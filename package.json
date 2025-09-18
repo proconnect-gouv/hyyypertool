@@ -11,7 +11,7 @@
     "sources/moderations",
     "sources/organizations",
     "sources/web",
-    "packages/hono-slotify"
+    "packages/*"
   ],
   "scripts": {
     "build": "bun x npm-run-all --serial build:*",
@@ -95,6 +95,7 @@
       "publish": false
     },
     "plugins": {
+      "./packages/release-it-changeset-plugin": {},
       "@csmith/release-it-calver-plugin": {
         "format": "yyyy.mm.minor"
       },
