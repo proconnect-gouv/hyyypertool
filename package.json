@@ -28,7 +28,7 @@
     "dev": "tsx watch bin/src/index.ts",
     "dev:api": "bun x run-z dev:api:clean dev:api:tsc dev:api:cp dev:api:format",
     "dev:api:clean": "bun run --cwd sources/app/urls clean",
-    "dev:api:cp": "cp './sources/app/api/node_sources/.cache/tsc/src/index.d.ts' './sources/app/urls/src/pattern.d.ts'",
+    "dev:api:cp": "cp './sources/app/api/node_modules/.cache/tsc/src/index.d.ts' './sources/app/urls/src/pattern.d.ts'",
     "dev:api:format": "bun run --cwd sources/app/urls format",
     "dev:api:tsc": "bun run build:tsc",
     "dev:inspect-brk": "tsx --inspect-brk bin/src/index.ts",
@@ -60,7 +60,7 @@
     "tailwindPreserveWhitespace": true
   },
   "overrides": {
-    "hono": "4.9.6",
+    "hono": "4.9.9",
     "zod": "3.24.1"
   },
   "dependencies": {
@@ -69,7 +69,7 @@
     "@~/app.core": "workspace:*",
     "consola": "3.4.2",
     "dotenv": "17.2.2",
-    "hono": "4.9.7",
+    "hono": "4.9.9",
     "tsx": "4.20.5"
   },
   "devDependencies": {
