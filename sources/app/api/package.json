@@ -23,7 +23,7 @@
     "await-to-js": "3.0.0",
     "consola": "3.4.2",
     "drizzle-orm": "0.44.5",
-    "hono": "4.9.8",
+    "hono": "4.9.9",
     "htmx-ext-debug": "2.0.1",
     "htmx-ext-include-vals": "2.0.1",
     "htmx-ext-sse": "2.2.3",

@@ -25,7 +25,7 @@
     "@~/identite-proconnect.lib": "workspace:*",
     "consola": "3.4.2",
     "drizzle-orm": "0.44.5",
-    "hono": "4.9.8",
+    "hono": "4.9.9",
     "pg": "8.16.3"
   },
   "devDependencies": {

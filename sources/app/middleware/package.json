@@ -27,7 +27,7 @@
     "@~/app.urls": "workspace:*",
     "@~/identite-proconnect.database": "workspace:*",
     "@~/identite-proconnect.lib": "workspace:*",
-    "hono": "4.9.8",
+    "hono": "4.9.9",
     "hono-sessions": "0.8.0",
     "openid-client": "6.6.2"
   },
