@@ -7,18 +7,13 @@ import {
   create_pink_diamond_user,
   create_unicorn_organization,
 } from "@~/identite-proconnect.database/seed/unicorn";
-import {
-  empty_database,
-  migrate,
-  pg,
-} from "@~/identite-proconnect.database/testing";
+import { migrate, pg } from "@~/identite-proconnect.database/testing";
 import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
 import { GetDuplicateModerations } from "./GetDuplicateModerations";
 
 //
 
-beforeAll(migrate);
-beforeEach(empty_database);
+beforeEach(migrate);
 
 beforeAll(() => {
   setSystemTime(new Date("2222-01-01T00:00:00.000Z"));
