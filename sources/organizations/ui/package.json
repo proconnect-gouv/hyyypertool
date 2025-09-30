@@ -12,7 +12,7 @@
     "@~/app.ui": "workspace:*",
     "@~/app.urls": "workspace:*",
     "@~/organizations.lib": "workspace:*",
-    "hono": "4.9.8",
+    "hono": "4.9.9",
     "tailwind-variants": "3.1.0",
     "ts-pattern": "5.8.0",
     "zod": "4.1.11"
