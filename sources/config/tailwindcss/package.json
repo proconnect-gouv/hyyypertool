@@ -5,10 +5,10 @@
   "type": "module",
   "exports": "./index.ts",
   "dependencies": {
-    "@tailwindcss/typography": "0.5.18",
+    "@tailwindcss/typography": "0.5.19",
     "autoprefixer": "10.4.21",
     "tailwind-merge": "3.3.1",
     "tailwind-variants": "3.1.0",
-    "tailwindcss": "4.1.13"
+    "tailwindcss": "4.1.14"
   }
 }
