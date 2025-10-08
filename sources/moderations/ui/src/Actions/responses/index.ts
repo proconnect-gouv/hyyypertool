@@ -20,8 +20,6 @@ import * as missing_name from "./missing_name";
 import * as more_precise_existing_establishement_cnrs from "./more_precise_existing_establishement_cnrs";
 import * as name_incorrectly_entered from "./name_incorrectly_entered";
 import * as non_teaching_agent from "./non_teaching_agent";
-import * as occupation_incorrectly_entered from "./occupation_incorrectly_entered";
-import * as occupation_incorrectly_entered_not_blocking from "./occupation_incorrectly_entered_not_blocking";
 import * as presta_email_admin_public from "./presta_email_admin_public";
 import * as presta_email_orga_public_beta_gouv from "./presta_email_orga_public_beta_gouv";
 import * as public_or_private_organization from "./public_or_private_organization";
@@ -46,8 +44,6 @@ export const reponse_templates = [
   missing_name,
   first_and_last_name_inversion,
   name_incorrectly_entered,
-  occupation_incorrectly_entered_not_blocking,
-  occupation_incorrectly_entered,
   min_armees,
   admin_centrale,
   teacher_academic_email,
