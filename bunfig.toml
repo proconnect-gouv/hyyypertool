@@ -1,4 +1,7 @@
 #
 
+[install]
+linker = "isolated"
+
 [test]
 preload = "@~/config.happydom/register.ts"
