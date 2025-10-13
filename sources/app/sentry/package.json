@@ -15,8 +15,8 @@
   },
   "dependencies": {
     "@~/app.core": "workspace:*",
-    "@sentry/node": "10.16.0",
-    "@sentry/profiling-node": "10.16.0",
+    "@sentry/node": "10.19.0",
+    "@sentry/profiling-node": "10.19.0",
     "consola": "3.4.2",
     "hono": "4.9.8"
   },
