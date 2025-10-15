@@ -42,7 +42,7 @@ jobs:
       - name: 🌭 Install bun
         uses: oven-sh/setup-bun@735343b667d3e6f658f44d0eca948eb6282f2b76 # v2
 
-      - run: bun install --frozen-lockfile
+      - run: bun install --frozen-lockfile --linker=hoisted
         working-directory: "."
 
       - name: Wait for mocked services to be ready
@@ -71,7 +71,7 @@ jobs:
         with:
           browser: chrome
           build: bun run build
-          install-command: bun install --frozen-lockfile
+          install-command: bun install --frozen-lockfile --linker=hoisted
           spec: features/${{ matrix.e2e_test }}
           start: bun run start
           working-directory: e2e
