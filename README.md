@@ -16,6 +16,8 @@ Then install dependencies with: `bun install`.
 
 ### Development server
 
+Run docker containers: `docker compose up --wait`
+
 Then run the app: `bun run scripts/dev.ts`.
 
 Then go to http://localhost:3000/.
