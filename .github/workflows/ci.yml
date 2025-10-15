@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Install bun
         uses: oven-sh/setup-bun@735343b667d3e6f658f44d0eca948eb6282f2b76 # v2
-      - run: bun install --frozen-lockfile
+      - run: bun install --frozen-lockfile --linker=hoisted
       - run: bun run build
       - run: bun run test:type-check
       - run: bun test
