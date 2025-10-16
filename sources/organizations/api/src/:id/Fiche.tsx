@@ -8,7 +8,7 @@ import { usePageRequestContext } from "./context";
 
 export async function Fiche() {
   const {
-    var: { organization },
+    var: { banaticUrl, organization },
   } = usePageRequestContext();
 
   return (
@@ -20,7 +20,7 @@ export async function Fiche() {
         <About organization={organization} />
       </div>
       <div class="fr-card p-6!">
-        <Investigation organization={organization} />
+        <Investigation banaticUrl={banaticUrl} organization={organization} />
       </div>
     </section>
   );

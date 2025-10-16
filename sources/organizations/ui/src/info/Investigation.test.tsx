@@ -15,6 +15,7 @@ test("render investigation section", async () => {
             cached_code_postal: "75015",
             siret: "12345678901234",
           }}
+          banaticUrl="https://www.banatic.interieur.gouv.fr/intercommunalite/200099711"
         />,
       ),
     )
