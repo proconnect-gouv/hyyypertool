@@ -23,15 +23,17 @@ export default new Hono<ContextType>()
     jsxRenderer(Main_Layout),
     zValidator("param", Entity_Schema),
     async function set_variables_middleware(
-      { render, req, set, status, var: { identite_pg } },
+      { render, req, set, status, var: { identite_pg, config } },
       next,
     ) {
       const { id } = req.valid("param");
 
       try {
-        const variables = await loadModerationPageVariables(identite_pg, {
-          id,
-        });
+        const variables = await loadModerationPageVariables(
+          config,
+          identite_pg,
+          { id },
+        );
         set_variables(set, variables);
         return next();
       } catch (error) {

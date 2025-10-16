@@ -1,5 +1,6 @@
 //
 
+import type { App_Config } from "@~/app.core/config/index";
 import { z_email_domain } from "@~/app.core/schema/z_email_domain";
 import type { App_Context } from "@~/app.middleware/context";
 import { urls } from "@~/app.urls";
@@ -8,6 +9,7 @@ import {
   GetModerationWithDetails,
   type GetModerationWithDetailsDto,
 } from "@~/moderations.repository";
+import { GetBanaticUrl } from "@~/organizations.lib/usecase";
 import {
   GetDomainCount,
   GetOrganizationById,
@@ -21,6 +23,7 @@ import { useRequestContext } from "hono/jsx-renderer";
 //
 
 export async function loadModerationPageVariables(
+  config: App_Config,
   pg: IdentiteProconnect_PgDatabase,
   { id }: { id: number },
 ) {
@@ -75,12 +78,17 @@ export async function loadModerationPageVariables(
     moderation.organization_id,
   );
 
+  const siren = organization_fiche.siret.substring(0, 9);
+  const get_banatic_url = GetBanaticUrl({
+    http_timout: config.HTTP_CLIENT_TIMEOUT,
+  });
   const get_organization_members_count = GetOrganizationMembersCount(pg);
   const get_domain_count = GetDomainCount(pg);
 
   //
 
   return {
+    banaticUrl: (await get_banatic_url(siren)).url,
     domain,
     moderation,
     organization_fiche,

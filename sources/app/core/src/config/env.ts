@@ -76,6 +76,7 @@ export const app_env = z.object({
   ENTREPRISE_API_GOUV_URL: z.string().trim().url(),
   GIT_SHA: GIT_SHA_SHEMA,
   HOST: z.string().trim().url().optional(),
+  HTTP_CLIENT_TIMEOUT: z.coerce.number().default(3_000),
   NODE_ENV: z
     .enum(["development", "production", "test"])
     .default("development"),
