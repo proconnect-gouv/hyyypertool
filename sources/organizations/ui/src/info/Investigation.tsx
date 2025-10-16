@@ -9,18 +9,18 @@ import type { JSX } from "hono/jsx";
 //
 
 type Props = JSX.IntrinsicElements["section"] & {
+  banaticUrl: string;
   organization: Pick<Organization, "cached_code_postal" | "siret">;
 };
 
 //
 
 export async function Investigation(props: Props) {
-  const { organization } = props;
+  const { banaticUrl, organization } = props;
   const hx_organizations_leaders_props =
     await hx_urls.organizations.leaders.$get({
       query: { siret: organization.siret },
     });
-
   const button_classes = button({
     class: "mr-2 bg-white",
     size: "sm",
@@ -47,6 +47,16 @@ export async function Investigation(props: Props) {
           target="_blank"
         >
           Chercher les services publics associés
+        </a>
+      </li>
+      <li>
+        <a
+          href={banaticUrl}
+          class={button_classes}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Chercher via Banatic
         </a>
       </li>
       <li>
