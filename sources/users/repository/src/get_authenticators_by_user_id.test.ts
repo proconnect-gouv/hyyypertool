@@ -3,18 +3,14 @@
 import { insert_nordPass_authenticator } from "@~/identite-proconnect.database/seed/authenticators/nordPass";
 import { insert_1Password_authenticator } from "@~/identite-proconnect.database/seed/authenticators/onePassword";
 import { create_pink_diamond_user } from "@~/identite-proconnect.database/seed/unicorn";
-import {
-  empty_database,
-  migrate,
-  pg,
-} from "@~/identite-proconnect.database/testing";
-import { beforeAll, beforeEach, expect, test } from "bun:test";
+import { migrate, pg } from "@~/identite-proconnect.database/testing";
+import { beforeEach, expect, test } from "bun:test";
 import { GetAuthenticatorByUserId } from "./GetAuthenticatorByUserId";
 
 //
 
-beforeAll(migrate);
-beforeEach(empty_database);
+beforeEach(migrate);
+// beforeEach(empty_database);
 
 const get_authenticators_by_user_id = GetAuthenticatorByUserId(pg);
 test("should returns one authenticator", async () => {
