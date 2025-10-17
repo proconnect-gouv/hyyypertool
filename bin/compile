@@ -106,7 +106,7 @@ rm -rf node_modules
 #
 
 header "Installing production dependencies"
-bun install --production
+bun install --production --linker=hoisted
 
 #
 
