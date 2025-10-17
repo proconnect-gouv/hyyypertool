@@ -21,7 +21,7 @@
     "@~/welcome.api": "workspace:*",
     "@~/zammad.api": "workspace:*",
     "@~/zammad.lib": "workspace:*",
-    "@hono/node-server": "1.15.0",
+    "@hono/node-server": "1.19.5",
     "@hono/sentry": "1.2.2",
     "await-to-js": "3.0.0",
     "consola": "3.4.2",
