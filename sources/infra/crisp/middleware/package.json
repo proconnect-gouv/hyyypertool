@@ -12,6 +12,7 @@
     "test": "bun test"
   },
   "dependencies": {
+    "@~/app.middleware": "workspace:*",
     "hono": "4.9.8"
   },
   "devDependencies": {

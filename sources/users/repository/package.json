@@ -15,8 +15,7 @@
     "test": "bun test"
   },
   "dependencies": {
-    "@~/identite-proconnect.database": "workspace:*",
-    "drizzle-orm": "0.44.5"
+    "@~/identite-proconnect.database": "workspace:*"
   },
   "devDependencies": {
     "@~/config.typescript": "workspace:*"

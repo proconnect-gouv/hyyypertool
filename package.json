@@ -59,26 +59,35 @@
     ],
     "tailwindPreserveWhitespace": true
   },
-  "overrides": {
-    "hono": "4.9.8",
-    "zod": "3.24.1"
-  },
   "dependencies": {
-    "@gouvfr/dsfr": "1.14.0",
     "@~/app.api": "workspace:*",
     "@~/app.core": "workspace:*",
+    "@gouvfr/dsfr": "1.14.0",
+    "@hono/node-server": "1.15.0",
     "consola": "3.4.2",
     "dotenv": "17.2.2",
+    "drizzle-orm": "0.44.5",
     "hono": "4.9.8",
-    "tsx": "4.20.5"
+    "tsx": "4.20.5",
+    "zod": "3.25.76"
   },
   "devDependencies": {
+    "@~/config.bun-plugin-test-projects": "workspace:*",
     "@~/config.tailwindcss": "workspace:*",
     "@csmith/release-it-calver-plugin": "2023.12.0",
+    "@lit-labs/motion": "1.0.9",
     "@release-it/conventional-changelog": "10.0.1",
     "@tailwindcss/cli": "4.1.14",
     "@tsconfig/bun": "1.0.7",
     "@types/bun": "1.2.21",
+    "htmx-ext-debug": "2.0.1",
+    "htmx-ext-include-vals": "2.0.1",
+    "htmx-ext-sse": "2.2.3",
+    "htmx.ext...chunked-transfer": "2.1.1",
+    "htmx.org": "2.0.7",
+    "hyperscript.org": "0.9.14",
+    "lit": "3.3.1",
+    "nprogress": "0.2.0",
     "prettier": "3.6.2",
     "prettier-plugin-organize-imports": "4.2.0",
     "prettier-plugin-tailwindcss": "0.6.14",

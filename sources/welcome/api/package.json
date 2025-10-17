@@ -14,7 +14,6 @@
     "@~/app.middleware": "workspace:*",
     "@~/app.urls": "workspace:*",
     "@lit-labs/motion": "1.0.9",
-    "animate.css": "4.1.1",
     "hono": "4.9.8",
     "lit": "3.3.1",
     "openid-client": "6.6.2"

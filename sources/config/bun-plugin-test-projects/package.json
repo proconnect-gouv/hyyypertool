@@ -1,0 +1,21 @@
+{
+  "name": "@~/config.bun-plugin-test-projects",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./index.ts",
+  "module": "./index.ts",
+  "exports": {
+    ".": {
+      "import": "./index.ts",
+      "default": "./index.ts"
+    }
+  },
+  "files": [],
+  "dependencies": {
+    "smol-toml": "1.4.2"
+  },
+  "devDependencies": {
+    "@~/config.typescript": "workspace:*"
+  }
+}

@@ -16,8 +16,7 @@
     "@~/app.core": "workspace:*",
     "@~/zammad.lib": "workspace:*",
     "hono": "4.9.8",
-    "ts-pattern": "5.8.0",
-    "zod": "4.1.11"
+    "ts-pattern": "5.8.0"
   },
   "devDependencies": {
     "@~/config.typescript": "workspace:*"

@@ -14,7 +14,8 @@
   "dependencies": {
     "@~/identite-proconnect.database": "workspace:*",
     "@~/identite-proconnect.lib": "workspace:*",
-    "drizzle-orm": "0.44.5",
+    "@gouvfr-lasuite/proconnect.core": "0.6.0",
+    "is-disposable-email-domain": "1.0.7",
     "ts-pattern": "5.8.0"
   },
   "devDependencies": {

@@ -2,18 +2,16 @@
 
 # [2025.9.0](https://github.com/proconnect-gouv/hyyypertool/compare/2025.7.2...2025.9.0) (2025-09-18)
 
-
 ### Bug Fixes
 
-* **moderation:** send notification typo ([#1095](https://github.com/proconnect-gouv/hyyypertool/issues/1095)) ([0d0e480](https://github.com/proconnect-gouv/hyyypertool/commit/0d0e480de5a43a8a92b68776365b827c07ae947c))
-* **test:** just avoid using mock.module for now ([#1058](https://github.com/proconnect-gouv/hyyypertool/issues/1058)) ([e50b498](https://github.com/proconnect-gouv/hyyypertool/commit/e50b498859895dc0f4d042d3344f806ff9ce91ff))
-
+- **moderation:** send notification typo ([#1095](https://github.com/proconnect-gouv/hyyypertool/issues/1095)) ([0d0e480](https://github.com/proconnect-gouv/hyyypertool/commit/0d0e480de5a43a8a92b68776365b827c07ae947c))
+- **test:** just avoid using mock.module for now ([#1058](https://github.com/proconnect-gouv/hyyypertool/issues/1058)) ([e50b498](https://github.com/proconnect-gouv/hyyypertool/commit/e50b498859895dc0f4d042d3344f806ff9ce91ff))
 
 ### Features
 
-* **moderations:** auto validate pending moderation for same organization and domain ([#1101](https://github.com/proconnect-gouv/hyyypertool/issues/1101)) ([28ec9a0](https://github.com/proconnect-gouv/hyyypertool/commit/28ec9a00f354ef8ba9111d5d50bfe06d862dffbc))
-* **moderations:** improve UX with auto go back component ([#1066](https://github.com/proconnect-gouv/hyyypertool/issues/1066)) ([2c3f264](https://github.com/proconnect-gouv/hyyypertool/commit/2c3f2648afd5a32dad4219843eb5fe37b2e8c3fc))
-* rename modules to sources ([200772e](https://github.com/proconnect-gouv/hyyypertool/commit/200772e9ab2b29a4508d1a1edc20f035df57208b))
+- **moderations:** auto validate pending moderation for same organization and domain ([#1101](https://github.com/proconnect-gouv/hyyypertool/issues/1101)) ([28ec9a0](https://github.com/proconnect-gouv/hyyypertool/commit/28ec9a00f354ef8ba9111d5d50bfe06d862dffbc))
+- **moderations:** improve UX with auto go back component ([#1066](https://github.com/proconnect-gouv/hyyypertool/issues/1066)) ([2c3f264](https://github.com/proconnect-gouv/hyyypertool/commit/2c3f2648afd5a32dad4219843eb5fe37b2e8c3fc))
+- rename modules to sources ([200772e](https://github.com/proconnect-gouv/hyyypertool/commit/200772e9ab2b29a4508d1a1edc20f035df57208b))
 
 ## [2025.7.2](https://github.com/proconnect-gouv/hyyypertool/compare/2025.7.1...2025.7.2) (2025-07-25)
 

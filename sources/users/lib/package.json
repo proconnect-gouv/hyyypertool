@@ -17,7 +17,9 @@
   "dependencies": {
     "@~/app.middleware": "workspace:*",
     "@~/crisp.lib": "workspace:*",
-    "@~/identite-proconnect.database": "workspace:*"
+    "@~/identite-proconnect.database": "workspace:*",
+    "await-to-js": "3.0.0",
+    "ts-dedent": "2.2.0"
   },
   "devDependencies": {
     "@~/config.typescript": "workspace:*"

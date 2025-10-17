@@ -21,6 +21,7 @@
   "devDependencies": {
     "@~/config.happydom": "workspace:*",
     "@~/config.tailwindcss": "workspace:*",
-    "@~/config.typescript": "workspace:*"
+    "@~/config.typescript": "workspace:*",
+    "hyperscript.org": "0.9.14"
   }
 }
