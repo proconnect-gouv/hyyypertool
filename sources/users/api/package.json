@@ -13,14 +13,19 @@
     "@~/app.middleware": "workspace:*",
     "@~/app.ui": "workspace:*",
     "@~/app.urls": "workspace:*",
+    "@~/crisp.lib": "workspace:*",
+    "@~/crisp.middleware": "workspace:*",
+    "@~/identite-proconnect.database": "workspace:*",
+    "@~/moderations.lib": "workspace:*",
     "@~/moderations.repository": "workspace:*",
     "@~/organizations.repository": "workspace:*",
+    "@~/users.lib": "workspace:*",
     "@~/users.repository": "workspace:*",
     "hono": "4.9.8",
-    "ts-pattern": "5.8.0",
-    "zod": "4.1.11"
+    "ts-pattern": "5.8.0"
   },
   "devDependencies": {
+    "@hono/zod-validator": "0.7.2",
     "@~/config.tailwindcss": "workspace:*",
     "@~/config.typescript": "workspace:*"
   }

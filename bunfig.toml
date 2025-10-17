@@ -1,6 +1,7 @@
 #
-[install]
-linker = "hoisted"
 
 [test]
-preload = "@~/config.happydom/register.ts"
+preload = ["@~/config.bun-plugin-test-projects"]
+
+[test."*.test.dom.tsx"]
+preload = ["@~/config.happydom/register.ts"]

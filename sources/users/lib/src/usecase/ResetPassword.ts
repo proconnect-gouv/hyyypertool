@@ -7,11 +7,10 @@ import {
   schema,
   type IdentiteProconnectDatabaseCradle,
 } from "@~/identite-proconnect.database";
-import { ResetPassword_Message } from "@~/users.ui/templates";
 import { to as await_to } from "await-to-js";
 import { eq } from "drizzle-orm";
+import { ResetPassword_Message } from "../templates";
 import { GetUserInfo } from "./GetUserInfo";
-
 //
 
 export function ResetPassword({

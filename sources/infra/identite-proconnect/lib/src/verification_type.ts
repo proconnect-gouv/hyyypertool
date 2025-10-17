@@ -5,6 +5,6 @@ import { UserOrganizationLinkVerificationTypeSchema } from "@gouvfr-lasuite/proc
 
 //
 
-export const Verification_Type_Schema =
+export const Verification_Type_Schema: typeof UserOrganizationLinkVerificationTypeSchema =
   UserOrganizationLinkVerificationTypeSchema;
 export type Verification_Type = UserOrganizationLinkVerificationType;

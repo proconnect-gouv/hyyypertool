@@ -11,6 +11,6 @@
     "isolatedModules": true,
     "noEmit": false,
     "preserveWatchOutput": true,
-    "types": ["bun"]
+    "skipLibCheck": true
   }
 }

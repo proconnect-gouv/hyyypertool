@@ -4,7 +4,7 @@
     "jsxImportSource": "hono/jsx",
     "lib": ["DOM"],
     "outDir": "./node_modules/.cache/tsc",
-    "types": ["bun-types", "hono"]
+    "types": ["@types/bun", "hono"]
   },
   "extends": "@~/config.typescript/tsx/tsconfig.json",
   "references": []

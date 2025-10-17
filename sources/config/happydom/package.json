@@ -6,5 +6,8 @@
   "files": [],
   "dependencies": {
     "@happy-dom/global-registrator": "18.0.1"
+  },
+  "devDependencies": {
+    "@~/config.typescript": "workspace:*"
   }
 }

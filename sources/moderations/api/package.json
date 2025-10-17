@@ -22,24 +22,26 @@
     "@~/crisp.lib": "workspace:*",
     "@~/crisp.middleware": "workspace:*",
     "@~/crisp.ui": "workspace:*",
-    "@~/moderations.lib": "workspace:*",
-    "@~/moderations.ui": "workspace:*",
     "@~/identite-proconnect.database": "workspace:*",
     "@~/identite-proconnect.lib": "workspace:*",
+    "@~/moderations.lib": "workspace:*",
+    "@~/moderations.repository": "workspace:*",
+    "@~/moderations.ui": "workspace:*",
+    "@~/organizations.lib": "workspace:*",
     "@~/organizations.repository": "workspace:*",
     "@~/organizations.ui": "workspace:*",
     "@~/users.lib": "workspace:*",
+    "@~/users.repository": "workspace:*",
     "@~/users.ui": "workspace:*",
     "@~/zammad.lib": "workspace:*",
     "await-to-js": "3.0.0",
-    "drizzle-orm": "0.44.5",
     "hono": "4.9.8",
     "tailwind-variants": "3.1.0",
     "ts-dedent": "2.2.0",
-    "ts-pattern": "5.8.0",
-    "zod": "4.1.11"
+    "ts-pattern": "5.8.0"
   },
   "devDependencies": {
+    "@hono/zod-validator": "0.7.2",
     "@~/config.tailwindcss": "workspace:*",
     "@~/config.typescript": "workspace:*"
   }

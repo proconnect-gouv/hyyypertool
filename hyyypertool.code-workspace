@@ -103,7 +103,17 @@
     "cSpell.language": "en,fr",
     "cucumber.features": ["features/**/*.feature"],
     "cucumber.glue": ["cypress/support/step_definitions/**/*.ts"],
-    "cSpell.words": ["identite", "moderations", "proconnect", "zammad"],
+    "cSpell.words": [
+      "dsfr",
+      "gouvfr",
+      "happydom",
+      "hyyypertool",
+      "identite",
+      "moderations",
+      "proconnect",
+      "slotify",
+      "zammad",
+    ],
   },
   "tasks": {
     "version": "2.0.0",
@@ -295,7 +305,7 @@
       {
         "label": "🏗️ Database MonComptePro Migrate",
         "command": "bun",
-        "args": ["run", "database:proconnect-identite:migrator"],
+        "args": ["run", "database:identite-proconnect:migrator"],
         "type": "shell",
         "options": {
           "cwd": "${workspaceFolder:/}",

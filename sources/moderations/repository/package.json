@@ -13,9 +13,11 @@
   },
   "dependencies": {
     "@~/identite-proconnect.database": "workspace:*",
-    "drizzle-orm": "0.44.5"
+    "@~/moderations.lib": "workspace:*",
+    "@~/organizations.lib": "workspace:*"
   },
   "devDependencies": {
+    "@~/app.middleware": "workspace:*",
     "@~/config.typescript": "workspace:*"
   }
 }

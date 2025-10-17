@@ -20,10 +20,10 @@
     "@gouvfr-lasuite/proconnect.insee": "0.3.2",
     "@gouvfr-lasuite/proconnect.entreprise": "0.0.0",
     "@~/app.core": "workspace:*",
-    "consola": "3.4.2",
-    "zod": "4.1.11"
+    "consola": "3.4.2"
   },
   "devDependencies": {
+    "@types/pg": "8.15.4",
     "@~/config.typescript": "workspace:*",
     "pg": "8.16.3"
   }

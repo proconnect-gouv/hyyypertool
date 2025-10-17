@@ -12,7 +12,6 @@ import {
   startSpan,
   withScope,
 } from "@sentry/node";
-import { nodeProfilingIntegration } from "@sentry/profiling-node";
 import config from "@~/app.core/config";
 import consola, { LogLevels } from "consola";
 import type { Env } from "hono";
@@ -43,11 +42,7 @@ export function set_sentry() {
         GIT_SHA: config.GIT_SHA,
       },
     },
-    integrations: [
-      postgresIntegration(),
-      httpIntegration(),
-      nodeProfilingIntegration(),
-    ],
+    integrations: [postgresIntegration(), httpIntegration()],
     profilesSampleRate: 1,
     release: config.VERSION,
     tracesSampleRate: 1,
