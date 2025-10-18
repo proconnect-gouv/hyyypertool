@@ -63,7 +63,7 @@
     "@~/app.api": "workspace:*",
     "@~/app.core": "workspace:*",
     "@gouvfr/dsfr": "1.14.0",
-    "@hono/node-server": "1.15.0",
+    "@hono/node-server": "1.19.5",
     "consola": "3.4.2",
     "dotenv": "17.2.2",
     "drizzle-orm": "0.44.5",
