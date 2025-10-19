@@ -50,6 +50,7 @@
         "@~/app.core": "workspace:*",
         "consola": "3.4.2",
         "hono": "4.9.8",
+        "tsx": "4.20.5",
       },
       "devDependencies": {
         "@~/config.typescript": "workspace:*",
@@ -186,6 +187,7 @@
       "name": "@~/auth.api",
       "version": "1.0.0",
       "dependencies": {
+        "@hono/zod-validator": "0.7.2",
         "@~/app.core": "workspace:*",
         "@~/app.middleware": "workspace:*",
         "@~/app.urls": "workspace:*",
@@ -193,7 +195,6 @@
         "openid-client": "6.6.2",
       },
       "devDependencies": {
-        "@hono/zod-validator": "0.7.2",
         "@~/config.typescript": "workspace:*",
       },
     },
@@ -255,6 +256,7 @@
       "version": "1.0.0",
       "dependencies": {
         "@~/app.middleware": "workspace:*",
+        "consola": "3.4.2",
         "hono": "4.9.8",
       },
       "devDependencies": {
@@ -268,6 +270,7 @@
       "dependencies": {
         "@~/app.ui": "workspace:*",
         "@~/crisp.lib": "workspace:*",
+        "hono": "4.9.8",
         "rehype-sanitize": "6.0.0",
         "rehype-stringify": "10.0.1",
         "remark-parse": "11.0.0",
@@ -344,6 +347,8 @@
       "name": "@~/moderations.api",
       "version": "1.0.0",
       "dependencies": {
+        "@hono/zod-validator": "0.7.2",
+        "@~/app.core": "workspace:*",
         "@~/app.layout": "workspace:*",
         "@~/app.middleware": "workspace:*",
         "@~/app.ui": "workspace:*",
@@ -364,6 +369,7 @@
         "@~/users.ui": "workspace:*",
         "@~/zammad.lib": "workspace:*",
         "await-to-js": "3.0.0",
+        "consola": "3.4.2",
         "hono": "4.9.8",
         "tailwind-variants": "3.1.0",
         "ts-dedent": "2.2.0",
@@ -387,7 +393,9 @@
         "@~/moderations.repository": "workspace:*",
         "@~/organizations.lib": "workspace:*",
         "@~/users.repository": "workspace:*",
+        "@~/zammad.lib": "workspace:*",
         "await-to-js": "3.0.0",
+        "consola": "3.4.2",
         "ts-pattern": "5.8.0",
       },
       "devDependencies": {
@@ -399,6 +407,7 @@
       "name": "@~/moderations.repository",
       "version": "1.0.0",
       "dependencies": {
+        "@~/app.core": "workspace:*",
         "@~/identite-proconnect.database": "workspace:*",
         "@~/moderations.lib": "workspace:*",
         "@~/organizations.lib": "workspace:*",
@@ -412,6 +421,7 @@
       "name": "@~/moderations.ui",
       "version": "1.0.0",
       "dependencies": {
+        "@~/app.core": "workspace:*",
         "@~/app.ui": "workspace:*",
         "@~/app.urls": "workspace:*",
         "@~/crisp.ui": "workspace:*",
@@ -434,6 +444,8 @@
       "version": "1.0.0",
       "dependencies": {
         "@gouvfr-lasuite/proconnect.core": "0.6.0",
+        "@hono/zod-validator": "0.7.2",
+        "@~/app.core": "workspace:*",
         "@~/app.layout": "workspace:*",
         "@~/app.middleware": "workspace:*",
         "@~/app.ui": "workspace:*",
@@ -445,13 +457,13 @@
         "@~/organizations.repository": "workspace:*",
         "@~/organizations.ui": "workspace:*",
         "@~/users.repository": "workspace:*",
+        "consola": "3.4.2",
         "hono": "4.9.8",
         "lodash.sortby": "4.7.0",
         "tailwind-variants": "3.1.0",
         "ts-pattern": "5.8.0",
       },
       "devDependencies": {
-        "@hono/zod-validator": "0.7.2",
         "@types/lodash.sortby": "4.7.9",
         "@~/config.tailwindcss": "workspace:*",
         "@~/config.typescript": "workspace:*",
@@ -461,6 +473,7 @@
       "name": "@~/organizations.lib",
       "version": "1.0.0",
       "dependencies": {
+        "@~/app.core": "workspace:*",
         "@~/identite-proconnect.database": "workspace:*",
         "@~/identite-proconnect.lib": "workspace:*",
         "@~/organizations.repository": "workspace:*",
@@ -475,6 +488,7 @@
       "version": "1.0.0",
       "dependencies": {
         "@gouvfr-lasuite/proconnect.core": "0.6.0",
+        "@~/app.core": "workspace:*",
         "@~/identite-proconnect.database": "workspace:*",
         "@~/identite-proconnect.lib": "workspace:*",
         "is-disposable-email-domain": "1.0.7",
@@ -513,6 +527,8 @@
       "name": "@~/users.api",
       "version": "1.0.0",
       "dependencies": {
+        "@hono/zod-validator": "0.7.2",
+        "@~/app.core": "workspace:*",
         "@~/app.layout": "workspace:*",
         "@~/app.middleware": "workspace:*",
         "@~/app.ui": "workspace:*",
@@ -525,11 +541,11 @@
         "@~/organizations.repository": "workspace:*",
         "@~/users.lib": "workspace:*",
         "@~/users.repository": "workspace:*",
+        "consola": "3.4.2",
         "hono": "4.9.8",
         "ts-pattern": "5.8.0",
       },
       "devDependencies": {
-        "@hono/zod-validator": "0.7.2",
         "@~/config.tailwindcss": "workspace:*",
         "@~/config.typescript": "workspace:*",
       },
@@ -538,6 +554,7 @@
       "name": "@~/users.lib",
       "version": "1.0.0",
       "dependencies": {
+        "@~/app.core": "workspace:*",
         "@~/app.middleware": "workspace:*",
         "@~/crisp.lib": "workspace:*",
         "@~/identite-proconnect.database": "workspace:*",
@@ -552,6 +569,7 @@
       "name": "@~/users.repository",
       "version": "1.0.0",
       "dependencies": {
+        "@~/app.core": "workspace:*",
         "@~/identite-proconnect.database": "workspace:*",
       },
       "devDependencies": {
@@ -562,6 +580,7 @@
       "name": "@~/users.ui",
       "version": "1.0.0",
       "dependencies": {
+        "@~/app.core": "workspace:*",
         "@~/app.ui": "workspace:*",
         "@~/app.urls": "workspace:*",
         "@~/moderations.lib": "workspace:*",

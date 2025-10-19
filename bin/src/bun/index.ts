@@ -1,5 +1,21 @@
 //
 
+import dotenv from "dotenv";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+// Load environment variables at bin level
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const workspaceRoot = join(__dirname, "../..");
+
+dotenv.config({
+  path: [
+    join(workspaceRoot, `.env.${process.env.NODE_ENV ?? "development"}.local`),
+    join(workspaceRoot, ".env.local"),
+    join(workspaceRoot, ".env"),
+  ],
+});
+
 import app from "@~/app.api";
 import config from "@~/app.core/config";
 import { LogLevels, consola } from "consola";

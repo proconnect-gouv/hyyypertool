@@ -8,6 +8,11 @@ import { z } from "zod";
 
 //
 
+/**
+ * @deprecated This dotenv.config() call is deprecated.
+ * Environment variables should be loaded at the bin level instead.
+ * Use set_config middleware for runtime configuration.
+ */
 dotenv.config({
   path: [
     `.env.${process.env.NODE_ENV ?? "development"}.local`,
