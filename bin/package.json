@@ -1,0 +1,23 @@
+{
+  "name": "@~/bin",
+  "version": "2025.9.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "hyyypertool-node": "./src/node/index.ts",
+    "hyyypertool-bun": "./src/bun/index.ts"
+  },
+  "scripts": {
+    "start:node": "tsx src/node/index.ts",
+    "start:bun": "bun run src/bun/index.ts"
+  },
+  "dependencies": {
+    "@~/app.api": "workspace:*",
+    "@~/app.core": "workspace:*",
+    "consola": "3.4.2",
+    "hono": "4.9.8"
+  },
+  "devDependencies": {
+    "@~/config.typescript": "workspace:*"
+  }
+}

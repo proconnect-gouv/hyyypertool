@@ -6,13 +6,10 @@
       "dependencies": {
         "@gouvfr/dsfr": "1.14.0",
         "@hono/node-server": "1.15.0",
-        "@~/app.api": "workspace:*",
-        "@~/app.core": "workspace:*",
+        "@~/bin": "workspace:*",
         "animate.css": "4.1.1",
-        "consola": "3.4.2",
         "dotenv": "17.2.2",
         "drizzle-orm": "0.44.5",
-        "hono": "4.9.8",
         "htmx-ext-include-vals": "2.0.1",
         "htmx-ext-sse": "2.2.3",
         "htmx.ext...chunked-transfer": "2.1.1",
@@ -39,6 +36,23 @@
         "release-it": "19.0.4",
         "tailwindcss": "4.1.14",
         "typescript": "5.9.2",
+      },
+    },
+    "bin": {
+      "name": "@~/bin",
+      "version": "2025.9.0",
+      "bin": {
+        "hyyypertool-node": "./src/node/index.ts",
+        "hyyypertool-bun": "./src/bun/index.ts",
+      },
+      "dependencies": {
+        "@~/app.api": "workspace:*",
+        "@~/app.core": "workspace:*",
+        "consola": "3.4.2",
+        "hono": "4.9.8",
+      },
+      "devDependencies": {
+        "@~/config.typescript": "workspace:*",
       },
     },
     "packages/hono-slotify": {
@@ -999,6 +1013,8 @@
     "@~/app.urls": ["@~/app.urls@workspace:sources/app/urls"],
 
     "@~/auth.api": ["@~/auth.api@workspace:sources/auth/api"],
+
+    "@~/bin": ["@~/bin@workspace:bin"],
 
     "@~/config.bun-plugin-test-projects": ["@~/config.bun-plugin-test-projects@workspace:sources/config/bun-plugin-test-projects"],
 

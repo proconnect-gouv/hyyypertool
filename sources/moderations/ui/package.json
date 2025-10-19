@@ -16,6 +16,7 @@
     }
   },
   "dependencies": {
+    "@~/app.core": "workspace:*",
     "@~/app.ui": "workspace:*",
     "@~/app.urls": "workspace:*",
     "@~/crisp.ui": "workspace:*",

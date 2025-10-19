@@ -16,10 +16,10 @@
     "@~/app.middleware": "workspace:*",
     "@~/app.urls": "workspace:*",
     "hono": "4.9.8",
+    "@hono/zod-validator": "0.7.2",
     "openid-client": "6.6.2"
   },
   "devDependencies": {
-    "@hono/zod-validator": "0.7.2",
     "@~/config.typescript": "workspace:*"
   }
 }

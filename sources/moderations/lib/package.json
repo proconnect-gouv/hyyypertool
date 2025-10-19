@@ -20,7 +20,9 @@
     "@~/moderations.repository": "workspace:*",
     "@~/organizations.lib": "workspace:*",
     "@~/users.repository": "workspace:*",
+    "@~/zammad.lib": "workspace:*",
     "await-to-js": "3.0.0",
+    "consola": "3.4.2",
     "ts-pattern": "5.8.0"
   },
   "devDependencies": {

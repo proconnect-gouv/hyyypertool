@@ -1,5 +1,7 @@
 #
 
+preload = ["./scripts/build.ts"]
+
 [test]
 preload = ["@~/config.bun-plugin-test-projects"]
 

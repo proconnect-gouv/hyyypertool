@@ -1,10 +1,23 @@
 //
 
+// Build static files with Bun runtime before app starts
 import { serve } from "@hono/node-server";
 import app from "@~/app.api";
 import config from "@~/app.core/config";
+import { execSync } from "child_process";
 import { LogLevels, consola } from "consola";
+import { existsSync } from "fs";
 import { showRoutes } from "hono/dev";
+
+//
+//
+//
+
+if (!existsSync("./public/built")) {
+  console.log("Building static files...");
+  execSync("bun run ./scripts/build.ts", { stdio: "inherit" });
+  console.log("✓ Static files built successfully");
+}
 
 //
 //
@@ -50,4 +63,5 @@ if (consola.level >= LogLevels.debug) {
 serve({
   fetch: app.fetch,
   port: config.PORT,
+
 });
