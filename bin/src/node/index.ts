@@ -6,13 +6,13 @@ import { fileURLToPath } from "node:url";
 
 // Load environment variables at bin level
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const workspaceRoot = join(__dirname, "../..");
+const binRoot = join(__dirname, "..");
 
 dotenv.config({
   path: [
-    join(workspaceRoot, `.env.${process.env.NODE_ENV ?? "development"}.local`),
-    join(workspaceRoot, ".env.local"),
-    join(workspaceRoot, ".env"),
+    join(binRoot, `.env.${process.env.NODE_ENV ?? "development"}.local`),
+    join(binRoot, ".env.local"),
+    join(binRoot, ".env"),
   ],
 });
 
@@ -29,9 +29,9 @@ import { showRoutes } from "hono/dev";
 //
 //
 
-if (!existsSync("./public/built")) {
+if (!existsSync(join(binRoot, "public/built"))) {
   console.log("Building static files...");
-  execSync("bun run ./scripts/build.ts", { stdio: "inherit" });
+  execSync("bun run ./build.ts", { stdio: "inherit", cwd: binRoot });
   console.log("✓ Static files built successfully");
 }
 

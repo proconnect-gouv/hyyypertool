@@ -1,11 +1,12 @@
 //
 
 const minify = true;
+const outdir = "./public/built";
 
 {
   const { logs, outputs, success } = await Bun.build({
     entrypoints: ["lit"],
-    outdir: "./public/built",
+    outdir,
     minify,
   });
   console.log({ logs, outputs, success });
@@ -22,7 +23,7 @@ const minify = true;
     entrypoints: lit_files.map((entrypoint) =>
       Bun.resolveSync(`lit/${entrypoint}`, process.cwd()),
     ),
-    outdir: `./public/built/node_modules/lit`,
+    outdir: `${outdir}/node_modules/lit`,
     minify,
   });
   console.log({ logs, outputs, success });
@@ -31,12 +32,12 @@ const minify = true;
 {
   const { logs, outputs, success } = await Bun.build({
     entrypoints: [
-      "./sources/app/layout/src/_client/nprogress.ts",
-      "./sources/welcome/api/src/_client/hyyypertitle.ts",
+      "../sources/app/layout/src/_client/nprogress.ts",
+      "../sources/welcome/api/src/_client/hyyypertitle.ts",
     ],
     external: ["lit", "@~/app.core/config"],
     minify,
-    outdir: "./public/built",
+    outdir,
   });
   console.log({ logs, outputs, success });
 }
