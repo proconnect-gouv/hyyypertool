@@ -22,6 +22,7 @@
     "test": "bun test"
   },
   "dependencies": {
+    "hono": "4.9.8",
     "modern-errors": "7.1.2",
     "ts-pattern": "5.8.0",
     "type-fest": "5.0.1"

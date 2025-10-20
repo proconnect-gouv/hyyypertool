@@ -89,6 +89,7 @@
       "node_modules/": false,
       "out/": true,
     },
+    "npm.scriptRunner": "bun",
     "javascript.preferences.importModuleSpecifier": "shortest",
     "typescript.preferences.importModuleSpecifier": "shortest",
     "typescript.tsdk": "root/node_modules/typescript/lib",

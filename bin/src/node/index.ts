@@ -31,7 +31,7 @@ import { showRoutes } from "hono/dev";
 
 if (!existsSync(join(binRoot, "public/built"))) {
   console.log("Building static files...");
-  execSync("bun run ./build.ts", { stdio: "inherit", cwd: binRoot });
+  execSync("bun run ./scripts/build.ts", { stdio: "inherit" });
   console.log("✓ Static files built successfully");
 }
 

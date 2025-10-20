@@ -3,22 +3,24 @@
 import { execSync } from "child_process";
 
 const minify = true;
-const outdir = "./bin/public/built";
+const outdir = "./public/built";
 
 // Build Tailwind CSS
 console.log("Building Tailwind CSS...");
+
 execSync(
-  "bun x tailwindcss -i ./sources/app/ui/tailwind.css -o ./bin/public/built/tailwind.css --config ./tailwind.config.ts",
-  { stdio: "inherit" },
+  `./node_modules/.bin/tailwindcss -i sources/app/ui/tailwind.css -o bin/public/built/tailwind.css --config bin/tailwind.config.js`,
+  { stdio: "inherit", cwd: ".." },
 );
+
 console.log("✓ Tailwind CSS built successfully");
 console.log("");
 
 {
   const { logs, outputs, success } = await Bun.build({
     entrypoints: [
-      "./sources/app/layout/src/_client/nprogress.ts",
-      "./sources/welcome/api/src/_client/hyyypertitle.ts",
+      "../sources/app/layout/src/_client/nprogress.ts",
+      "../sources/welcome/api/src/_client/hyyypertitle.ts",
     ],
     external: ["@~/app.core/config"],
     minify,
