@@ -91,7 +91,7 @@ cd "$BUILD_DIR"
 #
 
 header "Installing dependencies"
-bun install --cache-dir "$CACHE_DIR"
+bun install --cache-dir "$CACHE_DIR" --frozen-lockfile
 
 #
 
@@ -106,7 +106,7 @@ rm -rf node_modules
 #
 
 header "Installing production dependencies"
-bun install --production --linker=hoisted
+bun install --cache-dir "$CACHE_DIR" --frozen-lockfile --production
 
 #
 
