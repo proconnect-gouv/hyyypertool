@@ -42,7 +42,7 @@
       "dependencies": {
         "@hono/node-server": "1.15.0",
         "@tailwindcss/cli": "4.1.14",
-        "@tailwindcss/typography": "^0.5.19",
+        "@tailwindcss/typography": "0.5.19",
         "@~/app.api": "workspace:*",
         "@~/app.core": "workspace:*",
         "consola": "3.4.2",
@@ -53,6 +53,7 @@
       "devDependencies": {
         "@~/config.tailwindcss": "workspace:*",
         "@~/config.typescript": "workspace:*",
+        "bun-html-live-reload": "1.0.4",
       },
     },
     "packages/hono-slotify": {
@@ -1140,6 +1141,8 @@
     "browserslist": ["browserslist@4.25.4", "", { "dependencies": { "caniuse-lite": "^1.0.30001737", "electron-to-chromium": "^1.5.211", "node-releases": "^2.0.19", "update-browserslist-db": "^1.1.3" }, "bin": { "browserslist": "cli.js" } }, "sha512-4jYpcjabC606xJ3kw2QwGEZKX0Aw7sgQdZCvIK9dhVSPh76BKo+C+btT1RRofH7B+8iNpEbgGNVWiLki5q93yg=="],
 
     "buffer-from": ["buffer-from@1.1.2", "", {}, "sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ=="],
+
+    "bun-html-live-reload": ["bun-html-live-reload@1.0.4", "", {}, "sha512-8VF9aK4SXeOcxVhEzI+Ila0iEt4jt2xSZP9JMqG3gDWYRjTCUkqfBonms+50ELryk+MAa8tpDf5Ik8PwbHalUw=="],
 
     "bun-types": ["bun-types@1.2.21", "", { "dependencies": { "@types/node": "*" }, "peerDependencies": { "@types/react": "^19" } }, "sha512-sa2Tj77Ijc/NTLS0/Odjq/qngmEPZfbfnOERi0KRUYhT9R8M4VBioWVmMWE5GrYbKMc+5lVybXygLdibHaqVqw=="],
 

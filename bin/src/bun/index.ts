@@ -4,6 +4,7 @@ import app from "@~/app.api";
 import config from "@~/app.core/config";
 import { LogLevels, consola } from "consola";
 import dotenv from "dotenv";
+import type { ExecutionContext } from "hono";
 import { showRoutes } from "hono/dev";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -74,7 +75,19 @@ if (consola.level >= LogLevels.debug) {
 //
 //
 
+const appFetch = async (req: Request, env?: object, ctx?: ExecutionContext) => {
+  return app.fetch(req, env, ctx);
+};
+
+let fetchHandler;
+try {
+  const { withHtmlLiveReload } = await import("bun-html-live-reload");
+  fetchHandler = withHtmlLiveReload(appFetch);
+} catch {
+  fetchHandler = appFetch;
+}
+
 export default {
-  fetch: app.fetch,
+  fetch: fetchHandler,
   port,
 };
