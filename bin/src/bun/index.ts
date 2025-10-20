@@ -1,8 +1,17 @@
 //
 
+import app from "@~/app.api";
+import config from "@~/app.core/config";
+import { LogLevels, consola } from "consola";
 import dotenv from "dotenv";
+import { showRoutes } from "hono/dev";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { parseArgs } from "util";
+
+//
+//
+//
 
 // Load environment variables at bin level
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -16,14 +25,17 @@ dotenv.config({
   ],
 });
 
-import app from "@~/app.api";
-import config from "@~/app.core/config";
-import { LogLevels, consola } from "consola";
-import { showRoutes } from "hono/dev";
+// Handle -p PORT flag for Scalingo deployment (e.g., bun start -p 23573)
+const { values } = parseArgs({
+  options: {
+    p: {
+      type: "string",
+    },
+  },
+  allowPositionals: true,
+});
 
-//
-//
-//
+const port = values.p || config.PORT;
 
 consola.log("");
 consola.log("");
@@ -64,5 +76,5 @@ if (consola.level >= LogLevels.debug) {
 
 export default {
   fetch: app.fetch,
-  port: config.PORT,
+  port,
 };
