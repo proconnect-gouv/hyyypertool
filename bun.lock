@@ -20,13 +20,11 @@
       },
       "devDependencies": {
         "@csmith/release-it-calver-plugin": "2023.12.0",
-        "@lit-labs/motion": "1.0.9",
         "@release-it/conventional-changelog": "10.0.1",
         "@tsconfig/bun": "1.0.7",
         "@types/bun": "1.2.21",
         "@~/config.bun-plugin-test-projects": "workspace:*",
         "htmx-ext-debug": "2.0.1",
-        "lit": "3.3.1",
         "prettier": "3.6.2",
         "prettier-plugin-organize-imports": "4.2.0",
         "prettier-plugin-tailwindcss": "0.6.14",
@@ -599,13 +597,11 @@
       "name": "@~/welcome.api",
       "version": "1.0.0",
       "dependencies": {
-        "@lit-labs/motion": "1.0.9",
         "@~/app.core": "workspace:*",
         "@~/app.layout": "workspace:*",
         "@~/app.middleware": "workspace:*",
         "@~/app.urls": "workspace:*",
         "hono": "4.9.8",
-        "lit": "3.3.1",
         "openid-client": "6.6.2",
       },
       "devDependencies": {
@@ -751,12 +747,6 @@
     "@jridgewell/sourcemap-codec": ["@jridgewell/sourcemap-codec@1.5.5", "", {}, "sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og=="],
 
     "@jridgewell/trace-mapping": ["@jridgewell/trace-mapping@0.3.30", "", { "dependencies": { "@jridgewell/resolve-uri": "^3.1.0", "@jridgewell/sourcemap-codec": "^1.4.14" } }, "sha512-GQ7Nw5G2lTu/BtHTKfXhKHok2WGetd4XYcVKGx00SjAk8GMwgJM3zr6zORiPGuOE+/vkc90KtTosSSvaCjKb2Q=="],
-
-    "@lit-labs/motion": ["@lit-labs/motion@1.0.9", "", { "dependencies": { "lit": "^3.1.2" } }, "sha512-oUdZpZDyf9UKAW/im5nkXY6W4cpsMlDgzN99j0FcdPiAOsGclxJpRYbvQz9/eQrPlXpywnr4SkzS9WsSeKILRA=="],
-
-    "@lit-labs/ssr-dom-shim": ["@lit-labs/ssr-dom-shim@1.4.0", "", {}, "sha512-ficsEARKnmmW5njugNYKipTm4SFnbik7CXtoencDZzmzo/dQ+2Q0bgkzJuoJP20Aj0F+izzJjOqsnkd6F/o1bw=="],
-
-    "@lit/reactive-element": ["@lit/reactive-element@2.1.1", "", { "dependencies": { "@lit-labs/ssr-dom-shim": "^1.4.0" } }, "sha512-N+dm5PAYdQ8e6UlywyyrgI2t++wFGXfHx+dSJ1oBrg6FAxUj40jId++EaRm80MKX5JnlH1sBsyZ5h0bcZKemCg=="],
 
     "@nodeutils/defaults-deep": ["@nodeutils/defaults-deep@1.1.0", "", { "dependencies": { "lodash": "^4.15.0" } }, "sha512-gG44cwQovaOFdSR02jR9IhVRpnDP64VN6JdjYJTfNz4J4fWn7TQnmrf22nSjRqlwlxPcW8PL/L3KbJg3tdwvpg=="],
 
@@ -1005,8 +995,6 @@
     "@types/shimmer": ["@types/shimmer@1.2.0", "", {}, "sha512-UE7oxhQLLd9gub6JKIAhDq06T0F6FnztwMNRvYgjeQSBeMc1ZG/tA47EwfduvkuQS8apbkM/lpLpWsaCeYsXVg=="],
 
     "@types/tedious": ["@types/tedious@4.0.14", "", { "dependencies": { "@types/node": "*" } }, "sha512-KHPsfX/FoVbUGbyYvk1q9MMQHLPeRZhRJZdO45Q4YjvFkv4hMNghCWTvy7rdKessBsmtz4euWCWAB6/tVpI1Iw=="],
-
-    "@types/trusted-types": ["@types/trusted-types@2.0.7", "", {}, "sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw=="],
 
     "@types/unist": ["@types/unist@3.0.3", "", {}, "sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q=="],
 
@@ -1533,12 +1521,6 @@
     "lightningcss-win32-arm64-msvc": ["lightningcss-win32-arm64-msvc@1.30.1", "", { "os": "win32", "cpu": "arm64" }, "sha512-mSL4rqPi4iXq5YVqzSsJgMVFENoa4nGTT/GjO2c0Yl9OuQfPsIfncvLrEW6RbbB24WtZ3xP/2CCmI3tNkNV4oA=="],
 
     "lightningcss-win32-x64-msvc": ["lightningcss-win32-x64-msvc@1.30.1", "", { "os": "win32", "cpu": "x64" }, "sha512-PVqXh48wh4T53F/1CCu8PIPCxLzWyCnn/9T5W1Jpmdy5h9Cwd+0YQS6/LwhHXSafuc61/xg9Lv5OrCby6a++jg=="],
-
-    "lit": ["lit@3.3.1", "", { "dependencies": { "@lit/reactive-element": "^2.1.0", "lit-element": "^4.2.0", "lit-html": "^3.3.0" } }, "sha512-Ksr/8L3PTapbdXJCk+EJVB78jDodUMaP54gD24W186zGRARvwrsPfS60wae/SSCTCNZVPd1chXqio1qHQmu4NA=="],
-
-    "lit-element": ["lit-element@4.2.1", "", { "dependencies": { "@lit-labs/ssr-dom-shim": "^1.4.0", "@lit/reactive-element": "^2.1.0", "lit-html": "^3.3.0" } }, "sha512-WGAWRGzirAgyphK2urmYOV72tlvnxw7YfyLDgQ+OZnM9vQQBQnumQ7jUJe6unEzwGU3ahFOjuz1iz1jjrpCPuw=="],
-
-    "lit-html": ["lit-html@3.3.1", "", { "dependencies": { "@types/trusted-types": "^2.0.2" } }, "sha512-S9hbyDu/vs1qNrithiNyeyv64c9yqiW9l+DBgI18fL+MTvOtWoFR0FWiyq1TxaYef5wNlpEmzlXoBlZEO+WjoA=="],
 
     "locate-path": ["locate-path@6.0.0", "", { "dependencies": { "p-locate": "^5.0.0" } }, "sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw=="],
 

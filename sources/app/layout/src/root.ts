@@ -107,9 +107,7 @@ export function Root_Layout({ children }: PropsWithChildren) {
         >
           {
             "imports": {
-              "@~/app.core/config": "${config.ASSETS_PATH}/bundle/config.js",
-              "lit": "${config.PUBLIC_ASSETS_PATH}/node_modules/lit/index.js",
-              "lit/": "${config.PUBLIC_ASSETS_PATH}/node_modules/lit/"
+              "@~/app.core/config": "${config.ASSETS_PATH}/bundle/config.js"
             }
           }
         </script>
