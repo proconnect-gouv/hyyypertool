@@ -81,9 +81,7 @@ exports[`development 1`] = `
         >
           {
             "imports": {
-              "@~/app.core/config": "/assets/ASSETS_PATH/bundle/config.js",
-              "lit": "/assets/PUBLIC_ASSETS_PATH/public/built/node_modules/lit/index.js",
-              "lit/": "/assets/PUBLIC_ASSETS_PATH/public/built/node_modules/lit/"
+              "@~/app.core/config": "/assets/ASSETS_PATH/bundle/config.js"
             }
           }
         </script>
@@ -257,9 +255,7 @@ exports[`production 1`] = `
         >
           {
             "imports": {
-              "@~/app.core/config": "/assets/ASSETS_PATH/bundle/config.js",
-              "lit": "/assets/PUBLIC_ASSETS_PATH/public/built/node_modules/lit/index.js",
-              "lit/": "/assets/PUBLIC_ASSETS_PATH/public/built/node_modules/lit/"
+              "@~/app.core/config": "/assets/ASSETS_PATH/bundle/config.js"
             }
           }
         </script>

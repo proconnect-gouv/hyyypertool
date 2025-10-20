@@ -81,9 +81,7 @@ exports[`Main Layout 1`] = `
         >
           {
             "imports": {
-              "@~/app.core/config": "/bundle/config.js",
-              "lit": "/node_modules/lit/index.js",
-              "lit/": "/node_modules/lit/"
+              "@~/app.core/config": "/bundle/config.js"
             }
           }
         </script>

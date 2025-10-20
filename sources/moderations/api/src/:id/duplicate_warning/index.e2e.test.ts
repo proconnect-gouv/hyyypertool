@@ -39,7 +39,12 @@ test("GET /moderations/:id/duplicate_warning", async () => {
   //
 
   const response = await new Hono()
-    .use(set_config({ ALLOWED_USERS: "good@captain.yargs" }))
+    .use(
+      set_config({
+        ALLOWED_USERS: "good@captain.yargs",
+        ZAMMAD_URL: "http://localhost:6500",
+      }),
+    )
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
     .use(set_userinfo({ email: "good@captain.yargs" }))
