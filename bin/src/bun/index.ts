@@ -63,6 +63,6 @@ if (consola.level >= LogLevels.debug) {
 //
 
 export default {
-  port: config.PORT,
   fetch: app.fetch,
+  port: config.PORT,
 };

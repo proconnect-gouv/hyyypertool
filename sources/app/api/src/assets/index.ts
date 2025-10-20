@@ -1,6 +1,5 @@
 //
 
-import { serveStatic } from "@hono/node-server/serve-static";
 import { type AppVariables_Context } from "@~/app.core/config";
 import { cache_immutable } from "@~/app.middleware/cache_immutable";
 import zammad_attachment_router from "@~/zammad.api";
@@ -9,17 +8,34 @@ import { rewriteAssetRequestPath } from "./rewrite";
 
 //
 
+// Runtime-agnostic serveStatic: use Bun or Node.js adapter based on runtime
+const serveStatic = globalThis.Bun
+  ? (await import("hono/bun")).serveStatic
+  : (await import("@hono/node-server/serve-static")).serveStatic;
+
+// Determine the root path for static files
+// Server runs from bin/ directory:
+// - node_modules are at ../node_modules/ (workspace root) - use ".." as root
+// - public files are at ./public/ (bin/public) - use "." as root
+// For Node.js: default behavior works (no root specified)
+const nodeModulesRoot = globalThis.Bun ? ".." : undefined;
+const publicRoot = globalThis.Bun ? "." : undefined;
+
+//
+
 export default new Hono<AppVariables_Context>()
   .use("*", cache_immutable)
   .use(
     "/node_modules/*",
     serveStatic({
+      root: nodeModulesRoot,
       rewriteRequestPath: rewriteAssetRequestPath,
     }),
   )
   .use(
     "/public/*",
     serveStatic({
+      root: publicRoot,
       rewriteRequestPath: rewriteAssetRequestPath,
     }),
   )

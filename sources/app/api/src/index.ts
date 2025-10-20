@@ -16,7 +16,8 @@ import users_router from "@~/users.api";
 import welcome_router from "@~/welcome.api";
 import consola from "consola";
 import { Hono } from "hono";
-import { compress } from "hono/compress";
+// TODO: Re-enable compression when Bun supports CompressionStream
+// import { compress } from "hono/compress";
 import { contextStorage } from "hono/context-storage";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { logger } from "hono/logger";
@@ -30,7 +31,8 @@ import readyz_router from "./readyz";
 const app = new Hono()
   .use(logger(consola.info))
   .use(contextStorage())
-  .use(compress())
+  // TODO: Re-enable compression when Bun supports CompressionStream
+  // .use(compress())
   .use(set_sentry())
   .use(set_nonce())
   .use(set_config())
