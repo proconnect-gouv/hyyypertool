@@ -1,6 +1,7 @@
 //
+//
 
-import { execSync } from "child_process";
+import { $ } from "bun";
 
 const minify = true;
 const outdir = "./public/built";
@@ -8,9 +9,8 @@ const outdir = "./public/built";
 // Build Tailwind CSS
 console.log("Building Tailwind CSS...");
 
-execSync(
-  `./node_modules/.bin/tailwindcss -i sources/app/ui/tailwind.css -o bin/public/built/tailwind.css --config bin/tailwind.config.js`,
-  { stdio: "inherit", cwd: ".." },
+await $`./bin/node_modules/.bin/tailwindcss -i sources/app/ui/tailwind.css -o bin/public/built/tailwind.css --config bin/tailwind.config.js`.cwd(
+  "..",
 );
 
 console.log("✓ Tailwind CSS built successfully");

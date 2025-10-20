@@ -26,6 +26,7 @@
     "consola": "3.4.2",
     "hono": "4.9.8",
     "lodash.sortby": "4.7.0",
+    "tailwindcss": "4.1.14",
     "tailwind-variants": "3.1.0",
     "ts-pattern": "5.8.0"
   },
