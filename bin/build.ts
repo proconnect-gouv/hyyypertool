@@ -1,7 +1,18 @@
 //
 
+import { execSync } from "child_process";
+
 const minify = true;
 const outdir = "./public/built";
+
+// Build Tailwind CSS
+console.log("Building Tailwind CSS...");
+execSync(
+  "bun x tailwindcss -i ../sources/app/ui/tailwind.css -o ./public/built/tailwind.css",
+  { stdio: "inherit" },
+);
+console.log("✓ Tailwind CSS built successfully");
+console.log("");
 
 {
   const { logs, outputs, success } = await Bun.build({

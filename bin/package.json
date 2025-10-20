@@ -20,6 +20,9 @@
     "tsx": "4.20.5"
   },
   "devDependencies": {
-    "@~/config.typescript": "workspace:*"
+    "@~/config.tailwindcss": "workspace:*",
+    "@~/config.typescript": "workspace:*",
+    "@tailwindcss/cli": "4.1.14",
+    "tailwindcss": "4.1.14"
   }
 }

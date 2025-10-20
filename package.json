@@ -21,7 +21,6 @@
   "scripts": {
     "build": "bun x npm-run-all --serial build:*",
     "build:bun": "cd bin && bun run ./build.ts",
-    "build:tailwind": "bun x tailwindcss -i ./sources/app/ui/tailwind.css -o ./bin/public/built/tailwind.css",
     "build:tsc": "bun x tsc --build",
     "database:identite-proconnect:migrator": "bun run database:identite-proconnect:run migration",
     "database:identite-proconnect:run": "bun run --cwd sources/infra/identite-proconnect/database",
@@ -33,7 +32,6 @@
     "dev:api:format": "bun run --cwd sources/app/urls format",
     "dev:api:tsc": "bun run build:tsc",
     "dev:inspect-brk": "tsx --inspect-brk bin/src/index.ts",
-    "dev:tailwind": "bun run build:tailwind --watch",
     "e2e:install": "cd e2e && bun install",
     "e2e:run": "cd e2e && bun run",
     "fixtures:load": "bun x run-z database:identite-proconnect:migrator database:identite-proconnect:seed",
@@ -79,11 +77,9 @@
   },
   "devDependencies": {
     "@~/config.bun-plugin-test-projects": "workspace:*",
-    "@~/config.tailwindcss": "workspace:*",
     "@csmith/release-it-calver-plugin": "2023.12.0",
     "@lit-labs/motion": "1.0.9",
     "@release-it/conventional-changelog": "10.0.1",
-    "@tailwindcss/cli": "4.1.14",
     "@tsconfig/bun": "1.0.7",
     "@types/bun": "1.2.21",
     "htmx-ext-debug": "2.0.1",
@@ -92,7 +88,6 @@
     "prettier-plugin-organize-imports": "4.2.0",
     "prettier-plugin-tailwindcss": "0.6.14",
     "release-it": "19.0.4",
-    "tailwindcss": "4.1.14",
     "typescript": "5.9.2"
   },
   "release-it": {
