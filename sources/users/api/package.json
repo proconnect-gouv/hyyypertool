@@ -22,7 +22,7 @@
     "@~/organizations.repository": "workspace:*",
     "@~/users.lib": "workspace:*",
     "@~/users.repository": "workspace:*",
-    "@hono/zod-validator": "0.7.2",
+    "@hono/zod-validator": "0.7.4",
     "consola": "3.4.2",
     "hono": "4.9.8",
     "tailwindcss": "4.1.14",
