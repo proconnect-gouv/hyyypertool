@@ -49,7 +49,7 @@ export class Hyyyper_title extends HTMLElement {
       </style>
 
       <div class="inline-flex">
-        <span class=${visually_hidden()}>Bonjour Hyyypertool !</span>
+        <span class=${visually_hidden()}">Bonjour Hyyypertool !</span>
         <span class="text-(--text-active-blue-france)">H</span>
         <span class="text-(--text-active-blue-france)">
           ${Array.from(
