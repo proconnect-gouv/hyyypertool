@@ -23,6 +23,15 @@ exports[`render investigation section 1`] = `
   </li>
   <li>
     <a
+      href="https://www.banatic.interieur.gouv.fr/intercommunalite/200099711"
+      class="fr-btn fr-btn--sm fr-btn--tertiary mr-2 bg-white"
+      rel="noopener noreferrer"
+      target="_blank"
+      >Chercher via Banatic</a
+    >
+  </li>
+  <li>
+    <a
       class=""
       hx-get="/organizations/leaders?siret=12345678901234"
       hx-trigger="load"
