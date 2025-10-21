@@ -1,7 +1,6 @@
 //
 //
 
-import config from "@~/app.core/config";
 import { visually_hidden } from "@~/app.ui/visually_hidden";
 
 //
@@ -12,25 +11,6 @@ export class Hyyyper_title extends HTMLElement {
     const duration = 444;
 
     this.innerHTML = `
-      <link
-        rel="stylesheet"
-        href="${config.ASSETS_PATH}/node_modules/animate.css/source/_vars.css"
-      />
-      <link
-        rel="stylesheet"
-        href="${config.ASSETS_PATH}/node_modules/animate.css/source/_base.css"
-      />
-      <link
-        rel="stylesheet"
-        href="${config.ASSETS_PATH}/node_modules/animate.css/source/zooming_entrances/zoomInDown.css"
-      />
-      <link
-        rel="stylesheet"
-        href="${config.ASSETS_PATH}/node_modules/animate.css/source/attention_seekers/flash.css"
-      />
-
-      <link rel="stylesheet" href="${config.PUBLIC_ASSETS_PATH}/tailwind.css" />
-
       <style>
         @keyframes fadeIn {
           from { opacity: 0; }
@@ -49,7 +29,7 @@ export class Hyyyper_title extends HTMLElement {
       </style>
 
       <div class="inline-flex">
-        <span class=${visually_hidden()}">Bonjour Hyyypertool !</span>
+        <span class="${visually_hidden()}">Bonjour Hyyypertool !</span>
         <span class="text-(--text-active-blue-france)">H</span>
         <span class="text-(--text-active-blue-france)">
           ${Array.from(
