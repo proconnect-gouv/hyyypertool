@@ -189,7 +189,7 @@
       "name": "@~/auth.api",
       "version": "1.0.0",
       "dependencies": {
-        "@hono/zod-validator": "0.7.2",
+        "@hono/zod-validator": "0.7.4",
         "@~/app.core": "workspace:*",
         "@~/app.middleware": "workspace:*",
         "@~/app.urls": "workspace:*",
@@ -322,7 +322,7 @@
       "name": "@~/zammad.api",
       "version": "1.0.0",
       "dependencies": {
-        "@hono/zod-validator": "0.7.2",
+        "@hono/zod-validator": "0.7.4",
         "@~/app.core": "workspace:*",
         "@~/zammad.lib": "workspace:*",
         "hono": "4.9.8",
@@ -347,7 +347,7 @@
       "name": "@~/moderations.api",
       "version": "1.0.0",
       "dependencies": {
-        "@hono/zod-validator": "0.7.2",
+        "@hono/zod-validator": "0.7.4",
         "@~/app.core": "workspace:*",
         "@~/app.layout": "workspace:*",
         "@~/app.middleware": "workspace:*",
@@ -376,7 +376,7 @@
         "ts-pattern": "5.8.0",
       },
       "devDependencies": {
-        "@hono/zod-validator": "0.7.2",
+        "@hono/zod-validator": "0.7.4",
         "@~/config.tailwindcss": "workspace:*",
         "@~/config.typescript": "workspace:*",
       },
@@ -444,7 +444,7 @@
       "version": "1.0.0",
       "dependencies": {
         "@gouvfr-lasuite/proconnect.core": "0.6.0",
-        "@hono/zod-validator": "0.7.2",
+        "@hono/zod-validator": "0.7.4",
         "@~/app.core": "workspace:*",
         "@~/app.layout": "workspace:*",
         "@~/app.middleware": "workspace:*",
@@ -528,7 +528,7 @@
       "name": "@~/users.api",
       "version": "1.0.0",
       "dependencies": {
-        "@hono/zod-validator": "0.7.2",
+        "@hono/zod-validator": "0.7.4",
         "@~/app.core": "workspace:*",
         "@~/app.layout": "workspace:*",
         "@~/app.middleware": "workspace:*",
@@ -706,7 +706,7 @@
 
     "@hono/sentry": ["@hono/sentry@1.2.2", "", { "dependencies": { "toucan-js": "^4.0.0" }, "peerDependencies": { "hono": ">=3.*" } }, "sha512-027grZBrRGDPor8mRd+QOBcSpUlF07YrTp/WFDXZhbvWZ+1LrZdERUqcdg1gBGDUTanHhd9ucblpNNN6+V1bxg=="],
 
-    "@hono/zod-validator": ["@hono/zod-validator@0.7.2", "", { "peerDependencies": { "hono": ">=3.9.0", "zod": "^3.25.0 || ^4.0.0" } }, "sha512-ub5eL/NeZ4eLZawu78JpW/J+dugDAYhwqUIdp9KYScI6PZECij4Hx4UsrthlEUutqDDhPwRI0MscUfNkvn/mqQ=="],
+    "@hono/zod-validator": ["@hono/zod-validator@0.7.4", "", { "peerDependencies": { "hono": ">=3.9.0", "zod": "^3.25.0 || ^4.0.0" } }, "sha512-biKGn3BRJVaftZlIPMyK+HCe/UHAjJ6sH0UyXe3+v0OcgVr9xfImDROTJFLtn9e3XEEAHGZIM9U6evu85abm8Q=="],
 
     "@hutson/parse-repository-url": ["@hutson/parse-repository-url@5.0.0", "", {}, "sha512-e5+YUKENATs1JgYHMzTr2MW/NDcXGfYFAuOQU8gJgF/kEh4EqKgfGrfLI67bMD4tbhZVlkigz/9YYwWcbOFthg=="],
 
