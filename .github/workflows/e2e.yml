@@ -60,6 +60,7 @@ jobs:
       - name: 🗃️ Migrate database
         run: |
           bun run database:identite-proconnect:migrator
+        working-directory: "."
 
       - name: cypress-io/github-action needs package-lock.json
         run: |
