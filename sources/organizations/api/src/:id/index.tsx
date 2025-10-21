@@ -19,13 +19,13 @@ export default new Hono<ContextType>()
     "/",
     zValidator("param", Entity_Schema),
     async function set_variables_middleware(
-      { req, set, var: { identite_pg } },
+      { req, set, var: { config, identite_pg } },
       next,
     ) {
       const { id } = req.valid("param");
       set_variables(
         set,
-        await loadOrganizationPageVariables(identite_pg, {
+        await loadOrganizationPageVariables(config, identite_pg, {
           id,
         }),
       );

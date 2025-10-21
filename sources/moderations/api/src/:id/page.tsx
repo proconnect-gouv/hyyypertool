@@ -20,14 +20,13 @@ import {
 } from "@~/users.lib/usecase";
 import { About as About_User } from "@~/users.ui/About";
 import { Investigation as Investigation_User } from "@~/users.ui/Investigation";
-import { getContext } from "hono/context-storage";
-import { type ModerationContext, usePageRequestContext } from "./context";
+import { usePageRequestContext } from "./context";
 import { Moderation_Exchanges } from "./Moderation_Exchanges";
 
 //
 
 export default async function Moderation_Page() {
-  const { moderation } = getContext<ModerationContext>().var;
+  const { banaticUrl, moderation } = usePageRequestContext().var;
   const moderation_id = `moderation-${moderation.id.toString()}`;
   const {
     var: {
@@ -79,7 +78,10 @@ export default async function Moderation_Page() {
           organization={moderation.organization}
         />
         <About_Organization organization={organization_fiche} />
-        <Investigation_Organization organization={moderation.organization} />
+        <Investigation_Organization
+          banaticUrl={banaticUrl}
+          organization={moderation.organization}
+        />
 
         <hr class="bg-none" />
 

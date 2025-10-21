@@ -1,8 +1,10 @@
 //
 
+import type { App_Config } from "@~/app.core/config/index";
 import type { App_Context } from "@~/app.middleware/context";
 import { urls } from "@~/app.urls";
 import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
+import { GetBanaticUrl } from "@~/organizations.lib/usecase";
 import {
   GetDomainCount,
   GetOrganizationById,
@@ -13,6 +15,7 @@ import { useRequestContext } from "hono/jsx-renderer";
 
 //
 export async function loadOrganizationPageVariables(
+  config: App_Config,
   pg: IdentiteProconnect_PgDatabase,
   { id }: { id: number },
 ) {
@@ -38,13 +41,17 @@ export async function loadOrganizationPageVariables(
       updated_at: true,
     },
   });
-
   const organization = await get_organization_by_id(id);
+  const siren = organization.siret.substring(0, 9);
+  const get_banatic_url = GetBanaticUrl({
+    http_timout: config.HTTP_CLIENT_TIMEOUT,
+  });
 
   const query_organization_domains_count = GetDomainCount(pg)(id);
   const query_organization_members_count = GetOrganizationMembersCount(pg)(id);
 
   return {
+    banaticUrl: (await get_banatic_url(siren)).url,
     organization,
     query_organization_domains_count,
     query_organization_members_count,
