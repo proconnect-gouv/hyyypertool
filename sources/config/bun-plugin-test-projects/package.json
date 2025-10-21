@@ -12,9 +12,7 @@
     }
   },
   "files": [],
-  "dependencies": {
-    "smol-toml": "1.4.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@~/config.typescript": "workspace:*"
   }

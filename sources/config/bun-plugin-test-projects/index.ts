@@ -2,10 +2,9 @@
 // Bun test projects plugin - conditionally preloads setup based on file patterns
 //
 
-import { plugin, type BunPlugin } from "bun";
+import { plugin, TOML, type BunPlugin } from "bun";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { parse as parseToml } from "smol-toml";
 
 interface PatternConfig {
   preload?: string | string[];
@@ -24,7 +23,7 @@ function loadPatternConfigs(): Map<RegExp, string[]> {
   try {
     const bunfigPath = join(process.cwd(), "bunfig.toml");
     const bunfigContent = readFileSync(bunfigPath, "utf-8");
-    const config = parseToml(bunfigContent) as BunfigTestConfig;
+    const config = TOML.parse(bunfigContent) as BunfigTestConfig;
 
     if (!config.test) {
       return patterns;
