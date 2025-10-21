@@ -57,6 +57,10 @@ jobs:
           curl -sSf -XGET http://127.0.0.1:6300/readyz
         working-directory: "."
 
+      - name: 🗃️ Migrate database
+        run: |
+          bun run database:identite-proconnect:migrator
+
       - name: cypress-io/github-action needs package-lock.json
         run: |
           touch package-lock.json
