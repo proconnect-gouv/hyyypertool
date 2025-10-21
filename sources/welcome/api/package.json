@@ -13,6 +13,7 @@
     "@~/app.layout": "workspace:*",
     "@~/app.middleware": "workspace:*",
     "@~/app.urls": "workspace:*",
+    "@~/app.ui": "workspace:*",
     "hono": "4.9.8",
     "openid-client": "6.6.2"
   },
