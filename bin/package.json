@@ -13,7 +13,7 @@
     "start:bun": "bun run src/bun/index.ts"
   },
   "dependencies": {
-    "@hono/node-server": "1.15.0",
+    "@hono/node-server": "1.19.5",
     "@tailwindcss/cli": "4.1.14",
     "@tailwindcss/typography": "0.5.19",
     "@~/app.api": "workspace:*",
