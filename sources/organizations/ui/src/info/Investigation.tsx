@@ -41,7 +41,7 @@ export async function Investigation(props: Props) {
       </li>
       <li>
         <a
-          href={`https://lannuaire.service-public.fr/recherche?where=${organization.cached_code_postal}`}
+          href={`https://lannuaire.service-public.fr/recherche?whoWhat=&where=${organization.cached_code_postal}`}
           class={button_classes}
           rel="noopener noreferrer"
           target="_blank"

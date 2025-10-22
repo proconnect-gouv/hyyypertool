@@ -14,7 +14,7 @@ exports[`render investigation section 1`] = `
   </li>
   <li>
     <a
-      href="https://lannuaire.service-public.fr/recherche?where=75015"
+      href="https://lannuaire.service-public.fr/recherche?whoWhat=&amp;where=75015"
       class="fr-btn fr-btn--sm fr-btn--tertiary mr-2 bg-white"
       rel="noopener noreferrer"
       target="_blank"
