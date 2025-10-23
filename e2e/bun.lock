@@ -4,7 +4,7 @@
     "": {
       "name": "e2e",
       "dependencies": {
-        "@badeball/cypress-cucumber-preprocessor": "23.2.0",
+        "@badeball/cypress-cucumber-preprocessor": "23.2.1",
         "@bahmutov/cypress-esbuild-preprocessor": "2.2.6",
         "@testing-library/cypress": "10.1.0",
         "cypress": "15.4.0",
@@ -63,7 +63,7 @@
 
     "@babel/types": ["@babel/types@7.28.4", "", { "dependencies": { "@babel/helper-string-parser": "^7.27.1", "@babel/helper-validator-identifier": "^7.27.1" } }, "sha512-bkFqkLhh3pMBUQQkpVgWDWq/lqzc2678eUyDlTBhRqhCHFguYYGM0Efga7tYk4TogG/3x0EEl66/OQ+WGbWB/Q=="],
 
-    "@badeball/cypress-cucumber-preprocessor": ["@badeball/cypress-cucumber-preprocessor@23.2.0", "", { "dependencies": { "@cucumber/ci-environment": "^10.0.1", "@cucumber/cucumber": "^12.0.0", "@cucumber/cucumber-expressions": "^18.0.0", "@cucumber/gherkin": "^35.0.0", "@cucumber/html-formatter": "^21.7.0", "@cucumber/message-streams": "^4.0.1", "@cucumber/messages": "^29.0.0", "@cucumber/pretty-formatter": "^1.0.1", "@cucumber/tag-expressions": "^6.1.0", "base64-js": "^1.5.1", "chalk": "^4.1.2", "cli-table": "^0.3.11", "common-ancestor-path": "^1.0.1", "cosmiconfig": "^9.0.0", "debug": "^4.3.6", "error-stack-parser": "^2.1.4", "find-cypress-specs": "^1.45.2", "glob": "^11.0.3", "mocha": "^11.0.0", "seedrandom": "^3.0.5", "source-map": "^0.6.1", "split": "^1.0.1", "uuid": "^10.0.0" }, "peerDependencies": { "cypress": "^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0" }, "bin": { "cucumber-html-formatter": "dist/bin/cucumber-html-formatter.js", "cucumber-json-formatter": "dist/bin/cucumber-json-formatter.js", "cucumber-merge-messages": "dist/bin/cucumber-merge-messages.js" } }, "sha512-9FK6m2oI5AwozPcRIe6Clz4+lZkQZkiev5YsidcLIg7lO9AWC0Uv0OeB60ioGOiwBKTq4YUbgWGKsoDsLKH5SA=="],
+    "@badeball/cypress-cucumber-preprocessor": ["@badeball/cypress-cucumber-preprocessor@23.2.1", "", { "dependencies": { "@cucumber/ci-environment": "^10.0.1", "@cucumber/cucumber": "^12.0.0", "@cucumber/cucumber-expressions": "^18.0.0", "@cucumber/gherkin": "^35.0.0", "@cucumber/html-formatter": "^22.0.0", "@cucumber/message-streams": "^4.0.1", "@cucumber/messages": "^30.0.0", "@cucumber/pretty-formatter": "^1.0.1", "@cucumber/tag-expressions": "^6.1.0", "base64-js": "^1.5.1", "chalk": "^4.1.2", "cli-table": "^0.3.11", "common-ancestor-path": "^1.0.1", "cosmiconfig": "^9.0.0", "debug": "^4.3.6", "error-stack-parser": "^2.1.4", "find-cypress-specs": "^1.45.2", "glob": "^11.0.3", "mocha": "^11.0.0", "seedrandom": "^3.0.5", "source-map": "^0.6.1", "split": "^1.0.1", "uuid": "^10.0.0" }, "peerDependencies": { "cypress": "^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0" }, "bin": { "cucumber-html-formatter": "dist/bin/cucumber-html-formatter.js", "cucumber-json-formatter": "dist/bin/cucumber-json-formatter.js", "cucumber-merge-messages": "dist/bin/cucumber-merge-messages.js" } }, "sha512-yMEQCdjxhCww+mGhb/xvxlHNYUpsm2oiDuG3xb236+LwNFhfpT/RckvNktip44ETEZKSZe2xqxQDxOYKyXJctA=="],
 
     "@bahmutov/cypress-esbuild-preprocessor": ["@bahmutov/cypress-esbuild-preprocessor@2.2.6", "", { "dependencies": { "debug": "4.4.3" }, "peerDependencies": { "esbuild": ">=0.17.0" } }, "sha512-njJI3neexUcRh3iK/hXRZLwGa7tsjzO87MsoXkmqx0lmNaasJzewTau8hW6K9Tt74smA57e/uuskBUqU9SYrGw=="],
 
@@ -81,13 +81,13 @@
 
     "@cucumber/gherkin-utils": ["@cucumber/gherkin-utils@9.2.0", "", { "dependencies": { "@cucumber/gherkin": "^31.0.0", "@cucumber/messages": "^27.0.0", "@teppeis/multimaps": "3.0.0", "commander": "13.1.0", "source-map-support": "^0.5.21" }, "bin": { "gherkin-utils": "bin/gherkin-utils" } }, "sha512-3nmRbG1bUAZP3fAaUBNmqWO0z0OSkykZZotfLjyhc8KWwDSOrOmMJlBTd474lpA8EWh4JFLAX3iXgynBqBvKzw=="],
 
-    "@cucumber/html-formatter": ["@cucumber/html-formatter@21.15.1", "", { "peerDependencies": { "@cucumber/messages": ">=18" } }, "sha512-tjxEpP161sQ7xc3VREc94v1ymwIckR3ySViy7lTvfi1jUpyqy2Hd/p4oE3YT1kQ9fFDvUflPwu5ugK5mA7BQLA=="],
+    "@cucumber/html-formatter": ["@cucumber/html-formatter@22.0.0", "", { "peerDependencies": { "@cucumber/messages": ">=18" } }, "sha512-buWuKcXRErQWE8E3daFo0R+TKfyAQVbYnad0Ee5HK2zRNJyXhMmPXGJeaTVFQVPoyXA12m83Wy1kx9WeyEqVOQ=="],
 
     "@cucumber/junit-xml-formatter": ["@cucumber/junit-xml-formatter@0.8.1", "", { "dependencies": { "@cucumber/query": "^13.0.2", "@teppeis/multimaps": "^3.0.0", "luxon": "^3.5.0", "xmlbuilder": "^15.1.1" }, "peerDependencies": { "@cucumber/messages": "*" } }, "sha512-FT1Y96pyd9/ifbE9I7dbkTCjkwEdW9C0MBobUZoKD13c8EnWAt0xl1Yy/v/WZLTk4XfCLte1DATtLx01jt+YiA=="],
 
     "@cucumber/message-streams": ["@cucumber/message-streams@4.0.1", "", { "peerDependencies": { "@cucumber/messages": ">=17.1.1" } }, "sha512-Kxap9uP5jD8tHUZVjTWgzxemi/0uOsbGjd4LBOSxcJoOCRbESFwemUzilJuzNTB8pcTQUh8D5oudUyxfkJOKmA=="],
 
-    "@cucumber/messages": ["@cucumber/messages@29.0.1", "", { "dependencies": { "class-transformer": "0.5.1", "reflect-metadata": "0.2.2" } }, "sha512-aAvIYfQD6/aBdF8KFQChC3CQ1Q+GX9orlR6GurGiX6oqaCnBkxA4WU3OQUVepDynEFrPayerqKRFcAMhdcXReQ=="],
+    "@cucumber/messages": ["@cucumber/messages@30.1.0", "", { "dependencies": { "class-transformer": "0.5.1", "reflect-metadata": "0.2.2" } }, "sha512-KxnsSjHz9EGF23GeZc3BRMK2+bagt2p87mwwNfisBK7BfuyvnXJumyBQJJN4xv5SLSzBKxH3FsZnuOf8LwsHhg=="],
 
     "@cucumber/pretty-formatter": ["@cucumber/pretty-formatter@1.0.1", "", { "dependencies": { "ansi-styles": "^5.0.0", "cli-table3": "^0.6.0", "figures": "^3.2.0", "ts-dedent": "^2.0.0" }, "peerDependencies": { "@cucumber/cucumber": ">=7.0.0", "@cucumber/messages": "*" } }, "sha512-A1lU4VVP0aUWdOTmpdzvXOyEYuPtBDI0xYwYJnmoMDplzxMdhcHk86lyyvYDoMoPzzq6OkOE3isuosvUU4X7IQ=="],
 
@@ -1128,6 +1128,8 @@
     "@cucumber/cucumber/commander": ["commander@14.0.1", "", {}, "sha512-2JkV3gUZUVrbNA+1sjBOYLsMZ5cEEl8GTFP2a4AVz5hvasAMCQ1D2l2le/cX+pV4N6ZU17zjUahLpIXRrnWL8A=="],
 
     "@cucumber/cucumber/semver": ["semver@7.7.2", "", { "bin": { "semver": "bin/semver.js" } }, "sha512-RF0Fw+rO5AMf9MAyaRXI4AV0Ulj5lMHqVxxdSgiVbixSCXoEmmX/jk0CuJw4+3SqroYO9VoUh+HcuJivvtJemA=="],
+
+    "@cucumber/gherkin/@cucumber/messages": ["@cucumber/messages@29.0.1", "", { "dependencies": { "class-transformer": "0.5.1", "reflect-metadata": "0.2.2" } }, "sha512-aAvIYfQD6/aBdF8KFQChC3CQ1Q+GX9orlR6GurGiX6oqaCnBkxA4WU3OQUVepDynEFrPayerqKRFcAMhdcXReQ=="],
 
     "@cucumber/gherkin-streams/commander": ["commander@9.1.0", "", {}, "sha512-i0/MaqBtdbnJ4XQs4Pmyb+oFQl+q0lsAmokVUH92SlSw4fkeAcG3bVon+Qt7hmtF+u3Het6o4VgrcY3qAoEB6w=="],
 
