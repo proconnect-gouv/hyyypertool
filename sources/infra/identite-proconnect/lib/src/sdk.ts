@@ -3,10 +3,10 @@
 import {
   forceJoinOrganizationFactory,
   markDomainAsVerifiedFactory,
-} from "@gouvfr-lasuite/proconnect.identite/managers/organization";
-import * as EmailDomainRepository from "@gouvfr-lasuite/proconnect.identite/repositories/email-domain";
-import * as OrganizationRepository from "@gouvfr-lasuite/proconnect.identite/repositories/organization";
-import * as UserRepository from "@gouvfr-lasuite/proconnect.identite/repositories/user";
+} from "@proconnect-gouv/proconnect.identite/managers/organization";
+import * as EmailDomainRepository from "@proconnect-gouv/proconnect.identite/repositories/email-domain";
+import * as OrganizationRepository from "@proconnect-gouv/proconnect.identite/repositories/organization";
+import * as UserRepository from "@proconnect-gouv/proconnect.identite/repositories/user";
 import type Pg from "pg";
 
 //
