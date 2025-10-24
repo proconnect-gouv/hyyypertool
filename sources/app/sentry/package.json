@@ -17,7 +17,7 @@
     "@~/app.core": "workspace:*",
     "@sentry/node": "10.16.0",
     "consola": "3.4.2",
-    "hono": "4.9.8"
+    "hono": "4.10.3"
   },
   "devDependencies": {
     "@~/config.typescript": "workspace:*"
