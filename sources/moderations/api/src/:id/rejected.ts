@@ -16,7 +16,7 @@ import {
   UpdateModerationById,
 } from "@~/moderations.repository";
 import { Hono } from "hono";
-import type { ContextType } from "./context";
+import type { ContextType } from "./procedures_context";
 
 //
 
@@ -60,7 +60,7 @@ export default new Hono<ContextType>().patch(
     await mark_moderation_as(context, "REJECTED");
 
     return text("OK", 200, {
-      "HX-Trigger": MODERATION_EVENTS.Enum.MODERATION_UPDATED,
+      "HX-Trigger": MODERATION_EVENTS.enum.MODERATION_UPDATED,
     } as Htmx_Header);
   },
 );

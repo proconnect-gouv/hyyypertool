@@ -84,7 +84,7 @@ test("GET /moderations/:id/duplicate_warning", async () => {
             wait 2s
             go back
           "
-        hx-patch="/moderations/2/$procedures/processed"
+        hx-patch="/moderations/2/processed"
         hx-swap="none"
       >
         <fieldset class="fr-fieldset">

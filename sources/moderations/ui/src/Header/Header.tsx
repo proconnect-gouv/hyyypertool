@@ -97,7 +97,7 @@ async function ModerationCallout() {
   const { base, text, title } = callout({ intent: "success" });
   const hx_patch_moderation_reprocess = await hx_urls.moderations[
     ":id"
-  ].$procedures.reprocess.$patch({
+  ].reprocess.$patch({
     param: { id: moderation.id.toString() },
   });
 

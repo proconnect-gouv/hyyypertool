@@ -4,9 +4,9 @@ import { zValidator } from "@hono/zod-validator";
 import { set_variables } from "@~/app.middleware/context/set_variables";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
-import { Duplicate_Warning } from "./Duplicate_Warning";
+import { DuplicateWarning } from "./DuplicateWarning";
 import {
-  loadDuplicateWarningPageVariables,
+  load_duplicate_warning_page_variables,
   ParamSchema,
   QuerySchema,
   type ContextType,
@@ -25,7 +25,7 @@ export default new Hono<ContextType>().get(
   ) {
     const { id: moderation_id } = req.valid("param");
     const { organization_id, user_id } = req.valid("query");
-    const variables = await loadDuplicateWarningPageVariables(identite_pg, {
+    const variables = await load_duplicate_warning_page_variables(identite_pg, {
       moderation_id,
       organization_id,
       user_id,
@@ -35,9 +35,9 @@ export default new Hono<ContextType>().get(
   },
   async function GET({ render, var: variables }) {
     return render(
-      <Duplicate_Warning.Context.Provider value={variables}>
-        <Duplicate_Warning />
-      </Duplicate_Warning.Context.Provider>,
+      <DuplicateWarning.Context.Provider value={variables}>
+        <DuplicateWarning />
+      </DuplicateWarning.Context.Provider>,
     );
   },
 );

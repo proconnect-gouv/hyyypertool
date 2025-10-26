@@ -50,7 +50,7 @@ export async function OrganizationsByUser(props: Props) {
           hx-target="this"
           hx-trigger={[
             "load",
-            hx_trigger_from_body([ORGANISATION_EVENTS.Enum.MEMBERS_UPDATED]),
+            hx_trigger_from_body([ORGANISATION_EVENTS.enum.MEMBERS_UPDATED]),
           ].join(", ")}
         >
           <center>

@@ -33,7 +33,7 @@ export default new Hono<App_Context>().patch(
     await reprocess_moderation_by_id(id);
 
     return text("OK", 200, {
-      "HX-Trigger": MODERATION_EVENTS.Enum.MODERATION_UPDATED,
+      "HX-Trigger": MODERATION_EVENTS.enum.MODERATION_UPDATED,
     } as Htmx_Header);
   },
 );

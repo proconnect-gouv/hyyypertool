@@ -34,7 +34,7 @@ export type GetModerationsListDTO = Awaited<
   ReturnType<GetModerationsListHandler>
 >;
 
-export async function loadModerationsListPageVariables({
+export async function load_moderations_list_page_variables({
   pagination,
   search,
 }: {
@@ -50,7 +50,7 @@ export async function loadModerationsListPageVariables({
 //
 
 export interface ContextVariablesType extends Env {
-  Variables: Awaited<ReturnType<typeof loadModerationsListPageVariables>>;
+  Variables: Awaited<ReturnType<typeof load_moderations_list_page_variables>>;
 }
 export type ContextType = App_Context & ContextVariablesType;
 

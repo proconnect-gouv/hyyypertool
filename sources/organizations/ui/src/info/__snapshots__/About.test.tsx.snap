@@ -25,7 +25,7 @@ exports[`render about section 1`] = `
         add .copied to me
         wait 1s
         remove .copied from me"
-        class="fr-btn bg-transparent text-black hover:bg-(--background-default-grey-hover)! fr-btn--sm fr-btn--tertiary ml-2"
+        class="fr-btn hover:bg-(--background-default-grey-hover)! bg-transparent text-black fr-btn--sm fr-btn--tertiary ml-2"
         data-text="cached_libelle"
       >
         <span
@@ -33,7 +33,7 @@ exports[`render about section 1`] = `
           aria-hidden="true"
         ></span
         ><span
-          class="fr-icon-check-line animated bounceIn hidden in-[.copied]:inline"
+          class="fr-icon-check-line animated bounceIn in-[.copied]:inline hidden"
           aria-hidden="true"
         ></span>
       </button>
@@ -59,7 +59,7 @@ exports[`render about section 1`] = `
         add .copied to me
         wait 1s
         remove .copied from me"
-        class="fr-btn bg-transparent text-black hover:bg-(--background-default-grey-hover)! fr-btn--sm fr-btn--tertiary ml-2"
+        class="fr-btn hover:bg-(--background-default-grey-hover)! bg-transparent text-black fr-btn--sm fr-btn--tertiary ml-2"
         data-text="siret"
       >
         <span
@@ -67,7 +67,7 @@ exports[`render about section 1`] = `
           aria-hidden="true"
         ></span
         ><span
-          class="fr-icon-check-line animated bounceIn hidden in-[.copied]:inline"
+          class="fr-icon-check-line animated bounceIn in-[.copied]:inline hidden"
           aria-hidden="true"
         ></span>
       </button>

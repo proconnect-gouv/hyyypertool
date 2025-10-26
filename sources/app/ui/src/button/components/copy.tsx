@@ -42,7 +42,7 @@ export function CopyButton(
         aria-hidden="true"
       ></span>
       <span
-        class="fr-icon-check-line animated bounceIn hidden in-[.copied]:inline"
+        class="fr-icon-check-line animated bounceIn in-[.copied]:inline hidden"
         aria-hidden="true"
       ></span>
       {children}

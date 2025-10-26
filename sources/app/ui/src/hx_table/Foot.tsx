@@ -44,7 +44,7 @@ export function Foot({
             {...hx_query_props}
             id={id}
             class="fr-input inline-block w-auto"
-            name={name ?? Pagination_Schema.keyof().Enum.page}
+            name={name ?? Pagination_Schema.keyof().enum.page}
             value={page}
           />{" "}
           <span> of {FrNumberConverter.format(last_page)}</span>

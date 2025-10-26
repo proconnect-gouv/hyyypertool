@@ -6,11 +6,11 @@ import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.datab
 import type { Env } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";
 import { z } from "zod";
-import { Duplicate_Warning } from "./Duplicate_Warning";
+import { DuplicateWarning } from "./DuplicateWarning";
 
 //
 
-export async function loadDuplicateWarningPageVariables(
+export async function load_duplicate_warning_page_variables(
   pg: IdentiteProconnect_PgDatabase,
   {
     moderation_id,
@@ -22,7 +22,7 @@ export async function loadDuplicateWarningPageVariables(
     user_id: number;
   },
 ) {
-  const value = await Duplicate_Warning.queryContextValues(pg, {
+  const value = await DuplicateWarning.queryContextValues(pg, {
     moderation_id,
     organization_id,
     user_id,
@@ -34,7 +34,7 @@ export async function loadDuplicateWarningPageVariables(
 //
 
 export interface ContextVariablesType extends Env {
-  Variables: Awaited<ReturnType<typeof loadDuplicateWarningPageVariables>>;
+  Variables: Awaited<ReturnType<typeof load_duplicate_warning_page_variables>>;
 }
 export type ContextType = App_Context & ContextVariablesType;
 

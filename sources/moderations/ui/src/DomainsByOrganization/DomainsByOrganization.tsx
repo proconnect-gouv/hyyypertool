@@ -44,7 +44,7 @@ export async function DomainsByOrganization(props: Props) {
           {...query_domains_by_organization_id}
           hx-trigger={[
             "load delay:1s",
-            ...hx_trigger_from_body([ORGANISATION_EVENTS.Enum.DOMAIN_UPDATED]),
+            ...hx_trigger_from_body([ORGANISATION_EVENTS.enum.DOMAIN_UPDATED]),
           ].join(", ")}
         >
           <center>

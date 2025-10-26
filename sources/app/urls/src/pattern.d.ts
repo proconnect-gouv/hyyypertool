@@ -153,8 +153,8 @@ declare const app: import("hono/hono-base").HonoBase<
             input: {
               query: {
                 code: string;
-                state: string;
                 iss: string;
+                state: string;
               };
             };
             output: undefined;
@@ -236,104 +236,100 @@ declare const app: import("hono/hono-base").HonoBase<
                 "/duplicate_warning"
               >
             | import("hono/types").MergeSchemaPath<
-                | import("hono/types").BlankSchema
-                | import("hono/types").MergeSchemaPath<
-                    {
-                      "/": {
-                        $patch: {
-                          input: {
-                            param: {
-                              id: string;
-                            };
-                          };
-                          output: {};
-                          outputFormat: string;
-                          status: import("hono/utils/http-status").StatusCode;
+                {
+                  "/": {
+                    $patch: {
+                      input: {
+                        param: {
+                          id: string;
+                        };
+                      } & {
+                        form: {
+                          add_member: "AS_INTERNAL" | "AS_EXTERNAL";
+                          add_domain?: string | undefined;
+                          send_notification?: string | undefined;
+                          verification_type?:
+                            | "null"
+                            | "code_sent_to_official_contact_email"
+                            | "domain"
+                            | "imported_from_coop_mediation_numerique"
+                            | "imported_from_inclusion_connect"
+                            | "in_liste_dirigeants_rna"
+                            | "in_liste_dirigeants_rne"
+                            | "no_validation_means_available"
+                            | "no_verification_means_for_entreprise_unipersonnelle"
+                            | "no_verification_means_for_small_association"
+                            | "official_contact_email"
+                            | "organization_dirigeant"
+                            | "proof_received"
+                            | "bypassed"
+                            | undefined;
                         };
                       };
-                    },
-                    "/processed"
-                  >
-                | import("hono/types").MergeSchemaPath<
-                    {
-                      "/": {
-                        $patch: {
-                          input: {
-                            param: {
-                              id: string;
-                            };
-                          } & {
-                            form: {
-                              message: string;
-                              reason: string;
-                              subject: string;
-                            };
-                          };
-                          output: "OK";
-                          outputFormat: "text";
-                          status: 200;
+                      output: {};
+                      outputFormat: string;
+                      status: import("hono/utils/http-status").StatusCode;
+                    };
+                  };
+                },
+                "/validate"
+              >
+            | import("hono/types").MergeSchemaPath<
+                {
+                  "/": {
+                    $patch: {
+                      input: {
+                        param: {
+                          id: string;
+                        };
+                      } & {
+                        form: {
+                          message: string;
+                          reason: string;
+                          subject: string;
                         };
                       };
-                    },
-                    "/rejected"
-                  >
-                | import("hono/types").MergeSchemaPath<
-                    {
-                      "/": {
-                        $patch: {
-                          input: {
-                            param: {
-                              id: string;
-                            };
-                          };
-                          output: "OK";
-                          outputFormat: "text";
-                          status: 200;
+                      output: "OK";
+                      outputFormat: "text";
+                      status: 200;
+                    };
+                  };
+                },
+                "/rejected"
+              >
+            | import("hono/types").MergeSchemaPath<
+                {
+                  "/": {
+                    $patch: {
+                      input: {
+                        param: {
+                          id: string;
                         };
                       };
-                    },
-                    "/reprocess"
-                  >
-                | import("hono/types").MergeSchemaPath<
-                    {
-                      "/": {
-                        $patch: {
-                          input: {
-                            param: {
-                              id: string;
-                            };
-                          } & {
-                            form: {
-                              add_member: "AS_INTERNAL" | "AS_EXTERNAL";
-                              add_domain?: string | undefined;
-                              send_notitfication?: string | undefined;
-                              verification_type?:
-                                | "null"
-                                | "code_sent_to_official_contact_email"
-                                | "domain"
-                                | "imported_from_coop_mediation_numerique"
-                                | "imported_from_inclusion_connect"
-                                | "in_liste_dirigeants_rna"
-                                | "in_liste_dirigeants_rne"
-                                | "no_validation_means_available"
-                                | "no_verification_means_for_entreprise_unipersonnelle"
-                                | "no_verification_means_for_small_association"
-                                | "official_contact_email"
-                                | "organization_dirigeant"
-                                | "proof_received"
-                                | "bypassed"
-                                | undefined;
-                            };
-                          };
-                          output: {};
-                          outputFormat: string;
-                          status: import("hono/utils/http-status").StatusCode;
+                      output: {};
+                      outputFormat: string;
+                      status: import("hono/utils/http-status").StatusCode;
+                    };
+                  };
+                },
+                "/processed"
+              >
+            | import("hono/types").MergeSchemaPath<
+                {
+                  "/": {
+                    $patch: {
+                      input: {
+                        param: {
+                          id: string;
                         };
                       };
-                    },
-                    "/validate"
-                  >,
-                "/$procedures"
+                      output: "OK";
+                      outputFormat: "text";
+                      status: 200;
+                    };
+                  };
+                },
+                "/reprocess"
               >,
             "/:id"
           >
@@ -453,6 +449,10 @@ declare const app: import("hono/hono-base").HonoBase<
                         param: {
                           id: string;
                         };
+                      } & {
+                        query: {
+                          describedby: string;
+                        };
                       };
                       output: {};
                       outputFormat: string;
@@ -540,76 +540,6 @@ declare const app: import("hono/hono-base").HonoBase<
                   };
                 };
               })
-            | import("hono/types").MergeSchemaPath<
-                {
-                  "/": {
-                    $get: {
-                      input: {
-                        param: {
-                          id: string;
-                        };
-                      } & {
-                        query: {
-                          describedby: string;
-                        };
-                      };
-                      output: {};
-                      outputFormat: string;
-                      status: import("hono/utils/http-status").StatusCode;
-                    };
-                  };
-                } & {
-                  "/": {
-                    $put: {
-                      input: {
-                        param: {
-                          id: string;
-                        };
-                      } & {
-                        form: {
-                          domain: string;
-                        };
-                      };
-                      output: "OK";
-                      outputFormat: "text";
-                      status: 200;
-                    };
-                  };
-                } & {
-                  "/:domain_id": {
-                    $delete: {
-                      input: {
-                        param: {
-                          id: string;
-                          domain_id: string;
-                        };
-                      };
-                      output: "OK";
-                      outputFormat: "text";
-                      status: 200;
-                    };
-                  };
-                } & {
-                  "/:domain_id": {
-                    $patch: {
-                      input: {
-                        param: {
-                          id: string;
-                          domain_id: string;
-                        };
-                      } & {
-                        query: {
-                          type: string | string[];
-                        };
-                      };
-                      output: "OK";
-                      outputFormat: "text";
-                      status: 200;
-                    };
-                  };
-                },
-                "/domains"
-              >
             | import("hono/types").MergeSchemaPath<
                 | {
                     "/": {
@@ -723,6 +653,76 @@ declare const app: import("hono/hono-base").HonoBase<
                     };
                   }),
                 "/members"
+              >
+            | import("hono/types").MergeSchemaPath<
+                {
+                  "/": {
+                    $get: {
+                      input: {
+                        param: {
+                          id: string;
+                        };
+                      } & {
+                        query: {
+                          describedby: string;
+                        };
+                      };
+                      output: {};
+                      outputFormat: string;
+                      status: import("hono/utils/http-status").StatusCode;
+                    };
+                  };
+                } & {
+                  "/": {
+                    $put: {
+                      input: {
+                        param: {
+                          id: string;
+                        };
+                      } & {
+                        form: {
+                          domain: string;
+                        };
+                      };
+                      output: "OK";
+                      outputFormat: "text";
+                      status: 200;
+                    };
+                  };
+                } & {
+                  "/:domain_id": {
+                    $delete: {
+                      input: {
+                        param: {
+                          id: string;
+                          domain_id: string;
+                        };
+                      };
+                      output: "OK";
+                      outputFormat: "text";
+                      status: 200;
+                    };
+                  };
+                } & {
+                  "/:domain_id": {
+                    $patch: {
+                      input: {
+                        param: {
+                          id: string;
+                          domain_id: string;
+                        };
+                      } & {
+                        query: {
+                          type?: string | string[] | undefined;
+                        };
+                      };
+                      output: "OK";
+                      outputFormat: "text";
+                      status: 200;
+                    };
+                  };
+                },
+                "/domains"
               >,
             "/:id"
           >

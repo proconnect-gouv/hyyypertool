@@ -9,11 +9,11 @@ import { jsxRenderer } from "hono/jsx-renderer";
 import { match, P } from "ts-pattern";
 import moderation_router from "./:id/index";
 import {
-  loadModerationsListPageVariables,
+  load_moderations_list_page_variables,
   Search_Schema,
   type ContextType,
 } from "./context";
-import { Moderations_Page } from "./page";
+import { ModerationsPage } from "./page";
 
 //
 export default new Hono<ContextType>()
@@ -45,7 +45,7 @@ export default new Hono<ContextType>()
         .with({ success: true }, ({ data }) => data)
         .otherwise(() => Pagination_Schema.parse({}));
 
-      const variables = await loadModerationsListPageVariables({
+      const variables = await load_moderations_list_page_variables({
         pagination,
         search,
       });
@@ -55,7 +55,7 @@ export default new Hono<ContextType>()
     function GET({ render, set, var: { pagination, search } }) {
       set("page_title", "Liste des moderations");
       return render(
-        <Moderations_Page pagination={pagination} search={search} />,
+        <ModerationsPage pagination={pagination} search={search} />,
       );
     },
   );

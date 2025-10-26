@@ -68,7 +68,7 @@ export async function Add_Domain() {
             id={$describedby}
             class="fr-input"
             type="text"
-            name={AddDomainParams_Schema.keyof().Enum.domain}
+            name={AddDomainParams_Schema.keyof().enum.domain}
           />
           <button class="fr-btn" type="submit">
             Ajouter
@@ -157,7 +157,7 @@ function Row({
           </>
         ) : null}
       </td>
-      <td class="space-x-2 text-end!">
+      <td class="text-end! space-x-2">
         <GoogleSearchButton
           class={button({ class: "align-bottom", size: "sm" })}
           query={domain}

@@ -18,12 +18,12 @@ export async function AcceptModal({
 }) {
   const hx_path_validate_moderation = await hx_urls.moderations[
     ":id"
-  ].$procedures.validate.$patch({
+  ].validate.$patch({
     param: { id: moderation.id.toString() },
   });
   return (
     <div
-      class="fixed right-0 bottom-14 z-[calc(var(--ground)_+_777)] m-2 hidden justify-self-end border-solid border-(--text-action-high-blue-france) bg-(--blue-france-975-75) px-4 py-2"
+      class="border-(--text-action-high-blue-france) bg-(--blue-france-975-75) fixed bottom-14 right-0 z-[calc(var(--ground)_+_777)] m-2 hidden justify-self-end border-solid px-4 py-2"
       id="acceptModal"
       aria-label="la modale de validation"
     >
@@ -41,7 +41,7 @@ export async function AcceptModal({
       </div>
       <p>
         A propos de{" "}
-        <span class="font-bold text-(--text-action-high-blue-france)">
+        <span class="text-(--text-action-high-blue-france) font-bold">
           {userEmail}{" "}
         </span>
         pour l'organisation <b>{moderation.organization.cached_libelle}</b>, je

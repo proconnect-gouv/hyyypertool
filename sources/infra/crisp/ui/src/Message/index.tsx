@@ -65,14 +65,14 @@ export async function TextMessage({
 
 const message_variants = tv({
   base: `
+    [&_blockquote]:border-l-(--background-contrast-grey-hover)
     p-6
     pb-0
     [&_blockquote]:ml-5
     [&_blockquote]:border-y-0
-    [&_blockquote]:border-r-0
     [&_blockquote]:border-l-4
+    [&_blockquote]:border-r-0
     [&_blockquote]:border-solid
-    [&_blockquote]:border-l-(--background-contrast-grey-hover)
     [&_blockquote]:p-6
     [&_blockquote_p]:text-base
     [&_blockquote_p]:font-normal
@@ -80,12 +80,12 @@ const message_variants = tv({
   extend: quote,
   slots: {
     body: `
+      text-base!
+      **:bg-transparent!
+      break-words
       border-l-4
       border-gray-400
       pb-6
-      text-base!
-      break-words
-      **:bg-transparent!
       [&_img]:max-w-full
     `,
     caption: `
@@ -95,8 +95,8 @@ const message_variants = tv({
   },
   variants: {
     is_family: {
-      true: "mr-2 ml-12 bg-(--background-alt-blue-ecume)",
-      false: "mr-12 ml-2 bg-(--background-alt-grey)",
+      true: "bg-(--background-alt-blue-ecume) ml-12 mr-2",
+      false: "bg-(--background-alt-grey) ml-2 mr-12",
     },
   },
 });

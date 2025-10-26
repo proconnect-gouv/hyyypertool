@@ -18,7 +18,7 @@ export function Trigger({ target_id, ...other_props }: TriggerProps) {
       inline-flex items-center rounded-lg
       bg-white p-2 text-center text-sm font-medium text-gray-900
       hover:bg-gray-100
-      focus:ring-4 focus:ring-gray-50 focus:outline-none
+      focus:outline-none focus:ring-4 focus:ring-gray-50
       "
       type="button"
       {...other_props}

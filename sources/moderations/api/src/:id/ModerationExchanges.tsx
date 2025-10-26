@@ -9,7 +9,7 @@ import { usePageRequestContext } from "./context";
 
 //
 
-export async function Moderation_Exchanges() {
+export async function ModerationExchanges() {
   const $describedby = hyper_ref();
   const {
     var: { moderation },
@@ -36,7 +36,7 @@ export async function Moderation_Exchanges() {
           hx-trigger={[
             "load",
             hx_trigger_from_body([
-              MODERATION_EVENTS.Enum.MODERATION_EMAIL_UPDATED,
+              MODERATION_EVENTS.enum.MODERATION_EMAIL_UPDATED,
             ]),
           ].join(", ")}
         >

@@ -5,7 +5,7 @@ type ToolbarProps = {
 export function Toolbar(props: ToolbarProps) {
   return (
     <div
-      class="fixed right-0 bottom-0 z-50 flex w-full justify-end overflow-hidden bg-(--blue-france-975-75) p-2"
+      class="bg-(--blue-france-975-75) fixed bottom-0 right-0 z-50 flex w-full justify-end overflow-hidden p-2"
       role="dialog"
       aria-modal="true"
     >

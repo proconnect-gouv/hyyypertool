@@ -21,7 +21,7 @@ import {
 import { About as About_User } from "@~/users.ui/About";
 import { Investigation as Investigation_User } from "@~/users.ui/Investigation";
 import { usePageRequestContext } from "./context";
-import { Moderation_Exchanges } from "./Moderation_Exchanges";
+import { ModerationExchanges } from "./ModerationExchanges";
 
 //
 
@@ -62,7 +62,7 @@ export default async function Moderation_Page() {
         )}
         hx-select={`#${moderation_id}`}
         hx-trigger={hx_trigger_from_body([
-          MODERATION_EVENTS.Enum.MODERATION_UPDATED,
+          MODERATION_EVENTS.enum.MODERATION_UPDATED,
         ])}
         id={moderation_id}
       >
@@ -122,7 +122,7 @@ export default async function Moderation_Page() {
 
         <hr class="bg-none" />
 
-        <Moderation_Exchanges />
+        <ModerationExchanges />
       </section>
     </main>
   );

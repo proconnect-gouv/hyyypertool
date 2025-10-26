@@ -13,12 +13,12 @@ export async function RefusalModal({ userEmail }: { userEmail: string }) {
 
   return (
     <div
-      class="fixed right-0 bottom-14 z-751 m-2 hidden w-4/6 justify-self-end border-solid border-(--text-action-high-blue-france) bg-(--blue-france-975-75) px-4 py-2"
+      class="z-751 border-(--text-action-high-blue-france) bg-(--blue-france-975-75) fixed bottom-14 right-0 m-2 hidden w-4/6 justify-self-end border-solid px-4 py-2"
       id="refusalModal"
       aria-label="la modale de refus"
     >
       <form
-        {...await hx_urls.moderations[":id"].$procedures.rejected.$patch({
+        {...await hx_urls.moderations[":id"].rejected.$patch({
           param: { id: moderation.id.toString() },
         })}
         {...hx_disabled_form_elements}
@@ -35,7 +35,7 @@ export async function RefusalModal({ userEmail }: { userEmail: string }) {
           <input
             class="fr-input hidden"
             type="text"
-            name={reject_form_schema.keyof().Enum.subject}
+            name={reject_form_schema.keyof().enum.subject}
             value={`[ProConnect] Demande pour rejoindre « ${moderation.organization.cached_libelle} »`}
           />
           <p class="mb-0 text-lg font-bold">❌ Refuser</p>
@@ -67,7 +67,7 @@ export async function RefusalModal({ userEmail }: { userEmail: string }) {
             class="fr-input"
             rows={15}
             id={$modal_message}
-            name={reject_form_schema.keyof().Enum.message}
+            name={reject_form_schema.keyof().enum.message}
             _={`
                 on change set ${$modal_message} to my value
               `}
