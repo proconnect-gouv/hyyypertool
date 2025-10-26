@@ -5,7 +5,7 @@ import { urls } from "@~/app.urls";
 
 //
 
-export function Moderation_NotFound({
+export function ModerationNotFound({
   moderation_id,
 }: {
   moderation_id?: number | undefined;

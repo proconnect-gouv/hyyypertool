@@ -6,7 +6,7 @@ import { usePageRequestContext } from "./context";
 
 //
 
-export async function About_Organization() {
+export async function AboutOrganization() {
   const {
     var: {
       moderation: { organization },

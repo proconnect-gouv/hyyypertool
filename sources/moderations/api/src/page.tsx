@@ -44,7 +44,7 @@ const hx_moderations_query_props = {
   "hx-target": `#${MODERATION_TABLE_ID}`,
 };
 
-export function Moderations_Page({
+export function ModerationsPage({
   pagination,
   search,
 }: {

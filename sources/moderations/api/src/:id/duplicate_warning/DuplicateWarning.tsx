@@ -24,7 +24,7 @@ import { usePageRequestContext } from "./context";
 
 //
 
-export async function Duplicate_Warning() {
+export async function DuplicateWarning() {
   return (
     <>
       <Alert_Duplicate_Moderation />
@@ -62,15 +62,15 @@ async function createDuplicateWarningContextValues(
   };
 }
 
-Duplicate_Warning.queryContextValues = createDuplicateWarningContextValues;
-Duplicate_Warning.Context = createContext(
-  {} as Awaited<ReturnType<typeof Duplicate_Warning.queryContextValues>>,
+DuplicateWarning.queryContextValues = createDuplicateWarningContextValues;
+DuplicateWarning.Context = createContext(
+  {} as Awaited<ReturnType<typeof DuplicateWarning.queryContextValues>>,
 );
 
 //
 
 async function Alert_Duplicate_User() {
-  const { moderation_id } = useContext(Duplicate_Warning.Context);
+  const { moderation_id } = useContext(DuplicateWarning.Context);
   const duplicate_users = await get_duplicate_users(moderation_id);
 
   const duplicate_users_count = duplicate_users.length;
@@ -117,7 +117,7 @@ async function Alert_Duplicate_User() {
   );
 }
 async function Alert_Duplicate_Moderation() {
-  const { moderations, user } = useContext(Duplicate_Warning.Context);
+  const { moderations, user } = useContext(DuplicateWarning.Context);
   const moderation_count = moderations.length;
 
   if (moderation_count <= 1) return raw``;

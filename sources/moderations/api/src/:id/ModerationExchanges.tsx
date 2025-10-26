@@ -9,7 +9,7 @@ import { usePageRequestContext } from "./context";
 
 //
 
-export async function Moderation_Exchanges() {
+export async function ModerationExchanges() {
   const $describedby = hyper_ref();
   const {
     var: { moderation },
