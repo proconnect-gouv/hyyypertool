@@ -16,7 +16,7 @@ import type { z } from "zod";
 
 //
 
-export async function loadEmailPageVariables(
+export async function load_email_page_variables(
   pg: IdentiteProconnect_PgDatabase,
   { id, crisp_config }: { id: number; crisp_config: any },
 ) {
@@ -72,7 +72,7 @@ export async function loadEmailPageVariables(
 //
 
 export interface ContextVariablesType extends Env {
-  Variables: Awaited<ReturnType<typeof loadEmailPageVariables>>;
+  Variables: Awaited<ReturnType<typeof load_email_page_variables>>;
 }
 export type ContextType = App_Context & Crisp_Context & ContextVariablesType;
 

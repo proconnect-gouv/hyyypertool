@@ -89,7 +89,7 @@ export const app_env = z.object({
         path: ["env.DEPLOY_ENV"],
       }),
     )
-      .with(DEPLOY_ENV_SHEMA.Enum.production, () => version)
+      .with(DEPLOY_ENV_SHEMA.enum.production, () => version)
       .otherwise(
         () =>
           GIT_SHA_SHEMA.parse(env["GIT_SHA"], {

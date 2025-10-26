@@ -22,7 +22,7 @@ import { useRequestContext } from "hono/jsx-renderer";
 
 //
 
-export async function loadModerationPageVariables(
+export async function load_moderation_page_variables(
   config: App_Config,
   pg: IdentiteProconnect_PgDatabase,
   { id }: { id: number },
@@ -106,7 +106,7 @@ export interface ModerationContext extends Env {
   };
 }
 export interface ContextVariablesType extends Env {
-  Variables: Awaited<ReturnType<typeof loadModerationPageVariables>>;
+  Variables: Awaited<ReturnType<typeof load_moderation_page_variables>>;
 }
 export type ContextType = App_Context & ContextVariablesType;
 

@@ -68,7 +68,7 @@ export default new Hono<ContextType>()
       await add_authorized_domain(organization_id, domain);
 
       return text("OK", 200, {
-        "HX-Trigger": ORGANISATION_EVENTS.Enum.DOMAIN_UPDATED,
+        "HX-Trigger": ORGANISATION_EVENTS.enum.DOMAIN_UPDATED,
       } as Htmx_Header);
     },
   )
@@ -84,7 +84,7 @@ export default new Hono<ContextType>()
       await remove_domain_email_by_id(domain_id);
 
       return text("OK", 200, {
-        "HX-Trigger": ORGANISATION_EVENTS.Enum.DOMAIN_UPDATED,
+        "HX-Trigger": ORGANISATION_EVENTS.enum.DOMAIN_UPDATED,
       } as Htmx_Header);
     },
   )
@@ -104,7 +104,9 @@ export default new Hono<ContextType>()
       const { type: verification_type } = req.valid("query");
 
       await update_domain_by_id(identite_pg, domain_id, {
-        verification_type: verification_type,
+        verification_type: EmailDomain_Type_Schema.parse(
+          verification_type,
+        ) as any,
         verified_at:
           verification_type === "verified"
             ? new Date().toISOString()
@@ -112,7 +114,7 @@ export default new Hono<ContextType>()
       });
 
       return text("OK", 200, {
-        "HX-Trigger": ORGANISATION_EVENTS.Enum.DOMAIN_UPDATED,
+        "HX-Trigger": ORGANISATION_EVENTS.enum.DOMAIN_UPDATED,
       } as Htmx_Header);
     },
   );

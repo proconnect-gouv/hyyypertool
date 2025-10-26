@@ -34,8 +34,8 @@ export default new Hono<
 
     return text("OK", 200, {
       "HX-Trigger": [
-        MODERATION_EVENTS.Enum.MODERATION_EMAIL_UPDATED,
-        MODERATION_EVENTS.Enum.MODERATION_UPDATED,
+        MODERATION_EVENTS.enum.MODERATION_EMAIL_UPDATED,
+        MODERATION_EVENTS.enum.MODERATION_UPDATED,
       ].join(", "),
     } as Htmx_Header);
   },

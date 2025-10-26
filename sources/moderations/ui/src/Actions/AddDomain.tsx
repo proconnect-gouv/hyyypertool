@@ -10,7 +10,7 @@ export function AddDomain(props: { mailType: string }) {
     <div class="fr-checkbox-group">
       <input
         id={id}
-        name={validate_form_schema.keyof().Enum.add_domain}
+        name={validate_form_schema.keyof().enum.add_domain}
         type="checkbox"
         value="true"
       />

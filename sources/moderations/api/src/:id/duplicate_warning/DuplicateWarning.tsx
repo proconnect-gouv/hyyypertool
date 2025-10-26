@@ -161,7 +161,7 @@ async function Alert_Duplicate_Moderation() {
 }
 
 async function MarkModerationAsProcessed() {
-  const { moderation_id } = useContext(Duplicate_Warning.Context);
+  const { moderation_id } = useContext(DuplicateWarning.Context);
   const { base, element } = fieldset();
   const moderation = await get_moderation(moderation_id);
 
@@ -175,7 +175,7 @@ async function MarkModerationAsProcessed() {
         wait 2s
         go back
       `}
-      {...await hx_urls.moderations[":id"].$procedures.processed.$patch({
+      {...await hx_urls.moderations[":id"].processed.$patch({
         param: { id: moderation_id.toString() },
       })}
       hx-swap="none"

@@ -7,7 +7,7 @@ import { set_crisp_config } from "@~/crisp.middleware";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import Page from "./page";
-import { loadEmailPageVariables, type ContextType } from "./page/context";
+import { load_email_page_variables, type ContextType } from "./page/context";
 
 //
 
@@ -22,7 +22,7 @@ export default new Hono<ContextType>().get(
     next,
   ) {
     const { id } = req.valid("param");
-    const variables = await loadEmailPageVariables(identite_pg, {
+    const variables = await load_email_page_variables(identite_pg, {
       id,
       crisp_config,
     });

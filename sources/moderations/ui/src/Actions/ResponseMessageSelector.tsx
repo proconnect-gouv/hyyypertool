@@ -21,7 +21,7 @@ export function ResponseMessageSelector({ $message }: { $message: string }) {
         list="responses-type"
         placeholder="Recherche d'une réponse type"
         autocomplete="off"
-        name={reject_form_schema.keyof().Enum.reason}
+        name={reject_form_schema.keyof().enum.reason}
       />
       <datalist id="responses-type">
         {reponse_templates.map(async ({ label, default: template }, index) => (

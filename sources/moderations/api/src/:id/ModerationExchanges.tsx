@@ -36,7 +36,7 @@ export async function ModerationExchanges() {
           hx-trigger={[
             "load",
             hx_trigger_from_body([
-              MODERATION_EVENTS.Enum.MODERATION_EMAIL_UPDATED,
+              MODERATION_EVENTS.enum.MODERATION_EMAIL_UPDATED,
             ]),
           ].join(", ")}
         >

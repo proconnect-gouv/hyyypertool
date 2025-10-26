@@ -170,7 +170,7 @@ export default new Hono<App_Context>().patch(
     //#endregion
 
     return text("OK", 200, {
-      "HX-Trigger": [MODERATION_EVENTS.Enum.MODERATION_UPDATED].join(", "),
+      "HX-Trigger": [MODERATION_EVENTS.enum.MODERATION_UPDATED].join(", "),
     } as Htmx_Header);
   },
 );

@@ -20,13 +20,13 @@ export function SendNotification() {
     <div class="fr-checkbox-group">
       <input
         id={$send_notification}
-        name={validate_form_schema.keyof().Enum.send_notification}
+        name={validate_form_schema.keyof().enum.send_notification}
         type="checkbox"
         value="true"
         checked={
           Moderation_Type_Schema.parse(type, {
             path: ["moderation", "type"],
-          }) !== Moderation_Type_Schema.Enum.non_verified_domain
+          }) !== Moderation_Type_Schema.enum.non_verified_domain
         }
       />
       <label class="fr-label flex-row!" for={$send_notification}>

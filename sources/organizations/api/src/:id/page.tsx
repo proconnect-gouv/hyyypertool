@@ -49,7 +49,7 @@ export default async function Page() {
           {...hx_get_domains_query_props}
           hx-trigger={[
             "load",
-            ...hx_trigger_from_body([ORGANISATION_EVENTS.Enum.DOMAIN_UPDATED]),
+            ...hx_trigger_from_body([ORGANISATION_EVENTS.enum.DOMAIN_UPDATED]),
           ]}
         ></div>
         <hr />
@@ -97,7 +97,7 @@ async function MembersInTheOrganization() {
           hx-target="this"
           hx-trigger={[
             "load",
-            ...hx_trigger_from_body([ORGANISATION_EVENTS.Enum.MEMBERS_UPDATED]),
+            ...hx_trigger_from_body([ORGANISATION_EVENTS.enum.MEMBERS_UPDATED]),
           ]}
         ></div>
       </details>

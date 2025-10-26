@@ -134,7 +134,7 @@ async function Row_Actions() {
               },
               form: {
                 verification_type:
-                  Verification_Type_Schema.Enum.in_liste_dirigeants_rna,
+                  Verification_Type_Schema.enum.in_liste_dirigeants_rna,
               },
             })}
             hx-swap="none"
@@ -151,7 +151,7 @@ async function Row_Actions() {
                 user_id: user_id.toString(),
               },
               form: {
-                verification_type: Verification_Type_Schema.Enum.domain,
+                verification_type: Verification_Type_Schema.enum.domain,
               },
             })}
             hx-swap="none"
@@ -169,7 +169,7 @@ async function Row_Actions() {
               },
               form: {
                 verification_type:
-                  Verification_Type_Schema.Enum.official_contact_email,
+                  Verification_Type_Schema.enum.official_contact_email,
               },
             })}
             hx-swap="none"
@@ -187,7 +187,7 @@ async function Row_Actions() {
               },
               form: {
                 verification_type:
-                  Verification_Type_Schema.Enum.no_validation_means_available,
+                  Verification_Type_Schema.enum.no_validation_means_available,
               },
             })}
             hx-swap="none"

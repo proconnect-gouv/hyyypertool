@@ -15,10 +15,10 @@ export function AddAsMemberInternal() {
     <div class="fr-radio-group">
       <input
         id={id}
-        name={validate_form_schema.keyof().Enum.add_member}
+        name={validate_form_schema.keyof().enum.add_member}
         required
         type="radio"
-        value={validate_form_schema.shape.add_member.Enum.AS_INTERNAL}
+        value={validate_form_schema.shape.add_member.enum.AS_INTERNAL}
         checked={!is_already_internal_member}
         _={`
           on change

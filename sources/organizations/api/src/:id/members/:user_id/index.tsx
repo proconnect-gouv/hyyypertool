@@ -43,7 +43,7 @@ export default new Hono<IdentiteProconnect_Pg_Context>()
       });
 
       return text("OK", 200, {
-        "HX-Trigger": ORGANISATION_EVENTS.Enum.MEMBERS_UPDATED,
+        "HX-Trigger": ORGANISATION_EVENTS.enum.MEMBERS_UPDATED,
       } as Htmx_Header);
     },
   )
@@ -82,7 +82,7 @@ export default new Hono<IdentiteProconnect_Pg_Context>()
         );
 
       return text("OK", 200, {
-        "HX-Trigger": ORGANISATION_EVENTS.Enum.MEMBERS_UPDATED,
+        "HX-Trigger": ORGANISATION_EVENTS.enum.MEMBERS_UPDATED,
       } as Htmx_Header);
     },
   )
@@ -104,7 +104,7 @@ export default new Hono<IdentiteProconnect_Pg_Context>()
       });
 
       return text("OK", 200, {
-        "HX-Trigger": ORGANISATION_EVENTS.Enum.MEMBERS_UPDATED,
+        "HX-Trigger": ORGANISATION_EVENTS.enum.MEMBERS_UPDATED,
       } as Htmx_Header);
     },
   );
