@@ -1,6 +1,6 @@
 //
 
-import { hyper_ref } from "@~/app.core/html";
+import { hyper_ref } from "#src/html";
 import { hx_include } from "@~/app.core/htmx";
 import { Pagination_Schema } from "@~/app.core/schema";
 import { Foot } from "@~/app.ui/hx_table";

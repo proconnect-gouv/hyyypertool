@@ -1,6 +1,6 @@
 //
 
-import { hyper_ref } from "@~/app.core/html";
+import { hyper_ref } from "#src/html";
 import { button } from "@~/app.ui/button";
 import { GoogleSearchButton } from "@~/app.ui/button/components";
 import { menu_item } from "@~/app.ui/menu";

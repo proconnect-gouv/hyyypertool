@@ -1,6 +1,6 @@
 //
 
-import { hyper_ref } from "@~/app.core/html";
+import { hyper_ref } from "#src/html";
 import { z_email_domain } from "@~/app.core/schema/z_email_domain";
 import { button } from "@~/app.ui/button";
 import { GoogleSearchButton } from "@~/app.ui/button/components";

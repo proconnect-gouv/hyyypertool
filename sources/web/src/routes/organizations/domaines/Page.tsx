@@ -1,4 +1,4 @@
-import { hyper_ref } from "@~/app.core/html";
+import { hyper_ref } from "#src/html";
 import { Pagination_Schema } from "@~/app.core/schema";
 import { copy_text_content_to_clipboard } from "@~/app.ui/button/scripts";
 import { Foot } from "@~/app.ui/hx_table";
