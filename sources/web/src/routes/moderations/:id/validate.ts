@@ -1,7 +1,7 @@
 //
 
 import { zValidator } from "@hono/zod-validator";
-import { HTTPError, NotFoundError } from "@~/app.core/error";
+import { HTTPError, NotFoundError } from "#src/errors";
 import type { Htmx_Header } from "#src/htmx";
 import { Entity_Schema } from "@~/app.core/schema";
 import { z_email_domain } from "@~/app.core/schema/z_email_domain";

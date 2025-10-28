@@ -2,7 +2,7 @@
 
 import { zValidator } from "@hono/zod-validator";
 import env from "#src/config";
-import { AuthError } from "@~/app.core/error";
+import { AuthError } from "#src/errors";
 import { MfaAcrValue_Schema } from "@~/app.core/schema/index";
 import type { App_Context } from "@~/app.middleware/context";
 import type { AgentConnect_UserInfo } from "@~/app.middleware/session";
