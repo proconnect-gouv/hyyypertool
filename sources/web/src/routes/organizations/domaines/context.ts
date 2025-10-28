@@ -1,7 +1,7 @@
 //
 
 import { hyper_ref } from "#src/html";
-import { hx_include } from "@~/app.core/htmx";
+import { hx_include } from "#src/htmx";
 import { Pagination_Schema, Search_Schema } from "@~/app.core/schema";
 import type { App_Context } from "@~/app.middleware/context";
 import { hx_urls, urls } from "@~/app.urls";

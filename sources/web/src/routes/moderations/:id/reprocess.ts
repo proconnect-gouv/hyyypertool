@@ -1,7 +1,7 @@
 //
 
 import { zValidator } from "@hono/zod-validator";
-import type { Htmx_Header } from "@~/app.core/htmx";
+import type { Htmx_Header } from "#src/htmx";
 import { Entity_Schema } from "@~/app.core/schema";
 import type { App_Context } from "@~/app.middleware/context";
 import { MODERATION_EVENTS } from "@~/moderations.lib/event";

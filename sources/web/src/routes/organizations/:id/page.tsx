@@ -1,7 +1,7 @@
 //
 
 import { hyper_ref } from "#src/html";
-import { hx_include, hx_trigger_from_body } from "@~/app.core/htmx";
+import { hx_include, hx_trigger_from_body } from "#src/htmx";
 import { FrNumberConverter } from "@~/app.ui/number";
 import { formattedPlural } from "@~/app.ui/plurial";
 import { hx_urls } from "@~/app.urls";

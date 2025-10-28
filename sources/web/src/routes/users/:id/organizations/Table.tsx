@@ -1,7 +1,7 @@
 //
 
 import { date_to_dom_string } from "#src/time";
-import { hx_include } from "@~/app.core/htmx";
+import { hx_include } from "#src/htmx";
 import { Foot } from "@~/app.ui/hx_table";
 import { notice } from "@~/app.ui/notice";
 import { Time } from "@~/app.ui/time";

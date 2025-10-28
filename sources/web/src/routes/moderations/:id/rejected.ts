@@ -1,7 +1,7 @@
 //
 
 import { zValidator } from "@hono/zod-validator";
-import type { Htmx_Header } from "@~/app.core/htmx";
+import type { Htmx_Header } from "#src/htmx";
 import { Entity_Schema } from "@~/app.core/schema";
 import { CrispApi } from "@~/crisp.lib/api";
 import { set_crisp_config } from "@~/crisp.middleware";

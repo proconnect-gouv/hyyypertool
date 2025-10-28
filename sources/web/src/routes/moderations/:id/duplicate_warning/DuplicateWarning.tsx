@@ -1,7 +1,7 @@
 //
 
 import { NotFoundError } from "@~/app.core/error";
-import { Htmx_Events } from "@~/app.core/htmx";
+import { Htmx_Events } from "#src/htmx";
 import { button } from "@~/app.ui/button";
 import { fieldset } from "@~/app.ui/form";
 import { OpenInZammad, SearchInZammad } from "@~/app.ui/zammad/components";

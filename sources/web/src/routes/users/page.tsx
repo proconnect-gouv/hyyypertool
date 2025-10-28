@@ -1,7 +1,7 @@
 //
 
 import { hyper_ref } from "#src/html";
-import { hx_include } from "@~/app.core/htmx";
+import { hx_include } from "#src/htmx";
 import { Pagination_Schema } from "@~/app.core/schema";
 import { Foot } from "@~/app.ui/hx_table";
 import { row } from "@~/app.ui/table";

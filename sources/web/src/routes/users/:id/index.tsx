@@ -2,7 +2,7 @@
 
 import { zValidator } from "@hono/zod-validator";
 import { NotFoundError } from "@~/app.core/error";
-import type { Htmx_Header } from "@~/app.core/htmx";
+import type { Htmx_Header } from "#src/htmx";
 import { Entity_Schema } from "@~/app.core/schema";
 import { Main_Layout } from "@~/app.layout/index";
 import { set_variables } from "@~/app.middleware/context/set_variables";

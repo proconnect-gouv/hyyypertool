@@ -1,6 +1,6 @@
 //
 
-import { hx_include } from "@~/app.core/htmx";
+import { hx_include } from "#src/htmx";
 import { Foot } from "@~/app.ui/hx_table";
 import { menu_item } from "@~/app.ui/menu";
 import { Horizontal_Menu } from "@~/app.ui/menu/components";
