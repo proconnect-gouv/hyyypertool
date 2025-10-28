@@ -1,10 +1,9 @@
 //
 
-import { zValidator } from "@hono/zod-validator";
 import { HTTPError, NotFoundError } from "#src/errors";
 import type { Htmx_Header } from "#src/htmx";
-import { Entity_Schema } from "@~/app.core/schema";
-import { z_email_domain } from "@~/app.core/schema/z_email_domain";
+import { Entity_Schema, z_email_domain } from "@~/core/schema";
+import { zValidator } from "@hono/zod-validator";
 import type { App_Context } from "@~/app.middleware/context";
 import { send_moderation_processed_email } from "@~/identite-proconnect.lib/index";
 import {

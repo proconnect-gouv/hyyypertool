@@ -1,9 +1,9 @@
 //
 
 import type { App_Config } from "#src/config";
-import { z_email_domain } from "@~/app.core/schema/z_email_domain";
-import type { App_Context } from "@~/app.middleware/context";
 import { urls } from "#src/urls";
+import { z_email_domain } from "@~/core/schema";
+import type { App_Context } from "@~/app.middleware/context";
 import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
 import {
   GetModerationWithDetails,

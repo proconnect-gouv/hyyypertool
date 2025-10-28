@@ -21,6 +21,7 @@
   "dependencies": {
     "@~/app.core": "workspace:*",
     "@~/app.layout": "workspace:*",
+    "@~/core": "workspace:*",
     "@~/app.middleware": "workspace:*",
     "@~/app.ui": "workspace:*",
     "@~/crisp.lib": "workspace:*",

@@ -1,6 +1,6 @@
 //
 
-import { Pagination_Schema } from "@~/app.core/schema";
+import { Pagination_Schema } from "@~/core/schema";
 import { Main_Layout } from "@~/app.layout/index";
 import { authorized } from "@~/app.middleware/authorized";
 import { set_variables } from "@~/app.middleware/context/set_variables";

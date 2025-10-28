@@ -1,7 +1,7 @@
 //
 
+import { DescribedBy_Schema, Entity_Schema } from "@~/core/schema";
 import { zValidator } from "@hono/zod-validator";
-import { DescribedBy_Schema, Entity_Schema } from "@~/app.core/schema";
 import { set_variables } from "@~/app.middleware/context/set_variables";
 import { set_crisp_config } from "@~/crisp.middleware";
 import { Hono } from "hono";

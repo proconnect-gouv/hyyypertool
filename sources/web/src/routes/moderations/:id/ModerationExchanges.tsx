@@ -2,8 +2,8 @@
 
 import { hyper_ref } from "#src/html";
 import { hx_trigger_from_body } from "#src/htmx";
-import { Loader } from "@~/app.ui/loader";
 import { hx_urls } from "#src/urls";
+import { Loader } from "@~/app.ui/loader";
 import { MODERATION_EVENTS } from "@~/moderations.lib/event";
 import { usePageRequestContext } from "./context";
 

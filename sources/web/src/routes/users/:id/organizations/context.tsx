@@ -5,7 +5,7 @@ import {
   Entity_Schema,
   Pagination_Schema,
   type Pagination,
-} from "@~/app.core/schema";
+} from "@~/core/schema";
 import type { App_Context } from "@~/app.middleware/context";
 import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
 import { GetOrganizationsByUserId } from "@~/organizations.repository";

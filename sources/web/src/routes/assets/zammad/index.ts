@@ -1,8 +1,8 @@
 //
 
-import { zValidator } from "@hono/zod-validator";
 import { HTTPError } from "#src/errors";
-import { Id_Schema } from "@~/app.core/schema";
+import { Id_Schema } from "@~/core/schema";
+import { zValidator } from "@hono/zod-validator";
 import { get_zammad_attachment } from "@~/zammad.lib/get_zammad_attachment";
 import { Hono } from "hono";
 import { P, match } from "ts-pattern";

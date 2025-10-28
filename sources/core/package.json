@@ -1,0 +1,18 @@
+{
+  "name": "@~/core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./*": "./src/*/index.ts"
+  },
+  "imports": {
+    "#src/*": "./src/*/index.ts"
+  },
+  "devDependencies": {
+    "@~/config.typescript": "workspace:*"
+  },
+  "peerDependencies": {
+    "zod": "^3.25.0"
+  }
+}
