@@ -9,9 +9,6 @@
       "path": "../core"
     },
     {
-      "path": "../sentry"
-    },
-    {
       "path": "../ui"
     },
     {

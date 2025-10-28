@@ -1,6 +1,5 @@
 //
 
-import type { Simplify } from "@~/app.core/types";
 import {
   schema,
   type IdentiteProconnectDatabaseCradle,
@@ -8,6 +7,7 @@ import {
   type Users_Organizations,
 } from "@~/identite-proconnect.database";
 import { and, eq, ilike } from "drizzle-orm";
+import type { Simplify } from "type-fest";
 
 //
 

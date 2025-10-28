@@ -31,7 +31,7 @@
     "format": "bun x prettier --check .",
     "format:fix": "bun x prettier --log-level silent --write .",
     "format:pkg": "bun x sort-package-json ./package.json ./sources/*/package.json ./sources/*/*/package.json ./e2e/package.json",
-    "format:tsconfig": "bun x @monorepo-utils/workspaces-to-typescript-project-references && bun run format:fix",
+    "format:tsconfig": "bun x @monorepo-utils/workspaces-to-typescript-project-references && prettier --log-level silent --write **/tsconfig.json",
     "postadd": "bun run format:tsconfig",
     "renovate": "bun x npm-check-updates --packageManager bun --interactive --upgrade --deep",
     "start": "cd bin && bun run start:bun",

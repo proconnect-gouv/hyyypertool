@@ -100,28 +100,15 @@
       "name": "@~/app.middleware",
       "version": "1.0.0",
       "dependencies": {
+        "@sentry/core": "10.22.0",
         "@~/app.core": "workspace:*",
         "@~/app.ui": "workspace:*",
         "@~/app.urls": "workspace:*",
         "@~/identite-proconnect.database": "workspace:*",
         "@~/identite-proconnect.lib": "workspace:*",
-        "@~/web": "workspace:*",
         "hono": "4.9.8",
         "hono-sessions": "0.8.0",
         "openid-client": "6.6.2",
-      },
-      "devDependencies": {
-        "@~/config.typescript": "workspace:*",
-      },
-    },
-    "sources/app/sentry": {
-      "name": "@~/app.sentry",
-      "version": "1.0.0",
-      "dependencies": {
-        "@sentry/node": "10.22.0",
-        "@~/app.core": "workspace:*",
-        "consola": "3.4.2",
-        "hono": "4.9.8",
       },
       "devDependencies": {
         "@~/config.typescript": "workspace:*",
@@ -336,6 +323,7 @@
         "tailwind-variants": "3.1.0",
         "ts-dedent": "2.2.0",
         "ts-pattern": "5.8.0",
+        "type-fest": "5.0.1",
       },
       "devDependencies": {
         "@~/config.typescript": "workspace:*",
@@ -882,8 +870,6 @@
     "@~/app.layout": ["@~/app.layout@workspace:sources/app/layout"],
 
     "@~/app.middleware": ["@~/app.middleware@workspace:sources/app/middleware"],
-
-    "@~/app.sentry": ["@~/app.sentry@workspace:sources/app/sentry"],
 
     "@~/app.ui": ["@~/app.ui@workspace:sources/app/ui"],
 

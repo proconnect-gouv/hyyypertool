@@ -1,7 +1,6 @@
 //
 
 import { hyper_ref } from "@~/app.core/html";
-import type { SimplifyDeep } from "@~/app.core/types";
 import type { Moderation } from "@~/moderations.lib/entities/Moderation";
 import type { IsUserExternalMemberHandler } from "@~/moderations.lib/usecase/IsUserExternalMember";
 import type { Organization } from "@~/organizations.lib/entities/Organization";
@@ -9,6 +8,7 @@ import type { SuggestOrganizationDomainsHandler } from "@~/organizations.lib/use
 import type { User } from "@~/users.lib/entities/User";
 import type { SuggestSameUserEmailsHandler } from "@~/users.lib/usecase/SuggestSameUserEmails";
 import { createContext } from "hono/jsx";
+import type { SimplifyDeep } from "type-fest";
 
 export interface Values {
   domain: string;
