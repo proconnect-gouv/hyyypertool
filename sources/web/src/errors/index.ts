@@ -10,14 +10,14 @@ export class AuthError extends Error {
 export class BadRequestError extends Error {
   constructor(message: string, options?: ErrorOptions) {
     super(message, options);
-    this.name = "NotFoundError";
+    this.name = "BadRequestError";
   }
 }
 
 export class HTTPError extends Error {
   constructor(message: string, options?: ErrorOptions) {
     super(message, options);
-    this.name = "NotFoundError";
+    this.name = "HTTPError";
   }
 }
 
