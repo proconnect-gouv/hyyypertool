@@ -33,9 +33,6 @@
       "path": "../organizations/api"
     },
     {
-      "path": "../proxy/api"
-    },
-    {
       "path": "../users/api"
     },
     {

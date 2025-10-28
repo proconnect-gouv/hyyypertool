@@ -13,7 +13,6 @@
     "sources/infra/zammad/*",
     "sources/moderations/*",
     "sources/organizations/*",
-    "sources/proxy/*",
     "sources/users/*",
     "sources/web",
     "packages/hono-slotify"

@@ -484,16 +484,6 @@
         "@~/config.typescript": "workspace:*",
       },
     },
-    "sources/proxy/api": {
-      "name": "@~/proxy.api",
-      "version": "1.0.0",
-      "dependencies": {
-        "hono": "4.9.8",
-      },
-      "devDependencies": {
-        "@~/config.typescript": "workspace:*",
-      },
-    },
     "sources/users/api": {
       "name": "@~/users.api",
       "version": "1.0.0",
@@ -583,7 +573,6 @@
         "@~/auth.api": "workspace:*",
         "@~/moderations.api": "workspace:*",
         "@~/organizations.api": "workspace:*",
-        "@~/proxy.api": "workspace:*",
         "@~/users.api": "workspace:*",
         "@~/zammad.api": "workspace:*",
         "@~/zammad.lib": "workspace:*",
@@ -1046,8 +1035,6 @@
     "@~/organizations.repository": ["@~/organizations.repository@workspace:sources/organizations/repository"],
 
     "@~/organizations.ui": ["@~/organizations.ui@workspace:sources/organizations/ui"],
-
-    "@~/proxy.api": ["@~/proxy.api@workspace:sources/proxy/api"],
 
     "@~/users.api": ["@~/users.api@workspace:sources/users/api"],
 

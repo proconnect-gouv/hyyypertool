@@ -28,7 +28,6 @@
     "@~/auth.api": "workspace:*",
     "@~/moderations.api": "workspace:*",
     "@~/organizations.api": "workspace:*",
-    "@~/proxy.api": "workspace:*",
     "@~/users.api": "workspace:*",
     "@~/zammad.api": "workspace:*",
     "@~/zammad.lib": "workspace:*",

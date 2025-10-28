@@ -21,10 +21,6 @@
       "path": "sources/auth",
     },
     {
-      "name": "📦 sources/proxy/",
-      "path": "sources/proxy",
-    },
-    {
       "name": "🏗️ sources/infra/identite-proconnect/",
       "path": "sources/infra/identite-proconnect",
     },
