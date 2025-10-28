@@ -6,6 +6,9 @@
   "extends": "@~/config.typescript/api/tsconfig.json",
   "references": [
     {
+      "path": "../../app/core"
+    },
+    {
       "path": "../../app/layout"
     },
     {
@@ -16,6 +19,18 @@
     },
     {
       "path": "../../app/urls"
+    },
+    {
+      "path": "../../infra/identite-proconnect/database"
+    },
+    {
+      "path": "../../infra/identite-proconnect/lib"
+    },
+    {
+      "path": "../../moderations/repository"
+    },
+    {
+      "path": "../lib"
     },
     {
       "path": "../repository"

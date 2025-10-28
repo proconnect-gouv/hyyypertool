@@ -43,8 +43,8 @@
         "@hono/node-server": "1.19.5",
         "@tailwindcss/cli": "4.1.14",
         "@tailwindcss/typography": "0.5.19",
-        "@~/app.api": "workspace:*",
         "@~/app.core": "workspace:*",
+        "@~/web": "workspace:*",
         "consola": "3.4.2",
         "hono": "4.9.8",
         "tailwindcss": "4.1.14",
@@ -64,34 +64,6 @@
       },
       "devDependencies": {
         "@types/bun": "1.2.21",
-        "@~/config.typescript": "workspace:*",
-      },
-    },
-    "sources/app/api": {
-      "name": "@~/app.api",
-      "version": "1.0.0",
-      "dependencies": {
-        "@hono/node-server": "1.19.5",
-        "@hono/sentry": "1.2.2",
-        "@~/app.core": "workspace:*",
-        "@~/app.layout": "workspace:*",
-        "@~/app.middleware": "workspace:*",
-        "@~/app.sentry": "workspace:*",
-        "@~/auth.api": "workspace:*",
-        "@~/moderations.api": "workspace:*",
-        "@~/organizations.api": "workspace:*",
-        "@~/proxy.api": "workspace:*",
-        "@~/users.api": "workspace:*",
-        "@~/welcome.api": "workspace:*",
-        "@~/zammad.api": "workspace:*",
-        "@~/zammad.lib": "workspace:*",
-        "await-to-js": "3.0.0",
-        "consola": "3.4.2",
-        "hono": "4.9.8",
-        "ts-pattern": "5.8.0",
-        "youch": "3.3.4",
-      },
-      "devDependencies": {
         "@~/config.typescript": "workspace:*",
       },
     },
@@ -400,7 +372,6 @@
       },
       "devDependencies": {
         "@~/config.typescript": "workspace:*",
-        "@~/zammad.lib": "workspace:*",
       },
     },
     "sources/moderations/repository": {
@@ -409,7 +380,6 @@
       "dependencies": {
         "@~/app.core": "workspace:*",
         "@~/identite-proconnect.database": "workspace:*",
-        "@~/moderations.lib": "workspace:*",
         "@~/organizations.lib": "workspace:*",
       },
       "devDependencies": {
@@ -596,6 +566,34 @@
       "devDependencies": {
         "@~/config.typescript": "workspace:*",
         "@~/crisp.lib": "workspace:*",
+      },
+    },
+    "sources/web": {
+      "name": "@~/web",
+      "version": "1.0.0",
+      "dependencies": {
+        "@hono/node-server": "1.19.5",
+        "@hono/sentry": "1.2.2",
+        "@~/app.core": "workspace:*",
+        "@~/app.layout": "workspace:*",
+        "@~/app.middleware": "workspace:*",
+        "@~/app.sentry": "workspace:*",
+        "@~/auth.api": "workspace:*",
+        "@~/moderations.api": "workspace:*",
+        "@~/organizations.api": "workspace:*",
+        "@~/proxy.api": "workspace:*",
+        "@~/users.api": "workspace:*",
+        "@~/welcome.api": "workspace:*",
+        "@~/zammad.api": "workspace:*",
+        "@~/zammad.lib": "workspace:*",
+        "await-to-js": "3.0.0",
+        "consola": "3.4.2",
+        "hono": "4.9.8",
+        "ts-pattern": "5.8.0",
+        "youch": "3.3.4",
+      },
+      "devDependencies": {
+        "@~/config.typescript": "workspace:*",
       },
     },
     "sources/welcome/api": {
@@ -1014,8 +1012,6 @@
 
     "@zootools/email-spell-checker": ["@zootools/email-spell-checker@1.12.0", "", {}, "sha512-yM0lH4yjg+jZG5QubtvpHE+ahSnsHbw9ilnQgKgOF3fk6OBVQLRsEq4NR+/nRvrwG8Vo+29bzKwhXk5y1b/FwA=="],
 
-    "@~/app.api": ["@~/app.api@workspace:sources/app/api"],
-
     "@~/app.core": ["@~/app.core@workspace:sources/app/core"],
 
     "@~/app.layout": ["@~/app.layout@workspace:sources/app/layout"],
@@ -1075,6 +1071,8 @@
     "@~/users.repository": ["@~/users.repository@workspace:sources/users/repository"],
 
     "@~/users.ui": ["@~/users.ui@workspace:sources/users/ui"],
+
+    "@~/web": ["@~/web@workspace:sources/web"],
 
     "@~/welcome.api": ["@~/welcome.api@workspace:sources/welcome/api"],
 

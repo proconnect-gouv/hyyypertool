@@ -5,14 +5,6 @@
     "jsxImportSource": "hono/jsx",
     "skipLibCheck": true
   },
-  "include": [
-    "bin/src",
-    "build.ts",
-    "sources/*/*/*/src/**/*.tsx",
-    "sources/*/*/src/**/*.tsx"
-  ],
-  "references": [
-    { "path": "./sources/app/api/tsconfig.json" },
-    { "path": "./sources/app/core/tsconfig.json" }
-  ]
+  "include": [],
+  "references": [{ "path": "./bin/tsconfig.json" }]
 }

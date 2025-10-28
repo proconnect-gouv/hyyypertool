@@ -7,6 +7,9 @@
   "include": ["src"],
   "references": [
     {
+      "path": "../../app/core"
+    },
+    {
       "path": "../../app/layout"
     },
     {
@@ -28,16 +31,22 @@
       "path": "../../infra/crisp/ui"
     },
     {
+      "path": "../../infra/identite-proconnect/database"
+    },
+    {
+      "path": "../../infra/identite-proconnect/lib"
+    },
+    {
       "path": "../lib"
+    },
+    {
+      "path": "../repository"
     },
     {
       "path": "../ui"
     },
     {
-      "path": "../../infra/identite-proconnect/database"
-    },
-    {
-      "path": "../../infra/identite-proconnect/lib"
+      "path": "../../organizations/lib"
     },
     {
       "path": "../../organizations/repository"
@@ -47,6 +56,9 @@
     },
     {
       "path": "../../users/lib"
+    },
+    {
+      "path": "../../users/repository"
     },
     {
       "path": "../../users/ui"

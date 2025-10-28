@@ -1,12 +1,22 @@
 {
-  "name": "@~/app.api",
+  "name": "@~/web",
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "imports": {
+    "#src/*": "./src/*/index.ts"
+  },
   "exports": {
-    ".": {
-      "default": "./src/index.ts"
-    }
+    "./*": "./src/*/index.ts"
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "rm -rf node_modules/.cache/tsc",
+    "dev:api": "bun x run-z dev:api:clean dev:api:tsc dev:api:cp dev:api:format",
+    "dev:api:clean": "bun run --filter @~/app.urls clean",
+    "dev:api:cp": "cp ./node_modules/.cache/tsc/src/routes/index.d.ts '../app/urls/src/pattern.d.ts'",
+    "dev:api:format": "bun run --filter @~/app.urls format",
+    "dev:api:tsc": "bun run build"
   },
   "dependencies": {
     "@~/app.core": "workspace:*",
@@ -21,8 +31,8 @@
     "@~/welcome.api": "workspace:*",
     "@~/zammad.api": "workspace:*",
     "@~/zammad.lib": "workspace:*",
-    "@hono/sentry": "1.2.2",
     "@hono/node-server": "1.19.5",
+    "@hono/sentry": "1.2.2",
     "await-to-js": "3.0.0",
     "consola": "3.4.2",
     "hono": "4.9.8",

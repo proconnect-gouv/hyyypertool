@@ -6,7 +6,16 @@
   "include": ["src"],
   "references": [
     {
+      "path": "../../app/core"
+    },
+    {
       "path": "../../infra/identite-proconnect/database"
+    },
+    {
+      "path": "../../organizations/lib"
+    },
+    {
+      "path": "../../app/middleware"
     }
   ]
 }

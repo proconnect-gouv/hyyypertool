@@ -7,10 +7,19 @@
   "include": ["src"],
   "references": [
     {
+      "path": "../../app/core"
+    },
+    {
       "path": "../../app/ui"
     },
     {
       "path": "../../app/urls"
+    },
+    {
+      "path": "../../infra/crisp/ui"
+    },
+    {
+      "path": "../../infra/identite-proconnect/lib"
     },
     {
       "path": "../lib"

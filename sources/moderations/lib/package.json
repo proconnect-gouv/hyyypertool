@@ -26,7 +26,6 @@
     "ts-pattern": "5.8.0"
   },
   "devDependencies": {
-    "@~/config.typescript": "workspace:*",
-    "@~/zammad.lib": "workspace:*"
+    "@~/config.typescript": "workspace:*"
   }
 }

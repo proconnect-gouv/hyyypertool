@@ -6,8 +6,7 @@
     "emitDeclarationOnly": true,
     "lib": ["ESNext", "DOM"],
     "noEmit": false,
-    "outDir": "./node_modules/.cache/tsc",
-    "types": []
+    "outDir": "./node_modules/.cache/tsc"
   },
   "references": [
     {

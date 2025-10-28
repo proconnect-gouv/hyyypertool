@@ -6,6 +6,9 @@
   "include": ["src"],
   "references": [
     {
+      "path": "../../app/core"
+    },
+    {
       "path": "../../app/middleware"
     },
     {

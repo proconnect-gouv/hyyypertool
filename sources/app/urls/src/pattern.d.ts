@@ -713,7 +713,7 @@ declare const app: import("hono/hono-base").HonoBase<
                         };
                       } & {
                         query: {
-                          type?: string | string[] | undefined;
+                          type: string | string[];
                         };
                       };
                       output: "OK";

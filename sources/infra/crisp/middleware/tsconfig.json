@@ -5,6 +5,9 @@
   "extends": "@~/config.typescript/bun/tsconfig.json",
   "references": [
     {
+      "path": "../../../app/middleware"
+    },
+    {
       "path": "../lib"
     }
   ]

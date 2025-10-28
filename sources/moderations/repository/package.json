@@ -14,7 +14,6 @@
   "dependencies": {
     "@~/app.core": "workspace:*",
     "@~/identite-proconnect.database": "workspace:*",
-    "@~/moderations.lib": "workspace:*",
     "@~/organizations.lib": "workspace:*"
   },
   "devDependencies": {

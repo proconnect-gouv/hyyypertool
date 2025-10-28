@@ -9,13 +9,25 @@
       "path": "../../app/core"
     },
     {
+      "path": "../../app/middleware"
+    },
+    {
       "path": "../../infra/crisp/lib"
+    },
+    {
+      "path": "../../infra/identite-proconnect/database"
+    },
+    {
+      "path": "../../infra/identite-proconnect/lib"
     },
     {
       "path": "../repository"
     },
     {
-      "path": "../../infra/identite-proconnect/database"
+      "path": "../../organizations/lib"
+    },
+    {
+      "path": "../../users/repository"
     },
     {
       "path": "../../infra/zammad/lib"

@@ -1,7 +1,7 @@
 //
 
-import app from "@~/app.api";
 import config from "@~/app.core/config";
+import app from "@~/web/routes";
 import { LogLevels, consola } from "consola";
 import dotenv from "dotenv";
 import type { ExecutionContext } from "hono";
