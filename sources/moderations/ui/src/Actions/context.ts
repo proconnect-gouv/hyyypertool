@@ -1,6 +1,6 @@
 //
 
-import { hyper_ref } from "@~/app.core/html";
+import { hyper_ref } from "@~/web/html";
 import type { Moderation } from "@~/moderations.lib/entities/Moderation";
 import type { IsUserExternalMemberHandler } from "@~/moderations.lib/usecase/IsUserExternalMember";
 import type { Organization } from "@~/organizations.lib/entities/Organization";

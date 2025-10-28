@@ -1,4 +1,4 @@
-import { hyper_ref } from "@~/app.core/html";
+import { hyper_ref } from "@~/web/html";
 import { validate_form_schema } from "@~/moderations.lib/schema/validate.form";
 import { useContext } from "hono/jsx";
 import { context, valid_context } from "./context";
