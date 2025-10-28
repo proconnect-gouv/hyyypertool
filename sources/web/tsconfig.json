@@ -30,10 +30,13 @@
       "path": "../infra/crisp/middleware"
     },
     {
+      "path": "../infra/crisp/ui"
+    },
+    {
       "path": "../infra/identite-proconnect/database"
     },
     {
-      "path": "../moderations/api"
+      "path": "../infra/identite-proconnect/lib"
     },
     {
       "path": "../moderations/lib"
@@ -42,16 +45,25 @@
       "path": "../moderations/repository"
     },
     {
-      "path": "../organizations/api"
+      "path": "../moderations/ui"
+    },
+    {
+      "path": "../organizations/lib"
     },
     {
       "path": "../organizations/repository"
+    },
+    {
+      "path": "../organizations/ui"
     },
     {
       "path": "../users/lib"
     },
     {
       "path": "../users/repository"
+    },
+    {
+      "path": "../users/ui"
     },
     {
       "path": "../infra/zammad/api"

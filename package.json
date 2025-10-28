@@ -29,7 +29,7 @@
     "e2e:run": "cd e2e && bun run",
     "fixtures:load": "bun x run-z database:identite-proconnect:migrator database:identite-proconnect:seed",
     "format": "bun x prettier --check .",
-    "format:fix": "bun x prettier --write .",
+    "format:fix": "bun x prettier --log-level silent --write .",
     "format:pkg": "bun x sort-package-json ./package.json ./sources/*/package.json ./sources/*/*/package.json ./e2e/package.json",
     "format:tsconfig": "bun x @monorepo-utils/workspaces-to-typescript-project-references && bun run format:fix",
     "postadd": "bun run format:tsconfig",
