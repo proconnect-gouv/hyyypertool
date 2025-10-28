@@ -17,10 +17,6 @@
       "path": "sources/users",
     },
     {
-      "name": "📦 sources/auth/",
-      "path": "sources/auth",
-    },
-    {
       "name": "🏗️ sources/infra/identite-proconnect/",
       "path": "sources/infra/identite-proconnect",
     },

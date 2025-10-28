@@ -6,7 +6,6 @@
   "workspaces": [
     "bin",
     "sources/app/*",
-    "sources/auth/*",
     "sources/config/*",
     "sources/infra/identite-proconnect/*",
     "sources/infra/crisp/*",

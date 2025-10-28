@@ -24,9 +24,6 @@
       "path": "../app/urls"
     },
     {
-      "path": "../auth/api"
-    },
-    {
       "path": "../moderations/api"
     },
     {
