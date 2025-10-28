@@ -39,7 +39,6 @@
     "@~/users.lib": "workspace:*",
     "@~/users.repository": "workspace:*",
     "@~/users.ui": "workspace:*",
-    "@~/zammad.api": "workspace:*",
     "@~/zammad.lib": "workspace:*",
     "@gouvfr-lasuite/proconnect.core": "0.6.0",
     "@hono/node-server": "1.19.5",

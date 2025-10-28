@@ -2,9 +2,9 @@
 
 import { type AppVariables_Context } from "@~/app.core/config";
 import { cache_immutable } from "@~/app.middleware/cache_immutable";
-import zammad_attachment_router from "@~/zammad.api";
 import { Hono } from "hono";
 import { rewriteAssetRequestPath } from "./rewrite";
+import zammad_attachment_router from "./zammad";
 
 //
 
