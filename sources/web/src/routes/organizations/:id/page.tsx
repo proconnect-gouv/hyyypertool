@@ -4,7 +4,7 @@ import { hyper_ref } from "#src/html";
 import { hx_include, hx_trigger_from_body } from "#src/htmx";
 import { FrNumberConverter } from "@~/app.ui/number";
 import { formattedPlural } from "@~/app.ui/plurial";
-import { hx_urls } from "@~/app.urls";
+import { hx_urls } from "#src/urls";
 import { ORGANISATION_EVENTS } from "@~/organizations.lib/event";
 import { usePageRequestContext } from "./context";
 import { Fiche } from "./Fiche";

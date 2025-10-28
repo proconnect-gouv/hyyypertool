@@ -2,7 +2,7 @@
 
 import { type Pagination } from "@~/app.core/schema";
 import type { App_Context } from "@~/app.middleware/context";
-import { urls } from "@~/app.urls";
+import { urls } from "#src/urls";
 import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
 import {
   GetUsersByOrganizationId,

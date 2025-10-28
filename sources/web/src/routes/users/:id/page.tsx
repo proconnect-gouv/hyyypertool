@@ -8,7 +8,7 @@ import { copy_text_content_to_clipboard } from "@~/app.ui/button/scripts";
 import { badge_description_list } from "@~/app.ui/list";
 import { FrNumberConverter } from "@~/app.ui/number";
 import { LocalTime } from "@~/app.ui/time";
-import { hx_urls } from "@~/app.urls";
+import { hx_urls } from "#src/urls";
 import { usePageRequestContext } from "./context";
 
 //

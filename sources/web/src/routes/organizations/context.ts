@@ -6,7 +6,7 @@ import {
   Search_Schema,
 } from "@~/app.core/schema";
 import type { App_Context } from "@~/app.middleware/context";
-import type { urls } from "@~/app.urls";
+import type { urls } from "#src/urls";
 import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
 import { GetOrganizationsList } from "@~/organizations.repository";
 import type { Env, InferRequestType } from "hono";

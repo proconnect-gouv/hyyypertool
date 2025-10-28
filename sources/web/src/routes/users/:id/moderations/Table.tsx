@@ -1,7 +1,7 @@
 //
 
 import { date_to_string } from "#src/time";
-import { urls } from "@~/app.urls";
+import { urls } from "#src/urls";
 import {
   moderation_type_to_emoji,
   moderation_type_to_title,

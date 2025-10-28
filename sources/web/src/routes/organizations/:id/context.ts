@@ -2,7 +2,7 @@
 
 import type { App_Config } from "#src/config";
 import type { App_Context } from "@~/app.middleware/context";
-import { urls } from "@~/app.urls";
+import { urls } from "#src/urls";
 import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
 import { GetBanaticUrl } from "@~/organizations.lib/usecase";
 import {

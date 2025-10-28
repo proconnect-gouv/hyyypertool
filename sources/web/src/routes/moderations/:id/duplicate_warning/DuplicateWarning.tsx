@@ -5,7 +5,7 @@ import { Htmx_Events } from "#src/htmx";
 import { button } from "@~/app.ui/button";
 import { fieldset } from "@~/app.ui/form";
 import { OpenInZammad, SearchInZammad } from "@~/app.ui/zammad/components";
-import { hx_urls, urls } from "@~/app.urls";
+import { hx_urls, urls } from "#src/urls";
 import {
   schema,
   type IdentiteProconnect_PgDatabase,

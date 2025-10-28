@@ -5,7 +5,7 @@ import { Foot } from "@~/app.ui/hx_table";
 import { menu_item } from "@~/app.ui/menu";
 import { Horizontal_Menu } from "@~/app.ui/menu/components";
 import { row } from "@~/app.ui/table";
-import { hx_urls, urls } from "@~/app.urls";
+import { hx_urls, urls } from "#src/urls";
 import {
   Verification_Type_Schema,
   type Verification_Type,

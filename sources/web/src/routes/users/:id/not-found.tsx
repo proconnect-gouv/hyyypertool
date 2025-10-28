@@ -1,7 +1,7 @@
 //
 
 import config from "#src/config";
-import { urls } from "@~/app.urls";
+import { urls } from "#src/urls";
 
 //
 

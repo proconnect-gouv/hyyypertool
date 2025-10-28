@@ -3,7 +3,7 @@
 import config from "#src/config";
 import { Root_Layout } from "@~/app.layout/root";
 import type { App_Context } from "@~/app.middleware/context";
-import { urls } from "@~/app.urls";
+import { urls } from "#src/urls";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 

@@ -6,7 +6,7 @@ import type { Htmx_Header } from "#src/htmx";
 import { Entity_Schema } from "@~/app.core/schema";
 import { Main_Layout } from "@~/app.layout/index";
 import { set_variables } from "@~/app.middleware/context/set_variables";
-import { urls } from "@~/app.urls";
+import { urls } from "#src/urls";
 import { CrispApi } from "@~/crisp.lib/api";
 import { set_crisp_config } from "@~/crisp.middleware";
 import { schema } from "@~/identite-proconnect.database";

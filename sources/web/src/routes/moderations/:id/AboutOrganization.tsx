@@ -1,7 +1,7 @@
 //
 
 import { button } from "@~/app.ui/button";
-import { hx_urls, urls } from "@~/app.urls";
+import { hx_urls, urls } from "#src/urls";
 import { usePageRequestContext } from "./context";
 
 //

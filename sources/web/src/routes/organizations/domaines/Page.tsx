@@ -3,7 +3,7 @@ import { Pagination_Schema } from "@~/app.core/schema";
 import { copy_text_content_to_clipboard } from "@~/app.ui/button/scripts";
 import { Foot } from "@~/app.ui/hx_table";
 import { row } from "@~/app.ui/table";
-import { urls } from "@~/app.urls";
+import { urls } from "#src/urls";
 import {
   GetUnverifiedDomains,
   type GetUnverifiedDomainsDto,

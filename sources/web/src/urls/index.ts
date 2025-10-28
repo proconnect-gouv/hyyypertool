@@ -1,23 +1,13 @@
 //
-// @deprecated This module will be removed after Phase 2.3-2.4 migrations complete.
-// Use @~/web/urls instead for new code.
-//
 
 import { hc } from "hono/client";
-import type { Router } from "./pattern";
+import type { Router } from "../routes";
 
 //
 
-/**
- * @deprecated Use @~/web/urls hx_urls instead
- */
 export { hx_urls } from "./hx_urls";
 
 //
-
-/**
- * @deprecated Use @~/web/urls urls instead
- */
 export const urls = hc<Router>("http://localhost:3000", {
   fetch(input: string | URL | Request) {
     // NOTE(douglasduteil): do not fetch

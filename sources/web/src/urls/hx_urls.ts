@@ -1,14 +1,11 @@
 //
-// @deprecated This module will be removed after Phase 2.3-2.4 migrations complete.
-// Use @~/web/urls instead for new code.
-//
 
 import type { Hono, HonoRequest, Schema } from "hono";
 import { hc } from "hono/client";
 import type { HonoBase } from "hono/hono-base";
 import type { Endpoint } from "hono/types";
 import type { HasRequiredKeys, UnionToIntersection } from "hono/utils/types";
-import type { Router } from "./pattern";
+import type { Router } from "../routes";
 
 //
 type HxClientRequestOptions<T = unknown> = keyof T extends never
@@ -104,9 +101,6 @@ type HxClient<T> =
       : never
     : never;
 
-/**
- * @deprecated Use @~/web/urls hono_hx_attibute instead
- */
 export function hono_hx_attibute<
   T extends Hono<any, any, any>,
 >(): UnionToIntersection<HxClient<T>> {
@@ -130,7 +124,4 @@ export function hono_hx_attibute<
   }) as any;
 }
 
-/**
- * @deprecated Use @~/web/urls hx_urls instead
- */
 export const hx_urls = hono_hx_attibute<Router>();

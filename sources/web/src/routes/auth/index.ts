@@ -6,7 +6,7 @@ import { AuthError } from "#src/errors";
 import { MfaAcrValue_Schema } from "@~/app.core/schema/index";
 import type { App_Context } from "@~/app.middleware/context";
 import type { AgentConnect_UserInfo } from "@~/app.middleware/session";
-import { urls } from "@~/app.urls";
+import { urls } from "#src/urls";
 import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
 import {

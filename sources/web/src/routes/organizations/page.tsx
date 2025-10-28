@@ -7,7 +7,7 @@ import { Pagination_Schema } from "@~/app.core/schema";
 import { Foot } from "@~/app.ui/hx_table";
 import { row } from "@~/app.ui/table";
 import { Time } from "@~/app.ui/time";
-import { hx_urls, urls } from "@~/app.urls";
+import { hx_urls, urls } from "#src/urls";
 import { type GetOrganizationsListDto } from "@~/organizations.repository";
 import { match } from "ts-pattern";
 import { PageQuery_Schema, usePageRequestContext } from "./context";
