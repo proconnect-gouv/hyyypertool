@@ -28,27 +28,33 @@
     "@~/crisp.lib": "workspace:*",
     "@~/crisp.middleware": "workspace:*",
     "@~/identite-proconnect.database": "workspace:*",
+    "@~/identite-proconnect.lib": "workspace:*",
     "@~/moderations.api": "workspace:*",
     "@~/moderations.lib": "workspace:*",
     "@~/moderations.repository": "workspace:*",
-    "@~/organizations.api": "workspace:*",
+    "@~/organizations.lib": "workspace:*",
     "@~/organizations.repository": "workspace:*",
+    "@~/organizations.ui": "workspace:*",
     "@~/users.lib": "workspace:*",
     "@~/users.repository": "workspace:*",
     "@~/zammad.api": "workspace:*",
     "@~/zammad.lib": "workspace:*",
+    "@gouvfr-lasuite/proconnect.core": "0.6.0",
     "@hono/node-server": "1.19.5",
     "@hono/sentry": "1.2.2",
     "@hono/zod-validator": "0.7.4",
     "await-to-js": "3.0.0",
     "consola": "3.4.2",
     "hono": "4.9.8",
+    "lodash.sortby": "4.7.0",
     "openid-client": "6.6.2",
+    "tailwind-variants": "3.1.0",
     "tailwindcss": "4.1.14",
     "ts-pattern": "5.8.0",
     "youch": "3.3.4"
   },
   "devDependencies": {
-    "@~/config.typescript": "workspace:*"
+    "@~/config.typescript": "workspace:*",
+    "@types/lodash.sortby": "4.7.9"
   }
 }
