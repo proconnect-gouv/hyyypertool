@@ -1,4 +1,5 @@
 //
+// @deprecated This module is no longer used. The hyper_ref function was migrated via file-level migrations.
 
 import { createHash } from "node:crypto";
 

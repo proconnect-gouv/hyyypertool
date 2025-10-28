@@ -1,8 +1,9 @@
 //
+/**
+ * HTML utility functions for web package
+ */
 
 import { createHash } from "node:crypto";
-
-//
 
 export function hyper_ref(given_name?: string) {
   const short_sha = createHash("sha1")
