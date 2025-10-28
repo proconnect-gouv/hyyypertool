@@ -1,7 +1,7 @@
 //
 
 import { zValidator } from "@hono/zod-validator";
-import env from "@~/app.core/config";
+import env from "#src/config";
 import { AuthError } from "@~/app.core/error";
 import { MfaAcrValue_Schema } from "@~/app.core/schema/index";
 import type { App_Context } from "@~/app.middleware/context";

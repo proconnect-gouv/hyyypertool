@@ -1,6 +1,6 @@
 //
 
-import config from "@~/app.core/config";
+import config from "#src/config";
 import { Root_Layout } from "@~/app.layout/root";
 import type { App_Context } from "@~/app.middleware/context";
 import { urls } from "@~/app.urls";

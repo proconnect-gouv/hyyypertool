@@ -1,6 +1,6 @@
 //
 
-import type { App_Config } from "@~/app.core/config/index";
+import type { App_Config } from "#src/config";
 import type { App_Context } from "@~/app.middleware/context";
 import { urls } from "@~/app.urls";
 import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";

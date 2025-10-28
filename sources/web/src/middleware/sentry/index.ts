@@ -12,7 +12,7 @@ import {
   startSpan,
   withScope,
 } from "@sentry/node";
-import config from "@~/app.core/config";
+import config from "#src/config";
 import consola, { LogLevels } from "consola";
 import type { Env } from "hono";
 import { createMiddleware } from "hono/factory";

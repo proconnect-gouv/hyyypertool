@@ -1,6 +1,6 @@
 //
 
-import env from "@~/app.core/config";
+import env from "#src/config";
 
 //
 

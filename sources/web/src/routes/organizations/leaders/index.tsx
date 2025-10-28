@@ -1,7 +1,7 @@
 //
 
 import { zValidator } from "@hono/zod-validator";
-import env from "@~/app.core/config";
+import env from "#src/config";
 import { button } from "@~/app.ui/button";
 import consola from "consola";
 import { Hono } from "hono";

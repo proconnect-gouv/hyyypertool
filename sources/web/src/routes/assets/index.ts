@@ -1,6 +1,6 @@
 //
 
-import { type AppVariables_Context } from "@~/app.core/config";
+import { type AppVariables_Context } from "#src/config";
 import { cache_immutable } from "@~/app.middleware/cache_immutable";
 import { Hono } from "hono";
 import { rewriteAssetRequestPath } from "./rewrite";

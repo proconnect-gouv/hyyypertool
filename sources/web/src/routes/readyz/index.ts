@@ -1,6 +1,6 @@
 //
 
-import env from "@~/app.core/config";
+import env from "#src/config";
 import { set_identite_pg_database } from "@~/app.middleware/set_identite_pg";
 import { get_zammad_me } from "@~/zammad.lib";
 import { to } from "await-to-js";

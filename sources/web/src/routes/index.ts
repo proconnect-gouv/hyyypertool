@@ -1,7 +1,7 @@
 //
 
 import { set_sentry } from "#src/middleware/sentry";
-import config from "@~/app.core/config";
+import config from "#src/config";
 import { Root_Layout } from "@~/app.layout/root";
 import { hyyyyyypertool_session } from "@~/app.middleware/session";
 import { set_config } from "@~/app.middleware/set_config";

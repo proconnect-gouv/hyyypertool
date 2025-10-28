@@ -1,6 +1,6 @@
 //
 
-import type { AppEnv_Context } from "@~/app.core/config";
+import type { AppEnv_Context } from "#src/config";
 import type { App_Context } from "@~/app.middleware/context";
 import type { Context } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";

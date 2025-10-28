@@ -318,7 +318,6 @@
         "@~/moderations.lib": "workspace:*",
         "@~/organizations.lib": "workspace:*",
         "@~/users.lib": "workspace:*",
-        "@~/web": "workspace:*",
         "hono": "4.9.8",
         "tailwind-variants": "3.1.0",
         "ts-dedent": "2.2.0",
