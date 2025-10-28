@@ -18,9 +18,6 @@
       "path": "../app/ui"
     },
     {
-      "path": "../app/urls"
-    },
-    {
       "path": "../infra/crisp/lib"
     },
     {

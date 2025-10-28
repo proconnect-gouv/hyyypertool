@@ -23,7 +23,6 @@
     "@~/app.layout": "workspace:*",
     "@~/app.middleware": "workspace:*",
     "@~/app.ui": "workspace:*",
-    "@~/app.urls": "workspace:*",
     "@~/crisp.lib": "workspace:*",
     "@~/crisp.middleware": "workspace:*",
     "@~/crisp.ui": "workspace:*",
