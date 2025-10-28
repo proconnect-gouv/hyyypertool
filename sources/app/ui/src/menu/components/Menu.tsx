@@ -1,9 +1,24 @@
 //
 
-import { hyper_ref } from "@~/app.core/html";
+import { createHash } from "node:crypto";
 import { createSlot } from "hono-slotify";
 import type { JSX, PropsWithChildren } from "hono/jsx";
 import { Popover } from "./Popover";
+
+//
+
+/**
+ * @deprecated use @~/web/html after app.ui migration
+ */
+function hyper_ref(given_name?: string) {
+  const short_sha = createHash("sha1")
+    .update(crypto.randomUUID())
+    .digest("hex")
+    .slice(0, 8);
+  return given_name
+    ? `hyyyper_${given_name}_${short_sha}`
+    : `hyyyper_${short_sha}`;
+}
 
 //
 

@@ -1,9 +1,15 @@
 //
 
-import { Htmx_Events } from "@~/app.core/htmx";
 import type { Child, PropsWithChildren } from "hono/jsx";
 import type { VariantProps } from "tailwind-variants";
 import { toast } from "../index";
+
+//
+
+/**
+ * @deprecated use @~/web/htmx after app.ui migration
+ */
+const HTMX_RESPONSE_ERROR = "htmx:responseError";
 
 //
 
@@ -76,7 +82,7 @@ export function ToasterContainer() {
       </template>
       <template
         _={`
-          on every ${Htmx_Events.enum.responseError} from body
+          on every ${HTMX_RESPONSE_ERROR} from body
             render me then put it after me
           `}
       >
