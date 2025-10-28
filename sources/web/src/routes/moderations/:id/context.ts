@@ -1,6 +1,6 @@
 //
 
-import type { App_Config } from "#src/config/index";
+import type { App_Config } from "#src/config";
 import { z_email_domain } from "@~/app.core/schema/z_email_domain";
 import type { App_Context } from "@~/app.middleware/context";
 import { urls } from "@~/app.urls";
