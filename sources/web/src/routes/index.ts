@@ -10,11 +10,11 @@ import { set_userinfo } from "@~/app.middleware/set_userinfo";
 import { set_sentry } from "@~/app.sentry";
 import moderations_router from "@~/moderations.api";
 import organizations_router from "@~/organizations.api";
-import users_router from "@~/users.api";
 import consola from "consola";
 import { Hono } from "hono";
 import auth_router from "./auth";
 import proxy_router from "./proxy";
+import users_router from "./users";
 import welcome_router from "./welcome";
 // TODO: Re-enable compression when Bun supports CompressionStream
 // import { compress } from "hono/compress";

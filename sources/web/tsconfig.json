@@ -24,13 +24,34 @@
       "path": "../app/urls"
     },
     {
+      "path": "../infra/crisp/lib"
+    },
+    {
+      "path": "../infra/crisp/middleware"
+    },
+    {
+      "path": "../infra/identite-proconnect/database"
+    },
+    {
       "path": "../moderations/api"
+    },
+    {
+      "path": "../moderations/lib"
+    },
+    {
+      "path": "../moderations/repository"
     },
     {
       "path": "../organizations/api"
     },
     {
-      "path": "../users/api"
+      "path": "../organizations/repository"
+    },
+    {
+      "path": "../users/lib"
+    },
+    {
+      "path": "../users/repository"
     },
     {
       "path": "../infra/zammad/api"
