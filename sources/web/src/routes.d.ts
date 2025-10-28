@@ -223,8 +223,8 @@ declare const app: import("hono/hono-base").HonoBase<
                         };
                       } & {
                         query: {
-                          user_id: string;
                           organization_id: string;
+                          user_id: string;
                         };
                       };
                       output: {};

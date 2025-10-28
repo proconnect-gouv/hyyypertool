@@ -8,6 +8,7 @@
     "hyyypertool-bun": "./src/bun/index.ts"
   },
   "scripts": {
+    "clean": "rm -rf node_modules/.cache/tsc public/built",
     "dev:bun": "bun run --hot src/bun/index.ts",
     "start:node": "tsx src/node/index.ts",
     "start:bun": "bun run src/bun/index.ts"

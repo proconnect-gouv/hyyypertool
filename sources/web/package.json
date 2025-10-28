@@ -13,9 +13,9 @@
     "build": "tsc --build",
     "clean": "rm -rf node_modules/.cache/tsc",
     "dev:api": "bun x run-z dev:api:clean dev:api:tsc dev:api:cp dev:api:format",
-    "dev:api:clean": "bun run --filter @~/app.urls clean",
-    "dev:api:cp": "cp ./node_modules/.cache/tsc/src/routes/index.d.ts '../app/urls/src/pattern.d.ts'",
-    "dev:api:format": "bun run --filter @~/app.urls format",
+    "dev:api:clean": "rm src/routes.d.ts",
+    "dev:api:cp": "cp ./node_modules/.cache/tsc/src/routes/index.d.ts 'src/routes.d.ts'",
+    "dev:api:format": "prettier --write src/routes.d.ts",
     "dev:api:tsc": "bun run build"
   },
   "dependencies": {
@@ -57,6 +57,7 @@
   },
   "devDependencies": {
     "@~/config.typescript": "workspace:*",
-    "@types/lodash.sortby": "4.7.9"
+    "@types/lodash.sortby": "4.7.9",
+    "prettier": "3.6.2"
   }
 }
