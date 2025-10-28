@@ -1,7 +1,17 @@
 //
 
-import { date_to_string } from "@~/app.core/date/date_format";
 import type { PropsWithChildren } from "hono/jsx";
+
+//
+
+/**
+ * @deprecated use @~/web/time after app.ui migration
+ */
+function date_to_string(date: Date | undefined | null) {
+  return date
+    ? `${date.toLocaleDateString("fr-FR")} ${date.toLocaleTimeString("fr-FR")} `
+    : "";
+}
 
 //
 

@@ -118,7 +118,6 @@
       "name": "@~/app.ui",
       "version": "1.0.0",
       "dependencies": {
-        "@~/app.core": "workspace:*",
         "@~/app.urls": "workspace:*",
         "hono": "4.9.8",
         "hono-slotify": "workspace:*",
@@ -463,6 +462,7 @@
       "devDependencies": {
         "@types/lodash.sortby": "4.7.9",
         "@~/config.typescript": "workspace:*",
+        "prettier": "3.6.2",
       },
     },
   },

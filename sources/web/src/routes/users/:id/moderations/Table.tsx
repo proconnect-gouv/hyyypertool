@@ -1,6 +1,6 @@
 //
 
-import { date_to_string } from "@~/app.core/date/date_format";
+import { date_to_string } from "#src/time";
 import { urls } from "@~/app.urls";
 import {
   moderation_type_to_emoji,

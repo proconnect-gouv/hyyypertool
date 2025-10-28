@@ -9,10 +9,10 @@
     }
   },
   "scripts": {
+    "clean": "rm -rf node_modules/.cache/tsc",
     "test": "bun test"
   },
   "dependencies": {
-    "@~/app.core": "workspace:*",
     "@~/app.urls": "workspace:*",
     "hono": "4.9.8",
     "hono-slotify": "workspace:*",

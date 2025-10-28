@@ -1,6 +1,6 @@
 //
 
-import { date_to_dom_string } from "@~/app.core/date/date_format";
+import { date_to_dom_string } from "#src/time";
 import { hyper_ref } from "@~/app.core/html";
 import { hx_include } from "@~/app.core/htmx";
 import { Pagination_Schema } from "@~/app.core/schema";

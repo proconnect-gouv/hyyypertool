@@ -19,6 +19,7 @@
     }
   },
   "scripts": {
+    "clean": "rm -rf node_modules/.cache/tsc",
     "test": "bun test"
   },
   "dependencies": {

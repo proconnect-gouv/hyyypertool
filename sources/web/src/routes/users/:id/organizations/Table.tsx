@@ -1,6 +1,6 @@
 //
 
-import { date_to_dom_string } from "@~/app.core/date/date_format";
+import { date_to_dom_string } from "#src/time";
 import { hx_include } from "@~/app.core/htmx";
 import { Foot } from "@~/app.ui/hx_table";
 import { notice } from "@~/app.ui/notice";
