@@ -13,9 +13,9 @@ import moderations_router from "@~/moderations.api";
 import organizations_router from "@~/organizations.api";
 import proxy_router from "@~/proxy.api";
 import users_router from "@~/users.api";
-import welcome_router from "@~/welcome.api";
 import consola from "consola";
 import { Hono } from "hono";
+import welcome_router from "./welcome";
 // TODO: Re-enable compression when Bun supports CompressionStream
 // import { compress } from "hono/compress";
 import { contextStorage } from "hono/context-storage";

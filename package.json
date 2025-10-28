@@ -15,7 +15,6 @@
     "sources/organizations/*",
     "sources/proxy/*",
     "sources/users/*",
-    "sources/welcome/*",
     "sources/web",
     "packages/hono-slotify"
   ],

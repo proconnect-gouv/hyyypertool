@@ -18,10 +18,13 @@
       "path": "../app/sentry"
     },
     {
-      "path": "../auth/api"
+      "path": "../app/ui"
     },
     {
       "path": "../app/urls"
+    },
+    {
+      "path": "../auth/api"
     },
     {
       "path": "../moderations/api"
@@ -34,9 +37,6 @@
     },
     {
       "path": "../users/api"
-    },
-    {
-      "path": "../welcome/api"
     },
     {
       "path": "../infra/zammad/api"

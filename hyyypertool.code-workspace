@@ -21,10 +21,6 @@
       "path": "sources/auth",
     },
     {
-      "name": "📦 sources/welcome/",
-      "path": "sources/welcome",
-    },
-    {
       "name": "📦 sources/proxy/",
       "path": "sources/proxy",
     },
