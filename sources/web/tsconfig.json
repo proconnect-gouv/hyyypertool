@@ -9,7 +9,7 @@
       "path": "../app/core"
     },
     {
-      "path": "../app/layout"
+      "path": "../core"
     },
     {
       "path": "../app/middleware"

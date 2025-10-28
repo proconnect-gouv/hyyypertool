@@ -20,10 +20,9 @@
   },
   "dependencies": {
     "@~/app.core": "workspace:*",
-    "@~/app.layout": "workspace:*",
-    "@~/core": "workspace:*",
     "@~/app.middleware": "workspace:*",
     "@~/app.ui": "workspace:*",
+    "@~/core": "workspace:*",
     "@~/crisp.lib": "workspace:*",
     "@~/crisp.middleware": "workspace:*",
     "@~/crisp.ui": "workspace:*",
@@ -48,6 +47,7 @@
     "consola": "3.4.2",
     "hono": "4.9.8",
     "lodash.sortby": "4.7.0",
+    "nprogress": "0.2.0",
     "openid-client": "6.6.2",
     "static-path": "0.0.4",
     "tailwind-variants": "3.1.0",
@@ -59,6 +59,7 @@
   "devDependencies": {
     "@~/config.typescript": "workspace:*",
     "@types/lodash.sortby": "4.7.9",
+    "@types/nprogress": "0.2.3",
     "prettier": "3.6.2"
   }
 }

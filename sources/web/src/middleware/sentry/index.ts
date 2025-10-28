@@ -1,3 +1,4 @@
+import config from "#src/config";
 import {
   SEMANTIC_ATTRIBUTE_SENTRY_ORIGIN,
   SEMANTIC_ATTRIBUTE_SENTRY_SOURCE,
@@ -12,7 +13,6 @@ import {
   startSpan,
   withScope,
 } from "@sentry/node";
-import config from "#src/config";
 import consola, { LogLevels } from "consola";
 import type { Env } from "hono";
 import { createMiddleware } from "hono/factory";

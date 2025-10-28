@@ -1,6 +1,6 @@
 //
 
-import { Htmx_Events } from "@~/app.core/htmx";
+import { Htmx_Events } from "#src/htmx";
 import type { App_Context } from "@~/app.middleware/context";
 import { html, raw } from "hono/html";
 import type { PropsWithChildren } from "hono/jsx";
@@ -147,7 +147,7 @@ export function Root_Layout({ children }: PropsWithChildren) {
 
       <script
         nonce="${nonce}"
-        src="${config.PUBLIC_ASSETS_PATH}/app/layout/src/_client/nprogress.js"
+        src="${config.PUBLIC_ASSETS_PATH}/web/src/layouts/_client/nprogress.js"
         type="module"
       ></script>
 

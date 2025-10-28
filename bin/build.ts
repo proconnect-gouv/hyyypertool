@@ -30,7 +30,7 @@ if (shouldSkipBuild) {
 {
   const { logs, outputs, success } = await Bun.build({
     entrypoints: [
-      "../sources/app/layout/src/_client/nprogress.ts",
+      "../sources/web/src/layouts/_client/nprogress.ts",
       "../sources/web/src/routes/welcome/_client/hyyypertitle.ts",
     ],
     external: ["@~/app.core/config"],

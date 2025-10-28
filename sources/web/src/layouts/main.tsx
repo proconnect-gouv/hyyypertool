@@ -1,9 +1,9 @@
 //
 
-import { z_username } from "@~/app.core/schema/z_username";
+import { urls } from "#src/urls";
 import type { UserInfoVariables_Context } from "@~/app.middleware/set_userinfo";
 import { ToasterContainer } from "@~/app.ui/toast/components";
-import { urls } from "@~/app.urls";
+import { z_username } from "@~/core/schema";
 import type { PropsWithChildren } from "hono/jsx";
 import { useRequestContext } from "hono/jsx-renderer";
 import { Root_Layout } from "./root";

@@ -1,6 +1,10 @@
 {
   "folders": [
     {
+      "name": "🈸 sources/core/",
+      "path": "sources/core",
+    },
+    {
       "name": "🈸 sources/web/",
       "path": "sources/web",
     },

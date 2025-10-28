@@ -2,9 +2,7 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
-    "lib": [
-      "DOM"
-    ],
+    "lib": ["DOM"],
     "outDir": "./node_modules/.cache/tsc"
   },
   "extends": "@~/config.typescript/tsx/tsconfig.json",
