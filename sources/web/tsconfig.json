@@ -15,9 +15,6 @@
       "path": "../app/middleware"
     },
     {
-      "path": "../app/sentry"
-    },
-    {
       "path": "../app/ui"
     },
     {

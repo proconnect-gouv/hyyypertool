@@ -101,11 +101,11 @@
       "version": "1.0.0",
       "dependencies": {
         "@~/app.core": "workspace:*",
-        "@~/app.sentry": "workspace:*",
         "@~/app.ui": "workspace:*",
         "@~/app.urls": "workspace:*",
         "@~/identite-proconnect.database": "workspace:*",
         "@~/identite-proconnect.lib": "workspace:*",
+        "@~/web": "workspace:*",
         "hono": "4.9.8",
         "hono-sessions": "0.8.0",
         "openid-client": "6.6.2",
@@ -275,20 +275,6 @@
         "pg": "8.16.3",
       },
     },
-    "sources/infra/zammad/api": {
-      "name": "@~/zammad.api",
-      "version": "1.0.0",
-      "dependencies": {
-        "@hono/zod-validator": "0.7.4",
-        "@~/app.core": "workspace:*",
-        "@~/zammad.lib": "workspace:*",
-        "hono": "4.9.8",
-        "ts-pattern": "5.8.0",
-      },
-      "devDependencies": {
-        "@~/config.typescript": "workspace:*",
-      },
-    },
     "sources/infra/zammad/lib": {
       "name": "@~/zammad.lib",
       "version": "1.0.0",
@@ -454,10 +440,10 @@
         "@hono/node-server": "1.19.5",
         "@hono/sentry": "1.2.2",
         "@hono/zod-validator": "0.7.4",
+        "@sentry/node": "10.22.0",
         "@~/app.core": "workspace:*",
         "@~/app.layout": "workspace:*",
         "@~/app.middleware": "workspace:*",
-        "@~/app.sentry": "workspace:*",
         "@~/app.ui": "workspace:*",
         "@~/app.urls": "workspace:*",
         "@~/crisp.lib": "workspace:*",
@@ -942,8 +928,6 @@
     "@~/users.ui": ["@~/users.ui@workspace:sources/users/ui"],
 
     "@~/web": ["@~/web@workspace:sources/web"],
-
-    "@~/zammad.api": ["@~/zammad.api@workspace:sources/infra/zammad/api"],
 
     "@~/zammad.lib": ["@~/zammad.lib@workspace:sources/infra/zammad/lib"],
 

@@ -1,7 +1,7 @@
 //
 
 import type { AppVariables_Context } from "@~/app.core/config";
-import type { SentryVariables_Context } from "@~/app.sentry";
+import type { SentryVariables_Context } from "@~/web/middleware";
 import type { Csp_Context } from "./csp_headers";
 import type { Session_Context } from "./session";
 import type { IdentiteProconnect_Pg_Context } from "./set_identite_pg";
