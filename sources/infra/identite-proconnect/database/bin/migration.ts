@@ -1,10 +1,7 @@
 //
 
-import consola, { LogLevels } from "consola";
-import { drizzle } from "drizzle-orm/node-postgres";
-import { migrate } from "drizzle-orm/node-postgres/migrator";
+import { migrate } from "@proconnect-gouv/proconnect.identite.database/pg/migrator";
 import { Client } from "pg";
-import * as schema from "../src/drizzle/schema";
 
 export const connection = new Client({
   connectionString:
@@ -13,11 +10,6 @@ export const connection = new Client({
 });
 await connection.connect();
 
-const db = drizzle(connection, {
-  schema,
-  logger: consola.level >= LogLevels.verbose,
-});
-
-await migrate(db, { migrationsFolder: "src/drizzle" });
+await migrate(connection);
 
 await connection.end();
