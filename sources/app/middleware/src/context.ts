@@ -1,17 +1,18 @@
 //
+// Compatibility shim - type definitions only
+// Domain packages use these types but shouldn't import from middleware
+// TODO: Refactor domain libs to accept domain-specific types instead of middleware context
 
 import type { Scope } from "@sentry/core";
-import type { AppVariables_Context } from "@~/app.core/config";
 import type { Env } from "hono";
 import type { Session } from "hono-sessions";
 import type { UserInfoResponse } from "openid-client";
-import type { Csp_Context } from "./csp_headers";
-import type { IdentiteProconnect_Pg_Context } from "./set_identite_pg";
 
 //
 
 /**
- * @deprecated use web version after this file migration
+ * @deprecated Domain libs should not depend on middleware context
+ * Use domain-specific parameter types instead
  */
 export interface AgentConnect_UserInfo extends UserInfoResponse {
   sub: string;
@@ -23,7 +24,7 @@ export interface AgentConnect_UserInfo extends UserInfoResponse {
 }
 
 /**
- * @deprecated use web version after this file migration
+ * @deprecated Domain libs should not depend on middleware context
  */
 interface SessionKeyMapping {
   userinfo?: AgentConnect_UserInfo;
@@ -35,7 +36,7 @@ interface SessionKeyMapping {
 //
 
 /**
- * @deprecated use web version after this file migration
+ * @deprecated Domain libs should not depend on middleware context
  */
 export interface Session_Context extends Env {
   Variables: {
@@ -50,25 +51,7 @@ export interface Session_Context extends Env {
 }
 
 /**
- * @deprecated use web version after this file migration
- */
-export interface NonceVariables_Context extends Env {
-  Variables: {
-    readonly nonce: string;
-  };
-}
-
-/**
- * @deprecated use web version after this file migration
- */
-export interface UserInfoVariables_Context extends Env {
-  Variables: {
-    userinfo: AgentConnect_UserInfo;
-  };
-}
-
-/**
- * @deprecated use web version after this file migration
+ * @deprecated Domain libs should not depend on middleware context
  */
 export interface SentryVariables_Context extends Env {
   Variables: {
@@ -76,10 +59,43 @@ export interface SentryVariables_Context extends Env {
     sentry_trace_meta_tags: string;
   };
 }
-export type App_Context = AppVariables_Context &
+
+/**
+ * @deprecated Domain libs should not depend on middleware context
+ */
+export interface AppVariables_Context extends Env {
+  Variables: {
+    readonly nonce: string;
+    readonly page_title: string;
+    readonly config: any;
+  };
+}
+
+/**
+ * @deprecated Domain libs should not depend on middleware context
+ */
+export interface Csp_Context extends Env {
+  Variables: {
+    csp_headers: Record<string, string>;
+  };
+}
+
+/**
+ * @deprecated Domain libs should not depend on middleware context
+ */
+export interface IdentiteProconnect_Pg_Context extends Env {
+  Bindings: {
+    database: any;
+  };
+}
+
+/**
+ * @deprecated Domain libs should not depend on middleware context
+ */
+export type App_Context = Session_Context &
+  SentryVariables_Context &
+  AppVariables_Context &
   Csp_Context &
-  IdentiteProconnect_Pg_Context &
-  NonceVariables_Context &
-  Session_Context &
-  UserInfoVariables_Context &
-  SentryVariables_Context;
+  IdentiteProconnect_Pg_Context;
+
+export { set_variables } from "./context/set_variables";
