@@ -36,9 +36,6 @@
       "path": "../moderations/repository"
     },
     {
-      "path": "../moderations/ui"
-    },
-    {
       "path": "../organizations/lib"
     },
     {

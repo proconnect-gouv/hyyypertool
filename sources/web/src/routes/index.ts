@@ -7,7 +7,7 @@ import { set_config } from "@~/app.middleware/set_config";
 import { set_identite_pg_database } from "@~/app.middleware/set_identite_pg";
 import { set_nonce } from "@~/app.middleware/set_nonce";
 import { set_userinfo } from "@~/app.middleware/set_userinfo";
-import { Root_Layout } from "@~/web/layouts";
+import { Root_Layout } from "#src/layouts";
 import consola from "consola";
 import { Hono } from "hono";
 import auth_router from "./auth";

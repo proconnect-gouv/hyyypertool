@@ -1,7 +1,7 @@
 //
 
 import { zValidator } from "@hono/zod-validator";
-import { Main_Layout } from "@~/web/layouts";
+import { Main_Layout } from "#src/layouts";
 import { authorized } from "@~/app.middleware/authorized";
 import { set_variables } from "@~/app.middleware/context/set_variables";
 import { Hono } from "hono";

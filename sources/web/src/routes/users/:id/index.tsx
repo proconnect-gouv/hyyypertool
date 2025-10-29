@@ -5,7 +5,7 @@ import type { Htmx_Header } from "#src/htmx";
 import { urls } from "#src/urls";
 import { Entity_Schema } from "@~/core/schema";
 import { zValidator } from "@hono/zod-validator";
-import { Main_Layout } from "@~/web/layouts";
+import { Main_Layout } from "#src/layouts";
 import { set_variables } from "@~/app.middleware/context/set_variables";
 import { CrispApi } from "@~/crisp.lib/api";
 import { set_crisp_config } from "@~/crisp.middleware";

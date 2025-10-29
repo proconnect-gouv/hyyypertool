@@ -3,7 +3,7 @@
 import { NotFoundError } from "#src/errors";
 import { Entity_Schema } from "@~/core/schema";
 import { zValidator } from "@hono/zod-validator";
-import { Main_Layout } from "@~/web/layouts";
+import { Main_Layout } from "#src/layouts";
 import { set_variables } from "@~/app.middleware/context/set_variables";
 import { moderation_type_to_title } from "@~/moderations.lib/moderation_type.mapper";
 import { Hono } from "hono";

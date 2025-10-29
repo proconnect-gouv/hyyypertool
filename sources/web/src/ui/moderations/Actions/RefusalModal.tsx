@@ -1,4 +1,4 @@
-import { AUTO_GO_BACK_EVENT } from "#ui/AutoGoBack";
+import { AUTO_GO_BACK_EVENT } from "../AutoGoBack";
 import { Htmx_Events, hx_disabled_form_elements } from "@~/app.core/htmx";
 import { button } from "@~/app.ui/button";
 import { hx_urls } from "@~/app.urls";

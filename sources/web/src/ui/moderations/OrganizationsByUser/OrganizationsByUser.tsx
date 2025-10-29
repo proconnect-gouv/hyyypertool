@@ -7,7 +7,7 @@ import { hx_urls } from "@~/app.urls";
 import { ORGANISATION_EVENTS } from "@~/organizations.lib/event";
 import type { User } from "@~/users.lib/entities/User";
 import type { CountUserMembershipsHandler } from "@~/users.lib/usecase/CountUserMemberships";
-import { hyper_ref } from "@~/web/html";
+import { hyper_ref } from "#src/html";
 
 //
 

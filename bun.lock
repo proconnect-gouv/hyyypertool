@@ -205,27 +205,6 @@
         "@~/crisp.lib": "workspace:*",
       },
     },
-    "sources/infra/crisp/ui": {
-      "name": "@~/crisp.ui",
-      "version": "1.0.0",
-      "dependencies": {
-        "@~/app.ui": "workspace:*",
-        "@~/crisp.lib": "workspace:*",
-        "hono": "4.9.8",
-        "rehype-sanitize": "6.0.0",
-        "rehype-stringify": "10.0.1",
-        "remark-parse": "11.0.0",
-        "remark-rehype": "11.1.2",
-        "tailwind-variants": "3.1.0",
-        "tailwindcss": "4.1.14",
-        "ts-pattern": "5.8.0",
-        "unified": "11.0.5",
-      },
-      "devDependencies": {
-        "@~/config.tailwindcss": "workspace:*",
-        "@~/config.typescript": "workspace:*",
-      },
-    },
     "sources/infra/identite-proconnect/database": {
       "name": "@~/identite-proconnect.database",
       "version": "1.0.0",
@@ -303,29 +282,6 @@
       "devDependencies": {
         "@~/app.middleware": "workspace:*",
         "@~/config.typescript": "workspace:*",
-      },
-    },
-    "sources/moderations/ui": {
-      "name": "@~/moderations.ui",
-      "version": "1.0.0",
-      "dependencies": {
-        "@~/app.core": "workspace:*",
-        "@~/app.ui": "workspace:*",
-        "@~/app.urls": "workspace:*",
-        "@~/crisp.ui": "workspace:*",
-        "@~/identite-proconnect.lib": "workspace:*",
-        "@~/moderations.lib": "workspace:*",
-        "@~/organizations.lib": "workspace:*",
-        "@~/users.lib": "workspace:*",
-        "hono": "4.9.8",
-        "tailwind-variants": "3.1.0",
-        "ts-dedent": "2.2.0",
-        "ts-pattern": "5.8.0",
-        "type-fest": "5.0.1",
-      },
-      "devDependencies": {
-        "@~/config.typescript": "workspace:*",
-        "@~/crisp.lib": "workspace:*",
       },
     },
     "sources/organizations/lib": {
@@ -437,7 +393,6 @@
         "@~/identite-proconnect.lib": "workspace:*",
         "@~/moderations.lib": "workspace:*",
         "@~/moderations.repository": "workspace:*",
-        "@~/moderations.ui": "workspace:*",
         "@~/organizations.lib": "workspace:*",
         "@~/organizations.repository": "workspace:*",
         "@~/organizations.ui": "workspace:*",
@@ -460,6 +415,7 @@
         "tailwindcss": "4.1.14",
         "ts-dedent": "2.2.0",
         "ts-pattern": "5.8.0",
+        "type-fest": "5.0.1",
         "unified": "11.0.5",
         "youch": "3.3.4",
       },
@@ -894,8 +850,6 @@
 
     "@~/crisp.middleware": ["@~/crisp.middleware@workspace:sources/infra/crisp/middleware"],
 
-    "@~/crisp.ui": ["@~/crisp.ui@workspace:sources/infra/crisp/ui"],
-
     "@~/identite-proconnect.database": ["@~/identite-proconnect.database@workspace:sources/infra/identite-proconnect/database"],
 
     "@~/identite-proconnect.lib": ["@~/identite-proconnect.lib@workspace:sources/infra/identite-proconnect/lib"],
@@ -903,8 +857,6 @@
     "@~/moderations.lib": ["@~/moderations.lib@workspace:sources/moderations/lib"],
 
     "@~/moderations.repository": ["@~/moderations.repository@workspace:sources/moderations/repository"],
-
-    "@~/moderations.ui": ["@~/moderations.ui@workspace:sources/moderations/ui"],
 
     "@~/organizations.lib": ["@~/organizations.lib@workspace:sources/organizations/lib"],
 

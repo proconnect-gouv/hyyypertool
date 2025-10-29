@@ -1,6 +1,6 @@
 //
 
-import { hyper_ref } from "@~/web/html";
+import { hyper_ref } from "#src/html";
 import { z_email_domain } from "@~/app.core/schema/z_email_domain";
 import { AcceptModal } from "./AcceptModal";
 import { context, type Values } from "./context";

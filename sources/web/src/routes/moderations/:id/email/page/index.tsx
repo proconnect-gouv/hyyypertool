@@ -1,7 +1,7 @@
 //
 
-import { Crisp } from "@~/moderations.ui/Crisp";
-import { FindCorrespondingEmail } from "@~/moderations.ui/FindCorrespondingEmail";
+import { Crisp } from "#src/ui/moderations/Crisp";
+import { FindCorrespondingEmail } from "#src/ui/moderations/FindCorrespondingEmail";
 import { match, P } from "ts-pattern";
 import { usePageRequestContext } from "./context";
 import Zammad from "./Zammad";

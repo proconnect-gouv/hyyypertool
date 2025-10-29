@@ -4,7 +4,7 @@ import { callout } from "@~/app.ui/callout";
 import { OpenInCrisp, short_session_id } from "@~/app.ui/links";
 import { LocalTime } from "@~/app.ui/time";
 import type { Config } from "@~/crisp.lib/types";
-import { Message } from "@~/crisp.ui/message";
+import { Message } from "../../crisp";
 import type { GetCripsFromSessionIdHandler } from "@~/moderations.lib/usecase/GetCripsFromSessionId";
 import { createContext, useContext } from "hono/jsx";
 import { match } from "ts-pattern";

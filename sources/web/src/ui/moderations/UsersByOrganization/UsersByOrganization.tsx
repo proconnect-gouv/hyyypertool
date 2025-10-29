@@ -6,7 +6,7 @@ import { formattedPlural } from "@~/app.ui/plurial";
 import { hx_urls } from "@~/app.urls";
 import type { Organization } from "@~/organizations.lib/entities/Organization";
 import { ORGANISATION_EVENTS } from "@~/organizations.lib/event";
-import { hyper_ref } from "@~/web/html";
+import { hyper_ref } from "#src/html";
 import { match, P } from "ts-pattern";
 
 //

@@ -1,6 +1,6 @@
 //
 
-import { MessageInfo } from "#ui/MessageInfo";
+import { MessageInfo } from "../MessageInfo";
 import { button } from "@~/app.ui/button";
 import { callout } from "@~/app.ui/callout";
 import { notice } from "@~/app.ui/notice";

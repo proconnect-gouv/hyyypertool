@@ -2,7 +2,7 @@
 
 import config from "#src/config";
 import { urls } from "#src/urls";
-import { Root_Layout } from "@~/web/layouts";
+import { Root_Layout } from "#src/layouts";
 import type { App_Context } from "@~/app.middleware/context";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
