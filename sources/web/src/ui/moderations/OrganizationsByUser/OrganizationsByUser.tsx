@@ -1,10 +1,10 @@
 //
 
 import { hyper_ref } from "#src/html";
+import { hx_include, hx_trigger_from_body } from "#src/htmx";
 import { Loader } from "#src/ui/loader";
 import { formattedPlural } from "#src/ui/plurial";
-import { hx_include, hx_trigger_from_body } from "@~/app.core/htmx";
-import { hx_urls } from "@~/app.urls";
+import { hx_urls } from "#src/urls";
 import { ORGANISATION_EVENTS } from "@~/organizations.lib/event";
 import type { User } from "@~/users.lib/entities/User";
 import type { CountUserMembershipsHandler } from "@~/users.lib/usecase/CountUserMemberships";

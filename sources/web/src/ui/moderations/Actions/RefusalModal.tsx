@@ -1,6 +1,6 @@
+import { Htmx_Events, hx_disabled_form_elements } from "#src/htmx";
 import { button } from "#src/ui/button";
-import { Htmx_Events, hx_disabled_form_elements } from "@~/app.core/htmx";
-import { hx_urls } from "@~/app.urls";
+import { hx_urls } from "#src/urls";
 import { reject_form_schema } from "@~/moderations.lib/schema/rejected.form";
 import { useContext } from "hono/jsx";
 import { AUTO_GO_BACK_EVENT } from "../AutoGoBack";

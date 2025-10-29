@@ -1,7 +1,7 @@
 //
 
+import type { App_Context } from "#src/middleware/context";
 import { DescribedBy_Schema, Entity_Schema } from "@~/core/schema";
-import type { App_Context } from "@~/app.middleware/context";
 import { get_crisp_mail } from "@~/crisp.lib";
 import type { Crisp_Context } from "@~/crisp.middleware";
 import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";

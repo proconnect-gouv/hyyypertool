@@ -1,4 +1,4 @@
-import config from "@~/app.core/config";
+import config from "#src/config";
 import { CookieStore, sessionMiddleware } from "hono-sessions";
 
 export const hyyyyyypertool_session = sessionMiddleware({

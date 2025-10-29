@@ -1,8 +1,8 @@
 //
 
+import type { AppEnv_Context } from "#src/config";
 import { button } from "#src/ui/button";
-import type { AppEnv_Context } from "@~/app.core/config";
-import { urls } from "@~/app.urls";
+import { urls } from "#src/urls";
 import { useRequestContext } from "hono/jsx-renderer";
 
 //

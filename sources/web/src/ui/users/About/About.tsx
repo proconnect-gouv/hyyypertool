@@ -3,8 +3,8 @@
 import { button } from "#src/ui/button";
 import { CopyButton } from "#src/ui/button/components";
 import { description_list } from "#src/ui/list";
+import { urls } from "#src/urls";
 import { z_email_domain } from "@~/app.core/schema/z_email_domain";
-import { urls } from "@~/app.urls";
 import type { Organization } from "@~/organizations.lib/entities/Organization";
 import type { GetUserInfoOutput } from "@~/users.lib/usecase/GetUserInfo";
 

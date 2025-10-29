@@ -1,6 +1,6 @@
 //
 
-import { is_htmx_request, type Htmx_Header } from "@~/app.core/htmx";
+import { is_htmx_request, type Htmx_Header } from "#src/htmx";
 import { createMiddleware } from "hono/factory";
 import { NotAuthorized } from "./NotAuthorized";
 import type { UserInfoVariablesContext } from "./set_userinfo";

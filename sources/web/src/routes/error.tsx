@@ -2,7 +2,7 @@
 
 import config from "#src/config";
 import { NotFoundError } from "#src/errors";
-import type { App_Context } from "@~/app.middleware/context";
+import type { App_Context } from "#src/middleware/context";
 import consola from "consola";
 import { type Context } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";

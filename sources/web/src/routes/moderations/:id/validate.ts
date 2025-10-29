@@ -2,9 +2,9 @@
 
 import { HTTPError, NotFoundError } from "#src/errors";
 import type { Htmx_Header } from "#src/htmx";
-import { Entity_Schema, z_email_domain } from "@~/core/schema";
+import type { App_Context } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
-import type { App_Context } from "@~/app.middleware/context";
+import { Entity_Schema, z_email_domain } from "@~/core/schema";
 import { send_moderation_processed_email } from "@~/identite-proconnect.lib/index";
 import {
   ForceJoinOrganization,

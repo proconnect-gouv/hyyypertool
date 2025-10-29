@@ -4,7 +4,7 @@ import { button } from "#src/ui/button";
 import { callout } from "#src/ui/callout";
 import { notice } from "#src/ui/notice";
 import { LocalTime } from "#src/ui/time";
-import { hx_urls } from "@~/app.urls";
+import { hx_urls } from "#src/urls";
 import { moderation_type_to_emoji } from "@~/moderations.lib/moderation_type.mapper";
 import type { GetModerationHeaderOutput } from "@~/moderations.lib/usecase/GetModerationHeader";
 import { raw } from "hono/html";

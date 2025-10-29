@@ -4,7 +4,7 @@ import { button } from "#src/ui/button";
 import { CopyButton } from "#src/ui/button/components";
 import { description_list } from "#src/ui/list";
 import { LocalTime } from "#src/ui/time";
-import { urls } from "@~/app.urls";
+import { urls } from "#src/urls";
 import type { GetFicheOrganizationByIdHandler } from "@~/organizations.lib/usecase";
 import { type JSX } from "hono/jsx";
 import { InactiveWarning } from "./InactiveWarning";

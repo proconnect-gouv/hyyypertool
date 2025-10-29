@@ -1,6 +1,6 @@
 //
 
-import type { ConfigVariables_Context } from "@~/app.middleware/set_config";
+import type { ConfigVariables_Context } from "#src/middleware/config/set_config";
 import { createMiddleware } from "hono/factory";
 import { vip_list_guard } from "./vip_list.guard";
 

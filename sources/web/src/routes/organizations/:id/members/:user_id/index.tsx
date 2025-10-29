@@ -1,9 +1,9 @@
 //
 
 import type { Htmx_Header } from "#src/htmx";
-import { Entity_Schema, z_coerce_boolean } from "@~/core/schema";
+import type { IdentiteProconnect_Pg_Context } from "#src/middleware/identite-pg/set_identite_pg";
 import { zValidator } from "@hono/zod-validator";
-import type { IdentiteProconnect_Pg_Context } from "@~/app.middleware/set_identite_pg";
+import { Entity_Schema, z_coerce_boolean } from "@~/core/schema";
 import { schema } from "@~/identite-proconnect.database";
 import { join_organization } from "@~/identite-proconnect.lib/index";
 import { Verification_Type_Schema } from "@~/identite-proconnect.lib/verification_type";

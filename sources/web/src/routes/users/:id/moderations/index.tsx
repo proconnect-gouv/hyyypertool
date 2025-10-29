@@ -1,9 +1,9 @@
 //
 
-import { DescribedBy_Schema, Entity_Schema } from "@~/core/schema";
+import type { App_Context } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
-import type { App_Context } from "@~/app.middleware/context";
 import { set_variables } from "@~/app.middleware/context/set_variables";
+import { DescribedBy_Schema, Entity_Schema } from "@~/core/schema";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { loadModerationsPageVariables } from "./context";

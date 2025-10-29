@@ -1,7 +1,7 @@
 //
 
 import { button } from "#src/ui/button";
-import { hx_urls } from "@~/app.urls";
+import { hx_urls } from "#src/urls";
 
 import type { Organization } from "@~/organizations.lib/entities/Organization";
 import type { JSX } from "hono/jsx";

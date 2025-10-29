@@ -1,7 +1,7 @@
 //
 
 import { Htmx_Events } from "#src/htmx";
-import type { App_Context } from "@~/app.middleware/context";
+import type { App_Context } from "#src/middleware/context";
 import { html, raw } from "hono/html";
 import type { PropsWithChildren } from "hono/jsx";
 import { useRequestContext } from "hono/jsx-renderer";
