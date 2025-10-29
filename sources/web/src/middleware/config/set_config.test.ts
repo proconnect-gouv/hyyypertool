@@ -51,18 +51,7 @@ test("❌ bubble missing env variable", async () => {
 
   expect(async () => {
     await app.request("/");
-  }).toThrow(
-    new ZodError([
-      {
-        received: "🌵",
-        code: "invalid_enum_value",
-        options: ["development", "production", "test"],
-        path: ["env", "NODE_ENV"],
-        message:
-          "Invalid enum value. Expected 'development' | 'production' | 'test', received '🌵'",
-      },
-    ]),
-  );
+  }).toThrow(ZodError);
 });
 
 test("should set mocked config", async () => {

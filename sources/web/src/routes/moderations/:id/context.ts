@@ -38,9 +38,7 @@ export async function load_moderation_page_variables(
 
   //
 
-  const domain = z_email_domain.parse(moderation.user.email, {
-    path: ["moderation.users.email"],
-  });
+  const domain = z_email_domain.parse(moderation.user.email);
 
   //
 

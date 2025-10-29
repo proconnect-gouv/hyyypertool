@@ -19,9 +19,7 @@ export function set_config(
 
   return async function set_config_middleware(c, next) {
     const { set } = c;
-    const app_config = app_env.parse(env(c), {
-      path: ["env"],
-    });
+    const app_config = app_env.parse(env(c));
     const ASSETS_PATH = `/assets/${app_config.VERSION}` as const;
     const PUBLIC_ASSETS_PATH =
       `/assets/${app_config.VERSION}/public/built` as const;

@@ -26,7 +26,7 @@ export default new Hono<ContextType>()
     async function set_variables_middleware({ req, set }, next) {
       const query = req.query();
 
-      const search = match(Search_Schema.parse(query, { path: ["query"] }))
+      const search = match(Search_Schema.parse(query))
         .with(
           { search_email: P.not("") },
           { search_siret: P.not("") },
@@ -39,9 +39,7 @@ export default new Hono<ContextType>()
         )
         .otherwise((search) => search);
 
-      const pagination = match(
-        Pagination_Schema.safeParse(query, { path: ["query"] }),
-      )
+      const pagination = match(Pagination_Schema.safeParse(query))
         .with({ success: true }, ({ data }) => data)
         .otherwise(() => Pagination_Schema.parse({}));
 

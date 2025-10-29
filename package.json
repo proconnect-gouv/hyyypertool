@@ -67,7 +67,7 @@
     "hyperscript.org": "0.9.14",
     "nprogress": "0.2.0",
     "tsx": "4.20.5",
-    "zod": "3.25.76"
+    "zod": "4.1.12"
   },
   "devDependencies": {
     "@~/config.bun-plugin-test-projects": "workspace:*",

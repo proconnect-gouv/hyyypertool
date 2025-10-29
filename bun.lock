@@ -16,7 +16,7 @@
         "hyperscript.org": "0.9.14",
         "nprogress": "0.2.0",
         "tsx": "4.20.5",
-        "zod": "3.25.76",
+        "zod": "4.1.12",
       },
       "devDependencies": {
         "@csmith/release-it-calver-plugin": "2023.12.0",
@@ -117,7 +117,7 @@
         "@~/config.typescript": "workspace:*",
       },
       "peerDependencies": {
-        "zod": "^3.25.0",
+        "zod": "^4.0.0",
       },
     },
     "sources/infra/crisp/lib": {
@@ -153,8 +153,8 @@
       "name": "@~/identite-proconnect.lib",
       "version": "1.0.0",
       "dependencies": {
+        "@proconnect-gouv/proconnect.api_entreprise": "1.1.0",
         "@proconnect-gouv/proconnect.core": "1.0.0",
-        "@proconnect-gouv/proconnect.entreprise": "1.0.0",
         "@proconnect-gouv/proconnect.identite": "1.1.0",
         "@proconnect-gouv/proconnect.insee": "1.0.0",
         "@~/core": "workspace:*",
@@ -569,11 +569,11 @@
 
     "@prisma/instrumentation": ["@prisma/instrumentation@6.15.0", "", { "dependencies": { "@opentelemetry/instrumentation": "^0.52.0 || ^0.53.0 || ^0.54.0 || ^0.55.0 || ^0.56.0 || ^0.57.0" }, "peerDependencies": { "@opentelemetry/api": "^1.8" } }, "sha512-6TXaH6OmDkMOQvOxwLZ8XS51hU2v4A3vmE2pSijCIiGRJYyNeMcL6nMHQMyYdZRD8wl7LF3Wzc+AMPMV/9Oo7A=="],
 
+    "@proconnect-gouv/proconnect.api_entreprise": ["@proconnect-gouv/proconnect.api_entreprise@1.1.0", "", { "dependencies": { "openapi-fetch": "^0.15.0" } }, "sha512-opFsLPF11C7y9CeQw2eqc+1njIOgMiMnYXu/rgA9egg6SKtek/sxcYqE2Mf89Ir2RK5KsV6fznjacGfUWxXr3g=="],
+
     "@proconnect-gouv/proconnect.core": ["@proconnect-gouv/proconnect.core@1.0.0", "", { "dependencies": { "@types/lodash-es": "^4.17.12", "@types/oidc-provider": "^9.1.1", "@zootools/email-spell-checker": "^1.12.0", "bcryptjs": "^3.0.2", "is-disposable-email-domain": "^1.0.7", "lodash-es": "^4.17.21", "nanoid": "^5.1.5", "tld-extract": "^2.1.0" } }, "sha512-ZDZ14nq+evqThLUr+u8mbW9N4o2NIC+KtYfLH6awAUh/D3B5bW/e4J7ZCynVSRLigmZ50aLZkxFeAwoxQDgVsw=="],
 
     "@proconnect-gouv/proconnect.crisp": ["@proconnect-gouv/proconnect.crisp@1.0.0", "", {}, "sha512-uyJgJpXNuPyU1WPF9OZUPcEmizU+XNTcAG+b/A1bxBx+U7Y4niDaj1ADKhLXKLJ9l6T233P9W6qsmXmsKl97Vg=="],
-
-    "@proconnect-gouv/proconnect.entreprise": ["@proconnect-gouv/proconnect.entreprise@1.0.0", "", { "dependencies": { "openapi-fetch": "^0.14.0" } }, "sha512-3uEvhmfG5zD/6h7zttVb9n6qu0B6hCY5QrJpEIJbhSwHe5fEA0RchQY226Owa44Beeh6z4vptPX5ks9+gs0YRg=="],
 
     "@proconnect-gouv/proconnect.identite": ["@proconnect-gouv/proconnect.identite@1.1.0", "", { "dependencies": { "leven": "^4.0.0", "openid-client": "^6.6.4", "sql-template-tag": "^5.2.1", "zod": "^4.0.17" } }, "sha512-SjGLT/N+MTLytJkHXmBDElLYa6LoTeeFkPtusMVDf1jmJUPxp2LBgpgbDIbfx9arDt8zXN91+7sQWeBZApXgKg=="],
 
@@ -1321,7 +1321,7 @@
 
     "open": ["open@10.2.0", "", { "dependencies": { "default-browser": "^5.2.1", "define-lazy-prop": "^3.0.0", "is-inside-container": "^1.0.0", "wsl-utils": "^0.1.0" } }, "sha512-YgBpdJHPyQ2UE5x+hlSXcnejzAvD0b22U2OuAP+8OnlJT+PjWPxtgmGqKKc+RgTM63U9gN0YzrYc71R2WT/hTA=="],
 
-    "openapi-fetch": ["openapi-fetch@0.14.1", "", { "dependencies": { "openapi-typescript-helpers": "^0.0.15" } }, "sha512-l7RarRHxlEZYjMLd/PR0slfMVse2/vvIAGm75/F7J6MlQ8/b9uUQmUF2kCPrQhJqMXSxmYWObVgeYXbFYzZR+A=="],
+    "openapi-fetch": ["openapi-fetch@0.15.0", "", { "dependencies": { "openapi-typescript-helpers": "^0.0.15" } }, "sha512-OjQUdi61WO4HYhr9+byCPMj0+bgste/LtSBEcV6FzDdONTs7x0fWn8/ndoYwzqCsKWIxEZwo4FN/TG1c1rI8IQ=="],
 
     "openapi-typescript-helpers": ["openapi-typescript-helpers@0.0.15", "", {}, "sha512-opyTPaunsklCBpTK8JGef6mfPhLSnyy5a0IN9vKtx3+4aExf+KxEqYwIy3hqkedXIB97u357uLMJsOnm3GVjsw=="],
 
@@ -1641,7 +1641,7 @@
 
     "youch": ["youch@3.3.4", "", { "dependencies": { "cookie": "^0.7.1", "mustache": "^4.2.0", "stacktracey": "^2.1.8" } }, "sha512-UeVBXie8cA35DS6+nBkls68xaBBXCye0CNznrhszZjTbRVnJKQuNsyLKBTTL4ln1o1rh2PKtv35twV7irj5SEg=="],
 
-    "zod": ["zod@3.25.76", "", {}, "sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ=="],
+    "zod": ["zod@4.1.12", "", {}, "sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ=="],
 
     "zwitch": ["zwitch@2.0.4", "", {}, "sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A=="],
 
@@ -1657,7 +1657,7 @@
 
     "@proconnect-gouv/proconnect.identite/openid-client": ["openid-client@6.8.1", "", { "dependencies": { "jose": "^6.1.0", "oauth4webapi": "^3.8.2" } }, "sha512-VoYT6enBo6Vj2j3Q5Ec0AezS+9YGzQo1f5Xc42lreMGlfP4ljiXPKVDvCADh+XHCV/bqPu/wWSiCVXbJKvrODw=="],
 
-    "@proconnect-gouv/proconnect.identite/zod": ["zod@4.1.12", "", {}, "sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ=="],
+    "@proconnect-gouv/proconnect.insee/openapi-fetch": ["openapi-fetch@0.14.1", "", { "dependencies": { "openapi-typescript-helpers": "^0.0.15" } }, "sha512-l7RarRHxlEZYjMLd/PR0slfMVse2/vvIAGm75/F7J6MlQ8/b9uUQmUF2kCPrQhJqMXSxmYWObVgeYXbFYzZR+A=="],
 
     "@tailwindcss/node/jiti": ["jiti@2.6.1", "", { "bin": { "jiti": "lib/jiti-cli.mjs" } }, "sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ=="],
 

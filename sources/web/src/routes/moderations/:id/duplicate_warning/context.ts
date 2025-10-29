@@ -41,8 +41,8 @@ export type ContextType = App_Context & ContextVariablesType;
 //
 
 export const QuerySchema = z.object({
-  organization_id: z.string().pipe(z.coerce.number().int().nonnegative()),
-  user_id: z.string().pipe(z.coerce.number().int().nonnegative()),
+  organization_id: z.coerce.number().int().nonnegative(),
+  user_id: z.coerce.number().int().nonnegative(),
 });
 
 export const ParamSchema = Entity_Schema;

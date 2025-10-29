@@ -18,7 +18,7 @@ type AboutProps = {
 //
 
 export function About({ user, organization }: AboutProps) {
-  const domain = z_email_domain.parse(user.email, { path: ["user.email"] });
+  const domain = z_email_domain.parse(user.email);
 
   return (
     <section>

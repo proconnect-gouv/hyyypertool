@@ -18,9 +18,7 @@ export async function Actions({ value }: ActionProps) {
 
   const { user } = moderation;
 
-  const domain = z_email_domain.parse(moderation.user.email, {
-    path: ["user.email"],
-  });
+  const domain = z_email_domain.parse(moderation.user.email);
 
   return (
     <context.Provider

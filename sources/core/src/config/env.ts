@@ -84,26 +84,15 @@ export const app_env = z.object({
   SENTRY_DNS: z.string().trim().url().optional(),
   TZ: z.string().trim().optional(),
   VERSION: z.string().default(
-    match(
-      DEPLOY_ENV_SHEMA.optional().parse(env["DEPLOY_ENV"], {
-        path: ["env.DEPLOY_ENV"],
-      }),
-    )
+    match(DEPLOY_ENV_SHEMA.optional().parse(env["DEPLOY_ENV"]))
       .with(DEPLOY_ENV_SHEMA.enum.production, () => version)
-      .otherwise(
-        () =>
-          GIT_SHA_SHEMA.parse(env["GIT_SHA"], {
-            path: ["env.GIT_SHA"],
-          }) ?? version,
-      ),
+      .otherwise(() => GIT_SHA_SHEMA.parse(env["GIT_SHA"]) ?? version),
   ),
   ZAMMAD_MODERATION_TAG: z.string().trim().default("moderation"),
   ZAMMAD_TOKEN: z.string().trim(),
   ZAMMAD_URL: z.string().trim().url(),
 });
 
-export default app_env.parse(env, {
-  path: ["env"],
-});
+export default app_env.parse(env);
 
 export type App_Env = z.TypeOf<typeof app_env>;

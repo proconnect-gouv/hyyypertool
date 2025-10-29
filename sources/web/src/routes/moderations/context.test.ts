@@ -9,6 +9,7 @@ test("Search_Schema > empty object", () => {
   const search = Search_Schema.parse({});
 
   expect(search).toEqual({
+    day: undefined,
     search_siret: "",
     search_email: "",
     processed_requests: false,
