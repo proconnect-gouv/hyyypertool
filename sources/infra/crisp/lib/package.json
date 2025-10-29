@@ -12,7 +12,7 @@
     }
   },
   "dependencies": {
-    "@gouvfr-lasuite/proconnect.crisp": "0.5.0",
+    "@proconnect-gouv/proconnect.crisp": "1.0.0",
     "@~/core": "workspace:*",
     "consola": "3.4.2"
   },

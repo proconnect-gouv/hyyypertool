@@ -24,9 +24,8 @@ export function SendNotification() {
         type="checkbox"
         value="true"
         checked={
-          Moderation_Type_Schema.parse(type, {
-            path: ["moderation", "type"],
-          }) !== Moderation_Type_Schema.enum.non_verified_domain
+          Moderation_Type_Schema.parse(type) !==
+          Moderation_Type_Schema.enum.non_verified_domain
         }
       />
       <label class="fr-label flex-row!" for={$send_notification}>

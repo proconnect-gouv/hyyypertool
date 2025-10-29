@@ -18,7 +18,7 @@ type InvestigationProps = {
 export function Investigation(props: InvestigationProps) {
   const { user, organization } = props;
 
-  const domain = z_email_domain.parse(user.email, { path: ["user.email"] });
+  const domain = z_email_domain.parse(user.email);
 
   return (
     <ul class="mt-5 w-full bg-[#F6F6F6] p-3 [&_li]:inline-block">

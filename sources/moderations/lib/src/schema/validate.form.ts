@@ -12,5 +12,5 @@ export const validate_form_schema = z.object({
   send_notification: z.string().default("false").pipe(z_coerce_boolean),
   verification_type: Verification_Type_Schema.or(
     z.literal("null").transform(() => null),
-  ).default("null"),
+  ).default(null),
 });

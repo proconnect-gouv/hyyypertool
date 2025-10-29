@@ -1,7 +1,7 @@
 //
 
-import { zValidator } from "@hono/zod-validator";
 import { set_variables } from "#src/middleware/context";
+import { zValidator } from "@hono/zod-validator";
 import {
   DescribedBy_Schema,
   Entity_Schema,
@@ -37,9 +37,7 @@ export default new Hono<ContextType>()
       next,
     ) {
       const { id: organization_id } = req.valid("param");
-      const pagination = match(
-        Pagination_Schema.safeParse(req.query(), { path: ["query"] }),
-      )
+      const pagination = match(Pagination_Schema.safeParse(req.query()))
         .with({ success: true }, ({ data }) => data)
         .otherwise(() => Pagination_Schema.parse({}));
       const variables = await loadMembersPageVariables(identite_pg, {

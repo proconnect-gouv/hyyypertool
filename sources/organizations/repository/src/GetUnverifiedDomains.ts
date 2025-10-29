@@ -1,6 +1,6 @@
 //
 
-import { mostUsedFreeEmailDomains as most_used_free_email_domains } from "@gouvfr-lasuite/proconnect.core/data";
+import { mostUsedFreeEmailDomains as most_used_free_email_domains } from "@proconnect-gouv/proconnect.core/data";
 import type { Pagination } from "@~/core/schema";
 import {
   schema,

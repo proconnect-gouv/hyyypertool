@@ -3,4 +3,4 @@
 export type {
   Config,
   ConversationMessage,
-} from "@gouvfr-lasuite/proconnect.crisp/types";
+} from "@proconnect-gouv/proconnect.crisp/types";

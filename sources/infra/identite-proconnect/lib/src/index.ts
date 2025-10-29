@@ -5,8 +5,8 @@ import { fetch_mcp_admin_api } from "./fetch";
 //
 
 // HACK(douglasduteil): dirty export type
-// waiting for full identity types exports from @gouvfr-lasuite/proconnect.identite
-export * from "@gouvfr-lasuite/proconnect.identite/types";
+// waiting for full identity types exports from @proconnect-gouv/proconnect.identite
+export * from "@proconnect-gouv/proconnect.identite/types";
 
 //
 

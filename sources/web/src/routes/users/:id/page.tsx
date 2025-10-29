@@ -210,7 +210,7 @@ function Fiche() {
   const $domain = hyper_ref();
   const $email = hyper_ref();
 
-  const domain = z_email_domain.parse(user.email, { path: ["email"] });
+  const domain = z_email_domain.parse(user.email);
 
   return (
     <dl class={base({ className: "grid-cols-[100px_1fr]" })}>

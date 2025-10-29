@@ -45,7 +45,7 @@ export function AddMemberToOrganization(pg: IdentiteProconnect_PgDatabase) {
       return { organization, user };
     });
 
-    const domain = z_email_domain.parse(user.email, { path: ["user.email"] });
+    const domain = z_email_domain.parse(user.email);
     domain;
     const verification_type = match(organization)
       // .when(

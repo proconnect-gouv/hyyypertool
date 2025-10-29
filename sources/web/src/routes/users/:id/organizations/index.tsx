@@ -1,7 +1,7 @@
 //
 
-import { zValidator } from "@hono/zod-validator";
 import { set_variables } from "#src/middleware/context";
+import { zValidator } from "@hono/zod-validator";
 import { Pagination_Schema } from "@~/core/schema";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
@@ -27,9 +27,7 @@ export default new Hono<ContextType>().get(
   ) {
     const { id: user_id } = req.valid("param");
 
-    const pagination = match(
-      Pagination_Schema.safeParse(req.query(), { path: ["query"] }),
-    )
+    const pagination = match(Pagination_Schema.safeParse(req.query()))
       .with({ success: true }, ({ data }) => data)
       .otherwise(() => Pagination_Schema.parse({}));
 

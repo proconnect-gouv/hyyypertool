@@ -15,7 +15,7 @@
     "@~/core": "workspace:*",
     "@~/identite-proconnect.database": "workspace:*",
     "@~/identite-proconnect.lib": "workspace:*",
-    "@gouvfr-lasuite/proconnect.core": "0.6.0",
+    "@proconnect-gouv/proconnect.core": "1.0.0",
     "is-disposable-email-domain": "1.0.7",
     "ts-pattern": "5.8.0"
   },

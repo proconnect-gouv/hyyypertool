@@ -1,7 +1,7 @@
 //
 
-import type { UserOrganizationLinkVerificationType } from "@gouvfr-lasuite/proconnect.identite/types";
-import { UserOrganizationLinkVerificationTypeSchema } from "@gouvfr-lasuite/proconnect.identite/types";
+import type { UserOrganizationLinkVerificationType } from "@proconnect-gouv/proconnect.identite/types";
+import { UserOrganizationLinkVerificationTypeSchema } from "@proconnect-gouv/proconnect.identite/types";
 
 //
 

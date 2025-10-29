@@ -72,9 +72,7 @@ export default new Hono<App_Context>().patch(
       user_id,
       user: { email },
     } = moderation;
-    const domain = z_email_domain.parse(email, {
-      path: ["moderation.user.email"],
-    });
+    const domain = z_email_domain.parse(email);
 
     //#region ✨ Add verified domain
     if (add_domain) {

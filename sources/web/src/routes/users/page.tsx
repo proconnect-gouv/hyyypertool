@@ -76,9 +76,7 @@ async function Table() {
   } = usePageRequestContext();
 
   const { q } = req.valid("query");
-  const pagination = match(
-    Pagination_Schema.safeParse(req.query(), { path: ["req.query()"] }),
-  )
+  const pagination = match(Pagination_Schema.safeParse(req.query()))
     .with({ success: true }, ({ data }) => data)
     .otherwise(() => Pagination_Schema.parse({}));
 
