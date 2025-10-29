@@ -7,6 +7,7 @@
     "#src/*": "./src/*/index.ts"
   },
   "exports": {
+    "./config": "./src/config/index.ts",
     "./routes": "./src/routes/index.ts"
   },
   "scripts": {
@@ -19,8 +20,6 @@
     "dev:api:tsc": "bun run build"
   },
   "dependencies": {
-    "@~/app.core": "workspace:*",
-    "@~/app.middleware": "workspace:*",
     "@~/core": "workspace:*",
     "@~/crisp.lib": "workspace:*",
     "@~/identite-proconnect.database": "workspace:*",

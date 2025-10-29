@@ -43,7 +43,7 @@
         "@hono/node-server": "1.19.5",
         "@tailwindcss/cli": "4.1.14",
         "@tailwindcss/typography": "0.5.19",
-        "@~/app.core": "workspace:*",
+        "@~/core": "workspace:*",
         "@~/web": "workspace:*",
         "consola": "3.4.2",
         "hono": "4.9.8",
@@ -64,48 +64,6 @@
       },
       "devDependencies": {
         "@types/bun": "1.2.21",
-        "@~/config.typescript": "workspace:*",
-      },
-    },
-    "sources/app/core": {
-      "name": "@~/app.core",
-      "version": "1.0.0",
-      "dependencies": {
-        "hono": "4.9.8",
-        "modern-errors": "7.1.2",
-        "ts-pattern": "5.8.0",
-        "type-fest": "5.0.1",
-      },
-      "devDependencies": {
-        "@~/config.typescript": "workspace:*",
-      },
-    },
-    "sources/app/middleware": {
-      "name": "@~/app.middleware",
-      "version": "1.0.0",
-      "dependencies": {
-        "@sentry/core": "10.22.0",
-        "@~/app.core": "workspace:*",
-        "@~/app.urls": "workspace:*",
-        "@~/identite-proconnect.database": "workspace:*",
-        "@~/identite-proconnect.lib": "workspace:*",
-        "hono": "4.9.8",
-        "hono-sessions": "0.8.0",
-        "openid-client": "6.6.2",
-      },
-      "devDependencies": {
-        "@~/config.typescript": "workspace:*",
-      },
-    },
-    "sources/app/urls": {
-      "name": "@~/app.urls",
-      "version": "1.0.0",
-      "dependencies": {
-        "consola": "3.4.2",
-        "hono": "4.9.8",
-        "static-path": "0.0.4",
-      },
-      "devDependencies": {
         "@~/config.typescript": "workspace:*",
       },
     },
@@ -167,7 +125,7 @@
       "version": "1.0.0",
       "dependencies": {
         "@gouvfr-lasuite/proconnect.crisp": "0.5.0",
-        "@~/app.core": "workspace:*",
+        "@~/core": "workspace:*",
         "consola": "3.4.2",
       },
       "devDependencies": {
@@ -178,7 +136,7 @@
       "name": "@~/identite-proconnect.database",
       "version": "1.0.0",
       "dependencies": {
-        "@~/app.core": "workspace:*",
+        "@~/core": "workspace:*",
         "@~/identite-proconnect.lib": "workspace:*",
         "consola": "3.4.2",
         "hono": "4.9.8",
@@ -199,7 +157,7 @@
         "@gouvfr-lasuite/proconnect.entreprise": "0.0.0",
         "@gouvfr-lasuite/proconnect.identite": "0.8.1",
         "@gouvfr-lasuite/proconnect.insee": "0.3.2",
-        "@~/app.core": "workspace:*",
+        "@~/core": "workspace:*",
         "consola": "3.4.2",
       },
       "devDependencies": {
@@ -212,7 +170,7 @@
       "name": "@~/zammad.lib",
       "version": "1.0.0",
       "dependencies": {
-        "@~/app.core": "workspace:*",
+        "@~/core": "workspace:*",
         "consola": "3.4.2",
       },
       "devDependencies": {
@@ -223,8 +181,7 @@
       "name": "@~/moderations.lib",
       "version": "1.0.0",
       "dependencies": {
-        "@~/app.core": "workspace:*",
-        "@~/app.middleware": "workspace:*",
+        "@~/core": "workspace:*",
         "@~/crisp.lib": "workspace:*",
         "@~/identite-proconnect.database": "workspace:*",
         "@~/identite-proconnect.lib": "workspace:*",
@@ -244,12 +201,11 @@
       "name": "@~/moderations.repository",
       "version": "1.0.0",
       "dependencies": {
-        "@~/app.core": "workspace:*",
+        "@~/core": "workspace:*",
         "@~/identite-proconnect.database": "workspace:*",
         "@~/organizations.lib": "workspace:*",
       },
       "devDependencies": {
-        "@~/app.middleware": "workspace:*",
         "@~/config.typescript": "workspace:*",
       },
     },
@@ -257,7 +213,7 @@
       "name": "@~/organizations.lib",
       "version": "1.0.0",
       "dependencies": {
-        "@~/app.core": "workspace:*",
+        "@~/core": "workspace:*",
         "@~/identite-proconnect.database": "workspace:*",
         "@~/identite-proconnect.lib": "workspace:*",
         "@~/organizations.repository": "workspace:*",
@@ -272,7 +228,7 @@
       "version": "1.0.0",
       "dependencies": {
         "@gouvfr-lasuite/proconnect.core": "0.6.0",
-        "@~/app.core": "workspace:*",
+        "@~/core": "workspace:*",
         "@~/identite-proconnect.database": "workspace:*",
         "@~/identite-proconnect.lib": "workspace:*",
         "is-disposable-email-domain": "1.0.7",
@@ -286,7 +242,7 @@
       "name": "@~/users.lib",
       "version": "1.0.0",
       "dependencies": {
-        "@~/app.core": "workspace:*",
+        "@~/core": "workspace:*",
         "@~/crisp.lib": "workspace:*",
         "@~/identite-proconnect.database": "workspace:*",
         "await-to-js": "3.0.0",
@@ -300,7 +256,7 @@
       "name": "@~/users.repository",
       "version": "1.0.0",
       "dependencies": {
-        "@~/app.core": "workspace:*",
+        "@~/core": "workspace:*",
         "@~/identite-proconnect.database": "workspace:*",
       },
       "devDependencies": {
@@ -317,8 +273,6 @@
         "@hono/zod-validator": "0.7.4",
         "@sentry/core": "10.22.0",
         "@sentry/node": "10.22.0",
-        "@~/app.core": "workspace:*",
-        "@~/app.middleware": "workspace:*",
         "@~/core": "workspace:*",
         "@~/crisp.lib": "workspace:*",
         "@~/identite-proconnect.database": "workspace:*",
@@ -756,12 +710,6 @@
     "@ungap/structured-clone": ["@ungap/structured-clone@1.3.0", "", {}, "sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g=="],
 
     "@zootools/email-spell-checker": ["@zootools/email-spell-checker@1.12.0", "", {}, "sha512-yM0lH4yjg+jZG5QubtvpHE+ahSnsHbw9ilnQgKgOF3fk6OBVQLRsEq4NR+/nRvrwG8Vo+29bzKwhXk5y1b/FwA=="],
-
-    "@~/app.core": ["@~/app.core@workspace:sources/app/core"],
-
-    "@~/app.middleware": ["@~/app.middleware@workspace:sources/app/middleware"],
-
-    "@~/app.urls": ["@~/app.urls@workspace:sources/app/urls"],
 
     "@~/bin": ["@~/bin@workspace:bin"],
 

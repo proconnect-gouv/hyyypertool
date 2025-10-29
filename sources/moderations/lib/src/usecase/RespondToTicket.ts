@@ -1,7 +1,7 @@
 //
 
-import { NotFoundError } from "@~/app.core/error";
-import { z_username } from "@~/app.core/schema/z_username";
+import { NotFoundError } from "@~/core/error";
+import { z_username } from "@~/core/schema";
 import { is_crisp_ticket } from "@~/crisp.lib";
 import { get_full_ticket, send_zammad_response } from "@~/zammad.lib";
 import {

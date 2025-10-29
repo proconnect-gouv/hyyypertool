@@ -113,7 +113,7 @@ export type UseCaseNameOutput = Awaited<ReturnType<UseCaseNameHandler>>;
 ```typescript
 //
 
-import { NotFoundError } from "@~/app.core/error";
+import { NotFoundError } from "@~/core/error";
 import type { IdentiteProconnectDatabaseCradle } from "@~/identite-proconnect.database";
 import { to } from "await-to-js";
 

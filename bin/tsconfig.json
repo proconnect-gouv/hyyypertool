@@ -10,7 +10,7 @@
       "path": "../sources/web"
     },
     {
-      "path": "../sources/app/core"
+      "path": "../sources/core"
     }
   ]
 }

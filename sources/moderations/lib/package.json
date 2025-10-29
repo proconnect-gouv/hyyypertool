@@ -12,8 +12,7 @@
     }
   },
   "dependencies": {
-    "@~/app.core": "workspace:*",
-    "@~/app.middleware": "workspace:*",
+    "@~/core": "workspace:*",
     "@~/crisp.lib": "workspace:*",
     "@~/identite-proconnect.database": "workspace:*",
     "@~/identite-proconnect.lib": "workspace:*",

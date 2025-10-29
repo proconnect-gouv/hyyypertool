@@ -1,7 +1,7 @@
 //
 
 import type { App_Config } from "#src/config";
-import { app_env } from "@~/app.core/config/env";
+import { app_env } from "#src/config/env";
 import type { Env, MiddlewareHandler } from "hono";
 import { env } from "hono/adapter";
 

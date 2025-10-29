@@ -3,10 +3,12 @@
     "outDir": "./node_modules/.cache/tsc"
   },
   "extends": "@~/config.typescript/tsx/tsconfig.json",
-  "include": ["src"],
+  "include": [
+    "src"
+  ],
   "references": [
     {
-      "path": "../../app/core"
+      "path": "../../core"
     },
     {
       "path": "../../infra/crisp/lib"

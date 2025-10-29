@@ -3,7 +3,7 @@
 import { Main_Layout } from "#src/layouts";
 import { authorized } from "#src/middleware/auth/authorized";
 import { zValidator } from "@hono/zod-validator";
-import { set_variables } from "@~/app.middleware/context/set_variables";
+import { set_variables } from "#src/middleware/context";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import user_page_route from "./:id/index";

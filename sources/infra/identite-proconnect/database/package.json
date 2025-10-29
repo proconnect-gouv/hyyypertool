@@ -21,7 +21,7 @@
     "studio": "drizzle-kit studio"
   },
   "dependencies": {
-    "@~/app.core": "workspace:*",
+    "@~/core": "workspace:*",
     "@~/identite-proconnect.lib": "workspace:*",
     "consola": "3.4.2",
     "hono": "4.9.8",

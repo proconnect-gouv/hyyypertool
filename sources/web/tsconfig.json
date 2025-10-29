@@ -11,12 +11,6 @@
   "extends": "@~/config.typescript/base/tsconfig.json",
   "references": [
     {
-      "path": "../app/core"
-    },
-    {
-      "path": "../app/middleware"
-    },
-    {
       "path": "../core"
     },
     {

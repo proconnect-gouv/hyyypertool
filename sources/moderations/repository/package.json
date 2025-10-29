@@ -12,12 +12,11 @@
     }
   },
   "dependencies": {
-    "@~/app.core": "workspace:*",
+    "@~/core": "workspace:*",
     "@~/identite-proconnect.database": "workspace:*",
     "@~/organizations.lib": "workspace:*"
   },
   "devDependencies": {
-    "@~/app.middleware": "workspace:*",
     "@~/config.typescript": "workspace:*"
   }
 }

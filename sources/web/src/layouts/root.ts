@@ -107,7 +107,7 @@ export function Root_Layout({ children }: PropsWithChildren) {
         >
           {
             "imports": {
-              "@~/app.core/config": "${config.ASSETS_PATH}/bundle/config.js"
+              "#src/config": "${config.ASSETS_PATH}/bundle/config.js"
             }
           }
         </script>
@@ -147,7 +147,7 @@ export function Root_Layout({ children }: PropsWithChildren) {
 
       <script
         nonce="${nonce}"
-        src="${config.PUBLIC_ASSETS_PATH}/web/src/layouts/_client/nprogress.js"
+        src="${config.PUBLIC_ASSETS_PATH}/layouts/_client/nprogress.js"
         type="module"
       ></script>
 

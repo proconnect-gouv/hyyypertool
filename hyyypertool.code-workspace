@@ -9,10 +9,6 @@
       "path": "sources/web",
     },
     {
-      "name": "🈸 sources/app/",
-      "path": "sources/app",
-    },
-    {
       "name": "📦 sources/moderations/",
       "path": "sources/moderations",
     },

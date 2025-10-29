@@ -33,7 +33,7 @@ if (shouldSkipBuild) {
       "../sources/web/src/layouts/_client/nprogress.ts",
       "../sources/web/src/routes/welcome/_client/hyyypertitle.ts",
     ],
-    external: ["@~/app.core/config"],
+    external: ["@~/core/config"],
     minify,
     outdir,
   });

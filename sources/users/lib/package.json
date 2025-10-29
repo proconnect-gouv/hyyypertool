@@ -15,7 +15,7 @@
     }
   },
   "dependencies": {
-    "@~/app.core": "workspace:*",
+    "@~/core": "workspace:*",
     "@~/crisp.lib": "workspace:*",
     "@~/identite-proconnect.database": "workspace:*",
     "await-to-js": "3.0.0",

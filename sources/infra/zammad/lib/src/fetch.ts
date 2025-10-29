@@ -1,7 +1,7 @@
 //
 
-import env from "@~/app.core/config";
-import { HTTPError } from "@~/app.core/error";
+import env from "@~/core/config";
+import { HTTPError } from "@~/core/error";
 import consola from "consola";
 import type { NewTicket, UpdateTicket } from "./types";
 

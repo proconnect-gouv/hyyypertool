@@ -18,7 +18,7 @@ dotenv.config({
 
 // Build static files with Bun runtime before app starts
 import { serve } from "@hono/node-server";
-import config from "@~/app.core/config";
+import config from "@~/web/config";
 import app from "@~/web/routes";
 import { execSync } from "child_process";
 import { LogLevels, consola } from "consola";

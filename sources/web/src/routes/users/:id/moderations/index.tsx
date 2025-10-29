@@ -2,7 +2,7 @@
 
 import type { App_Context } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
-import { set_variables } from "@~/app.middleware/context/set_variables";
+import { set_variables } from "#src/middleware/context";
 import { DescribedBy_Schema, Entity_Schema } from "@~/core/schema";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";

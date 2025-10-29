@@ -5,7 +5,7 @@
   "extends": "@~/config.typescript/base/tsconfig.json",
   "references": [
     {
-      "path": "../../app/core"
+      "path": "../../core"
     },
     {
       "path": "../../infra/identite-proconnect/database"

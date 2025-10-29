@@ -1,6 +1,5 @@
 //
 
-import type { AgentConnect_UserInfo } from "@~/app.middleware/context";
 import {
   schema,
   type IdentiteProconnect_PgDatabase,
@@ -20,7 +19,7 @@ export function ValidateSimilarModerations(pg: IdentiteProconnect_PgDatabase) {
     domain_verification_type: "verified" | "external";
     domain: string;
     organization_id: number;
-    userinfo: AgentConnect_UserInfo;
+    userinfo: { email: string; given_name: string; usual_name: string };
   }) {
     // Auto-validate the matching moderations following PCI rules
     const reason =
