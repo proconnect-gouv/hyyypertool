@@ -42,6 +42,9 @@
     },
     {
       "path": "../infra/zammad/lib"
+    },
+    {
+      "path": "../../packages/hono-slotify"
     }
   ]
 }
