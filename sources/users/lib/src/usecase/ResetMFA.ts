@@ -1,6 +1,5 @@
 //
 
-import type { AgentConnect_UserInfo } from "@~/app.middleware/context";
 import { z_username } from "@~/core/schema";
 import type { CrispApiCradle } from "@~/crisp.lib";
 import {
@@ -20,7 +19,7 @@ export function ResetMFA({
   resolve_delay,
 }: IdentiteProconnectDatabaseCradle &
   CrispApiCradle & { resolve_delay: number }) {
-  type ResetMFA_Input = { moderator: AgentConnect_UserInfo; user_id: number };
+  type ResetMFA_Input = { moderator: { email: string }; user_id: number };
   return async function reset_mfa({ moderator, user_id }: ResetMFA_Input) {
     await pg
       .delete(schema.authenticators)

@@ -1,6 +1,5 @@
 //
 
-import type { AgentConnect_UserInfo } from "@~/app.middleware/context";
 import { crisp } from "@~/crisp.lib/api#mock";
 import { schema } from "@~/identite-proconnect.database";
 import { create_pink_diamond_user } from "@~/identite-proconnect.database/seed/unicorn";
@@ -20,20 +19,8 @@ beforeEach(empty_database);
 
 const reset_password = ResetPassword({ crisp, pg, resolve_delay: 0 });
 
-export const anais_tailhade: AgentConnect_UserInfo = {
+export const anais_tailhade: { email: string } = {
   email: "anais.tailhade@omage.gouv.fr",
-  sub: "anais.tailhade@omage.gouv.fr",
-  given_name: "Anais",
-  usual_name: "Tailhade",
-  uid: "1",
-  siret: "21440109300015",
-  phone_number: "0123456789",
-  idp_id: "71144ab3-ee1a-4401-b7b3-79b44f7daeeb",
-  idp_acr: "eidas1",
-  aud: "6925fb8143c76eded44d32b40c0cb1006065f7f003de52712b78985704f39950",
-  exp: 1707821864,
-  iat: 1707821804,
-  iss: "https://proconnect.gouv.fr/api/v2",
 };
 
 //
