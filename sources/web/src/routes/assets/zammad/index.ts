@@ -1,6 +1,5 @@
 //
 
-import { HTTPError } from "#src/errors";
 import { zValidator } from "@hono/zod-validator";
 import { Id_Schema } from "@~/core/schema";
 import { get_zammad_attachment } from "@~/zammad.lib/get_zammad_attachment";
@@ -38,6 +37,6 @@ export default new Hono()
         return notFound();
       })
       .otherwise(() => {
-        throw new HTTPError("Invalid Zammad attachment", { cause: err });
+        throw err;
       });
   });
