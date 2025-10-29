@@ -3,8 +3,7 @@
 import { expect, test } from "bun:test";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
-import { set_config } from "./set_config";
-import { set_nonce } from "./set_nonce";
+import { set_nonce } from "../nonce";
 import { set_userinfo } from "./set_userinfo";
 import { vip_list_guard } from "./vip_list.guard";
 
@@ -13,9 +12,8 @@ import { vip_list_guard } from "./vip_list.guard";
 test("should let good captains pass", async () => {
   const app = new Hono().get(
     "/",
-    jsxRenderer(),
-    set_config({}),
     set_nonce("nonce"),
+    jsxRenderer(),
     set_userinfo({ email: "good@captain.yargs" }),
     vip_list_guard({ vip_list: ["good@captain.yargs"] }),
     async ({ text }) => {
@@ -33,9 +31,8 @@ test("should let good captains pass", async () => {
 test("should stop any anonymous user", async () => {
   const app = new Hono().get(
     "/",
-    jsxRenderer(),
-    set_config({}),
     set_nonce("nonce"),
+    jsxRenderer(),
     vip_list_guard({ vip_list: [] }),
     async ({ text }) => {
       return text("✅");
@@ -51,9 +48,8 @@ test("should stop any anonymous user", async () => {
 test("should redirect hx-request", async () => {
   const app = new Hono().get(
     "/",
-    jsxRenderer(),
-    set_config({}),
     set_nonce("nonce"),
+    jsxRenderer(),
     vip_list_guard({ vip_list: [] }),
     async ({ text }) => {
       return text("✅");
@@ -71,9 +67,8 @@ test("should redirect hx-request", async () => {
 test("should stop pirates", async () => {
   const app = new Hono().get(
     "/",
-    jsxRenderer(),
-    set_config({}),
     set_nonce("nonce"),
+    jsxRenderer(),
     set_userinfo({ email: "verybad@pirate.yargs" }),
     vip_list_guard({ vip_list: [] }),
     async ({ text }) => {

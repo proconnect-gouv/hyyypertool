@@ -1,10 +1,10 @@
 //
 
 import type { Htmx_Header } from "#src/htmx";
-import { Entity_Schema } from "@~/core/schema";
+import type { UserInfoVariablesContext } from "#src/middleware/auth/set_userinfo";
 import { zValidator } from "@hono/zod-validator";
 import type { IdentiteProconnect_Pg_Context } from "@~/app.middleware/set_identite_pg";
-import type { UserInfoVariables_Context } from "@~/app.middleware/set_userinfo";
+import { Entity_Schema } from "@~/core/schema";
 import { MODERATION_EVENTS } from "@~/moderations.lib/event";
 import { mark_moderatio_as_rejected } from "@~/moderations.lib/usecase/mark_moderatio_as_rejected";
 import { GetModerationWithUser } from "@~/moderations.repository";
@@ -13,7 +13,7 @@ import { Hono } from "hono";
 //
 
 export default new Hono<
-  IdentiteProconnect_Pg_Context & UserInfoVariables_Context
+  IdentiteProconnect_Pg_Context & UserInfoVariablesContext
 >().patch(
   "/",
   zValidator("param", Entity_Schema),

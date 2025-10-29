@@ -1,8 +1,8 @@
 //
 
+import type { UserInfoVariablesContext } from "#src/middleware/auth/set_userinfo";
 import { ToasterContainer } from "#src/ui/toast/components";
 import { urls } from "#src/urls";
-import type { UserInfoVariables_Context } from "@~/app.middleware/set_userinfo";
 import { z_username } from "@~/core/schema";
 import type { PropsWithChildren } from "hono/jsx";
 import { useRequestContext } from "hono/jsx-renderer";
@@ -12,7 +12,7 @@ import { Root_Layout } from "./root";
 export function Main_Layout({ children }: PropsWithChildren) {
   const {
     var: { userinfo },
-  } = useRequestContext<UserInfoVariables_Context>();
+  } = useRequestContext<UserInfoVariablesContext>();
   const username = z_username.parse(userinfo);
   return (
     <Root_Layout>

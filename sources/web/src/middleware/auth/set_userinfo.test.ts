@@ -3,7 +3,7 @@
 import { expect, test } from "bun:test";
 import { Hono } from "hono";
 import { set_userinfo } from "./set_userinfo";
-import { anais_tailhade } from "./set_userinfo#fixture";
+import { anais_tailhade } from "./set_userinfo.test#fixture";
 
 //
 

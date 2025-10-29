@@ -2,11 +2,11 @@
 
 import env from "#src/config";
 import { AuthError } from "#src/errors";
+import type { AgentConnectUserInfo } from "#src/middleware/auth/AgentConnectUserInfo";
 import { urls } from "#src/urls";
-import { MfaAcrValue_Schema } from "@~/core/schema";
 import { zValidator } from "@hono/zod-validator";
 import type { App_Context } from "@~/app.middleware/context";
-import type { AgentConnect_UserInfo } from "@~/app.middleware/session";
+import { MfaAcrValue_Schema } from "@~/core/schema";
 import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
 import {
@@ -140,7 +140,7 @@ export default new Hono<Oidc_Context & App_Context>()
         claims?.sub ?? "",
       );
 
-      session.set("userinfo", userinfo as AgentConnect_UserInfo);
+      session.set("userinfo", userinfo as AgentConnectUserInfo);
       session.set("idtoken", tokens.id_token ?? "");
 
       return redirect(urls.moderations.$url().pathname);

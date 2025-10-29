@@ -1,7 +1,7 @@
 //
 
 import { z_username } from "@~/app.core/schema/z_username";
-import type { AgentConnect_UserInfo } from "@~/app.middleware/session";
+import type { AgentConnect_UserInfo } from "@~/app.middleware/context";
 import type { CrispApiCradle } from "@~/crisp.lib";
 import {
   schema,

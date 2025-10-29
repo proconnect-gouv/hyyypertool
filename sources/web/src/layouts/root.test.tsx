@@ -1,7 +1,7 @@
 //
 
+import { set_nonce } from "#src/middleware/nonce";
 import { set_config } from "@~/app.middleware/set_config";
-import { set_nonce } from "@~/app.middleware/set_nonce";
 import { beforeAll, expect, setSystemTime, test } from "bun:test";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";

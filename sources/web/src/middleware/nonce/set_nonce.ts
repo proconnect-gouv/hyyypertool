@@ -6,7 +6,7 @@ import type { Env, MiddlewareHandler } from "hono";
 
 export function set_nonce(
   value?: string,
-): MiddlewareHandler<NonceVariables_Context> {
+): MiddlewareHandler<NonceVariablesContext> {
   return async function set_nonce_middleware({ set }, next) {
     const nonce = value ?? crypto.getRandomValues(new Uint8Array(16)).join("");
     set("nonce", nonce);
@@ -15,7 +15,7 @@ export function set_nonce(
 }
 //
 
-export interface NonceVariables_Context extends Env {
+export interface NonceVariablesContext extends Env {
   Variables: {
     readonly nonce: string;
   };

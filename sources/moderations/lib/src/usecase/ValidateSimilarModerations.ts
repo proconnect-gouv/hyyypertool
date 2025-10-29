@@ -1,6 +1,6 @@
 //
 
-import type { AgentConnect_UserInfo } from "@~/app.middleware/session";
+import type { AgentConnect_UserInfo } from "@~/app.middleware/context";
 import {
   schema,
   type IdentiteProconnect_PgDatabase,

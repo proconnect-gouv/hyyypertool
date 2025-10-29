@@ -1,8 +1,8 @@
-import type { AgentConnect_UserInfo } from "./session";
+import type { AgentConnectUserInfo } from "./AgentConnectUserInfo";
 
 //
 
-export const anais_tailhade: AgentConnect_UserInfo = {
+export const anais_tailhade: AgentConnectUserInfo = {
   email: "anais.tailhade@omage.gouv.fr",
   sub: "anais.tailhade@omage.gouv.fr",
   given_name: "Anais",

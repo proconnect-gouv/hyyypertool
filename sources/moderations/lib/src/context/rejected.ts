@@ -1,6 +1,6 @@
 //
 
-import type { AgentConnect_UserInfo } from "@~/app.middleware/session";
+import type { AgentConnect_UserInfo } from "@~/app.middleware/context";
 import type { CrispApi } from "@~/crisp.lib/api";
 import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
 import type { GetModerationWithUserDto } from "@~/moderations.repository";

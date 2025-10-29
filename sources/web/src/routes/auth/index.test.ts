@@ -1,4 +1,4 @@
-import { hyyyyyypertool_session } from "@~/app.middleware/session";
+import { hyyyyyypertool_session } from "#src/middleware/session/hyyypersession.ts";
 import { expect, mock, test } from "bun:test";
 import { Hono } from "hono";
 import app from "./index.ts";

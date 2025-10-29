@@ -1,9 +1,9 @@
 //
 
+import { Main_Layout } from "#src/layouts";
+import { authorized } from "#src/middleware/auth/authorized";
 import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
-import { Main_Layout } from "#src/layouts";
-import { authorized } from "@~/app.middleware/authorized";
 import { set_variables } from "@~/app.middleware/context/set_variables";
 import consola from "consola";
 import { Hono } from "hono";

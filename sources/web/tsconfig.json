@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
     "jsxImportSource": "hono/jsx",
-    "outDir": "./node_modules/.cache/tsc"
+    "outDir": "./node_modules/.cache/tsc",
+    "paths": {
+      "#src/*": ["./src/*"]
+    }
   },
   "extends": "@~/config.typescript/base/tsconfig.json",
   "references": [

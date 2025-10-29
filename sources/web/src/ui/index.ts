@@ -13,7 +13,11 @@ export * from "./moderations";
 export * from "./notice";
 export * from "./number";
 // organizations: About, Investigation, etc (renamed to avoid conflicts)
-export { About as Organization_About, Investigation as Organization_Investigation, InactiveWarning } from "./organizations/info";
+export {
+  InactiveWarning,
+  About as Organization_About,
+  Investigation as Organization_Investigation,
+} from "./organizations/info";
 export * from "./plurial";
 export * from "./quote";
 export * from "./table";

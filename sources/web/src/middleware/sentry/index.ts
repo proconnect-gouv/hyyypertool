@@ -19,7 +19,7 @@ import { createMiddleware } from "hono/factory";
 
 //
 
-export interface SentryVariables_Context extends Env {
+export interface SentryVariablesContext extends Env {
   Variables: {
     sentry: Scope;
     sentry_trace_meta_tags: string;
