@@ -1,8 +1,8 @@
 //
 
 import env from "#src/config";
+import { button } from "#src/ui/button";
 import { zValidator } from "@hono/zod-validator";
-import { button } from "@~/app.ui/button";
 import consola from "consola";
 import { Hono } from "hono";
 import lodash_sortby from "lodash.sortby";

@@ -1,6 +1,6 @@
 //
 
-import { render_html } from "@~/app.ui/testing";
+import { render_html } from "#src/ui/testing";
 import { expect, test } from "bun:test";
 import { About } from "./About";
 

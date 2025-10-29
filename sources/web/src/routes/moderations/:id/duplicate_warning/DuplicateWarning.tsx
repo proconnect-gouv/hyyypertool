@@ -2,10 +2,10 @@
 
 import { NotFoundError } from "#src/errors";
 import { Htmx_Events } from "#src/htmx";
+import { button } from "#src/ui/button";
+import { fieldset } from "#src/ui/form";
+import { OpenInZammad, SearchInZammad } from "#src/ui/zammad/components";
 import { hx_urls, urls } from "#src/urls";
-import { button } from "@~/app.ui/button";
-import { fieldset } from "@~/app.ui/form";
-import { OpenInZammad, SearchInZammad } from "@~/app.ui/zammad/components";
 import {
   schema,
   type IdentiteProconnect_PgDatabase,

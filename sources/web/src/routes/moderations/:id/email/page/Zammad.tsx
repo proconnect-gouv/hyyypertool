@@ -1,8 +1,8 @@
 //
 
-import { callout } from "@~/app.ui/callout";
-import { LocalTime } from "@~/app.ui/time";
-import { OpenInZammad } from "@~/app.ui/zammad/components";
+import { callout } from "#src/ui/callout";
+import { LocalTime } from "#src/ui/time";
+import { OpenInZammad } from "#src/ui/zammad/components";
 import { usePageRequestContext } from "./context";
 import { Message } from "./Message";
 

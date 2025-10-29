@@ -1,7 +1,7 @@
 //
 
-import { button } from "@~/app.ui/button";
-import { callout } from "@~/app.ui/callout";
+import { button } from "#src/ui/button";
+import { callout } from "#src/ui/callout";
 import type { JSX } from "hono/jsx";
 
 export const AUTO_GO_BACK_EVENT = "AUTO_GO_BACK_EVENT";

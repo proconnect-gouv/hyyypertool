@@ -1,6 +1,6 @@
 //
 
-import { button } from "@~/app.ui/button";
+import { button } from "#src/ui/button";
 import { hx_urls } from "@~/app.urls";
 
 import type { Organization } from "@~/organizations.lib/entities/Organization";

@@ -1,6 +1,6 @@
 //
 
-import { render_md } from "@~/app.ui/testing";
+import { render_md } from "#src/ui/testing";
 import { expect, test } from "bun:test";
 import { context, type Values } from "../context";
 import student_school_training_establishment from "./student_school_training_establishment";

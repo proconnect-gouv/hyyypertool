@@ -1,6 +1,6 @@
 //
 
-import { render_md } from "@~/app.ui/testing";
+import { render_md } from "#src/ui/testing";
 import type { SuggestSameUserEmailsHandler } from "@~/users.lib/usecase/SuggestSameUserEmails";
 import { expect, test } from "bun:test";
 import { context, type Values } from "../context";

@@ -1,14 +1,14 @@
 //
 
 import { hyper_ref } from "#src/html";
+import { button } from "#src/ui/button";
+import { GoogleSearchButton } from "#src/ui/button/components";
+import { copy_text_content_to_clipboard } from "#src/ui/button/scripts";
+import { badge_description_list } from "#src/ui/list";
+import { FrNumberConverter } from "#src/ui/number";
+import { LocalTime } from "#src/ui/time";
 import { hx_urls } from "#src/urls";
 import { z_email_domain } from "@~/core/schema";
-import { button } from "@~/app.ui/button";
-import { GoogleSearchButton } from "@~/app.ui/button/components";
-import { copy_text_content_to_clipboard } from "@~/app.ui/button/scripts";
-import { badge_description_list } from "@~/app.ui/list";
-import { FrNumberConverter } from "@~/app.ui/number";
-import { LocalTime } from "@~/app.ui/time";
 import { usePageRequestContext } from "./context";
 
 //

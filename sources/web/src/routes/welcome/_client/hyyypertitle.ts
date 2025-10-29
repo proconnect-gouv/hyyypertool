@@ -1,7 +1,7 @@
 //
 //
 
-import { visually_hidden } from "@~/app.ui/visually_hidden";
+import { visually_hidden } from "#src/ui/visually_hidden";
 
 //
 

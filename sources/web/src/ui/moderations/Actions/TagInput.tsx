@@ -1,4 +1,4 @@
-import { tag } from "@~/app.ui/tag";
+import { tag } from "#src/ui/tag";
 import {
   Verification_Type_Schema,
   type Verification_Type,

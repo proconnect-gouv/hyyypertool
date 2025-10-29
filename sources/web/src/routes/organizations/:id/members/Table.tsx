@@ -1,11 +1,11 @@
 //
 
 import { hx_include } from "#src/htmx";
+import { Foot } from "#src/ui/hx_table";
+import { menu_item } from "#src/ui/menu";
+import { Horizontal_Menu } from "#src/ui/menu/components";
+import { row } from "#src/ui/table";
 import { hx_urls, urls } from "#src/urls";
-import { Foot } from "@~/app.ui/hx_table";
-import { menu_item } from "@~/app.ui/menu";
-import { Horizontal_Menu } from "@~/app.ui/menu/components";
-import { row } from "@~/app.ui/table";
 import {
   Verification_Type_Schema,
   type Verification_Type,

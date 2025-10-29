@@ -1,6 +1,6 @@
 //
 
-import { render_md } from "@~/app.ui/testing";
+import { render_md } from "#src/ui/testing";
 import { expect, test } from "bun:test";
 import { context, type Values } from "../context";
 import agent_outside_min_finance_chorus_pro from "./agent_outside_min_finance_chorus_pro";

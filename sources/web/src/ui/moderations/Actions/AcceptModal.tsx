@@ -1,7 +1,7 @@
-import { AUTO_GO_BACK_EVENT } from "../AutoGoBack";
+import { button } from "#src/ui/button";
 import { Htmx_Events } from "@~/app.core/htmx";
-import { button } from "@~/app.ui/button";
 import { hx_urls } from "@~/app.urls";
+import { AUTO_GO_BACK_EVENT } from "../AutoGoBack";
 import { AddAsMemberExternal } from "./AddAsMemberExternal";
 import { AddAsMemberInternal } from "./AddAsMemberInternal";
 import { AddDomain } from "./AddDomain";

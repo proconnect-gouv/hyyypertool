@@ -1,9 +1,9 @@
-import { AUTO_GO_BACK_EVENT } from "../AutoGoBack";
+import { button } from "#src/ui/button";
 import { Htmx_Events, hx_disabled_form_elements } from "@~/app.core/htmx";
-import { button } from "@~/app.ui/button";
 import { hx_urls } from "@~/app.urls";
 import { reject_form_schema } from "@~/moderations.lib/schema/rejected.form";
 import { useContext } from "hono/jsx";
+import { AUTO_GO_BACK_EVENT } from "../AutoGoBack";
 import { context, reject_context } from "./context";
 import { ResponseMessageSelector } from "./ResponseMessageSelector";
 

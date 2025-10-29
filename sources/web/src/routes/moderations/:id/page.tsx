@@ -1,20 +1,23 @@
 //
 
 import { hx_trigger_from_body } from "#src/htmx";
+import { button } from "#src/ui/button";
 import { Actions } from "#src/ui/moderations/Actions";
 import { AutoGoBack } from "#src/ui/moderations/AutoGoBack";
 import { DomainsByOrganization } from "#src/ui/moderations/DomainsByOrganization";
 import { Header } from "#src/ui/moderations/Header";
 import { OrganizationsByUser } from "#src/ui/moderations/OrganizationsByUser";
 import { UsersByOrganization } from "#src/ui/moderations/UsersByOrganization";
+import {
+  About as About_Organization,
+  Investigation as Investigation_Organization,
+} from "#src/ui/organizations/info";
 import { About as About_User } from "#src/ui/users/About";
 import { Investigation as Investigation_User } from "#src/ui/users/Investigation";
 import { hx_urls } from "#src/urls";
-import { button } from "@~/app.ui/button";
 import { MODERATION_EVENTS } from "@~/moderations.lib/event";
 import { IsUserExternalMember } from "@~/moderations.lib/usecase/IsUserExternalMember";
 import { SuggestOrganizationDomains } from "@~/organizations.lib/usecase";
-import { About as About_Organization, Investigation as Investigation_Organization } from "#src/ui/organizations/info";
 import {
   CountUserMemberships,
   SuggestSameUserEmails,

@@ -12,9 +12,6 @@
       "path": "../app/middleware"
     },
     {
-      "path": "../app/ui"
-    },
-    {
       "path": "../core"
     },
     {

@@ -86,7 +86,6 @@
       "dependencies": {
         "@sentry/core": "10.22.0",
         "@~/app.core": "workspace:*",
-        "@~/app.ui": "workspace:*",
         "@~/app.urls": "workspace:*",
         "@~/identite-proconnect.database": "workspace:*",
         "@~/identite-proconnect.lib": "workspace:*",
@@ -96,23 +95,6 @@
       },
       "devDependencies": {
         "@~/config.typescript": "workspace:*",
-      },
-    },
-    "sources/app/ui": {
-      "name": "@~/app.ui",
-      "version": "1.0.0",
-      "dependencies": {
-        "@~/app.urls": "workspace:*",
-        "hono": "4.9.8",
-        "hono-slotify": "workspace:*",
-        "tailwind-variants": "3.1.0",
-        "tailwindcss": "4.1.14",
-      },
-      "devDependencies": {
-        "@~/config.happydom": "workspace:*",
-        "@~/config.tailwindcss": "workspace:*",
-        "@~/config.typescript": "workspace:*",
-        "hyperscript.org": "0.9.14",
       },
     },
     "sources/app/urls": {
@@ -350,7 +332,6 @@
         "@sentry/node": "10.22.0",
         "@~/app.core": "workspace:*",
         "@~/app.middleware": "workspace:*",
-        "@~/app.ui": "workspace:*",
         "@~/core": "workspace:*",
         "@~/crisp.lib": "workspace:*",
         "@~/crisp.middleware": "workspace:*",
@@ -792,8 +773,6 @@
     "@~/app.core": ["@~/app.core@workspace:sources/app/core"],
 
     "@~/app.middleware": ["@~/app.middleware@workspace:sources/app/middleware"],
-
-    "@~/app.ui": ["@~/app.ui@workspace:sources/app/ui"],
 
     "@~/app.urls": ["@~/app.urls@workspace:sources/app/urls"],
 

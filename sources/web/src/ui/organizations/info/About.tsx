@@ -1,9 +1,9 @@
 //
 
-import { button } from "@~/app.ui/button";
-import { CopyButton } from "@~/app.ui/button/components";
-import { description_list } from "@~/app.ui/list";
-import { LocalTime } from "@~/app.ui/time";
+import { button } from "#src/ui/button";
+import { CopyButton } from "#src/ui/button/components";
+import { description_list } from "#src/ui/list";
+import { LocalTime } from "#src/ui/time";
 import { urls } from "@~/app.urls";
 import type { GetFicheOrganizationByIdHandler } from "@~/organizations.lib/usecase";
 import { type JSX } from "hono/jsx";

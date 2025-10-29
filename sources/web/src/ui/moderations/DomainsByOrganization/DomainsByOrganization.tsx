@@ -1,12 +1,12 @@
 //
 
+import { hyper_ref } from "#src/html";
+import { Loader } from "#src/ui/loader";
+import { formattedPlural } from "#src/ui/plurial";
 import { hx_trigger_from_body } from "@~/app.core/htmx";
-import { Loader } from "@~/app.ui/loader";
-import { formattedPlural } from "@~/app.ui/plurial";
 import { hx_urls } from "@~/app.urls";
 import type { Organization } from "@~/organizations.lib/entities/Organization";
 import { ORGANISATION_EVENTS } from "@~/organizations.lib/event";
-import { hyper_ref } from "#src/html";
 
 //
 

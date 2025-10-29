@@ -2,10 +2,10 @@
 
 import { hx_include } from "#src/htmx";
 import { date_to_dom_string, date_to_string } from "#src/time";
+import { Foot } from "#src/ui/hx_table";
+import { row } from "#src/ui/table";
 import { hx_urls, urls } from "#src/urls";
 import type { Pagination } from "@~/core/schema";
-import { Foot } from "@~/app.ui/hx_table";
-import { row } from "@~/app.ui/table";
 import {
   moderation_type_to_emoji,
   moderation_type_to_title,

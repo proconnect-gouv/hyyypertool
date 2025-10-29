@@ -1,15 +1,15 @@
 //
 
-import { MessageInfo } from "../MessageInfo";
-import { button } from "@~/app.ui/button";
-import { callout } from "@~/app.ui/callout";
-import { notice } from "@~/app.ui/notice";
-import { LocalTime } from "@~/app.ui/time";
+import { button } from "#src/ui/button";
+import { callout } from "#src/ui/callout";
+import { notice } from "#src/ui/notice";
+import { LocalTime } from "#src/ui/time";
 import { hx_urls } from "@~/app.urls";
 import { moderation_type_to_emoji } from "@~/moderations.lib/moderation_type.mapper";
 import type { GetModerationHeaderOutput } from "@~/moderations.lib/usecase/GetModerationHeader";
 import { raw } from "hono/html";
 import { createContext, useContext } from "hono/jsx";
+import { MessageInfo } from "../MessageInfo";
 
 //
 

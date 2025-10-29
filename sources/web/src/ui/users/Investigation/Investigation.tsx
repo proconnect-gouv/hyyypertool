@@ -1,8 +1,8 @@
 //
 
+import { button } from "#src/ui/button";
+import { GoogleSearchButton } from "#src/ui/button/components";
 import { z_email_domain } from "@~/app.core/schema/z_email_domain";
-import { button } from "@~/app.ui/button";
-import { GoogleSearchButton } from "@~/app.ui/button/components";
 import type { Organization } from "@~/organizations.lib/entities/Organization";
 import type { User } from "@~/users.lib/entities/User";
 

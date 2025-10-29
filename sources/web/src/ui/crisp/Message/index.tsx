@@ -1,7 +1,7 @@
 //
 
-import { quote } from "@~/app.ui/quote";
-import { LocalTime } from "@~/app.ui/time";
+import { quote } from "#src/ui/quote";
+import { LocalTime } from "#src/ui/time";
 import { create_link } from "@~/crisp.lib/links";
 import type { ConversationMessage } from "@~/crisp.lib/types";
 import { tv } from "tailwind-variants";

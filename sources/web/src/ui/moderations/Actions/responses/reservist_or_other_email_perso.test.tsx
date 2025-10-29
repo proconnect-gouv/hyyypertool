@@ -1,6 +1,6 @@
 //
 
-import { render_md } from "@~/app.ui/testing";
+import { render_md } from "#src/ui/testing";
 import { expect, test } from "bun:test";
 import { context, type Values } from "../context";
 import reservist_or_other_email_perso from "./reservist_or_other_email_perso";
