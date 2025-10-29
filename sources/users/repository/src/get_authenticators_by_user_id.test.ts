@@ -10,7 +10,6 @@ import { GetAuthenticatorByUserId } from "./GetAuthenticatorByUserId";
 //
 
 beforeEach(migrate);
-// beforeEach(empty_database);
 
 const get_authenticators_by_user_id = GetAuthenticatorByUserId(pg);
 test("should returns one authenticator", async () => {
