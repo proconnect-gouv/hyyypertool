@@ -23,7 +23,6 @@
     "@~/app.middleware": "workspace:*",
     "@~/core": "workspace:*",
     "@~/crisp.lib": "workspace:*",
-    "@~/crisp.middleware": "workspace:*",
     "@~/identite-proconnect.database": "workspace:*",
     "@~/identite-proconnect.lib": "workspace:*",
     "@~/moderations.lib": "workspace:*",
