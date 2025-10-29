@@ -15,10 +15,10 @@
     }
   },
   "dependencies": {
-    "@gouvfr-lasuite/proconnect.core": "0.6.0",
-    "@gouvfr-lasuite/proconnect.identite": "0.8.1",
-    "@gouvfr-lasuite/proconnect.insee": "0.3.2",
-    "@gouvfr-lasuite/proconnect.entreprise": "0.0.0",
+    "@proconnect-gouv/proconnect.core": "1.0.0",
+    "@proconnect-gouv/proconnect.identite": "1.1.0",
+    "@proconnect-gouv/proconnect.insee": "1.0.0",
+    "@proconnect-gouv/proconnect.entreprise": "1.0.0",
     "@~/core": "workspace:*",
     "consola": "3.4.2"
   },

@@ -1,6 +1,6 @@
 //
 
-import type { Config } from "@gouvfr-lasuite/proconnect.crisp/types";
+import type { Config } from "@proconnect-gouv/proconnect.crisp/types";
 
 //
 
