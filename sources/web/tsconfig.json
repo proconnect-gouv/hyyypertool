@@ -51,9 +51,6 @@
       "path": "../users/repository"
     },
     {
-      "path": "../users/ui"
-    },
-    {
       "path": "../infra/zammad/lib"
     }
   ]
