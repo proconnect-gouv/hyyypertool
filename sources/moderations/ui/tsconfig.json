@@ -16,9 +16,6 @@
       "path": "../../app/urls"
     },
     {
-      "path": "../../infra/crisp/ui"
-    },
-    {
       "path": "../../infra/identite-proconnect/lib"
     },
     {

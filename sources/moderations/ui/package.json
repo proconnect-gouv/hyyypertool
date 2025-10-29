@@ -19,7 +19,6 @@
     "@~/app.core": "workspace:*",
     "@~/app.ui": "workspace:*",
     "@~/app.urls": "workspace:*",
-    "@~/crisp.ui": "workspace:*",
     "@~/identite-proconnect.lib": "workspace:*",
     "@~/moderations.lib": "workspace:*",
     "@~/organizations.lib": "workspace:*",
