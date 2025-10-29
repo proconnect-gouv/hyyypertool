@@ -3,8 +3,13 @@
     "outDir": "./node_modules/.cache/tsc"
   },
   "extends": "@~/config.typescript/tsx/tsconfig.json",
-  "include": ["src"],
+  "include": [
+    "src"
+  ],
   "references": [
+    {
+      "path": "../../core"
+    },
     {
       "path": "../../infra/identite-proconnect/database"
     },

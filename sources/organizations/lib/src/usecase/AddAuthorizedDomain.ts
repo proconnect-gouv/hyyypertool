@@ -1,6 +1,6 @@
 //
 
-import { BadRequestError } from "@~/app.core/error";
+import { BadRequestError } from "@~/core/error";
 import {
   schema,
   type IdentiteProconnectDatabaseCradle,

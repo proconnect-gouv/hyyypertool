@@ -1,6 +1,5 @@
 //
 
-import type { AgentConnect_UserInfo } from "@~/app.middleware/session";
 import type { CrispApi } from "@~/crisp.lib/api";
 import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
 import type { GetModerationWithUserDto } from "@~/moderations.repository";
@@ -15,6 +14,6 @@ export type RejectedModeration_Context = {
   reason: string;
   resolve_delay: number;
   subject: string;
-  userinfo: AgentConnect_UserInfo;
+  userinfo: { email: string; given_name: string; usual_name: string };
 };
 export type RejectedFullMessage = RejectedMessage & { to: string };

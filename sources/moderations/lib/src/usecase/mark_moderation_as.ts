@@ -1,7 +1,6 @@
 //
 
-import { z_username } from "@~/app.core/schema/z_username";
-import type { AgentConnect_UserInfo } from "@~/app.middleware/session";
+import { z_username } from "@~/core/schema";
 import type {
   IdentiteProconnect_PgDatabase,
   schema,
@@ -21,7 +20,7 @@ export async function mark_moderation_as(
     moderation: Pick<typeof schema.moderations.$inferSelect, "comment" | "id">;
     pg: IdentiteProconnect_PgDatabase;
     reason: string;
-    userinfo: AgentConnect_UserInfo;
+    userinfo: { email: string };
   },
   type: Comment_Type["type"],
 ) {

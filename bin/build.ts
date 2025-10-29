@@ -19,7 +19,7 @@ if (shouldSkipBuild) {
 } else {
   console.log("Building Tailwind CSS...");
 
-  await $`./bin/node_modules/.bin/tailwindcss -i sources/app/ui/tailwind.css -o bin/public/built/tailwind.css --config bin/tailwind.config.js`.cwd(
+  await $`./bin/node_modules/.bin/tailwindcss -i sources/web/src/ui/tailwind.css -o bin/public/built/tailwind.css --config bin/tailwind.config.js`.cwd(
     "..",
   );
 
@@ -30,10 +30,10 @@ if (shouldSkipBuild) {
 {
   const { logs, outputs, success } = await Bun.build({
     entrypoints: [
-      "../sources/app/layout/src/_client/nprogress.ts",
-      "../sources/welcome/api/src/_client/hyyypertitle.ts",
+      "../sources/web/src/layouts/_client/nprogress.ts",
+      "../sources/web/src/routes/welcome/_client/hyyypertitle.ts",
     ],
-    external: ["@~/app.core/config"],
+    external: ["@~/core/config"],
     minify,
     outdir,
   });

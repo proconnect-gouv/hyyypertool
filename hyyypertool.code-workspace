@@ -1,8 +1,12 @@
 {
   "folders": [
     {
-      "name": "🈸 sources/app/",
-      "path": "sources/app",
+      "name": "🈸 sources/core/",
+      "path": "sources/core",
+    },
+    {
+      "name": "🈸 sources/web/",
+      "path": "sources/web",
     },
     {
       "name": "📦 sources/moderations/",
@@ -15,18 +19,6 @@
     {
       "name": "📦 sources/users/",
       "path": "sources/users",
-    },
-    {
-      "name": "📦 sources/auth/",
-      "path": "sources/auth",
-    },
-    {
-      "name": "📦 sources/welcome/",
-      "path": "sources/welcome",
-    },
-    {
-      "name": "📦 sources/proxy/",
-      "path": "sources/proxy",
     },
     {
       "name": "🏗️ sources/infra/identite-proconnect/",

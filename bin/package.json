@@ -8,6 +8,7 @@
     "hyyypertool-bun": "./src/bun/index.ts"
   },
   "scripts": {
+    "clean": "rm -rf node_modules/.cache/tsc public/built",
     "dev:bun": "bun run --hot src/bun/index.ts",
     "start:node": "tsx src/node/index.ts",
     "start:bun": "bun run src/bun/index.ts"
@@ -16,8 +17,8 @@
     "@hono/node-server": "1.19.5",
     "@tailwindcss/cli": "4.1.14",
     "@tailwindcss/typography": "0.5.19",
-    "@~/app.api": "workspace:*",
-    "@~/app.core": "workspace:*",
+    "@~/web": "workspace:*",
+    "@~/core": "workspace:*",
     "consola": "3.4.2",
     "hono": "4.9.8",
     "tailwindcss": "4.1.14",

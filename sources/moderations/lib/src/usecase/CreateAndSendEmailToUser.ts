@@ -1,7 +1,7 @@
 //
 
-import { NotFoundError } from "@~/app.core/error";
-import { z_username } from "@~/app.core/schema/z_username";
+import { NotFoundError } from "@~/core/error";
+import { z_username } from "@~/core/schema";
 import type { IdentiteProconnectDatabaseCradle } from "@~/identite-proconnect.database";
 import type { UpdateModerationByIdHandler } from "@~/moderations.repository";
 import type {

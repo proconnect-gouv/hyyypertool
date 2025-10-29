@@ -1,6 +1,5 @@
 //
 
-import { anais_tailhade } from "@~/app.middleware/set_userinfo#fixture";
 import { crisp } from "@~/crisp.lib/api#mock";
 import { schema } from "@~/identite-proconnect.database";
 import { create_pink_diamond_user } from "@~/identite-proconnect.database/seed/unicorn";
@@ -19,6 +18,10 @@ beforeAll(migrate);
 beforeEach(empty_database);
 
 const reset_mfa = ResetMFA({ crisp, pg, resolve_delay: 0 });
+
+export const anais_tailhade: { email: string } = {
+  email: "anais.tailhade@omage.gouv.fr",
+};
 
 //
 

@@ -12,8 +12,7 @@
     }
   },
   "dependencies": {
-    "@~/app.core": "workspace:*",
-    "@~/app.middleware": "workspace:*",
+    "@~/core": "workspace:*",
     "@~/crisp.lib": "workspace:*",
     "@~/identite-proconnect.database": "workspace:*",
     "@~/identite-proconnect.lib": "workspace:*",
@@ -26,7 +25,6 @@
     "ts-pattern": "5.8.0"
   },
   "devDependencies": {
-    "@~/config.typescript": "workspace:*",
-    "@~/zammad.lib": "workspace:*"
+    "@~/config.typescript": "workspace:*"
   }
 }

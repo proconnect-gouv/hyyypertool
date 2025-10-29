@@ -3,14 +3,14 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "main": "./index.ts",
-  "module": "./index.ts",
   "exports": {
     ".": {
       "import": "./index.ts",
       "default": "./index.ts"
     }
   },
+  "main": "./index.ts",
+  "module": "./index.ts",
   "files": [],
   "dependencies": {},
   "devDependencies": {

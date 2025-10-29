@@ -1,6 +1,6 @@
 //
 
-import { NotFoundError } from "@~/app.core/error";
+import { NotFoundError } from "@~/core/error";
 import { expect, mock, test } from "bun:test";
 import type { RejectedModeration_Context } from "../context/rejected";
 import { CreateAndSendEmailToUser } from "./CreateAndSendEmailToUser";

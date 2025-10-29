@@ -15,7 +15,7 @@
     "test": "bun test"
   },
   "dependencies": {
-    "@~/app.core": "workspace:*",
+    "@~/core": "workspace:*",
     "@~/identite-proconnect.database": "workspace:*"
   },
   "devDependencies": {

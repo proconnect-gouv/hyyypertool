@@ -1,0 +1,344 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`development 1`] = `
+"<!DOCTYPE html>
+    <html
+      lang="fr"
+      data-fr-scheme="system"
+      hx-ext="debug, chunked-transfer, include-vals"
+    >
+      <head>
+        <meta charset="utf-8" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="theme-color" content="#000091" />
+
+        <!--  -->
+        
+        <!--  -->
+
+        <link
+          rel="apple-touch-icon"
+          href="/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/favicon/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          href="/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/favicon/favicon.svg"
+          type="image/svg+xml"
+        />
+        <link
+          rel="shortcut icon"
+          href="/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/favicon/favicon.ico"
+          type="image/x-icon"
+        />
+        <link
+          rel="manifest"
+          href="/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/favicon/manifest.webmanifest"
+          crossorigin="use-credentials"
+        />
+
+        <!--  -->
+
+        <link
+          rel="stylesheet"
+          href="/assets/ASSETS_PATH/node_modules/animate.css/source/_vars.css"
+        />
+        <link
+          rel="stylesheet"
+          href="/assets/ASSETS_PATH/node_modules/animate.css/source/_base.css"
+        />
+        <link
+          rel="stylesheet"
+          href="/assets/ASSETS_PATH/node_modules/animate.css/source/bouncing_entrances/bounceIn.css"
+        />
+
+        <!--  -->
+
+        <style>
+              @import "/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/dsfr/dsfr.css"
+                layer(dsfr);
+
+              @import "/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/utility/utility.css"
+                layer(dsfr-utility);
+            </style>
+
+        <!--  -->
+
+        <link
+          rel="stylesheet"
+          href="/assets/PUBLIC_ASSETS_PATH/public/built/tailwind.css"
+        />
+
+        <!--  -->
+
+        <script
+          hash="sha256-ZtVO4euNrRnx0KrqoCatLuOIaHv1Z7zi++KgINh8SqM="
+          nonce="nonce"
+          type="importmap"
+        >
+          {
+            "imports": {
+              "#src/config": "/assets/ASSETS_PATH/bundle/config.js"
+            }
+          }
+        </script>
+
+        <title>
+          Hyyyyypertool
+        </title>
+      </head>
+      <body
+        _="
+          on every htmx:beforeSend NProgress.start()
+          on every htmx:afterOnLoad NProgress.done()
+          on every htmx:afterSettle NProgress.done()
+        "
+        class="flex min-h-screen flex-col"
+      >
+        <div class="flex flex-1 flex-col"></div>
+        <footer class="container mx-auto flex flex-row justify-between p-2">
+          <div>© 2222 🇫🇷</div>
+          <a
+            href="https://github.com/proconnect-gouv/hyyypertool/tree/__VERSION__"
+            rel="noopener noreferrer"
+            target="_blank"
+            safe
+          >
+            <small>version __VERSION__</small>
+          </a>
+        </footer>
+      </body>
+
+      <!--  -->
+
+      <script
+        nonce="nonce"
+        src="/assets/PUBLIC_ASSETS_PATH/public/built/layouts/_client/nprogress.js"
+        type="module"
+      ></script>
+
+      <link
+        rel="stylesheet"
+        href="/assets/ASSETS_PATH/node_modules/nprogress/nprogress.css"
+      />
+
+      <!--  -->
+
+      <script
+            nonce="nonce"
+            src="/assets/ASSETS_PATH/node_modules/htmx.org/dist/htmx.js"
+          ></script>
+
+      <meta
+        name="htmx-env"
+        content="{&quot;defaultSettleDelay&quot;:0,&quot;globalViewTransitions&quot;:true,&quot;historyEnabled&quot;:true,&quot;inlineScriptNonce&quot;:&quot;nonce&quot;}"
+      />
+
+      
+
+      <script
+        nonce="nonce"
+        src="/assets/ASSETS_PATH/node_modules/htmx-ext-include-vals/include-vals.js"
+        type="module"
+      ></script>
+      <script
+        nonce="nonce"
+        src="/assets/ASSETS_PATH/node_modules/htmx-ext-sse/dist/sse.js"
+        type="module"
+      ></script>
+      <script
+        nonce="nonce"
+        src="/assets/ASSETS_PATH/node_modules/htmx.ext...chunked-transfer/dist/index.js"
+        type="module"
+      ></script>
+
+      <!--  -->
+
+      <script
+              nonce="nonce"
+              src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/_hyperscript.js"
+            ></script>
+
+            <script
+              nonce="nonce"
+              src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/hdb.js"
+            ></script>
+      <script
+        nonce="nonce"
+        src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/template.js"
+      ></script>
+    </html>
+  "
+`;
+
+exports[`production 1`] = `
+"<!DOCTYPE html>
+    <html
+      lang="fr"
+      data-fr-scheme="system"
+      hx-ext="chunked-transfer, include-vals"
+    >
+      <head>
+        <meta charset="utf-8" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="theme-color" content="#000091" />
+
+        <!--  -->
+        
+        <!--  -->
+
+        <link
+          rel="apple-touch-icon"
+          href="/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/favicon/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          href="/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/favicon/favicon.svg"
+          type="image/svg+xml"
+        />
+        <link
+          rel="shortcut icon"
+          href="/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/favicon/favicon.ico"
+          type="image/x-icon"
+        />
+        <link
+          rel="manifest"
+          href="/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/favicon/manifest.webmanifest"
+          crossorigin="use-credentials"
+        />
+
+        <!--  -->
+
+        <link
+          rel="stylesheet"
+          href="/assets/ASSETS_PATH/node_modules/animate.css/source/_vars.css"
+        />
+        <link
+          rel="stylesheet"
+          href="/assets/ASSETS_PATH/node_modules/animate.css/source/_base.css"
+        />
+        <link
+          rel="stylesheet"
+          href="/assets/ASSETS_PATH/node_modules/animate.css/source/bouncing_entrances/bounceIn.css"
+        />
+
+        <!--  -->
+
+        <style>
+              @import "/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/dsfr/dsfr.min.css"
+                layer(dsfr);
+
+              @import "/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/utility/utility.min.css"
+                layer(dsfr-utility);
+            </style>
+
+        <!--  -->
+
+        <link
+          rel="stylesheet"
+          href="/assets/PUBLIC_ASSETS_PATH/public/built/tailwind.css"
+        />
+
+        <!--  -->
+
+        <script
+          hash="sha256-ZtVO4euNrRnx0KrqoCatLuOIaHv1Z7zi++KgINh8SqM="
+          nonce="nonce"
+          type="importmap"
+        >
+          {
+            "imports": {
+              "#src/config": "/assets/ASSETS_PATH/bundle/config.js"
+            }
+          }
+        </script>
+
+        <title>
+          Hyyyyypertool
+        </title>
+      </head>
+      <body
+        _="
+          on every htmx:beforeSend NProgress.start()
+          on every htmx:afterOnLoad NProgress.done()
+          on every htmx:afterSettle NProgress.done()
+        "
+        class="flex min-h-screen flex-col"
+      >
+        <div class="flex flex-1 flex-col"></div>
+        <footer class="container mx-auto flex flex-row justify-between p-2">
+          <div>© 2222 🇫🇷</div>
+          <a
+            href="https://github.com/proconnect-gouv/hyyypertool/tree/__VERSION__"
+            rel="noopener noreferrer"
+            target="_blank"
+            safe
+          >
+            <small>version __VERSION__</small>
+          </a>
+        </footer>
+      </body>
+
+      <!--  -->
+
+      <script
+        nonce="nonce"
+        src="/assets/PUBLIC_ASSETS_PATH/public/built/layouts/_client/nprogress.js"
+        type="module"
+      ></script>
+
+      <link
+        rel="stylesheet"
+        href="/assets/ASSETS_PATH/node_modules/nprogress/nprogress.css"
+      />
+
+      <!--  -->
+
+      <script
+            nonce="nonce"
+            src="/assets/ASSETS_PATH/node_modules/htmx.org/dist/htmx.min.js"
+          ></script>
+
+      <meta
+        name="htmx-env"
+        content="{&quot;defaultSettleDelay&quot;:0,&quot;globalViewTransitions&quot;:true,&quot;historyEnabled&quot;:true,&quot;inlineScriptNonce&quot;:&quot;nonce&quot;}"
+      />
+
+      
+
+      <script
+        nonce="nonce"
+        src="/assets/ASSETS_PATH/node_modules/htmx-ext-include-vals/include-vals.js"
+        type="module"
+      ></script>
+      <script
+        nonce="nonce"
+        src="/assets/ASSETS_PATH/node_modules/htmx-ext-sse/dist/sse.js"
+        type="module"
+      ></script>
+      <script
+        nonce="nonce"
+        src="/assets/ASSETS_PATH/node_modules/htmx.ext...chunked-transfer/dist/index.js"
+        type="module"
+      ></script>
+
+      <!--  -->
+
+      <script
+            nonce="nonce"
+            src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/_hyperscript.min.js"
+          ></script>
+      <script
+        nonce="nonce"
+        src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/template.js"
+      ></script>
+    </html>
+  "
+`;

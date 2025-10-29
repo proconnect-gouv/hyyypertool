@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "jsxImportSource": "hono/jsx",
+    "outDir": "./node_modules/.cache/tsc",
+    "paths": {
+      "#src/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "extends": "@~/config.typescript/base/tsconfig.json",
+  "references": [
+    {
+      "path": "../core"
+    },
+    {
+      "path": "../infra/crisp/lib"
+    },
+    {
+      "path": "../infra/identite-proconnect/database"
+    },
+    {
+      "path": "../infra/identite-proconnect/lib"
+    },
+    {
+      "path": "../moderations/lib"
+    },
+    {
+      "path": "../moderations/repository"
+    },
+    {
+      "path": "../organizations/lib"
+    },
+    {
+      "path": "../organizations/repository"
+    },
+    {
+      "path": "../users/lib"
+    },
+    {
+      "path": "../users/repository"
+    },
+    {
+      "path": "../infra/zammad/lib"
+    },
+    {
+      "path": "../../packages/hono-slotify"
+    }
+  ]
+}

@@ -3,19 +3,30 @@
     "outDir": "./node_modules/.cache/tsc"
   },
   "extends": "@~/config.typescript/base/tsconfig.json",
-  "include": ["src"],
+  "include": [
+    "src"
+  ],
   "references": [
     {
-      "path": "../../app/core"
+      "path": "../../core"
     },
     {
       "path": "../../infra/crisp/lib"
     },
     {
+      "path": "../../infra/identite-proconnect/database"
+    },
+    {
+      "path": "../../infra/identite-proconnect/lib"
+    },
+    {
       "path": "../repository"
     },
     {
-      "path": "../../infra/identite-proconnect/database"
+      "path": "../../organizations/lib"
+    },
+    {
+      "path": "../../users/repository"
     },
     {
       "path": "../../infra/zammad/lib"

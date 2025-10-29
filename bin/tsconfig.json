@@ -7,10 +7,10 @@
   "extends": "@~/config.typescript/api/tsconfig.json",
   "references": [
     {
-      "path": "../sources/app/api/tsconfig.json"
+      "path": "../sources/web"
     },
     {
-      "path": "../sources/app/core/tsconfig.json"
+      "path": "../sources/core"
     }
   ]
 }

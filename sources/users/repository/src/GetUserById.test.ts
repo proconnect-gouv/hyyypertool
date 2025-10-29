@@ -1,6 +1,6 @@
 //
 
-import { NotFoundError } from "@~/app.core/error";
+import { NotFoundError } from "@~/core/error";
 import { create_adora_pony_user } from "@~/identite-proconnect.database/seed/unicorn";
 import {
   empty_database,

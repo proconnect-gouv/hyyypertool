@@ -1,6 +1,6 @@
 //
 
-import { NotFoundError } from "@~/app.core/error";
+import { NotFoundError } from "@~/core/error";
 import {
   schema,
   type IdentiteProconnect_PgDatabase,

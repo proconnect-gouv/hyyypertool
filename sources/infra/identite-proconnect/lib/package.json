@@ -19,7 +19,7 @@
     "@gouvfr-lasuite/proconnect.identite": "0.8.1",
     "@gouvfr-lasuite/proconnect.insee": "0.3.2",
     "@gouvfr-lasuite/proconnect.entreprise": "0.0.0",
-    "@~/app.core": "workspace:*",
+    "@~/core": "workspace:*",
     "consola": "3.4.2"
   },
   "devDependencies": {

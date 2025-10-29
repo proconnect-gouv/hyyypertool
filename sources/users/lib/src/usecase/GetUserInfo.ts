@@ -1,6 +1,6 @@
 //
 
-import { NotFoundError } from "@~/app.core/error";
+import { NotFoundError } from "@~/core/error";
 import type { IdentiteProconnectDatabaseCradle } from "@~/identite-proconnect.database";
 
 //

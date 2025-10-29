@@ -1,0 +1,173 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`Main Layout 1`] = `
+"<!DOCTYPE html>
+    <html
+      lang="fr"
+      data-fr-scheme="system"
+      hx-ext="debug, chunked-transfer, include-vals"
+    >
+      <head>
+        <meta charset="utf-8" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="theme-color" content="#000091" />
+
+        <!--  -->
+        
+        <!--  -->
+
+        <link
+          rel="apple-touch-icon"
+          href="/node_modules/@gouvfr/dsfr/dist/favicon/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          href="/node_modules/@gouvfr/dsfr/dist/favicon/favicon.svg"
+          type="image/svg+xml"
+        />
+        <link
+          rel="shortcut icon"
+          href="/node_modules/@gouvfr/dsfr/dist/favicon/favicon.ico"
+          type="image/x-icon"
+        />
+        <link
+          rel="manifest"
+          href="/node_modules/@gouvfr/dsfr/dist/favicon/manifest.webmanifest"
+          crossorigin="use-credentials"
+        />
+
+        <!--  -->
+
+        <link
+          rel="stylesheet"
+          href="/node_modules/animate.css/source/_vars.css"
+        />
+        <link
+          rel="stylesheet"
+          href="/node_modules/animate.css/source/_base.css"
+        />
+        <link
+          rel="stylesheet"
+          href="/node_modules/animate.css/source/bouncing_entrances/bounceIn.css"
+        />
+
+        <!--  -->
+
+        <style>
+              @import "/node_modules/@gouvfr/dsfr/dist/dsfr/dsfr.css"
+                layer(dsfr);
+
+              @import "/node_modules/@gouvfr/dsfr/dist/utility/utility.css"
+                layer(dsfr-utility);
+            </style>
+
+        <!--  -->
+
+        <link
+          rel="stylesheet"
+          href="/tailwind.css"
+        />
+
+        <!--  -->
+
+        <script
+          hash="sha256-ZtVO4euNrRnx0KrqoCatLuOIaHv1Z7zi++KgINh8SqM="
+          nonce="nonce"
+          type="importmap"
+        >
+          {
+            "imports": {
+              "#src/config": "/bundle/config.js"
+            }
+          }
+        </script>
+
+        <title>
+          Hyyyyypertool
+        </title>
+      </head>
+      <body
+        _="
+          on every htmx:beforeSend NProgress.start()
+          on every htmx:afterOnLoad NProgress.done()
+          on every htmx:afterSettle NProgress.done()
+        "
+        class="flex min-h-screen flex-col"
+      >
+        <div class="flex flex-1 flex-col"><div class="flex min-h-full grow flex-col"><header role="banner" class="fr-header"><div class="fr-header__body"><div class="fr-container"><div class="fr-header__body-row"><div class="fr-header__brand fr-enlarge-link"><div class="fr-header__brand-top"><div class="fr-header__logo"><p class="fr-logo">République<br/>Française</p></div></div><div class="fr-header__service"><a href="/" title="Accueil "><p class="fr-header__service-title">Hyyypertool</p></a><p class="fr-header__service-tagline">hyyyyyyyypertool</p></div></div><div class="fr-header__tools"><div class="fr-header__tools-links"><ul class="fr-btns-group"><li><a class="fr-btn fr-btn--sm fr-btn--tertiary-no-outline fr-fi-logout-box-r-line fr-btn--icon-left" href="/auth/logout">Lara Croft</a></li></ul></div></div></div></div></div><div class="fr-header__menu fr-modal"><div class="fr-container"><nav class="fr-nav" id="navigation-494" role="navigation" aria-label="Menu principal"><ul class="fr-nav__list"><li class="fr-nav__item"><a aria-current="false" class="fr-nav__link" href="/moderations" target="_self">Moderations</a></li><li class="fr-nav__item"><a aria-current="false" class="fr-nav__link" href="/users" target="_self">Utilisateurs</a></li><li class="fr-nav__item"><a aria-current="false" class="fr-nav__link" href="/organizations" target="_self">Organisations</a></li><li class="fr-nav__item"><a aria-current="false" class="fr-nav__link" href="/organizations/domains" target="_self">Domaines à vérifier</a></li></ul></nav></div></div></header><div class="relative flex flex-1 flex-col">✅</div></div><div class="fixed bottom-4 left-4 z-50 flex flex-col gap-2"><template><div class="animated bounceIn flex w-full max-w-xs items-center rounded-lg border border-solid border-gray-300 bg-white p-4 text-gray-500 shadow-sm" role="alert"><div class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-500"><svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.147 15.085a7.159 7.159 0 0 1-6.189 3.307A6.713 6.713 0 0 1 3.1 15.444c-2.679-4.513.287-8.737.888-9.548A4.373 4.373 0 0 0 5 1.608c1.287.953 6.445 3.218 5.537 10.5 1.5-1.122 2.706-3.01 2.853-6.14 1.433 1.049 3.993 5.395 1.757 9.117Z"></path></svg><span class="sr-only">Fire icon</span></div><div class="ms-3 text-sm font-normal">DefaultToast</div><button _="on click remove closest &lt;div[role=&#39;alert&#39;]/&gt; " type="button" class="-mx-1.5 -my-1.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-gray-300" aria-label="Close"><span class="sr-only">Close</span><svg class="h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"></path></svg></button></div></template><template><div class="animated bounceIn flex w-full max-w-xs items-center rounded-lg border border-solid border-gray-300 bg-white p-4 text-gray-500 shadow-sm" role="alert"><div class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500"><svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"></path></svg><span class="sr-only">Check icon</span></div><div class="ms-3 text-sm font-normal">SuccessToast</div><button _="on click remove closest &lt;div[role=&#39;alert&#39;]/&gt; " type="button" class="-mx-1.5 -my-1.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-gray-300" aria-label="Close"><span class="sr-only">Close</span><svg class="h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"></path></svg></button></div></template><template _="
+          on every htmx:responseError from body
+            render me then put it after me
+          "><div class="animated bounceIn flex w-full max-w-xs items-center rounded-lg border border-solid border-gray-300 bg-white p-4 text-gray-500 shadow-sm" role="alert"><div class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500"><svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"></path></svg><span class="sr-only">Error icon</span></div><div class="ms-3 text-sm font-normal">Une erreur est survenue !</div><button _="on click remove closest &lt;div[role=&#39;alert&#39;]/&gt; " type="button" class="-mx-1.5 -my-1.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-gray-300" aria-label="Close"><span class="sr-only">Close</span><svg class="h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"></path></svg></button></div></template><template><div class="animated bounceIn flex w-full max-w-xs items-center rounded-lg border border-solid border-gray-300 bg-white p-4 text-gray-500 shadow-sm" role="alert"><div class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-100 text-orange-500"><svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20"><path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v5Z"></path></svg><span class="sr-only">Warning icon</span></div><div class="ms-3 text-sm font-normal">WarningToast</div><button _="on click remove closest &lt;div[role=&#39;alert&#39;]/&gt; " type="button" class="-mx-1.5 -my-1.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-900 focus:ring-2 focus:ring-gray-300" aria-label="Close"><span class="sr-only">Close</span><svg class="h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"></path></svg></button></div></template></div></div>
+        <footer class="container mx-auto flex flex-row justify-between p-2">
+          <div>© 2222 🇫🇷</div>
+          <a
+            href="https://github.com/proconnect-gouv/hyyypertool/tree/"
+            rel="noopener noreferrer"
+            target="_blank"
+            safe
+          >
+            <small>version </small>
+          </a>
+        </footer>
+      </body>
+
+      <!--  -->
+
+      <script
+        nonce="nonce"
+        src="/layouts/_client/nprogress.js"
+        type="module"
+      ></script>
+
+      <link
+        rel="stylesheet"
+        href="/node_modules/nprogress/nprogress.css"
+      />
+
+      <!--  -->
+
+      <script
+            nonce="nonce"
+            src="/node_modules/htmx.org/dist/htmx.min.js"
+          ></script>
+
+      <meta
+        name="htmx-env"
+        content="{&quot;defaultSettleDelay&quot;:0,&quot;globalViewTransitions&quot;:true,&quot;historyEnabled&quot;:true,&quot;inlineScriptNonce&quot;:&quot;nonce&quot;}"
+      />
+
+      
+
+      <script
+        nonce="nonce"
+        src="/node_modules/htmx-ext-include-vals/include-vals.js"
+        type="module"
+      ></script>
+      <script
+        nonce="nonce"
+        src="/node_modules/htmx-ext-sse/dist/sse.js"
+        type="module"
+      ></script>
+      <script
+        nonce="nonce"
+        src="/node_modules/htmx.ext...chunked-transfer/dist/index.js"
+        type="module"
+      ></script>
+
+      <!--  -->
+
+      <script
+            nonce="nonce"
+            src="/node_modules/hyperscript.org/dist/_hyperscript.min.js"
+          ></script>
+      <script
+        nonce="nonce"
+        src="/node_modules/hyperscript.org/dist/template.js"
+      ></script>
+    </html>
+  "
+`;

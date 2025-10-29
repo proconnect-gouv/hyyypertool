@@ -12,7 +12,7 @@
     }
   },
   "dependencies": {
-    "@~/app.core": "workspace:*",
+    "@~/core": "workspace:*",
     "@~/identite-proconnect.database": "workspace:*",
     "@~/identite-proconnect.lib": "workspace:*",
     "@gouvfr-lasuite/proconnect.core": "0.6.0",

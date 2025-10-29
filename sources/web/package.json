@@ -1,0 +1,67 @@
+{
+  "name": "@~/web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "imports": {
+    "#src/*": "./src/*/index.ts"
+  },
+  "exports": {
+    "./config": "./src/config/index.ts",
+    "./routes": "./src/routes/index.ts"
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "rm -rf node_modules/.cache/tsc",
+    "dev:api": "bun x run-z dev:api:clean dev:api:tsc dev:api:cp dev:api:format",
+    "dev:api:clean": "rm src/routes.d.ts",
+    "dev:api:cp": "cp ./node_modules/.cache/tsc/src/routes/index.d.ts 'src/routes.d.ts'",
+    "dev:api:format": "prettier --write src/routes.d.ts",
+    "dev:api:tsc": "bun run build"
+  },
+  "dependencies": {
+    "@~/core": "workspace:*",
+    "@~/crisp.lib": "workspace:*",
+    "@~/identite-proconnect.database": "workspace:*",
+    "@~/identite-proconnect.lib": "workspace:*",
+    "@~/moderations.lib": "workspace:*",
+    "@~/moderations.repository": "workspace:*",
+    "@~/organizations.lib": "workspace:*",
+    "@~/organizations.repository": "workspace:*",
+    "@~/users.lib": "workspace:*",
+    "@~/users.repository": "workspace:*",
+    "@~/zammad.lib": "workspace:*",
+    "@gouvfr-lasuite/proconnect.core": "0.6.0",
+    "@hono/node-server": "1.19.5",
+    "@hono/sentry": "1.2.2",
+    "@hono/zod-validator": "0.7.4",
+    "@sentry/core": "10.22.0",
+    "@sentry/node": "10.22.0",
+    "await-to-js": "3.0.0",
+    "consola": "3.4.2",
+    "hono": "4.9.8",
+    "hono-sessions": "0.8.0",
+    "hono-slotify": "workspace:*",
+    "lodash.sortby": "4.7.0",
+    "nprogress": "0.2.0",
+    "openid-client": "6.6.2",
+    "rehype-sanitize": "6.0.0",
+    "rehype-stringify": "10.0.1",
+    "remark-parse": "11.0.0",
+    "remark-rehype": "11.1.2",
+    "static-path": "0.0.4",
+    "tailwind-variants": "3.1.0",
+    "tailwindcss": "4.1.14",
+    "ts-dedent": "2.2.0",
+    "ts-pattern": "5.8.0",
+    "type-fest": "5.0.1",
+    "unified": "11.0.5",
+    "youch": "3.3.4"
+  },
+  "devDependencies": {
+    "@~/config.typescript": "workspace:*",
+    "@types/lodash.sortby": "4.7.9",
+    "@types/nprogress": "0.2.3",
+    "prettier": "3.6.2"
+  }
+}

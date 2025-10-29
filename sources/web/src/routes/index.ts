@@ -1,0 +1,74 @@
+//
+
+import config from "#src/config";
+import { Root_Layout } from "#src/layouts";
+import { set_userinfo } from "#src/middleware/auth/set_userinfo";
+import { set_config } from "#src/middleware/config/set_config";
+import { set_identite_pg_database } from "#src/middleware/identite-pg/set_identite_pg";
+import { set_nonce } from "#src/middleware/nonce";
+import { set_sentry } from "#src/middleware/sentry";
+import { hyyyyyypertool_session } from "#src/middleware/session/hyyypersession";
+import consola from "consola";
+import { Hono } from "hono";
+import auth_router from "./auth";
+import moderations_router from "./moderations";
+import organizations_router from "./organizations";
+import proxy_router from "./proxy";
+import users_router from "./users";
+import welcome_router from "./welcome";
+// TODO: Re-enable compression when Bun supports CompressionStream
+// import { compress } from "hono/compress";
+import { contextStorage } from "hono/context-storage";
+import { jsxRenderer } from "hono/jsx-renderer";
+import { logger } from "hono/logger";
+import asserts_router from "./assets";
+import { error_handler } from "./error";
+import { not_found_handler } from "./not-found";
+import readyz_router from "./readyz";
+
+//
+
+const app = new Hono()
+  .use(logger(consola.info))
+  .use(contextStorage())
+  // TODO: Re-enable compression when Bun supports CompressionStream
+  // .use(compress())
+  .use(set_sentry())
+  .use(set_nonce())
+  .use(set_config())
+
+  .get("/healthz", ({ text }) => text(`healthz check passed`))
+  .get("/livez", ({ text }) => text(`livez check passed`))
+
+  .route(config.ASSETS_PATH, asserts_router)
+  .route("/readyz", readyz_router)
+
+  //
+
+  .route("/proxy", proxy_router)
+
+  //
+
+  .use(hyyyyyypertool_session)
+  .use(jsxRenderer(Root_Layout))
+  .use(set_userinfo())
+  //
+  .route("/", welcome_router)
+  .route("/auth", auth_router)
+  //
+  .use(set_identite_pg_database({ connectionString: config.DATABASE_URL }))
+  //
+
+  .route("/moderations", moderations_router)
+
+  .route("/users", users_router)
+
+  .route("/organizations", organizations_router)
+
+  .onError(error_handler)
+  .notFound(not_found_handler);
+
+//
+
+export type Router = typeof app;
+export default app;

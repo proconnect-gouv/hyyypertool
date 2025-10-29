@@ -15,12 +15,12 @@
     }
   },
   "dependencies": {
-    "@~/app.core": "workspace:*",
-    "@~/app.middleware": "workspace:*",
+    "@~/core": "workspace:*",
     "@~/crisp.lib": "workspace:*",
     "@~/identite-proconnect.database": "workspace:*",
     "await-to-js": "3.0.0",
-    "ts-dedent": "2.2.0"
+    "ts-dedent": "2.2.0",
+    "type-fest": "5.0.1"
   },
   "devDependencies": {
     "@~/config.typescript": "workspace:*"

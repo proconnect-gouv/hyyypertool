@@ -1,7 +1,6 @@
 //
 
-import { z_username } from "@~/app.core/schema/z_username";
-import type { AgentConnect_UserInfo } from "@~/app.middleware/session";
+import { z_username } from "@~/core/schema";
 import type { CrispApiCradle } from "@~/crisp.lib";
 import {
   schema,
@@ -20,7 +19,7 @@ export function ResetPassword({
 }: IdentiteProconnectDatabaseCradle &
   CrispApiCradle & { resolve_delay: number }) {
   type ResetPassword_Input = {
-    moderator: AgentConnect_UserInfo;
+    moderator: { email: string };
     user_id: number;
   };
   return async function reset_password({

@@ -1,7 +1,7 @@
 //
 
-import { NotFoundError } from "@~/app.core/error";
-import { z_email_domain } from "@~/app.core/schema/z_email_domain";
+import { NotFoundError } from "@~/core/error";
+import { z_email_domain } from "@~/core/schema";
 import {
   schema,
   type IdentiteProconnect_PgDatabase,

@@ -1,7 +1,6 @@
 //
 
-import { z_username } from "@~/app.core/schema/z_username";
-import type { AgentConnect_UserInfo } from "@~/app.middleware/session";
+import { z_username } from "@~/core/schema";
 import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
 import {
   UpdateModerationById,
@@ -18,7 +17,7 @@ export async function mark_moderatio_as_rejected({
   reason,
 }: {
   moderation: GetModerationWithUserDto;
-  userinfo: AgentConnect_UserInfo;
+  userinfo: { email: string; given_name: string; usual_name: string };
   pg: IdentiteProconnect_PgDatabase;
   reason: string;
 }) {

@@ -40,27 +40,43 @@
 
 #
 
-"scope: app":
+"scope: devtool config":
   - changed-files:
-      - any-glob-to-any-file: "sources/app/**/*"
-"scope: auth":
+      - any-glob-to-any-file:
+          - "sources/config/src/**/*"
+"scope: core":
   - changed-files:
-      - any-glob-to-any-file: "sources/auth/**/*"
-"scope: config":
+      - any-glob-to-any-file: "sources/core/src/**/*"
+"scope: infra":
   - changed-files:
-      - any-glob-to-any-file: "sources/config/**/*"
+      - any-glob-to-any-file: "sources/infra/**/src/**/*"
+"scope: middleware":
+  - changed-files:
+      - any-glob-to-any-file: "sources/web/src/middleware/**/*"
 "scope: moderations":
   - changed-files:
-      - any-glob-to-any-file: "sources/moderations/**/*"
+      - any-glob-to-any-file:
+          - "sources/moderations/**/src/**/*"
+          - "sources/web/src/routes/moderations/**/*"
+          - "sources/web/src/ui/moderations/**/*"
 "scope: organizations":
   - changed-files:
-      - any-glob-to-any-file: "sources/organizations/**/*"
-"scope: proxy":
+      - any-glob-to-any-file:
+          - "sources/organizations/**/src/**/*"
+          - "sources/web/src/routes/organizations/**/*"
+          - "sources/web/src/ui/organizations/**/*"
+"scope: routes":
   - changed-files:
-      - any-glob-to-any-file: "sources/proxy/**/*"
+      - any-glob-to-any-file:
+          - "sources/web/src/routes/**/*"
+"scope: ui":
+  - changed-files:
+      - any-glob-to-any-file:
+          - "sources/web/src/ui/**/*"
+          - "sources/*/ui/src/**/*"
 "scope: users":
   - changed-files:
-      - any-glob-to-any-file: "sources/users/**/*"
-"scope: welcome":
-  - changed-files:
-      - any-glob-to-any-file: "sources/welcome/**/*"
+      - any-glob-to-any-file:
+          - "sources/users/**/src/**/*"
+          - "sources/web/src/routes/users/**/*"
+          - "sources/web/src/ui/users/**/*"
