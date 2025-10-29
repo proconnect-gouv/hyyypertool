@@ -1,6 +1,6 @@
 //
 
-import { set_config } from "@~/app.middleware/set_config";
+import { set_config } from "#src/middleware/config";
 import { expect, test } from "bun:test";
 import { Hono } from "hono";
 import { set_crisp_config } from "./index";

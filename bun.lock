@@ -174,19 +174,6 @@
         "@~/config.typescript": "workspace:*",
       },
     },
-    "sources/infra/crisp/middleware": {
-      "name": "@~/crisp.middleware",
-      "version": "1.0.0",
-      "dependencies": {
-        "@~/app.middleware": "workspace:*",
-        "consola": "3.4.2",
-        "hono": "4.9.8",
-      },
-      "devDependencies": {
-        "@~/config.typescript": "workspace:*",
-        "@~/crisp.lib": "workspace:*",
-      },
-    },
     "sources/infra/identite-proconnect/database": {
       "name": "@~/identite-proconnect.database",
       "version": "1.0.0",
@@ -334,7 +321,6 @@
         "@~/app.middleware": "workspace:*",
         "@~/core": "workspace:*",
         "@~/crisp.lib": "workspace:*",
-        "@~/crisp.middleware": "workspace:*",
         "@~/identite-proconnect.database": "workspace:*",
         "@~/identite-proconnect.lib": "workspace:*",
         "@~/moderations.lib": "workspace:*",
@@ -790,8 +776,6 @@
     "@~/core": ["@~/core@workspace:sources/core"],
 
     "@~/crisp.lib": ["@~/crisp.lib@workspace:sources/infra/crisp/lib"],
-
-    "@~/crisp.middleware": ["@~/crisp.middleware@workspace:sources/infra/crisp/middleware"],
 
     "@~/identite-proconnect.database": ["@~/identite-proconnect.database@workspace:sources/infra/identite-proconnect/database"],
 
