@@ -313,21 +313,6 @@
         "@~/config.typescript": "workspace:*",
       },
     },
-    "sources/organizations/ui": {
-      "name": "@~/organizations.ui",
-      "version": "1.0.0",
-      "dependencies": {
-        "@~/app.ui": "workspace:*",
-        "@~/app.urls": "workspace:*",
-        "@~/organizations.lib": "workspace:*",
-        "hono": "4.9.8",
-        "tailwind-variants": "3.1.0",
-        "ts-pattern": "5.8.0",
-      },
-      "devDependencies": {
-        "@~/config.typescript": "workspace:*",
-      },
-    },
     "sources/users/lib": {
       "name": "@~/users.lib",
       "version": "1.0.0",
@@ -375,7 +360,6 @@
         "@~/moderations.repository": "workspace:*",
         "@~/organizations.lib": "workspace:*",
         "@~/organizations.repository": "workspace:*",
-        "@~/organizations.ui": "workspace:*",
         "@~/users.lib": "workspace:*",
         "@~/users.repository": "workspace:*",
         "@~/zammad.lib": "workspace:*",
@@ -840,8 +824,6 @@
     "@~/organizations.lib": ["@~/organizations.lib@workspace:sources/organizations/lib"],
 
     "@~/organizations.repository": ["@~/organizations.repository@workspace:sources/organizations/repository"],
-
-    "@~/organizations.ui": ["@~/organizations.ui@workspace:sources/organizations/ui"],
 
     "@~/users.lib": ["@~/users.lib@workspace:sources/users/lib"],
 

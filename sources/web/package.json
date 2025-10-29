@@ -31,7 +31,6 @@
     "@~/moderations.repository": "workspace:*",
     "@~/organizations.lib": "workspace:*",
     "@~/organizations.repository": "workspace:*",
-    "@~/organizations.ui": "workspace:*",
     "@~/users.lib": "workspace:*",
     "@~/users.repository": "workspace:*",
     "@~/zammad.lib": "workspace:*",

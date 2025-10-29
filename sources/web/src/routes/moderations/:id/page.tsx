@@ -14,8 +14,7 @@ import { button } from "@~/app.ui/button";
 import { MODERATION_EVENTS } from "@~/moderations.lib/event";
 import { IsUserExternalMember } from "@~/moderations.lib/usecase/IsUserExternalMember";
 import { SuggestOrganizationDomains } from "@~/organizations.lib/usecase";
-import { About as About_Organization } from "@~/organizations.ui/info/About";
-import { Investigation as Investigation_Organization } from "@~/organizations.ui/info/Investigation";
+import { About as About_Organization, Investigation as Investigation_Organization } from "#src/ui/organizations/info";
 import {
   CountUserMemberships,
   SuggestSameUserEmails,

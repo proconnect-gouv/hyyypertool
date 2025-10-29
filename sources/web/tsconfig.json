@@ -42,9 +42,6 @@
       "path": "../organizations/repository"
     },
     {
-      "path": "../organizations/ui"
-    },
-    {
       "path": "../users/lib"
     },
     {

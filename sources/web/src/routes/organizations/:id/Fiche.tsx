@@ -1,7 +1,6 @@
 //
 
-import { About } from "@~/organizations.ui/info/About";
-import { Investigation } from "@~/organizations.ui/info/Investigation";
+import { About, Investigation } from "#src/ui/organizations/info";
 import { usePageRequestContext } from "./context";
 
 //
