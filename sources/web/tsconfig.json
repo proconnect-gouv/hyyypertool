@@ -3,7 +3,9 @@
     "jsxImportSource": "hono/jsx",
     "outDir": "./node_modules/.cache/tsc",
     "paths": {
-      "#src/*": ["./src/*"]
+      "#src/*": [
+        "./src/*"
+      ]
     }
   },
   "extends": "@~/config.typescript/base/tsconfig.json",
@@ -19,9 +21,6 @@
     },
     {
       "path": "../infra/crisp/lib"
-    },
-    {
-      "path": "../infra/crisp/middleware"
     },
     {
       "path": "../infra/identite-proconnect/database"

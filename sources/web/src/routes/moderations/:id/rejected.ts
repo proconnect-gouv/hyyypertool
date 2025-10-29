@@ -4,7 +4,7 @@ import type { Htmx_Header } from "#src/htmx";
 import { zValidator } from "@hono/zod-validator";
 import { Entity_Schema } from "@~/core/schema";
 import { CrispApi } from "@~/crisp.lib/api";
-import { set_crisp_config } from "@~/crisp.middleware";
+import { set_crisp_config } from "#src/middleware/crisp";
 import { type RejectedModeration_Context } from "@~/moderations.lib/context/rejected";
 import { MODERATION_EVENTS } from "@~/moderations.lib/event";
 import { reject_form_schema } from "@~/moderations.lib/schema/rejected.form";

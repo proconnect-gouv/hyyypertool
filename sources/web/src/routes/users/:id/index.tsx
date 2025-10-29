@@ -8,7 +8,7 @@ import { zValidator } from "@hono/zod-validator";
 import { set_variables } from "@~/app.middleware/context/set_variables";
 import { Entity_Schema } from "@~/core/schema";
 import { CrispApi } from "@~/crisp.lib/api";
-import { set_crisp_config } from "@~/crisp.middleware";
+import { set_crisp_config } from "#src/middleware/crisp";
 import { schema } from "@~/identite-proconnect.database";
 import { ResetMFA, ResetPassword } from "@~/users.lib/usecase";
 import { eq } from "drizzle-orm";

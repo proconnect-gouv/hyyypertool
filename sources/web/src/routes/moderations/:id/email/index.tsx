@@ -3,7 +3,7 @@
 import { zValidator } from "@hono/zod-validator";
 import { set_variables } from "@~/app.middleware/context/set_variables";
 import { DescribedBy_Schema, Entity_Schema } from "@~/core/schema";
-import { set_crisp_config } from "@~/crisp.middleware";
+import { set_crisp_config } from "#src/middleware/crisp";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import Page from "./page";
