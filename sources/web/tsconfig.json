@@ -9,22 +9,19 @@
       "path": "../app/core"
     },
     {
-      "path": "../core"
-    },
-    {
       "path": "../app/middleware"
     },
     {
       "path": "../app/ui"
     },
     {
+      "path": "../core"
+    },
+    {
       "path": "../infra/crisp/lib"
     },
     {
       "path": "../infra/crisp/middleware"
-    },
-    {
-      "path": "../infra/crisp/ui"
     },
     {
       "path": "../infra/identite-proconnect/database"

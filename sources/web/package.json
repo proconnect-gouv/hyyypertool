@@ -7,7 +7,7 @@
     "#src/*": "./src/*/index.ts"
   },
   "exports": {
-    "./*": "./src/*/index.ts"
+    "./routes": "./src/routes/index.ts"
   },
   "scripts": {
     "build": "tsc --build",
