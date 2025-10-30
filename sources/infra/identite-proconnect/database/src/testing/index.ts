@@ -1,12 +1,11 @@
 //
 
 import { PGlite } from "@electric-sql/pglite";
+import { migrate as pglite_migrator } from "@proconnect-gouv/proconnect.identite.database/pglite/migrator";
 import { sql } from "drizzle-orm";
 import type { PgInsertValue } from "drizzle-orm/pg-core";
 import { drizzle } from "drizzle-orm/pglite";
-import { migrate as pglite_migrate } from "drizzle-orm/pglite/migrator";
-import path from "node:path";
-import { schema } from "..";
+import { schema } from "../index";
 
 //
 
@@ -29,10 +28,9 @@ export async function empty_database() {
     await tx.execute(sql`ALTER SEQUENCE users_id_seq RESTART WITH 1`);
   });
 }
-export function migrate() {
-  return pglite_migrate(pg, {
-    migrationsFolder: path.resolve(import.meta.dirname, "../drizzle"),
-  });
+export async function migrate() {
+  await pglite_migrator(client);
+  await pg.execute("SET search_path TO public");
 }
 
 export async function add_user_to_organization(

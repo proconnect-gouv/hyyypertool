@@ -3,11 +3,11 @@
 import { addCucumberPreprocessorPlugin } from "@badeball/cypress-cucumber-preprocessor";
 import { createEsbuildPlugin } from "@badeball/cypress-cucumber-preprocessor/esbuild";
 import createBundler from "@bahmutov/cypress-esbuild-preprocessor";
+import * as schema from "@proconnect-gouv/proconnect.identite.database/drizzle";
 import { defineConfig } from "cypress";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { env } from "node:process";
 import pg from "pg";
-import * as schema from "../sources/infra/identite-proconnect/database/src/drizzle/schema.js";
 import { delete_database } from "../sources/infra/identite-proconnect/database/src/seed/delete.js";
 import { insert_database } from "../sources/infra/identite-proconnect/database/src/seed/insert.js";
 

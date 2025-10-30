@@ -59,7 +59,6 @@
     "@gouvfr/dsfr": "1.14.0",
     "animate.css": "4.1.1",
     "dotenv": "17.2.2",
-    "drizzle-orm": "0.44.5",
     "htmx-ext-include-vals": "2.0.1",
     "htmx-ext-sse": "2.2.3",
     "htmx.ext...chunked-transfer": "2.1.1",

@@ -1,4 +1,3 @@
 //
 
-export * from "./drizzle/relations";
-export * from "./drizzle/schema";
+export * from "@proconnect-gouv/proconnect.identite.database/drizzle";

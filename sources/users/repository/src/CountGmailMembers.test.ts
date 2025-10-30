@@ -6,17 +6,15 @@ import {
 } from "@~/identite-proconnect.database/seed/unicorn";
 import {
   add_user_to_organization,
-  empty_database,
   migrate,
   pg,
 } from "@~/identite-proconnect.database/testing";
-import { beforeAll, beforeEach, expect, test } from "bun:test";
+import { beforeAll, expect, test } from "bun:test";
 import { CountGmailMembers } from "./CountGmailMembers";
 
 //
 
 beforeAll(migrate);
-beforeEach(empty_database);
 
 //
 
