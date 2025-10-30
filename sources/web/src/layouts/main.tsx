@@ -25,7 +25,6 @@ export function Main_Layout({ children }: PropsWithChildren) {
                 <Tools username={username} />
               </div>
             </div>
-            {/*  */}
           </div>
 
           <div class="fr-header__menu fr-modal">
@@ -136,6 +135,16 @@ function Nav() {
             target="_self"
           >
             Domaines à vérifier
+          </a>
+        </li>
+        <li class="fr-nav__item">
+          <a
+            aria-current={req.routePath.startsWith("/domains-deliverability")}
+            class="fr-nav__link"
+            href={(urls as any)["domains-deliverability"].$url().pathname}
+            target="_self"
+          >
+            Délivrabilité des domaines
           </a>
         </li>
       </ul>
