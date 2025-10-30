@@ -1,5 +1,8 @@
 #
 
+[install]
+publicHoistPattern = [ "drizzle-orm", "pg" ]
+
 [test]
 preload = ["@~/config.bun-plugin-test-projects"]
 
