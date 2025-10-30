@@ -1,5 +1,27 @@
 # Changelog
 
+# [2025.10.0](https://github.com/proconnect-gouv/hyyypertool/compare/2025.9.0...2025.10.0) (2025-10-30)
+
+
+### Bug Fixes
+
+* **lib:** remove app.* dependency ([08846fa](https://github.com/proconnect-gouv/hyyypertool/commit/08846fa2a39a72aa26989f296661ced8fad23882))
+* **libs:** update imports to use @~/app.middleware compatibility shim ([b435eb8](https://github.com/proconnect-gouv/hyyypertool/commit/b435eb8e30fa68a8ded31247810fe98e3f9b9d3f))
+* skip Tailwind build if already built to prevent OOM on Scalingo ([f44bdf7](https://github.com/proconnect-gouv/hyyypertool/commit/f44bdf7783f5ebd47197d91b17c56aef340ee249))
+* **web:** correct config import path in moderations context ([6648286](https://github.com/proconnect-gouv/hyyypertool/commit/66482863babac1d3f98fcfd557fdb7eb27ad3874))
+* **web:** correct error class names in errors module ([7ceab92](https://github.com/proconnect-gouv/hyyypertool/commit/7ceab9241b39f36277c4ee53197a6131b494b86f))
+* **web:** update imports to use #src/middleware patterns ([d19fdb3](https://github.com/proconnect-gouv/hyyypertool/commit/d19fdb3b7a1c0bc82ef017297c8a5dfeb428bf2b))
+* **web:** update routes.d.ts imports after middleware migration ([154cc8d](https://github.com/proconnect-gouv/hyyypertool/commit/154cc8db93b7864217d64d33f3873dd549abe0ca))
+* **welcome:** overlapping welcome ([#1139](https://github.com/proconnect-gouv/hyyypertool/issues/1139)) ([8ab7f7e](https://github.com/proconnect-gouv/hyyypertool/commit/8ab7f7e7ff25fb1e275431bc5a60451c24c40f4f))
+* **welcome:** testable webcomponent ([136c123](https://github.com/proconnect-gouv/hyyypertool/commit/136c123f3f634ce349b53209480eb384b543e42f))
+* **welcome:** testable webcomponent (2) ([3351d60](https://github.com/proconnect-gouv/hyyypertool/commit/3351d60562df4b67e3a4684180a2bdb1d5be1ca2))
+
+
+### Features
+
+* **database:** use @proconnect-gouv/proconnect.identite.database ([#1116](https://github.com/proconnect-gouv/hyyypertool/issues/1116)) ([4e458d1](https://github.com/proconnect-gouv/hyyypertool/commit/4e458d17c9cf90e83e5c7f794a3e867e5b3d51eb))
+* **web:** add NotAuthorized and vip_list_guard auth UI components ([4fbcd8c](https://github.com/proconnect-gouv/hyyypertool/commit/4fbcd8cf80d39b5839a84dbda791feb21a431c14))
+
 # [2025.9.0](https://github.com/proconnect-gouv/hyyypertool/compare/2025.7.2...2025.9.0) (2025-09-18)
 
 ### Bug Fixes
