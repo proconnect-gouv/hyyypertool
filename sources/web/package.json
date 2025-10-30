@@ -54,7 +54,7 @@
     "tailwindcss": "4.1.16",
     "ts-dedent": "2.2.0",
     "ts-pattern": "5.8.0",
-    "type-fest": "5.0.1",
+    "type-fest": "5.1.0",
     "unified": "11.0.5",
     "youch": "3.3.4"
   },
