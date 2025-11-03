@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "hono": "4.9.8",
-    "modern-errors": "7.1.2",
+    "modern-errors": "7.1.4",
     "ts-pattern": "5.8.0"
   },
   "devDependencies": {
