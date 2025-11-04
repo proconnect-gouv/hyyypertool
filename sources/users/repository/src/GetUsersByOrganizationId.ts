@@ -32,6 +32,9 @@ export function GetUsersByOrganizationId(pg: IdentiteProconnect_PgDatabase) {
           id: schema.users.id,
           is_external: schema.users_organizations.is_external,
           job: schema.users.job,
+          needs_official_contact_email_verification:
+            schema.users_organizations
+              .needs_official_contact_email_verification,
           verification_type: schema.users_organizations.verification_type,
         })
         .from(schema.users)
