@@ -67,7 +67,7 @@ export async function fetch_zammad_api(
     body: options.method === "GET" ? null : JSON.stringify(options.body),
     headers,
     method: options.method,
-    signal: AbortSignal.timeout(options.timeout ?? 6_666),
+    signal: AbortSignal.timeout(options.timeout ?? 10_000),
   });
 
   consola.info(

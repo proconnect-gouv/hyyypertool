@@ -37,7 +37,7 @@ export async function fetch_mcp_admin_api(
   const response = await fetch(url, {
     method: options.method ?? "GET",
     headers,
-    signal: AbortSignal.timeout(options.timeout ?? 6_666),
+    signal: AbortSignal.timeout(options.timeout ?? 10_000),
   });
 
   consola.info(
