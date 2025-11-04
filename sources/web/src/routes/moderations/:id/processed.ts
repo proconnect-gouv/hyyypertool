@@ -1,8 +1,8 @@
 //
 
 import type { Htmx_Header } from "#src/htmx";
-import type { UserInfoVariablesContext } from "#src/middleware/auth/set_userinfo";
-import type { IdentiteProconnect_Pg_Context } from "#src/middleware/identite-pg/set_identite_pg";
+import type { UserInfoVariablesContext } from "#src/middleware/auth";
+import type { IdentiteProconnect_Pg_Context } from "#src/middleware/identite-pg";
 import { zValidator } from "@hono/zod-validator";
 import { Entity_Schema } from "@~/core/schema";
 import { MODERATION_EVENTS } from "@~/moderations.lib/event";

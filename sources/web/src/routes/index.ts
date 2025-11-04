@@ -2,12 +2,11 @@
 
 import config from "#src/config";
 import { Root_Layout } from "#src/layouts";
-import { set_userinfo } from "#src/middleware/auth/set_userinfo";
-import { set_config } from "#src/middleware/config/set_config";
-import { set_identite_pg_database } from "#src/middleware/identite-pg/set_identite_pg";
+import { set_userinfo } from "#src/middleware/auth";
+import { set_config } from "#src/middleware/config";
+import { set_identite_pg_database } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
 import { set_sentry } from "#src/middleware/sentry";
-import { hyyyyyypertool_session } from "#src/middleware/session/hyyypersession";
 import consola from "consola";
 import { Hono } from "hono";
 import auth_router from "./auth";
@@ -18,6 +17,7 @@ import users_router from "./users";
 import welcome_router from "./welcome";
 // TODO: Re-enable compression when Bun supports CompressionStream
 // import { compress } from "hono/compress";
+import { hyyyyyypertool_session } from "#src/middleware/session";
 import { contextStorage } from "hono/context-storage";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { logger } from "hono/logger";

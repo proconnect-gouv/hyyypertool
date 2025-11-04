@@ -1,9 +1,9 @@
 //
 
 import { Main_Layout } from "#src/layouts";
-import { authorized } from "#src/middleware/auth/authorized";
-import { zValidator } from "@hono/zod-validator";
+import { authorized } from "#src/middleware/auth";
 import { set_variables } from "#src/middleware/context";
+import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import user_page_route from "./:id/index";

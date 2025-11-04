@@ -1,6 +1,6 @@
 //
 
-import { set_config } from "#src/middleware/config/set_config";
+import { set_config } from "#src/middleware/config";
 import { set_nonce } from "#src/middleware/nonce";
 import { beforeAll, expect, setSystemTime, test } from "bun:test";
 import { Hono } from "hono";
