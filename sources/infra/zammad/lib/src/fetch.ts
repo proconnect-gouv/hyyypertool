@@ -51,7 +51,9 @@ type Options =
       searchParams: {};
     };
 
-export async function fetch_zammad_api(options: Options) {
+export async function fetch_zammad_api(
+  options: Options & { timeout?: number },
+) {
   const searchParams = new URLSearchParams(options.searchParams);
   const url = `${env.ZAMMAD_URL}${options.endpoint}?${searchParams.toString()}`;
   const headers = new Headers({
@@ -62,9 +64,10 @@ export async function fetch_zammad_api(options: Options) {
   consola.info(`  <<-- ${options.method} ${url}`);
 
   const response = await fetch(url, {
-    method: options.method,
-    headers,
     body: options.method === "GET" ? null : JSON.stringify(options.body),
+    headers,
+    method: options.method,
+    signal: AbortSignal.timeout(options.timeout ?? 10_000),
   });
 
   consola.info(
