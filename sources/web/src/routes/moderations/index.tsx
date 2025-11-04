@@ -1,7 +1,7 @@
 //
 
 import { Main_Layout } from "#src/layouts";
-import { authorized } from "#src/middleware/auth/authorized";
+import { authorized } from "#src/middleware/auth";
 import { set_variables } from "#src/middleware/context";
 import { Pagination_Schema } from "@~/core/schema";
 import { Hono } from "hono";

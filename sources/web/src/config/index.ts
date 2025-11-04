@@ -2,7 +2,7 @@
 
 import type { Env } from "hono";
 import type { App_Env } from "./env";
-import env from "./env";
+import env, { app_env } from "./env";
 
 //
 
@@ -10,6 +10,7 @@ const ASSETS_PATH = `/assets/${env.VERSION}` as const;
 const PUBLIC_ASSETS_PATH = `/assets/${env.VERSION}/public/built` as const;
 
 export default { ...env, ASSETS_PATH, PUBLIC_ASSETS_PATH };
+export { app_env };
 
 export interface App_Config extends App_Env {
   ASSETS_PATH: typeof ASSETS_PATH;

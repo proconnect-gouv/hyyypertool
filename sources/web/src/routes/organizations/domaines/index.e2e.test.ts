@@ -1,10 +1,10 @@
 //
 
-import { set_config } from "#src/middleware/config/set_config";
-import { set_identite_pg } from "#src/middleware/identite-pg/set_identite_pg";
+import { set_config } from "#src/middleware/config";
+import { set_identite_pg } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
 
-import { set_userinfo } from "#src/middleware/auth/set_userinfo";
+import { set_userinfo } from "#src/middleware/auth";
 import {
   empty_database,
   migrate,

@@ -1,8 +1,8 @@
 declare const app: import("hono/hono-base").HonoBase<
   import("#src/middleware/nonce/set_nonce").NonceVariablesContext &
-    import("#src/middleware/config/set_config").ConfigVariables_Context &
-    import("#src/middleware/auth/set_userinfo").UserInfoVariablesContext &
-    import("#src/middleware/identite-pg/set_identite_pg").IdentiteProconnect_Pg_Context,
+    import("#src/middleware/config").ConfigVariables_Context &
+    import("#src/middleware/auth").UserInfoVariablesContext &
+    import("#src/middleware/identite-pg").IdentiteProconnect_Pg_Context,
   | ({
       "/healthz": {
         $get: {

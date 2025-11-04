@@ -1,11 +1,11 @@
-import type { AgentConnect_UserInfo } from "#src/middleware/auth";
+import type { AgentConnectUserInfo } from "#src/middleware/auth";
 import type { Env } from "hono";
 import type { Session } from "hono-sessions";
 
 //
 
 interface SessionKeyMapping {
-  userinfo?: AgentConnect_UserInfo;
+  userinfo?: AgentConnectUserInfo;
   idtoken: string;
   state: string;
   nonce: string;

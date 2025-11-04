@@ -1,7 +1,7 @@
 //
 
 import type { Htmx_Header } from "#src/htmx";
-import type { IdentiteProconnect_Pg_Context } from "#src/middleware/identite-pg/set_identite_pg";
+import type { IdentiteProconnect_Pg_Context } from "#src/middleware/identite-pg";
 import { zValidator } from "@hono/zod-validator";
 import { Entity_Schema, z_coerce_boolean } from "@~/core/schema";
 import { schema } from "@~/identite-proconnect.database";

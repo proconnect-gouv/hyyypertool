@@ -1,7 +1,7 @@
 //
 
 import { type AppVariables_Context } from "#src/config";
-import { cache_immutable } from "#src/middleware/cache/cache_immutable";
+import { cache_immutable } from "#src/middleware/cache";
 import { Hono } from "hono";
 import { rewriteAssetRequestPath } from "./rewrite";
 import zammad_attachment_router from "./zammad";

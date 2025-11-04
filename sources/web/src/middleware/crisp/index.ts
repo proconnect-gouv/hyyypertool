@@ -1,6 +1,6 @@
 //
 
-import type { ConfigVariables_Context } from "#src/middleware/config/set_config";
+import type { ConfigVariables_Context } from "#src/middleware/config";
 import type { Config } from "@~/crisp.lib/types";
 import consola, { LogLevels } from "consola";
 import type { Env, MiddlewareHandler } from "hono";

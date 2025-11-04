@@ -2,7 +2,7 @@
 
 import env from "#src/config";
 import { AuthError } from "#src/errors";
-import type { AgentConnectUserInfo } from "#src/middleware/auth/AgentConnectUserInfo";
+import type { AgentConnectUserInfo } from "#src/middleware/auth";
 import type { App_Context } from "#src/middleware/context";
 import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";

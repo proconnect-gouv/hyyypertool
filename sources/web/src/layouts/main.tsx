@@ -1,6 +1,6 @@
 //
 
-import type { UserInfoVariablesContext } from "#src/middleware/auth/set_userinfo";
+import type { UserInfoVariablesContext } from "#src/middleware/auth";
 import { ToasterContainer } from "#src/ui/toast/components";
 import { urls } from "#src/urls";
 import { z_username } from "@~/core/schema";
