@@ -71,6 +71,7 @@ export async function Table() {
 function Row({ variants }: { variants?: VariantProps<typeof row> }) {
   const { user } = useContext(Member_Context);
   const verification_type = user.verification_type as Verification_Type;
+
   return (
     <tr
       aria-label={`Membre ${user.given_name} ${user.family_name} (${user.email})`}
@@ -81,7 +82,14 @@ function Row({ variants }: { variants?: VariantProps<typeof row> }) {
       <td>{user.is_external ? "❌" : "✅"}</td>
       <td>{user.email}</td>
       <td>{user.job}</td>
-      <td>{verification_type}</td>
+      <td>
+        {user.needs_official_contact_email_verification ? (
+          <span title="En attente d'une vérification officielle de l'adresse e-mail de contact">
+            ⚠️
+          </span>
+        ) : null}
+        {verification_type}
+      </td>
       <td>
         <Row_Actions />
       </td>
