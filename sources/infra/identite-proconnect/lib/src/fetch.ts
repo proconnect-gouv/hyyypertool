@@ -23,7 +23,9 @@ type Options =
       searchParams: { organization_id: string; user_id: string };
     };
 
-export async function fetch_mcp_admin_api(options: Options) {
+export async function fetch_mcp_admin_api(
+  options: Options & { timeout?: number },
+) {
   const searchParams = new URLSearchParams(options.searchParams);
   const url = `${join(env.API_AUTH_URL, options.endpoint)}?${searchParams}`;
   const headers = new Headers({
@@ -35,6 +37,7 @@ export async function fetch_mcp_admin_api(options: Options) {
   const response = await fetch(url, {
     method: options.method ?? "GET",
     headers,
+    signal: AbortSignal.timeout(options.timeout ?? 6_666),
   });
 
   consola.info(

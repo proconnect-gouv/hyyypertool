@@ -63,6 +63,7 @@ async function load_leaders({ siret }: { siret: string }) {
       "content-type": "application/json",
       Authorization: `Bearer ${env.ENTREPRISE_API_GOUV_TOKEN}`,
     },
+    signal: AbortSignal.timeout(env.HTTP_CLIENT_TIMEOUT),
   });
 
   consola.info(
