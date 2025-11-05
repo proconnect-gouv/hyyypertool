@@ -35,7 +35,7 @@
     "format:tsconfig": "bun x @monorepo-utils/workspaces-to-typescript-project-references && prettier --log-level silent --write **/tsconfig.json",
     "postadd": "bun run format:tsconfig",
     "renovate": "bun x npm-check-updates --packageManager bun --interactive --upgrade --deep",
-    "start": "tsx bin/src/node/index.ts",
+    "start": "tsx --tsconfig tsconfig.json bin/src/node/index.ts",
     "studio:identite-proconnect": "bun run database:identite-proconnect:run studio",
     "test": "bun run test:type-check && bun run test:all",
     "test:all": "bun test",
