@@ -1,5 +1,14 @@
 # Changelog
 
+## [2025.11.1](https://github.com/proconnect-gouv/hyyypertool/compare/2025.11.0...2025.11.1) (2025-11-05)
+
+
+### Bug Fixes
+
+* add timeout handling to HTTP client functions ([#1163](https://github.com/proconnect-gouv/hyyypertool/issues/1163)) ([d943fec](https://github.com/proconnect-gouv/hyyypertool/commit/d943fec5f09291fd8e3a1907a634bb3a0799d9e7))
+* wrong tsconfig at start ([444bb72](https://github.com/proconnect-gouv/hyyypertool/commit/444bb72faaf51894183c2d805c90f43199ab2579))
+* wrong tsconfig at start (2) ([47a79bb](https://github.com/proconnect-gouv/hyyypertool/commit/47a79bb495317798df19637c97453db31cae981e))
+
 # [2025.11.0](https://github.com/proconnect-gouv/hyyypertool/compare/2025.10.1...2025.11.0) (2025-11-04)
 
 ## [2025.10.1](https://github.com/proconnect-gouv/hyyypertool/compare/2025.10.0...2025.10.1) (2025-10-30)
