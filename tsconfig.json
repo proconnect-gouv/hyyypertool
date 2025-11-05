@@ -5,6 +5,6 @@
     "jsxImportSource": "hono/jsx",
     "skipLibCheck": true
   },
-  "include": [],
+  "include": ["sources"],
   "references": [{ "path": "./bin/tsconfig.json" }]
 }

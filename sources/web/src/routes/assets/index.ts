@@ -14,12 +14,14 @@ const serveStatic = globalThis.Bun
   : (await import("@hono/node-server/serve-static")).serveStatic;
 
 // Determine the root path for static files
-// Server runs from bin/ directory:
-// - node_modules are at ../node_modules/ (workspace root) - use ".." as root
-// - public files are at ./public/ (bin/public) - use "." as root
-// For Node.js: default behavior works (no root specified)
-const nodeModulesRoot = globalThis.Bun ? ".." : undefined;
-const publicRoot = globalThis.Bun ? "." : undefined;
+// For Bun: Server runs from bin/ directory:
+//   - node_modules are at ../node_modules/ (workspace root) - use ".." as root
+//   - public files are at ./public/ (bin/public) - use "." as root
+// For Node.js: Server runs from workspace root:
+//   - node_modules are at ./node_modules/ (workspace root) - use "." as root
+//   - public files are at ./bin/public/ - use "./bin" as root
+const nodeModulesRoot = globalThis.Bun ? ".." : ".";
+const publicRoot = globalThis.Bun ? "." : "./bin";
 
 //
 

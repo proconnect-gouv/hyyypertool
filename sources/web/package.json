@@ -17,7 +17,9 @@
     "dev:api:clean": "rm src/routes.d.ts",
     "dev:api:cp": "cp ./node_modules/.cache/tsc/src/routes/index.d.ts 'src/routes.d.ts'",
     "dev:api:format": "prettier --write src/routes.d.ts",
-    "dev:api:tsc": "bun run build"
+    "dev:api:tsc": "bun run build",
+    "start:bun": "bun run src/bun/index.ts",
+    "start:node": "tsx src/node/index.ts"
   },
   "dependencies": {
     "@~/core": "workspace:*",
@@ -54,6 +56,7 @@
     "tailwindcss": "4.1.16",
     "ts-dedent": "2.2.0",
     "ts-pattern": "5.8.0",
+    "tsx": "4.20.6",
     "type-fest": "5.0.1",
     "unified": "11.0.5",
     "youch": "3.3.4"
