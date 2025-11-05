@@ -5,6 +5,7 @@
       "name": "hyyypertool",
       "dependencies": {
         "@gouvfr/dsfr": "1.14.0",
+        "@tsconfig/bun": "1.0.7",
         "@~/bin": "workspace:*",
         "animate.css": "4.1.1",
         "dotenv": "17.2.2",
@@ -20,7 +21,6 @@
       "devDependencies": {
         "@csmith/release-it-calver-plugin": "2023.12.0",
         "@release-it/conventional-changelog": "10.0.1",
-        "@tsconfig/bun": "1.0.7",
         "@types/bun": "1.2.21",
         "@~/config.bun-plugin-test-projects": "workspace:*",
         "htmx-ext-debug": "2.0.1",

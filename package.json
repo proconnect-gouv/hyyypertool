@@ -55,6 +55,7 @@
   "dependencies": {
     "@~/bin": "workspace:*",
     "@gouvfr/dsfr": "1.14.0",
+    "@tsconfig/bun": "1.0.7",
     "animate.css": "4.1.1",
     "dotenv": "17.2.2",
     "htmx-ext-include-vals": "2.0.1",
@@ -70,7 +71,6 @@
     "@~/config.bun-plugin-test-projects": "workspace:*",
     "@csmith/release-it-calver-plugin": "2023.12.0",
     "@release-it/conventional-changelog": "10.0.1",
-    "@tsconfig/bun": "1.0.7",
     "@types/bun": "1.2.21",
     "htmx-ext-debug": "2.0.1",
     "prettier": "3.6.2",

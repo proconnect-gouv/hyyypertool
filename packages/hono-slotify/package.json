@@ -11,7 +11,7 @@
     "hono": "4.9.8"
   },
   "devDependencies": {
-    "@types/bun": "1.2.21",
-    "@~/config.typescript": "workspace:*"
+    "@~/config.typescript": "workspace:*",
+    "@types/bun": "1.2.21"
   }
 }
