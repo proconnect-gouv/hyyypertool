@@ -1,0 +1,43 @@
+//
+
+import type { ForceJoinOrganizationHandler } from "@~/identite-proconnect.lib/sdk";
+import type { GetMemberHandler } from "@~/users.repository";
+import { to as await_to } from "await-to-js";
+
+//
+
+export function MemberJoinOrganization({
+  force_join_organization,
+  get_member,
+  get_moderation_by_id,
+}: {
+  force_join_organization: ForceJoinOrganizationHandler;
+  get_member: GetMemberHandler<{ updated_at: true }>;
+  get_moderation_by_id: (
+    moderation_id: number
+  ) => Promise<{ organization_id: number; user_id: number }>;
+}) {
+  return async function member_join_organization({
+    moderation_id,
+    is_external,
+  }: {
+    moderation_id: number;
+    is_external: boolean;
+  }) {
+    const { organization_id, user_id } = await get_moderation_by_id(
+      moderation_id
+    );
+
+    const [get_member_err] = await await_to(
+      get_member({ organization_id, user_id }),
+    );
+
+    if (get_member_err) {
+      await force_join_organization({
+        is_external,
+        organization_id,
+        user_id,
+      });
+    }
+  };
+}

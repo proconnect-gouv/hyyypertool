@@ -1,7 +1,8 @@
 //
 
-import type { Moderation } from "@~/moderations.lib/entities/Moderation";
-import { moderation_type_to_verb_in_sentence } from "@~/moderations.lib/moderation_type.mapper";
+import type { schema } from "@~/identite-proconnect.database";
+type Moderation = typeof schema.moderations.$inferSelect;
+import { moderation_type_to_verb_in_sentence } from "@~/moderations/utils/moderation_type_mapper";
 import type { Organization } from "@~/organizations.lib/entities/Organization";
 import type { User } from "@~/users.lib/entities/User";
 //

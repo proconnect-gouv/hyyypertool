@@ -6,9 +6,9 @@ import { urls } from "#src/urls";
 import { z_email_domain } from "@~/core/schema";
 import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
 import {
-  GetModerationWithDetails,
+  get_moderation_with_details,
   type GetModerationWithDetailsDto,
-} from "@~/moderations.repository";
+} from "./get_moderation_with_details";
 import { GetBanaticUrl } from "@~/organizations.lib/usecase";
 import {
   GetDomainCount,
@@ -27,9 +27,8 @@ export async function load_moderation_page_variables(
   pg: IdentiteProconnect_PgDatabase,
   { id }: { id: number },
 ) {
-  const get_moderation_with_details = GetModerationWithDetails(pg);
   const [moderation_error, moderation] = await to(
-    get_moderation_with_details(id),
+    get_moderation_with_details(pg, id),
   );
 
   if (moderation_error) {

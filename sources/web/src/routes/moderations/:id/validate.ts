@@ -10,15 +10,11 @@ import {
   ForceJoinOrganization,
   MarkDomainAsVerified,
 } from "@~/identite-proconnect.lib/sdk";
-import { MODERATION_EVENTS } from "@~/moderations.lib/event";
-import { validate_form_schema } from "@~/moderations.lib/schema/validate.form";
-import { mark_moderation_as } from "@~/moderations.lib/usecase/mark_moderation_as";
-import { MemberJoinOrganization } from "@~/moderations.lib/usecase/member_join_organization";
-import { ValidateSimilarModerations } from "@~/moderations.lib/usecase/ValidateSimilarModerations";
-import {
-  GetModerationById,
-  GetModerationWithUser,
-} from "@~/moderations.repository";
+import { MODERATION_EVENTS } from "@~/moderations/events/moderation_events";
+import { validate_form_schema } from "./validate_form_schema";
+import { MemberJoinOrganization } from "./member_join_organization";
+import { ValidateSimilarModerations } from "./validate_similar_moderations";
+import { get_moderation_with_user } from "./get_moderation_with_user";
 import {
   AddVerifiedDomain,
   GetFicheOrganizationById,
@@ -28,6 +24,7 @@ import { to } from "await-to-js";
 import consola from "consola";
 import { Hono } from "hono";
 import { P, match } from "ts-pattern";
+import { validate_moderation } from "./validate_moderation.command";
 
 //
 
@@ -50,7 +47,6 @@ export default new Hono<App_Context>().patch(
       get_organization_by_id: GetFicheOrganizationById({ pg: identite_pg }),
       mark_domain_as_verified: MarkDomainAsVerified(identite_pg_client),
     });
-    const get_moderation_with_user = GetModerationWithUser(identite_pg);
     const update_user_by_id_in_organization = UpdateUserByIdInOrganization({
       pg: identite_pg,
     });
@@ -59,7 +55,7 @@ export default new Hono<App_Context>().patch(
     //#endregion
 
     const [moderation_error, moderation] = await to(
-      get_moderation_with_user(id),
+      get_moderation_with_user(identite_pg, id),
     );
 
     if (moderation_error) {
@@ -119,7 +115,14 @@ export default new Hono<App_Context>().patch(
         pg: identite_pg,
         columns: { updated_at: true },
       }),
-      get_moderation_by_id: GetModerationById({ pg: identite_pg }),
+      get_moderation_by_id: async (moderation_id: number) => {
+        const moderation = await identite_pg.query.moderations.findFirst({
+          columns: { organization_id: true, user_id: true },
+          where: (table, { eq }) => eq(table.id, moderation_id),
+        });
+        if (!moderation) throw new NotFoundError("Moderation not found");
+        return moderation;
+      },
     });
     const [join_error] = await to(
       member_join_organization({ is_external, moderation_id: id }),
@@ -155,14 +158,11 @@ export default new Hono<App_Context>().patch(
     //#endregion
 
     //#region ✨ Mark moderation as validated
-    await mark_moderation_as(
-      {
-        moderation,
-        pg: identite_pg,
-        reason: "[ProConnect] ✨ Modeation validée",
-        userinfo,
-      },
-      "VALIDATED",
+    await validate_moderation(
+      identite_pg,
+      id,
+      userinfo,
+      "[ProConnect] ✨ Modeation validée",
     );
     //#endregion
 

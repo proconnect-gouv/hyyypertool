@@ -3,8 +3,7 @@
 import { callout } from "#src/ui/callout";
 import { OpenInCrisp, short_session_id } from "#src/ui/links";
 import { LocalTime } from "#src/ui/time";
-import type { Config } from "@~/crisp.lib/types";
-import type { GetCripsFromSessionIdHandler } from "@~/moderations.lib/usecase/GetCripsFromSessionId";
+import type { Config, ConversationMessage } from "@~/crisp.lib/types";
 import { createContext, useContext } from "hono/jsx";
 import { match } from "ts-pattern";
 import { Message } from "../../crisp";
@@ -14,7 +13,12 @@ import { Message } from "../../crisp";
 interface Values {
   crisp_config: Config;
   limit: number;
-  crisp: Awaited<ReturnType<GetCripsFromSessionIdHandler>>;
+  crisp: {
+    messages: ConversationMessage[];
+    show_more: boolean;
+    session_id: string;
+    subject: string;
+  };
 }
 const context = createContext<Values>(null as any);
 

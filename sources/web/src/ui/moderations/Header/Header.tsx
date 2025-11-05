@@ -5,23 +5,34 @@ import { callout } from "#src/ui/callout";
 import { notice } from "#src/ui/notice";
 import { LocalTime } from "#src/ui/time";
 import { hx_urls } from "#src/urls";
-import { moderation_type_to_emoji } from "@~/moderations.lib/moderation_type.mapper";
-import type { GetModerationHeaderOutput } from "@~/moderations.lib/usecase/GetModerationHeader";
+import { moderation_type_to_emoji } from "@~/moderations/utils/moderation_type_mapper";
 import { raw } from "hono/html";
-import { createContext, useContext } from "hono/jsx";
 import { MessageInfo } from "../MessageInfo";
 
 //
 
-interface Values {
-  moderation: GetModerationHeaderOutput;
+interface ModerationHeaderProps {
+  moderation: {
+    id: number;
+    created_at: string;
+    moderated_at: string | null;
+    moderated_by: string | null;
+    type: string;
+    comment: string | null;
+    user: {
+      email: string;
+      family_name: string | null;
+      given_name: string | null;
+      id: number;
+    };
+    organization: {
+      cached_libelle: string | null;
+      id: number;
+    };
+  };
 }
-const context = createContext<Values>({} as any);
 
-//
-
-export async function Header() {
-  const { moderation } = useContext(context);
+export async function Header({ moderation }: ModerationHeaderProps) {
   const hx_get_duplicate_warning = await hx_urls.moderations[
     ":id"
   ].duplicate_warning.$get({
@@ -45,17 +56,17 @@ export async function Header() {
           {moderation.user.given_name} {moderation.user.family_name}
         </h1>
         <div>
-          <State_Badge />
+          <State_Badge moderation={moderation} />
         </div>
       </section>
 
-      <ModerationCallout />
+      <ModerationCallout moderation={moderation} />
 
-      <Info />
+      <Info moderation={moderation} />
 
       <hr class="bg-none" />
 
-      <Comments />
+      <Comments moderation={moderation} />
 
       <hr class="bg-none" />
 
@@ -65,17 +76,14 @@ export async function Header() {
     </header>
   );
 }
-Header.Provier = context.Provider;
 
-function State_Badge() {
-  const { moderation } = useContext(context);
+function State_Badge({ moderation }: ModerationHeaderProps) {
   const is_treated = moderation.moderated_at !== null;
   if (is_treated) return <p class="fr-badge fr-badge--success">Traité</p>;
   return <p class="fr-badge fr-badge--new">A traiter</p>;
 }
 
-function Info() {
-  const { moderation } = useContext(context);
+function Info({ moderation }: ModerationHeaderProps) {
   const { base, container, body, title } = notice({ type: "info" });
   return (
     <div class={base()}>
@@ -90,8 +98,7 @@ function Info() {
   );
 }
 
-async function ModerationCallout() {
-  const { moderation } = useContext(context);
+async function ModerationCallout({ moderation }: ModerationHeaderProps) {
   if (!moderation.moderated_at) return raw``;
 
   const { base, text, title } = callout({ intent: "success" });
@@ -107,7 +114,7 @@ async function ModerationCallout() {
 
       <h3 class={text()}>Modération traitée</h3>
       <p class={title()}>
-        Cette modération a été marqué comme traitée le{" "}
+        Cette modération a été marqué comme traité le{" "}
         <b>
           <LocalTime date={moderation.moderated_at} />
         </b>
@@ -119,7 +126,7 @@ async function ModerationCallout() {
         ) : null}
         .
       </p>
-      <LastComment />
+      <LastComment moderation={moderation} />
       <button
         class={button({ size: "sm", type: "tertiary" })}
         {...hx_patch_moderation_reprocess}
@@ -131,8 +138,8 @@ async function ModerationCallout() {
   );
 }
 
-function LastComment() {
-  const { comment } = useContext(context).moderation;
+function LastComment({ moderation }: ModerationHeaderProps) {
+  const { comment } = moderation;
   if (!comment) {
     return null;
   }
@@ -141,8 +148,8 @@ function LastComment() {
   return <p>{last_comment?.value}</p>;
 }
 
-function Comments() {
-  const { comment } = useContext(context).moderation;
+function Comments({ moderation }: ModerationHeaderProps) {
+  const { comment } = moderation;
   const parsed_comment = parse_comment(comment);
   return (
     <details>

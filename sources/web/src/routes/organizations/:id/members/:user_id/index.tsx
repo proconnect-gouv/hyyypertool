@@ -7,7 +7,6 @@ import { Entity_Schema, z_coerce_boolean } from "@~/core/schema";
 import { schema } from "@~/identite-proconnect.database";
 import { join_organization } from "@~/identite-proconnect.lib/index";
 import { Verification_Type_Schema } from "@~/identite-proconnect.lib/verification_type";
-import { RemoveUserFromOrganization } from "@~/moderations.repository";
 import { ORGANISATION_EVENTS } from "@~/organizations.lib/event";
 import { and, eq } from "drizzle-orm";
 import { Hono } from "hono";
@@ -94,13 +93,15 @@ export default new Hono<IdentiteProconnect_Pg_Context>()
     async function DELETE({ text, req, var: { identite_pg } }) {
       const { id: organization_id, user_id } = req.valid("param");
 
-      const remove_user_from_organization = RemoveUserFromOrganization({
-        pg: identite_pg,
-      });
-      await remove_user_from_organization({
-        organization_id,
-        user_id,
-      });
+      // Remove user from organization
+      await identite_pg
+        .delete(schema.users_organizations)
+        .where(
+          and(
+            eq(schema.users_organizations.organization_id, organization_id),
+            eq(schema.users_organizations.user_id, user_id),
+          ),
+        );
 
       return text("OK", 200, {
         "HX-Trigger": ORGANISATION_EVENTS.enum.MEMBERS_UPDATED,

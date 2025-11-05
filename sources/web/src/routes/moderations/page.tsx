@@ -9,8 +9,8 @@ import type { Pagination } from "@~/core/schema";
 import {
   moderation_type_to_emoji,
   moderation_type_to_title,
-} from "@~/moderations.lib/moderation_type.mapper";
-import { GetModerationsList } from "@~/moderations.repository";
+} from "@~/moderations/utils/moderation_type_mapper";
+import { get_moderations_list } from "./get_moderations_list";
 import { useContext } from "hono/jsx";
 import Moderations_Context, {
   MODERATION_TABLE_ID,
@@ -60,8 +60,7 @@ export function ModerationsPage({
     search_email,
     search_siret,
   } = search;
-  const get_moderations_list = GetModerationsList(identite_pg);
-  const query_moderations_list = get_moderations_list({
+  const query_moderations_list = get_moderations_list(identite_pg, {
     search: {
       created_at: date,
       email: search_email,

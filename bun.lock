@@ -178,33 +178,12 @@
         "@~/config.typescript": "workspace:*",
       },
     },
-    "sources/moderations/lib": {
-      "name": "@~/moderations.lib",
+    "sources/moderations": {
+      "name": "@~/moderations",
       "version": "1.0.0",
       "dependencies": {
-        "@~/core": "workspace:*",
-        "@~/crisp.lib": "workspace:*",
-        "@~/identite-proconnect.database": "workspace:*",
-        "@~/identite-proconnect.lib": "workspace:*",
-        "@~/moderations.repository": "workspace:*",
-        "@~/organizations.lib": "workspace:*",
-        "@~/users.repository": "workspace:*",
-        "@~/zammad.lib": "workspace:*",
-        "await-to-js": "3.0.0",
-        "consola": "3.4.2",
-        "ts-pattern": "5.8.0",
-      },
-      "devDependencies": {
-        "@~/config.typescript": "workspace:*",
-      },
-    },
-    "sources/moderations/repository": {
-      "name": "@~/moderations.repository",
-      "version": "1.0.0",
-      "dependencies": {
-        "@~/core": "workspace:*",
-        "@~/identite-proconnect.database": "workspace:*",
-        "@~/organizations.lib": "workspace:*",
+        "ts-pattern": "*",
+        "zod": "*",
       },
       "devDependencies": {
         "@~/config.typescript": "workspace:*",
@@ -279,8 +258,7 @@
         "@~/crisp.lib": "workspace:*",
         "@~/identite-proconnect.database": "workspace:*",
         "@~/identite-proconnect.lib": "workspace:*",
-        "@~/moderations.lib": "workspace:*",
-        "@~/moderations.repository": "workspace:*",
+        "@~/moderations": "workspace:*",
         "@~/organizations.lib": "workspace:*",
         "@~/organizations.repository": "workspace:*",
         "@~/users.lib": "workspace:*",
@@ -735,9 +713,7 @@
 
     "@~/identite-proconnect.lib": ["@~/identite-proconnect.lib@workspace:sources/infra/identite-proconnect/lib"],
 
-    "@~/moderations.lib": ["@~/moderations.lib@workspace:sources/moderations/lib"],
-
-    "@~/moderations.repository": ["@~/moderations.repository@workspace:sources/moderations/repository"],
+    "@~/moderations": ["@~/moderations@workspace:sources/moderations"],
 
     "@~/organizations.lib": ["@~/organizations.lib@workspace:sources/organizations/lib"],
 

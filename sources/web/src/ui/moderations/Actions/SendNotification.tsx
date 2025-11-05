@@ -1,7 +1,7 @@
 //
 
-import { Moderation_Type_Schema } from "@~/moderations.lib/Moderation_Type";
-import { validate_form_schema } from "@~/moderations.lib/schema/validate.form";
+import { Moderation_Type_Schema } from "@~/moderations/utils/moderation_type";
+import { validate_form_schema } from "../../../routes/moderations/:id/validate_form_schema";
 import { useContext } from "hono/jsx";
 import { context, valid_context } from "./context";
 

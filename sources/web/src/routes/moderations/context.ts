@@ -2,7 +2,7 @@
 
 import type { App_Context } from "#src/middleware/context";
 import { Pagination_Schema, type Pagination } from "@~/core/schema";
-import type { GetModerationsListHandler } from "@~/moderations.repository";
+import type { get_moderations_list } from "./get_moderations_list";
 import type { Env } from "hono";
 import { createContext } from "hono/jsx";
 import { useRequestContext } from "hono/jsx-renderer";
@@ -41,7 +41,7 @@ export type Search = z.infer<typeof Search_Schema>;
 
 //
 export type GetModerationsListDTO = Awaited<
-  ReturnType<GetModerationsListHandler>
+  ReturnType<typeof get_moderations_list>
 >;
 
 export async function load_moderations_list_page_variables({

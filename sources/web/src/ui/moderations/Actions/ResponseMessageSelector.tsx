@@ -1,6 +1,6 @@
 //
 
-import { reject_form_schema } from "@~/moderations.lib/schema/rejected.form";
+import { reject_form_schema } from "../../../routes/moderations/:id/rejected_form_schema";
 import { reponse_templates } from "./responses";
 
 //

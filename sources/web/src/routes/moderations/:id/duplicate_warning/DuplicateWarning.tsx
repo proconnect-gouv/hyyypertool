@@ -11,9 +11,9 @@ import {
   type IdentiteProconnect_PgDatabase,
 } from "@~/identite-proconnect.database";
 import {
-  GetDuplicateModerations,
+  get_duplicate_moderations,
   type GetDuplicateModerationsDto,
-} from "@~/moderations.repository";
+} from "./get_duplicate_moderations";
 import { GetUserById } from "@~/users.repository";
 import { get_zammad_mail } from "@~/zammad.lib/get_zammad_mail";
 import { to } from "await-to-js";
@@ -41,8 +41,6 @@ async function createDuplicateWarningContextValues(
     moderation_id,
   }: { organization_id: number; user_id: number; moderation_id: number },
 ) {
-  const get_duplicate_moderations = GetDuplicateModerations(pg);
-
   const get_user_by_id = GetUserById(pg, {
     columns: {
       id: true,
@@ -54,7 +52,7 @@ async function createDuplicateWarningContextValues(
 
   return {
     moderation_id,
-    moderations: await get_duplicate_moderations({
+    moderations: await get_duplicate_moderations(pg, {
       organization_id,
       user_id,
     }),

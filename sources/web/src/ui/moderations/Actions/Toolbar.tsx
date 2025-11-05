@@ -1,4 +1,5 @@
-import type { Moderation } from "@~/moderations.lib/entities/Moderation";
+import type { schema } from "@~/identite-proconnect.database";
+type Moderation = typeof schema.moderations.$inferSelect;
 type ToolbarProps = {
   moderation: Pick<Moderation, "moderated_at">;
 };

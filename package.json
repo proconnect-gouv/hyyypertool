@@ -5,12 +5,12 @@
   "type": "module",
   "workspaces": [
     "bin",
+    "sources/*",
     "sources/app/*",
     "sources/config/*",
     "sources/infra/identite-proconnect/*",
     "sources/infra/crisp/*",
     "sources/infra/zammad/*",
-    "sources/moderations/*",
     "sources/organizations/*",
     "sources/users/*",
     "sources/core",

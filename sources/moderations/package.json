@@ -1,0 +1,22 @@
+{
+  "name": "@~/moderations",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "imports": {
+    "#src/*": "./src/*"
+  },
+  "exports": {
+    "./state/*": "./src/state/*.ts",
+    "./rules/*": "./src/rules/*.ts",
+    "./utils/*": "./src/utils/*.ts",
+    "./events/*": "./src/events/*.ts"
+  },
+  "dependencies": {
+    "zod": "*",
+    "ts-pattern": "*"
+  },
+  "devDependencies": {
+    "@~/config.typescript": "workspace:*"
+  }
+}

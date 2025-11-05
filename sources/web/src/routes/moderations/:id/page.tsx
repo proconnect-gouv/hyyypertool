@@ -15,9 +15,10 @@ import {
 import { About as About_User } from "#src/ui/users/About";
 import { Investigation as Investigation_User } from "#src/ui/users/Investigation";
 import { hx_urls } from "#src/urls";
-import { MODERATION_EVENTS } from "@~/moderations.lib/event";
-import { IsUserExternalMember } from "@~/moderations.lib/usecase/IsUserExternalMember";
+import { schema } from "@~/identite-proconnect.database";
+import { MODERATION_EVENTS } from "@~/moderations/events/moderation_events";
 import { SuggestOrganizationDomains } from "@~/organizations.lib/usecase";
+import { and, eq } from "drizzle-orm";
 import {
   CountUserMemberships,
   SuggestSameUserEmails,
@@ -68,9 +69,7 @@ export default async function Moderation_Page() {
         ])}
         id={moderation_id}
       >
-        <Header.Provier value={{ moderation }}>
-          <Header />
-        </Header.Provier>
+        <Header moderation={moderation} />
 
         <hr class="bg-none pb-5" />
 
@@ -109,9 +108,23 @@ export default async function Moderation_Page() {
             query_suggest_same_user_emails: SuggestSameUserEmails({
               pg: identite_pg,
             }),
-            query_is_user_external_member: IsUserExternalMember({
-              pg: identite_pg,
-            }),
+            query_is_user_external_member: async ({
+              organization_id,
+              user_id,
+            }) => {
+              const user_organization =
+                await identite_pg.query.users_organizations.findFirst({
+                  columns: { is_external: true },
+                  where: and(
+                    eq(schema.users_organizations.user_id, user_id),
+                    eq(
+                      schema.users_organizations.organization_id,
+                      organization_id,
+                    ),
+                  ),
+                });
+              return user_organization?.is_external ?? false;
+            },
             query_suggest_organization_domains: SuggestOrganizationDomains({
               pg: identite_pg,
             }),

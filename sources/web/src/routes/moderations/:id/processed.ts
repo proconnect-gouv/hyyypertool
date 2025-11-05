@@ -5,10 +5,9 @@ import type { UserInfoVariablesContext } from "#src/middleware/auth";
 import type { IdentiteProconnect_Pg_Context } from "#src/middleware/identite-pg";
 import { zValidator } from "@hono/zod-validator";
 import { Entity_Schema } from "@~/core/schema";
-import { MODERATION_EVENTS } from "@~/moderations.lib/event";
-import { mark_moderatio_as_rejected } from "@~/moderations.lib/usecase/mark_moderatio_as_rejected";
-import { GetModerationWithUser } from "@~/moderations.repository";
+import { MODERATION_EVENTS } from "@~/moderations/events/moderation_events";
 import { Hono } from "hono";
+import { mark_as_rejected } from "./mark_as_rejected.command";
 
 //
 
@@ -17,20 +16,10 @@ export default new Hono<
 >().patch(
   "/",
   zValidator("param", Entity_Schema),
-  async ({ text, req, notFound, var: { identite_pg, userinfo } }) => {
+  async ({ text, req, var: { identite_pg, userinfo } }) => {
     const { id } = req.valid("param");
 
-    const get_moderation_with_user = GetModerationWithUser(identite_pg);
-    const moderation = await get_moderation_with_user(id);
-
-    if (!moderation) return notFound();
-
-    await mark_moderatio_as_rejected({
-      pg: identite_pg,
-      moderation,
-      userinfo,
-      reason: "DUPLICATE",
-    });
+    await mark_as_rejected(identite_pg, id, userinfo, "DUPLICATE");
 
     return text("OK", 200, {
       "HX-Trigger": [

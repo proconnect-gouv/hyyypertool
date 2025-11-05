@@ -1,8 +1,7 @@
 //
-
 import { hyper_ref } from "#src/html";
-import type { Moderation } from "@~/moderations.lib/entities/Moderation";
-import type { IsUserExternalMemberHandler } from "@~/moderations.lib/usecase/IsUserExternalMember";
+import type { schema } from "@~/identite-proconnect.database";
+type Moderation = typeof schema.moderations.$inferSelect;
 import type { Organization } from "@~/organizations.lib/entities/Organization";
 import type { SuggestOrganizationDomainsHandler } from "@~/organizations.lib/usecase";
 import type { User } from "@~/users.lib/entities/User";
@@ -25,7 +24,13 @@ export interface Values {
   $decision_form: string;
   $reject: string;
   query_suggest_same_user_emails: SuggestSameUserEmailsHandler;
-  query_is_user_external_member: IsUserExternalMemberHandler;
+  query_is_user_external_member: ({
+    organization_id,
+    user_id,
+  }: {
+    organization_id: number;
+    user_id: number;
+  }) => Promise<boolean>;
   query_suggest_organization_domains: SuggestOrganizationDomainsHandler;
 }
 export const context = createContext<Values>(null as any);

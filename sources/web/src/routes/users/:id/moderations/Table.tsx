@@ -5,7 +5,7 @@ import { urls } from "#src/urls";
 import {
   moderation_type_to_emoji,
   moderation_type_to_title,
-} from "@~/moderations.lib/moderation_type.mapper";
+} from "@~/moderations/utils/moderation_type_mapper";
 import { usePageRequestContext, type ModerationList } from "./context";
 
 //

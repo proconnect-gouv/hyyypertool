@@ -6,8 +6,8 @@ import { DescribedBy_Schema, Entity_Schema } from "@~/core/schema";
 import { set_crisp_config } from "#src/middleware/crisp";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
-import Page from "./page";
-import { load_email_page_variables, type ContextType } from "./page/context";
+import Page from "./Page";
+import { load_email_page_variables, type ContextType } from "./context";
 
 //
 
