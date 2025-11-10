@@ -8,8 +8,8 @@ import { defineConfig } from "cypress";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { env } from "node:process";
 import pg from "pg";
-import { delete_database } from "../sources/infra/identite-proconnect/database/src/seed/delete.js";
-import { insert_database } from "../sources/infra/identite-proconnect/database/src/seed/insert.js";
+import { delete_database } from "../sources/identite-proconnect/src/database/seed/delete.js";
+import { insert_database } from "../sources/identite-proconnect/src/database/seed/insert.js";
 
 //
 

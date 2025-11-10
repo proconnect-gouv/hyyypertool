@@ -3,7 +3,7 @@
 import {
   schema,
   type IdentiteProconnect_PgDatabase,
-} from "@~/identite-proconnect.database";
+} from "@~/identite-proconnect/database";
 import { mark_moderation_as } from "./mark_moderation_as";
 import { and, eq, ilike, isNull } from "drizzle-orm";
 

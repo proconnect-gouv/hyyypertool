@@ -3,7 +3,7 @@
 import {
   schema,
   type IdentiteProconnectDatabaseCradle,
-} from "@~/identite-proconnect.database";
+} from "@~/identite-proconnect/database";
 import { count as drizzle_count, eq } from "drizzle-orm";
 
 //

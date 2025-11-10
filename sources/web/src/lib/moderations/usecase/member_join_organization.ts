@@ -1,6 +1,6 @@
 //
 
-import type { ForceJoinOrganizationHandler } from "@~/identite-proconnect.lib/sdk";
+import type { ForceJoinOrganizationHandler } from "@~/identite-proconnect/sdk";
 import type { GetModerationByIdHandler } from "#src/queries/moderations";
 import type { GetMemberHandler } from "#src/queries/users";
 import { to as await_to } from "await-to-js";

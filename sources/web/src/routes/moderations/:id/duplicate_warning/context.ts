@@ -2,7 +2,7 @@
 
 import type { App_Context } from "#src/middleware/context";
 import { Entity_Schema } from "@~/core/schema";
-import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
+import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect/database";
 import type { Env } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";
 import { z } from "zod";

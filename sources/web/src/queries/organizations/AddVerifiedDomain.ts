@@ -3,8 +3,8 @@
 import {
   schema,
   type IdentiteProconnect_PgDatabase,
-} from "@~/identite-proconnect.database";
-import type { MCP_EmailDomain_Type } from "@~/identite-proconnect.lib/types";
+} from "@~/identite-proconnect/database";
+import type { MCP_EmailDomain_Type } from "@~/identite-proconnect/types";
 import { eq } from "drizzle-orm";
 
 //

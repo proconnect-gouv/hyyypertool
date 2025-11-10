@@ -2,7 +2,7 @@ import { tag } from "#src/ui/tag";
 import {
   Verification_Type_Schema,
   type Verification_Type,
-} from "@~/identite-proconnect.lib/verification_type";
+} from "@~/identite-proconnect/verification_type";
 
 const verificationType: Array<[Verification_Type, string]> = [
   [Verification_Type_Schema.enum.official_contact_email, "Mail officiel"],

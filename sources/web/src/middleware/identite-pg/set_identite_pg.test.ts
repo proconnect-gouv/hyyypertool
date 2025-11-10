@@ -1,6 +1,6 @@
 //
 
-import { pg } from "@~/identite-proconnect.database/testing";
+import { pg } from "@~/identite-proconnect/testing";
 import { expect, test } from "bun:test";
 import { sql } from "drizzle-orm";
 import { Hono } from "hono";

@@ -3,7 +3,7 @@
 import {
   schema,
   type IdentiteProconnect_PgDatabase,
-} from "@~/identite-proconnect.database";
+} from "@~/identite-proconnect/database";
 import { and, eq, ilike } from "drizzle-orm";
 
 //

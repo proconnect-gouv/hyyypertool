@@ -9,12 +9,12 @@ import {
   create_adora_pony_moderation,
   create_adora_pony_user,
   create_unicorn_organization,
-} from "@~/identite-proconnect.database/seed/unicorn";
+} from "@~/identite-proconnect/database/seed/unicorn";
 import {
   empty_database,
   migrate,
   pg,
-} from "@~/identite-proconnect.database/testing";
+} from "@~/identite-proconnect/testing";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
 import { Hono } from "hono";
 import app from "./index";

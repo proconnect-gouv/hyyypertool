@@ -1,7 +1,7 @@
 //
 
 import type { DescribedBy } from "@~/core/schema";
-import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
+import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect/database";
 import {
   GetModerationsByUserId,
   type GetModerationsByUserIdHandler,

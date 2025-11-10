@@ -1,13 +1,13 @@
 //
 
 import { type CrispApi } from "#src/lib/crisp";
-import { schema } from "@~/identite-proconnect.database";
-import { create_pink_diamond_user } from "@~/identite-proconnect.database/seed/unicorn";
+import { schema } from "@~/identite-proconnect/database";
+import { create_pink_diamond_user } from "@~/identite-proconnect/database/seed/unicorn";
 import {
   empty_database,
   migrate,
   pg,
-} from "@~/identite-proconnect.database/testing";
+} from "@~/identite-proconnect/testing";
 import { beforeAll, beforeEach, expect, mock, test } from "bun:test";
 import { eq } from "drizzle-orm";
 import { ResetPassword } from "./ResetPassword";

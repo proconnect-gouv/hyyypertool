@@ -1,12 +1,12 @@
 //
 
-import { schema } from "@~/identite-proconnect.database";
-import { create_unicorn_organization } from "@~/identite-proconnect.database/seed/unicorn";
+import { schema } from "@~/identite-proconnect/database";
+import { create_unicorn_organization } from "@~/identite-proconnect/database/seed/unicorn";
 import {
   empty_database,
   migrate,
   pg,
-} from "@~/identite-proconnect.database/testing";
+} from "@~/identite-proconnect/testing";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
 import { RemoveDomainEmailById } from "./RemoveDomainEmailById";
 

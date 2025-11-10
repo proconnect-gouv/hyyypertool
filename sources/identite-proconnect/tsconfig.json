@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "./node_modules/.cache/tsc",
+    "types": ["pg"]
+  },
+  "extends": "@~/config.typescript/base/tsconfig.json",
+  "references": [
+    {
+      "path": "../core"
+    }
+  ]
+}

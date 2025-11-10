@@ -3,12 +3,12 @@
 import {
   create_pink_diamond_user,
   create_unicorn_organization,
-} from "@~/identite-proconnect.database/seed/unicorn";
+} from "@~/identite-proconnect/database/seed/unicorn";
 import {
   add_user_to_organization,
   migrate,
   pg,
-} from "@~/identite-proconnect.database/testing";
+} from "@~/identite-proconnect/testing";
 import { beforeAll, expect, test } from "bun:test";
 import { CountGmailMembers } from "./CountGmailMembers";
 

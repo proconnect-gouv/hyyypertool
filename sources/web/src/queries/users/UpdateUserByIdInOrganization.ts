@@ -4,7 +4,7 @@ import {
   schema,
   type IdentiteProconnect_PgDatabase,
   type Writable_Users_Organizations,
-} from "@~/identite-proconnect.database";
+} from "@~/identite-proconnect/database";
 import { and, eq } from "drizzle-orm";
 
 //

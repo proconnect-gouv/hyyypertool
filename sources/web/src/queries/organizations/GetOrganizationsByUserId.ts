@@ -4,8 +4,8 @@ import { type Pagination } from "@~/core/schema";
 import {
   schema,
   type IdentiteProconnect_PgDatabase,
-} from "@~/identite-proconnect.database";
-import type { MCP_EmailDomain_Type } from "@~/identite-proconnect.lib/types";
+} from "@~/identite-proconnect/database";
+import type { MCP_EmailDomain_Type } from "@~/identite-proconnect/types";
 import { and, asc, count as drizzle_count, eq } from "drizzle-orm";
 
 //

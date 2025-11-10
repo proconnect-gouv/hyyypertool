@@ -1,20 +1,20 @@
 //
 
-import { schema } from "@~/identite-proconnect.database";
-import { create_cactus_organization } from "@~/identite-proconnect.database/seed/captus";
-import { create_troll_organization } from "@~/identite-proconnect.database/seed/troll";
+import { schema } from "@~/identite-proconnect/database";
+import { create_cactus_organization } from "@~/identite-proconnect/database/seed/captus";
+import { create_troll_organization } from "@~/identite-proconnect/database/seed/troll";
 import {
   create_adora_pony_user,
   create_unicorn_organization,
-} from "@~/identite-proconnect.database/seed/unicorn";
-import { create_zombie_organization } from "@~/identite-proconnect.database/seed/zombie";
+} from "@~/identite-proconnect/database/seed/unicorn";
+import { create_zombie_organization } from "@~/identite-proconnect/database/seed/zombie";
 import {
   empty_database,
   migrate,
   pg,
-} from "@~/identite-proconnect.database/testing";
-import type { EmailDomain } from "@~/identite-proconnect.lib";
-import type { MCP_Moderation } from "@~/identite-proconnect.lib/types";
+} from "@~/identite-proconnect/testing";
+import type { EmailDomain } from "@~/identite-proconnect/database";
+import type { MCP_Moderation } from "@~/identite-proconnect/types";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
 import { GetUnverifiedDomains } from "./GetUnverifiedDomains";
 

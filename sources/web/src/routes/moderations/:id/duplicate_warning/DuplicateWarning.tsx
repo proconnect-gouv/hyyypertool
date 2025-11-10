@@ -9,7 +9,7 @@ import { hx_urls, urls } from "#src/urls";
 import {
   schema,
   type IdentiteProconnect_PgDatabase,
-} from "@~/identite-proconnect.database";
+} from "@~/identite-proconnect/database";
 import {
   GetDuplicateModerations,
   type GetDuplicateModerationsDto,

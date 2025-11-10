@@ -13,10 +13,7 @@
       "path": "../core"
     },
     {
-      "path": "../infra/identite-proconnect/database"
-    },
-    {
-      "path": "../infra/identite-proconnect/lib"
+      "path": "../identite-proconnect"
     },
     {
       "path": "../organizations"
