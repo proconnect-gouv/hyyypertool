@@ -4,7 +4,7 @@ import { hyper_ref } from "#src/html";
 import { hx_trigger_from_body } from "#src/htmx";
 import { Loader } from "#src/ui/loader";
 import { hx_urls } from "#src/urls";
-import { MODERATION_EVENTS } from "@~/moderations.lib/event";
+import { MODERATION_EVENTS } from "#src/lib/moderations";
 import { usePageRequestContext } from "./context";
 
 //

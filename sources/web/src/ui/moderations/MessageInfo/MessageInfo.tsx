@@ -1,8 +1,8 @@
 //
 
-import type { Moderation } from "@~/moderations.lib/entities/Moderation";
-import { moderation_type_to_verb_in_sentence } from "@~/moderations.lib/moderation_type.mapper";
-import type { User } from "@~/users.lib/entities/User";
+import type { Moderation } from "#src/lib/moderations";
+import { moderation_type_to_verb_in_sentence } from "#src/lib/moderations";
+import type { User } from "#src/lib/users";
 //
 
 type MessageInfoProps = {

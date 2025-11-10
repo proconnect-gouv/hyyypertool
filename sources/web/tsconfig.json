@@ -22,16 +22,10 @@
       "path": "../infra/identite-proconnect/lib"
     },
     {
-      "path": "../moderations/lib"
-    },
-    {
       "path": "../moderations/repository"
     },
     {
       "path": "../organizations"
-    },
-    {
-      "path": "../users/lib"
     },
     {
       "path": "../users/repository"

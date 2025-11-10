@@ -1,4 +1,4 @@
-import type { Moderation } from "@~/moderations.lib/entities/Moderation";
+import type { Moderation } from "#src/lib/moderations";
 type ToolbarProps = {
   moderation: Pick<Moderation, "moderated_at">;
 };
