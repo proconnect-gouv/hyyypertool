@@ -5,13 +5,12 @@ import { hx_trigger_from_body } from "#src/htmx";
 import { Loader } from "#src/ui/loader";
 import { formattedPlural } from "#src/ui/plurial";
 import { hx_urls } from "#src/urls";
-import type { Organization } from "@~/organizations.lib/entities/Organization";
-import { ORGANISATION_EVENTS } from "@~/organizations.lib/event";
+import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 
 //
 
 type Props = {
-  organization: Pick<Organization, "id">;
+  organization: { id: number };
   query_domain_count: Promise<number>;
 };
 export async function DomainsByOrganization(props: Props) {

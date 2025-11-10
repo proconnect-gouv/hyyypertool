@@ -1,12 +1,11 @@
 //
 
-import { type Organization } from "@~/organizations.lib/entities/Organization";
 import { type JSX } from "hono/jsx";
 
 //
 
 type Props = JSX.IntrinsicElements["section"] & {
-  organization: Pick<Organization, "cached_est_active">;
+  organization: { cached_est_active: boolean | null };
 };
 
 export function InactiveWarning(props: Props) {

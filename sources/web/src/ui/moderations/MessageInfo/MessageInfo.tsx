@@ -2,13 +2,12 @@
 
 import type { Moderation } from "@~/moderations.lib/entities/Moderation";
 import { moderation_type_to_verb_in_sentence } from "@~/moderations.lib/moderation_type.mapper";
-import type { Organization } from "@~/organizations.lib/entities/Organization";
 import type { User } from "@~/users.lib/entities/User";
 //
 
 type MessageInfoProps = {
   moderation: Pick<Moderation, "type"> & {
-    organization: Pick<Organization, "cached_libelle">;
+    organization: { cached_libelle: string | null };
     user: Pick<User, "email" | "family_name" | "given_name">;
   };
 };

@@ -21,9 +21,6 @@
       "path": "../repository"
     },
     {
-      "path": "../../organizations/lib"
-    },
-    {
       "path": "../../users/repository"
     },
     {

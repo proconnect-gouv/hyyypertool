@@ -4,7 +4,6 @@ import {
   schema,
   type IdentiteProconnectDatabaseCradle,
 } from "@~/identite-proconnect.database";
-import type { UserOrganizationIdPair } from "@~/organizations.lib/entities/Organization";
 import { and, eq } from "drizzle-orm";
 
 //
@@ -15,7 +14,10 @@ export function RemoveUserFromOrganization({
   return async function remove_user_from_organization({
     organization_id,
     user_id,
-  }: UserOrganizationIdPair) {
+  }: {
+    user_id: number;
+    organization_id: number;
+  }) {
     return pg
       .delete(schema.users_organizations)
       .where(

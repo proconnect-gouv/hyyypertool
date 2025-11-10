@@ -1,20 +1,14 @@
 {
-  "name": "@~/moderations.repository",
+  "name": "@~/organizations",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "exports": {
-    ".": {
-      "default": "./src/index.ts"
-    },
     "./*": {
       "default": "./src/*.ts"
     }
   },
-  "dependencies": {
-    "@~/core": "workspace:*",
-    "@~/identite-proconnect.database": "workspace:*"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@~/config.typescript": "workspace:*"
   }

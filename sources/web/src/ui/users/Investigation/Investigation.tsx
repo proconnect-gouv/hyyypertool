@@ -3,14 +3,13 @@
 import { button } from "#src/ui/button";
 import { GoogleSearchButton } from "#src/ui/button/components";
 import { z_email_domain } from "@~/core/schema";
-import type { Organization } from "@~/organizations.lib/entities/Organization";
 import type { User } from "@~/users.lib/entities/User";
 
 //
 
 type InvestigationProps = {
   user: Pick<User, "email">;
-  organization: Pick<Organization, "cached_libelle">;
+  organization: { cached_libelle: string | null };
 };
 
 //

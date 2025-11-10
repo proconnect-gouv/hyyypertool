@@ -22,7 +22,7 @@ import {
 import {
   AddVerifiedDomain,
   GetFicheOrganizationById,
-} from "@~/organizations.lib/usecase";
+} from "#src/lib/organizations/usecase";
 import { GetMember, UpdateUserByIdInOrganization } from "@~/users.repository";
 import { to } from "await-to-js";
 import consola from "consola";

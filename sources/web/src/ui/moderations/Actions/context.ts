@@ -3,7 +3,6 @@
 import { hyper_ref } from "#src/html";
 import type { Moderation } from "@~/moderations.lib/entities/Moderation";
 import type { IsUserExternalMemberHandler } from "@~/moderations.lib/usecase/IsUserExternalMember";
-import type { Organization } from "@~/organizations.lib/entities/Organization";
 import type { User } from "@~/users.lib/entities/User";
 import type { SuggestSameUserEmailsHandler } from "@~/users.lib/usecase/SuggestSameUserEmails";
 import { createContext } from "hono/jsx";
@@ -13,10 +12,12 @@ export interface Values {
   domain: string;
   moderation: SimplifyDeep<
     Pick<Moderation, "id" | "moderated_at" | "type"> & {
-      organization: Pick<
-        Organization,
-        "cached_libelle" | "id" | "siret" | "cached_libelle_categorie_juridique"
-      >;
+      organization: {
+        cached_libelle: string | null;
+        id: number;
+        siret: string;
+        cached_libelle_categorie_juridique: string | null;
+      };
       user: Pick<User, "email" | "id" | "family_name" | "given_name">;
     }
   >;
