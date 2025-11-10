@@ -1,6 +1,5 @@
 {
   "lockfileVersion": 1,
-  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "hyyypertool",
@@ -10,7 +9,7 @@
         "@~/bin": "workspace:*",
         "animate.css": "4.1.1",
         "dotenv": "17.2.2",
-        "htmx-ext-include-vals": "2.0.1",
+        "htmx-ext-include-vals": "2.0.2",
         "htmx-ext-sse": "2.2.3",
         "htmx.ext...chunked-transfer": "2.1.1",
         "htmx.org": "2.0.7",
@@ -930,7 +929,7 @@
 
     "htmx-ext-debug": ["htmx-ext-debug@2.0.1", "", { "dependencies": { "htmx.org": "^2.0.2" } }, "sha512-GipbV220uTYdRrTzL+pK/Lbus3z167M6Ds6WnliCItIwsyK5qIFK8GPl6QIAaonf6+8sVif7rkxz/VIXUWdlFA=="],
 
-    "htmx-ext-include-vals": ["htmx-ext-include-vals@2.0.1", "", { "dependencies": { "htmx.org": "^2.0.2" } }, "sha512-54+CaKB8VZPdgNT71MkQepqiNX134jtDBmH4+FY9dUuBwbSx5YXjzE1vtO6XfXJC8FPiwsgezJO/qMD/GvEGSQ=="],
+    "htmx-ext-include-vals": ["htmx-ext-include-vals@2.0.2", "", { "dependencies": { "htmx.org": "^2.0.2" } }, "sha512-gOo01kQGvWAPtWHVtm64cRFoEEX71V5H5TgBvVZqh7bU+Lu/Q5U5+tGGB96SLyifh410vqVUxf/+kdvNQ/GTsQ=="],
 
     "htmx-ext-sse": ["htmx-ext-sse@2.2.3", "", { "dependencies": { "htmx.org": "^2.0.2" } }, "sha512-DDahTngA+XSUeX4/EFAzAGDkvY8pdr/FmelHzag0FvZpUOh41G08P1fwp+jfFZCQphkA7/z06l90FN4iyD6O2w=="],
 
