@@ -12,7 +12,6 @@ import {
 } from "@~/identite-proconnect/sdk";
 import { MODERATION_EVENTS } from "#src/lib/moderations";
 import { validate_form_schema } from "#src/lib/moderations";
-import { mark_moderation_as } from "#src/lib/moderations";
 import { MemberJoinOrganization } from "#src/lib/moderations";
 import { ValidateSimilarModerations } from "#src/lib/moderations";
 import {
@@ -28,6 +27,7 @@ import { to } from "await-to-js";
 import consola from "consola";
 import { Hono } from "hono";
 import { P, match } from "ts-pattern";
+import { mark_as_validated } from "./mark_as_validated";
 
 //
 
@@ -155,15 +155,7 @@ export default new Hono<App_Context>().patch(
     //#endregion
 
     //#region ✨ Mark moderation as validated
-    await mark_moderation_as(
-      {
-        moderation,
-        pg: identite_pg,
-        reason: "[ProConnect] ✨ Modeation validée",
-        userinfo,
-      },
-      "VALIDATED",
-    );
+    await mark_as_validated(identite_pg, moderation, userinfo);
     //#endregion
 
     return text("OK", 200, {
