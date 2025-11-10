@@ -8,7 +8,7 @@ import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.datab
 import { GetCripsFromSessionId } from "#src/lib/moderations";
 import { GetZammadFromTicketId } from "#src/lib/moderations";
 import { GetModerationForEmail } from "#src/queries/moderations";
-import { get_zammad_mail } from "@~/zammad.lib/get_zammad_mail";
+import { get_zammad_mail } from "#src/lib/zammad";
 import { to } from "await-to-js";
 import { type Env } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";

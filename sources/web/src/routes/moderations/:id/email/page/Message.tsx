@@ -3,8 +3,8 @@
 import env from "#src/config";
 import { quote } from "#src/ui/quote";
 import { LocalTime } from "#src/ui/time";
-import { GROUP_MONCOMPTEPRO_SENDER_ID } from "@~/zammad.lib/const";
-import type { Article } from "@~/zammad.lib/types";
+import { GROUP_MONCOMPTEPRO_SENDER_ID } from "#src/lib/zammad";
+import type { Article } from "#src/lib/zammad";
 import { tv } from "tailwind-variants";
 import { usePageRequestContext } from "./context";
 

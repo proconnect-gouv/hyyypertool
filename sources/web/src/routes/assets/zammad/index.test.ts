@@ -1,12 +1,12 @@
 //
 
-import type { get_zammad_attachment } from "@~/zammad.lib/get_zammad_attachment";
+import type { get_zammad_attachment } from "#src/lib/zammad";
 import { expect, mock, test } from "bun:test";
 
 //
 
 test("GET /attachment/123/456/789 : 🪴", async () => {
-  mock.module("@~/zammad.lib/get_zammad_attachment", () => {
+  mock.module("#src/lib/zammad", () => {
     return {
       get_zammad_attachment: mock<typeof get_zammad_attachment>(() =>
         Promise.resolve(new Response("🪴")),
@@ -23,7 +23,7 @@ test("GET /attachment/123/456/789 : 🪴", async () => {
 });
 
 test("❎ fails with 404 on TypeError", async () => {
-  mock.module("@~/zammad.lib/get_zammad_attachment", () => {
+  mock.module("#src/lib/zammad", () => {
     return {
       get_zammad_attachment: mock<typeof get_zammad_attachment>(() =>
         Promise.reject(new TypeError("🧟")),
@@ -40,7 +40,7 @@ test("❎ fails with 404 on TypeError", async () => {
 });
 
 test("❎ fails with 404 on SyntaxError", async () => {
-  mock.module("@~/zammad.lib/get_zammad_attachment", () => {
+  mock.module("#src/lib/zammad", () => {
     return {
       get_zammad_attachment: mock<typeof get_zammad_attachment>(() =>
         Promise.reject(new SyntaxError("🧟")),
@@ -57,7 +57,7 @@ test("❎ fails with 404 on SyntaxError", async () => {
 });
 
 test("❌ bubble other errors", async () => {
-  mock.module("@~/zammad.lib/get_zammad_attachment", () => {
+  mock.module("#src/lib/zammad", () => {
     return {
       get_zammad_attachment: mock<typeof get_zammad_attachment>(() =>
         Promise.reject(new Error("🦭")),

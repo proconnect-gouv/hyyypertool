@@ -3,13 +3,13 @@
 import { NotFoundError } from "@~/core/error";
 import { z_username } from "@~/core/schema";
 import { is_crisp_ticket } from "#src/lib/crisp";
-import { get_full_ticket, send_zammad_response } from "@~/zammad.lib";
+import { get_full_ticket, send_zammad_response } from "#src/lib/zammad";
 import {
   ARTICLE_TYPE,
   GROUP_MONCOMPTEPRO,
   GROUP_MONCOMPTEPRO_SENDER_ID,
-} from "@~/zammad.lib/const";
-import { is_zammad_ticket } from "@~/zammad.lib/is_zammad_ticket";
+} from "#src/lib/zammad";
+import { is_zammad_ticket } from "#src/lib/zammad";
 import { to as await_to } from "await-to-js";
 import { match } from "ts-pattern";
 import type {
