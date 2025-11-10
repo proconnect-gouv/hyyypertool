@@ -2,13 +2,13 @@
 
 import { hyper_ref } from "#src/html";
 import { hx_include } from "#src/htmx";
+import { type GetOrganizationsListDto } from "#src/queries/organizations";
 import { date_to_dom_string } from "#src/time";
 import { Foot } from "#src/ui/hx_table";
 import { row } from "#src/ui/table";
 import { Time } from "#src/ui/time";
 import { hx_urls, urls } from "#src/urls";
 import { Pagination_Schema } from "@~/core/schema";
-import { type GetOrganizationsListDto } from "@~/organizations.repository";
 import { match } from "ts-pattern";
 import { PageQuery_Schema, usePageRequestContext } from "./context";
 

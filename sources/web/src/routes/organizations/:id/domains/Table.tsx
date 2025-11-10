@@ -9,9 +9,9 @@ import { LocalTime } from "#src/ui/time";
 import { hx_urls } from "#src/urls";
 import type { EmailDomain_Type } from "@~/identite-proconnect.lib/email_domain";
 import type { MCP_EmailDomain_Type } from "@~/identite-proconnect.lib/identite-proconnect.d";
-import type { get_orginization_domains_dto } from "@~/organizations.repository/get_orginization_domains";
 import { match } from "ts-pattern";
 import { AddDomainParams_Schema, usePageRequestContext } from "./context";
+import type { get_orginization_domains_dto } from "./get_orginization_domains";
 
 //
 

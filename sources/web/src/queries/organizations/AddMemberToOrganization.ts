@@ -1,6 +1,6 @@
 //
 
-import { NotFoundError } from "@~/core/error";
+import { NotFoundError } from "#src/errors";
 import { z_email_domain } from "@~/core/schema";
 import {
   schema,

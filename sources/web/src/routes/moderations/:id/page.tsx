@@ -17,13 +17,13 @@ import { Investigation as Investigation_User } from "#src/ui/users/Investigation
 import { hx_urls } from "#src/urls";
 import { MODERATION_EVENTS } from "@~/moderations.lib/event";
 import { IsUserExternalMember } from "@~/moderations.lib/usecase/IsUserExternalMember";
-import { SuggestOrganizationDomains } from "@~/organizations.lib/usecase";
 import {
   CountUserMemberships,
   SuggestSameUserEmails,
 } from "@~/users.lib/usecase";
 import { usePageRequestContext } from "./context";
 import { ModerationExchanges } from "./ModerationExchanges";
+import { SuggestOrganizationDomains } from "./SuggestOrganizationDomains";
 
 //
 

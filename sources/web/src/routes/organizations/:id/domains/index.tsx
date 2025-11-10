@@ -1,16 +1,17 @@
 //
 
 import type { Htmx_Header } from "#src/htmx";
-import { zValidator } from "@hono/zod-validator";
 import { set_variables } from "#src/middleware/context";
+import { zValidator } from "@hono/zod-validator";
 import { DescribedBy_Schema, Entity_Schema, Id_Schema } from "@~/core/schema";
+import { schema } from "@~/identite-proconnect.database";
 import { EmailDomain_Type_Schema } from "@~/identite-proconnect.lib/email_domain";
 import { ORGANISATION_EVENTS } from "@~/organizations.lib/event";
 import {
   AddAuthorizedDomain,
   RemoveDomainEmailById,
 } from "@~/organizations.lib/usecase";
-import { update_domain_by_id } from "@~/organizations.repository/update_domain_by_id";
+import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { z } from "zod";
@@ -99,15 +100,19 @@ export default new Hono<ContextType>()
       const { domain_id } = req.valid("param");
       const { type: verification_type } = req.valid("query");
 
-      await update_domain_by_id(identite_pg, domain_id, {
-        verification_type: EmailDomain_Type_Schema.parse(
-          verification_type,
-        ) as any,
-        verified_at:
-          verification_type === "verified"
-            ? new Date().toISOString()
-            : undefined,
-      });
+      await identite_pg
+        .update(schema.email_domains)
+        .set({
+          verification_type: EmailDomain_Type_Schema.parse(
+            verification_type,
+          ) as any,
+          verified_at:
+            verification_type === "verified"
+              ? new Date().toISOString()
+              : undefined,
+          updated_at: new Date().toISOString(),
+        })
+        .where(eq(schema.email_domains.id, domain_id));
 
       return text("OK", 200, {
         "HX-Trigger": ORGANISATION_EVENTS.enum.DOMAIN_UPDATED,

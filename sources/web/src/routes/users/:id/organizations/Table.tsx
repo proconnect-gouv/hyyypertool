@@ -1,12 +1,12 @@
 //
 
 import { hx_include } from "#src/htmx";
+import type { GetOrganizationsByUserIdDto } from "#src/queries/organizations";
 import { date_to_dom_string } from "#src/time";
 import { Foot } from "#src/ui/hx_table";
 import { notice } from "#src/ui/notice";
 import { Time } from "#src/ui/time";
 import { hx_urls, urls } from "#src/urls";
-import type { GetOrganizationsByUserIdDto } from "@~/organizations.repository";
 import { usePageRequestContext } from "./context";
 
 //

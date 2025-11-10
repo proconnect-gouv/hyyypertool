@@ -1,13 +1,13 @@
 import { hyper_ref } from "#src/html";
+import {
+  GetUnverifiedDomains,
+  type GetUnverifiedDomainsDto,
+} from "#src/queries/organizations";
 import { copy_text_content_to_clipboard } from "#src/ui/button/scripts";
 import { Foot } from "#src/ui/hx_table";
 import { row } from "#src/ui/table";
 import { urls } from "#src/urls";
 import { Pagination_Schema } from "@~/core/schema";
-import {
-  GetUnverifiedDomains,
-  type GetUnverifiedDomainsDto,
-} from "@~/organizations.repository";
 import { match } from "ts-pattern";
 import { query_schema, usePageRequestContext } from "./context";
 
