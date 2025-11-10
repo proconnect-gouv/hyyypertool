@@ -1,6 +1,7 @@
 #
 
 [install]
+linker = "isolated"
 publicHoistPattern = [ "drizzle-orm", "pg" ]
 
 [test]
