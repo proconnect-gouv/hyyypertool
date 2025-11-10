@@ -14,7 +14,7 @@ import { SendRejectedMessageToUser } from "#src/lib/moderations";
 import {
   GetModerationWithUser,
   UpdateModerationById,
-} from "@~/moderations.repository";
+} from "#src/queries/moderations";
 import { Hono } from "hono";
 import type { ContextType } from "./procedures_context";
 

@@ -7,7 +7,7 @@ import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.datab
 import {
   GetUsersByOrganizationId,
   type GetUsersByOrganizationIdDto,
-} from "@~/users.repository";
+} from "#src/queries/users";
 import type { Env, InferRequestType } from "hono";
 import { createContext } from "hono/jsx";
 import { useRequestContext } from "hono/jsx-renderer";

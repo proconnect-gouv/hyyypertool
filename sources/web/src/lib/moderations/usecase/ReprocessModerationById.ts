@@ -4,7 +4,7 @@ import type {
   GetModerationByIdHandler,
   RemoveUserFromOrganizationHandler,
   UpdateModerationByIdHandler,
-} from "@~/moderations.repository";
+} from "#src/queries/moderations";
 import { append_comment } from "../comment_message";
 
 //

@@ -22,13 +22,7 @@
       "path": "../infra/identite-proconnect/lib"
     },
     {
-      "path": "../moderations/repository"
-    },
-    {
       "path": "../organizations"
-    },
-    {
-      "path": "../users/repository"
     },
     {
       "path": "../infra/zammad/lib"

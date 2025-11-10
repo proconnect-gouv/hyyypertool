@@ -7,7 +7,7 @@ import { Entity_Schema, z_coerce_boolean } from "@~/core/schema";
 import { schema } from "@~/identite-proconnect.database";
 import { join_organization } from "@~/identite-proconnect.lib/index";
 import { Verification_Type_Schema } from "@~/identite-proconnect.lib/verification_type";
-import { RemoveUserFromOrganization } from "@~/moderations.repository";
+import { RemoveUserFromOrganization } from "#src/queries/moderations";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import { and, eq } from "drizzle-orm";
 import { Hono } from "hono";

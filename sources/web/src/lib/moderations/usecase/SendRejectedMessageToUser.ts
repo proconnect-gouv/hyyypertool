@@ -1,6 +1,6 @@
 import { NotFoundError } from "@~/core/error";
 import { z_username } from "@~/core/schema";
-import type { UpdateModerationByIdHandler } from "@~/moderations.repository";
+import type { UpdateModerationByIdHandler } from "#src/queries/moderations";
 import { to as await_to } from "await-to-js";
 import consola from "consola";
 import type { RejectedModeration_Context } from "../context/rejected";

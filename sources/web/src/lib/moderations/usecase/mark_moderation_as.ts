@@ -5,7 +5,7 @@ import type {
   IdentiteProconnect_PgDatabase,
   schema,
 } from "@~/identite-proconnect.database";
-import { UpdateModerationById } from "@~/moderations.repository";
+import { UpdateModerationById } from "#src/queries/moderations";
 import { append_comment, type Comment_Type } from "../comment_message";
 
 //

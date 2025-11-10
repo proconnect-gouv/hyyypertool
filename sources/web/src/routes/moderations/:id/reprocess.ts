@@ -10,7 +10,7 @@ import {
   GetModerationById,
   RemoveUserFromOrganization,
   UpdateModerationById,
-} from "@~/moderations.repository";
+} from "#src/queries/moderations";
 import { Hono } from "hono";
 
 //

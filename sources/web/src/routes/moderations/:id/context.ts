@@ -14,7 +14,7 @@ import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.datab
 import {
   GetModerationWithDetails,
   type GetModerationWithDetailsDto,
-} from "@~/moderations.repository";
+} from "#src/queries/moderations";
 import { GetBanaticUrl } from "#src/lib/organizations/usecase";
 import { to } from "await-to-js";
 import type { Env, InferRequestType } from "hono";

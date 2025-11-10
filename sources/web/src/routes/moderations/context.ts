@@ -2,7 +2,7 @@
 
 import type { App_Context } from "#src/middleware/context";
 import { Pagination_Schema, type Pagination } from "@~/core/schema";
-import type { GetModerationsListHandler } from "@~/moderations.repository";
+import type { GetModerationsListHandler } from "#src/queries/moderations";
 import type { Env } from "hono";
 import { createContext } from "hono/jsx";
 import { useRequestContext } from "hono/jsx-renderer";

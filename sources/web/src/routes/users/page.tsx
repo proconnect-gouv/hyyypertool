@@ -7,7 +7,7 @@ import { row } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
 import { hx_urls, urls } from "#src/urls";
 import { Pagination_Schema } from "@~/core/schema";
-import type { GetUsersListDto } from "@~/users.repository";
+import type { GetUsersListDto } from "#src/queries/users";
 import { match } from "ts-pattern";
 import { PageInput_Schema, usePageRequestContext } from "./context";
 
