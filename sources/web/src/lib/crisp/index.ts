@@ -1,5 +1,10 @@
 //
 
+export * from "./api";
+export * from "./links";
+export * from "./types";
+
+// Re-export from index
 import { fetch_crisp } from "@proconnect-gouv/proconnect.crisp/client";
 import type {
   GetConversationRoute,

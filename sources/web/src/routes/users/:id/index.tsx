@@ -7,7 +7,7 @@ import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
 import { set_variables } from "#src/middleware/context";
 import { Entity_Schema } from "@~/core/schema";
-import { CrispApi } from "@~/crisp.lib/api";
+import { CrispApi } from "#src/lib/crisp";
 import { set_crisp_config } from "#src/middleware/crisp";
 import { schema } from "@~/identite-proconnect.database";
 import { ResetMFA, ResetPassword } from "#src/lib/users";

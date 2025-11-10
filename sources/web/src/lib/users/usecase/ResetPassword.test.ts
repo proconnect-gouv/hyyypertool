@@ -1,6 +1,6 @@
 //
 
-import { crisp } from "@~/crisp.lib/api#mock";
+import { type CrispApi } from "#src/lib/crisp";
 import { schema } from "@~/identite-proconnect.database";
 import { create_pink_diamond_user } from "@~/identite-proconnect.database/seed/unicorn";
 import {
@@ -8,7 +8,7 @@ import {
   migrate,
   pg,
 } from "@~/identite-proconnect.database/testing";
-import { beforeAll, beforeEach, expect, test } from "bun:test";
+import { beforeAll, beforeEach, expect, mock, test } from "bun:test";
 import { eq } from "drizzle-orm";
 import { ResetPassword } from "./ResetPassword";
 
@@ -16,6 +16,17 @@ import { ResetPassword } from "./ResetPassword";
 
 beforeAll(migrate);
 beforeEach(empty_database);
+
+const crisp: CrispApi = {
+  create_conversation: mock().mockResolvedValue({
+    session_id: "🗨️",
+  }),
+  get_user: mock().mockResolvedValue({
+    nickname: "👩‍🚀",
+  }),
+  mark_conversation_as_resolved: mock().mockResolvedValue(undefined),
+  send_message: mock().mockResolvedValue(undefined),
+};
 
 const reset_password = ResetPassword({ crisp, pg, resolve_delay: 0 });
 

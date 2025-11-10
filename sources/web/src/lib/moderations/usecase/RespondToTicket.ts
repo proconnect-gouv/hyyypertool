@@ -2,7 +2,7 @@
 
 import { NotFoundError } from "@~/core/error";
 import { z_username } from "@~/core/schema";
-import { is_crisp_ticket } from "@~/crisp.lib";
+import { is_crisp_ticket } from "#src/lib/crisp";
 import { get_full_ticket, send_zammad_response } from "@~/zammad.lib";
 import {
   ARTICLE_TYPE,

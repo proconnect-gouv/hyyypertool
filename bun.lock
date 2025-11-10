@@ -121,18 +121,6 @@
         "zod": "^4.0.0",
       },
     },
-    "sources/infra/crisp/lib": {
-      "name": "@~/crisp.lib",
-      "version": "1.0.0",
-      "dependencies": {
-        "@proconnect-gouv/proconnect.crisp": "1.0.0",
-        "@~/core": "workspace:*",
-        "consola": "3.4.2",
-      },
-      "devDependencies": {
-        "@~/config.typescript": "workspace:*",
-      },
-    },
     "sources/infra/identite-proconnect/database": {
       "name": "@~/identite-proconnect.database",
       "version": "1.0.0",
@@ -195,10 +183,10 @@
         "@hono/sentry": "1.2.2",
         "@hono/zod-validator": "0.7.4",
         "@proconnect-gouv/proconnect.core": "1.0.0",
+        "@proconnect-gouv/proconnect.crisp": "1.0.0",
         "@sentry/core": "10.22.0",
         "@sentry/node": "10.22.0",
         "@~/core": "workspace:*",
-        "@~/crisp.lib": "workspace:*",
         "@~/identite-proconnect.database": "workspace:*",
         "@~/identite-proconnect.lib": "workspace:*",
         "@~/organizations": "workspace:*",
@@ -646,8 +634,6 @@
     "@~/config.typescript": ["@~/config.typescript@workspace:sources/config/typescript"],
 
     "@~/core": ["@~/core@workspace:sources/core"],
-
-    "@~/crisp.lib": ["@~/crisp.lib@workspace:sources/infra/crisp/lib"],
 
     "@~/identite-proconnect.database": ["@~/identite-proconnect.database@workspace:sources/infra/identite-proconnect/database"],
 
