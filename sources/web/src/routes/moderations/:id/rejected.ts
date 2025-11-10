@@ -8,15 +8,10 @@ import { set_crisp_config } from "#src/middleware/crisp";
 import { type RejectedModeration_Context } from "#src/lib/moderations";
 import { MODERATION_EVENTS } from "#src/lib/moderations";
 import { reject_form_schema } from "#src/lib/moderations";
-import { mark_moderation_as } from "#src/lib/moderations";
-import { RespondToTicket } from "#src/lib/moderations";
-import { SendRejectedMessageToUser } from "#src/lib/moderations";
-import {
-  GetModerationWithUser,
-  UpdateModerationById,
-} from "#src/queries/moderations";
+import { GetModerationWithUser } from "#src/queries/moderations";
 import { Hono } from "hono";
 import type { ContextType } from "./procedures_context";
+import { mark_as_rejected } from "./mark_as_rejected";
 
 //
 
@@ -36,8 +31,6 @@ export default new Hono<ContextType>().patch(
     const get_moderation_with_user = GetModerationWithUser(identite_pg);
     const moderation = await get_moderation_with_user(moderation_id);
     const crisp = CrispApi(crisp_config);
-    const update_moderation_by_id = UpdateModerationById({ pg: identite_pg });
-    const respond_to_ticket = RespondToTicket();
     const context: RejectedModeration_Context = {
       crisp,
       moderation,
@@ -47,17 +40,8 @@ export default new Hono<ContextType>().patch(
       subject,
       userinfo,
     };
-    const send_rejected_message_to_user = SendRejectedMessageToUser({
-      respond_to_ticket,
-      update_moderation_by_id,
-    });
-    await send_rejected_message_to_user(context, {
-      message,
-      reason,
-      subject,
-    });
 
-    await mark_moderation_as(context, "REJECTED");
+    await mark_as_rejected(context, { message, reason, subject });
 
     return text("OK", 200, {
       "HX-Trigger": MODERATION_EVENTS.enum.MODERATION_UPDATED,
