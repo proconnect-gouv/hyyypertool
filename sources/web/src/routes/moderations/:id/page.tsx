@@ -15,12 +15,12 @@ import {
 import { About as About_User } from "#src/ui/users/About";
 import { Investigation as Investigation_User } from "#src/ui/users/Investigation";
 import { hx_urls } from "#src/urls";
-import { MODERATION_EVENTS } from "@~/moderations.lib/event";
-import { IsUserExternalMember } from "@~/moderations.lib/usecase/IsUserExternalMember";
+import { MODERATION_EVENTS } from "#src/lib/moderations";
+import { IsUserExternalMember } from "#src/lib/moderations";
 import {
   CountUserMemberships,
   SuggestSameUserEmails,
-} from "@~/users.lib/usecase";
+} from "#src/lib/users";
 import { usePageRequestContext } from "./context";
 import { ModerationExchanges } from "./ModerationExchanges";
 import { SuggestOrganizationDomains } from "./SuggestOrganizationDomains";

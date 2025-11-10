@@ -1,5 +1,5 @@
 import { hyper_ref } from "#src/html";
-import { validate_form_schema } from "@~/moderations.lib/schema/validate.form";
+import { validate_form_schema } from "#src/lib/moderations";
 import { useContext } from "hono/jsx";
 import { context, valid_context } from "./context";
 

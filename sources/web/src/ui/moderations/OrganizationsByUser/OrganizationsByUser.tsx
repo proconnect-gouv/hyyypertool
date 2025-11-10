@@ -6,8 +6,8 @@ import { Loader } from "#src/ui/loader";
 import { formattedPlural } from "#src/ui/plurial";
 import { hx_urls } from "#src/urls";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
-import type { User } from "@~/users.lib/entities/User";
-import type { CountUserMembershipsHandler } from "@~/users.lib/usecase/CountUserMemberships";
+import type { User } from "#src/lib/users";
+import type { CountUserMembershipsHandler } from "#src/lib/users";
 
 //
 

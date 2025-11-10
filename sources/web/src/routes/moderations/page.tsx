@@ -9,7 +9,7 @@ import type { Pagination } from "@~/core/schema";
 import {
   moderation_type_to_emoji,
   moderation_type_to_title,
-} from "@~/moderations.lib/moderation_type.mapper";
+} from "#src/lib/moderations";
 import { GetModerationsList } from "@~/moderations.repository";
 import { useContext } from "hono/jsx";
 import Moderations_Context, {

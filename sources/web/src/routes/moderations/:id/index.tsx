@@ -5,7 +5,7 @@ import { Main_Layout } from "#src/layouts";
 import { zValidator } from "@hono/zod-validator";
 import { set_variables } from "#src/middleware/context";
 import { Entity_Schema } from "@~/core/schema";
-import { moderation_type_to_title } from "@~/moderations.lib/moderation_type.mapper";
+import { moderation_type_to_title } from "#src/lib/moderations";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { load_moderation_page_variables, type ContextType } from "./context";

@@ -10,11 +10,11 @@ import {
   ForceJoinOrganization,
   MarkDomainAsVerified,
 } from "@~/identite-proconnect.lib/sdk";
-import { MODERATION_EVENTS } from "@~/moderations.lib/event";
-import { validate_form_schema } from "@~/moderations.lib/schema/validate.form";
-import { mark_moderation_as } from "@~/moderations.lib/usecase/mark_moderation_as";
-import { MemberJoinOrganization } from "@~/moderations.lib/usecase/member_join_organization";
-import { ValidateSimilarModerations } from "@~/moderations.lib/usecase/ValidateSimilarModerations";
+import { MODERATION_EVENTS } from "#src/lib/moderations";
+import { validate_form_schema } from "#src/lib/moderations";
+import { mark_moderation_as } from "#src/lib/moderations";
+import { MemberJoinOrganization } from "#src/lib/moderations";
+import { ValidateSimilarModerations } from "#src/lib/moderations";
 import {
   GetModerationById,
   GetModerationWithUser,

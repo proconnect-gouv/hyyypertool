@@ -5,7 +5,7 @@ import { CopyButton } from "#src/ui/button/components";
 import { description_list } from "#src/ui/list";
 import { urls } from "#src/urls";
 import { z_email_domain } from "@~/core/schema";
-import type { GetUserInfoOutput } from "@~/users.lib/usecase/GetUserInfo";
+import type { GetUserInfoOutput } from "#src/lib/users";
 
 //
 

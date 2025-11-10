@@ -10,7 +10,7 @@ import { Entity_Schema } from "@~/core/schema";
 import { CrispApi } from "@~/crisp.lib/api";
 import { set_crisp_config } from "#src/middleware/crisp";
 import { schema } from "@~/identite-proconnect.database";
-import { ResetMFA, ResetPassword } from "@~/users.lib/usecase";
+import { ResetMFA, ResetPassword } from "#src/lib/users";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";

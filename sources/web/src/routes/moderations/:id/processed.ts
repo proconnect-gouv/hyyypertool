@@ -5,8 +5,8 @@ import type { UserInfoVariablesContext } from "#src/middleware/auth";
 import type { IdentiteProconnect_Pg_Context } from "#src/middleware/identite-pg";
 import { zValidator } from "@hono/zod-validator";
 import { Entity_Schema } from "@~/core/schema";
-import { MODERATION_EVENTS } from "@~/moderations.lib/event";
-import { mark_moderatio_as_rejected } from "@~/moderations.lib/usecase/mark_moderatio_as_rejected";
+import { MODERATION_EVENTS } from "#src/lib/moderations";
+import { mark_moderatio_as_rejected } from "#src/lib/moderations";
 import { GetModerationWithUser } from "@~/moderations.repository";
 import { Hono } from "hono";
 
