@@ -15,7 +15,7 @@ import {
   type GetDuplicateModerationsDto,
 } from "#src/queries/moderations";
 import { GetUserById } from "#src/queries/users";
-import { get_zammad_mail } from "@~/zammad.lib/get_zammad_mail";
+import { get_zammad_mail } from "#src/lib/zammad";
 import { to } from "await-to-js";
 import { and, asc, eq, ilike, not, or } from "drizzle-orm";
 import { raw } from "hono/html";

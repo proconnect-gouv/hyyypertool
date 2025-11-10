@@ -33,7 +33,6 @@
     "@~/identite-proconnect.database": "workspace:*",
     "@~/identite-proconnect.lib": "workspace:*",
     "@~/organizations": "workspace:*",
-    "@~/zammad.lib": "workspace:*",
     "await-to-js": "3.0.0",
     "consola": "3.4.2",
     "hono": "4.9.8",

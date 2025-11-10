@@ -1,5 +1,13 @@
 //
 
+export * from "./const";
+export * from "./fetch";
+export * from "./get_zammad_attachment";
+export * from "./get_zammad_mail";
+export * from "./is_zammad_ticket";
+export * from "./types";
+
+// Re-export main API functions
 import { fetch_zammad_api } from "./fetch";
 import type {
   NewTicket,
