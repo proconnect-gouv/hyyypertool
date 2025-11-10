@@ -3,7 +3,7 @@
 import type { Htmx_Header } from "#src/htmx";
 import { zValidator } from "@hono/zod-validator";
 import { Entity_Schema } from "@~/core/schema";
-import { CrispApi } from "@~/crisp.lib/api";
+import { CrispApi } from "#src/lib/crisp";
 import { set_crisp_config } from "#src/middleware/crisp";
 import { type RejectedModeration_Context } from "#src/lib/moderations";
 import { MODERATION_EVENTS } from "#src/lib/moderations";

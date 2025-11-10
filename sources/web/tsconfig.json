@@ -13,9 +13,6 @@
       "path": "../core"
     },
     {
-      "path": "../infra/crisp/lib"
-    },
-    {
       "path": "../infra/identite-proconnect/database"
     },
     {

@@ -2,8 +2,8 @@
 
 import { quote } from "#src/ui/quote";
 import { LocalTime } from "#src/ui/time";
-import { create_link } from "@~/crisp.lib/links";
-import type { ConversationMessage } from "@~/crisp.lib/types";
+import { create_link } from "#src/lib/crisp";
+import type { ConversationMessage } from "#src/lib/crisp";
 import { tv } from "tailwind-variants";
 import { match } from "ts-pattern";
 import { processor } from "../processor";
