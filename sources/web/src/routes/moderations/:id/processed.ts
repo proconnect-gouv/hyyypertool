@@ -7,7 +7,7 @@ import { zValidator } from "@hono/zod-validator";
 import { Entity_Schema } from "@~/core/schema";
 import { MODERATION_EVENTS } from "#src/lib/moderations";
 import { mark_moderatio_as_rejected } from "#src/lib/moderations";
-import { GetModerationWithUser } from "@~/moderations.repository";
+import { GetModerationWithUser } from "#src/queries/moderations";
 import { Hono } from "hono";
 
 //

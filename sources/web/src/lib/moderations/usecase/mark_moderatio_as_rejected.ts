@@ -5,7 +5,7 @@ import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.datab
 import {
   UpdateModerationById,
   type GetModerationWithUserDto,
-} from "@~/moderations.repository";
+} from "#src/queries/moderations";
 import { append_comment } from "../comment_message";
 
 //

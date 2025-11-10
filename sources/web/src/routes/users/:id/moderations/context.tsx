@@ -5,7 +5,7 @@ import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.datab
 import {
   GetModerationsByUserId,
   type GetModerationsByUserIdHandler,
-} from "@~/moderations.repository/GetModerationsByUserId";
+} from "#src/queries/moderations";
 import type { Env } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";
 

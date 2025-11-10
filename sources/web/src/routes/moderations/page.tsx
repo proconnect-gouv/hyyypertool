@@ -10,7 +10,7 @@ import {
   moderation_type_to_emoji,
   moderation_type_to_title,
 } from "#src/lib/moderations";
-import { GetModerationsList } from "@~/moderations.repository";
+import { GetModerationsList } from "#src/queries/moderations";
 import { useContext } from "hono/jsx";
 import Moderations_Context, {
   MODERATION_TABLE_ID,

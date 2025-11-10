@@ -2,7 +2,7 @@
 
 import type { CrispApi } from "@~/crisp.lib/api";
 import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
-import type { GetModerationWithUserDto } from "@~/moderations.repository";
+import type { GetModerationWithUserDto } from "#src/queries/moderations";
 import type { RejectedMessage } from "../schema/rejected.form";
 
 //

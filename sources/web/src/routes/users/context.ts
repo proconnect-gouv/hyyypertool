@@ -4,7 +4,7 @@ import type { App_Context } from "#src/middleware/context";
 import type { urls } from "#src/urls";
 import { Pagination_Schema, Search_Schema } from "@~/core/schema";
 import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
-import { GetUsersList } from "@~/users.repository";
+import { GetUsersList } from "#src/queries/users";
 import type { Env, InferRequestType } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";
 

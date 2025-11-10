@@ -180,31 +180,9 @@
         "@~/config.typescript": "workspace:*",
       },
     },
-    "sources/moderations/repository": {
-      "name": "@~/moderations.repository",
-      "version": "1.0.0",
-      "dependencies": {
-        "@~/core": "workspace:*",
-        "@~/identite-proconnect.database": "workspace:*",
-      },
-      "devDependencies": {
-        "@~/config.typescript": "workspace:*",
-      },
-    },
     "sources/organizations": {
       "name": "@~/organizations",
       "version": "1.0.0",
-      "devDependencies": {
-        "@~/config.typescript": "workspace:*",
-      },
-    },
-    "sources/users/repository": {
-      "name": "@~/users.repository",
-      "version": "1.0.0",
-      "dependencies": {
-        "@~/core": "workspace:*",
-        "@~/identite-proconnect.database": "workspace:*",
-      },
       "devDependencies": {
         "@~/config.typescript": "workspace:*",
       },
@@ -223,9 +201,7 @@
         "@~/crisp.lib": "workspace:*",
         "@~/identite-proconnect.database": "workspace:*",
         "@~/identite-proconnect.lib": "workspace:*",
-        "@~/moderations.repository": "workspace:*",
         "@~/organizations": "workspace:*",
-        "@~/users.repository": "workspace:*",
         "@~/zammad.lib": "workspace:*",
         "await-to-js": "3.0.0",
         "consola": "3.4.2",
@@ -677,11 +653,7 @@
 
     "@~/identite-proconnect.lib": ["@~/identite-proconnect.lib@workspace:sources/infra/identite-proconnect/lib"],
 
-    "@~/moderations.repository": ["@~/moderations.repository@workspace:sources/moderations/repository"],
-
     "@~/organizations": ["@~/organizations@workspace:sources/organizations"],
-
-    "@~/users.repository": ["@~/users.repository@workspace:sources/users/repository"],
 
     "@~/web": ["@~/web@workspace:sources/web"],
 

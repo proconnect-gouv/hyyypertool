@@ -7,7 +7,7 @@ import type { Crisp_Context } from "#src/middleware/crisp";
 import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
 import { GetCripsFromSessionId } from "#src/lib/moderations";
 import { GetZammadFromTicketId } from "#src/lib/moderations";
-import { GetModerationForEmail } from "@~/moderations.repository";
+import { GetModerationForEmail } from "#src/queries/moderations";
 import { get_zammad_mail } from "@~/zammad.lib/get_zammad_mail";
 import { to } from "await-to-js";
 import { type Env } from "hono";

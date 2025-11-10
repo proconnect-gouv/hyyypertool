@@ -18,12 +18,12 @@ import { ValidateSimilarModerations } from "#src/lib/moderations";
 import {
   GetModerationById,
   GetModerationWithUser,
-} from "@~/moderations.repository";
+} from "#src/queries/moderations";
 import {
   AddVerifiedDomain,
   GetFicheOrganizationById,
 } from "#src/lib/organizations/usecase";
-import { GetMember, UpdateUserByIdInOrganization } from "@~/users.repository";
+import { GetMember, UpdateUserByIdInOrganization } from "#src/queries/users";
 import { to } from "await-to-js";
 import consola from "consola";
 import { Hono } from "hono";
