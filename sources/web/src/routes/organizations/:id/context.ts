@@ -2,14 +2,14 @@
 
 import type { App_Config } from "#src/config";
 import type { App_Context } from "#src/middleware/context";
-import { urls } from "#src/urls";
-import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
-import { GetBanaticUrl } from "@~/organizations.lib/usecase";
 import {
   GetDomainCount,
   GetOrganizationById,
   GetOrganizationMembersCount,
-} from "@~/organizations.repository";
+} from "#src/queries/organizations";
+import { urls } from "#src/urls";
+import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
+import { GetBanaticUrl } from "@~/organizations.lib/usecase";
 import type { Env, InferRequestType } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";
 

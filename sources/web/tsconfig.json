@@ -31,9 +31,6 @@
       "path": "../organizations/lib"
     },
     {
-      "path": "../organizations/repository"
-    },
-    {
       "path": "../users/lib"
     },
     {

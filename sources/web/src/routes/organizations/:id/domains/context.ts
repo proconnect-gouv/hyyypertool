@@ -3,10 +3,10 @@
 import type { App_Context } from "#src/middleware/context";
 import { urls } from "#src/urls";
 import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
-import { get_orginization_domains } from "@~/organizations.repository/get_orginization_domains";
 import type { Env, InferRequestType } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";
 import { z } from "zod";
+import { get_orginization_domains } from "./get_orginization_domains";
 
 //
 

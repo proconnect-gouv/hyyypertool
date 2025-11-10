@@ -1,6 +1,7 @@
 //
 
 import type { App_Context } from "#src/middleware/context";
+import { GetOrganizationsByUserId } from "#src/queries/organizations";
 import {
   DescribedBy_Schema,
   Entity_Schema,
@@ -8,7 +9,6 @@ import {
   type Pagination,
 } from "@~/core/schema";
 import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
-import { GetOrganizationsByUserId } from "@~/organizations.repository";
 import type { Env } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";
 import { z } from "zod";

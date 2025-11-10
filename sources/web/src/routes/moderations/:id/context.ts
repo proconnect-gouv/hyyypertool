@@ -2,6 +2,12 @@
 
 import type { App_Config } from "#src/config";
 import type { App_Context } from "#src/middleware/context";
+import {
+  GetDomainCount,
+  GetOrganizationById,
+  GetOrganizationMember,
+  GetOrganizationMembersCount,
+} from "#src/queries/organizations";
 import { urls } from "#src/urls";
 import { z_email_domain } from "@~/core/schema";
 import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
@@ -10,12 +16,6 @@ import {
   type GetModerationWithDetailsDto,
 } from "@~/moderations.repository";
 import { GetBanaticUrl } from "@~/organizations.lib/usecase";
-import {
-  GetDomainCount,
-  GetOrganizationById,
-  GetOrganizationMember,
-  GetOrganizationMembersCount,
-} from "@~/organizations.repository";
 import { to } from "await-to-js";
 import type { Env, InferRequestType } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";

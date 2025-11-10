@@ -1,6 +1,6 @@
 //
 
-import { NotFoundError } from "@~/core/error";
+import { NotFoundError } from "#src/errors";
 import { create_unicorn_organization } from "@~/identite-proconnect.database/seed/unicorn";
 import {
   empty_database,

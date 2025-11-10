@@ -1,7 +1,6 @@
 //
 
 import { render_md } from "#src/ui/testing";
-import type { SuggestOrganizationDomainsHandler } from "@~/organizations.lib/usecase";
 import { expect, test } from "bun:test";
 import { context, type Values } from "../context";
 import existing_domain_name, { label } from "./existing_domain_name";
@@ -9,8 +8,9 @@ import existing_domain_name, { label } from "./existing_domain_name";
 //
 
 test(label, async () => {
-  const query_suggest_organization_domains: SuggestOrganizationDomainsHandler =
-    async () => ["yahoo.fr", "test.koukou"];
+  const query_suggest_organization_domains = async (
+    _organization_id: number,
+  ) => ["yahoo.fr", "test.koukou"];
   expect(
     await render_md(
       <context.Provider
