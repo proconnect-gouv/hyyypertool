@@ -10,7 +10,7 @@ import {
 } from "#src/queries/organizations";
 import { urls } from "#src/urls";
 import { z_email_domain } from "@~/core/schema";
-import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
+import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect/database";
 import {
   GetModerationWithDetails,
   type GetModerationWithDetailsDto,

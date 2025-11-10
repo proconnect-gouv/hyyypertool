@@ -9,7 +9,7 @@ import { hx_urls, urls } from "#src/urls";
 import {
   Verification_Type_Schema,
   type Verification_Type,
-} from "@~/identite-proconnect.lib/verification_type";
+} from "@~/identite-proconnect/verification_type";
 import { useContext } from "hono/jsx";
 import type { VariantProps } from "tailwind-variants";
 import { Member_Context, usePageRequestContext } from "./context";

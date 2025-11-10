@@ -8,7 +8,7 @@ import {
   GetOrganizationMembersCount,
 } from "#src/queries/organizations";
 import { urls } from "#src/urls";
-import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
+import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect/database";
 import { GetBanaticUrl } from "#src/lib/organizations/usecase";
 import type { Env, InferRequestType } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";

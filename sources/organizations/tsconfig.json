@@ -5,7 +5,7 @@
   },
   "references": [
     {
-      "path": "../infra/identite-proconnect/database"
+      "path": "../identite-proconnect"
     }
   ]
 }

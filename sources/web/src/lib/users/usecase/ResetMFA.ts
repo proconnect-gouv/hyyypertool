@@ -5,7 +5,7 @@ import type { CrispApiCradle } from "#src/lib/crisp";
 import {
   schema,
   type IdentiteProconnectDatabaseCradle,
-} from "@~/identite-proconnect.database";
+} from "@~/identite-proconnect/database";
 import { to as await_to } from "await-to-js";
 import { eq } from "drizzle-orm";
 import { ResetMFA_Message } from "../templates";

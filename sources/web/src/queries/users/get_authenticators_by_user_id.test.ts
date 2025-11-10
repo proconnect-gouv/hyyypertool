@@ -1,9 +1,9 @@
 //
 
-import { insert_nordPass_authenticator } from "@~/identite-proconnect.database/seed/authenticators/nordPass";
-import { insert_1Password_authenticator } from "@~/identite-proconnect.database/seed/authenticators/onePassword";
-import { create_pink_diamond_user } from "@~/identite-proconnect.database/seed/unicorn";
-import { migrate, pg } from "@~/identite-proconnect.database/testing";
+import { insert_nordPass_authenticator } from "@~/identite-proconnect/database/seed/authenticators/nordPass";
+import { insert_1Password_authenticator } from "@~/identite-proconnect/database/seed/authenticators/onePassword";
+import { create_pink_diamond_user } from "@~/identite-proconnect/database/seed/unicorn";
+import { migrate, pg } from "@~/identite-proconnect/testing";
 import { beforeEach, expect, test } from "bun:test";
 import { GetAuthenticatorByUserId } from "./GetAuthenticatorByUserId";
 

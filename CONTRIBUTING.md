@@ -114,7 +114,7 @@ export type UseCaseNameOutput = Awaited<ReturnType<UseCaseNameHandler>>;
 //
 
 import { NotFoundError } from "@~/core/error";
-import type { IdentiteProconnectDatabaseCradle } from "@~/identite-proconnect.database";
+import type { IdentiteProconnectDatabaseCradle } from "@~/identite-proconnect/database";
 import { to } from "await-to-js";
 
 //
@@ -169,7 +169,7 @@ Write comprehensive tests following these guidelines:
 
 ### Repository Layer Tests
 
-1. **Use Real Database**: Import `pg` from `@~/identite-proconnect.database/testing` instead of mocking
+1. **Use Real Database**: Import `pg` from `@~/identite-proconnect/database/testing` instead of mocking
 2. **Database Setup**: Always include `beforeAll(migrate)` and `beforeEach(empty_database)`
 3. **Seed Data**: Use unicorn seed functions (e.g., `create_adora_pony_user`, `create_pink_diamond_user`, `create_red_diamond_user`)
 4. **Time Control**: Use `setSystemTime()` for deterministic timestamps in tests
@@ -187,16 +187,16 @@ Write comprehensive tests following these guidelines:
 ```typescript
 //
 
-import { schema } from "@~/identite-proconnect.database";
+import { schema } from "@~/identite-proconnect/database";
 import {
   create_adora_pony_user,
   create_pink_diamond_user,
-} from "@~/identite-proconnect.database/seed/unicorn";
+} from "@~/identite-proconnect/database/seed/unicorn";
 import {
   empty_database,
   migrate,
   pg,
-} from "@~/identite-proconnect.database/testing";
+} from "@~/identite-proconnect/database/testing";
 import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
 import { GetUsersList } from "./GetUsersList";
 

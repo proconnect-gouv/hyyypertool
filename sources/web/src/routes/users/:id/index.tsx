@@ -9,7 +9,7 @@ import { set_variables } from "#src/middleware/context";
 import { Entity_Schema } from "@~/core/schema";
 import { CrispApi } from "#src/lib/crisp";
 import { set_crisp_config } from "#src/middleware/crisp";
-import { schema } from "@~/identite-proconnect.database";
+import { schema } from "@~/identite-proconnect/database";
 import { ResetMFA, ResetPassword } from "#src/lib/users";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";

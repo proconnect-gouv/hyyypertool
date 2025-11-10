@@ -4,7 +4,7 @@ import type { App_Context } from "#src/middleware/context";
 import { DescribedBy_Schema, Entity_Schema } from "@~/core/schema";
 import { get_crisp_mail } from "#src/lib/crisp";
 import type { Crisp_Context } from "#src/middleware/crisp";
-import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
+import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect/database";
 import { GetCripsFromSessionId } from "#src/lib/moderations";
 import { GetZammadFromTicketId } from "#src/lib/moderations";
 import { GetModerationForEmail } from "#src/queries/moderations";

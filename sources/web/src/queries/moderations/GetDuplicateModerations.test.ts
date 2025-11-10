@@ -1,13 +1,13 @@
 //
 
-import { create_troll_organization } from "@~/identite-proconnect.database/seed/troll";
+import { create_troll_organization } from "@~/identite-proconnect/database/seed/troll";
 import {
   create_adora_pony_moderation,
   create_adora_pony_user,
   create_pink_diamond_user,
   create_unicorn_organization,
-} from "@~/identite-proconnect.database/seed/unicorn";
-import { migrate, pg } from "@~/identite-proconnect.database/testing";
+} from "@~/identite-proconnect/database/seed/unicorn";
+import { migrate, pg } from "@~/identite-proconnect/testing";
 import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
 import { GetDuplicateModerations } from "./GetDuplicateModerations";
 

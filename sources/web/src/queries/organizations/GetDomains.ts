@@ -1,6 +1,6 @@
 //
 
-import { type IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
+import { type IdentiteProconnect_PgDatabase } from "@~/identite-proconnect/database";
 
 //
 

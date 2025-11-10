@@ -5,7 +5,7 @@ import {
   drizzle,
   schema,
   type IdentiteProconnect_PgDatabase,
-} from "@~/identite-proconnect.database";
+} from "@~/identite-proconnect/database";
 import type { Env, MiddlewareHandler } from "hono";
 
 //

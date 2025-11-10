@@ -1,7 +1,7 @@
 //
 
 import { NotFoundError } from "@~/core/error";
-import type { IdentiteProconnectDatabaseCradle } from "@~/identite-proconnect.database";
+import type { IdentiteProconnectDatabaseCradle } from "@~/identite-proconnect/database";
 
 export function GetModerationHeader({ pg }: IdentiteProconnectDatabaseCradle) {
   return async function get_moderation_header(id: number) {

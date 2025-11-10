@@ -1,7 +1,7 @@
 //
 
-import type { EmailDomainVerificationType } from "@~/identite-proconnect.lib";
-import { type MarkDomainAsVerifiedHandler } from "@~/identite-proconnect.lib/sdk";
+import type { EmailDomainVerificationType } from "@~/identite-proconnect/database";
+import { type MarkDomainAsVerifiedHandler } from "@~/identite-proconnect/sdk";
 import type { GetFicheOrganizationByIdHandler } from "./GetFicheOrganizationById";
 
 //
@@ -27,7 +27,7 @@ export function AddVerifiedDomain({
     return mark_domain_as_verified({
       domain,
       organization_id,
-      domain_verification_type,
+      domain_verification_type: domain_verification_type as any,
     });
   };
 }

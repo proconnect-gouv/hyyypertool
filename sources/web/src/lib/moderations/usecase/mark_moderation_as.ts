@@ -4,7 +4,7 @@ import { z_username } from "@~/core/schema";
 import type {
   IdentiteProconnect_PgDatabase,
   schema,
-} from "@~/identite-proconnect.database";
+} from "@~/identite-proconnect/database";
 import { UpdateModerationById } from "#src/queries/moderations";
 import { append_comment, type Comment_Type } from "../comment_message";
 

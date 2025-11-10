@@ -5,11 +5,11 @@ import type { Htmx_Header } from "#src/htmx";
 import type { App_Context } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
 import { Entity_Schema, z_email_domain } from "@~/core/schema";
-import { send_moderation_processed_email } from "@~/identite-proconnect.lib/index";
+import { send_moderation_processed_email } from "@~/identite-proconnect/index";
 import {
   ForceJoinOrganization,
   MarkDomainAsVerified,
-} from "@~/identite-proconnect.lib/sdk";
+} from "@~/identite-proconnect/sdk";
 import { MODERATION_EVENTS } from "#src/lib/moderations";
 import { validate_form_schema } from "#src/lib/moderations";
 import { mark_moderation_as } from "#src/lib/moderations";

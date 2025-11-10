@@ -1,7 +1,7 @@
 //
 
 import { z_username } from "@~/core/schema";
-import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
+import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect/database";
 import {
   UpdateModerationById,
   type GetModerationWithUserDto,

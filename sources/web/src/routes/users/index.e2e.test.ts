@@ -8,7 +8,7 @@ import {
   empty_database,
   migrate,
   pg,
-} from "@~/identite-proconnect.database/testing";
+} from "@~/identite-proconnect/testing";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
 import { Hono } from "hono";
 import app from "./index";

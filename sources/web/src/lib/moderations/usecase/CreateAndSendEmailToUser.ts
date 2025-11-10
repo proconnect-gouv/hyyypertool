@@ -2,7 +2,7 @@
 
 import { NotFoundError } from "@~/core/error";
 import { z_username } from "@~/core/schema";
-import type { IdentiteProconnectDatabaseCradle } from "@~/identite-proconnect.database";
+import type { IdentiteProconnectDatabaseCradle } from "@~/identite-proconnect/database";
 import type { UpdateModerationByIdHandler } from "#src/queries/moderations";
 import type {
   RejectedFullMessage,

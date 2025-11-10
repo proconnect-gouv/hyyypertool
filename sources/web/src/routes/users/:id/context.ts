@@ -2,7 +2,7 @@
 
 import type { App_Context } from "#src/middleware/context";
 import { urls } from "#src/urls";
-import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect.database";
+import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect/database";
 import { GetAuthenticatorByUserId, GetUserById } from "#src/queries/users";
 import type { Env, InferRequestType } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";

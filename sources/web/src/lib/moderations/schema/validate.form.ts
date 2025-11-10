@@ -1,7 +1,7 @@
 //
 
 import { z_coerce_boolean } from "@~/core/schema";
-import { Verification_Type_Schema } from "@~/identite-proconnect.lib/verification_type";
+import { Verification_Type_Schema } from "@~/identite-proconnect/verification_type";
 import { z } from "zod";
 
 //

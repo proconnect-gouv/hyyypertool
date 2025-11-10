@@ -1,7 +1,7 @@
 //
 
 import { GetDomains } from "#src/queries/organizations";
-import { type IdentiteProconnectDatabaseCradle } from "@~/identite-proconnect.database";
+import { type IdentiteProconnectDatabaseCradle } from "@~/identite-proconnect/database";
 
 //
 

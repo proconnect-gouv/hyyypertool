@@ -4,7 +4,7 @@ import type { Pagination } from "@~/core/schema";
 import {
   schema,
   type IdentiteProconnect_PgDatabase,
-} from "@~/identite-proconnect.database";
+} from "@~/identite-proconnect/database";
 import { and, desc, count as drizzle_count, eq } from "drizzle-orm";
 
 //

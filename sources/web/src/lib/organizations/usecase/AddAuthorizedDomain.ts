@@ -4,8 +4,8 @@ import { BadRequestError } from "@~/core/error";
 import {
   schema,
   type IdentiteProconnectDatabaseCradle,
-} from "@~/identite-proconnect.database";
-import { EmailDomain_Type_Schema } from "@~/identite-proconnect.lib/email_domain";
+} from "@~/identite-proconnect/database";
+import { EmailDomain_Type_Schema } from "@~/identite-proconnect/database";
 
 //
 

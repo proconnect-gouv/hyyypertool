@@ -1,16 +1,16 @@
 //
 
-import { schema } from "@~/identite-proconnect.database";
+import { schema } from "@~/identite-proconnect/database";
 import {
   create_adora_pony_user,
   create_pink_diamond_user,
   create_red_diamond_user,
-} from "@~/identite-proconnect.database/seed/unicorn";
+} from "@~/identite-proconnect/database/seed/unicorn";
 import {
   empty_database,
   migrate,
   pg,
-} from "@~/identite-proconnect.database/testing";
+} from "@~/identite-proconnect/testing";
 import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
 import { eq } from "drizzle-orm";
 import { GetUsersList } from "./GetUsersList";

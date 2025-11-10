@@ -4,8 +4,8 @@ import type { Htmx_Header } from "#src/htmx";
 import { set_variables } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
 import { DescribedBy_Schema, Entity_Schema, Id_Schema } from "@~/core/schema";
-import { schema } from "@~/identite-proconnect.database";
-import { EmailDomain_Type_Schema } from "@~/identite-proconnect.lib/email_domain";
+import { schema } from "@~/identite-proconnect/database";
+import { EmailDomain_Type_Schema } from "@~/identite-proconnect/database";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import {
   AddAuthorizedDomain,
