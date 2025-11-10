@@ -17,7 +17,6 @@
     "@~/identite-proconnect.database": "workspace:*",
     "@~/identite-proconnect.lib": "workspace:*",
     "@~/moderations.repository": "workspace:*",
-    "@~/organizations.lib": "workspace:*",
     "@~/users.repository": "workspace:*",
     "@~/zammad.lib": "workspace:*",
     "await-to-js": "3.0.0",

@@ -10,7 +10,7 @@
     "sources/infra/crisp/*",
     "sources/infra/zammad/*",
     "sources/moderations/*",
-    "sources/organizations/*",
+    "sources/organizations",
     "sources/users/*",
     "sources/core",
     "sources/web",

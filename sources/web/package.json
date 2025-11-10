@@ -34,7 +34,7 @@
     "@~/identite-proconnect.lib": "workspace:*",
     "@~/moderations.lib": "workspace:*",
     "@~/moderations.repository": "workspace:*",
-    "@~/organizations.lib": "workspace:*",
+    "@~/organizations": "workspace:*",
     "@~/users.lib": "workspace:*",
     "@~/users.repository": "workspace:*",
     "@~/zammad.lib": "workspace:*",

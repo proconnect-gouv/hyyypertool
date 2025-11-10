@@ -15,7 +15,7 @@ import {
   GetModerationWithDetails,
   type GetModerationWithDetailsDto,
 } from "@~/moderations.repository";
-import { GetBanaticUrl } from "@~/organizations.lib/usecase";
+import { GetBanaticUrl } from "#src/lib/organizations/usecase";
 import { to } from "await-to-js";
 import type { Env, InferRequestType } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";

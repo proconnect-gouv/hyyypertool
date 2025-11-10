@@ -28,7 +28,7 @@
       "path": "../moderations/repository"
     },
     {
-      "path": "../organizations/lib"
+      "path": "../organizations"
     },
     {
       "path": "../users/lib"

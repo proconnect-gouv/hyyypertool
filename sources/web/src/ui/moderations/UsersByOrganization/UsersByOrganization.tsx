@@ -5,15 +5,14 @@ import { hx_include, hx_trigger_from_body } from "#src/htmx";
 import { Loader } from "#src/ui/loader";
 import { formattedPlural } from "#src/ui/plurial";
 import { hx_urls } from "#src/urls";
-import type { Organization } from "@~/organizations.lib/entities/Organization";
-import { ORGANISATION_EVENTS } from "@~/organizations.lib/event";
+import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import { match, P } from "ts-pattern";
 
 //
 
 type Props = {
   isOpen?: boolean;
-  organization: Pick<Organization, "id">;
+  organization: { id: number };
   query_members_count: Promise<number>;
 };
 export async function UsersByOrganization(props: Props) {

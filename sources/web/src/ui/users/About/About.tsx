@@ -5,14 +5,13 @@ import { CopyButton } from "#src/ui/button/components";
 import { description_list } from "#src/ui/list";
 import { urls } from "#src/urls";
 import { z_email_domain } from "@~/core/schema";
-import type { Organization } from "@~/organizations.lib/entities/Organization";
 import type { GetUserInfoOutput } from "@~/users.lib/usecase/GetUserInfo";
 
 //
 
 type AboutProps = {
   user: GetUserInfoOutput;
-  organization: Pick<Organization, "siret">;
+  organization: { siret: string };
 };
 
 //

@@ -8,7 +8,7 @@ import { schema } from "@~/identite-proconnect.database";
 import { join_organization } from "@~/identite-proconnect.lib/index";
 import { Verification_Type_Schema } from "@~/identite-proconnect.lib/verification_type";
 import { RemoveUserFromOrganization } from "@~/moderations.repository";
-import { ORGANISATION_EVENTS } from "@~/organizations.lib/event";
+import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import { and, eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { z } from "zod";

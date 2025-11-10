@@ -4,7 +4,6 @@ import {
   schema,
   type IdentiteProconnectDatabaseCradle,
 } from "@~/identite-proconnect.database";
-import type { UserOrganizationIdPair } from "@~/organizations.lib/entities/Organization";
 import { and, eq } from "drizzle-orm";
 
 //
@@ -13,7 +12,10 @@ export function IsUserExternalMember({ pg }: IdentiteProconnectDatabaseCradle) {
   return async function is_user_external_member({
     organization_id,
     user_id,
-  }: UserOrganizationIdPair) {
+  }: {
+    user_id: number;
+    organization_id: number;
+  }) {
     const user_organization = await pg.query.users_organizations.findFirst({
       columns: { is_external: true },
       where: and(

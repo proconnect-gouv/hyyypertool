@@ -6,11 +6,11 @@ import { zValidator } from "@hono/zod-validator";
 import { DescribedBy_Schema, Entity_Schema, Id_Schema } from "@~/core/schema";
 import { schema } from "@~/identite-proconnect.database";
 import { EmailDomain_Type_Schema } from "@~/identite-proconnect.lib/email_domain";
-import { ORGANISATION_EVENTS } from "@~/organizations.lib/event";
+import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import {
   AddAuthorizedDomain,
   RemoveDomainEmailById,
-} from "@~/organizations.lib/usecase";
+} from "#src/lib/organizations/usecase";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";

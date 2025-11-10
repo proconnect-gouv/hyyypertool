@@ -3,14 +3,13 @@
 import { button } from "#src/ui/button";
 import { hx_urls } from "#src/urls";
 
-import type { Organization } from "@~/organizations.lib/entities/Organization";
 import type { JSX } from "hono/jsx";
 
 //
 
 type Props = JSX.IntrinsicElements["section"] & {
   banaticUrl: string;
-  organization: Pick<Organization, "cached_code_postal" | "siret">;
+  organization: { cached_code_postal: string | null; siret: string };
 };
 
 //
