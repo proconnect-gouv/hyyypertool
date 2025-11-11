@@ -6,7 +6,7 @@ import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect/datab
 import type { Env, InferRequestType } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";
 import { z } from "zod";
-import { get_orginization_domains } from "./get_orginization_domains";
+import { get_organization_domains } from "./get_organization_domains";
 
 //
 
@@ -14,7 +14,7 @@ export async function loadDomainsPageVariables(
   pg: IdentiteProconnect_PgDatabase,
   { organization_id }: { organization_id: number },
 ) {
-  const domains = await get_orginization_domains({ pg }, { organization_id });
+  const domains = await get_organization_domains({ pg }, { organization_id });
 
   return {
     domains,

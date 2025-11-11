@@ -11,7 +11,7 @@ import type { EmailDomain_Type } from "@~/identite-proconnect/database";
 import type { MCP_EmailDomain_Type } from "@~/identite-proconnect/identite-proconnect.d";
 import { match } from "ts-pattern";
 import { AddDomainParams_Schema, usePageRequestContext } from "./context";
-import type { get_orginization_domains_dto } from "./get_orginization_domains";
+import type { get_organization_domains_dto } from "./get_organization_domains";
 
 //
 
@@ -128,7 +128,7 @@ function Row({
   organization_domain,
 }: {
   key?: string;
-  organization_domain: get_orginization_domains_dto[number];
+  organization_domain: get_organization_domains_dto[number];
 }) {
   const {
     created_at,
@@ -179,7 +179,7 @@ function Row({
 async function Row_Actions({
   organization_domain,
 }: {
-  organization_domain: get_orginization_domains_dto[number];
+  organization_domain: get_organization_domains_dto[number];
 }) {
   const { domain, id, organization, organization_id } = organization_domain;
 
