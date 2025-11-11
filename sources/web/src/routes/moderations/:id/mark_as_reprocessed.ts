@@ -1,30 +1,41 @@
 //
 
 import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect/database";
-import { ReprocessModerationById } from "#src/lib/moderations";
 import {
   GetModerationById,
   RemoveUserFromOrganization,
   UpdateModerationById,
 } from "#src/queries/moderations";
+import { append_comment } from "#src/lib/moderations";
 
 //
 
-/**
- * Thin wrapper around ReprocessModerationById usecase.
- * Reprocesses a moderation by resetting it to pending state and removing user from organization.
- */
 export async function mark_as_reprocessed(
   pg: IdentiteProconnect_PgDatabase,
   id: number,
   userinfo: { email: string },
 ) {
-  const reprocess_moderation_by_id = ReprocessModerationById({
-    get_moderation_by_id: GetModerationById({ pg }),
-    remove_user_from_organization: RemoveUserFromOrganization({ pg }),
-    update_moderation_by_id: UpdateModerationById({ pg }),
-    userinfo,
+  const get_moderation_by_id = GetModerationById({ pg });
+  const remove_user_from_organization = RemoveUserFromOrganization({ pg });
+  const update_moderation_by_id = UpdateModerationById({ pg });
+
+  const moderation = await get_moderation_by_id(id, {
+    columns: { comment: true, organization_id: true, user_id: true },
   });
 
-  await reprocess_moderation_by_id(id);
+  const comment = append_comment(moderation.comment, {
+    type: "REPROCESSED",
+    created_by: userinfo.email,
+  });
+
+  await remove_user_from_organization({
+    organization_id: moderation.organization_id,
+    user_id: moderation.user_id,
+  });
+
+  await update_moderation_by_id(id, {
+    comment,
+    moderated_by: null,
+    moderated_at: null,
+  });
 }
