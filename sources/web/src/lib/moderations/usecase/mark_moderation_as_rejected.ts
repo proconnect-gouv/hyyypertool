@@ -10,7 +10,7 @@ import { append_comment } from "../comment_message";
 
 //
 
-export async function mark_moderatio_as_rejected({
+export async function mark_moderation_as_rejected({
   pg,
   moderation,
   userinfo,
