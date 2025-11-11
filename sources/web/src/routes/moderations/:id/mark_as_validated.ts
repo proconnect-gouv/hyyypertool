@@ -3,7 +3,7 @@
 import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect/database";
 import type { schema } from "@~/identite-proconnect/database";
 import { UpdateModerationById } from "#src/queries/moderations";
-import { build_moderation_update } from "#src/lib/moderations";
+import { build_moderation_update } from "@~/moderations/build_moderation_update";
 
 //
 

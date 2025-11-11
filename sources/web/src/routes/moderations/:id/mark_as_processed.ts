@@ -5,7 +5,7 @@ import {
   UpdateModerationById,
   type GetModerationWithUserDto,
 } from "#src/queries/moderations";
-import { build_moderation_update } from "#src/lib/moderations";
+import { build_moderation_update } from "@~/moderations/build_moderation_update";
 
 //
 
