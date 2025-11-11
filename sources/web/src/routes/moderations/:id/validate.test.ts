@@ -38,7 +38,7 @@ test("PATCH /moderations/:id/validate marks moderation as validated", async () =
   const response = await new Hono()
     .use(set_config({ ALLOWED_USERS: "admin@example.com" }))
     .use(set_identite_pg(pg))
-    .use(set_identite_pg_client(client))
+    .use(set_identite_pg_client(client as any))
     .use(set_userinfo({ email: "admin@example.com" }))
     .route("/:id/validate", app)
     .request(`/${moderation_id}/validate`, {
