@@ -1,5 +1,6 @@
 //
 
+export * from "./build_moderation_update";
 export * from "./comment_message";
 export * from "./context";
 export * from "./entities/Moderation";
