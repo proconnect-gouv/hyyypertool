@@ -6,9 +6,9 @@ import type { IdentiteProconnect_Pg_Context } from "#src/middleware/identite-pg"
 import { zValidator } from "@hono/zod-validator";
 import { Entity_Schema } from "@~/core/schema";
 import { MODERATION_EVENTS } from "#src/lib/moderations";
-import { mark_moderatio_as_rejected } from "#src/lib/moderations";
 import { GetModerationWithUser } from "#src/queries/moderations";
 import { Hono } from "hono";
+import { mark_as_processed } from "./mark_as_processed";
 
 //
 
@@ -25,12 +25,7 @@ export default new Hono<
 
     if (!moderation) return notFound();
 
-    await mark_moderatio_as_rejected({
-      pg: identite_pg,
-      moderation,
-      userinfo,
-      reason: "DUPLICATE",
-    });
+    await mark_as_processed(identite_pg, moderation, userinfo);
 
     return text("OK", 200, {
       "HX-Trigger": [
