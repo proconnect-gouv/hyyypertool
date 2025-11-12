@@ -1,78 +1,78 @@
 //
 
-import { NotFoundError } from "#src/errors";
 import { Htmx_Events } from "#src/htmx";
+import type { GetDuplicateModerationsDto } from "#src/queries/moderations";
 import { button } from "#src/ui/button";
 import { fieldset } from "#src/ui/form";
 import { OpenInZammad, SearchInZammad } from "#src/ui/zammad/components";
 import { hx_urls, urls } from "#src/urls";
-import {
-  schema,
-  type IdentiteProconnect_PgDatabase,
-} from "@~/identite-proconnect/database";
-import {
-  GetDuplicateModerations,
-  type GetDuplicateModerationsDto,
-} from "#src/queries/moderations";
-import { GetUserById } from "#src/queries/users";
-import { get_zammad_mail } from "#src/lib/zammad";
-import { to } from "await-to-js";
-import { and, asc, eq, ilike, not, or } from "drizzle-orm";
 import { raw } from "hono/html";
-import { createContext, useContext } from "hono/jsx";
-import { usePageRequestContext } from "./context";
 
 //
 
-export async function DuplicateWarning() {
+type DuplicateUser = {
+  user_id: number;
+  email: string | null;
+  family_name: string | null;
+  given_name: string | null;
+};
+
+type User = {
+  id: number;
+  email: string;
+  given_name: string | null;
+  family_name: string | null;
+};
+
+type Moderation = {
+  moderated_at: string | null;
+};
+
+type ModerationTicket = {
+  moderation: GetDuplicateModerationsDto[number];
+  zammad_ticket?: any;
+};
+
+type DuplicateWarningProps = {
+  moderation_id: number;
+  moderations: GetDuplicateModerationsDto;
+  user: User;
+  duplicate_users: DuplicateUser[];
+  moderation: Moderation;
+  moderation_tickets: ModerationTicket[];
+};
+
+//
+
+export async function DuplicateWarning({
+  moderations,
+  user,
+  duplicate_users,
+  moderation,
+  moderation_tickets,
+  moderation_id,
+}: DuplicateWarningProps) {
   return (
     <>
-      <Alert_Duplicate_Moderation />
-      <Alert_Duplicate_User />
+      <Alert_Duplicate_Moderation
+        moderations={moderations}
+        user={user}
+        moderation_tickets={moderation_tickets}
+        moderation_id={moderation_id}
+        moderation={moderation}
+      />
+      <Alert_Duplicate_User duplicate_users={duplicate_users} />
     </>
   );
 }
 
-async function createDuplicateWarningContextValues(
-  pg: IdentiteProconnect_PgDatabase,
-  {
-    organization_id,
-    user_id,
-    moderation_id,
-  }: { organization_id: number; user_id: number; moderation_id: number },
-) {
-  const get_duplicate_moderations = GetDuplicateModerations(pg);
-
-  const get_user_by_id = GetUserById(pg, {
-    columns: {
-      id: true,
-      email: true,
-      given_name: true,
-      family_name: true,
-    },
-  });
-
-  return {
-    moderation_id,
-    moderations: await get_duplicate_moderations({
-      organization_id,
-      user_id,
-    }),
-    user: await get_user_by_id(user_id),
-  };
-}
-
-DuplicateWarning.queryContextValues = createDuplicateWarningContextValues;
-DuplicateWarning.Context = createContext(
-  {} as Awaited<ReturnType<typeof DuplicateWarning.queryContextValues>>,
-);
-
 //
 
-async function Alert_Duplicate_User() {
-  const { moderation_id } = useContext(DuplicateWarning.Context);
-  const duplicate_users = await get_duplicate_users(moderation_id);
-
+async function Alert_Duplicate_User({
+  duplicate_users,
+}: {
+  duplicate_users: DuplicateUser[];
+}) {
   const duplicate_users_count = duplicate_users.length;
 
   if (duplicate_users_count === 0) return raw``;
@@ -89,17 +89,7 @@ async function Alert_Duplicate_User() {
 
       <ul>
         {duplicate_users.map(
-          ({
-            user_id,
-            email,
-            family_name,
-            given_name,
-          }: {
-            user_id: number;
-            email: string | null;
-            family_name: string | null;
-            given_name: string | null;
-          }) => (
+          ({ user_id, email, family_name, given_name }: DuplicateUser) => (
             <li key={user_id}>
               <a
                 href={
@@ -116,13 +106,23 @@ async function Alert_Duplicate_User() {
     </div>
   );
 }
-async function Alert_Duplicate_Moderation() {
-  const { moderations, user } = useContext(DuplicateWarning.Context);
+
+async function Alert_Duplicate_Moderation({
+  moderations,
+  user,
+  moderation_tickets,
+  moderation_id,
+  moderation,
+}: {
+  moderations: GetDuplicateModerationsDto;
+  user: User;
+  moderation_tickets: ModerationTicket[];
+  moderation_id: number;
+  moderation: Moderation;
+}) {
   const moderation_count = moderations.length;
 
   if (moderation_count <= 1) return raw``;
-
-  const moderation_tickets = await get_moderation_tickets(moderations);
 
   return (
     <div class="fr-alert fr-alert--warning">
@@ -155,17 +155,24 @@ async function Alert_Duplicate_Moderation() {
         ))}
       </ul>
 
-      <MarkModerationAsProcessed />
+      <MarkModerationAsProcessed
+        moderation_id={moderation_id}
+        moderation={moderation}
+      />
     </div>
   );
 }
 
-async function MarkModerationAsProcessed() {
-  const { moderation_id } = useContext(DuplicateWarning.Context);
-  const { base, element } = fieldset();
-  const moderation = await get_moderation(moderation_id);
-
+async function MarkModerationAsProcessed({
+  moderation_id,
+  moderation,
+}: {
+  moderation_id: number;
+  moderation: Moderation;
+}) {
   if (moderation.moderated_at) return raw``;
+
+  const { base, element } = fieldset();
 
   return (
     <form
@@ -189,74 +196,4 @@ async function MarkModerationAsProcessed() {
       </fieldset>
     </form>
   );
-}
-
-//
-
-function get_moderation_tickets(moderations: GetDuplicateModerationsDto) {
-  return Promise.all(
-    moderations.map(async (moderation) => {
-      if (!moderation.ticket_id) return { moderation };
-      const ticket_id = Number(moderation.ticket_id);
-      const [, zammad_ticket] = await to(get_zammad_mail({ ticket_id }));
-      return { moderation, zammad_ticket };
-    }),
-  );
-}
-
-//
-
-async function get_moderation(moderation_id: number) {
-  const {
-    var: { identite_pg },
-  } = usePageRequestContext();
-
-  const moderation = await identite_pg.query.moderations.findFirst({
-    columns: { moderated_at: true },
-    where: eq(schema.moderations.id, moderation_id),
-  });
-  if (!moderation) throw new NotFoundError("Moderation not found.");
-  return moderation;
-}
-
-async function get_duplicate_users(moderation_id: number) {
-  const {
-    var: { identite_pg },
-  } = usePageRequestContext();
-
-  const moderation = await identite_pg.query.moderations.findFirst({
-    columns: { organization_id: true },
-    with: {
-      user: { columns: { id: true, given_name: true, family_name: true } },
-    },
-    where: eq(schema.moderations.id, moderation_id),
-  });
-
-  if (!moderation) throw new NotFoundError("Moderation not found.");
-
-  const {
-    organization_id,
-    user: { family_name, id: user_id },
-  } = moderation;
-
-  return await identite_pg
-    .select({
-      email: schema.users.email,
-      family_name: schema.users.family_name,
-      given_name: schema.users.given_name,
-      user_id: schema.users_organizations.user_id,
-    })
-    .from(schema.users_organizations)
-    .leftJoin(
-      schema.users,
-      eq(schema.users_organizations.user_id, schema.users.id),
-    )
-    .where(
-      and(
-        or(ilike(schema.users.family_name, family_name ?? "")),
-        not(eq(schema.users.id, user_id)),
-        eq(schema.users_organizations.organization_id, organization_id),
-      ),
-    )
-    .orderBy(asc(schema.users.created_at));
 }
