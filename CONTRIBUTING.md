@@ -314,6 +314,317 @@ async function set_variables_middleware(
 
 ---
 
+## File Naming Grammar
+
+Our codebase uses file suffixes to indicate both **purity** (pure/impure) and **purpose** of code. This makes it easy to understand what a file does and how to test it at a glance.
+
+### File Suffixes
+
+| Suffix           | Pure/Impure | Contains                        | Example                         | Testing Strategy                       |
+| ---------------- | ----------- | ------------------------------- | ------------------------------- | -------------------------------------- |
+| `.rules.ts`      | Pure        | Business decision logic         | `eligibility.rules.ts`          | Unit tests, colocated, <10ms, no mocks |
+| `.validation.ts` | Pure        | Input validation                | `join-input.validation.ts`      | Unit tests, colocated, no I/O          |
+| `.mapper.ts`     | Pure\*      | Data transformation             | `insee-to-org.mapper.ts`        | Unit tests, colocated                  |
+| `.workflow.ts`   | Impure      | Orchestration (Read→Decide→Act) | `join-organization.workflow.ts` | Integration tests, real DB, ~800ms     |
+| `.router.ts`     | Impure      | HTTP routes (Hono)              | `join.router.ts`                | Route tests, HTTP + DB                 |
+| `index.ts`       | Impure      | Router entry point              | `index.ts`                      | -                                      |
+| `.query.ts`      | Impure      | SQL query builder               | `get-org-with-members.query.ts` | Integration tests, real DB             |
+
+\*Mappers are pure but colocated with their feature for locality.
+
+### Examples
+
+**Pure business logic** (`.rules.ts`):
+
+```typescript
+// sources/web/src/routes/organizations/join/eligibility.rules.ts
+export function can_join_organization(user: User, org: Organization): boolean {
+  if (org.is_closed) return false;
+  if (user.email_domain !== org.domain) return false;
+  return true;
+}
+
+// Test colocated: eligibility.rules.test.ts
+test("cannot join closed organization", () => {
+  expect(can_join_organization(user, { is_closed: true })).toBe(false);
+});
+```
+
+**Pure validation** (`.validation.ts`):
+
+```typescript
+// sources/web/src/routes/organizations/join/join-input.validation.ts
+import { z } from "zod";
+
+export const join_input_schema = z.object({
+  organization_id: z.number().positive(),
+  as_external: z.boolean().default(false),
+});
+```
+
+**Pure mapper** (`.mapper.ts`):
+
+```typescript
+// sources/web/src/routes/organizations/join/insee-to-org.mapper.ts
+export function map_insee_to_organization(
+  insee_data: INSEEResponse,
+): Organization {
+  return {
+    siret: insee_data.etablissement.siret,
+    name: insee_data.etablissement.uniteLegale.denominationUniteLegale,
+    // ... pure transformation
+  };
+}
+```
+
+**Impure workflow** (`.workflow.ts`):
+
+```typescript
+// sources/web/src/routes/organizations/join/join-organization.workflow.ts
+export async function join_organization(
+  pg: Database,
+  { user_id, organization_id, as_external }: JoinParams,
+) {
+  // 1. Fetch data (impure)
+  const user = await pg.query.users.findFirst({ where: eq(users.id, user_id) });
+  const org = await pg.query.organizations.findFirst({
+    where: eq(organizations.id, organization_id),
+  });
+
+  // 2. Business decision (pure - call .rules.ts)
+  if (!can_join_organization(user, org)) {
+    throw new ValidationError("Cannot join organization");
+  }
+
+  // 3. Save (impure)
+  await pg
+    .insert(members)
+    .values({ user_id, organization_id, is_external: as_external });
+}
+
+// Test: join-organization.workflow.test.ts (integration test with real DB)
+```
+
+**HTTP routes** (`.router.ts`):
+
+```typescript
+// sources/web/src/routes/organizations/join/join.router.ts
+import { Hono } from "hono";
+import { join_organization } from "./join-organization.workflow";
+
+export const join_router = new Hono().post("/", async (c) => {
+  const { user_id, organization_id } = await c.req.json();
+  await join_organization(c.var.identite_pg, { user_id, organization_id });
+  return c.json({ success: true });
+});
+```
+
+**Router entry point** (`index.ts`):
+
+```typescript
+// sources/web/src/routes/organizations/join/index.ts
+import { join_router } from "./join.router";
+export default join_router;
+
+// Parent router imports this:
+// import join_router from "./join";
+// app.route("/join", join_router);
+```
+
+### When to Use Each Suffix
+
+- Use `.rules.ts` when: Writing business logic that returns boolean/decision with no I/O
+- Use `.validation.ts` when: Validating input shape with Zod schemas
+- Use `.mapper.ts` when: Transforming external API data to domain types
+- Use `.workflow.ts` when: Orchestrating multiple steps (fetch → decide → save)
+- Use `.router.ts` when: Defining HTTP endpoints (GET, POST, PATCH, DELETE)
+- Use `.query.ts` when: Building complex SQL queries with Drizzle
+- Use `index.ts` when: Exporting a Hono router as the feature entry point
+
+---
+
+## Feature-First Organization
+
+Organize routes by **user-facing capability** (feature-first) rather than technical layer (layer-first). Related code lives together in feature folders.
+
+### Folder Structure Rules
+
+**Feature depth: Max 2-3 levels**
+
+```
+web/src/routes/organizations/
+├── join/                       # Feature: Join organization
+│   ├── index.ts                # Router entry point
+│   ├── join.router.ts          # HTTP routes
+│   ├── join-organization.workflow.ts
+│   ├── eligibility.rules.ts    # Pure logic
+│   ├── eligibility.rules.test.ts
+│   └── insee-to-org.mapper.ts  # Colocated with feature
+├── verify-dirigeant/           # Feature: Verify company director
+│   ├── index.ts
+│   ├── verify.router.ts
+│   └── ...
+└── :id/                        # Feature: Organization detail
+    ├── index.ts
+    ├── page.tsx
+    └── members/                # Nested feature (max depth)
+        ├── index.ts
+        └── ...
+```
+
+**When feature grows too large**: Use file prefixes, not deeper folders
+
+```
+✅ Good (flat with prefixes):
+/join/
+├── join-with-invitation.workflow.ts
+├── join-as-external.workflow.ts
+└── join-eligibility.rules.ts
+
+❌ Bad (too nested):
+/join/
+└── workflows/
+    └── invitation/
+        └── with-email/
+            └── workflow.ts
+```
+
+### Test Colocation
+
+Tests live **next to source files**, not in separate `/tests/` tree:
+
+```
+/join/
+├── eligibility.rules.ts
+├── eligibility.rules.test.ts    # Unit test (same folder)
+├── join-organization.workflow.ts
+└── join-organization.workflow.test.ts  # Integration test (same folder)
+```
+
+**Exception**: E2E tests stay in `/e2e/` directory (cross-feature user journeys).
+
+### When to Extract to Domain Packages
+
+Extract complex business logic to domain packages (`@~/organizations`, `@~/moderations`) when:
+
+- Logic is genuinely reusable across 3+ features
+- Pure business rules need to be tested in isolation
+- Domain concepts are complex enough to deserve their own package
+
+```typescript
+// Domain package: sources/organizations/src/rules/eligibility.rules.ts
+export function can_join_organization(...) { ... }
+
+// Feature uses domain logic:
+import { can_join_organization } from "@~/organizations/rules/eligibility.rules";
+```
+
+### When to Use Context Access
+
+For UI components and infrastructure, use context access via barrel files (`#src/*/index.ts`):
+
+```typescript
+// ✅ Good: Context access via barrel
+import { Button } from "#src/ui/button";
+import { htmx } from "#src/htmx";
+import { NotFoundError } from "#src/errors";
+
+// ❌ Bad: No /shared/ folder
+import { OrganizationsRepo } from "#src/shared/db/organizations.repo";
+```
+
+### Decision Tree: "Where Does This Code Go?"
+
+1. **Is it pure business logic?**
+   - Simple: Feature folder with `.rules.ts` suffix
+   - Complex/reusable: Extract to domain package `@~/organizations/rules/`
+
+2. **Is it data transformation?**
+   - Colocate mapper with feature: `insee-to-org.mapper.ts`
+
+3. **Is it orchestration?**
+   - Feature folder with `.workflow.ts` suffix
+
+4. **Is it HTTP routing?**
+   - Feature folder with `.router.ts` + `index.ts` entry point
+
+5. **Is it UI component?**
+   - Shared: `#src/ui/button` (via barrel)
+   - Feature-specific: `/feature/ComponentName.tsx`
+
+6. **Is it database query?**
+   - Colocate with feature: `get-org-details.query.ts`
+
+---
+
+## Migrating to Feature-First Structure
+
+We're gradually migrating to feature-first organization using the **strangler fig pattern** (not big-bang reorg).
+
+### Migration Strategy
+
+- **Opportunistic**: Migrate features when you touch them, not all at once
+- **Timeline**: 6-12 months for natural evolution
+- **No breaking changes**: Old code keeps working during migration
+- **Start small**: Begin with simple features (health checks, simple CRUD)
+
+### Step-by-Step Migration Example
+
+Let's migrate `/moderations/:id/processed` feature:
+
+**Before** (Phase 2A structure):
+
+```
+/:id/
+├── processed.ts           # Handler + logic mixed
+├── processed.test.ts      # Test
+└── mark_as_processed.ts   # Thin wrapper
+```
+
+**After** (Phase 4 feature-first):
+
+```
+/:id/processed/
+├── index.ts                    # Router entry (exports Hono router)
+├── processed.router.ts         # HTTP routes only
+├── mark-as-processed.workflow.ts  # Orchestration extracted
+└── workflow.test.ts            # Integration test (renamed, moved)
+```
+
+**Migration steps**:
+
+1. **Create feature folder**: `mkdir /:id/processed/`
+2. **Extract HTTP layer**: Move route definition → `processed.router.ts`
+3. **Extract orchestration**: Move business logic → `mark-as-processed.workflow.ts`
+4. **Create entry point**: Add `index.ts` that exports the router
+5. **Move tests**: Rename and move → `workflow.test.ts`
+6. **Update imports**: Fix references in parent router
+7. **Delete old files**: Remove `processed.ts`, `mark_as_processed.ts`
+8. **Run tests**: Verify all tests pass
+
+**Checklist** (copy when migrating):
+
+```
+- [ ] Create feature folder
+- [ ] Apply file suffixes (.router.ts, .workflow.ts, etc.)
+- [ ] Extract pure logic to .rules.ts (if any)
+- [ ] Colocate tests (next to source files)
+- [ ] Update imports in parent router
+- [ ] Delete old files
+- [ ] Run: bun run build:tsc
+- [ ] Run: bun test
+- [ ] Git commit
+```
+
+### Tips for Migration
+
+- **Keep it simple**: Don't over-engineer. If a feature is 2 files, that's fine.
+- **File suffixes are optional initially**: Focus on folder structure first
+- **Tests can migrate gradually**: Colocate new tests, leave old ones temporarily
+- **Ask for help**: Open an issue or ask in Tchap if unsure about structure
+
+---
+
 ## Questions or Help
 
 If you need assistance, please open an issue or ask in our [community channel](https://tchap.gouv.fr/#/room/!kBghcRpyMNThkFQjdW:agent.dinum.tchap.gouv.fr?via=agent.dinum.tchap.gouv.fr&via=agent.finances.tchap.gouv.fr&via=agent.interieur.tchap.gouv.fr). We appreciate your contributions!
