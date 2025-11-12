@@ -8,7 +8,7 @@ import { Entity_Schema } from "@~/core/schema";
 import { MODERATION_EVENTS } from "#src/lib/moderations";
 import { GetModerationWithUser } from "#src/queries/moderations";
 import { Hono } from "hono";
-import { mark_as_processed } from "./mark_as_processed";
+import { mark_as_processed } from "./mark-as-processed.workflow";
 
 //
 

@@ -5,7 +5,7 @@ import type { App_Context } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
 import { Entity_Schema } from "@~/core/schema";
 import { MODERATION_EVENTS } from "#src/lib/moderations";
-import { mark_as_reprocessed } from "./mark_as_reprocessed";
+import { mark_as_reprocessed } from "./mark-as-reprocessed.workflow";
 import { Hono } from "hono";
 
 //
