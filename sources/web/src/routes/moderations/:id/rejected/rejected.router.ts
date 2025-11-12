@@ -10,8 +10,8 @@ import { MODERATION_EVENTS } from "#src/lib/moderations";
 import { reject_form_schema } from "#src/lib/moderations";
 import { GetModerationWithUser } from "#src/queries/moderations";
 import { Hono } from "hono";
-import type { ContextType } from "./procedures_context";
-import { mark_as_rejected } from "./mark_as_rejected";
+import type { ContextType } from "../procedures_context";
+import { mark_as_rejected } from "./mark-as-rejected.workflow";
 
 //
 

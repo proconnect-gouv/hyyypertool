@@ -9,7 +9,7 @@ import { UpdateModerationById } from "#src/queries/moderations";
 //
 
 /**
- * Thin wrapper for rejecting a moderation.
+ * Workflow for rejecting a moderation.
  * Sends rejection message and marks moderation as rejected.
  */
 export async function mark_as_rejected(
