@@ -433,13 +433,67 @@ export default join_router;
 
 ### When to Use Each Suffix
 
+**Decision Rule: Start with `index.ts`, split only when complexity justifies it.**
+
+#### Always use these suffixes:
 - Use `.rules.ts` when: Writing business logic that returns boolean/decision with no I/O
 - Use `.validation.ts` when: Validating input shape with Zod schemas
-- Use `.mapper.ts` when: Transforming external API data to domain types
-- Use `.workflow.ts` when: Orchestrating multiple steps (fetch → decide → save)
-- Use `.router.ts` when: Defining HTTP endpoints (GET, POST, PATCH, DELETE)
-- Use `.query.ts` when: Building complex SQL queries with Drizzle
-- Use `index.ts` when: Exporting a Hono router as the feature entry point
+- Use `.mapper.ts` when: Transforming external API data to domain types (colocate with feature)
+- Use `.query.ts` when: Building complex SQL queries with Drizzle (colocate with feature)
+
+#### Rarely use these suffixes (complexity-based):
+- Use `.workflow.ts` **only when**:
+  - **Orchestration is complex** (3+ distinct steps: fetch → validate → transform → save → notify)
+  - **Workflow is reused** (called from multiple routes OR background jobs)
+  - **File would exceed 80-100 lines** with workflow included
+  - If reused across routes, move to domain package (`sources/moderations/src/workflows/`)
+  - ⚠️ **Most routes don't need this** - keep logic in `index.ts` as helper functions
+
+- Use `.router.ts` **only when**:
+  - **Multiple related routes** (5+ endpoints in one feature)
+  - **Complex middleware chains** (authentication, validation, rate limiting)
+  - ⚠️ **Most features don't need this** - export router directly from `index.ts`
+
+- Use `index.ts` **always** as the feature entry point (exports Hono router)
+
+#### Complexity Threshold Examples:
+
+**✅ Keep in `index.ts` (60-80 lines total)**:
+```typescript
+// sources/web/src/routes/moderations/:id/processed/index.ts
+export default new Hono().patch("/", async ({ req, var: { pg, userinfo } }) => {
+  const moderation = await get_moderation(pg, req.valid("param").id);
+  await mark_as_processed(pg, moderation, userinfo); // Helper function below
+  return text("OK", 200);
+});
+
+// Helper function in same file
+async function mark_as_processed(pg, moderation, userinfo) {
+  const update = build_moderation_update({ /* ... */ });
+  await update_moderation_by_id(moderation.id, update);
+}
+```
+
+**✅ Split into `.workflow.ts` (100+ lines, complex orchestration)**:
+```typescript
+// sources/web/src/routes/moderations/:id/rejected/index.ts
+export { default } from "./rejected.router"; // Just re-export
+
+// rejected.router.ts (50 lines) - HTTP boundary + context building
+export default new Hono().patch("/", async (c) => {
+  const context = { crisp: CrispApi(...), pg, userinfo, /* complex setup */ };
+  await mark_as_rejected(context, req.valid("form")); // Complex workflow
+  return text("OK", 200);
+});
+
+// mark-as-rejected.workflow.ts (50 lines) - Multi-step orchestration
+export async function mark_as_rejected(context, { message, reason, subject }) {
+  await send_rejected_message_to_user(context, { message }); // Step 1: Email
+  await respond_to_ticket(context.crisp, { subject }); // Step 2: Crisp
+  await mark_moderation_as(context, "REJECTED"); // Step 3: DB
+  await notify_slack_channel(context, { reason }); // Step 4: Notification
+}
+```
 
 ---
 
@@ -451,16 +505,28 @@ Organize routes by **user-facing capability** (feature-first) rather than techni
 
 **Feature depth: Max 2-3 levels**
 
+**Simple features** (most common - single `index.ts`):
+```
+web/src/routes/moderations/:id/
+├── processed/                  # Feature: Mark as processed
+│   ├── index.ts                # Router + logic (~60 lines)
+│   └── index.test.ts           # Integration test
+├── reprocess/                  # Feature: Reprocess moderation
+│   ├── index.ts                # Router + logic (~65 lines)
+│   └── index.test.ts           # Integration test
+```
+
+**Complex features** (rare - split when justified):
 ```
 web/src/routes/organizations/
-├── join/                       # Feature: Join organization
-│   ├── index.ts                # Router entry point
-│   ├── join.router.ts          # HTTP routes
-│   ├── join-organization.workflow.ts
-│   ├── eligibility.rules.ts    # Pure logic
+├── join/                       # Feature: Join organization (complex)
+│   ├── index.ts                # Router entry point (re-export)
+│   ├── join.router.ts          # HTTP routes (if 5+ endpoints)
+│   ├── join-organization.workflow.ts  # (only if 3+ steps OR reused)
+│   ├── eligibility.rules.ts    # Pure logic (always extract)
 │   ├── eligibility.rules.test.ts
 │   └── insee-to-org.mapper.ts  # Colocated with feature
-├── verify-dirigeant/           # Feature: Verify company director
+├── verify-dirigeant/           # Feature: Verify company director (complex)
 │   ├── index.ts
 │   ├── verify.router.ts
 │   └── ...
