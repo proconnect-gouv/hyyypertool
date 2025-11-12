@@ -6,11 +6,10 @@
   "workspaces": [
     "bin",
     "sources/config/*",
+    "sources/core",
     "sources/identite-proconnect",
     "sources/moderations",
     "sources/organizations",
-    "sources/users/*",
-    "sources/core",
     "sources/web",
     "packages/hono-slotify"
   ],
