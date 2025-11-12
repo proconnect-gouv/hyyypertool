@@ -7,7 +7,7 @@
     "bin",
     "sources/config/*",
     "sources/identite-proconnect",
-    "sources/moderations/*",
+    "sources/moderations",
     "sources/organizations",
     "sources/users/*",
     "sources/core",

@@ -1,0 +1,11 @@
+{
+  "extends": "@~/config.typescript/base/tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./node_modules/.cache/tsc"
+  },
+  "references": [
+    {
+      "path": "../core"
+    }
+  ]
+}

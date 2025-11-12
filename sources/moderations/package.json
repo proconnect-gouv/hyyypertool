@@ -1,0 +1,19 @@
+{
+  "name": "@~/moderations",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./*": {
+      "default": "./src/*.ts"
+    }
+  },
+  "dependencies": {
+    "@~/core": "workspace:*",
+    "ts-pattern": "^5.5.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@~/config.typescript": "workspace:*"
+  }
+}

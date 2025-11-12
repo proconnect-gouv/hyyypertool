@@ -4,7 +4,7 @@ import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect/datab
 
 //
 
-export function get_orginization_domains(
+export function get_organization_domains(
   { pg }: { pg: IdentiteProconnect_PgDatabase },
   { organization_id }: { organization_id: number },
 ) {
@@ -28,6 +28,6 @@ export function get_orginization_domains(
     where: (table, { eq }) => eq(table.organization_id, organization_id),
   });
 }
-export type get_orginization_domains_dto = Awaited<
-  ReturnType<typeof get_orginization_domains>
+export type get_organization_domains_dto = Awaited<
+  ReturnType<typeof get_organization_domains>
 >;
