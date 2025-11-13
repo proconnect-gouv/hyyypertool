@@ -1,17 +1,15 @@
 //
 
 import type { RejectedModeration_Context } from "#src/lib/moderations";
-import { mark_moderation_as } from "#src/lib/moderations";
-import { RespondToTicket } from "#src/lib/moderations";
-import { SendRejectedMessageToUser } from "#src/lib/moderations";
+import {
+  mark_moderation_as,
+  RespondToTicket,
+  SendRejectedMessageToUser,
+} from "#src/lib/moderations";
 import { UpdateModerationById } from "#src/queries/moderations";
 
 //
 
-/**
- * Thin wrapper for rejecting a moderation.
- * Sends rejection message and marks moderation as rejected.
- */
 export async function mark_as_rejected(
   context: RejectedModeration_Context,
   {

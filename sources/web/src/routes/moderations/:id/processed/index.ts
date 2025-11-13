@@ -8,7 +8,30 @@ import { Entity_Schema } from "@~/core/schema";
 import { MODERATION_EVENTS } from "#src/lib/moderations";
 import { GetModerationWithUser } from "#src/queries/moderations";
 import { Hono } from "hono";
-import { mark_as_processed } from "./mark_as_processed";
+import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect/database";
+import {
+  UpdateModerationById,
+  type GetModerationWithUserDto,
+} from "#src/queries/moderations";
+import { build_moderation_update } from "@~/moderations/build_moderation_update";
+
+//
+
+async function mark_as_processed(
+  pg: IdentiteProconnect_PgDatabase,
+  moderation: GetModerationWithUserDto,
+  userinfo: { email: string; given_name: string; usual_name: string },
+) {
+  const update = build_moderation_update({
+    comment: moderation.comment,
+    userinfo,
+    reason: "DUPLICATE",
+    type: "REJECTED",
+  });
+
+  const update_moderation_by_id = UpdateModerationById({ pg });
+  await update_moderation_by_id(moderation.id, update);
+}
 
 //
 

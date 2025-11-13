@@ -15,7 +15,7 @@ import {
 } from "@~/identite-proconnect/testing";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
 import { Hono } from "hono";
-import app from "./processed";
+import app from "./index";
 
 //
 

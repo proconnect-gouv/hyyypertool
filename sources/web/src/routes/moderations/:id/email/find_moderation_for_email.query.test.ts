@@ -5,13 +5,9 @@ import {
   create_adora_pony_user,
   create_unicorn_organization,
 } from "@~/identite-proconnect/database/seed/unicorn";
-import {
-  empty_database,
-  migrate,
-  pg,
-} from "@~/identite-proconnect/testing";
+import { empty_database, migrate, pg } from "@~/identite-proconnect/testing";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
-import { GetModerationForEmail } from "./GetModerationForEmail";
+import { find_moderation_for_email } from "./find_moderation_for_email.query";
 
 //
 
@@ -28,8 +24,7 @@ test("get a moderation with minimal email context data", async () => {
     ticket_id: "test-ticket-123",
   });
 
-  const get_moderation_for_email = GetModerationForEmail(pg);
-  const moderation = await get_moderation_for_email(moderation_id);
+  const moderation = await find_moderation_for_email(pg, moderation_id);
 
   expect(moderation).toMatchInlineSnapshot(`
     {
@@ -46,8 +41,7 @@ test("handles null ticket_id", async () => {
   await create_adora_pony_user(pg);
   const moderation_id = await create_adora_pony_moderation(pg, { type: "" });
 
-  const get_moderation_for_email = GetModerationForEmail(pg);
-  const moderation = await get_moderation_for_email(moderation_id);
+  const moderation = await find_moderation_for_email(pg, moderation_id);
 
   expect(moderation).toMatchInlineSnapshot(`
     {
@@ -59,10 +53,6 @@ test("handles null ticket_id", async () => {
   `);
 });
 
-test("throws NotFoundError when moderation does not exist", async () => {
-  const get_moderation_for_email = GetModerationForEmail(pg);
-
-  await expect(get_moderation_for_email(999999)).rejects.toThrow(
-    "Moderation not found",
-  );
+test("❎ moderation does not exist", async () => {
+  await expect(find_moderation_for_email(pg, 999999)).resolves.toBeUndefined();
 });
