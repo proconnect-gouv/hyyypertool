@@ -17,7 +17,7 @@ export async function Table() {
     await identite_pg.query.email_deliverability_whitelist.findMany();
 
   return (
-    <div class="fr-table *:table!" id="domains-deliverability-table">
+    <div class="fr-table *:table!">
       <table>
         <thead>
           <tr>
