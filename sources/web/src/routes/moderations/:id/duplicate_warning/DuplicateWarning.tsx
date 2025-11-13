@@ -1,21 +1,17 @@
 //
 
 import { Htmx_Events } from "#src/htmx";
-import type { GetDuplicateModerationsDto } from "#src/queries/moderations";
 import { button } from "#src/ui/button";
 import { fieldset } from "#src/ui/form";
 import { OpenInZammad, SearchInZammad } from "#src/ui/zammad/components";
 import { hx_urls, urls } from "#src/urls";
 import { raw } from "hono/html";
+import type { find_duplicate_users } from "./find_duplicate_users.query";
+import type { get_duplicate_moderations } from "./get_duplicate_moderations.query";
+import type { get_moderation } from "./get_moderation.query";
+import type { get_moderation_tickets } from "./get_moderation_tickets.query";
 
 //
-
-type DuplicateUser = {
-  user_id: number;
-  email: string | null;
-  family_name: string | null;
-  given_name: string | null;
-};
 
 type User = {
   id: number;
@@ -24,23 +20,23 @@ type User = {
   family_name: string | null;
 };
 
-type Moderation = {
-  moderated_at: string | null;
-};
+type DuplicateUsers = Awaited<ReturnType<typeof find_duplicate_users>>;
 
-type ModerationTicket = {
-  moderation: GetDuplicateModerationsDto[number];
-  zammad_ticket?: any;
-};
+type Moderation = Awaited<ReturnType<typeof get_moderation>>;
+type ModerationTickets = Awaited<ReturnType<typeof get_moderation_tickets>>;
 
 type DuplicateWarningProps = {
   moderation_id: number;
-  moderations: GetDuplicateModerationsDto;
+  moderations: DuplicateModerations;
   user: User;
-  duplicate_users: DuplicateUser[];
+  duplicate_users: DuplicateUsers;
   moderation: Moderation;
-  moderation_tickets: ModerationTicket[];
+  moderation_tickets: ModerationTickets;
 };
+
+type DuplicateModerations = Awaited<
+  ReturnType<typeof get_duplicate_moderations>
+>;
 
 //
 
@@ -71,7 +67,7 @@ export async function DuplicateWarning({
 async function Alert_Duplicate_User({
   duplicate_users,
 }: {
-  duplicate_users: DuplicateUser[];
+  duplicate_users: DuplicateUsers;
 }) {
   const duplicate_users_count = duplicate_users.length;
 
@@ -89,7 +85,12 @@ async function Alert_Duplicate_User({
 
       <ul>
         {duplicate_users.map(
-          ({ user_id, email, family_name, given_name }: DuplicateUser) => (
+          ({
+            user_id,
+            email,
+            family_name,
+            given_name,
+          }: DuplicateUsers[number]) => (
             <li key={user_id}>
               <a
                 href={
@@ -114,9 +115,9 @@ async function Alert_Duplicate_Moderation({
   moderation_id,
   moderation,
 }: {
-  moderations: GetDuplicateModerationsDto;
+  moderations: DuplicateModerations;
   user: User;
-  moderation_tickets: ModerationTicket[];
+  moderation_tickets: ModerationTickets;
   moderation_id: number;
   moderation: Moderation;
 }) {

@@ -9,7 +9,7 @@ import {
 } from "@~/identite-proconnect/database/seed/unicorn";
 import { migrate, pg } from "@~/identite-proconnect/testing";
 import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
-import { GetDuplicateModerations } from "./GetDuplicateModerations";
+import { get_duplicate_moderations } from "./get_duplicate_moderations.query";
 
 //
 
@@ -36,8 +36,7 @@ test("get duplicate moderations for the same user and organization", async () =>
     type: "type_c",
   });
 
-  const get_duplicate_moderations = GetDuplicateModerations(pg);
-  const moderations = await get_duplicate_moderations({
+  const moderations = await get_duplicate_moderations(pg, {
     organization_id,
     user_id,
   });
@@ -55,8 +54,7 @@ test("get duplicate moderations for the same user and organization", async () =>
 });
 
 test("returns empty array when no moderations found", async () => {
-  const get_duplicate_moderations = GetDuplicateModerations(pg);
-  const moderations = await get_duplicate_moderations({
+  const moderations = await get_duplicate_moderations(pg, {
     organization_id: 999999,
     user_id: 999999,
   });
@@ -72,10 +70,8 @@ test("filters by specific user and organization", async () => {
 
   await create_adora_pony_moderation(pg, { type: "for_user1_org1" });
 
-  const get_duplicate_moderations = GetDuplicateModerations(pg);
-
   // Should only return moderations for specific user+org combination
-  const moderations = await get_duplicate_moderations({
+  const moderations = await get_duplicate_moderations(pg, {
     organization_id: org1_id,
     user_id: user1_id,
   });

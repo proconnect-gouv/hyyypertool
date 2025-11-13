@@ -1,17 +1,17 @@
 //
 
-import { zValidator } from "@hono/zod-validator";
 import type { App_Context } from "#src/middleware/context";
-import { Entity_Schema } from "@~/core/schema";
-import { GetDuplicateModerations } from "#src/queries/moderations";
 import { GetUserById } from "#src/queries/users";
+import { zValidator } from "@hono/zod-validator";
+import { Entity_Schema } from "@~/core/schema";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { z } from "zod";
 import { DuplicateWarning } from "./DuplicateWarning";
-import { get_duplicate_users } from "./get-duplicate-users.query";
-import { get_moderation } from "./get-moderation.query";
-import { get_moderation_tickets } from "./get-moderation-tickets.query";
+import { find_duplicate_users } from "./find_duplicate_users.query";
+import { get_duplicate_moderations } from "./get_duplicate_moderations.query";
+import { get_moderation } from "./get_moderation.query";
+import { get_moderation_tickets } from "./get_moderation_tickets.query";
 
 //
 
@@ -34,8 +34,6 @@ export default new Hono<App_Context>().get(
     const { id: moderation_id } = req.valid("param");
     const { organization_id, user_id } = req.valid("query");
 
-    // Load ALL data upfront - clear, explicit, testable
-    const get_duplicate_moderations = GetDuplicateModerations(identite_pg);
     const get_user_by_id = GetUserById(identite_pg, {
       columns: {
         id: true,
@@ -45,13 +43,13 @@ export default new Hono<App_Context>().get(
       },
     });
 
-    const moderations = await get_duplicate_moderations({
+    const moderations = await get_duplicate_moderations(identite_pg, {
       organization_id,
       user_id,
     });
     const user = await get_user_by_id(user_id);
-    const duplicate_users = await get_duplicate_users(identite_pg, moderation_id);
     const moderation = await get_moderation(identite_pg, moderation_id);
+    const duplicate_users = await find_duplicate_users(identite_pg, moderation);
     const moderation_tickets = await get_moderation_tickets(moderations);
 
     return render(

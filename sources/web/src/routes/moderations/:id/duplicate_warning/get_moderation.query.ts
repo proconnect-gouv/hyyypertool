@@ -14,7 +14,10 @@ export async function get_moderation(
   moderation_id: number,
 ) {
   const moderation = await pg.query.moderations.findFirst({
-    columns: { moderated_at: true },
+    columns: { organization_id: true, moderated_at: true },
+    with: {
+      user: { columns: { id: true, family_name: true } },
+    },
     where: eq(schema.moderations.id, moderation_id),
   });
 

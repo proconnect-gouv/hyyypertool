@@ -1,6 +1,5 @@
 //
 
-import { NotFoundError } from "#src/errors";
 import {
   schema,
   type IdentiteProconnect_PgDatabase,
@@ -9,20 +8,13 @@ import { and, asc, eq, ilike, not, or } from "drizzle-orm";
 
 //
 
-export async function get_duplicate_users(
+export async function find_duplicate_users(
   pg: IdentiteProconnect_PgDatabase,
-  moderation_id: number,
+  moderation: {
+    organization_id: number;
+    user: { id: number; family_name: string | null };
+  },
 ) {
-  const moderation = await pg.query.moderations.findFirst({
-    columns: { organization_id: true },
-    with: {
-      user: { columns: { id: true, given_name: true, family_name: true } },
-    },
-    where: eq(schema.moderations.id, moderation_id),
-  });
-
-  if (!moderation) throw new NotFoundError("Moderation not found.");
-
   const {
     organization_id,
     user: { family_name, id: user_id },

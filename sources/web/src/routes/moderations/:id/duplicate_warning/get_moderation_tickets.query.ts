@@ -1,13 +1,16 @@
 //
 
-import type { GetDuplicateModerationsDto } from "#src/queries/moderations";
 import { get_zammad_mail } from "#src/lib/zammad";
 import { to } from "await-to-js";
 
 //
 
 export async function get_moderation_tickets(
-  moderations: GetDuplicateModerationsDto,
+  moderations: {
+    id: number;
+    ticket_id: string | null;
+    moderated_at: string | null;
+  }[],
 ) {
   return Promise.all(
     moderations.map(async (moderation) => {
