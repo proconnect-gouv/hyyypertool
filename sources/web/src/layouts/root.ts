@@ -221,6 +221,11 @@ export function Root_Layout({ children }: PropsWithChildren) {
         nonce="${nonce}"
         src="${config.ASSETS_PATH}/node_modules/hyperscript.org/dist/template.js"
       ></script>
+      <script
+        defer
+        nonce="${nonce}"
+        src="${config.ASSETS_PATH}/node_modules/alpinejs/dist/cdn.min.js"
+      ></script>
     </html>
   `;
 }

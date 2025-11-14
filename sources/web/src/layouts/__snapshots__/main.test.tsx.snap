@@ -168,6 +168,11 @@ exports[`Main Layout 1`] = `
         nonce="nonce"
         src="/node_modules/hyperscript.org/dist/template.js"
       ></script>
+      <script
+        defer
+        nonce="nonce"
+        src="/node_modules/alpinejs/dist/cdn.min.js"
+      ></script>
     </html>
   "
 `;

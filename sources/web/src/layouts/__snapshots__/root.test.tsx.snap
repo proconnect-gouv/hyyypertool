@@ -170,6 +170,11 @@ exports[`development 1`] = `
         nonce="nonce"
         src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/template.js"
       ></script>
+      <script
+        defer
+        nonce="nonce"
+        src="/assets/ASSETS_PATH/node_modules/alpinejs/dist/cdn.min.js"
+      ></script>
     </html>
   "
 `;
@@ -338,6 +343,11 @@ exports[`production 1`] = `
       <script
         nonce="nonce"
         src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/template.js"
+      ></script>
+      <script
+        defer
+        nonce="nonce"
+        src="/assets/ASSETS_PATH/node_modules/alpinejs/dist/cdn.min.js"
       ></script>
     </html>
   "
