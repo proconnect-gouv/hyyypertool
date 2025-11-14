@@ -1,16 +1,16 @@
 //
 
 import { hx_include } from "#src/htmx";
-import { date_to_dom_string, date_to_string } from "#src/time";
-import { Foot } from "#src/ui/hx_table";
-import { row } from "#src/ui/table";
-import { hx_urls, urls } from "#src/urls";
-import type { Pagination } from "@~/core/schema";
 import {
   moderation_type_to_emoji,
   moderation_type_to_title,
 } from "#src/lib/moderations";
 import { GetModerationsList } from "#src/queries/moderations";
+import { date_to_dom_string, date_to_string } from "#src/time";
+import { Foot } from "#src/ui/hx_table";
+import { row } from "#src/ui/table";
+import { hx_urls, urls } from "#src/urls";
+import type { Pagination } from "@~/core/schema";
 import { useContext } from "hono/jsx";
 import Moderations_Context, {
   MODERATION_TABLE_ID,
@@ -270,7 +270,7 @@ function Row({
     <tr
       aria-label={`Modération ${moderation_type_to_title(moderation.type).toLowerCase()} de ${user.given_name} ${user.family_name} pour ${organization.siret}`}
       key={key}
-      _={`on click set the window's location to '${
+      onclick={`window.location = '${
         urls.moderations[":id"].$url({
           param: { id: moderation.id.toString() },
         }).pathname
