@@ -12,7 +12,7 @@ import {
   PageQuery_Schema,
   type ContextType,
 } from "./context";
-import domains_router from "./domaines";
+import domains_router from "./domains";
 import leaders_router from "./leaders";
 import Page from "./page";
 

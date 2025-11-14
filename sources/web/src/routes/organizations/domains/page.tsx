@@ -1,21 +1,41 @@
 import { hyper_ref } from "#src/html";
-import {
-  GetUnverifiedDomains,
-  type GetUnverifiedDomainsDto,
-} from "#src/queries/organizations";
 import { copy_text_content_to_clipboard } from "#src/ui/button/scripts";
 import { Foot } from "#src/ui/hx_table";
 import { row } from "#src/ui/table";
 import { urls } from "#src/urls";
-import { Pagination_Schema } from "@~/core/schema";
-import { match } from "ts-pattern";
-import { query_schema, usePageRequestContext } from "./context";
+import type { Pagination } from "@~/core/schema";
+import { createContext, useContext } from "hono/jsx";
+import type { get_unverified_domains } from "./get_unverified_domains.query";
+import { query_schema } from "./index";
 
 //
-export async function Page() {
-  const {
-    var: { $describedby, hx_domains_query_props },
-  } = usePageRequestContext();
+
+type UnverifiedDomainsDto = Awaited<ReturnType<typeof get_unverified_domains>>;
+
+interface PageContext {
+  $describedby: string;
+  $search: string;
+  $table: string;
+  hx_domains_query_props: Record<string, any>;
+  query: { q?: string | string[] };
+  pagination: Pagination;
+  count: number;
+  domains: UnverifiedDomainsDto["domains"];
+}
+
+const PageContext = createContext<PageContext | undefined>(undefined);
+
+export async function Page(props: PageContext) {
+  return (
+    <PageContext.Provider value={props}>
+      <Main />
+    </PageContext.Provider>
+  );
+}
+
+function Main() {
+  const context = useContext(PageContext)!;
+  const { $describedby, hx_domains_query_props } = context;
 
   return (
     <main
@@ -35,11 +55,9 @@ export async function Page() {
 }
 
 function Filter() {
-  const {
-    req,
-    var: { $search, hx_domains_query_props },
-  } = usePageRequestContext();
-  const { q } = req.valid("query");
+  const context = useContext(PageContext)!;
+  const { $search, hx_domains_query_props, query } = context;
+  const { q } = query;
   return (
     <form
       {...hx_domains_query_props}
@@ -65,21 +83,16 @@ function Filter() {
   );
 }
 
-async function Table() {
+function Table() {
+  const context = useContext(PageContext)!;
   const {
-    req,
-    var: { $describedby, $table, hx_domains_query_props, identite_pg },
-  } = usePageRequestContext();
-  const { q } = req.valid("query");
-  const pagination = match(Pagination_Schema.safeParse(req.query()))
-    .with({ success: true }, ({ data }) => data)
-    .otherwise(() => Pagination_Schema.parse({}));
-
-  const get_unverified_domains = GetUnverifiedDomains(identite_pg);
-  const { count, domains } = await get_unverified_domains({
-    pagination: { ...pagination, page: pagination.page - 1 },
-    search: q ? String(q) : undefined,
-  });
+    $describedby,
+    $table,
+    hx_domains_query_props,
+    pagination,
+    count,
+    domains,
+  } = context;
 
   return (
     <div class="fr-table *:table!" id={$table}>
@@ -110,17 +123,18 @@ async function Table() {
     </div>
   );
 }
+
 function Row({
   key,
-  domains: { organization, domain },
+  domains: { organization, domain: domainName },
 }: {
   key?: string;
-  domains: GetUnverifiedDomainsDto["domains"][number];
+  domains: UnverifiedDomainsDto["domains"][number];
 }) {
   const $domain = hyper_ref();
   return (
     <tr
-      aria-label={`Domaine non vérifié ${domain} pour ${organization.cached_libelle}`}
+      aria-label={`Domaine non vérifié ${domainName} pour ${organization.cached_libelle}`}
       onclick={`window.location = '${
         urls.organizations[":id"].$url({
           param: { id: organization.id.toString() },
@@ -131,7 +145,7 @@ function Row({
     >
       <td></td>
       <td>
-        <span id={$domain}> {domain} </span>
+        <span id={$domain}> {domainName} </span>
         <button
           aria-hidden="true"
           class="fr-p-O leading-none"
