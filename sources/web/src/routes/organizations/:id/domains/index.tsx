@@ -1,22 +1,24 @@
 //
 
 import type { Htmx_Header } from "#src/htmx";
-import { set_variables } from "#src/middleware/context";
-import { zValidator } from "@hono/zod-validator";
-import { DescribedBy_Schema, Entity_Schema, Id_Schema } from "@~/core/schema";
-import { schema } from "@~/identite-proconnect/database";
-import { EmailDomain_Type_Schema } from "@~/identite-proconnect/database";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import {
   AddAuthorizedDomain,
   RemoveDomainEmailById,
 } from "#src/lib/organizations/usecase";
+import type { App_Context } from "#src/middleware/context";
+import { zValidator } from "@hono/zod-validator";
+import { DescribedBy_Schema, Entity_Schema, Id_Schema } from "@~/core/schema";
+import {
+  EmailDomain_Type_Schema,
+  schema,
+} from "@~/identite-proconnect/database";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { z } from "zod";
-import { loadDomainsPageVariables, type ContextType } from "./context";
-import { Add_Domain, Table } from "./Table";
+import { get_organization_domains } from "./get_organization_domains.query";
+import { AddDomain, Table } from "./Table";
 
 //
 
@@ -24,28 +26,26 @@ const DomainParams_Schema = z.object({ domain_id: Id_Schema });
 
 //
 
-export default new Hono<ContextType>()
+export default new Hono<App_Context>()
   .get(
     "/",
     jsxRenderer(),
     zValidator("param", Entity_Schema),
     zValidator("query", DescribedBy_Schema),
-    async function set_variables_middleware(
-      { req, set, var: { identite_pg } },
-      next,
-    ) {
+    async function GET({ render, req, var: { identite_pg } }) {
       const { id: organization_id } = req.valid("param");
-      const variables = await loadDomainsPageVariables(identite_pg, {
-        organization_id,
-      });
-      set_variables(set, variables);
-      return next();
-    },
-    async function GET({ render }) {
+      const { describedby } = req.valid("query");
+
+      // Load data directly in handler
+      const domains = await get_organization_domains(
+        { pg: identite_pg },
+        { organization_id },
+      );
+
       return render(
         <>
-          <Table />
-          <Add_Domain />
+          <Table domains={domains} describedby={describedby} />
+          <AddDomain organization_id={organization_id} />
         </>,
       );
     },
@@ -107,9 +107,7 @@ export default new Hono<ContextType>()
             verification_type,
           ) as any,
           verified_at:
-            verification_type === "verified"
-              ? new Date().toISOString()
-              : undefined,
+            verification_type === "verified" ? new Date().toISOString() : null,
           updated_at: new Date().toISOString(),
         })
         .where(eq(schema.email_domains.id, domain_id));

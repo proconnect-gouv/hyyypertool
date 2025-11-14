@@ -10,18 +10,22 @@ import { hx_urls } from "#src/urls";
 import type { EmailDomain_Type } from "@~/identite-proconnect/database";
 import type { MCP_EmailDomain_Type } from "@~/identite-proconnect/identite-proconnect.d";
 import { match } from "ts-pattern";
-import { AddDomainParams_Schema, usePageRequestContext } from "./context";
-import type { get_organization_domains_dto } from "./get_organization_domains";
+import { add_params } from "./context";
+import type { get_organization_domains } from "./get_organization_domains.query";
 
 //
 
-export function Table() {
-  const {
-    req,
-    var: { domains },
-  } = usePageRequestContext();
-  const { describedby } = req.valid("query");
+type Domains = Awaited<ReturnType<typeof get_organization_domains>>;
 
+//
+
+export function Table({
+  domains,
+  describedby,
+}: {
+  domains: Domains;
+  describedby: string;
+}) {
   return (
     <div class="fr-table *:table!">
       <table aria-describedby={describedby}>
@@ -45,14 +49,16 @@ export function Table() {
   );
 }
 
-export async function Add_Domain() {
-  const { req } = usePageRequestContext();
-  const { id: organization_id } = req.valid("param");
+export async function AddDomain({
+  organization_id,
+}: {
+  organization_id: number;
+}) {
   const $describedby = hyper_ref("add_domain");
 
   const hx_add_domain_props = await hx_urls.organizations[":id"].domains.$put({
     param: {
-      id: organization_id,
+      id: organization_id.toString(),
     },
   });
 
@@ -68,7 +74,7 @@ export async function Add_Domain() {
             id={$describedby}
             class="fr-input"
             type="text"
-            name={AddDomainParams_Schema.keyof().enum.domain}
+            name={add_params.keyof().enum.domain}
           />
           <button class="fr-btn" type="submit">
             Ajouter
@@ -128,7 +134,7 @@ function Row({
   organization_domain,
 }: {
   key?: string;
-  organization_domain: get_organization_domains_dto[number];
+  organization_domain: Domains[number];
 }) {
   const {
     created_at,
@@ -179,7 +185,7 @@ function Row({
 async function Row_Actions({
   organization_domain,
 }: {
-  organization_domain: get_organization_domains_dto[number];
+  organization_domain: Domains[number];
 }) {
   const { domain, id, organization, organization_id } = organization_domain;
 

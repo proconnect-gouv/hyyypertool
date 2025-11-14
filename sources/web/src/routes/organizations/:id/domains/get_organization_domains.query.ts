@@ -28,6 +28,3 @@ export function get_organization_domains(
     where: (table, { eq }) => eq(table.organization_id, organization_id),
   });
 }
-export type get_organization_domains_dto = Awaited<
-  ReturnType<typeof get_organization_domains>
->;
