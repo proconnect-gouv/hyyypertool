@@ -1,6 +1,8 @@
 //
 
 import { hx_trigger_from_body } from "#src/htmx";
+import { IsUserExternalMember, MODERATION_EVENTS } from "#src/lib/moderations";
+import { CountUserMemberships, SuggestSameUserEmails } from "#src/lib/users";
 import { button } from "#src/ui/button";
 import { Actions } from "#src/ui/moderations/Actions";
 import { AutoGoBack } from "#src/ui/moderations/AutoGoBack";
@@ -15,12 +17,6 @@ import {
 import { About as About_User } from "#src/ui/users/About";
 import { Investigation as Investigation_User } from "#src/ui/users/Investigation";
 import { hx_urls } from "#src/urls";
-import { MODERATION_EVENTS } from "#src/lib/moderations";
-import { IsUserExternalMember } from "#src/lib/moderations";
-import {
-  CountUserMemberships,
-  SuggestSameUserEmails,
-} from "#src/lib/users";
 import { usePageRequestContext } from "./context";
 import { ModerationExchanges } from "./ModerationExchanges";
 import { SuggestOrganizationDomains } from "./SuggestOrganizationDomains";
