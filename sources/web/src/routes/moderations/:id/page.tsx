@@ -1,6 +1,8 @@
 //
 
 import { hx_trigger_from_body } from "#src/htmx";
+import { IsUserExternalMember, MODERATION_EVENTS } from "#src/lib/moderations";
+import { CountUserMemberships, SuggestSameUserEmails } from "#src/lib/users";
 import { button } from "#src/ui/button";
 import { Actions } from "#src/ui/moderations/Actions";
 import { AutoGoBack } from "#src/ui/moderations/AutoGoBack";
@@ -15,28 +17,18 @@ import {
 import { About as About_User } from "#src/ui/users/About";
 import { Investigation as Investigation_User } from "#src/ui/users/Investigation";
 import { hx_urls } from "#src/urls";
-import { MODERATION_EVENTS } from "#src/lib/moderations";
-import { IsUserExternalMember } from "#src/lib/moderations";
-import {
-  CountUserMemberships,
-  SuggestSameUserEmails,
-} from "#src/lib/users";
 import { usePageRequestContext } from "./context";
+import { useModerationPageContext } from "./ModerationContext";
 import { ModerationExchanges } from "./ModerationExchanges";
 import { SuggestOrganizationDomains } from "./SuggestOrganizationDomains";
 
 //
 
 export default async function Moderation_Page() {
-  const { banaticUrl, moderation } = usePageRequestContext().var;
+  const { moderation } = usePageRequestContext().var;
   const moderation_id = `moderation-${moderation.id.toString()}`;
   const {
-    var: {
-      identite_pg,
-      organization_fiche,
-      query_domain_count,
-      query_organization_members_count,
-    },
+    var: { identite_pg },
   } = usePageRequestContext();
 
   return (
@@ -74,58 +66,75 @@ export default async function Moderation_Page() {
 
         <hr class="bg-none pb-5" />
 
-        <About_User user={moderation.user} organization={organization_fiche} />
-        <Investigation_User
-          user={moderation.user}
-          organization={moderation.organization}
-        />
-        <About_Organization organization={organization_fiche} />
-        <Investigation_Organization
-          banaticUrl={banaticUrl}
-          organization={moderation.organization}
-        />
-
-        <hr class="bg-none" />
-
-        <DomainsByOrganization
-          organization={moderation.organization}
-          query_domain_count={query_domain_count}
-        />
-        <OrganizationsByUser
-          user={moderation.user}
-          query_organization_count={CountUserMemberships({ pg: identite_pg })}
-        />
-
-        <UsersByOrganization
-          organization={moderation.organization}
-          query_members_count={query_organization_members_count}
-        />
-
-        <hr class="bg-none" />
-
-        <Actions
-          value={{
-            moderation,
-            query_suggest_same_user_emails: SuggestSameUserEmails({
-              pg: identite_pg,
-            }),
-            query_is_user_external_member: IsUserExternalMember({
-              pg: identite_pg,
-            }),
-            query_suggest_organization_domains: SuggestOrganizationDomains({
-              pg: identite_pg,
-            }),
-          }}
-        />
-
-        <hr class="bg-none" />
-
-        <hr />
-
-        <hr class="bg-none" />
-
-        <ModerationExchanges />
+        <ModerationContent identite_pg={identite_pg} />
       </section>
     </main>
+  );
+}
+
+//
+
+async function ModerationContent({ identite_pg }: { identite_pg: any }) {
+  const {
+    moderation,
+    organization,
+    user,
+    organization_fiche,
+    query_domain_count,
+    query_organization_members_count,
+    banaticUrl,
+  } = useModerationPageContext();
+
+  return (
+    <>
+      <About_User user={user} organization={organization_fiche} />
+      <Investigation_User user={user} organization={organization} />
+      <About_Organization organization={organization_fiche} />
+      <Investigation_Organization
+        banaticUrl={banaticUrl}
+        organization={organization}
+      />
+
+      <hr class="bg-none" />
+
+      <DomainsByOrganization
+        organization={organization}
+        query_domain_count={query_domain_count}
+      />
+      <OrganizationsByUser
+        user={user}
+        query_organization_count={CountUserMemberships({ pg: identite_pg })}
+      />
+
+      <UsersByOrganization
+        organization={organization}
+        query_members_count={query_organization_members_count}
+      />
+
+      <hr class="bg-none" />
+
+      <Actions
+        value={{
+          moderation,
+          query_suggest_same_user_emails: SuggestSameUserEmails({
+            pg: identite_pg,
+          }),
+          query_is_user_external_member: IsUserExternalMember({
+            pg: identite_pg,
+          }),
+          query_suggest_organization_domains: SuggestOrganizationDomains({
+            pg: identite_pg,
+          }),
+        }}
+      />
+
+      <hr class="bg-none" />
+
+      <hr />
+
+      <hr class="bg-none" />
+
+      <ModerationExchanges />
+    </>
   );
 }

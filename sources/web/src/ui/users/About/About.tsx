@@ -1,22 +1,36 @@
 //
 
+import type { GetUserInfoOutput } from "#src/lib/users";
 import { button } from "#src/ui/button";
 import { CopyButton } from "#src/ui/button/components";
 import { description_list } from "#src/ui/list";
 import { urls } from "#src/urls";
 import { z_email_domain } from "@~/core/schema";
-import type { GetUserInfoOutput } from "#src/lib/users";
 
 //
 
 type AboutProps = {
-  user: GetUserInfoOutput;
-  organization: { siret: string };
+  user?: GetUserInfoOutput;
+  organization?: { siret: string };
 };
 
 //
 
-export function About({ user, organization }: AboutProps) {
+export function About({
+  user: userProp,
+  organization: organizationProp,
+}: AboutProps = {}) {
+  // Context pattern would be used in moderation pages
+  // For now, require props to maintain backward compatibility
+  if (!userProp || !organizationProp) {
+    throw new Error(
+      "About component requires user and organization props when not used with ModerationContext",
+    );
+  }
+
+  const user = userProp;
+  const organization = organizationProp;
+
   const domain = z_email_domain.parse(user.email);
 
   return (
