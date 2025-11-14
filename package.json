@@ -52,6 +52,7 @@
     "@gouvfr/dsfr": "1.14.0",
     "@tsconfig/bun": "1.0.7",
     "@~/bin": "workspace:*",
+    "alpinejs": "3.15.1",
     "animate.css": "4.1.1",
     "dotenv": "17.2.2",
     "htmx-ext-include-vals": "2.0.2",
@@ -66,6 +67,7 @@
   "devDependencies": {
     "@csmith/release-it-calver-plugin": "2023.12.0",
     "@release-it/conventional-changelog": "10.0.1",
+    "@types/alpinejs": "3.13.11",
     "@types/bun": "1.2.21",
     "@~/config.bun-plugin-test-projects": "workspace:*",
     "hono": "4.10.4",
