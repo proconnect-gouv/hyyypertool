@@ -16,7 +16,7 @@ import {
 import type { EmailDomain } from "@~/identite-proconnect/database";
 import type { MCP_Moderation } from "@~/identite-proconnect/types";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
-import { GetUnverifiedDomains } from "./GetUnverifiedDomains";
+import { get_unverified_domains } from "./get_unverified_domains.query";
 
 //
 
@@ -52,8 +52,7 @@ test("returns bi.corn then troll.corn organizations", async () => {
     organization_id: unicorn_organization_id,
   });
 
-  const get_unverified_domains = GetUnverifiedDomains(pg);
-  const result = await get_unverified_domains({});
+  const result = await get_unverified_domains(pg, {});
 
   expect(result).toEqual({
     count: 2,
@@ -96,8 +95,7 @@ test("search for bi.corn organization", async () => {
     organization_id: unicorn_organization_id,
   });
 
-  const get_unverified_domains = GetUnverifiedDomains(pg);
-  const result = await get_unverified_domains({
+  const result = await get_unverified_domains(pg, {
     search: "bi.corn",
   });
 
@@ -132,8 +130,7 @@ test("search for 🦄 libelle organization", async () => {
     organization_id: unicorn_organization_id,
   });
 
-  const get_unverified_domains = GetUnverifiedDomains(pg);
-  const result = await get_unverified_domains({
+  const result = await get_unverified_domains(pg, {
     search: "🦄 libelle",
   });
 
@@ -168,8 +165,7 @@ test("search for 🦄 siret organization", async () => {
     organization_id: unicorn_organization_id,
   });
 
-  const get_unverified_domains = GetUnverifiedDomains(pg);
-  const result = await get_unverified_domains({
+  const result = await get_unverified_domains(pg, {
     search: "🦄 siret",
   });
 
@@ -219,8 +215,7 @@ test.each(
       });
     }
 
-    const get_unverified_domains = GetUnverifiedDomains(pg);
-    const result = await get_unverified_domains({});
+    const result = await get_unverified_domains(pg, {});
     expect(result).toEqual({ count: 0, domains: [] });
   },
 );
@@ -234,15 +229,13 @@ test("returns no organizations verified by Trackdechets", async () => {
     verification_type:
       "trackdechets_postal_mail" as EmailDomain["verification_type"],
   });
-  const get_unverified_domains = GetUnverifiedDomains(pg);
-  const result = await get_unverified_domains({});
+  const result = await get_unverified_domains(pg, {});
   expect(result).toEqual({ count: 0, domains: [] });
 });
 
 test("returns no unactive organizations", async () => {
   await create_zombie_organization(pg);
-  const get_unverified_domains = GetUnverifiedDomains(pg);
-  const result = await get_unverified_domains({});
+  const result = await get_unverified_domains(pg, {});
   expect(result).toEqual({ count: 0, domains: [] });
 });
 
@@ -253,7 +246,6 @@ test("returns no free domain organizations", async () => {
     organization_id: unicorn_organization_id,
   });
 
-  const get_unverified_domains = GetUnverifiedDomains(pg);
-  const result = await get_unverified_domains({});
+  const result = await get_unverified_domains(pg, {});
   expect(result).toEqual({ count: 0, domains: [] });
 });

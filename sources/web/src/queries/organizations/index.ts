@@ -11,4 +11,3 @@ export * from "./GetOrganizationMember";
 export * from "./GetOrganizationMembersCount";
 export * from "./GetOrganizationsByUserId";
 export * from "./GetOrganizationsList";
-export * from "./GetUnverifiedDomains";
