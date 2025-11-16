@@ -2,15 +2,14 @@
 
 import { hyper_ref } from "#src/html";
 import { hx_include } from "#src/htmx";
-import { type GetOrganizationsListDto } from "#src/queries/organizations";
 import { date_to_dom_string } from "#src/time";
 import { Foot } from "#src/ui/hx_table";
 import { row } from "#src/ui/table";
 import { Time } from "#src/ui/time";
 import { hx_urls, urls } from "#src/urls";
-import { Pagination_Schema } from "@~/core/schema";
-import { match } from "ts-pattern";
-import { PageQuery_Schema, usePageRequestContext } from "./context";
+import type { Pagination } from "@~/core/schema";
+import { query_schema } from "./context";
+import type { get_organizations_list } from "./get_organizations_list.query";
 
 //
 
@@ -19,30 +18,36 @@ const $search = hyper_ref();
 
 const hx_organizations_query_props = {
   ...(await hx_urls.organizations.$get({ query: {} })),
-  "hx-include": hx_include([
-    $table,
-    $search,
-    PageQuery_Schema.keyof().enum.page,
-  ]),
+  "hx-include": hx_include([$table, $search, query_schema.keyof().enum.page]),
   "hx-replace-url": true,
   "hx-select": `#${$table} > table`,
   "hx-target": `#${$table}`,
 };
+
 //
 
-export default async function Page() {
+type QueryResult = Awaited<ReturnType<typeof get_organizations_list>>;
+type Organization = QueryResult["organizations"][number];
+
+export default async function Page({
+  q,
+  pagination,
+  query_result,
+}: {
+  q?: string | string[];
+  pagination: Pagination;
+  query_result: QueryResult;
+}) {
   return (
     <main class="fr-container my-12">
       <h1>Liste des organisations</h1>
-      <Filter />
-      <Table />
+      <Filter q={q} />
+      <Table pagination={pagination} query_result={query_result} />
     </main>
   );
 }
 
-function Filter() {
-  const { req } = usePageRequestContext();
-  const { q } = req.valid("query");
+function Filter({ q }: { q?: string | string[] }) {
   return (
     <form
       {...hx_organizations_query_props}
@@ -55,7 +60,7 @@ function Filter() {
         <input
           class="fr-input"
           id={$search}
-          name={PageQuery_Schema.keyof().enum.q}
+          name={query_schema.keyof().enum.q}
           placeholder="Rechercher par nom ou SIRET"
           value={q}
           type="search"
@@ -68,20 +73,14 @@ function Filter() {
   );
 }
 
-async function Table() {
-  const {
-    req,
-    var: { query_organizations },
-  } = usePageRequestContext();
-  const { q } = req.valid("query");
-  const pagination = match(Pagination_Schema.safeParse(req.query()))
-    .with({ success: true }, ({ data }) => data)
-    .otherwise(() => Pagination_Schema.parse({}));
-
-  const { count, organizations } = await query_organizations({
-    pagination: { ...pagination, page: pagination.page - 1 },
-    search: q ? String(q) : undefined,
-  });
+async function Table({
+  pagination,
+  query_result,
+}: {
+  pagination: Pagination;
+  query_result: QueryResult;
+}) {
+  const { count, organizations } = query_result;
 
   return (
     <div class="fr-table *:table!" id={$table}>
@@ -106,7 +105,7 @@ async function Table() {
           count={count}
           hx_query_props={hx_organizations_query_props}
           id={$table}
-          name={PageQuery_Schema.keyof().enum.page}
+          name={query_schema.keyof().enum.page}
           pagination={pagination}
         />
       </table>
@@ -119,7 +118,7 @@ function Row({
   organization,
 }: {
   key?: string;
-  organization: GetOrganizationsListDto["organizations"][number];
+  organization: Organization;
 }) {
   return (
     <tr
