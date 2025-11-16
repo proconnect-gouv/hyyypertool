@@ -9,14 +9,21 @@ import { FrNumberConverter } from "#src/ui/number";
 import { LocalTime } from "#src/ui/time";
 import { hx_urls } from "#src/urls";
 import { z_email_domain } from "@~/core/schema";
-import { usePageRequestContext } from "./context";
+import type { get_authenticators_by_user_id } from "./get_authenticators_by_user_id.query";
+import type { get_user_by_id } from "./get_user_by_id.query";
 
 //
 
-export async function UserPage() {
-  const {
-    var: { user },
-  } = usePageRequestContext();
+type User = Awaited<ReturnType<typeof get_user_by_id>>;
+type Authenticators = Awaited<ReturnType<typeof get_authenticators_by_user_id>>;
+
+export async function UserPage({
+  user,
+  authenticators,
+}: {
+  user: User;
+  authenticators: Authenticators;
+}) {
   const $organizations_describedby = hyper_ref("user_organizations");
   const $moderations_describedby = hyper_ref("user_moderations");
 
@@ -43,10 +50,10 @@ export async function UserPage() {
               <h1 class="text-(--text-action-high-blue-france)">
                 « {user.given_name} {user.family_name} »
               </h1>
-              <Fiche />
+              <Fiche user={user} />
             </div>
             <div class="fr-card p-6!">
-              <AccountInfo />
+              <AccountInfo user={user} />
             </div>
           </div>
         </div>
@@ -80,24 +87,26 @@ export async function UserPage() {
       </div>
       <div class="bg-(--background-alt-red-marianne) py-6">
         <div class="fr-container py-6">
-          <Actions />
+          <Actions user={user} />
         </div>
       </div>
       <hr />
       <div aria-describedby="mfa" class="fr-container py-6">
         <h1 id="mfa">🔓 MFA</h1>
-        <MFA />
+        <MFA user={user} authenticators={authenticators} />
       </div>
       <hr />
     </main>
   );
 }
 
-async function MFA() {
-  const {
-    var: { user, authenticators },
-  } = usePageRequestContext();
-
+async function MFA({
+  user,
+  authenticators,
+}: {
+  user: User;
+  authenticators: Authenticators;
+}) {
   const hasTOTP = user.totp_key_verified_at !== null;
   const hasPasskeys = authenticators && authenticators.length > 0;
   const hasMFA = hasTOTP || hasPasskeys;
@@ -147,11 +156,7 @@ async function MFA() {
   );
 }
 
-async function Actions() {
-  const {
-    var: { user },
-  } = usePageRequestContext();
-
+async function Actions({ user }: { user: User }) {
   const { id } = user;
 
   return (
@@ -201,10 +206,7 @@ async function Actions() {
   );
 }
 
-function Fiche() {
-  const {
-    var: { user },
-  } = usePageRequestContext();
+function Fiche({ user }: { user: User }) {
   const { base, dd, dt } = badge_description_list();
 
   const $domain = hyper_ref();
@@ -283,11 +285,7 @@ function Fiche() {
   );
 }
 
-function AccountInfo() {
-  const {
-    var: { user },
-  } = usePageRequestContext();
-
+function AccountInfo({ user }: { user: User }) {
   const { base, dd, dt } = badge_description_list();
 
   return (

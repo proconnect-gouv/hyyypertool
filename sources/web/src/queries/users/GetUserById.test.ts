@@ -1,12 +1,7 @@
 //
 
-import { NotFoundError } from "@~/core/error";
 import { create_adora_pony_user } from "@~/identite-proconnect/database/seed/unicorn";
-import {
-  empty_database,
-  migrate,
-  pg,
-} from "@~/identite-proconnect/testing";
+import { empty_database, migrate, pg } from "@~/identite-proconnect/testing";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
 import { GetUserById } from "./GetUserById";
 
@@ -43,5 +38,5 @@ test("throws NotFoundError when user not found", async () => {
     columns: { id: true },
   });
 
-  await expect(get_user_by_id(42)).rejects.toThrow(NotFoundError);
+  await expect(get_user_by_id(42)).rejects.toThrow("User not found.");
 });
