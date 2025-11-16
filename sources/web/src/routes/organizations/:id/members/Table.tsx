@@ -6,23 +6,34 @@ import { menu_item } from "#src/ui/menu";
 import { Horizontal_Menu } from "#src/ui/menu/components";
 import { row } from "#src/ui/table";
 import { hx_urls, urls } from "#src/urls";
+import type { Pagination } from "@~/core/schema";
 import {
   Verification_Type_Schema,
   type Verification_Type,
 } from "@~/identite-proconnect/verification_type";
 import { useContext } from "hono/jsx";
 import type { VariantProps } from "tailwind-variants";
-import { Member_Context, usePageRequestContext } from "./context";
+import { MemberContext } from "./context";
+import type { get_users_by_organization } from "./get_users_by_organization.query";
 
 //
 
-export async function Table() {
-  const {
-    req,
-    var: { pagination, query_members_collection, organization_id },
-  } = usePageRequestContext();
-  const { describedby, page_ref } = req.valid("query");
-  const { users, count } = await query_members_collection;
+type QueryResult = Awaited<ReturnType<typeof get_users_by_organization>>;
+
+export async function Table({
+  organization_id,
+  pagination,
+  query_members_collection,
+  describedby,
+  page_ref,
+}: {
+  organization_id: number;
+  pagination: Pagination;
+  query_members_collection: QueryResult;
+  describedby: string;
+  page_ref: string;
+}) {
+  const { users, count } = query_members_collection;
 
   const hx_member_query_props = {
     ...(await hx_urls.organizations[":id"].members.$get({
@@ -51,9 +62,9 @@ export async function Table() {
 
         <tbody>
           {users.map((user) => (
-            <Member_Context.Provider value={{ user }}>
+            <MemberContext.Provider value={{ user, organization_id }}>
               <Row />
-            </Member_Context.Provider>
+            </MemberContext.Provider>
           ))}
         </tbody>
 
@@ -69,7 +80,7 @@ export async function Table() {
 }
 
 function Row({ variants }: { variants?: VariantProps<typeof row> }) {
-  const { user } = useContext(Member_Context);
+  const { user } = useContext(MemberContext);
   const verification_type = user.verification_type as Verification_Type;
 
   return (
@@ -98,10 +109,7 @@ function Row({ variants }: { variants?: VariantProps<typeof row> }) {
 }
 
 async function Row_Actions() {
-  const {
-    var: { organization_id },
-  } = usePageRequestContext();
-  const { user } = useContext(Member_Context);
+  const { user, organization_id } = useContext(MemberContext);
   const { id: user_id, is_external, verification_type } = user;
 
   return (

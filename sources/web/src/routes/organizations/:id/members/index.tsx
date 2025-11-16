@@ -1,23 +1,23 @@
 //
 
-import { set_variables } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
 import {
   DescribedBy_Schema,
   Entity_Schema,
   Pagination_Schema,
 } from "@~/core/schema";
+import type { App_Context } from "#src/middleware/context";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { match } from "ts-pattern";
 import { z } from "zod";
 import organization_member_router from "./:user_id";
 import { Table } from "./Table";
-import { loadMembersPageVariables, type ContextType } from "./context";
+import { get_users_by_organization } from "./get_users_by_organization.query";
 
 //
 
-export default new Hono<ContextType>()
+export default new Hono<App_Context>()
   //
   .route("/:user_id", organization_member_router)
   //
@@ -32,22 +32,29 @@ export default new Hono<ContextType>()
         page_ref: z.string(),
       }),
     ),
-    async function set_variables_middleware(
-      { req, set, var: { identite_pg } },
-      next,
-    ) {
+    async function GET({ render, req, var: { identite_pg } }) {
       const { id: organization_id } = req.valid("param");
+      const { describedby, page_ref } = req.valid("query");
       const pagination = match(Pagination_Schema.safeParse(req.query()))
         .with({ success: true }, ({ data }) => data)
         .otherwise(() => Pagination_Schema.parse({}));
-      const variables = await loadMembersPageVariables(identite_pg, {
-        organization_id,
-        pagination,
-      });
-      set_variables(set, variables);
-      return next();
-    },
-    async function GET({ render }) {
-      return render(<Table />);
+
+      const query_members_collection = await get_users_by_organization(
+        identite_pg,
+        {
+          organization_id,
+          pagination: { ...pagination, page: pagination.page - 1 },
+        },
+      );
+
+      return render(
+        <Table
+          organization_id={organization_id}
+          pagination={pagination}
+          query_members_collection={query_members_collection}
+          describedby={describedby}
+          page_ref={page_ref}
+        />,
+      );
     },
   );
