@@ -6,10 +6,9 @@ import { Foot } from "#src/ui/hx_table";
 import { row } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
 import { hx_urls, urls } from "#src/urls";
-import { Pagination_Schema } from "@~/core/schema";
-import type { GetUsersListDto } from "#src/queries/users";
-import { match } from "ts-pattern";
-import { PageInput_Schema, usePageRequestContext } from "./context";
+import type { Pagination } from "@~/core/schema";
+import { query_schema } from "./context";
+import type { get_users_list } from "./get_users_list.query";
 
 //
 
@@ -17,11 +16,7 @@ const $search = hyper_ref();
 const $table = hyper_ref();
 const hx_users_list_query_props = {
   ...(await hx_urls.users.$get({ query: {} })),
-  "hx-include": hx_include([
-    $table,
-    $search,
-    PageInput_Schema.keyof().enum.page,
-  ]),
+  "hx-include": hx_include([$table, $search, query_schema.keyof().enum.page]),
   "hx-replace-url": true,
   "hx-select": `#${$table} > table`,
   "hx-target": `#${$table}`,
@@ -29,21 +24,30 @@ const hx_users_list_query_props = {
 
 //
 
-export default async function Page() {
+type QueryResult = Awaited<ReturnType<typeof get_users_list>>;
+type User = QueryResult["users"][number];
+
+export default async function Page({
+  q,
+  pagination,
+  query_result: queryResult,
+}: {
+  q?: string | string[];
+  pagination: Pagination;
+  query_result: QueryResult;
+}) {
   return (
     <main class="fr-container my-12">
       <h1>Liste des utilisateurs</h1>
-      <Filter />
-      <Table />
+      <Filter q={q} />
+      <Table pagination={pagination} query_result={queryResult} />
     </main>
   );
 }
 
 //
 
-function Filter() {
-  const { req } = usePageRequestContext();
-  const { q } = req.valid("query");
+function Filter({ q }: { q?: string | string[] }) {
   return (
     <form
       {...hx_users_list_query_props}
@@ -56,7 +60,7 @@ function Filter() {
         <input
           class="fr-input"
           id={$search}
-          name={PageInput_Schema.keyof().enum.q}
+          name={query_schema.keyof().enum.q}
           placeholder="Recherche"
           value={q}
           type="search"
@@ -69,21 +73,14 @@ function Filter() {
   );
 }
 
-async function Table() {
-  const {
-    req,
-    var: { query_users },
-  } = usePageRequestContext();
-
-  const { q } = req.valid("query");
-  const pagination = match(Pagination_Schema.safeParse(req.query()))
-    .with({ success: true }, ({ data }) => data)
-    .otherwise(() => Pagination_Schema.parse({}));
-
-  const { count, users } = await query_users({
-    search: q ? String(q) : undefined,
-    pagination: { ...pagination, page: pagination.page - 1 },
-  });
+async function Table({
+  pagination,
+  query_result: queryResult,
+}: {
+  pagination: Pagination;
+  query_result: QueryResult;
+}) {
+  const { count, users } = queryResult;
 
   return (
     <div class="fr-table *:table!" id={$table}>
@@ -109,7 +106,7 @@ async function Table() {
           count={count}
           hx_query_props={hx_users_list_query_props}
           id={$table}
-          name={PageInput_Schema.keyof().enum.page}
+          name={query_schema.keyof().enum.page}
           pagination={pagination}
         />
       </table>
@@ -117,13 +114,7 @@ async function Table() {
   );
 }
 
-function Row({
-  key,
-  user,
-}: {
-  key?: string;
-  user: GetUsersListDto["users"][number];
-}) {
+function Row({ key, user }: { key?: string; user: User }) {
   return (
     <tr
       aria-label={`Utilisateur ${user.given_name} ${user.family_name} (${user.email})`}
