@@ -1,6 +1,6 @@
-import { GetUserById_ } from "#src/queries/users";
+import { GetUserById } from "#src/queries/users";
 
-export const get_user_by_id = GetUserById_({
+export const get_user_by_id = GetUserById({
   columns: {
     created_at: true,
     email_verified: true,
