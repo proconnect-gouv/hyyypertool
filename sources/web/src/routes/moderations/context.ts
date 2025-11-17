@@ -1,11 +1,6 @@
 //
 
-import type { App_Context } from "#src/middleware/context";
-import { Pagination_Schema, type Pagination } from "@~/core/schema";
-import type { GetModerationsListHandler } from "#src/queries/moderations";
-import type { Env } from "hono";
-import { createContext } from "hono/jsx";
-import { useRequestContext } from "hono/jsx-renderer";
+import { Pagination_Schema } from "@~/core/schema";
 import { z } from "zod";
 
 //
@@ -13,7 +8,7 @@ import { z } from "zod";
 export const MODERATION_TABLE_ID = "moderation_table";
 export const MODERATION_TABLE_PAGE_ID = "moderation_table_page";
 
-export const Search_Schema = z.object({
+export const search_schema = z.object({
   day: z
     .string()
     .default("")
@@ -36,39 +31,8 @@ export const Search_Schema = z.object({
     .default("false")
     .transform((v) => v === "true"),
 });
-export const Page_Query = Search_Schema.merge(Pagination_Schema).partial();
-export type Search = z.infer<typeof Search_Schema>;
+export type Search = z.infer<typeof search_schema>;
 
-//
-export type GetModerationsListDTO = Awaited<
-  ReturnType<GetModerationsListHandler>
->;
-
-export async function load_moderations_list_page_variables({
-  pagination,
-  search,
-}: {
-  pagination: Pagination;
-  search: Search;
-}) {
-  return {
-    pagination,
-    search,
-  };
-}
-
-//
-
-export interface ContextVariablesType extends Env {
-  Variables: Awaited<ReturnType<typeof load_moderations_list_page_variables>>;
-}
-export type ContextType = App_Context & ContextVariablesType;
-
-//
-
-export const usePageRequestContext = useRequestContext<ContextType, any, any>;
-
-export default createContext({
-  query_moderations_list: {} as Promise<GetModerationsListDTO>,
-  pagination: {} as Pagination,
-});
+export const query_schema = search_schema
+  .extend(Pagination_Schema.shape)
+  .partial();
