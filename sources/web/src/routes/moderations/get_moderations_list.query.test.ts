@@ -5,17 +5,11 @@ import {
   create_adora_pony_user,
   create_unicorn_organization,
 } from "@~/identite-proconnect/database/seed/unicorn";
-import {
-  empty_database,
-  migrate,
-  pg,
-} from "@~/identite-proconnect/testing";
+import { empty_database, migrate, pg } from "@~/identite-proconnect/testing";
 import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
-import { GetModerationsList } from "./GetModerationsList";
+import { get_moderations_list } from "./get_moderations_list.query";
 
 //
-
-const get_moderations_list = GetModerationsList(pg);
 
 beforeAll(migrate);
 beforeEach(empty_database);
@@ -33,7 +27,7 @@ test("get moderations list with basic search", async () => {
     type: "non_verified_domain",
   });
 
-  const result = await get_moderations_list({
+  const result = await get_moderations_list(pg, {
     search: {},
   });
 
@@ -65,9 +59,9 @@ test("filters by email search", async () => {
   await create_adora_pony_user(pg);
   await create_adora_pony_moderation(pg, { type: "" });
 
-  const result = await get_moderations_list({
+  const result = await get_moderations_list(pg, {
     search: {
-      email: "adora",
+      search_email: "adora",
     },
   });
 
@@ -99,9 +93,9 @@ test("filters by siret search", async () => {
   await create_adora_pony_user(pg);
   await create_adora_pony_moderation(pg, { type: "" });
 
-  const result = await get_moderations_list({
+  const result = await get_moderations_list(pg, {
     search: {
-      siret: "🦄 siret",
+      search_siret: "🦄 siret",
     },
   });
 
@@ -141,7 +135,7 @@ test("excludes archived moderations by default", async () => {
   // Create an unmoderated moderation
   await create_adora_pony_moderation(pg, { type: "" });
 
-  const result = await get_moderations_list({
+  const result = await get_moderations_list(pg, {
     search: {},
   });
 
@@ -177,9 +171,9 @@ test("includes archived moderations when show_archived is true", async () => {
     moderated_at: "2222-01-01T00:00:00.000Z",
   });
 
-  const result = await get_moderations_list({
+  const result = await get_moderations_list(pg, {
     search: {
-      show_archived: true,
+      processed_requests: true,
     },
   });
 
@@ -216,9 +210,9 @@ test("supports pagination", async () => {
   await create_adora_pony_moderation(pg, { type: "type_3" });
 
   // Test first page
-  const page1 = await get_moderations_list({
+  const page1 = await get_moderations_list(pg, {
     search: {},
-    pagination: { page: 0, take: 2 },
+    pagination: { page: 0, page_size: 2 },
   });
 
   expect(page1).toMatchInlineSnapshot(`
@@ -258,9 +252,9 @@ test("supports pagination", async () => {
   `);
 
   // Test second page
-  const page2 = await get_moderations_list({
+  const page2 = await get_moderations_list(pg, {
     search: {},
-    pagination: { page: 1, take: 2 },
+    pagination: { page: 1, page_size: 2 },
   });
 
   expect(page2).toMatchInlineSnapshot(`

@@ -1,12 +1,12 @@
 //
 
 import { expect, test } from "bun:test";
-import { Search_Schema } from "./context";
+import { search_schema } from "./context";
 
 //
 
 test("Search_Schema > empty object", () => {
-  const search = Search_Schema.parse({});
+  const search = search_schema.parse({});
 
   expect(search).toEqual({
     day: undefined,
@@ -19,7 +19,7 @@ test("Search_Schema > empty object", () => {
 });
 
 test("Search_Schema > day 2011-01-11", () => {
-  const search = Search_Schema.parse({ day: "2011-01-11" });
+  const search = search_schema.parse({ day: "2011-01-11" });
 
   expect(search).toEqual({
     day: new Date("2011-01-11"),
