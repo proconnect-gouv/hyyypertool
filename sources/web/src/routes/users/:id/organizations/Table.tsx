@@ -1,25 +1,35 @@
 //
 
 import { hx_include } from "#src/htmx";
-import type { GetOrganizationsByUserIdDto } from "#src/queries/organizations";
 import { date_to_dom_string } from "#src/time";
 import { Foot } from "#src/ui/hx_table";
 import { notice } from "#src/ui/notice";
 import { Time } from "#src/ui/time";
 import { hx_urls, urls } from "#src/urls";
-import { usePageRequestContext } from "./context";
+import type { Pagination } from "@~/core/schema";
+import type { get_organizations_by_user_id } from "./get_organizations_by_user_id.query";
 
 //
 
-export async function Table() {
-  const {
-    req,
-    var: { pagination, query_organizations_collection },
-  } = usePageRequestContext();
-  const { id: user_id } = req.valid("param");
-  const { describedby, page_ref } = req.valid("query");
+type OrganizationsCollection = Awaited<
+  ReturnType<typeof get_organizations_by_user_id>
+>;
+type Organization = OrganizationsCollection["organizations"][number];
 
-  const { organizations, count } = await query_organizations_collection;
+export async function Table({
+  pagination,
+  organizations_collection,
+  user_id,
+  describedby,
+  page_ref,
+}: {
+  pagination: Pagination;
+  organizations_collection: OrganizationsCollection;
+  user_id: number;
+  describedby: string;
+  page_ref: string;
+}) {
+  const { organizations, count } = organizations_collection;
 
   const hx_get_organizations_query_props = {
     ...(await hx_urls.users[":id"].organizations.$get({
@@ -70,7 +80,7 @@ export function Row({
   organization,
 }: {
   key?: string;
-  organization: GetOrganizationsByUserIdDto["organizations"][number];
+  organization: Organization;
 }) {
   const {
     cached_code_officiel_geographique,
