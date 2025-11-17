@@ -17,20 +17,8 @@
       "path": "sources/organizations",
     },
     {
-      "name": "📦 sources/users/",
-      "path": "sources/users",
-    },
-    {
-      "name": "🏗️ sources/infra/identite-proconnect/",
-      "path": "sources/infra/identite-proconnect",
-    },
-    {
-      "name": "🏗️ sources/infra/zammad/",
-      "path": "sources/infra/zammad",
-    },
-    {
-      "name": "🏗️ sources/infra/crisp/",
-      "path": "sources/infra/crisp",
+      "name": "🏗️ sources/identite-proconnect/",
+      "path": "sources/identite-proconnect",
     },
     {
       "name": "⚙️ sources/config/",
@@ -130,12 +118,7 @@
       },
       {
         "label": "1. 🚀 Dev",
-        "dependsOn": [
-          "🚀 WWW Dev Server",
-          "📦 Tailwind Dev",
-          "📦 Types Dev",
-          "🐋 Docker Up",
-        ],
+        "dependsOn": ["🚀 WWW Dev Server", "📦 Types Dev", "🐋 Docker Up"],
         "group": "build",
       },
       {
@@ -154,19 +137,6 @@
         "runOptions": {
           "instanceLimit": 1,
         },
-      },
-      {
-        "args": ["run", "dev:tailwind"],
-        "command": "bun",
-        "group": "build",
-        "label": "📦 Tailwind Dev",
-        "options": {
-          "cwd": "${workspaceFolder:/}",
-          "env": { "NODE_ENV": "development" },
-        },
-        "problemMatcher": ["$tsc-watch"],
-        "runOptions": { "instanceLimit": 1 },
-        "type": "shell",
       },
       {
         "args": ["run", "build:tsc", "--watch"],

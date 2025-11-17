@@ -12,10 +12,11 @@ test("render header section", async () => {
           moderation: {
             comment: null,
             created_at: "2023-01-01T00:00:00.000Z",
+            id: 42,
             moderated_at: null,
             moderated_by: null,
-            id: 42,
             organization: { cached_libelle: "🦄 libelle", id: 43 },
+            status: "accepted",
             type: "organization_join_block",
             user: {
               email: "adora.pony@unicorn.xyz",

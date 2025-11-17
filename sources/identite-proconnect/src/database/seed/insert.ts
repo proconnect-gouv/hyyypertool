@@ -102,6 +102,7 @@ export async function insert_database(db: IdentiteProconnect_PgDatabase) {
       type: "organization_join_block" as MCP_Moderation["type"],
       user_id: jean_bon.id,
       ticket_id: "115793",
+      status: "pending",
     });
     consola.verbose(
       `🌱 INSERT ${jean_bon.given_name} wants to join ${dinum.cached_libelle}`,
@@ -110,9 +111,10 @@ export async function insert_database(db: IdentiteProconnect_PgDatabase) {
     await insert_moderation(db, {
       created_at: "2011-11-11T01:02:59+02:00",
       organization_id: abracadabra.id,
+      status: "pending",
+      ticket_id: "session_456",
       type: "organization_join_block" as MCP_Moderation["type"],
       user_id: jean_bon.id,
-      ticket_id: "session_456",
     });
     consola.verbose(
       `🌱 INSERT ${jean_bon.given_name} wants to join ${abracadabra.cached_libelle}`,
@@ -121,9 +123,10 @@ export async function insert_database(db: IdentiteProconnect_PgDatabase) {
     await insert_moderation(db, {
       created_at: "2011-11-11T01:03:15+02:00",
       organization_id: abracadabra.id,
+      status: "pending",
+      ticket_id: "session_789",
       type: "organization_join_block" as MCP_Moderation["type"],
       user_id: jean_dre.id,
-      ticket_id: "session_789",
     });
     consola.verbose(
       `🌱 INSERT ${jean_dre.given_name} wants to join ${abracadabra.cached_libelle}`,
@@ -139,11 +142,12 @@ export async function insert_database(db: IdentiteProconnect_PgDatabase) {
     );
 
     await insert_moderation(db, {
+      moderated_at: "2023-06-22T16:34:34+02:00",
       organization_id: dengi.id,
+      status: "accepted",
+      ticket_id: "session_789",
       type: "organization_join_block" as MCP_Moderation["type"],
       user_id: richard_bon.id,
-      moderated_at: "2023-06-22T16:34:34+02:00",
-      ticket_id: "session_789",
     });
     consola.verbose(
       `🌱 INSERT ${richard_bon.given_name} wants to join ${dengi.cached_nom_complet}`,
@@ -151,9 +155,10 @@ export async function insert_database(db: IdentiteProconnect_PgDatabase) {
 
     await insert_moderation(db, {
       organization_id: dengi.id,
+      status: "pending",
+      ticket_id: "session_321",
       type: "organization_join_block" as MCP_Moderation["type"],
       user_id: richard_bon.id,
-      ticket_id: "session_321",
     });
     consola.verbose(
       `🌱 INSERT ${richard_bon.given_name} wants to join ${dengi.cached_nom_complet} again...`,
@@ -161,9 +166,10 @@ export async function insert_database(db: IdentiteProconnect_PgDatabase) {
 
     await insert_moderation(db, {
       organization_id: bosch_france,
+      status: "pending",
+      ticket_id: "session_654",
       type: "non_verified_domain" as MCP_Moderation["type"],
       user_id: marie_bon,
-      ticket_id: "session_654",
     });
     consola.verbose(
       `🌱 INSERT ${marie_bon} wants to join ${bosch_france} again...`,
@@ -171,21 +177,23 @@ export async function insert_database(db: IdentiteProconnect_PgDatabase) {
 
     await insert_moderation(db, {
       created_at: "2011-11-12T12:11:12+02:00",
+      moderated_at: "2023-06-22T16:34:34+02:00",
       organization_id: bosch_rexroth,
+      status: "accepted",
+      ticket_id: "session_987",
       type: "non_verified_domain" as MCP_Moderation["type"],
       user_id: marie_bon,
-      moderated_at: "2023-06-22T16:34:34+02:00",
-      ticket_id: "session_987",
     });
     consola.verbose(
       `🌱 INSERT ${marie_bon} wants to join ${bosch_rexroth} again...`,
     );
     await insert_moderation(db, {
+      moderated_at: "2023-06-22T16:34:34+02:00",
       organization_id: dinum.id,
+      status: "rejected",
+      ticket_id: "session_111",
       type: "non_verified_domain" as MCP_Moderation["type"],
       user_id: raphael_alpha.id,
-      moderated_at: "2023-06-22T16:34:34+02:00",
-      ticket_id: "session_111",
     });
     consola.verbose(
       `🌱 INSERT ${raphael_alpha.given_name} wants to join ${dinum.cached_nom_complet} again...`,

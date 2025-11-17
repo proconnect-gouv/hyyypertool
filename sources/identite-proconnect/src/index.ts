@@ -1,5 +1,6 @@
 //
 
+import z from "zod/v4";
 import { fetch_mcp_admin_api } from "./fetch";
 
 //
@@ -7,6 +8,17 @@ import { fetch_mcp_admin_api } from "./fetch";
 // HACK(douglasduteil): dirty export type
 // waiting for full identity types exports from @proconnect-gouv/proconnect.identite
 export * from "@proconnect-gouv/proconnect.identite/types";
+
+//
+
+export const MODERATION_STATUS = z.enum([
+  "accepted",
+  "pending",
+  "rejected",
+  "unknown",
+]);
+
+export type ModerationStatus = z.infer<typeof MODERATION_STATUS>;
 
 //
 

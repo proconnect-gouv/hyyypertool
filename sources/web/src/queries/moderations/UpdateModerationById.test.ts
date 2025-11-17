@@ -30,8 +30,8 @@ test("update a moderation", async () => {
   setSystemTime(new Date("2222-01-02T00:00:00.000Z"));
   await update_moderation_by_id(moderation_id, {
     comment: "Adora is a good pony",
-    moderated_by: "Captain Midnight",
     moderated_at: new Date().toISOString(),
+    moderated_by: "Captain Midnight",
     status: "accepted",
   });
 
@@ -46,9 +46,9 @@ test("update a moderation", async () => {
     moderated_at: "2222-01-02 00:00:00+00",
     moderated_by: "Captain Midnight",
     organization_id,
+    status: "accepted",
     ticket_id: null,
     type: "",
     user_id,
-    status: "accepted",
   });
 });

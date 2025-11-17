@@ -1,7 +1,11 @@
 //
 
 import { z_username } from "@~/core/schema";
-import { append_comment, type Comment_Type } from "./comment_message";
+import {
+  append_comment,
+  comment_type_to_status,
+  type CommentMeta,
+} from "./comment_message";
 
 //
 
@@ -14,7 +18,7 @@ export function build_moderation_update({
   comment: string | null;
   userinfo: { email: string; given_name: string; usual_name: string };
   reason: string;
-  type: Comment_Type["type"];
+  type: CommentMeta["type"];
 }) {
   const username = z_username.parse(userinfo);
   const moderated_by = `${username} <${userinfo.email}>`;
@@ -27,5 +31,6 @@ export function build_moderation_update({
     }),
     moderated_by,
     moderated_at: new Date().toISOString(),
+    status: comment_type_to_status(type),
   };
 }

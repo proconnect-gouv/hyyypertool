@@ -18,14 +18,18 @@ export async function get_duplicate_moderations(
     user_id: number;
   },
 ) {
-  return pg
-    .select()
-    .from(schema.moderations)
-    .where(
-      and(
-        eq(schema.moderations.organization_id, organization_id),
-        eq(schema.moderations.user_id, user_id),
-      ),
-    )
-    .orderBy(asc(schema.moderations.created_at));
+  return pg.query.moderations.findMany({
+    columns: {
+      created_at: true,
+      id: true,
+      moderated_at: true,
+      status: true,
+      ticket_id: true,
+    },
+    where: and(
+      eq(schema.moderations.organization_id, organization_id),
+      eq(schema.moderations.user_id, user_id),
+    ),
+    orderBy: asc(schema.moderations.created_at),
+  });
 }

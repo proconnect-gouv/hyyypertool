@@ -8,8 +8,9 @@ import { to } from "await-to-js";
 export async function get_moderation_tickets(
   moderations: {
     id: number;
-    ticket_id: string | null;
     moderated_at: string | null;
+    status: string;
+    ticket_id: string | null;
   }[],
 ) {
   return Promise.all(

@@ -1,14 +1,15 @@
 //
 
+import type { GetModerationHeaderOutput } from "#src/lib/moderations";
+import { moderation_type_to_emoji } from "#src/lib/moderations";
 import { button } from "#src/ui/button";
 import { callout } from "#src/ui/callout";
 import { notice } from "#src/ui/notice";
 import { LocalTime } from "#src/ui/time";
 import { hx_urls } from "#src/urls";
-import { moderation_type_to_emoji } from "#src/lib/moderations";
-import type { GetModerationHeaderOutput } from "#src/lib/moderations";
 import { raw } from "hono/html";
 import { createContext, useContext } from "hono/jsx";
+import { match } from "ts-pattern";
 import { MessageInfo } from "../MessageInfo";
 
 //
@@ -70,8 +71,18 @@ Header.Provier = context.Provider;
 function State_Badge() {
   const { moderation } = useContext(context);
   const is_treated = moderation.moderated_at !== null;
-  if (is_treated) return <p class="fr-badge fr-badge--success">Traité</p>;
-  return <p class="fr-badge fr-badge--new">A traiter</p>;
+  if (moderation.status === "unknown")
+    return is_treated ? (
+      <p class="fr-badge fr-badge--success">Traité</p>
+    ) : (
+      <p class="fr-badge fr-badge--new">A traiter</p>
+    );
+
+  return match(moderation.status)
+    .with("accepted", () => <p class="fr-badge fr-badge--success">Accepté</p>)
+    .with("rejected", () => <p class="fr-badge fr-badge--error">Rejeté</p>)
+    .with("pending", () => <p class="fr-badge fr-badge--new">A traiter</p>)
+    .otherwise(() => <p class="fr-badge fr-badge--success">Traité</p>);
 }
 
 function Info() {
@@ -94,18 +105,28 @@ async function ModerationCallout() {
   const { moderation } = useContext(context);
   if (!moderation.moderated_at) return raw``;
 
-  const { base, text, title } = callout({ intent: "success" });
+  const { base, text, title } = callout({
+    intent: match(moderation.status)
+      .with("accepted", () => "success" as const)
+      .with("rejected", () => "warning" as const)
+      .otherwise(() => "success" as const),
+  });
   const hx_patch_moderation_reprocess = await hx_urls.moderations[
     ":id"
   ].reprocess.$patch({
     param: { id: moderation.id.toString() },
   });
 
+  const state = match(moderation.status)
+    .with("accepted", () => "acceptée")
+    .with("rejected", () => "rejetée")
+    .otherwise(() => "traitée");
+
   return (
     <div class={base()}>
       <hr class="bg-none" />
 
-      <h3 class={text()}>Modération traitée</h3>
+      <h3 class={text()}>Modération {state}</h3>
       <p class={title()}>
         Cette modération a été marqué comme traitée le{" "}
         <b>
