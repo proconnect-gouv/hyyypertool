@@ -2,11 +2,7 @@
 
 import { NotFoundError } from "#src/errors";
 import { create_unicorn_organization } from "@~/identite-proconnect/database/seed/unicorn";
-import {
-  empty_database,
-  migrate,
-  pg,
-} from "@~/identite-proconnect/testing";
+import { empty_database, migrate, pg } from "@~/identite-proconnect/testing";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
 import { GetOrganizationById } from "./GetOrganizationById";
 
@@ -18,7 +14,7 @@ beforeEach(empty_database);
 test("returns organization with partial fields", async () => {
   const organization_id = await create_unicorn_organization(pg);
 
-  const get_organization_by_id = GetOrganizationById(pg, {
+  const get_organization_by_id = GetOrganizationById({
     columns: {
       cached_libelle: true,
       cached_nom_complet: true,
@@ -26,7 +22,7 @@ test("returns organization with partial fields", async () => {
       siret: true,
     },
   });
-  const result = await get_organization_by_id(organization_id);
+  const result = await get_organization_by_id(pg, organization_id);
 
   expect(result).toMatchInlineSnapshot(`
     {
@@ -39,9 +35,9 @@ test("returns organization with partial fields", async () => {
 });
 
 test("throws NotFoundError when organization not found", async () => {
-  const get_organization_by_id = GetOrganizationById(pg, {
+  const get_organization_by_id = GetOrganizationById({
     columns: { id: true },
   });
 
-  await expect(get_organization_by_id(42)).rejects.toThrow(NotFoundError);
+  await expect(get_organization_by_id(pg, 42)).rejects.toThrow(NotFoundError);
 });

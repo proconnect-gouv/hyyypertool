@@ -1,8 +1,4 @@
-//
-
 import { GetOrganizationById } from "#src/queries/organizations";
-
-//
 
 export const get_organization_by_id = GetOrganizationById({
   columns: {

@@ -14,8 +14,11 @@ type OrganizationQueryConfigColumns = Partial<
 
 export function GetOrganizationById<
   TColumns extends OrganizationQueryConfigColumns,
->(pg: IdentiteProconnect_PgDatabase, { columns }: { columns: TColumns }) {
-  return async function get_organization_by_id(organization_id: number) {
+>({ columns }: { columns: TColumns }) {
+  return async function get_organization_by_id(
+    pg: IdentiteProconnect_PgDatabase,
+    organization_id: number,
+  ) {
     const organization = await pg.query.organizations.findFirst({
       columns,
       where: eq(schema.organizations.id, organization_id),

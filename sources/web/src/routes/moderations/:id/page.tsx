@@ -3,6 +3,8 @@
 import { hx_trigger_from_body } from "#src/htmx";
 import { IsUserExternalMember, MODERATION_EVENTS } from "#src/lib/moderations";
 import { CountUserMemberships, SuggestSameUserEmails } from "#src/lib/users";
+import type { GetModerationWithDetailsDto } from "#src/queries/moderations";
+import { type GetOrganizationMemberDto } from "#src/queries/organizations";
 import { button } from "#src/ui/button";
 import { Actions } from "#src/ui/moderations/Actions";
 import { AutoGoBack } from "#src/ui/moderations/AutoGoBack";
@@ -17,23 +19,49 @@ import {
 import { About as About_User } from "#src/ui/users/About";
 import { Investigation as Investigation_User } from "#src/ui/users/Investigation";
 import { hx_urls } from "#src/urls";
-import { usePageRequestContext } from "./context";
+import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect/database";
+import { createContext, useContext } from "hono/jsx";
 import { ModerationExchanges } from "./ModerationExchanges";
 import { SuggestOrganizationDomains } from "./SuggestOrganizationDomains";
+import type { get_organization_by_id } from "./get_organization_by_id.query";
 
 //
 
-export default async function Moderation_Page() {
-  const { banaticUrl, moderation } = usePageRequestContext().var;
-  const moderation_id = `moderation-${moderation.id.toString()}`;
+type OrganizationFiche = Awaited<ReturnType<typeof get_organization_by_id>>;
+type OrganizationMember = GetOrganizationMemberDto;
+
+type PageData = {
+  banaticUrl: string;
+  domain: string;
+  moderation: GetModerationWithDetailsDto;
+  organization_fiche: OrganizationFiche;
+  organization_member: OrganizationMember;
+  query_domain_count: Promise<number>;
+  query_organization_members_count: Promise<number>;
+  identite_pg: IdentiteProconnect_PgDatabase;
+};
+
+const PageContext = createContext<PageData>({} as PageData);
+
+export default async function Moderation_Page(props: PageData) {
+  return (
+    <PageContext.Provider value={props}>
+      <ModerationPageContent />
+    </PageContext.Provider>
+  );
+}
+
+async function ModerationPageContent() {
   const {
-    var: {
-      identite_pg,
-      organization_fiche,
-      query_domain_count,
-      query_organization_members_count,
-    },
-  } = usePageRequestContext();
+    banaticUrl,
+    moderation,
+    identite_pg,
+    organization_fiche,
+    query_domain_count,
+    query_organization_members_count,
+  } = useContext(PageContext)!;
+
+  const moderation_id = `moderation-${moderation.id.toString()}`;
 
   return (
     <main class="fr-container my-12">
@@ -120,7 +148,7 @@ export default async function Moderation_Page() {
 
         <hr class="bg-none" />
 
-        <ModerationExchanges />
+        <ModerationExchanges moderation={moderation} />
       </section>
     </main>
   );
