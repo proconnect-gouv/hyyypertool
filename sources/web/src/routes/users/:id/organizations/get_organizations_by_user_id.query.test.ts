@@ -11,7 +11,7 @@ import {
   pg,
 } from "@~/identite-proconnect/testing";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
-import { GetOrganizationsByUserId } from "./GetOrganizationsByUserId";
+import { get_organizations_by_user_id } from "./get_organizations_by_user_id.query";
 
 //
 
@@ -28,8 +28,7 @@ test("returns organizations for a user", async () => {
     user_id,
   });
 
-  const get_organizations_by_user_id = GetOrganizationsByUserId(pg);
-  const result = await get_organizations_by_user_id({ user_id });
+  const result = await get_organizations_by_user_id(pg, { user_id });
 
   expect(result).toMatchInlineSnapshot(`
     {
@@ -57,8 +56,7 @@ test("supports pagination", async () => {
     user_id,
   });
 
-  const get_organizations_by_user_id = GetOrganizationsByUserId(pg);
-  const result = await get_organizations_by_user_id({
+  const result = await get_organizations_by_user_id(pg, {
     user_id,
     pagination: { page: 0, page_size: 1 },
   });

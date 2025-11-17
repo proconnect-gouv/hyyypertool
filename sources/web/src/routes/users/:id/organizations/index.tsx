@@ -1,44 +1,45 @@
 //
 
-import { set_variables } from "#src/middleware/context";
+import type { App_Context } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
 import { Pagination_Schema } from "@~/core/schema";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { match } from "ts-pattern";
+import { ParamSchema, QuerySchema } from "./context";
+import { get_organizations_by_user_id } from "./get_organizations_by_user_id.query";
 import { Table } from "./Table";
-import {
-  loadOrganizationsPageVariables,
-  ParamSchema,
-  QuerySchema,
-  type ContextType,
-} from "./context";
 
 //
 
-export default new Hono<ContextType>().get(
+export default new Hono<App_Context>().get(
   "/",
   jsxRenderer(),
   zValidator("param", ParamSchema),
   zValidator("query", QuerySchema),
-  async function set_variables_middleware(
-    { req, set, var: { identite_pg } },
-    next,
-  ) {
+  async function GET({ req, var: { identite_pg }, render }) {
     const { id: user_id } = req.valid("param");
+    const { describedby, page_ref } = req.valid("query");
 
     const pagination = match(Pagination_Schema.safeParse(req.query()))
       .with({ success: true }, ({ data }) => data)
       .otherwise(() => Pagination_Schema.parse({}));
 
-    const variables = await loadOrganizationsPageVariables(identite_pg, {
-      pagination,
-      user_id,
-    });
-    set_variables(set, variables);
-    return next();
-  },
-  async function GET({ render }) {
-    return render(<Table />);
+    const organizations_collection = await get_organizations_by_user_id(
+      identite_pg,
+      {
+        user_id,
+        pagination: { ...pagination, page: pagination.page - 1 },
+      },
+    );
+    return render(
+      <Table
+        pagination={pagination}
+        organizations_collection={organizations_collection}
+        user_id={user_id}
+        describedby={describedby}
+        page_ref={page_ref}
+      />,
+    );
   },
 );
