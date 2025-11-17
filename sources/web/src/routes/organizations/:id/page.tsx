@@ -6,15 +6,26 @@ import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import { FrNumberConverter } from "#src/ui/number";
 import { formattedPlural } from "#src/ui/plurial";
 import { hx_urls } from "#src/urls";
-import { usePageRequestContext } from "./context";
 import { Fiche } from "./Fiche";
+import type { get_organization_by_id } from "./get_organization_by_id.query";
 
 //
 
-export default async function Page() {
-  const {
-    var: { organization, query_organization_domains_count },
-  } = usePageRequestContext();
+type Organisation = Awaited<ReturnType<typeof get_organization_by_id>>;
+
+//
+
+export default async function Page({
+  banaticUrl,
+  organization,
+  domains_count,
+  members_count,
+}: {
+  banaticUrl: string;
+  organization: Organisation;
+  domains_count: number;
+  members_count: number;
+}) {
   const $domains_describedby = hyper_ref();
 
   const hx_get_domains_query_props = await hx_urls.organizations[
@@ -24,22 +35,20 @@ export default async function Page() {
     query: { describedby: $domains_describedby },
   });
 
-  const count = await query_organization_domains_count;
-
   return (
     <main>
       <div class="bg-(--background-alt-blue-france) py-6">
         <div class="fr-container py-6">
           <h1>🏛 A propos de l'organisation</h1>
 
-          <Fiche />
+          <Fiche organization={organization} banaticUrl={banaticUrl} />
         </div>
       </div>
       <hr />
       <div class="fr-container">
         <h3 id={$domains_describedby}>
-          🌐 {FrNumberConverter.format(count)}{" "}
-          {formattedPlural(count, {
+          🌐 {FrNumberConverter.format(domains_count)}{" "}
+          {formattedPlural(domains_count, {
             one: "domaine",
             other: "domaines",
           })}{" "}
@@ -54,20 +63,25 @@ export default async function Page() {
         ></div>
         <hr />
         <br />
-        <MembersInTheOrganization />
+        <MembersInTheOrganization
+          organization={organization}
+          members_count={members_count}
+        />
       </div>
     </main>
   );
 }
 
-async function MembersInTheOrganization() {
+async function MembersInTheOrganization({
+  organization,
+  members_count,
+}: {
+  organization: Organisation;
+  members_count: number;
+}) {
   const $describedby = hyper_ref();
   const $members_describedby = hyper_ref();
   const $page_ref = hyper_ref();
-  const {
-    var: { organization, query_organization_members_count },
-  } = usePageRequestContext();
-  const count = await query_organization_members_count;
 
   const hx_get_members_query_props = await hx_urls.organizations[
     ":id"
@@ -81,8 +95,8 @@ async function MembersInTheOrganization() {
       <details open={false}>
         <summary>
           <h3 class="inline-block" id={$describedby}>
-            👥 {FrNumberConverter.format(count)}{" "}
-            {formattedPlural(count, {
+            👥 {FrNumberConverter.format(members_count)}{" "}
+            {formattedPlural(members_count, {
               one: "membre enregistré",
               other: "membres enregistrés ",
             })}{" "}

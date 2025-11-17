@@ -5,7 +5,11 @@ import { set_config } from "#src/middleware/config";
 import { set_identite_pg } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
 import { create_unicorn_organization } from "@~/identite-proconnect/database/seed/unicorn";
-import { empty_database, migrate, pg } from "@~/identite-proconnect/testing";
+import {
+  empty_database,
+  migrate,
+  pg,
+} from "@~/identite-proconnect/database/testing";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
 import { Hono } from "hono";
 import app from "./index";
@@ -21,7 +25,12 @@ test("GET /organizations/:id returns organization details", async () => {
   const organization_id = await create_unicorn_organization(pg);
 
   const response = await new Hono()
-    .use(set_config({}))
+    .use(
+      set_config({
+        ALLOWED_USERS: "test@example.com",
+        HTTP_CLIENT_TIMEOUT: 5000,
+      }),
+    )
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
     .use(set_userinfo({ email: "test@example.com" }))
