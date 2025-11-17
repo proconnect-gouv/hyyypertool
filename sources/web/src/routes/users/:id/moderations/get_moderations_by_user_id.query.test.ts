@@ -11,7 +11,7 @@ import {
   pg,
 } from "@~/identite-proconnect/testing";
 import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
-import { GetModerationsByUserId } from "./GetModerationsByUserId";
+import { get_moderations_by_user_id } from "./get_moderations_by_user_id.query";
 
 //
 
@@ -29,8 +29,7 @@ test("get adora's moderations", async () => {
   const adora_pony_user_id = await create_adora_pony_user(pg);
   const moderation_id = await create_adora_pony_moderation(pg, { type: "🦷" });
 
-  const get_moderations_by_user_id = GetModerationsByUserId({ pg });
-  const moderations = await get_moderations_by_user_id(adora_pony_user_id);
+  const moderations = await get_moderations_by_user_id(pg, adora_pony_user_id);
 
   expect(moderations).toEqual([
     {
