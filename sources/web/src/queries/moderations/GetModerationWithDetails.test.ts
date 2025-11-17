@@ -57,6 +57,7 @@ test("get a moderation with full organization and user details", async () => {
         "updated_at": "1970-01-01T00:00:00+00:00",
       },
       "organization_id": 1,
+      "status": "unknown",
       "ticket_id": null,
       "type": "",
       "user": {

@@ -5,11 +5,7 @@ import {
   create_adora_pony_user,
   create_unicorn_organization,
 } from "@~/identite-proconnect/database/seed/unicorn";
-import {
-  empty_database,
-  migrate,
-  pg,
-} from "@~/identite-proconnect/testing";
+import { empty_database, migrate, pg } from "@~/identite-proconnect/testing";
 import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
 import { get_moderations_by_user_id } from "./get_moderations_by_user_id.query";
 
@@ -27,7 +23,10 @@ beforeAll(() => {
 test("get adora's moderations", async () => {
   const organization_id = await create_unicorn_organization(pg);
   const adora_pony_user_id = await create_adora_pony_user(pg);
-  const moderation_id = await create_adora_pony_moderation(pg, { type: "🦷" });
+  const moderation_id = await create_adora_pony_moderation(pg, {
+    type: "🦷",
+    status: "pending",
+  });
 
   const moderations = await get_moderations_by_user_id(pg, adora_pony_user_id);
 
@@ -42,6 +41,7 @@ test("get adora's moderations", async () => {
       ticket_id: null,
       type: "🦷",
       user_id: adora_pony_user_id,
+      status: "pending",
     },
   ]);
 });

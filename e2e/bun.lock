@@ -1,12 +1,13 @@
 {
   "lockfileVersion": 1,
+  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "e2e",
       "dependencies": {
         "@badeball/cypress-cucumber-preprocessor": "23.2.1",
         "@bahmutov/cypress-esbuild-preprocessor": "2.2.7",
-        "@proconnect-gouv/proconnect.identite.database": "0.0.0",
+        "@proconnect-gouv/proconnect.identite.database": "0.1.0",
         "@testing-library/cypress": "10.1.0",
         "cypress": "15.6.0",
         "drizzle-orm": "0.44.7",
@@ -181,7 +182,7 @@
 
     "@pkgjs/parseargs": ["@pkgjs/parseargs@0.11.0", "", {}, "sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg=="],
 
-    "@proconnect-gouv/proconnect.identite.database": ["@proconnect-gouv/proconnect.identite.database@0.0.0", "", { "peerDependencies": { "drizzle-orm": ">=0.44" }, "optionalPeers": ["drizzle-orm"] }, "sha512-enpURK5wezpdehs2LICO3uCF/RYnYRkqztU5LyrAHIBlj5La2Z1MyT6rsnwrC7BjlRp129Bs52oo8JntDRKfag=="],
+    "@proconnect-gouv/proconnect.identite.database": ["@proconnect-gouv/proconnect.identite.database@0.1.0", "", { "peerDependencies": { "drizzle-orm": ">=0.44" }, "optionalPeers": ["drizzle-orm"] }, "sha512-i30SqDW8JzFoAa+edDF695ev14dskg6aJUjuLqjku1Sd6D5gSzBpGvi+WH1MgAmbvHeW3TRV/PmfHJdjD9POhw=="],
 
     "@teppeis/multimaps": ["@teppeis/multimaps@3.0.0", "", {}, "sha512-ID7fosbc50TbT0MK0EG12O+gAP3W3Aa/Pz4DaTtQtEvlc9Odaqi0de+xuZ7Li2GtK4HzEX7IuRWS/JmZLksR3Q=="],
 

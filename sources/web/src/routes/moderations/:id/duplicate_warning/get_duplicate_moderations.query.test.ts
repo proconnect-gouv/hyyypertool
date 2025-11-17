@@ -85,6 +85,7 @@ test("filters by specific user and organization", async () => {
         "moderated_at": null,
         "moderated_by": null,
         "organization_id": 1,
+        "status": "unknown",
         "ticket_id": null,
         "type": "for_user1_org1",
         "user_id": 1,
