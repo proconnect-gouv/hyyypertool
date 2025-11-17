@@ -1,15 +1,19 @@
 //
 
 import { About, Investigation } from "#src/ui/organizations/info";
-import { usePageRequestContext } from "./context";
+import type { get_organization_by_id } from "./get_organization_by_id.query";
 
 //
 
-export async function Fiche() {
-  const {
-    var: { banaticUrl, organization },
-  } = usePageRequestContext();
+type Organisation = Awaited<ReturnType<typeof get_organization_by_id>>;
 
+export async function Fiche({
+  banaticUrl,
+  organization,
+}: {
+  banaticUrl: string;
+  organization: Organisation;
+}) {
   return (
     <section class="grid grid-cols-3 gap-4">
       <div class="fr-card p-6! col-span-2">
