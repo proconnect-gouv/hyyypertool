@@ -5,25 +5,26 @@ import {
   moderation_type_to_emoji,
   moderation_type_to_title,
 } from "#src/lib/moderations";
-import { GetModerationsList } from "#src/queries/moderations";
 import { date_to_dom_string, date_to_string } from "#src/time";
 import { Foot } from "#src/ui/hx_table";
 import { row } from "#src/ui/table";
 import { hx_urls, urls } from "#src/urls";
 import type { Pagination } from "@~/core/schema";
-import { useContext } from "hono/jsx";
-import Moderations_Context, {
+import { createContext, useContext } from "hono/jsx";
+import {
   MODERATION_TABLE_ID,
   MODERATION_TABLE_PAGE_ID,
-  Page_Query,
-  usePageRequestContext,
-  type GetModerationsListDTO,
+  query_schema,
   type Search,
 } from "./context";
+import type { get_moderations_list } from "./get_moderations_list.query";
 
 //
 
-const page_query_keys = Page_Query.keyof();
+type QueryResult = Awaited<ReturnType<typeof get_moderations_list>>;
+type Moderation = QueryResult["moderations"][number];
+
+const page_query_keys = query_schema.keyof();
 
 const hx_moderations_query_props = {
   ...(await hx_urls.moderations.$get()),
@@ -40,63 +41,51 @@ const hx_moderations_query_props = {
   "hx-select": `#${MODERATION_TABLE_ID} > table`,
   "hx-target": `#${MODERATION_TABLE_ID}`,
 };
+const Moderations_Context = createContext({
+  query_result: {} as QueryResult,
+  pagination: {} as Pagination,
+});
 
 export function ModerationsPage({
   pagination,
   search,
+  query_result,
 }: {
   pagination: Pagination;
   search: Search;
+  query_result: QueryResult;
 }) {
-  const {
-    var: { identite_pg },
-  } = usePageRequestContext();
-  const { page, page_size } = pagination;
-  const {
-    day: date,
-    hide_join_organization,
-    hide_non_verified_domain,
-    processed_requests,
-    search_email,
-    search_siret,
-  } = search;
-  const get_moderations_list = GetModerationsList(identite_pg);
-  const query_moderations_list = get_moderations_list({
-    search: {
-      created_at: date,
-      email: search_email,
-      siret: search_siret,
-      show_archived: processed_requests,
-      hide_non_verified_domain,
-      hide_join_organization,
-    },
-    pagination: { page: page - 1, take: page_size },
-  });
   return (
     <Moderations_Context.Provider
       value={{
         pagination,
-        query_moderations_list,
+        query_result,
       }}
     >
-      <main
-        class="fr-container my-12"
-        {...hx_moderations_query_props}
-        hx-sync="this"
-        hx-trigger={[
-          `every 33s [document.visibilityState === 'visible']`,
-          `visibilitychange[document.visibilityState === 'visible'] from:document`,
-        ].join(", ")}
-      >
-        <h1>Liste des moderations</h1>
-        <Filter search={search} />
-        <ModerationList_Table />
-      </main>
+      <Main search={search} />
     </Moderations_Context.Provider>
   );
 }
 
 //
+
+function Main({ search }: { search: Search }) {
+  return (
+    <main
+      class="fr-container my-12"
+      {...hx_moderations_query_props}
+      hx-sync="this"
+      hx-trigger={[
+        `every 33s [document.visibilityState === 'visible']`,
+        `visibilitychange[document.visibilityState === 'visible'] from:document`,
+      ].join(", ")}
+    >
+      <h1>Liste des moderations</h1>
+      <Filter search={search} />
+      <ModerationList_Table />
+    </main>
+  );
+}
 
 function Filter({ search }: { search: Search }) {
   const on_search_show_processed_requests = `
@@ -223,9 +212,8 @@ function Filter({ search }: { search: Search }) {
 }
 
 async function ModerationList_Table() {
-  const { pagination, query_moderations_list } =
-    useContext(Moderations_Context);
-  const { count, moderations } = await query_moderations_list;
+  const { pagination, query_result } = useContext(Moderations_Context);
+  const { count, moderations } = query_result;
   return (
     <div class="fr-table *:table!" id={MODERATION_TABLE_ID}>
       <table>
@@ -258,13 +246,7 @@ async function ModerationList_Table() {
   );
 }
 
-function Row({
-  key,
-  moderation,
-}: {
-  key?: string;
-  moderation: GetModerationsListDTO["moderations"][number];
-}) {
+function Row({ key, moderation }: { key?: string; moderation: Moderation }) {
   const { user, organization } = moderation;
   return (
     <tr

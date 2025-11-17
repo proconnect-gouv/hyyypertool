@@ -2,31 +2,28 @@
 
 import { Main_Layout } from "#src/layouts";
 import { authorized } from "#src/middleware/auth";
-import { set_variables } from "#src/middleware/context";
+import type { App_Context } from "#src/middleware/context";
 import { Pagination_Schema } from "@~/core/schema";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { match, P } from "ts-pattern";
 import moderation_router from "./:id/index";
-import {
-  load_moderations_list_page_variables,
-  Search_Schema,
-  type ContextType,
-} from "./context";
+import { search_schema } from "./context";
+import { get_moderations_list } from "./get_moderations_list.query";
 import { ModerationsPage } from "./page";
 
 //
-export default new Hono<ContextType>()
+export default new Hono<App_Context>()
   .use(authorized())
 
   .route("/:id", moderation_router)
   .get(
     "/",
     jsxRenderer(Main_Layout),
-    async function set_variables_middleware({ req, set }, next) {
+    async function GET({ render, req, set, var: { identite_pg } }) {
       const query = req.query();
 
-      const search = match(Search_Schema.parse(query))
+      const search = match(search_schema.parse(query))
         .with(
           { search_email: P.not("") },
           { search_siret: P.not("") },
@@ -43,17 +40,18 @@ export default new Hono<ContextType>()
         .with({ success: true }, ({ data }) => data)
         .otherwise(() => Pagination_Schema.parse({}));
 
-      const variables = await load_moderations_list_page_variables({
-        pagination,
+      const query_moderations_list = await get_moderations_list(identite_pg, {
+        pagination: { ...pagination, page: pagination.page - 1 },
         search,
       });
-      set_variables(set, variables);
-      return next();
-    },
-    function GET({ render, set, var: { pagination, search } }) {
+
       set("page_title", "Liste des moderations");
       return render(
-        <ModerationsPage pagination={pagination} search={search} />,
+        <ModerationsPage
+          pagination={pagination}
+          search={search}
+          query_result={query_moderations_list}
+        />,
       );
     },
   );
