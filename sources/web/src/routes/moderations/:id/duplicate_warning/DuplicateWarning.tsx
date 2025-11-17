@@ -10,15 +10,11 @@ import type { find_duplicate_users } from "./find_duplicate_users.query";
 import type { get_duplicate_moderations } from "./get_duplicate_moderations.query";
 import type { get_moderation } from "./get_moderation.query";
 import type { get_moderation_tickets } from "./get_moderation_tickets.query";
+import type { get_user_by_id } from "./get_user_by_id.query";
 
 //
 
-type User = {
-  id: number;
-  email: string;
-  given_name: string | null;
-  family_name: string | null;
-};
+type User = Awaited<ReturnType<typeof get_user_by_id>>;
 
 type DuplicateUsers = Awaited<ReturnType<typeof find_duplicate_users>>;
 

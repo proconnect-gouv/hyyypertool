@@ -13,7 +13,7 @@ beforeEach(empty_database);
 test("returns user with specified columns", async () => {
   const user_id = await create_adora_pony_user(pg);
 
-  const get_user_by_id = GetUserById(pg, {
+  const get_user_by_id = GetUserById({
     columns: {
       id: true,
       email: true,
@@ -21,7 +21,7 @@ test("returns user with specified columns", async () => {
       family_name: true,
     },
   });
-  const result = await get_user_by_id(user_id);
+  const result = await get_user_by_id(pg, user_id);
 
   expect(result).toMatchInlineSnapshot(`
     {
@@ -34,9 +34,9 @@ test("returns user with specified columns", async () => {
 });
 
 test("throws NotFoundError when user not found", async () => {
-  const get_user_by_id = GetUserById(pg, {
+  const get_user_by_id = GetUserById({
     columns: { id: true },
   });
 
-  await expect(get_user_by_id(42)).rejects.toThrow("User not found.");
+  await expect(get_user_by_id(pg, 42)).rejects.toThrow("User not found.");
 });
