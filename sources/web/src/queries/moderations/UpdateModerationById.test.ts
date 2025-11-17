@@ -5,11 +5,7 @@ import {
   create_adora_pony_user,
   create_unicorn_organization,
 } from "@~/identite-proconnect/database/seed/unicorn";
-import {
-  empty_database,
-  migrate,
-  pg,
-} from "@~/identite-proconnect/testing";
+import { empty_database, migrate, pg } from "@~/identite-proconnect/testing";
 import { beforeAll, expect, setSystemTime, test } from "bun:test";
 import { UpdateModerationById } from "./UpdateModerationById";
 
@@ -36,6 +32,7 @@ test("update a moderation", async () => {
     comment: "Adora is a good pony",
     moderated_by: "Captain Midnight",
     moderated_at: new Date().toISOString(),
+    status: "accepted",
   });
 
   expect(
@@ -52,5 +49,6 @@ test("update a moderation", async () => {
     ticket_id: null,
     type: "",
     user_id,
+    status: "accepted",
   });
 });
