@@ -12,7 +12,7 @@ exports[`render header section 1`] = `
   </div>
   <section class="flex items-baseline space-x-5">
     <h1 class="fr-h2">🕵️ Adora Pony</h1>
-    <div><p class="fr-badge fr-badge--new">A traiter</p></div>
+    <div><p class="fr-badge fr-badge--success">Accepté</p></div>
   </section>
   <div class="fr-notice fr-notice--info">
     <div class="fr-container">

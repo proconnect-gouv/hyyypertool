@@ -12,6 +12,7 @@ export function GetModerationHeader({ pg }: IdentiteProconnectDatabaseCradle) {
         id: true,
         moderated_at: true,
         moderated_by: true,
+        status: true,
         type: true,
       },
       where: (table, { eq }) => eq(table.id, id),

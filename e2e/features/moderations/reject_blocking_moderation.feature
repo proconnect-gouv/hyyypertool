@@ -25,6 +25,7 @@ Fonctionnalité: Refuser une modération bloquante
     Et je réinitialise le contexte
 
     Quand je clique sur "Annuler"
+    Et je vois "Modération rejetée"
     Alors je vois "Cette modération a été marqué comme traitée le"
 
     Quand je clique sur "Moderations"

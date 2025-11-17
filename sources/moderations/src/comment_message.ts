@@ -20,15 +20,23 @@ const REPROCESSED_COMMENT = BUILTIN_COMMENT.extend({
   type: z.literal("REPROCESSED"),
 });
 
-export type Comment_Type =
+export type CommentMeta =
   | z.TypeOf<typeof REJECTED_COMMENT>
   | z.TypeOf<typeof REPROCESSED_COMMENT>
   | z.TypeOf<typeof VALIDATED_COMMENT>;
 
 //
 
-export function comment_message(comment_type: Comment_Type) {
-  const comment_message = match(comment_type)
+export function comment_type_to_status(type: CommentMeta["type"]) {
+  return match(type)
+    .with("VALIDATED", () => "accepted" as const)
+    .with("REJECTED", () => "rejected" as const)
+    .with("REPROCESSED", () => "pending" as const)
+    .exhaustive();
+}
+
+export function comment_message(comment_meta: CommentMeta) {
+  const comment_message = match(comment_meta)
     .with({ type: "VALIDATED" }, ({ created_by, reason }) =>
       [`Validé par ${created_by}`, reason ? `Raison : "${reason}"` : false]
         .filter(Boolean)
@@ -44,14 +52,14 @@ export function comment_message(comment_type: Comment_Type) {
         `Rejeté par ${created_by} | Raison : "${reason}"`,
     )
     .exhaustive();
-  return `${Number(new Date())} ${comment_type.created_by} | ${comment_message}`;
+  return `${Number(new Date())} ${comment_meta.created_by} | ${comment_message}`;
 }
 
 export function append_comment(
   comment: string | null,
-  comment_type: Comment_Type,
+  comment_meta: CommentMeta,
 ) {
-  return [...(comment ? [comment] : []), comment_message(comment_type)].join(
+  return [...(comment ? [comment] : []), comment_message(comment_meta)].join(
     "\n",
   );
 }

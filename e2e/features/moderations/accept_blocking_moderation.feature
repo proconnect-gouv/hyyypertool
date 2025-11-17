@@ -24,6 +24,7 @@ Fonctionnalité: Accepter une modération bloquante avec la barre d'outils
     Et je réinitialise le contexte
     Quand je clique sur "Annuler"
 
+    Et je vois "Modération acceptée"
     Et je vois "Cette modération a été marqué comme traitée le"
     Et je vois "Validé par user@yopmail.com"
 

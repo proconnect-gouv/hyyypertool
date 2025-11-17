@@ -1,12 +1,12 @@
 //
 
 import { match } from "ts-pattern";
-import { z } from "zod";
+import { z } from "zod/v4";
 
 //
 
 const BUILTIN_COMMENT = z.object({
-  created_by: z.string().email(),
+  created_by: z.email(),
 });
 const VALIDATED_COMMENT = BUILTIN_COMMENT.extend({
   reason: z.string().optional(),
@@ -20,14 +20,14 @@ const REPROCESSED_COMMENT = BUILTIN_COMMENT.extend({
   type: z.literal("REPROCESSED"),
 });
 
-export type Comment_Type =
+export type CommentType =
   | z.TypeOf<typeof REJECTED_COMMENT>
   | z.TypeOf<typeof REPROCESSED_COMMENT>
   | z.TypeOf<typeof VALIDATED_COMMENT>;
 
 //
 
-export function comment_message(comment_type: Comment_Type) {
+export function comment_message(comment_type: CommentType) {
   const comment_message = match(comment_type)
     .with({ type: "VALIDATED" }, ({ created_by, reason }) =>
       [`Validé par ${created_by}`, reason ? `Raison : "${reason}"` : false]
@@ -49,7 +49,7 @@ export function comment_message(comment_type: Comment_Type) {
 
 export function append_comment(
   comment: string | null,
-  comment_type: Comment_Type,
+  comment_type: CommentType,
 ) {
   return [...(comment ? [comment] : []), comment_message(comment_type)].join(
     "\n",

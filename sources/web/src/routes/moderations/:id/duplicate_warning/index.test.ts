@@ -75,8 +75,16 @@ test("GET /moderations/:id/duplicate_warning", async () => {
         Zammad</a
       >
       <ul>
-        <li><a href="/moderations/1">Moderation#1</a> ❌: Pas de ticket</li>
-        <li><a href="/moderations/2">Moderation#2</a> ❌: Pas de ticket</li>
+        <li>
+          <a href="/moderations/1">Moderation#1</a>
+          <p class="fr-badge fr-badge--success">Traité</p>
+          Pas de ticket
+        </li>
+        <li>
+          <a href="/moderations/2">Moderation#2</a>
+          <p class="fr-badge fr-badge--success">Traité</p>
+          Pas de ticket
+        </li>
       </ul>
       <form
         _="
