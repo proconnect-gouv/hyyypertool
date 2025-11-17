@@ -1,20 +1,24 @@
 //
 
-import { date_to_string } from "#src/time";
-import { urls } from "#src/urls";
 import {
   moderation_type_to_emoji,
   moderation_type_to_title,
 } from "#src/lib/moderations";
-import { usePageRequestContext, type ModerationList } from "./context";
+import { date_to_string } from "#src/time";
+import { urls } from "#src/urls";
+import type { get_moderations_by_user_id } from "./get_moderations_by_user_id.query";
 
 //
 
-export function Table() {
-  const {
-    var: { describedby, moderations },
-  } = usePageRequestContext();
+type ModerationList = Awaited<ReturnType<typeof get_moderations_by_user_id>>;
 
+export function Table({
+  describedby,
+  moderations,
+}: {
+  describedby: string;
+  moderations: ModerationList;
+}) {
   return (
     <div class="fr-table *:table!">
       <table aria-describedby={describedby}>
