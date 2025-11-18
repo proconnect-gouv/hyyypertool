@@ -1,11 +1,11 @@
 //
 
-import { BadRequestError } from "@~/core/error";
+import { BadRequestError } from "#src/errors";
 import {
+  EmailDomain_Type_Schema,
   schema,
   type IdentiteProconnectDatabaseCradle,
 } from "@~/identite-proconnect/database";
-import { EmailDomain_Type_Schema } from "@~/identite-proconnect/database";
 
 //
 
