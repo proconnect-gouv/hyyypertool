@@ -1,7 +1,7 @@
 //
 
 import type { Env } from "hono";
-import type { App_Env } from "./env";
+import type { AppEnv } from "./env";
 import env from "./env";
 
 //
@@ -11,7 +11,7 @@ const PUBLIC_ASSETS_PATH = `/assets/${env.VERSION}/public/built` as const;
 
 export default { ...env, ASSETS_PATH, PUBLIC_ASSETS_PATH };
 
-export interface App_Config extends App_Env {
+export interface App_Config extends AppEnv {
   ASSETS_PATH: typeof ASSETS_PATH;
   PUBLIC_ASSETS_PATH: typeof PUBLIC_ASSETS_PATH;
 }
@@ -29,7 +29,7 @@ export interface AppEnv_Context extends Env {
   Bindings: {
     ASSETS_PATH: typeof ASSETS_PATH;
     PUBLIC_ASSETS_PATH: typeof PUBLIC_ASSETS_PATH;
-  } & App_Env;
+  } & AppEnv;
 
   Variables: {
     readonly nonce: string;
