@@ -1,10 +1,15 @@
 //
 
-import env from "@~/core/config";
 import consola from "consola";
 import { join } from "node:path";
 
 //
+
+export type ApiAuthConfig = {
+  baseUrl: string;
+  username: string;
+  password: string;
+};
 
 type Options =
   | {
@@ -23,12 +28,13 @@ type Options =
     };
 
 export async function fetch_mcp_admin_api(
+  config: ApiAuthConfig,
   options: Options & { timeout?: number },
 ) {
   const searchParams = new URLSearchParams(options.searchParams);
-  const url = `${join(env.API_AUTH_URL, options.endpoint)}?${searchParams}`;
+  const url = `${join(config.baseUrl, options.endpoint)}?${searchParams}`;
   const headers = new Headers({
-    Authorization: `Basic ${Buffer.from(`${env.API_AUTH_USERNAME}:${env.API_AUTH_PASSWORD}`).toString("base64")}`,
+    Authorization: `Basic ${Buffer.from(`${config.username}:${config.password}`).toString("base64")}`,
   });
 
   consola.info(`  <<-- ${options.method} ${url}`);
