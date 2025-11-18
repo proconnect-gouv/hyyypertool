@@ -1,6 +1,6 @@
 //
 
-import { HTTPError } from "@~/core/error";
+import { HTTPError } from "#src/errors";
 import type { get_zammad_mail } from "#src/lib/zammad";
 import { is_zammad_ticket } from "#src/lib/zammad";
 import { to } from "await-to-js";

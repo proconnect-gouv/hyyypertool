@@ -1,7 +1,6 @@
 //
 
 import env from "@~/core/config";
-import { HTTPError } from "@~/core/error";
 import consola from "consola";
 import { join } from "node:path";
 
@@ -45,7 +44,7 @@ export async function fetch_mcp_admin_api(
   );
 
   if (!response.ok) {
-    throw new HTTPError(
+    throw new Error(
       `${options.method} ${url} ${response.status} ${response.statusText}`,
     );
   }

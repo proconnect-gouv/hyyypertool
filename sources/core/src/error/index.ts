@@ -21,8 +21,3 @@ export class AuthError extends Error {
  * @deprecated Use @~/web/errors BadRequestError instead
  */
 export const BadRequestError = ModernError.subclass("BadRequestError");
-
-/**
- * @deprecated Use @~/web/errors HTTPError instead
- */
-export const HTTPError = ModernError.subclass("HTTPError");
