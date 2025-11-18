@@ -1,6 +1,6 @@
 //
 
-import { NotFoundError } from "@~/core/error";
+import { NotFoundError } from "#src/errors";
 import type { IdentiteProconnectDatabaseCradle } from "@~/identite-proconnect/database";
 
 //

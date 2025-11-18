@@ -26,8 +26,3 @@ export const BadRequestError = ModernError.subclass("BadRequestError");
  * @deprecated Use @~/web/errors HTTPError instead
  */
 export const HTTPError = ModernError.subclass("HTTPError");
-
-/**
- * @deprecated Use @~/web/errors NotFoundError instead
- */
-export const NotFoundError = ModernError.subclass("NotFoundError");
