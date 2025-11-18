@@ -9,10 +9,12 @@ export async function AddDomain() {
   return (
     <form {...hx_add_props} hx-swap="none">
       <div class="fr-input-group">
-        <label class="fr-label">Ajouter un email problématique</label>
+        <label class="fr-label" for={$describedby}>
+          Ajouter un email problématique
+        </label>
         <div class="fr-input-wrap fr-input-wrap--addon">
           <input
-            aria-describedby="{$describedby}"
+            aria-describedby={$describedby}
             id={$describedby}
             class="fr-input"
             type="email"
