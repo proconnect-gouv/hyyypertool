@@ -48,7 +48,7 @@ async function Row({
   const { verified_at, problematic_email, email_domain, verified_by } =
     whitelist_item;
 
-  const hx_delete_props = await (hx_urls as any)["domains-deliverability"][
+  const hx_delete_props = await hx_urls["domains-deliverability"][
     ":email_domain"
   ].$delete({
     param: { email_domain: email_domain },

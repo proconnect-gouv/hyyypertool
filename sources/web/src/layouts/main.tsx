@@ -141,7 +141,7 @@ function Nav() {
           <a
             aria-current={req.routePath.startsWith("/domains-deliverability")}
             class="fr-nav__link"
-            href={(urls as any)["domains-deliverability"].$url().pathname}
+            href={urls["domains-deliverability"].$url().pathname}
             target="_self"
           >
             Délivrabilité des domaines

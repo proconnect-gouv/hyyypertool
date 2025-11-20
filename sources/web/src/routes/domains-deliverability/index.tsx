@@ -5,7 +5,7 @@ import { Main_Layout } from "#src/layouts";
 import { authorized } from "#src/middleware/auth";
 import { zValidator } from "@hono/zod-validator";
 import { z_username } from "@~/core/schema";
-import { email_deliverability_whitelist } from "@~/identite-proconnect/database/drizzle.schema";
+import { schema } from "@~/identite-proconnect/database";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
@@ -50,7 +50,7 @@ export default new Hono<ContextType>()
       const username = z_username.parse(userinfo);
 
       try {
-        await identite_pg.insert(email_deliverability_whitelist).values({
+        await identite_pg.insert(schema.email_deliverability_whitelist).values({
           problematic_email,
           email_domain,
           verified_by: username,
@@ -76,8 +76,13 @@ export default new Hono<ContextType>()
 
       try {
         await identite_pg
-          .delete(email_deliverability_whitelist)
-          .where(eq(email_deliverability_whitelist.email_domain, email_domain));
+          .delete(schema.email_deliverability_whitelist)
+          .where(
+            eq(
+              schema.email_deliverability_whitelist.email_domain,
+              email_domain,
+            ),
+          );
 
         return text("OK", 200, {
           "HX-Trigger": "domains-deliverability-updated",

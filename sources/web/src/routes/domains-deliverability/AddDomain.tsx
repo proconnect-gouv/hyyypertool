@@ -4,7 +4,7 @@ import { hx_urls } from "#src/urls";
 export async function AddDomain() {
   const $describedby = hyper_ref("add_problematic_email");
 
-  const hx_add_props = await (hx_urls as any)["domains-deliverability"].$put();
+  const hx_add_props = await hx_urls["domains-deliverability"].$put();
 
   return (
     <form {...hx_add_props} hx-swap="none">
