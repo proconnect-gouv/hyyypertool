@@ -10,6 +10,7 @@ import { set_sentry } from "#src/middleware/sentry";
 import consola from "consola";
 import { Hono } from "hono";
 import auth_router from "./auth";
+import domains_deliverability_router from "./domains-deliverability";
 import moderations_router from "./moderations";
 import organizations_router from "./organizations";
 import proxy_router from "./proxy";
@@ -64,6 +65,8 @@ const app = new Hono()
   .route("/users", users_router)
 
   .route("/organizations", organizations_router)
+
+  .route("/domains-deliverability", domains_deliverability_router)
 
   .onError(error_handler)
   .notFound(not_found_handler);

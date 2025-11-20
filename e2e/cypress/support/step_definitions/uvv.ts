@@ -190,3 +190,11 @@ Then(
       });
   },
 );
+
+When("je clique sur l'élément nommé {string}", (ariaLabel: string) => {
+  get_within_context().within(() => cy.findByLabelText(ariaLabel).click());
+});
+
+When("je confirme la suppression", () => {
+  cy.on("window:confirm", () => true);
+});

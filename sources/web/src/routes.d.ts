@@ -751,6 +751,56 @@ declare const app: import("hono/hono-base").HonoBase<
         };
       },
       "/organizations"
+    >
+  | import("hono/types").MergeSchemaPath<
+      {
+        "/": {
+          $get: {
+            input: {};
+            output: {};
+            outputFormat: string;
+            status: import("hono/utils/http-status").StatusCode;
+          };
+        };
+      } & {
+        "/": {
+          $put: {
+            input: {
+              form: {
+                problematic_email: string;
+              };
+            };
+            output: {};
+            outputFormat: string;
+            status: import("hono/utils/http-status").StatusCode;
+          };
+        };
+      } & {
+        "/:email_domain": {
+          $delete:
+            | {
+                input: {
+                  param: {
+                    email_domain: string;
+                  };
+                };
+                output: "OK";
+                outputFormat: "text";
+                status: 200;
+              }
+            | {
+                input: {
+                  param: {
+                    email_domain: string;
+                  };
+                };
+                output: "Erreur lors de la suppression";
+                outputFormat: "text";
+                status: 500;
+              };
+        };
+      },
+      "/domains-deliverability"
     >,
   "/"
 >;

@@ -44,6 +44,13 @@ export async function delete_database(db: IdentiteProconnect_PgDatabase) {
     const email_domains = await db.delete(schema.email_domains).returning();
     await db.execute(sql`ALTER SEQUENCE email_domains_id_seq RESTART WITH 1`);
     consola.info(`🚮 DELETE ${email_domains.length} moderations`);
+
+    const email_deliverability_whitelist = await db
+      .delete(schema.email_deliverability_whitelist)
+      .returning();
+    consola.info(
+      `🚮 DELETE ${email_deliverability_whitelist.length} email delivrability in whitelist`,
+    );
   } catch (err) {
     console.error("Something went wrong...");
     console.error(err);
