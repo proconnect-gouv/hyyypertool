@@ -6,8 +6,12 @@ import { set_identite_pg } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
 import { schema } from "@~/identite-proconnect/database";
 import { create_unicorn_organization } from "@~/identite-proconnect/database/seed/unicorn";
-import { empty_database, migrate, pg } from "@~/identite-proconnect/testing";
-import { beforeAll, beforeEach, expect, test } from "bun:test";
+import {
+  empty_database,
+  migrate,
+  pg,
+} from "@~/identite-proconnect/database/testing";
+import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
 import { Hono } from "hono";
 import app from "./index";
 
@@ -15,6 +19,7 @@ import app from "./index";
 
 beforeAll(migrate);
 beforeEach(empty_database);
+setSystemTime(new Date("2222-01-01T00:00:00.000Z"));
 
 //
 

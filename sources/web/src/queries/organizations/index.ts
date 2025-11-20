@@ -1,6 +1,5 @@
 //
 
-export * from "./AddMemberToOrganization";
 export * from "./AddVerifiedDomain";
 export * from "./CountOrganizationMembers";
 export * from "./DeleteDomainById";

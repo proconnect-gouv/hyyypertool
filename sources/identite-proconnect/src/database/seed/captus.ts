@@ -1,6 +1,6 @@
 //
 
-import type { MCP_EmailDomain_Type } from "@~/identite-proconnect/types";
+import { EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES } from "#src/types";
 import { schema, type IdentiteProconnect_PgDatabase } from "..";
 
 //
@@ -19,7 +19,7 @@ export async function create_cactus_organization(
   await pg.insert(schema.email_domains).values({
     domain: "cactus.corn",
     organization_id,
-    verification_type: "verified" as MCP_EmailDomain_Type,
+    verification_type: EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES.enum.verified,
   });
 
   return organization_id;

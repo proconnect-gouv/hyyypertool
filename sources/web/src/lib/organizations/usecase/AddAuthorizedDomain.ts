@@ -2,10 +2,10 @@
 
 import { BadRequestError } from "#src/errors";
 import {
-  EmailDomain_Type_Schema,
   schema,
   type IdentiteProconnectDatabaseCradle,
 } from "@~/identite-proconnect/database";
+import { EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES } from "@~/identite-proconnect/types";
 
 //
 
@@ -19,7 +19,7 @@ export function AddAuthorizedDomain({ pg }: IdentiteProconnectDatabaseCradle) {
     return pg.insert(schema.email_domains).values({
       domain,
       organization_id,
-      verification_type: EmailDomain_Type_Schema.unwrap().enum.verified,
+      verification_type: EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES.enum.verified,
     });
   };
 }

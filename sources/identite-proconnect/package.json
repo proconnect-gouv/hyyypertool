@@ -3,30 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "imports": {
+    "#src/*": "./src/*/index.ts"
+  },
   "exports": {
-    ".": {
-      "default": "./src/index.ts"
-    },
-    "./database": {
-      "default": "./src/database/index.ts"
-    },
-    "./sdk": {
-      "default": "./src/sdk/index.ts"
-    },
-    "./database/testing": {
-      "default": "./src/database/testing/index.ts"
-    },
     "./database/seed/*": {
       "default": "./src/database/seed/*.ts"
     },
-    "./testing": {
-      "default": "./src/database/testing/index.ts"
-    },
-    "./types": {
-      "default": "./src/identite-proconnect.d.ts"
-    },
     "./*": {
-      "default": "./src/*.ts"
+      "default": "./src/*/index.ts"
     }
   },
   "scripts": {

@@ -2,11 +2,11 @@
 
 import { UpdateModerationById } from "#src/queries/moderations";
 import { z_username } from "@~/core/schema";
-import { type ModerationStatus } from "@~/identite-proconnect";
 import type {
   IdentiteProconnect_PgDatabase,
   schema,
 } from "@~/identite-proconnect/database";
+import { type ModerationStatus } from "@~/identite-proconnect/types";
 import { comment_type_to_status } from "@~/moderations/comment_message";
 import { append_comment, type CommentType } from "../comment_message";
 

@@ -7,7 +7,7 @@ import {
   create_pink_diamond_user,
   create_unicorn_organization,
 } from "@~/identite-proconnect/database/seed/unicorn";
-import { migrate, pg } from "@~/identite-proconnect/testing";
+import { migrate, pg } from "@~/identite-proconnect/database/testing";
 import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
 import { get_duplicate_moderations } from "./get_duplicate_moderations.query";
 

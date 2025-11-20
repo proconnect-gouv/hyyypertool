@@ -9,7 +9,7 @@ import {
   empty_database,
   migrate,
   pg,
-} from "@~/identite-proconnect/testing";
+} from "@~/identite-proconnect/database/testing";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
 import { get_organizations_by_user_id } from "./get_organizations_by_user_id.query";
 
@@ -38,7 +38,11 @@ test("returns organizations for a user", async () => {
           "cached_code_officiel_geographique": null,
           "cached_libelle": "🦄 libelle",
           "created_at": "1970-01-01T00:00:00+00:00",
-          "email_domains": [],
+          "email_domains": [
+            {
+              "domain": "unicorn.xyz",
+            },
+          ],
           "id": 1,
           "siret": "🦄 siret",
           "verification_type": null,
@@ -69,7 +73,11 @@ test("supports pagination", async () => {
           "cached_code_officiel_geographique": null,
           "cached_libelle": "🦄 libelle",
           "created_at": "1970-01-01T00:00:00+00:00",
-          "email_domains": [],
+          "email_domains": [
+            {
+              "domain": "unicorn.xyz",
+            },
+          ],
           "id": 1,
           "siret": "🦄 siret",
           "verification_type": null,

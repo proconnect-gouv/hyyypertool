@@ -3,16 +3,15 @@
 import {
   schema,
   type IdentiteProconnectDatabaseCradle,
-  type User,
-  type Users_Organizations,
 } from "@~/identite-proconnect/database";
+import type { User, UserOrganizationLink } from "@~/identite-proconnect/types";
 import { and, eq, ilike } from "drizzle-orm";
 import type { Simplify } from "type-fest";
 
 //
 
 type Pattern = Simplify<
-  Pick<User, "family_name"> & Pick<Users_Organizations, "organization_id">
+  Pick<User, "family_name"> & Pick<UserOrganizationLink, "organization_id">
 >;
 export function SuggestSameUserEmails({
   pg,
