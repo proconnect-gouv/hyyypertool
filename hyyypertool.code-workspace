@@ -157,7 +157,7 @@
         "group": "build",
         "label": "📦 Api Urls Dev",
         "options": {
-          "cwd": "${workspaceFolder:/}",
+          "cwd": "${workspaceFolder:🈸 sources/web/}",
           "env": { "NODE_ENV": "development" },
         },
         "problemMatcher": ["$tsc-watch"],
