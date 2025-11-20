@@ -11,7 +11,7 @@ import {
   empty_database,
   migrate,
   pg,
-} from "@~/identite-proconnect/testing";
+} from "@~/identite-proconnect/database/testing";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
 import { SuggestSameUserEmails } from "./SuggestSameUserEmails";
 

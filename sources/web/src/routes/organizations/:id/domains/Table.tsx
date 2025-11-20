@@ -7,12 +7,10 @@ import { menu_item } from "#src/ui/menu";
 import { Horizontal_Menu } from "#src/ui/menu/components";
 import { LocalTime } from "#src/ui/time";
 import { hx_urls } from "#src/urls";
-import type { EmailDomain_Type } from "@~/identite-proconnect/database";
-import type { MCP_EmailDomain_Type } from "@~/identite-proconnect/identite-proconnect.d";
+import type { EmailDomainVerificationType } from "@~/identite-proconnect/types";
 import { match } from "ts-pattern";
 import { add_params } from "./context";
 import type { get_organization_domains } from "./get_organization_domains.query";
-
 //
 
 type Domains = Awaited<ReturnType<typeof get_organization_domains>>;
@@ -85,13 +83,8 @@ export async function AddDomain({
   );
 }
 
-function TypeToEmoji({ type }: { type: EmailDomain_Type }) {
+function TypeToEmoji({ type }: { type: EmailDomainVerificationType }) {
   return match(type)
-    .with("authorized", () => (
-      <span role="img" aria-label="autorisé" title="autorisé">
-        🔓
-      </span>
-    ))
     .with("blacklisted", () => (
       <span role="img" aria-label="blacklisté" title="blacklisté">
         ☠️
@@ -147,7 +140,7 @@ function Row({
   return (
     <tr aria-label={`Domaine ${domain} (${verification_type})`} key={key}>
       <td>
-        <TypeToEmoji type={verification_type as MCP_EmailDomain_Type} />
+        <TypeToEmoji type={verification_type as EmailDomainVerificationType} />
       </td>
       <td>{domain}</td>
       <td>{verification_type}</td>
@@ -189,10 +182,10 @@ async function Row_Actions({
 }) {
   const { domain, id, organization, organization_id } = organization_domain;
 
-  const hx_change_type_props = (type: MCP_EmailDomain_Type) =>
+  const hx_change_type_props = (type: EmailDomainVerificationType) =>
     hx_urls.organizations[":id"].domains[":domain_id"].$patch({
       param: { id: organization_id.toString(), domain_id: id.toString() },
-      query: { type },
+      query: { type: type ?? "null" },
     });
 
   const hx_delete_domain_props = await hx_urls.organizations[":id"].domains[

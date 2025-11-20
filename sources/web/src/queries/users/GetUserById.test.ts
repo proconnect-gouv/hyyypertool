@@ -1,7 +1,11 @@
 //
 
 import { create_adora_pony_user } from "@~/identite-proconnect/database/seed/unicorn";
-import { empty_database, migrate, pg } from "@~/identite-proconnect/testing";
+import {
+  empty_database,
+  migrate,
+  pg,
+} from "@~/identite-proconnect/database/testing";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
 import { GetUserById } from "./GetUserById";
 

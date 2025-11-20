@@ -5,7 +5,11 @@ import {
   create_adora_pony_user,
   create_unicorn_organization,
 } from "@~/identite-proconnect/database/seed/unicorn";
-import { empty_database, migrate, pg } from "@~/identite-proconnect/testing";
+import {
+  empty_database,
+  migrate,
+  pg,
+} from "@~/identite-proconnect/database/testing";
 import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
 import { get_moderations_by_user_id } from "./get_moderations_by_user_id.query";
 

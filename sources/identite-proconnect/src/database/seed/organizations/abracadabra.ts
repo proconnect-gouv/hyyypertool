@@ -1,4 +1,4 @@
-import type { EmailDomainVerificationType } from "@~/identite-proconnect/database";
+import type { EmailDomainVerificationType } from "@~/identite-proconnect/types";
 import type { IdentiteProconnect_PgDatabase } from "../..";
 import { schema } from "../..";
 

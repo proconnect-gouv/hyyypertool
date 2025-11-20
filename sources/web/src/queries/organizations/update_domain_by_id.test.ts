@@ -5,11 +5,10 @@ import {
   empty_database,
   migrate,
   pg,
-} from "@~/identite-proconnect/testing";
-import type { MCP_EmailDomain_Type } from "@~/identite-proconnect/identite-proconnect.d";
+} from "@~/identite-proconnect/database/testing";
+import { EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES } from "@~/identite-proconnect/types";
 import { beforeAll, expect, setSystemTime, test } from "bun:test";
 import { update_domain_by_id } from "./update_domain_by_id";
-
 //
 
 beforeAll(migrate);
@@ -41,7 +40,7 @@ test("should update nothing", async () => {
     id: expect.any(Number),
     organization_id: unicorn_organization_id,
     domain: "unicorn.xyz",
-    verification_type: "verified" as MCP_EmailDomain_Type,
+    verification_type: EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES.enum.verified,
     can_be_suggested: true,
     verified_at: null,
     created_at: "2222-01-01 00:00:00+00",

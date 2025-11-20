@@ -12,9 +12,8 @@ import {
   empty_database,
   migrate,
   pg,
-} from "@~/identite-proconnect/testing";
-import type { EmailDomain } from "@~/identite-proconnect/database";
-import type { MCP_Moderation } from "@~/identite-proconnect/types";
+} from "@~/identite-proconnect/database/testing";
+import { EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES } from "@~/identite-proconnect/types";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
 import { get_unverified_domains } from "./get_unverified_domains.query";
 
@@ -44,7 +43,7 @@ test("returns bi.corn then troll.corn organizations", async () => {
   await pg.insert(schema.moderations).values({
     organization_id: unicorn_organization_id,
     user_id: adora_pony_user_id,
-    type: "" as MCP_Moderation["type"],
+    type: "",
   });
 
   await pg.insert(schema.email_domains).values({
@@ -227,7 +226,7 @@ test("returns no organizations verified by Trackdechets", async () => {
     domain: "troll.corn",
     organization_id: troll_organization_id,
     verification_type:
-      "trackdechets_postal_mail" as EmailDomain["verification_type"],
+      EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES.enum.trackdechets_postal_mail,
   });
   const result = await get_unverified_domains(pg, {});
   expect(result).toEqual({ count: 0, domains: [] });

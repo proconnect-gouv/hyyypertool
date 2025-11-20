@@ -2,27 +2,29 @@
 
 import { HTTPError, NotFoundError } from "#src/errors";
 import type { Htmx_Header } from "#src/htmx";
-import type { App_Context } from "#src/middleware/context";
-import { zValidator } from "@hono/zod-validator";
-import { Entity_Schema, z_email_domain } from "@~/core/schema";
-import { send_moderation_processed_email } from "@~/identite-proconnect/index";
 import {
-  ForceJoinOrganization,
-  MarkDomainAsVerified,
-} from "@~/identite-proconnect/sdk";
-import { MODERATION_EVENTS } from "#src/lib/moderations";
-import { validate_form_schema } from "#src/lib/moderations";
-import { MemberJoinOrganization } from "#src/lib/moderations";
-import { ValidateSimilarModerations } from "#src/lib/moderations";
-import {
-  GetModerationById,
-  GetModerationWithUser,
-} from "#src/queries/moderations";
+  MODERATION_EVENTS,
+  MemberJoinOrganization,
+  ValidateSimilarModerations,
+  validate_form_schema,
+} from "#src/lib/moderations";
 import {
   AddVerifiedDomain,
   GetFicheOrganizationById,
 } from "#src/lib/organizations/usecase";
+import type { App_Context } from "#src/middleware/context";
+import {
+  GetModerationById,
+  GetModerationWithUser,
+} from "#src/queries/moderations";
 import { GetMember, UpdateUserByIdInOrganization } from "#src/queries/users";
+import { zValidator } from "@hono/zod-validator";
+import { Entity_Schema, z_email_domain } from "@~/core/schema";
+import { SendModerationProcessedEmail } from "@~/identite-proconnect/api";
+import {
+  ForceJoinOrganization,
+  MarkDomainAsVerified,
+} from "@~/identite-proconnect/sdk";
 import { to } from "await-to-js";
 import consola from "consola";
 import { Hono } from "hono";
@@ -31,15 +33,19 @@ import { mark_as_validated } from "./mark_as_validated";
 
 //
 
+const param_schema = Entity_Schema;
+const form_schema = validate_form_schema;
+//
+
 export default new Hono<App_Context>().patch(
   "/",
-  zValidator("param", Entity_Schema),
-  zValidator("form", validate_form_schema),
+  zValidator("param", param_schema),
+  zValidator("form", form_schema),
   async function PATCH({
     text,
     req,
     notFound,
-    var: { identite_pg_client, identite_pg, userinfo, sentry },
+    var: { config, identite_pg_client, identite_pg, userinfo, sentry },
   }) {
     const { id } = req.valid("param");
     const { add_domain, add_member, send_notification, verification_type } =
@@ -150,6 +156,11 @@ export default new Hono<App_Context>().patch(
 
     //#region ✨ Send notification
     if (send_notification) {
+      const send_moderation_processed_email = SendModerationProcessedEmail({
+        baseUrl: config.API_AUTH_URL,
+        username: config.API_AUTH_USERNAME,
+        password: config.API_AUTH_PASSWORD,
+      });
       await send_moderation_processed_email({ organization_id, user_id });
     }
     //#endregion

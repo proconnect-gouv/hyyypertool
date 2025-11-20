@@ -8,7 +8,7 @@ import {
   add_user_to_organization,
   migrate,
   pg,
-} from "@~/identite-proconnect/testing";
+} from "@~/identite-proconnect/database/testing";
 import { beforeAll, expect, test } from "bun:test";
 import { CountGmailMembers } from "./CountGmailMembers";
 

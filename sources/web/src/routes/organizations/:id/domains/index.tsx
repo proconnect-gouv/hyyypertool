@@ -9,10 +9,11 @@ import {
 import type { App_Context } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
 import { DescribedBy_Schema, Entity_Schema, Id_Schema } from "@~/core/schema";
+import { schema } from "@~/identite-proconnect/database";
 import {
-  EmailDomain_Type_Schema,
-  schema,
-} from "@~/identite-proconnect/database";
+  EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES,
+  EMAIL_DOMAIN_REJECTED_VERIFICATION_TYPES,
+} from "@~/identite-proconnect/types";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
@@ -23,7 +24,10 @@ import { AddDomain, Table } from "./Table";
 //
 
 const DomainParams_Schema = z.object({ domain_id: Id_Schema });
-
+const EMAIL_DOMAIN_VERIFICATION_TYPES =
+  EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES.or(
+    EMAIL_DOMAIN_REJECTED_VERIFICATION_TYPES,
+  );
 //
 
 export default new Hono<App_Context>()
@@ -91,7 +95,7 @@ export default new Hono<App_Context>()
     zValidator(
       "query",
       z.object({
-        type: EmailDomain_Type_Schema.or(
+        type: EMAIL_DOMAIN_VERIFICATION_TYPES.or(
           z.literal("null").transform(() => null),
         ),
       }),
@@ -103,9 +107,7 @@ export default new Hono<App_Context>()
       await identite_pg
         .update(schema.email_domains)
         .set({
-          verification_type: EmailDomain_Type_Schema.parse(
-            verification_type,
-          ) as any,
+          verification_type,
           verified_at:
             verification_type === "verified" ? new Date().toISOString() : null,
           updated_at: new Date().toISOString(),

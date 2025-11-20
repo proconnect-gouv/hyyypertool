@@ -1,4 +1,4 @@
-import type { EmailDomainVerificationType } from "@~/identite-proconnect/database";
+import { EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES } from "#src/types";
 import type { IdentiteProconnect_PgDatabase } from "../..";
 import { schema } from "../..";
 
@@ -25,7 +25,7 @@ export async function insert_aldp(db: IdentiteProconnect_PgDatabase) {
   await db.insert(schema.email_domains).values({
     domain: "aldp-asso.fr",
     organization_id: organization.id,
-    verification_type: "verified" satisfies EmailDomainVerificationType,
+    verification_type: EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES.enum.verified,
   });
   return organization;
 }

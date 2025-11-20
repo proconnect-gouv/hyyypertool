@@ -1,6 +1,6 @@
 //
 
-import type { MCP_Moderation } from "@~/identite-proconnect/identite-proconnect.d";
+import { MODERATION_TYPES } from "#src/types";
 import consola from "consola";
 import type { IdentiteProconnect_PgDatabase } from "..";
 import { schema } from "..";
@@ -99,7 +99,7 @@ export async function insert_database(db: IdentiteProconnect_PgDatabase) {
     await insert_moderation(db, {
       created_at: "2011-11-11T12:11:11+02:00",
       organization_id: dinum.id,
-      type: "organization_join_block" as MCP_Moderation["type"],
+      type: MODERATION_TYPES.enum.organization_join_block,
       user_id: jean_bon.id,
       ticket_id: "115793",
       status: "pending",
@@ -113,7 +113,7 @@ export async function insert_database(db: IdentiteProconnect_PgDatabase) {
       organization_id: abracadabra.id,
       status: "pending",
       ticket_id: "session_456",
-      type: "organization_join_block" as MCP_Moderation["type"],
+      type: MODERATION_TYPES.enum.organization_join_block,
       user_id: jean_bon.id,
     });
     consola.verbose(
@@ -125,7 +125,7 @@ export async function insert_database(db: IdentiteProconnect_PgDatabase) {
       organization_id: abracadabra.id,
       status: "pending",
       ticket_id: "session_789",
-      type: "organization_join_block" as MCP_Moderation["type"],
+      type: MODERATION_TYPES.enum.organization_join_block,
       user_id: jean_dre.id,
     });
     consola.verbose(
@@ -134,7 +134,7 @@ export async function insert_database(db: IdentiteProconnect_PgDatabase) {
 
     await insert_moderation(db, {
       organization_id: aldp.id,
-      type: "big_organization_join" as MCP_Moderation["type"],
+      type: MODERATION_TYPES.enum.big_organization_join,
       user_id: pierre_bon.id,
     });
     consola.verbose(
@@ -146,7 +146,7 @@ export async function insert_database(db: IdentiteProconnect_PgDatabase) {
       organization_id: dengi.id,
       status: "accepted",
       ticket_id: "session_789",
-      type: "organization_join_block" as MCP_Moderation["type"],
+      type: MODERATION_TYPES.enum.organization_join_block,
       user_id: richard_bon.id,
     });
     consola.verbose(
@@ -157,7 +157,7 @@ export async function insert_database(db: IdentiteProconnect_PgDatabase) {
       organization_id: dengi.id,
       status: "pending",
       ticket_id: "session_321",
-      type: "organization_join_block" as MCP_Moderation["type"],
+      type: MODERATION_TYPES.enum.organization_join_block,
       user_id: richard_bon.id,
     });
     consola.verbose(
@@ -168,7 +168,7 @@ export async function insert_database(db: IdentiteProconnect_PgDatabase) {
       organization_id: bosch_france,
       status: "pending",
       ticket_id: "session_654",
-      type: "non_verified_domain" as MCP_Moderation["type"],
+      type: MODERATION_TYPES.enum.non_verified_domain,
       user_id: marie_bon,
     });
     consola.verbose(
@@ -181,7 +181,7 @@ export async function insert_database(db: IdentiteProconnect_PgDatabase) {
       organization_id: bosch_rexroth,
       status: "accepted",
       ticket_id: "session_987",
-      type: "non_verified_domain" as MCP_Moderation["type"],
+      type: MODERATION_TYPES.enum.non_verified_domain,
       user_id: marie_bon,
     });
     consola.verbose(
@@ -192,7 +192,7 @@ export async function insert_database(db: IdentiteProconnect_PgDatabase) {
       organization_id: dinum.id,
       status: "rejected",
       ticket_id: "session_111",
-      type: "non_verified_domain" as MCP_Moderation["type"],
+      type: MODERATION_TYPES.enum.non_verified_domain,
       user_id: raphael_alpha.id,
     });
     consola.verbose(

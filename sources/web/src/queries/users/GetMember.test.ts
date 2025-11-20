@@ -9,7 +9,7 @@ import {
   empty_database,
   migrate,
   pg,
-} from "@~/identite-proconnect/testing";
+} from "@~/identite-proconnect/database/testing";
 import { beforeAll, expect, setSystemTime, test } from "bun:test";
 import { GetMember } from "./GetMember";
 

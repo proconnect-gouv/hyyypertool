@@ -10,7 +10,7 @@ import type { Pagination } from "@~/core/schema";
 import {
   Verification_Type_Schema,
   type Verification_Type,
-} from "@~/identite-proconnect/verification_type";
+} from "@~/identite-proconnect/types";
 import { useContext } from "hono/jsx";
 import type { VariantProps } from "tailwind-variants";
 import { MemberContext } from "./context";

@@ -6,7 +6,7 @@ import { fieldset } from "#src/ui/form";
 import { formattedPlural } from "#src/ui/plurial";
 import { OpenInZammad, SearchInZammad } from "#src/ui/zammad/components";
 import { hx_urls, urls } from "#src/urls";
-import { MODERATION_STATUS } from "@~/identite-proconnect";
+import { MODERATION_STATUS } from "@~/identite-proconnect/types";
 import { raw } from "hono/html";
 import { match } from "ts-pattern";
 import type { find_duplicate_users } from "./find_duplicate_users.query";
