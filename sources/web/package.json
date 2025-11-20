@@ -14,7 +14,7 @@
     "build": "tsc --build",
     "clean": "rm -rf node_modules/.cache/tsc",
     "dev:api": "bun x run-z dev:api:clean dev:api:tsc dev:api:cp dev:api:format",
-    "dev:api:clean": "rm src/routes.d.ts",
+    "dev:api:clean": "bun run clean",
     "dev:api:cp": "cp ./node_modules/.cache/tsc/src/routes/index.d.ts 'src/routes.d.ts'",
     "dev:api:format": "prettier --write src/routes.d.ts",
     "dev:api:tsc": "bun run build",

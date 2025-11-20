@@ -1,5 +1,5 @@
 declare const app: import("hono/hono-base").HonoBase<
-  import("#src/middleware/nonce/set_nonce").NonceVariablesContext &
+  import("../middleware/nonce/set_nonce").NonceVariablesContext &
     import("#src/middleware/config").ConfigVariables_Context &
     import("#src/middleware/auth").UserInfoVariablesContext &
     import("#src/middleware/identite-pg").IdentiteProconnect_Pg_Context,
@@ -50,9 +50,9 @@ declare const app: import("hono/hono-base").HonoBase<
               $get: {
                 input: {
                   param: {
-                    ticket_id: string;
                     article_id: string;
                     attachment_id: string;
+                    ticket_id: string;
                   };
                 };
                 output: {};
@@ -223,8 +223,8 @@ declare const app: import("hono/hono-base").HonoBase<
                         };
                       } & {
                         query: {
-                          organization_id: string;
-                          user_id: string;
+                          organization_id: string | string[];
+                          user_id: string | string[];
                         };
                       };
                       output: {};
@@ -249,9 +249,9 @@ declare const app: import("hono/hono-base").HonoBase<
                           add_domain?: string | undefined;
                           send_notification?: string | undefined;
                           verification_type?:
+                            | "domain"
                             | "null"
                             | "code_sent_to_official_contact_email"
-                            | "domain"
                             | "imported_from_coop_mediation_numerique"
                             | "imported_from_inclusion_connect"
                             | "in_liste_dirigeants_rna"
@@ -427,8 +427,8 @@ declare const app: import("hono/hono-base").HonoBase<
                         query: {
                           describedby: string;
                           page_ref: string;
-                          page?: string | undefined;
-                          page_size?: string | undefined;
+                          page?: string | string[] | undefined;
+                          page_size?: string | string[] | undefined;
                         };
                       };
                       output: {};
@@ -469,9 +469,9 @@ declare const app: import("hono/hono-base").HonoBase<
           $get: {
             input: {
               query: {
-                page?: string | undefined;
-                page_size?: string | undefined;
-                q?: string | undefined;
+                page?: string | string[] | undefined;
+                page_size?: string | string[] | undefined;
+                q?: string | string[] | undefined;
               };
             };
             output: {};
@@ -510,9 +510,9 @@ declare const app: import("hono/hono-base").HonoBase<
                 $get: {
                   input: {
                     query: {
-                      page?: string | undefined;
-                      page_size?: string | undefined;
-                      q?: string | undefined;
+                      page?: string | string[] | undefined;
+                      page_size?: string | string[] | undefined;
+                      q?: string | string[] | undefined;
                     };
                   };
                   output: {};
@@ -552,8 +552,8 @@ declare const app: import("hono/hono-base").HonoBase<
                           query: {
                             describedby: string;
                             page_ref: string;
-                            page?: string | undefined;
-                            page_size?: string | undefined;
+                            page?: string | string[] | undefined;
+                            page_size?: string | string[] | undefined;
                           };
                         };
                         output: {};
@@ -591,7 +591,6 @@ declare const app: import("hono/hono-base").HonoBase<
                             };
                           } & {
                             form: {
-                              is_external?: string | undefined;
                               verification_type?:
                                 | ""
                                 | "domain"
@@ -608,6 +607,7 @@ declare const app: import("hono/hono-base").HonoBase<
                                 | "proof_received"
                                 | "bypassed"
                                 | undefined;
+                              is_external?: string | undefined;
                             };
                           };
                           output: "OK";
@@ -642,8 +642,8 @@ declare const app: import("hono/hono-base").HonoBase<
                           query: {
                             describedby: string;
                             page_ref: string;
-                            page?: string | undefined;
-                            page_size?: string | undefined;
+                            page?: string | string[] | undefined;
+                            page_size?: string | string[] | undefined;
                           };
                         };
                         output: {};
@@ -713,7 +713,14 @@ declare const app: import("hono/hono-base").HonoBase<
                         };
                       } & {
                         query: {
-                          type: string | string[];
+                          type:
+                            | "null"
+                            | "verified"
+                            | "external"
+                            | "official_contact"
+                            | "trackdechets_postal_mail"
+                            | "blacklisted"
+                            | "refused";
                         };
                       };
                       output: "OK";
@@ -731,10 +738,10 @@ declare const app: import("hono/hono-base").HonoBase<
           $get: {
             input: {
               query: {
-                id?: string | undefined;
-                page?: string | undefined;
-                page_size?: string | undefined;
-                q?: string | undefined;
+                page?: string | string[] | undefined;
+                page_size?: string | string[] | undefined;
+                q?: string | string[] | undefined;
+                id?: string | string[] | undefined;
               };
             };
             output: {};
