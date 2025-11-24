@@ -22,7 +22,6 @@ export * from "./plurial";
 export * from "./quote";
 export * from "./table";
 export * from "./tag";
-export * from "./testing";
 export * from "./time";
 export * from "./toast";
 export * from "./users";
