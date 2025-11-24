@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import { join } from "node:path";
 import { cwd, env } from "node:process";
 import { match } from "ts-pattern";
-import { z } from "zod";
+import { z } from "zod/v4";
 
 //
 
@@ -65,9 +65,8 @@ export const app_env = z.object({
   CRISP_USER_NICKNAME: z.string().trim(),
   CRISP_WEBSITE_ID: z.string().trim(),
   DATABASE_URL: z
-    .string()
-    .trim()
     .url()
+    .trim()
     .default(
       "postgresql://postgres:postgres@localhost:5432/postgres?schema=public",
     ),

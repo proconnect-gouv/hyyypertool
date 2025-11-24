@@ -10,7 +10,7 @@ import type { App_Context } from "#src/middleware/context";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { match } from "ts-pattern";
-import { z } from "zod";
+import { z } from "zod/v4";
 import organization_member_router from "./:user_id";
 import { Table } from "./Table";
 import { get_users_by_organization } from "./get_users_by_organization.query";

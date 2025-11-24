@@ -1,8 +1,7 @@
 //
 
-import { z } from "zod";
+import { z } from "zod/v4";
 
 export const z_email_domain = z
-  .string()
   .email()
   .transform((email) => email.split("@")[1]);

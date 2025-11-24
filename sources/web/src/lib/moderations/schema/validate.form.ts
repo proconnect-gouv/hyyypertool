@@ -2,7 +2,7 @@
 
 import { z_coerce_boolean } from "@~/core/schema";
 import { UserOrganizationLinkVerificationTypeSchema } from "@~/identite-proconnect/types";
-import { z } from "zod";
+import { z } from "zod/v4";
 
 //
 
