@@ -3,6 +3,7 @@
 import type { Htmx_Header } from "#src/htmx";
 import { Main_Layout } from "#src/layouts";
 import { authorized } from "#src/middleware/auth";
+import type { App_Context } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
 import { z_username } from "@~/core/schema";
 import { schema } from "@~/identite-proconnect/database";
@@ -10,7 +11,7 @@ import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import z from "zod";
-import { type ContextType } from "./context";
+import { get_email_deliverability_whitelist } from "./get_email_deliverability_whitelist.query";
 import Page from "./page";
 
 //
@@ -20,17 +21,19 @@ const WhitelistParams_Schema = z.object({
 });
 
 //
-export default new Hono<ContextType>()
+export default new Hono<App_Context>()
   .use(authorized())
   .get(
     "/",
     jsxRenderer(Main_Layout),
 
-    function GET({ render, set }) {
+    async function GET({ render, set, var: { identite_pg } }) {
+      const whitelist = await get_email_deliverability_whitelist(identite_pg);
+
       set("page_title", "Délivrabilité des domaines");
       return render(
         <>
-          <Page />
+          <Page whitelist={whitelist} />
         </>,
       );
     },

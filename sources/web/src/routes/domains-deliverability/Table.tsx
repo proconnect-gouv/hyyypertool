@@ -1,21 +1,16 @@
 import { LocalTime } from "#src/ui";
 import { hx_urls } from "#src/urls";
-import { usePageRequestContext } from "./context";
+import { get_email_deliverability_whitelist } from "./get_email_deliverability_whitelist.query";
 
-type EmailDelivrabilityWhiteList = {
-  verified_at: string;
-  problematic_email: string;
-  email_domain: string;
-  verified_by: string | null;
-};
-export async function Table() {
-  const {
-    var: { identite_pg },
-  } = usePageRequestContext();
+type EmailDelivrabilityWhiteList = Awaited<
+  ReturnType<typeof get_email_deliverability_whitelist>
+>[number];
 
-  const results =
-    await identite_pg.query.email_deliverability_whitelist.findMany();
-
+export async function Table({
+  whitelist,
+}: {
+  whitelist: EmailDelivrabilityWhiteList[];
+}) {
   return (
     <div class="fr-table *:table!">
       <table>
@@ -29,7 +24,7 @@ export async function Table() {
           </tr>
         </thead>
         <tbody>
-          {results.map((item) => (
+          {whitelist.map((item) => (
             <Row key={item.email_domain} whitelist_item={item} />
           ))}
         </tbody>
