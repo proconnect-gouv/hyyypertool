@@ -466,18 +466,31 @@ declare const app: import("hono/hono-base").HonoBase<
           >
       ) & {
         "/": {
-          $get: {
-            input: {
-              query: {
-                page?: string | string[] | undefined;
-                page_size?: string | string[] | undefined;
-                q?: string | string[] | undefined;
+          $get:
+            | {
+                input: {
+                  query: {
+                    page?: string | string[] | undefined;
+                    page_size?: string | string[] | undefined;
+                    q?: string | string[] | undefined;
+                  };
+                };
+                output: {};
+                outputFormat: string;
+                status: import("hono/utils/http-status").StatusCode;
+              }
+            | {
+                input: {
+                  query: {
+                    page?: string | string[] | undefined;
+                    page_size?: string | string[] | undefined;
+                    q?: string | string[] | undefined;
+                  };
+                };
+                output: undefined;
+                outputFormat: "redirect";
+                status: import("hono/utils/http-status").RedirectStatusCode;
               };
-            };
-            output: {};
-            outputFormat: string;
-            status: import("hono/utils/http-status").StatusCode;
-          };
         };
       },
       "/users"
@@ -507,18 +520,31 @@ declare const app: import("hono/hono-base").HonoBase<
               "/": {};
             } & {
               "/": {
-                $get: {
-                  input: {
-                    query: {
-                      page?: string | string[] | undefined;
-                      page_size?: string | string[] | undefined;
-                      q?: string | string[] | undefined;
+                $get:
+                  | {
+                      input: {
+                        query: {
+                          page?: string | string[] | undefined;
+                          page_size?: string | string[] | undefined;
+                          q?: string | string[] | undefined;
+                        };
+                      };
+                      output: {};
+                      outputFormat: string;
+                      status: import("hono/utils/http-status").StatusCode;
+                    }
+                  | {
+                      input: {
+                        query: {
+                          page?: string | string[] | undefined;
+                          page_size?: string | string[] | undefined;
+                          q?: string | string[] | undefined;
+                        };
+                      };
+                      output: undefined;
+                      outputFormat: "redirect";
+                      status: import("hono/utils/http-status").RedirectStatusCode;
                     };
-                  };
-                  output: {};
-                  outputFormat: string;
-                  status: import("hono/utils/http-status").StatusCode;
-                };
               };
             },
             "/domains"
