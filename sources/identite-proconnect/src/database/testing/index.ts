@@ -26,6 +26,7 @@ export async function empty_database() {
     await tx.execute(sql`ALTER SEQUENCE moderations_id_seq RESTART WITH 1`);
     await tx.delete(schema.users);
     await tx.execute(sql`ALTER SEQUENCE users_id_seq RESTART WITH 1`);
+    await tx.delete(schema.email_deliverability_whitelist);
   });
 }
 export async function migrate() {

@@ -6,6 +6,7 @@ import type { IdentiteProconnect_PgDatabase } from "..";
 import { schema } from "..";
 import { insert_nordPass_authenticator } from "./authenticators/nordPass";
 import { insert_1Password_authenticator } from "./authenticators/onePassword";
+import { insert_email_deliverability_whitelist } from "./email_deliverability_whitelist";
 import { insert_abracadabra } from "./organizations/abracadabra";
 import { insert_aldp } from "./organizations/aldp";
 import { insert_bosch_france } from "./organizations/bosch_france";
@@ -53,6 +54,11 @@ export async function insert_database(db: IdentiteProconnect_PgDatabase) {
     );
     const marie_bon = await insert_mariebon(db);
     consola.verbose(`🌱 INSERT user (id: ${marie_bon})`);
+
+    const whitelisted_domains = await insert_email_deliverability_whitelist(db);
+    consola.verbose(
+      `🌱 INSERT ${whitelisted_domains.length} whitelisted email domains`,
+    );
 
     //
 
