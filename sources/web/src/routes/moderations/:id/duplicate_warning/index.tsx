@@ -5,7 +5,7 @@ import { zValidator } from "@hono/zod-validator";
 import { Entity_Schema } from "@~/core/schema";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
-import { z } from "zod";
+import { z } from "zod/v4";
 import { DuplicateWarning } from "./DuplicateWarning";
 import { find_duplicate_users } from "./find_duplicate_users.query";
 import { get_duplicate_moderations } from "./get_duplicate_moderations.query";

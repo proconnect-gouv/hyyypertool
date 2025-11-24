@@ -17,7 +17,7 @@ import {
   randomNonce,
   randomState,
 } from "openid-client";
-import { z } from "zod";
+import { z } from "zod/v4";
 import { agentconnect, type Oidc_Context } from "./agentconnect";
 
 //

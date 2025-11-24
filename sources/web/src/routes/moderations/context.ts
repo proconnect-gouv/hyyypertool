@@ -1,7 +1,7 @@
 //
 
 import { Pagination_Schema } from "@~/core/schema";
-import { z } from "zod";
+import { z } from "zod/v4";
 
 //
 

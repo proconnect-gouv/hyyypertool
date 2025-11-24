@@ -5,7 +5,7 @@ import {
   Entity_Schema,
   Pagination_Schema,
 } from "@~/core/schema";
-import { z } from "zod";
+import { z } from "zod/v4";
 
 //
 
