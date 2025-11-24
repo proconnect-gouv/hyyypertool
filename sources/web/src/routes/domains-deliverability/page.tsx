@@ -1,7 +1,12 @@
 import { AddDomain } from "./AddDomain";
 import { Table } from "./Table";
+import { get_email_deliverability_whitelist } from "./get_email_deliverability_whitelist.query";
 
-export default async function Page() {
+type Whitelist = Awaited<
+  ReturnType<typeof get_email_deliverability_whitelist>
+>[number];
+
+export default async function Page({ whitelist }: { whitelist: Whitelist[] }) {
   return (
     <main class="fr-container my-12" id="domains-deliverability-container">
       <h1>Délivrabilité des domaines</h1>
@@ -11,7 +16,7 @@ export default async function Page() {
         hx-trigger="domains-deliverability-updated"
         hx-swap="innerHTML"
       >
-        <Table />
+        <Table whitelist={whitelist} />
         <AddDomain />
       </div>
     </main>
