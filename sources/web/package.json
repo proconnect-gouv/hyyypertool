@@ -22,9 +22,9 @@
     "start:node": "tsx src/node/index.ts"
   },
   "dependencies": {
-    "@hono/node-server": "1.19.5",
+    "@hono/node-server": "1.19.6",
     "@hono/sentry": "1.2.2",
-    "@hono/zod-validator": "0.7.4",
+    "@hono/zod-validator": "0.7.5",
     "@proconnect-gouv/proconnect.core": "1.0.0",
     "@proconnect-gouv/proconnect.crisp": "1.0.0",
     "@sentry/core": "10.24.0",
@@ -35,7 +35,7 @@
     "@~/organizations": "workspace:*",
     "await-to-js": "3.0.0",
     "consola": "3.4.2",
-    "hono": "4.9.8",
+    "hono": "4.10.6",
     "hono-sessions": "0.8.0",
     "hono-slotify": "workspace:*",
     "is-disposable-email-domain": "1.0.7",
