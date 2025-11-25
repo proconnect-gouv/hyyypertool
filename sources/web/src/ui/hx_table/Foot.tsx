@@ -1,6 +1,6 @@
 //
 
-import { Pagination_Schema, type Pagination } from "@~/core/schema";
+import { PaginationSchema, type Pagination } from "@~/core/schema";
 import { button } from "../button";
 import { FrNumberConverter } from "../number";
 
@@ -44,7 +44,7 @@ export function Foot({
             {...hx_query_props}
             id={id}
             class="fr-input inline-block w-auto"
-            name={name ?? Pagination_Schema.keyof().enum.page}
+            name={name ?? PaginationSchema.keyof().enum.page}
             value={page}
           />{" "}
           <span> of {FrNumberConverter.format(last_page)}</span>

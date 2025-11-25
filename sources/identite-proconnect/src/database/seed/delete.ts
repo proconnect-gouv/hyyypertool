@@ -2,12 +2,12 @@
 
 import consola from "consola";
 import { sql } from "drizzle-orm";
-import type { IdentiteProconnect_PgDatabase } from "..";
+import type { IdentiteProconnectPgDatabase } from "..";
 import { schema } from "..";
 
 //
 
-export async function delete_database(db: IdentiteProconnect_PgDatabase) {
+export async function delete_database(db: IdentiteProconnectPgDatabase) {
   try {
     const authenticators = await db.delete(schema.authenticators).returning();
     consola.info(`🚮 DELETE ${authenticators.length} authenticators`);

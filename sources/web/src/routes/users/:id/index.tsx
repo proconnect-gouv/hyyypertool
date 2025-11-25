@@ -1,7 +1,7 @@
 //
 
 import { NotFoundError } from "#src/errors";
-import type { Htmx_Header } from "#src/htmx";
+import type { HtmxHeader } from "#src/htmx";
 import { Main_Layout } from "#src/layouts";
 import { CrispApi } from "#src/lib/crisp";
 import { ResetMFA, ResetPassword } from "#src/lib/users";
@@ -9,7 +9,7 @@ import type { App_Context } from "#src/middleware/context";
 import { set_crisp_config } from "#src/middleware/crisp";
 import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
-import { Entity_Schema } from "@~/core/schema";
+import { EntitySchema } from "@~/core/schema";
 import { schema } from "@~/identite-proconnect/database";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
@@ -27,7 +27,7 @@ export default new Hono<App_Context>()
   .get(
     "/",
     jsxRenderer(Main_Layout),
-    zValidator("param", Entity_Schema),
+    zValidator("param", EntitySchema),
     async function GET({ render, req, set, status, var: { identite_pg } }) {
       const { id } = req.valid("param");
 
@@ -55,18 +55,18 @@ export default new Hono<App_Context>()
   )
   .delete(
     "/",
-    zValidator("param", Entity_Schema),
+    zValidator("param", EntitySchema),
     async function DELETE({ text, req, var: { identite_pg } }) {
       const { id } = req.valid("param");
       await identite_pg.delete(schema.users).where(eq(schema.users.id, id));
       return text("OK", 200, {
         "HX-Location": urls.users.$url().pathname,
-      } as Htmx_Header);
+      } as HtmxHeader);
     },
   )
   .patch(
     "/reset/email_verified",
-    zValidator("param", Entity_Schema),
+    zValidator("param", EntitySchema),
     async function reset_email_verified({ text, req, var: { identite_pg } }) {
       const { id } = req.valid("param");
       await identite_pg
@@ -75,13 +75,13 @@ export default new Hono<App_Context>()
           email_verified: false,
         })
         .where(eq(schema.users.id, id));
-      return text("OK", 200, { "HX-Refresh": "true" } as Htmx_Header);
+      return text("OK", 200, { "HX-Refresh": "true" } as HtmxHeader);
     },
   )
   .patch(
     "/reset/password",
     set_crisp_config(),
-    zValidator("param", Entity_Schema),
+    zValidator("param", EntitySchema),
     async function reset_password({
       text,
       req,
@@ -96,13 +96,13 @@ export default new Hono<App_Context>()
       });
       await reset_password({ moderator: userinfo, user_id });
 
-      return text("OK", 200, { "HX-Refresh": "true" } as Htmx_Header);
+      return text("OK", 200, { "HX-Refresh": "true" } as HtmxHeader);
     },
   )
   .patch(
     "/reset/mfa",
     set_crisp_config(),
-    zValidator("param", Entity_Schema),
+    zValidator("param", EntitySchema),
     async function reset_mfa({
       text,
       req,
@@ -117,7 +117,7 @@ export default new Hono<App_Context>()
       });
       await reset_mfa({ moderator: userinfo, user_id });
 
-      return text("OK", 200, { "HX-Refresh": "true" } as Htmx_Header);
+      return text("OK", 200, { "HX-Refresh": "true" } as HtmxHeader);
     },
   )
   //

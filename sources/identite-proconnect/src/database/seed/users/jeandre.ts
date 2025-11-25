@@ -1,11 +1,11 @@
 //
 
-import type { IdentiteProconnect_PgDatabase } from "../..";
+import type { IdentiteProconnectPgDatabase } from "../..";
 import { schema } from "../..";
 
 //
 
-export async function insert_jeandre(db: IdentiteProconnect_PgDatabase) {
+export async function insert_jeandre(db: IdentiteProconnectPgDatabase) {
   const insert = await db
     .insert(schema.users)
     .values({

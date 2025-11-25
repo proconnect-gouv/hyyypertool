@@ -12,7 +12,7 @@ import {
   GetOrganizationMembersCount,
 } from "#src/queries/organizations";
 import { zValidator } from "@hono/zod-validator";
-import { Entity_Schema, z_email_domain } from "@~/core/schema";
+import { EntitySchema, z_email_domain } from "@~/core/schema";
 import { to } from "await-to-js";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
@@ -32,7 +32,7 @@ export default new Hono<App_Context>()
   .get(
     "/",
     jsxRenderer(Main_Layout),
-    zValidator("param", Entity_Schema),
+    zValidator("param", EntitySchema),
     async function GET({
       render,
       req,

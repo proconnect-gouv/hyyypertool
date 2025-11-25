@@ -2,14 +2,14 @@
 
 import {
   schema,
-  type IdentiteProconnect_PgDatabase,
+  type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
 import { mark_moderation_as } from "./mark_moderation_as";
 import { and, eq, ilike, isNull } from "drizzle-orm";
 
 //
 
-export function ValidateSimilarModerations(pg: IdentiteProconnect_PgDatabase) {
+export function ValidateSimilarModerations(pg: IdentiteProconnectPgDatabase) {
   return async function validate_similar_moderations({
     domain_verification_type,
     domain,

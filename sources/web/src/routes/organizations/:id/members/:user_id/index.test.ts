@@ -18,7 +18,7 @@ import {
   migrate,
   pg,
 } from "@~/identite-proconnect/database/testing";
-import { Verification_Type_Schema } from "@~/identite-proconnect/types";
+import { VerificationTypeSchema } from "@~/identite-proconnect/types";
 import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
 import { Hono } from "hono";
 import app from "./index";
@@ -175,7 +175,7 @@ test("PATCH /organizations/:id/members/:user_id updates user organization member
       method: "PATCH",
       body: new URLSearchParams({
         is_external: "true",
-        verification_type: Verification_Type_Schema.enum.domain,
+        verification_type: VerificationTypeSchema.enum.domain,
       }),
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
     });

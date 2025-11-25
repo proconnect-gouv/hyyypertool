@@ -1,13 +1,13 @@
 //
 
 import { schema } from "@~/identite-proconnect/database";
-import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect/database";
+import type { IdentiteProconnectPgDatabase } from "@~/identite-proconnect/database";
 import { asc, desc, eq } from "drizzle-orm";
 
 //
 
 export async function get_moderations_by_user_id(
-  pg: IdentiteProconnect_PgDatabase,
+  pg: IdentiteProconnectPgDatabase,
   user_id: number,
 ) {
   return pg.query.moderations.findMany({

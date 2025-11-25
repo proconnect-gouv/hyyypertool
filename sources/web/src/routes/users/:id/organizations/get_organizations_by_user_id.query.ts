@@ -1,7 +1,7 @@
 //
 
 import type { Pagination } from "@~/core/schema";
-import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect/database";
+import type { IdentiteProconnectPgDatabase } from "@~/identite-proconnect/database";
 import { schema } from "@~/identite-proconnect/database";
 import { EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES } from "@~/identite-proconnect/types";
 import { and, asc, count as drizzle_count, eq } from "drizzle-orm";
@@ -9,7 +9,7 @@ import { and, asc, count as drizzle_count, eq } from "drizzle-orm";
 //
 
 export async function get_organizations_by_user_id(
-  pg: IdentiteProconnect_PgDatabase,
+  pg: IdentiteProconnectPgDatabase,
   {
     user_id,
     pagination = { page: 0, page_size: 10 },

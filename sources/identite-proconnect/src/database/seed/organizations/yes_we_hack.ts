@@ -1,8 +1,8 @@
 //
 
-import { schema, type IdentiteProconnect_PgDatabase } from "../..";
+import { schema, type IdentiteProconnectPgDatabase } from "../..";
 
-export async function insert_yes_we_hack(pg: IdentiteProconnect_PgDatabase) {
+export async function insert_yes_we_hack(pg: IdentiteProconnectPgDatabase) {
   const [{ id: organization_id }] = await pg
     .insert(schema.organizations)
     .values({

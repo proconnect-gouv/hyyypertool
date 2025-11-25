@@ -1,6 +1,6 @@
 //
 
-import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect/database";
+import type { IdentiteProconnectPgDatabase } from "@~/identite-proconnect/database";
 import type { schema } from "@~/identite-proconnect/database";
 import { UpdateModerationById } from "#src/queries/moderations";
 import { build_moderation_update } from "@~/moderations/build_moderation_update";
@@ -8,7 +8,7 @@ import { build_moderation_update } from "@~/moderations/build_moderation_update"
 //
 
 export async function mark_as_validated(
-  pg: IdentiteProconnect_PgDatabase,
+  pg: IdentiteProconnectPgDatabase,
   moderation: Pick<typeof schema.moderations.$inferSelect, "comment" | "id">,
   userinfo: { email: string; given_name: string; usual_name: string },
 ) {

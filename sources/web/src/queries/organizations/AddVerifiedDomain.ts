@@ -2,14 +2,14 @@
 
 import {
   schema,
-  type IdentiteProconnect_PgDatabase,
+  type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
 import { EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES } from "@~/identite-proconnect/types";
 import { eq } from "drizzle-orm";
 
 //
 
-export function AddVerifiedDomain(pg: IdentiteProconnect_PgDatabase) {
+export function AddVerifiedDomain(pg: IdentiteProconnectPgDatabase) {
   return async function add_verified_domain({
     id,
   }: {

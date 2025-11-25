@@ -2,14 +2,14 @@
 
 import { z } from "zod/v4";
 
-export type Htmx_Header = {
+export type HtmxHeader = {
   "HX-Refresh"?: "true" | "false";
   "HX-Location"?: string;
   "HX-Trigger"?: string;
 };
 
 // \from https://htmx.org/reference/#events
-export const Htmx_Events = z.nativeEnum({
+export const HtmxEvents = z.nativeEnum({
   abort: "htmx:abort", //	send this event to an element to abort a request
   afterOnLoad: "htmx:afterOnLoad", //	triggered after an AJAX request has completed processing a successful response
   afterProcessNode: "htmx:afterProcessNode", //	triggered after htmx has initialized a node

@@ -3,13 +3,13 @@
 import type { Pagination } from "@~/core/schema";
 import {
   schema,
-  type IdentiteProconnect_PgDatabase,
+  type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
 import { desc, count as drizzle_count, ilike, or } from "drizzle-orm";
 
 //
 
-export function GetUsersList(pg: IdentiteProconnect_PgDatabase) {
+export function GetUsersList(pg: IdentiteProconnectPgDatabase) {
   return async function get_users_list({
     pagination = { page: 0, page_size: 10 },
     search,

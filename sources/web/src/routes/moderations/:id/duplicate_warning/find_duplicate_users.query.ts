@@ -2,14 +2,14 @@
 
 import {
   schema,
-  type IdentiteProconnect_PgDatabase,
+  type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
 import { and, asc, eq, ilike, not, or } from "drizzle-orm";
 
 //
 
 export async function find_duplicate_users(
-  pg: IdentiteProconnect_PgDatabase,
+  pg: IdentiteProconnectPgDatabase,
   moderation: {
     organization_id: number;
     user: { id: number; family_name: string | null };

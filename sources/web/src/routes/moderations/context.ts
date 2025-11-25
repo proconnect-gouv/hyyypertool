@@ -1,6 +1,6 @@
 //
 
-import { Pagination_Schema } from "@~/core/schema";
+import { PaginationSchema } from "@~/core/schema";
 import { z } from "zod/v4";
 
 //
@@ -34,5 +34,5 @@ export const search_schema = z.object({
 export type Search = z.infer<typeof search_schema>;
 
 export const query_schema = search_schema
-  .extend(Pagination_Schema.shape)
+  .extend(PaginationSchema.shape)
   .partial();

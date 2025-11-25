@@ -4,7 +4,7 @@ import { Main_Layout } from "#src/layouts";
 import { authorized } from "#src/middleware/auth";
 import type { App_Context } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
-import { Pagination_Schema } from "@~/core/schema";
+import { PaginationSchema } from "@~/core/schema";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { match } from "ts-pattern";
@@ -32,9 +32,9 @@ export default new Hono<App_Context>()
       set("page_title", "Liste des organisations");
 
       const { q } = req.valid("query");
-      const pagination = match(Pagination_Schema.safeParse(req.query()))
+      const pagination = match(PaginationSchema.safeParse(req.query()))
         .with({ success: true }, ({ data }) => data)
-        .otherwise(() => Pagination_Schema.parse({}));
+        .otherwise(() => PaginationSchema.parse({}));
 
       const query_result = await get_organizations_list(identite_pg, {
         pagination: { ...pagination, page: pagination.page - 1 },

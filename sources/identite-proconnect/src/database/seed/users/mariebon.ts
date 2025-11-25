@@ -1,10 +1,10 @@
 //
 
-import { schema, type IdentiteProconnect_PgDatabase } from "../..";
+import { schema, type IdentiteProconnectPgDatabase } from "../..";
 
 //
 
-export async function insert_mariebon(pg: IdentiteProconnect_PgDatabase) {
+export async function insert_mariebon(pg: IdentiteProconnectPgDatabase) {
   const [{ id: user_id }] = await pg
     .insert(schema.users)
     .values({

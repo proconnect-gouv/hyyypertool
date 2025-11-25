@@ -2,7 +2,7 @@
 
 import { MODERATION_TYPES } from "#src/types";
 import consola from "consola";
-import type { IdentiteProconnect_PgDatabase } from "..";
+import type { IdentiteProconnectPgDatabase } from "..";
 import { schema } from "..";
 import { insert_nordPass_authenticator } from "./authenticators/nordPass";
 import { insert_1Password_authenticator } from "./authenticators/onePassword";
@@ -26,7 +26,7 @@ import { insert_richardbon } from "./users/richardbon";
 
 //
 
-export async function insert_database(db: IdentiteProconnect_PgDatabase) {
+export async function insert_database(db: IdentiteProconnectPgDatabase) {
   try {
     const raphael = await insert_raphael(db);
     consola.verbose(
@@ -219,14 +219,14 @@ export async function insert_database(db: IdentiteProconnect_PgDatabase) {
 //
 
 function insert_moderation(
-  db: IdentiteProconnect_PgDatabase,
+  db: IdentiteProconnectPgDatabase,
   insert_moderation: typeof schema.moderations.$inferInsert,
 ) {
   return db.insert(schema.moderations).values(insert_moderation);
 }
 
 function insert_users_organizations(
-  db: IdentiteProconnect_PgDatabase,
+  db: IdentiteProconnectPgDatabase,
   insert_users_organizations: typeof schema.users_organizations.$inferInsert,
 ) {
   return db

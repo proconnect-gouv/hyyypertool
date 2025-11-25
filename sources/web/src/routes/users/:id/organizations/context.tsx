@@ -1,16 +1,16 @@
 //
 
 import {
-  DescribedBy_Schema,
-  Entity_Schema,
-  Pagination_Schema,
+  DescribedBySchema,
+  EntitySchema,
+  PaginationSchema,
 } from "@~/core/schema";
 import { z } from "zod/v4";
 
 //
 
-export const QuerySchema = Pagination_Schema.merge(DescribedBy_Schema).extend({
+export const QuerySchema = PaginationSchema.merge(DescribedBySchema).extend({
   page_ref: z.string(),
 });
 
-export const ParamSchema = Entity_Schema;
+export const ParamSchema = EntitySchema;

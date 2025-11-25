@@ -8,8 +8,8 @@ import { row } from "#src/ui/table";
 import { hx_urls, urls } from "#src/urls";
 import type { Pagination } from "@~/core/schema";
 import {
-  Verification_Type_Schema,
-  type Verification_Type,
+  VerificationTypeSchema,
+  type VerificationType,
 } from "@~/identite-proconnect/types";
 import { useContext } from "hono/jsx";
 import type { VariantProps } from "tailwind-variants";
@@ -81,7 +81,7 @@ export async function Table({
 
 function Row({ variants }: { variants?: VariantProps<typeof row> }) {
   const { user } = useContext(MemberContext);
-  const verification_type = user.verification_type as Verification_Type;
+  const verification_type = user.verification_type as VerificationType;
 
   return (
     <tr
@@ -150,7 +150,7 @@ async function Row_Actions() {
               },
               form: {
                 verification_type:
-                  Verification_Type_Schema.enum.in_liste_dirigeants_rna,
+                  VerificationTypeSchema.enum.in_liste_dirigeants_rna,
               },
             })}
             hx-swap="none"
@@ -167,7 +167,7 @@ async function Row_Actions() {
                 user_id: user_id.toString(),
               },
               form: {
-                verification_type: Verification_Type_Schema.enum.domain,
+                verification_type: VerificationTypeSchema.enum.domain,
               },
             })}
             hx-swap="none"
@@ -185,7 +185,7 @@ async function Row_Actions() {
               },
               form: {
                 verification_type:
-                  Verification_Type_Schema.enum.official_contact_email,
+                  VerificationTypeSchema.enum.official_contact_email,
               },
             })}
             hx-swap="none"
@@ -203,7 +203,7 @@ async function Row_Actions() {
               },
               form: {
                 verification_type:
-                  Verification_Type_Schema.enum.no_validation_means_available,
+                  VerificationTypeSchema.enum.no_validation_means_available,
               },
             })}
             hx-swap="none"

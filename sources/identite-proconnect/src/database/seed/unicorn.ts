@@ -2,7 +2,7 @@
 
 import { EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES } from "#src/types";
 import { eq } from "drizzle-orm";
-import { schema, type IdentiteProconnect_PgDatabase } from "..";
+import { schema, type IdentiteProconnectPgDatabase } from "..";
 
 //
 
@@ -10,7 +10,7 @@ import { schema, type IdentiteProconnect_PgDatabase } from "..";
 
 //
 export async function create_unicorn_organization(
-  pg: IdentiteProconnect_PgDatabase,
+  pg: IdentiteProconnectPgDatabase,
 ) {
   const [{ id: organization_id }] = await pg
     .insert(schema.organizations)
@@ -32,7 +32,7 @@ export async function create_unicorn_organization(
 //
 
 export async function create_adora_pony_user(
-  pg: IdentiteProconnect_PgDatabase,
+  pg: IdentiteProconnectPgDatabase,
 ) {
   const [{ id: user_id }] = await pg
     .insert(schema.users)
@@ -49,7 +49,7 @@ export async function create_adora_pony_user(
 }
 
 export async function create_adora_pony_moderation(
-  pg: IdentiteProconnect_PgDatabase,
+  pg: IdentiteProconnectPgDatabase,
   moderation: Omit<
     typeof schema.moderations.$inferInsert,
     "organization_id" | "user_id"
@@ -77,7 +77,7 @@ export async function create_adora_pony_moderation(
 //
 
 export async function create_pink_diamond_user(
-  pg: IdentiteProconnect_PgDatabase,
+  pg: IdentiteProconnectPgDatabase,
 ) {
   const [{ id: user_id }] = await pg
     .insert(schema.users)
@@ -94,7 +94,7 @@ export async function create_pink_diamond_user(
 }
 
 export async function create_red_diamond_user(
-  pg: IdentiteProconnect_PgDatabase,
+  pg: IdentiteProconnectPgDatabase,
 ) {
   const [{ id: user_id }] = await pg
     .insert(schema.users)

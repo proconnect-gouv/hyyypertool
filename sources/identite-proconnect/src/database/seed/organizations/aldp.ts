@@ -1,8 +1,8 @@
 import { EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES } from "#src/types";
-import type { IdentiteProconnect_PgDatabase } from "../..";
+import type { IdentiteProconnectPgDatabase } from "../..";
 import { schema } from "../..";
 
-export async function insert_aldp(db: IdentiteProconnect_PgDatabase) {
+export async function insert_aldp(db: IdentiteProconnectPgDatabase) {
   const insert = await db
     .insert(schema.organizations)
     .values({

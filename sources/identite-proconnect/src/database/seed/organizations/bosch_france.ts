@@ -1,10 +1,10 @@
 //
 
-import { schema, type IdentiteProconnect_PgDatabase } from "../..";
+import { schema, type IdentiteProconnectPgDatabase } from "../..";
 
 //
 
-export async function insert_bosch_france(pg: IdentiteProconnect_PgDatabase) {
+export async function insert_bosch_france(pg: IdentiteProconnectPgDatabase) {
   const [{ id: organization_id }] = await pg
     .insert(schema.organizations)
     .values({

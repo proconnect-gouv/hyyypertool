@@ -1,6 +1,6 @@
 //
 
-import { Htmx_Events } from "#src/htmx";
+import { HtmxEvents } from "#src/htmx";
 import type { App_Context } from "#src/middleware/context";
 import { html, raw } from "hono/html";
 import type { PropsWithChildren } from "hono/jsx";
@@ -123,9 +123,9 @@ export function Root_Layout({ children }: PropsWithChildren) {
       </head>
       <body
         _="
-          on every ${Htmx_Events.enum.beforeSend} NProgress.start()
-          on every ${Htmx_Events.enum.afterOnLoad} NProgress.done()
-          on every ${Htmx_Events.enum.afterSettle} NProgress.done()
+          on every ${HtmxEvents.enum.beforeSend} NProgress.start()
+          on every ${HtmxEvents.enum.afterOnLoad} NProgress.done()
+          on every ${HtmxEvents.enum.afterSettle} NProgress.done()
         "
         class="flex min-h-screen flex-col"
       >

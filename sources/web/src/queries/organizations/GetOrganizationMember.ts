@@ -2,13 +2,13 @@
 
 import {
   schema,
-  type IdentiteProconnect_PgDatabase,
+  type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
 import { and, eq } from "drizzle-orm";
 
 //
 
-export function GetOrganizationMember(pg: IdentiteProconnect_PgDatabase) {
+export function GetOrganizationMember(pg: IdentiteProconnectPgDatabase) {
   return async function get_organization_member({
     user_id,
     organization_id,

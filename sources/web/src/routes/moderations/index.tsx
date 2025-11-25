@@ -3,7 +3,7 @@
 import { Main_Layout } from "#src/layouts";
 import { authorized } from "#src/middleware/auth";
 import type { App_Context } from "#src/middleware/context";
-import { Pagination_Schema } from "@~/core/schema";
+import { PaginationSchema } from "@~/core/schema";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { match, P } from "ts-pattern";
@@ -36,9 +36,9 @@ export default new Hono<App_Context>()
         )
         .otherwise((search) => search);
 
-      const pagination = match(Pagination_Schema.safeParse(query))
+      const pagination = match(PaginationSchema.safeParse(query))
         .with({ success: true }, ({ data }) => data)
-        .otherwise(() => Pagination_Schema.parse({}));
+        .otherwise(() => PaginationSchema.parse({}));
 
       const query_moderations_list = await get_moderations_list(identite_pg, {
         pagination: { ...pagination, page: pagination.page - 1 },

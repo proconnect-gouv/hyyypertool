@@ -2,10 +2,10 @@ import {
   EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES,
   EMAIL_DOMAIN_REJECTED_VERIFICATION_TYPES,
 } from "#src/types";
-import type { IdentiteProconnect_PgDatabase } from "../..";
+import type { IdentiteProconnectPgDatabase } from "../..";
 import { schema } from "../..";
 
-export async function insert_dinum(db: IdentiteProconnect_PgDatabase) {
+export async function insert_dinum(db: IdentiteProconnectPgDatabase) {
   const insert = await db
     .insert(schema.organizations)
     .values({

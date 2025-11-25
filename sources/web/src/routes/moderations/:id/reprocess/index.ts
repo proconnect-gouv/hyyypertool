@@ -1,12 +1,12 @@
 //
 
-import type { Htmx_Header } from "#src/htmx";
+import type { HtmxHeader } from "#src/htmx";
 import type { App_Context } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
-import { Entity_Schema } from "@~/core/schema";
+import { EntitySchema } from "@~/core/schema";
 import { MODERATION_EVENTS } from "#src/lib/moderations";
 import { Hono } from "hono";
-import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect/database";
+import type { IdentiteProconnectPgDatabase } from "@~/identite-proconnect/database";
 import {
   GetModerationById,
   RemoveUserFromOrganization,
@@ -17,7 +17,7 @@ import { append_comment } from "#src/lib/moderations";
 //
 
 async function mark_as_reprocessed(
-  pg: IdentiteProconnect_PgDatabase,
+  pg: IdentiteProconnectPgDatabase,
   id: number,
   userinfo: { email: string },
 ) {
@@ -50,7 +50,7 @@ async function mark_as_reprocessed(
 
 export default new Hono<App_Context>().patch(
   "/",
-  zValidator("param", Entity_Schema),
+  zValidator("param", EntitySchema),
   async ({ text, req, var: { identite_pg, userinfo } }) => {
     const { id } = req.valid("param");
 
@@ -58,6 +58,6 @@ export default new Hono<App_Context>().patch(
 
     return text("OK", 200, {
       "HX-Trigger": MODERATION_EVENTS.enum.MODERATION_UPDATED,
-    } as Htmx_Header);
+    } as HtmxHeader);
   },
 );

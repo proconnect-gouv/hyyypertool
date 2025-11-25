@@ -2,14 +2,14 @@
 
 import {
   schema,
-  type IdentiteProconnect_PgDatabase,
+  type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
 import { and, asc, eq } from "drizzle-orm";
 
 //
 
 export async function get_duplicate_moderations(
-  pg: IdentiteProconnect_PgDatabase,
+  pg: IdentiteProconnectPgDatabase,
   {
     organization_id,
     user_id,

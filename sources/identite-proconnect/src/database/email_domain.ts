@@ -4,7 +4,7 @@ import { z } from "zod/v4";
 
 //
 
-export const EmailDomain_Type_Schema = z
+export const EmailDomainTypeSchema = z
   .enum([
     "authorized", // legacy ?
     "blacklisted",
@@ -16,4 +16,4 @@ export const EmailDomain_Type_Schema = z
   ])
   .nullable();
 
-export type EmailDomain_Type = z.infer<typeof EmailDomain_Type_Schema>;
+export type EmailDomainType = z.infer<typeof EmailDomainTypeSchema>;

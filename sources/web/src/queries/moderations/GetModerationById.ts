@@ -3,7 +3,7 @@
 import { NotFoundError } from "#src/errors";
 import {
   schema,
-  type IdentiteProconnect_PgDatabase,
+  type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
 import { eq } from "drizzle-orm";
 
@@ -12,7 +12,7 @@ import { eq } from "drizzle-orm";
 export function GetModerationById({
   pg,
 }: {
-  pg: IdentiteProconnect_PgDatabase;
+  pg: IdentiteProconnectPgDatabase;
 }) {
   type ModerationColumns = keyof typeof schema.moderations._.columns;
   return async function get_moderation_by_id<

@@ -2,13 +2,13 @@
 
 import {
   schema,
-  type IdentiteProconnect_PgDatabase,
+  type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
 import { ilike, or } from "drizzle-orm";
 
 //
 
-export function FindUsersByName(pg: IdentiteProconnect_PgDatabase) {
+export function FindUsersByName(pg: IdentiteProconnectPgDatabase) {
   return async function find_users_by_name(name: string) {
     return pg.query.users.findMany({
       where: or(

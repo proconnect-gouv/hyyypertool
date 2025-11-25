@@ -1,6 +1,6 @@
 //
 
-import { Htmx_Events } from "#src/htmx";
+import { HtmxEvents } from "#src/htmx";
 import { button } from "#src/ui/button";
 import { fieldset } from "#src/ui/form";
 import { formattedPlural } from "#src/ui/plurial";
@@ -199,7 +199,7 @@ async function MarkModerationAsProcessed({
     <form
       _={`
       on submit
-        wait for ${Htmx_Events.enum.afterSettle}
+        wait for ${HtmxEvents.enum.afterSettle}
         wait 2s
         go back
       `}

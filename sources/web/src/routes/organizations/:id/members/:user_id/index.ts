@@ -1,20 +1,20 @@
 //
 
-import type { Htmx_Header } from "#src/htmx";
+import type { HtmxHeader } from "#src/htmx";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import type { App_Context } from "#src/middleware/context";
 import { RemoveUserFromOrganization } from "#src/queries/moderations";
 import { zValidator } from "@hono/zod-validator";
-import { Entity_Schema, z_coerce_boolean } from "@~/core/schema";
+import { EntitySchema, z_coerce_boolean } from "@~/core/schema";
 import { schema } from "@~/identite-proconnect/database";
 import { ForceJoinOrganization } from "@~/identite-proconnect/sdk";
-import { Verification_Type_Schema } from "@~/identite-proconnect/types";
+import { VerificationTypeSchema } from "@~/identite-proconnect/types";
 import { and, eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { z } from "zod/v4";
 
 //
-const params_schema = Entity_Schema.extend({
+const params_schema = EntitySchema.extend({
   user_id: z.string().pipe(z.coerce.number()),
 });
 export default new Hono<App_Context>()
@@ -41,7 +41,7 @@ export default new Hono<App_Context>()
 
       return text("OK", 200, {
         "HX-Trigger": ORGANISATION_EVENTS.enum.MEMBERS_UPDATED,
-      } as Htmx_Header);
+      } as HtmxHeader);
     },
   )
   .patch(
@@ -50,7 +50,7 @@ export default new Hono<App_Context>()
     zValidator(
       "form",
       z.object({
-        verification_type: Verification_Type_Schema.or(
+        verification_type: VerificationTypeSchema.or(
           z.literal(""),
         ).optional(),
         is_external: z.string().pipe(z_coerce_boolean).optional(),
@@ -78,14 +78,14 @@ export default new Hono<App_Context>()
 
       return text("OK", 200, {
         "HX-Trigger": ORGANISATION_EVENTS.enum.MEMBERS_UPDATED,
-      } as Htmx_Header);
+      } as HtmxHeader);
     },
   )
   .delete(
     "/",
     zValidator(
       "param",
-      Entity_Schema.extend({ user_id: z.string().pipe(z.coerce.number()) }),
+      EntitySchema.extend({ user_id: z.string().pipe(z.coerce.number()) }),
     ),
     async function DELETE({ text, req, var: { identite_pg } }) {
       const { id: organization_id, user_id } = req.valid("param");
@@ -100,6 +100,6 @@ export default new Hono<App_Context>()
 
       return text("OK", 200, {
         "HX-Trigger": ORGANISATION_EVENTS.enum.MEMBERS_UPDATED,
-      } as Htmx_Header);
+      } as HtmxHeader);
     },
   );

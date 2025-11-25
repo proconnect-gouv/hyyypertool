@@ -1,14 +1,14 @@
 //
 
-import type { Htmx_Header } from "#src/htmx";
+import type { HtmxHeader } from "#src/htmx";
 import type { UserInfoVariablesContext } from "#src/middleware/auth";
 import type { IdentiteProconnect_Pg_Context } from "#src/middleware/identite-pg";
 import { zValidator } from "@hono/zod-validator";
-import { Entity_Schema } from "@~/core/schema";
+import { EntitySchema } from "@~/core/schema";
 import { MODERATION_EVENTS } from "#src/lib/moderations";
 import { GetModerationWithUser } from "#src/queries/moderations";
 import { Hono } from "hono";
-import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect/database";
+import type { IdentiteProconnectPgDatabase } from "@~/identite-proconnect/database";
 import {
   UpdateModerationById,
   type GetModerationWithUserDto,
@@ -18,7 +18,7 @@ import { build_moderation_update } from "@~/moderations/build_moderation_update"
 //
 
 async function mark_as_processed(
-  pg: IdentiteProconnect_PgDatabase,
+  pg: IdentiteProconnectPgDatabase,
   moderation: GetModerationWithUserDto,
   userinfo: { email: string; given_name: string; usual_name: string },
 ) {
@@ -39,7 +39,7 @@ export default new Hono<
   IdentiteProconnect_Pg_Context & UserInfoVariablesContext
 >().patch(
   "/",
-  zValidator("param", Entity_Schema),
+  zValidator("param", EntitySchema),
   async ({ text, req, notFound, var: { identite_pg, userinfo } }) => {
     const { id } = req.valid("param");
 
@@ -55,6 +55,6 @@ export default new Hono<
         MODERATION_EVENTS.enum.MODERATION_EMAIL_UPDATED,
         MODERATION_EVENTS.enum.MODERATION_UPDATED,
       ].join(", "),
-    } as Htmx_Header);
+    } as HtmxHeader);
   },
 );

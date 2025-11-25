@@ -3,7 +3,7 @@
 import { NotFoundError } from "#src/errors";
 import {
   schema,
-  type IdentiteProconnect_PgDatabase,
+  type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
 import { eq } from "drizzle-orm";
 
@@ -16,7 +16,7 @@ export function GetOrganizationById<
   TColumns extends OrganizationQueryConfigColumns,
 >({ columns }: { columns: TColumns }) {
   return async function get_organization_by_id(
-    pg: IdentiteProconnect_PgDatabase,
+    pg: IdentiteProconnectPgDatabase,
     organization_id: number,
   ) {
     const organization = await pg.query.organizations.findFirst({
