@@ -1,34 +1,33 @@
 //
 
-import config from "#src/config";
 import { Root_Layout } from "#src/layouts";
 import type { App_Context } from "#src/middleware/context";
 import { urls } from "#src/urls";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
+import { ScrollingTitleWall } from "./ScrollingTitleWall";
+import { KineticTitle, TerminalTitle } from "./Titles";
 
 //
 
 export default new Hono<App_Context>().get(
   "/",
   jsxRenderer(Root_Layout),
-  function GET({ render, redirect, var: { nonce, userinfo } }) {
+  function GET({ render, redirect, var: { userinfo } }) {
     if (userinfo) {
       return redirect(urls.moderations.$url().pathname);
     }
 
+    const variants = [KineticTitle, ScrollingTitleWall, TerminalTitle];
+    const SelectedTitle = variants[Math.floor(Math.random() * variants.length)];
+
     return render(
       <main class="flex h-full grow flex-col items-center justify-center">
-        <h1 class="fr-display--xl drop-shadow-lg">
-          <hyyyper-title>Bonjour Hyyypertool !</hyyyper-title>
-          <script
-            nonce={nonce}
-            src={`${config.PUBLIC_ASSETS_PATH}/routes/welcome/_client/hyyypertitle.js`}
-            type="module"
-          ></script>
-        </h1>
+        <div class="relative w-full">
+          <SelectedTitle />
+        </div>
 
-        <div class="animated delay-2s fadeInLeftBig flex flex-col items-center">
+        <div class="animated delay-2s fadeInLeftBig absolute bottom-14 flex flex-col items-center">
           <button class="agentconnect-button"></button>
           <form method="post" action={urls.auth.login.$url().pathname}>
             <div class="fr-connect-group">
