@@ -2,13 +2,13 @@
 
 import {
   schema,
-  type IdentiteProconnect_PgDatabase,
+  type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
 import { count as drizzle_count, eq } from "drizzle-orm";
 
 //
 
-export function GetDomainCount(pg: IdentiteProconnect_PgDatabase) {
+export function GetDomainCount(pg: IdentiteProconnectPgDatabase) {
   return async function get_domain_count(organization_id: number) {
     const [{ value: count }] = await pg
       .select({ value: drizzle_count() })

@@ -3,13 +3,13 @@
 import { NotFoundError } from "#src/errors";
 import {
   schema,
-  type IdentiteProconnect_PgDatabase,
+  type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
 import { eq } from "drizzle-orm";
 
 //
 
-export function GetModerationWithUser(pg: IdentiteProconnect_PgDatabase) {
+export function GetModerationWithUser(pg: IdentiteProconnectPgDatabase) {
   return async function get_moderation_with_user(moderation_id: number) {
     const moderation = await pg.query.moderations.findFirst({
       columns: {

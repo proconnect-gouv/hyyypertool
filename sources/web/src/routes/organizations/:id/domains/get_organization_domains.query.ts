@@ -1,11 +1,11 @@
 //
 
-import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect/database";
+import type { IdentiteProconnectPgDatabase } from "@~/identite-proconnect/database";
 
 //
 
 export function get_organization_domains(
-  { pg }: { pg: IdentiteProconnect_PgDatabase },
+  { pg }: { pg: IdentiteProconnectPgDatabase },
   { organization_id }: { organization_id: number },
 ) {
   return pg.query.email_domains.findMany({

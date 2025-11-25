@@ -1,11 +1,11 @@
 //
 
-import { schema, type IdentiteProconnect_PgDatabase } from "..";
+import { schema, type IdentiteProconnectPgDatabase } from "..";
 
 //
 
 export async function create_troll_organization(
-  pg: IdentiteProconnect_PgDatabase,
+  pg: IdentiteProconnectPgDatabase,
 ) {
   const [{ id: organization_id }] = await pg
     .insert(schema.organizations)

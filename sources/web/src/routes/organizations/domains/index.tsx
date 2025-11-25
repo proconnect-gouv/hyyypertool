@@ -6,7 +6,7 @@ import { Main_Layout } from "#src/layouts";
 import type { App_Context } from "#src/middleware/context";
 import { hx_urls, urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
-import { Pagination_Schema, Search_Schema } from "@~/core/schema";
+import { PaginationSchema, SearchSchema } from "@~/core/schema";
 import consola from "consola";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
@@ -16,7 +16,7 @@ import { Page } from "./page";
 
 //
 
-export const query_schema = Pagination_Schema.merge(Search_Schema);
+export const query_schema = PaginationSchema.merge(SearchSchema);
 
 //
 
@@ -49,9 +49,9 @@ export default new Hono<App_Context>().use("/", jsxRenderer(Main_Layout)).get(
 
     // Load domain data in handler
     const { q } = req.valid("query");
-    const pagination = match(Pagination_Schema.safeParse(req.query()))
+    const pagination = match(PaginationSchema.safeParse(req.query()))
       .with({ success: true }, ({ data }) => data)
-      .otherwise(() => Pagination_Schema.parse({}));
+      .otherwise(() => PaginationSchema.parse({}));
 
     const { count, domains } = await get_unverified_domains(identite_pg, {
       pagination: { ...pagination, page: pagination.page - 1 },

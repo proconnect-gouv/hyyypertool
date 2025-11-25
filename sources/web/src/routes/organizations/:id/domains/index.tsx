@@ -1,6 +1,6 @@
 //
 
-import type { Htmx_Header } from "#src/htmx";
+import type { HtmxHeader } from "#src/htmx";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import {
   AddAuthorizedDomain,
@@ -8,7 +8,7 @@ import {
 } from "#src/lib/organizations/usecase";
 import type { App_Context } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
-import { DescribedBy_Schema, Entity_Schema, Id_Schema } from "@~/core/schema";
+import { DescribedBySchema, EntitySchema, IdSchema } from "@~/core/schema";
 import { schema } from "@~/identite-proconnect/database";
 import {
   EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES,
@@ -23,7 +23,7 @@ import { AddDomain, Table } from "./Table";
 
 //
 
-const DomainParams_Schema = z.object({ domain_id: Id_Schema });
+const DomainParams_Schema = z.object({ domain_id: IdSchema });
 const EMAIL_DOMAIN_VERIFICATION_TYPES =
   EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES.or(
     EMAIL_DOMAIN_REJECTED_VERIFICATION_TYPES,
@@ -34,8 +34,8 @@ export default new Hono<App_Context>()
   .get(
     "/",
     jsxRenderer(),
-    zValidator("param", Entity_Schema),
-    zValidator("query", DescribedBy_Schema),
+    zValidator("param", EntitySchema),
+    zValidator("query", DescribedBySchema),
     async function GET({ render, req, var: { identite_pg } }) {
       const { id: organization_id } = req.valid("param");
       const { describedby } = req.valid("query");
@@ -56,7 +56,7 @@ export default new Hono<App_Context>()
   )
   .put(
     "/",
-    zValidator("param", Entity_Schema),
+    zValidator("param", EntitySchema),
     zValidator("form", z.object({ domain: z.string().min(1) })),
     async function PUT({ text, req, var: { identite_pg } }) {
       const { id: organization_id } = req.valid("param");
@@ -70,12 +70,12 @@ export default new Hono<App_Context>()
 
       return text("OK", 200, {
         "HX-Trigger": ORGANISATION_EVENTS.enum.DOMAIN_UPDATED,
-      } as Htmx_Header);
+      } as HtmxHeader);
     },
   )
   .delete(
     "/:domain_id",
-    zValidator("param", Entity_Schema.merge(DomainParams_Schema)),
+    zValidator("param", EntitySchema.merge(DomainParams_Schema)),
     async function DELETE({ text, req, var: { identite_pg } }) {
       const { domain_id } = req.valid("param");
 
@@ -86,12 +86,12 @@ export default new Hono<App_Context>()
 
       return text("OK", 200, {
         "HX-Trigger": ORGANISATION_EVENTS.enum.DOMAIN_UPDATED,
-      } as Htmx_Header);
+      } as HtmxHeader);
     },
   )
   .patch(
     "/:domain_id",
-    zValidator("param", Entity_Schema.merge(DomainParams_Schema)),
+    zValidator("param", EntitySchema.merge(DomainParams_Schema)),
     zValidator(
       "query",
       z.object({
@@ -116,6 +116,6 @@ export default new Hono<App_Context>()
 
       return text("OK", 200, {
         "HX-Trigger": ORGANISATION_EVENTS.enum.DOMAIN_UPDATED,
-      } as Htmx_Header);
+      } as HtmxHeader);
     },
   );

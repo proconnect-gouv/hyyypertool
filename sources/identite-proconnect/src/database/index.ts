@@ -10,7 +10,7 @@ export { drizzle } from "drizzle-orm/node-postgres";
 
 export { schema };
 
-export type IdentiteProconnect_PgDatabase = PgDatabase<
+export type IdentiteProconnectPgDatabase = PgDatabase<
   PgQueryResultHKT,
   typeof schema
 >;
@@ -19,6 +19,6 @@ export type IdentiteProconnectSdkDatabaseCradle = {
 };
 
 export type IdentiteProconnectDatabaseCradle = {
-  pg: IdentiteProconnect_PgDatabase;
+  pg: IdentiteProconnectPgDatabase;
 };
 export const Pool = Pg.Pool;

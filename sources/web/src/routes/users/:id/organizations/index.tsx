@@ -2,7 +2,7 @@
 
 import type { App_Context } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
-import { Pagination_Schema } from "@~/core/schema";
+import { PaginationSchema } from "@~/core/schema";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { match } from "ts-pattern";
@@ -21,9 +21,9 @@ export default new Hono<App_Context>().get(
     const { id: user_id } = req.valid("param");
     const { describedby, page_ref } = req.valid("query");
 
-    const pagination = match(Pagination_Schema.safeParse(req.query()))
+    const pagination = match(PaginationSchema.safeParse(req.query()))
       .with({ success: true }, ({ data }) => data)
-      .otherwise(() => Pagination_Schema.parse({}));
+      .otherwise(() => PaginationSchema.parse({}));
 
     const organizations_collection = await get_organizations_by_user_id(
       identite_pg,

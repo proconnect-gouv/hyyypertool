@@ -1,20 +1,20 @@
 import { tag } from "#src/ui/tag";
 import {
-  Verification_Type_Schema,
-  type Verification_Type,
+  VerificationTypeSchema,
+  type VerificationType,
 } from "@~/identite-proconnect/types";
 
-const verificationType: Array<[Verification_Type, string]> = [
-  [Verification_Type_Schema.enum.official_contact_email, "Mail officiel"],
+const verificationType: Array<[VerificationType, string]> = [
+  [VerificationTypeSchema.enum.official_contact_email, "Mail officiel"],
   [
-    Verification_Type_Schema.enum.in_liste_dirigeants_rna,
+    VerificationTypeSchema.enum.in_liste_dirigeants_rna,
     "Liste des dirigeants RNA",
   ],
   [
-    Verification_Type_Schema.enum.in_liste_dirigeants_rne,
+    VerificationTypeSchema.enum.in_liste_dirigeants_rne,
     "Liste des dirigeants RNE",
   ],
-  [Verification_Type_Schema.enum.proof_received, "Justificatif transmis"],
+  [VerificationTypeSchema.enum.proof_received, "Justificatif transmis"],
 ];
 
 export function TagInput() {

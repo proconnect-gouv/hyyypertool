@@ -1,7 +1,7 @@
-import { schema, type IdentiteProconnect_PgDatabase } from "../..";
+import { schema, type IdentiteProconnectPgDatabase } from "../..";
 
 export function insert_nordPass_authenticator(
-  db: IdentiteProconnect_PgDatabase,
+  db: IdentiteProconnectPgDatabase,
   user_id: number,
 ) {
   return db.insert(schema.authenticators).values({

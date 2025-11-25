@@ -1,7 +1,7 @@
-import type { IdentiteProconnect_PgDatabase } from "../..";
+import type { IdentiteProconnectPgDatabase } from "../..";
 import { schema } from "../..";
 
-export async function insert_raphael(db: IdentiteProconnect_PgDatabase) {
+export async function insert_raphael(db: IdentiteProconnectPgDatabase) {
   const insert = await db
     .insert(schema.users)
     .values({

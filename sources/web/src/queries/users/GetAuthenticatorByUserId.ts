@@ -2,13 +2,13 @@
 
 import {
   schema,
-  type IdentiteProconnect_PgDatabase,
+  type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
 import { eq } from "drizzle-orm";
 
 //
 
-export function GetAuthenticatorByUserId(pg: IdentiteProconnect_PgDatabase) {
+export function GetAuthenticatorByUserId(pg: IdentiteProconnectPgDatabase) {
   return async function get_authenticators_by_user_id(id: number) {
     return pg.query.authenticators.findMany({
       columns: {

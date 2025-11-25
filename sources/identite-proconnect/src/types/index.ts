@@ -8,9 +8,9 @@ import z from "zod/v4";
 
 export * from "@proconnect-gouv/proconnect.identite/types";
 
-export const Verification_Type_Schema: typeof UserOrganizationLinkVerificationTypeSchema =
+export const VerificationTypeSchema: typeof UserOrganizationLinkVerificationTypeSchema =
   UserOrganizationLinkVerificationTypeSchema;
-export type Verification_Type = UserOrganizationLinkVerificationType;
+export type VerificationType = UserOrganizationLinkVerificationType;
 
 //
 //

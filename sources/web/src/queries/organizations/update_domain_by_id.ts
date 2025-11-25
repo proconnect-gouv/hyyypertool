@@ -2,7 +2,7 @@
 
 import {
   schema,
-  type IdentiteProconnect_PgDatabase,
+  type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
 import { eq } from "drizzle-orm";
 import type { PgUpdateSetSource } from "drizzle-orm/pg-core";
@@ -10,7 +10,7 @@ import type { PgUpdateSetSource } from "drizzle-orm/pg-core";
 //
 
 export function update_domain_by_id(
-  pg: IdentiteProconnect_PgDatabase,
+  pg: IdentiteProconnectPgDatabase,
   id: number,
   values: PgUpdateSetSource<typeof schema.email_domains>,
 ) {

@@ -1,6 +1,6 @@
 //
 
-import type { Htmx_Header } from "#src/htmx";
+import type { HtmxHeader } from "#src/htmx";
 import { CrispApi } from "#src/lib/crisp";
 import {
   MODERATION_EVENTS,
@@ -10,7 +10,7 @@ import {
 import { set_crisp_config } from "#src/middleware/crisp";
 import { GetModerationWithUser } from "#src/queries/moderations";
 import { zValidator } from "@hono/zod-validator";
-import { Entity_Schema } from "@~/core/schema";
+import { EntitySchema } from "@~/core/schema";
 import { Hono } from "hono";
 import type { ContextType } from "../procedures_context";
 import { mark_as_rejected } from "./mark_as_rejected.workflow";
@@ -20,7 +20,7 @@ import { mark_as_rejected } from "./mark_as_rejected.workflow";
 export default new Hono<ContextType>().patch(
   "/",
   set_crisp_config(),
-  zValidator("param", Entity_Schema),
+  zValidator("param", EntitySchema),
   zValidator("form", reject_form_schema),
   async function PATCH({
     text,
@@ -47,6 +47,6 @@ export default new Hono<ContextType>().patch(
 
     return text("OK", 200, {
       "HX-Trigger": MODERATION_EVENTS.enum.MODERATION_UPDATED,
-    } as Htmx_Header);
+    } as HtmxHeader);
   },
 );

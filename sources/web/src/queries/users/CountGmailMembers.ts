@@ -2,13 +2,13 @@
 
 import {
   schema,
-  type IdentiteProconnect_PgDatabase,
+  type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
 import { and, eq, like } from "drizzle-orm";
 
 //
 
-export function CountGmailMembers(pg: IdentiteProconnect_PgDatabase) {
+export function CountGmailMembers(pg: IdentiteProconnectPgDatabase) {
   return function count_gmail_members({
     domain,
     siret,

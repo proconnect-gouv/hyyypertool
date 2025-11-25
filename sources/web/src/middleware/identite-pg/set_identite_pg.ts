@@ -4,14 +4,14 @@ import {
   Pool,
   drizzle,
   schema,
-  type IdentiteProconnect_PgDatabase,
+  type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
 import type { Env, MiddlewareHandler } from "hono";
 
 //
 
 export function set_identite_pg(
-  client: IdentiteProconnect_PgDatabase,
+  client: IdentiteProconnectPgDatabase,
 ): MiddlewareHandler<IdentiteProconnect_Pg_Context> {
   return async function set_identite_pg_middleware({ set }, next) {
     set("identite_pg", client);
@@ -53,13 +53,13 @@ export function set_identite_pg_database({
 export interface IdentiteProconnect_Pg_Context extends Env {
   Variables: {
     identite_pg_client: InstanceType<typeof Pool>;
-    identite_pg: IdentiteProconnect_PgDatabase;
+    identite_pg: IdentiteProconnectPgDatabase;
   };
 }
 
 export interface IdentiteProconnect_Pg_Client_Context extends Env {
   Variables: {
     identite_pg_client: InstanceType<typeof Pool>;
-    identite_pg: IdentiteProconnect_PgDatabase;
+    identite_pg: IdentiteProconnectPgDatabase;
   };
 }

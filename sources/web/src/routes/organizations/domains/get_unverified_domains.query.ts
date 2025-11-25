@@ -4,7 +4,7 @@ import { mostUsedFreeEmailDomains as most_used_free_email_domains } from "@proco
 import type { Pagination } from "@~/core/schema";
 import {
   schema,
-  type IdentiteProconnect_PgDatabase,
+  type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
 import {
   and,
@@ -35,7 +35,7 @@ const disposable_free_email_domain = (
 //
 
 export async function get_unverified_domains(
-  pg: IdentiteProconnect_PgDatabase,
+  pg: IdentiteProconnectPgDatabase,
   {
     pagination = { page: 0, page_size: 10 },
     search,

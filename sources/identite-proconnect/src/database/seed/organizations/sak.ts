@@ -1,8 +1,8 @@
 import type { EmailDomainVerificationType } from "@~/identite-proconnect/types";
-import type { IdentiteProconnect_PgDatabase } from "../..";
+import type { IdentiteProconnectPgDatabase } from "../..";
 import { schema } from "../..";
 
-export async function insert_sak(db: IdentiteProconnect_PgDatabase) {
+export async function insert_sak(db: IdentiteProconnectPgDatabase) {
   const insert = await db
     .insert(schema.organizations)
     .values({

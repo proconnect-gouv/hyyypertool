@@ -1,6 +1,6 @@
 //
 
-import { Moderation_Type_Schema } from "#src/lib/moderations";
+import { ModerationTypeSchema } from "#src/lib/moderations";
 import { validate_form_schema } from "#src/lib/moderations";
 import { useContext } from "hono/jsx";
 import { context, valid_context } from "./context";
@@ -24,8 +24,8 @@ export function SendNotification() {
         type="checkbox"
         value="true"
         checked={
-          Moderation_Type_Schema.parse(type) !==
-          Moderation_Type_Schema.enum.non_verified_domain
+          ModerationTypeSchema.parse(type) !==
+          ModerationTypeSchema.enum.non_verified_domain
         }
       />
       <label class="fr-label flex-row!" for={$send_notification}>

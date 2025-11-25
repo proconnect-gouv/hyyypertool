@@ -3,7 +3,7 @@
 import { NotFoundError } from "#src/errors";
 import {
   schema,
-  type IdentiteProconnect_PgDatabase,
+  type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
 import { and, eq } from "drizzle-orm";
 
@@ -13,7 +13,7 @@ type UsersOrganizationsColumns =
 
 export function GetMember<
   TColumns extends Partial<Record<UsersOrganizationsColumns, true>>,
->({ pg, columns }: { pg: IdentiteProconnect_PgDatabase; columns: TColumns }) {
+>({ pg, columns }: { pg: IdentiteProconnectPgDatabase; columns: TColumns }) {
   return async function get_member_by_id({
     organization_id,
     user_id,

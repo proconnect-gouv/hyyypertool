@@ -1,8 +1,8 @@
 //
-import { schema, type IdentiteProconnect_PgDatabase } from "..";
+import { schema, type IdentiteProconnectPgDatabase } from "..";
 //
 export async function insert_email_deliverability_whitelist(
-  pg: IdentiteProconnect_PgDatabase,
+  pg: IdentiteProconnectPgDatabase,
 ) {
   return pg
     .insert(schema.email_deliverability_whitelist)

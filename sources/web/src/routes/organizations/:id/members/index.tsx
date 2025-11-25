@@ -2,9 +2,9 @@
 
 import { zValidator } from "@hono/zod-validator";
 import {
-  DescribedBy_Schema,
-  Entity_Schema,
-  Pagination_Schema,
+  DescribedBySchema,
+  EntitySchema,
+  PaginationSchema,
 } from "@~/core/schema";
 import type { App_Context } from "#src/middleware/context";
 import { Hono } from "hono";
@@ -25,19 +25,19 @@ export default new Hono<App_Context>()
   .get(
     "/",
     jsxRenderer(),
-    zValidator("param", Entity_Schema),
+    zValidator("param", EntitySchema),
     zValidator(
       "query",
-      Pagination_Schema.merge(DescribedBy_Schema).extend({
+      PaginationSchema.merge(DescribedBySchema).extend({
         page_ref: z.string(),
       }),
     ),
     async function GET({ render, req, var: { identite_pg } }) {
       const { id: organization_id } = req.valid("param");
       const { describedby, page_ref } = req.valid("query");
-      const pagination = match(Pagination_Schema.safeParse(req.query()))
+      const pagination = match(PaginationSchema.safeParse(req.query()))
         .with({ success: true }, ({ data }) => data)
-        .otherwise(() => Pagination_Schema.parse({}));
+        .otherwise(() => PaginationSchema.parse({}));
 
       const query_members_collection = await get_users_by_organization(
         identite_pg,

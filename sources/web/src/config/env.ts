@@ -95,4 +95,4 @@ export const app_env = z.object({
 
 export default app_env.parse(env);
 
-export type App_Env = z.TypeOf<typeof app_env>;
+export type AppEnv = z.TypeOf<typeof app_env>;

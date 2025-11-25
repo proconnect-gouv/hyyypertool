@@ -3,14 +3,14 @@
 import type { Pagination } from "@~/core/schema";
 import {
   schema,
-  type IdentiteProconnect_PgDatabase,
+  type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
 import { and, desc, count as drizzle_count, eq } from "drizzle-orm";
 
 //
 
 export async function get_users_by_organization(
-  pg: IdentiteProconnect_PgDatabase,
+  pg: IdentiteProconnectPgDatabase,
   {
     organization_id,
     pagination = { page: 0, page_size: 10 },

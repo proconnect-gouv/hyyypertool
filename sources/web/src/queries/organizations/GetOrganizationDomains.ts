@@ -1,10 +1,10 @@
 //
 
-import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect/database";
+import type { IdentiteProconnectPgDatabase } from "@~/identite-proconnect/database";
 
 //
 
-export function GetOrganizationDomains(pg: IdentiteProconnect_PgDatabase) {
+export function GetOrganizationDomains(pg: IdentiteProconnectPgDatabase) {
   return function get_organization_domains({
     organization_id,
   }: {

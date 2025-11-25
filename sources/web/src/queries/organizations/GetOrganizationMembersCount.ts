@@ -2,13 +2,13 @@
 
 import {
   schema,
-  type IdentiteProconnect_PgDatabase,
+  type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
 import { count as drizzle_count, eq } from "drizzle-orm";
 
 //
 
-export function GetOrganizationMembersCount(pg: IdentiteProconnect_PgDatabase) {
+export function GetOrganizationMembersCount(pg: IdentiteProconnectPgDatabase) {
   return async function get_organization_members_count(
     organization_id: number,
   ) {

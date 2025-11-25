@@ -2,7 +2,7 @@
 
 import type { App_Context } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
-import { Entity_Schema } from "@~/core/schema";
+import { EntitySchema } from "@~/core/schema";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { z } from "zod/v4";
@@ -21,7 +21,7 @@ const QuerySchema = z.object({
   user_id: z.coerce.number().int().nonnegative(),
 });
 
-const ParamSchema = Entity_Schema;
+const ParamSchema = EntitySchema;
 
 //
 

@@ -3,7 +3,7 @@
 import { UpdateModerationById } from "#src/queries/moderations";
 import { z_username } from "@~/core/schema";
 import type {
-  IdentiteProconnect_PgDatabase,
+  IdentiteProconnectPgDatabase,
   schema,
 } from "@~/identite-proconnect/database";
 import { type ModerationStatus } from "@~/identite-proconnect/types";
@@ -20,7 +20,7 @@ export async function mark_moderation_as(
     userinfo,
   }: {
     moderation: Pick<typeof schema.moderations.$inferSelect, "comment" | "id">;
-    pg: IdentiteProconnect_PgDatabase;
+    pg: IdentiteProconnectPgDatabase;
     reason: string;
     userinfo: { email: string };
   },

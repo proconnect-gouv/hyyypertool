@@ -5,7 +5,7 @@ import { search_schema } from "./context";
 
 //
 
-test("Search_Schema > empty object", () => {
+test("SearchSchema > empty object", () => {
   const search = search_schema.parse({});
 
   expect(search).toEqual({
@@ -18,7 +18,7 @@ test("Search_Schema > empty object", () => {
   });
 });
 
-test("Search_Schema > day 2011-01-11", () => {
+test("SearchSchema > day 2011-01-11", () => {
   const search = search_schema.parse({ day: "2011-01-11" });
 
   expect(search).toEqual({

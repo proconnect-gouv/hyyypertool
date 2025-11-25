@@ -19,7 +19,7 @@ import {
 import { About as About_User } from "#src/ui/users/About";
 import { Investigation as Investigation_User } from "#src/ui/users/Investigation";
 import { hx_urls } from "#src/urls";
-import type { IdentiteProconnect_PgDatabase } from "@~/identite-proconnect/database";
+import type { IdentiteProconnectPgDatabase } from "@~/identite-proconnect/database";
 import { createContext, useContext } from "hono/jsx";
 import { ModerationExchanges } from "./ModerationExchanges";
 import { SuggestOrganizationDomains } from "./SuggestOrganizationDomains";
@@ -38,7 +38,7 @@ type PageData = {
   organization_member: OrganizationMember;
   query_domain_count: Promise<number>;
   query_organization_members_count: Promise<number>;
-  identite_pg: IdentiteProconnect_PgDatabase;
+  identite_pg: IdentiteProconnectPgDatabase;
 };
 
 const PageContext = createContext<PageData>({} as PageData);

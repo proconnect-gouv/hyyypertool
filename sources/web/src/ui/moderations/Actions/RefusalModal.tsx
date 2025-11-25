@@ -1,4 +1,4 @@
-import { Htmx_Events, hx_disabled_form_elements } from "#src/htmx";
+import { HtmxEvents, hx_disabled_form_elements } from "#src/htmx";
 import { button } from "#src/ui/button";
 import { hx_urls } from "#src/urls";
 import { reject_form_schema } from "#src/lib/moderations";
@@ -25,7 +25,7 @@ export async function RefusalModal({ userEmail }: { userEmail: string }) {
         hx-swap="none"
         _={`
           on submit
-            wait for ${Htmx_Events.enum.afterSettle}
+            wait for ${HtmxEvents.enum.afterSettle}
             add .hidden to #refusalModal
             go to the top of body smoothly
             trigger ${AUTO_GO_BACK_EVENT}(type: 'success', message: 'Modération refusé !') on #auto_go_back

@@ -12,7 +12,7 @@ import { set_crisp_config } from "#src/middleware/crisp";
 import { Crisp } from "#src/ui/moderations/Crisp";
 import { FindCorrespondingEmail } from "#src/ui/moderations/FindCorrespondingEmail";
 import { zValidator } from "@hono/zod-validator";
-import { DescribedBy_Schema, Entity_Schema } from "@~/core/schema";
+import { DescribedBySchema, EntitySchema } from "@~/core/schema";
 import { to } from "await-to-js";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
@@ -29,8 +29,8 @@ const MAX_ARTICLE_COUNT = 3;
 export default new Hono<App_Context>().get(
   "/",
   jsxRenderer(),
-  zValidator("param", Entity_Schema),
-  zValidator("query", DescribedBy_Schema),
+  zValidator("param", EntitySchema),
+  zValidator("query", DescribedBySchema),
   set_crisp_config(),
   async function GET({ render, req, var: { identite_pg, crisp_config } }) {
     const { id } = req.valid("param");

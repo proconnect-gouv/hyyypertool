@@ -1,12 +1,12 @@
 //
 
 import { EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES } from "#src/types";
-import { schema, type IdentiteProconnect_PgDatabase } from "..";
+import { schema, type IdentiteProconnectPgDatabase } from "..";
 
 //
 
 export async function create_cactus_organization(
-  pg: IdentiteProconnect_PgDatabase,
+  pg: IdentiteProconnectPgDatabase,
 ) {
   const [{ id: organization_id }] = await pg
     .insert(schema.organizations)

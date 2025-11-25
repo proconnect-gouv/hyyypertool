@@ -6,7 +6,7 @@ import type { AgentConnectUserInfo } from "#src/middleware/auth";
 import type { App_Context } from "#src/middleware/context";
 import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
-import { MfaAcrValue_Schema } from "@~/core/schema";
+import { MfaAcrValueSchema } from "@~/core/schema";
 import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
 import {
@@ -125,7 +125,7 @@ export default new Hono<Oidc_Context & App_Context>()
 
       const claims = tokens.claims();
 
-      const result = MfaAcrValue_Schema.safeParse(claims?.["acr"]);
+      const result = MfaAcrValueSchema.safeParse(claims?.["acr"]);
 
       if (!result.success) {
         throw new HTTPException(403, {

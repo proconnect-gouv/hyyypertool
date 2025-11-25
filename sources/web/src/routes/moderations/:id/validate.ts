@@ -1,7 +1,7 @@
 //
 
 import { HTTPError, NotFoundError } from "#src/errors";
-import type { Htmx_Header } from "#src/htmx";
+import type { HtmxHeader } from "#src/htmx";
 import {
   MODERATION_EVENTS,
   MemberJoinOrganization,
@@ -19,7 +19,7 @@ import {
 } from "#src/queries/moderations";
 import { GetMember, UpdateUserByIdInOrganization } from "#src/queries/users";
 import { zValidator } from "@hono/zod-validator";
-import { Entity_Schema, z_email_domain } from "@~/core/schema";
+import { EntitySchema, z_email_domain } from "@~/core/schema";
 import { SendModerationProcessedEmail } from "@~/identite-proconnect/api";
 import {
   ForceJoinOrganization,
@@ -33,7 +33,7 @@ import { mark_as_validated } from "./mark_as_validated";
 
 //
 
-const param_schema = Entity_Schema;
+const param_schema = EntitySchema;
 const form_schema = validate_form_schema;
 //
 
@@ -171,6 +171,6 @@ export default new Hono<App_Context>().patch(
 
     return text("OK", 200, {
       "HX-Trigger": [MODERATION_EVENTS.enum.MODERATION_UPDATED].join(", "),
-    } as Htmx_Header);
+    } as HtmxHeader);
   },
 );

@@ -1,6 +1,6 @@
 //
 
-import type { Htmx_Header } from "#src/htmx";
+import type { HtmxHeader } from "#src/htmx";
 import { Main_Layout } from "#src/layouts";
 import { authorized } from "#src/middleware/auth";
 import type { App_Context } from "#src/middleware/context";
@@ -89,7 +89,7 @@ export default new Hono<App_Context>()
 
         return text("OK", 200, {
           "HX-Trigger": "domains-deliverability-updated",
-        } as Htmx_Header);
+        } as HtmxHeader);
       } catch (error) {
         console.error("Erreur lors de la suppression:", error);
         return text("Erreur lors de la suppression", 500);

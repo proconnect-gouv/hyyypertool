@@ -3,7 +3,7 @@
 import type { Pagination } from "@~/core/schema";
 import {
   schema,
-  type IdentiteProconnect_PgDatabase,
+  type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
 import {
   and,
@@ -20,7 +20,7 @@ import type { Search } from "./context";
 //
 
 export async function get_moderations_list(
-  pg: IdentiteProconnect_PgDatabase,
+  pg: IdentiteProconnectPgDatabase,
   {
     pagination,
     search,
