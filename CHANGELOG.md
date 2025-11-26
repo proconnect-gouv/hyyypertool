@@ -1,5 +1,7 @@
 # Changelog
 
+## [2025.11.2](https://github.com/proconnect-gouv/hyyypertool/compare/2025.11.1...2025.11.2) (2025-11-26)
+
 ## [2025.11.1](https://github.com/proconnect-gouv/hyyypertool/compare/2025.11.0...2025.11.1) (2025-11-05)
 
 
