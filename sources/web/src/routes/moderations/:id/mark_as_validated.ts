@@ -15,7 +15,7 @@ export async function mark_as_validated(
   const update = build_moderation_update({
     comment: moderation.comment,
     userinfo,
-    reason: "[ProConnect] ✨ Modeation validée",
+    reason: "[ProConnect] ✨ Modération validée",
     type: "VALIDATED",
   });
 
