@@ -3,10 +3,8 @@
 import { NotFoundError } from "#src/errors";
 import type { HtmxHeader } from "#src/htmx";
 import { Main_Layout } from "#src/layouts";
-import { CrispApi } from "#src/lib/crisp";
 import { ResetMFA, ResetPassword } from "#src/lib/users";
 import type { App_Context } from "#src/middleware/context";
-import { set_crisp_config } from "#src/middleware/crisp";
 import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
 import { EntitySchema } from "@~/core/schema";
@@ -80,17 +78,16 @@ export default new Hono<App_Context>()
   )
   .patch(
     "/reset/password",
-    set_crisp_config(),
     zValidator("param", EntitySchema),
     async function reset_password({
       text,
       req,
-      var: { config, crisp_config, identite_pg, userinfo },
+      var: { config, crisp, identite_pg, userinfo },
     }) {
       const { id: user_id } = req.valid("param");
 
       const reset_password = ResetPassword({
-        crisp: CrispApi(crisp_config),
+        crisp,
         pg: identite_pg,
         resolve_delay: config.CRISP_RESOLVE_DELAY,
       });
@@ -101,17 +98,16 @@ export default new Hono<App_Context>()
   )
   .patch(
     "/reset/mfa",
-    set_crisp_config(),
     zValidator("param", EntitySchema),
     async function reset_mfa({
       text,
       req,
-      var: { config, crisp_config, identite_pg, userinfo },
+      var: { config, crisp, identite_pg, userinfo },
     }) {
       const { id: user_id } = req.valid("param");
 
       const reset_mfa = ResetMFA({
-        crisp: CrispApi(crisp_config),
+        crisp,
         pg: identite_pg,
         resolve_delay: config.CRISP_RESOLVE_DELAY,
       });

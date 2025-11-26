@@ -2,6 +2,7 @@
 
 import { set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
+import { set_crisp_client } from "#src/middleware/crisp";
 import { set_identite_pg } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
 import { schema } from "@~/identite-proconnect/database";
@@ -11,7 +12,7 @@ import {
   migrate,
   pg,
 } from "@~/identite-proconnect/database/testing";
-import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
+import { beforeAll, beforeEach, expect, mock, setSystemTime, test } from "bun:test";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import app from "./index";
@@ -84,8 +85,15 @@ test("PATCH /users/:id/reset/email_verified resets email verification", async ()
   expect(updated_user?.email_verified).toBe(false);
 });
 
-test("PATCH /users/:id/reset/mfa resets MFA", async () => {
+test("PATCH /users/:id/reset/password resets password", async () => {
   const user_id = await create_adora_pony_user(pg);
+
+  const mockCrisp = {
+    create_conversation: mock().mockResolvedValue({ session_id: "session_123" }),
+    get_user: mock().mockResolvedValue({ nickname: "Test User" }),
+    mark_conversation_as_resolved: mock().mockResolvedValue(undefined),
+    send_message: mock().mockResolvedValue(undefined),
+  };
 
   const response = await new Hono()
     .use(
@@ -95,12 +103,42 @@ test("PATCH /users/:id/reset/mfa resets MFA", async () => {
         CRISP_KEY: "test",
       }),
     )
+    .use(set_crisp_client(mockCrisp))
+    .use(set_identite_pg(pg))
+    .use(set_nonce("nonce"))
+    .use(set_userinfo({ email: "test@example.com" }))
+    .route("/:id", app)
+    .request(`/${user_id}/reset/password`, { method: "PATCH" });
+
+  expect(response.status).toBe(200);
+  expect(response.text()).resolves.toBe("OK");
+});
+
+test("PATCH /users/:id/reset/mfa resets MFA", async () => {
+  const user_id = await create_adora_pony_user(pg);
+
+  const mockCrisp = {
+    create_conversation: mock().mockResolvedValue({ session_id: "session_123" }),
+    get_user: mock().mockResolvedValue({ nickname: "Test User" }),
+    mark_conversation_as_resolved: mock().mockResolvedValue(undefined),
+    send_message: mock().mockResolvedValue(undefined),
+  };
+
+  const response = await new Hono()
+    .use(
+      set_config({
+        CRISP_RESOLVE_DELAY: 0,
+        CRISP_WEBSITE_ID: "test",
+        CRISP_KEY: "test",
+      }),
+    )
+    .use(set_crisp_client(mockCrisp))
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
     .use(set_userinfo({ email: "test@example.com" }))
     .route("/:id", app)
     .request(`/${user_id}/reset/mfa`, { method: "PATCH" });
 
-  // May return 500 due to Crisp config, but verifies endpoint exists
-  expect([200, 500]).toContain(response.status);
+  expect(response.status).toBe(200);
+  expect(response.text()).resolves.toBe("OK");
 });

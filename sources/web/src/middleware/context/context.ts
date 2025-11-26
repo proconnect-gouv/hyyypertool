@@ -1,6 +1,7 @@
 //
 
 import type { AppVariables_Context } from "#src/config";
+import type { CrispClientContext } from "#src/middleware/crisp";
 import type { Csp_Context } from "#src/middleware/csp";
 import type { IdentiteProconnect_Pg_Context } from "#src/middleware/identite-pg";
 import type { Scope } from "@sentry/core";
@@ -77,6 +78,7 @@ export interface SentryVariables_Context extends Env {
   };
 }
 export type App_Context = AppVariables_Context &
+  CrispClientContext &
   Csp_Context &
   IdentiteProconnect_Pg_Context &
   NonceVariables_Context &

@@ -8,7 +8,6 @@ import {
 } from "#src/lib/moderations";
 import { get_zammad_mail } from "#src/lib/zammad";
 import type { App_Context } from "#src/middleware/context";
-import { set_crisp_config } from "#src/middleware/crisp";
 import { Crisp } from "#src/ui/moderations/Crisp";
 import { FindCorrespondingEmail } from "#src/ui/moderations/FindCorrespondingEmail";
 import { zValidator } from "@hono/zod-validator";
@@ -31,13 +30,23 @@ export default new Hono<App_Context>().get(
   jsxRenderer(),
   zValidator("param", EntitySchema),
   zValidator("query", DescribedBySchema),
-  set_crisp_config(),
-  async function GET({ render, req, var: { identite_pg, crisp_config } }) {
+  async function GET({ render, req, var: { identite_pg, config } }) {
     const { id } = req.valid("param");
     const { describedby } = req.valid("query");
 
     const moderation = await find_moderation_for_email(identite_pg, id);
     const ticket_id = moderation?.ticket_id ?? "";
+
+    const crisp_config = {
+      base_url: config.CRISP_BASE_URL,
+      identifier: config.CRISP_IDENTIFIER,
+      key: config.CRISP_KEY,
+      plugin_urn: config.CRISP_PLUGIN_URN,
+      user_nickname: config.CRISP_USER_NICKNAME,
+      website_id: config.CRISP_WEBSITE_ID,
+      debug: false,
+    };
+
     const [[, zammad], [, crisp]] = await Promise.all([
       to(
         GetZammadFromTicketId({ fetch_zammad_mail: get_zammad_mail })({
