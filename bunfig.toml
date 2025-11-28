@@ -9,3 +9,6 @@ preload = ["@~/config.bun-plugin-test-projects"]
 
 [test."*.test.dom.tsx"]
 preload = ["@~/config.happydom/register.ts"]
+
+[test."*.dom.test.tsx"]
+preload = ["@~/config.happydom/register.ts"]

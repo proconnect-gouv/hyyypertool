@@ -5,7 +5,7 @@
   "type": "module",
   "files": [],
   "dependencies": {
-    "@happy-dom/global-registrator": "18.0.1"
+    "@happy-dom/global-registrator": "20.0.10"
   },
   "devDependencies": {
     "@~/config.typescript": "workspace:*"

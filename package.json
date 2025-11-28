@@ -21,6 +21,7 @@
     "database:identite-proconnect:run": "bun run --cwd sources/identite-proconnect",
     "database:identite-proconnect:seed": "bun run database:identite-proconnect:run seed",
     "dev": "cd bin && bun run dev:bun",
+    "dev:tailwind": "cd bin && bun run ./build.ts --hot",
     "dev:inspect-brk": "tsx --inspect-brk bin/src/index.ts",
     "e2e:install": "cd e2e && bun install",
     "e2e:run": "cd e2e && bun run",

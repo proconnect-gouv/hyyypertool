@@ -59,6 +59,7 @@
   "devDependencies": {
     "@types/lodash.sortby": "4.7.9",
     "@types/nprogress": "0.2.3",
+    "@~/config.happydom": "workspace:*",
     "@~/config.typescript": "workspace:*",
     "prettier": "3.6.2"
   }
