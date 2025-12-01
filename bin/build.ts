@@ -35,6 +35,7 @@ if (shouldSkipBuild) {
     entrypoints: [
       "../sources/web/src/layouts/_client/nprogress.ts",
       "../sources/web/src/routes/welcome/_client/hyyypertitle.ts",
+      "../sources/web/src/lib/alpine/clipboard.ts",
     ],
     external: ["@~/core/config"],
     minify,

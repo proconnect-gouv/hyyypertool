@@ -29,12 +29,17 @@ function getMimeType(path: string): string {
  * Transform absolute filesystem path to web-relative path
  * The path transformation maps: /sources/web/src/... → /src/...
  * This works because the build serves web assets from /src
+ *
+ * For TypeScript files, transforms to .js since Bun builds .ts to .js
  */
 function transformPath(filePath: string): string {
   // Match the sources/web/src portion and extract the rest
   const match = filePath.match(/sources\/web\/src\/(.*)/);
   if (match) {
-    return `/src/${match[1]}`;
+    let webPath = `/src/${match[1]}`;
+    // Transform .ts files to .js since they're compiled during build
+    webPath = webPath.replace(/\.ts$/, ".js");
+    return webPath;
   }
 
   // Fallback: if the path doesn't match the pattern, return as-is
