@@ -29,6 +29,7 @@
     "@proconnect-gouv/proconnect.crisp": "1.0.0",
     "@sentry/core": "10.27.0",
     "@sentry/node": "10.27.0",
+    "@~/config.bun-plugin-query": "workspace:*",
     "@~/core": "workspace:*",
     "@~/identite-proconnect": "workspace:*",
     "@~/moderations": "workspace:*",

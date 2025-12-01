@@ -70,6 +70,10 @@
         "@~/config.typescript": "workspace:*",
       },
     },
+    "sources/config/bun-plugin-query": {
+      "name": "@~/config.bun-plugin-query",
+      "version": "0.0.1",
+    },
     "sources/config/bun-plugin-test-projects": {
       "name": "@~/config.bun-plugin-test-projects",
       "version": "0.0.0",
@@ -174,6 +178,7 @@
         "@proconnect-gouv/proconnect.crisp": "1.0.0",
         "@sentry/core": "10.27.0",
         "@sentry/node": "10.27.0",
+        "@~/config.bun-plugin-query": "workspace:*",
         "@~/core": "workspace:*",
         "@~/identite-proconnect": "workspace:*",
         "@~/moderations": "workspace:*",
@@ -615,6 +620,8 @@
     "@zootools/email-spell-checker": ["@zootools/email-spell-checker@1.12.0", "", {}, "sha512-yM0lH4yjg+jZG5QubtvpHE+ahSnsHbw9ilnQgKgOF3fk6OBVQLRsEq4NR+/nRvrwG8Vo+29bzKwhXk5y1b/FwA=="],
 
     "@~/bin": ["@~/bin@workspace:bin"],
+
+    "@~/config.bun-plugin-query": ["@~/config.bun-plugin-query@workspace:sources/config/bun-plugin-query"],
 
     "@~/config.bun-plugin-test-projects": ["@~/config.bun-plugin-test-projects@workspace:sources/config/bun-plugin-test-projects"],
 

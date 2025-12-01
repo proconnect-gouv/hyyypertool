@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "./node_modules/.cache/tsc"
+  },
+  "extends": "@~/config.typescript/base/tsconfig.json"
+}

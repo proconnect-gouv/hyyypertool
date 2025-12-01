@@ -1,6 +1,7 @@
 //
 
 import { hyper_ref } from "#src/html";
+import { ClipboardScript } from "#src/lib/alpine";
 import { button } from "#src/ui/button";
 import { GoogleSearchButton } from "#src/ui/button/components";
 import { copy_text_content_to_clipboard } from "#src/ui/button/scripts";
@@ -96,6 +97,7 @@ export async function UserPage({
         <MFA user={user} authenticators={authenticators} />
       </div>
       <hr />
+      <ClipboardScript />
     </main>
   );
 }

@@ -1,6 +1,9 @@
 //
 //
 
+// Load query parameter plugin
+import "../sources/config/bun-plugin-query/index.ts";
+
 import { $ } from "bun";
 import { existsSync } from "node:fs";
 import { join } from "node:path";

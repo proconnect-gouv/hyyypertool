@@ -2,7 +2,12 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
-    "outDir": "./node_modules/.cache/tsc"
+    "outDir": "./node_modules/.cache/tsc",
+    "rootDir": "..",
+    "baseUrl": "..",
+    "paths": {
+      "@~/config.bun-plugin-query": ["sources/config/bun-plugin-query"]
+    }
   },
   "extends": "@~/config.typescript/api/tsconfig.json",
   "references": [
@@ -12,5 +17,6 @@
     {
       "path": "../sources/core"
     }
-  ]
+  ],
+  "include": ["src/**/*.ts", "../sources/config/bun-plugin-query/index.ts"]
 }
