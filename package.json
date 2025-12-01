@@ -69,6 +69,7 @@
     "@release-it/conventional-changelog": "10.0.1",
     "@types/alpinejs": "3.13.11",
     "@types/bun": "1.2.21",
+    "@~/config.bun-plugin-query": "workspace:*",
     "@~/config.bun-plugin-test-projects": "workspace:*",
     "hono": "4.10.6",
     "htmx-ext-debug": "2.0.2",
