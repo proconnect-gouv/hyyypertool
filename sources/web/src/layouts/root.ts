@@ -144,7 +144,7 @@ export function Root_Layout({ children }: PropsWithChildren) {
 
       <script
         nonce="${nonce}"
-        src="${config.PUBLIC_ASSETS_PATH}/layouts/_client/nprogress.js"
+        src="${config.PUBLIC_ASSETS_PATH}/layouts/nprogress.client.js"
         type="module"
       ></script>
 

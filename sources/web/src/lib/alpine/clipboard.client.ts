@@ -1,9 +1,24 @@
 /**
  * Alpine.js clipboard utilities
  * Provides methods for copying values and text content to clipboard
+ *
+ * Usage in HTML:
+ * ```html
+ * <div x-data="clipboard">
+ *   <button @click="copyText('#my-element')">Copy</button>
+ * </div>
+ * ```
  */
 
-export const clipboard = {
+declare global {
+  interface Window {
+    Alpine?: {
+      data: (name: string, callback: () => object) => void;
+    };
+  }
+}
+
+const clipboard = {
   /**
    * Copies the value of an input element to the clipboard
    * @param selector - CSS selector for the input element
@@ -27,3 +42,8 @@ export const clipboard = {
     }
   },
 };
+
+// Register with Alpine.js when available
+document.addEventListener("alpine:init", () => {
+  window.Alpine?.data("clipboard", () => clipboard);
+});

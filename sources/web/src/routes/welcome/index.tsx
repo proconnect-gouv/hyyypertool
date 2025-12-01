@@ -23,7 +23,7 @@ export default new Hono<App_Context>().get(
           <hyyyper-title>Bonjour Hyyypertool !</hyyyper-title>
           <script
             nonce={nonce}
-            src={`${config.PUBLIC_ASSETS_PATH}/routes/welcome/_client/hyyypertitle.js`}
+            src={`${config.PUBLIC_ASSETS_PATH}/routes/welcome/hyyypertitle.client.js`}
             type="module"
           ></script>
         </h1>

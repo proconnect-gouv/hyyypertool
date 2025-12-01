@@ -6,14 +6,14 @@
  * ```tsx
  * <ClipboardScript />
  * ```
- *
- * This component uses the query parameter plugin to import the client script.
- * The ?url parameter returns the web-relative path for the script.
  */
 
-// @ts-expect-error - Query parameter imports need plugin support
-import clipboardUrl from "./clipboard.ts?url";
-
+import config from "#src/config";
 export function ClipboardScript() {
-  return <script type="module" src={clipboardUrl} />;
+  return (
+    <script
+      type="module"
+      src={`${config.PUBLIC_ASSETS_PATH}/lib/alpine/clipboard.client.js`}
+    />
+  );
 }

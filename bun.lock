@@ -25,7 +25,6 @@
         "@release-it/conventional-changelog": "10.0.1",
         "@types/alpinejs": "3.13.11",
         "@types/bun": "1.2.21",
-        "@~/config.bun-plugin-query": "workspace:*",
         "@~/config.bun-plugin-test-projects": "workspace:*",
         "hono": "4.10.6",
         "htmx-ext-debug": "2.0.2",
@@ -55,6 +54,7 @@
         "tsx": "4.20.5",
       },
       "devDependencies": {
+        "@~/config.bun-plugin-client-scripts": "workspace:*",
         "@~/config.tailwindcss": "workspace:*",
         "@~/config.typescript": "workspace:*",
         "bun-html-live-reload": "1.0.4",
@@ -71,9 +71,12 @@
         "@~/config.typescript": "workspace:*",
       },
     },
-    "sources/config/bun-plugin-query": {
-      "name": "@~/config.bun-plugin-query",
-      "version": "0.0.1",
+    "sources/config/bun-plugin-client-scripts": {
+      "name": "@~/config.bun-plugin-client-scripts",
+      "version": "0.0.0",
+      "devDependencies": {
+        "@~/config.typescript": "workspace:*",
+      },
     },
     "sources/config/bun-plugin-test-projects": {
       "name": "@~/config.bun-plugin-test-projects",
@@ -179,7 +182,6 @@
         "@proconnect-gouv/proconnect.crisp": "1.0.0",
         "@sentry/core": "10.27.0",
         "@sentry/node": "10.27.0",
-        "@~/config.bun-plugin-query": "workspace:*",
         "@~/core": "workspace:*",
         "@~/identite-proconnect": "workspace:*",
         "@~/moderations": "workspace:*",
@@ -622,7 +624,7 @@
 
     "@~/bin": ["@~/bin@workspace:bin"],
 
-    "@~/config.bun-plugin-query": ["@~/config.bun-plugin-query@workspace:sources/config/bun-plugin-query"],
+    "@~/config.bun-plugin-client-scripts": ["@~/config.bun-plugin-client-scripts@workspace:sources/config/bun-plugin-client-scripts"],
 
     "@~/config.bun-plugin-test-projects": ["@~/config.bun-plugin-test-projects@workspace:sources/config/bun-plugin-test-projects"],
 

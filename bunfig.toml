@@ -5,7 +5,12 @@ linker = "isolated"
 publicHoistPattern = [ "drizzle-orm", "pg" ]
 
 [test]
-preload = ["@~/config.bun-plugin-query", "@~/config.bun-plugin-test-projects"]
+preload = ["@~/config.bun-plugin-test-projects"]
 
-[test."*.test.dom.tsx"]
+[test."*.client.test.tsx"]
 preload = ["@~/config.happydom/register.ts"]
+
+[build]
+clientScripts = [
+  "sources/web/src/**/*.client.ts"
+]

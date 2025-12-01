@@ -4,10 +4,7 @@
     "jsxImportSource": "hono/jsx",
     "outDir": "./node_modules/.cache/tsc",
     "rootDir": "..",
-    "baseUrl": "..",
-    "paths": {
-      "@~/config.bun-plugin-query": ["sources/config/bun-plugin-query"]
-    }
+    "baseUrl": ".."
   },
   "extends": "@~/config.typescript/api/tsconfig.json",
   "references": [
@@ -18,5 +15,5 @@
       "path": "../sources/core"
     }
   ],
-  "include": ["src/**/*.ts", "../sources/config/bun-plugin-query/index.ts"]
+  "include": ["src/**/*.ts"]
 }

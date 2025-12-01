@@ -1,9 +1,7 @@
 //
 //
 
-// Load query parameter plugin
-import "../sources/config/bun-plugin-query/index.ts";
-
+import { buildAllClientScripts } from "@~/config.bun-plugin-client-scripts";
 import { $ } from "bun";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
@@ -30,18 +28,7 @@ if (shouldSkipBuild) {
   console.log("");
 }
 
-{
-  const { logs, outputs, success } = await Bun.build({
-    entrypoints: [
-      "../sources/web/src/layouts/_client/nprogress.ts",
-      "../sources/web/src/routes/welcome/_client/hyyypertitle.ts",
-      "../sources/web/src/lib/alpine/clipboard.ts",
-    ],
-    external: ["@~/core/config"],
-    minify,
-    outdir,
-  });
-  console.log({ logs, outputs, success });
-}
+// Build client scripts (auto-discovered from bunfig.toml)
+await buildAllClientScripts(outdir, { minify });
 
 export {};

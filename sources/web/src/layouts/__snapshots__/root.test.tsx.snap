@@ -113,7 +113,7 @@ exports[`development 1`] = `
 
       <script
         nonce="nonce"
-        src="/assets/PUBLIC_ASSETS_PATH/public/built/layouts/_client/nprogress.js"
+        src="/assets/PUBLIC_ASSETS_PATH/public/built/layouts/nprogress.client.js"
         type="module"
       ></script>
 
@@ -289,7 +289,7 @@ exports[`production 1`] = `
 
       <script
         nonce="nonce"
-        src="/assets/PUBLIC_ASSETS_PATH/public/built/layouts/_client/nprogress.js"
+        src="/assets/PUBLIC_ASSETS_PATH/public/built/layouts/nprogress.client.js"
         type="module"
       ></script>
 
