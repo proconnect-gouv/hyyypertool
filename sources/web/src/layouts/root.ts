@@ -100,14 +100,11 @@ export function Root_Layout({ children }: PropsWithChildren) {
 
         <!--  -->
 
-        <script
-          hash="sha256-ZtVO4euNrRnx0KrqoCatLuOIaHv1Z7zi++KgINh8SqM="
-          nonce="${nonce}"
-          type="importmap"
-        >
+        <script nonce="${nonce}" type="importmap">
           {
             "imports": {
-              "#src/config": "${config.ASSETS_PATH}/bundle/config.js"
+              "#src/config": "${config.ASSETS_PATH}/bundle/config.js",
+              "/src/": "${config.PUBLIC_ASSETS_PATH}/"
             }
           }
         </script>

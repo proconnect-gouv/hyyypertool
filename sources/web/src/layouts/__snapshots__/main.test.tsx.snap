@@ -74,14 +74,11 @@ exports[`Main Layout 1`] = `
 
         <!--  -->
 
-        <script
-          hash="sha256-ZtVO4euNrRnx0KrqoCatLuOIaHv1Z7zi++KgINh8SqM="
-          nonce="nonce"
-          type="importmap"
-        >
+        <script nonce="nonce" type="importmap">
           {
             "imports": {
-              "#src/config": "/bundle/config.js"
+              "#src/config": "/bundle/config.js",
+              "/src/": "/"
             }
           }
         </script>

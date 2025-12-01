@@ -74,14 +74,11 @@ exports[`development 1`] = `
 
         <!--  -->
 
-        <script
-          hash="sha256-ZtVO4euNrRnx0KrqoCatLuOIaHv1Z7zi++KgINh8SqM="
-          nonce="nonce"
-          type="importmap"
-        >
+        <script nonce="nonce" type="importmap">
           {
             "imports": {
-              "#src/config": "/assets/ASSETS_PATH/bundle/config.js"
+              "#src/config": "/assets/ASSETS_PATH/bundle/config.js",
+              "/src/": "/assets/PUBLIC_ASSETS_PATH/public/built/"
             }
           }
         </script>
@@ -253,14 +250,11 @@ exports[`production 1`] = `
 
         <!--  -->
 
-        <script
-          hash="sha256-ZtVO4euNrRnx0KrqoCatLuOIaHv1Z7zi++KgINh8SqM="
-          nonce="nonce"
-          type="importmap"
-        >
+        <script nonce="nonce" type="importmap">
           {
             "imports": {
-              "#src/config": "/assets/ASSETS_PATH/bundle/config.js"
+              "#src/config": "/assets/ASSETS_PATH/bundle/config.js",
+              "/src/": "/assets/PUBLIC_ASSETS_PATH/public/built/"
             }
           }
         </script>
