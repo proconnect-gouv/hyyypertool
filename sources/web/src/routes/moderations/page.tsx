@@ -141,10 +141,9 @@ function Filter({ search }: { search: Search }) {
       <div class="fr-fieldset__element">
         <div class="fr-checkbox-group">
           <input
-            _="on click set @value to my checked"
             id={page_query_keys.enum.processed_requests}
             name={page_query_keys.enum.processed_requests}
-            value={search.processed_requests ? "true" : "false"}
+            value={"true"}
             checked={search.processed_requests}
             type="checkbox"
           />
@@ -156,10 +155,9 @@ function Filter({ search }: { search: Search }) {
       <div class="fr-fieldset__element">
         <div class="fr-checkbox-group">
           <input
-            _="on click set @value to my checked"
             id={page_query_keys.enum.hide_non_verified_domain}
             name={page_query_keys.enum.hide_non_verified_domain}
-            value={search.hide_non_verified_domain ? "true" : "false"}
+            value={"true"}
             checked={search.hide_non_verified_domain}
             type="checkbox"
           />
@@ -175,10 +173,9 @@ function Filter({ search }: { search: Search }) {
       <div class="fr-fieldset__element">
         <div class="fr-checkbox-group">
           <input
-            _="on click set @value to my checked"
             id={page_query_keys.enum.hide_join_organization}
             name={page_query_keys.enum.hide_join_organization}
-            value={search.hide_join_organization ? "true" : "false"}
+            value={"true"}
             checked={search.hide_join_organization}
             type="checkbox"
           />

@@ -12,14 +12,23 @@ import { join } from "path";
 
 //
 
-let reloadClients: (() => void) | undefined;
-try {
-  const liveReload = await import("bun-html-live-reload");
-  reloadClients = liveReload.reloadClients;
-} catch {}
-
 const PROJECT_ROOT = join(import.meta.dir, "..");
 const OUTDIR = join(PROJECT_ROOT, "bin/public/built");
+
+// Dynamic import to trigger live reload
+// The notifyReload function is exported from the web app's __dev__ route
+let notifyReload: (() => void) | undefined;
+async function loadReloadNotifier() {
+  try {
+    const module = await import(
+      "../sources/web/src/routes/__dev__/reload.tsx"
+    );
+    notifyReload = module.notifyReload;
+    console.log("[live-reload] Notifier loaded");
+  } catch (error) {
+    console.warn("[live-reload] Could not load notifier:", error);
+  }
+}
 
 //
 
@@ -42,7 +51,7 @@ async function buildAllClientScripts() {
   });
 
   console.log("");
-  reloadClients?.();
+  notifyReload?.();
 }
 
 async function buildTailwind() {
@@ -104,4 +113,8 @@ watchClientScripts();
 watchTailwind();
 
 console.log("🌐 Starting dev server...\n");
-await $`bun run --hot src/bun/index.ts`;
+
+// Wait a bit for the server to start before loading the notifier
+setTimeout(loadReloadNotifier, 2000);
+
+await $.cwd("..")`tsx watch --tsconfig tsconfig.json bin/src/node/index.ts`;

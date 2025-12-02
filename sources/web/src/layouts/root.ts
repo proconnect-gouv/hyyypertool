@@ -219,6 +219,14 @@ export function RootLayout({ children }: PropsWithChildren) {
         src="${config.PUBLIC_ASSETS_PATH}/lib/alpine/alpine-init.client.js"
         type="module"
       ></script>
+
+      ${config.NODE_ENV === "development"
+        ? html`<script
+            nonce="${nonce}"
+            src="${config.PUBLIC_ASSETS_PATH}/routes/__dev__/live-reload.client.js"
+            type="module"
+          ></script>`
+        : ""}
     </html>
   `;
 }

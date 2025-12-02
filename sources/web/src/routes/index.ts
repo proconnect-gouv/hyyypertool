@@ -17,6 +17,7 @@ import organizations_router from "./organizations";
 import proxy_router from "./proxy";
 import users_router from "./users";
 import welcome_router from "./welcome";
+import dev_router from "./__dev__/reload";
 // TODO: Re-enable compression when Bun supports CompressionStream
 // import { compress } from "hono/compress";
 import { hyyyyyypertool_session } from "#src/middleware/session";
@@ -44,6 +45,10 @@ const app = new Hono()
 
   .route(config.ASSETS_PATH, asserts_router)
   .route("/readyz", readyz_router)
+
+  //
+
+  .route("/__dev__", dev_router)
 
   //
 

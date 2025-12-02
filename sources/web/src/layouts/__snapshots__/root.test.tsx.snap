@@ -169,6 +169,12 @@ exports[`development 1`] = `
         src="/assets/PUBLIC_ASSETS_PATH/public/built/lib/alpine/alpine-init.client.js"
         type="module"
       ></script>
+
+      <script
+            nonce="nonce"
+            src="/assets/PUBLIC_ASSETS_PATH/public/built/routes/__dev__/live-reload.client.js"
+            type="module"
+          ></script>
     </html>
   "
 `;
@@ -337,6 +343,8 @@ exports[`production 1`] = `
         src="/assets/PUBLIC_ASSETS_PATH/public/built/lib/alpine/alpine-init.client.js"
         type="module"
       ></script>
+
+      
     </html>
   "
 `;
