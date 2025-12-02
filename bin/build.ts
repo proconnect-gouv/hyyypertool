@@ -8,13 +8,13 @@
  * This works with both Bun and tsx/Node, unlike the plugin-based approach.
  */
 
-import { $ } from "bun";
 import {
   buildClientScripts,
   discoverClientScripts,
   loadClientScriptPatterns,
   loadExternalDependencies,
 } from "@~/config.bun-plugin-client-scripts";
+import { $ } from "bun";
 import { join } from "path";
 
 //
@@ -28,43 +28,36 @@ const OUTDIR = join(PROJECT_ROOT, "bin/public/built");
 // Main
 //
 
-async function main() {
-  console.log("🏗️  Building for production...\n");
+console.log("🏗️  Building for production...\n");
 
-  // Build client scripts
-  const patterns = loadClientScriptPatterns();
-  const external = loadExternalDependencies();
+// Build client scripts
+const patterns = loadClientScriptPatterns();
+const external = loadExternalDependencies();
 
-  if (patterns.length > 0) {
-    console.log("Building client scripts...");
-    const entrypoints = await discoverClientScripts(patterns);
+if (patterns.length > 0) {
+  console.log("Building client scripts...");
+  const entrypoints = await discoverClientScripts(patterns);
 
-    await buildClientScripts(entrypoints, OUTDIR, {
-      minify: true,
-      sourcemap: "external",
-      external,
-    });
+  await buildClientScripts(entrypoints, OUTDIR, {
+    minify: true,
+    sourcemap: "external",
+    external,
+  });
 
-    console.log("");
-  } else {
-    console.log("No client script patterns configured");
-    console.log("");
-  }
-
-  // Build Tailwind CSS
-  console.log("Building Tailwind CSS...");
-
-  await $`./bin/node_modules/.bin/tailwindcss -i sources/web/src/ui/tailwind.css -o bin/public/built/tailwind.css --config bin/tailwind.config.js --minify`.cwd(
-    PROJECT_ROOT,
-  );
-
-  console.log("✓ Tailwind CSS built");
   console.log("");
-
-  console.log("✅ Production build complete!");
+} else {
+  console.log("No client script patterns configured");
+  console.log("");
 }
 
-main().catch((error) => {
-  console.error("❌ Build failed:", error);
-  process.exit(1);
-});
+// Build Tailwind CSS
+console.log("Building Tailwind CSS...");
+
+await $`./bin/node_modules/.bin/tailwindcss -i sources/web/src/ui/tailwind.css -o bin/public/built/tailwind.css --config bin/tailwind.config.js --minify`.cwd(
+  PROJECT_ROOT,
+);
+
+console.log("✓ Tailwind CSS built");
+console.log("");
+
+console.log("✅ Production build complete!");
