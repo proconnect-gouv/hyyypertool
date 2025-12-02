@@ -1,6 +1,6 @@
 /**
  * ClipboardScript component
- * Renders a script tag for the clipboard utilities
+ * Loads the Alpine.js clipboard utilities
  *
  * Usage:
  * ```tsx
@@ -8,12 +8,8 @@
  * ```
  */
 
-import config from "#src/config";
+import { ClientScript } from "#src/html";
+
 export function ClipboardScript() {
-  return (
-    <script
-      type="module"
-      src={`${config.PUBLIC_ASSETS_PATH}/lib/alpine/clipboard.client.js`}
-    />
-  );
+  return <ClientScript src="/src/lib/alpine/clipboard.client.ts" />;
 }

@@ -1,7 +1,7 @@
 //
 
 import config from "#src/config";
-import { Root_Layout } from "#src/layouts";
+import { RootLayout } from "#src/layouts";
 import type { App_Context } from "#src/middleware/context";
 import { urls } from "#src/urls";
 import { Hono } from "hono";
@@ -11,7 +11,7 @@ import { jsxRenderer } from "hono/jsx-renderer";
 
 export default new Hono<App_Context>().get(
   "/",
-  jsxRenderer(Root_Layout),
+  jsxRenderer(RootLayout),
   function GET({ render, redirect, var: { nonce, userinfo } }) {
     if (userinfo) {
       return redirect(urls.moderations.$url().pathname);

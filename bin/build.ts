@@ -1,34 +1,70 @@
-//
-//
+/**
+ * Production build script
+ *
+ * Builds all assets for production:
+ * - Client scripts (*.client.ts) with minification
+ * - Tailwind CSS with minification
+ *
+ * This works with both Bun and tsx/Node, unlike the plugin-based approach.
+ */
 
-import { buildAllClientScripts } from "@~/config.bun-plugin-client-scripts";
 import { $ } from "bun";
-import { existsSync } from "node:fs";
-import { join } from "node:path";
+import {
+  buildClientScripts,
+  discoverClientScripts,
+  loadClientScriptPatterns,
+  loadExternalDependencies,
+} from "@~/config.bun-plugin-client-scripts";
+import { join } from "path";
 
-const minify = true;
-const outdir = "./public/built";
+//
+// Configuration
+//
 
-// Build Tailwind CSS
-const tailwindOutputPath = join(outdir, "tailwind.css");
-const isDevMode = import.meta.hot !== undefined;
-const shouldSkipBuild = !isDevMode && existsSync(tailwindOutputPath);
+const PROJECT_ROOT = join(import.meta.dir, "..");
+const OUTDIR = join(PROJECT_ROOT, "bin/public/built");
 
-if (shouldSkipBuild) {
-  console.log("✓ Tailwind CSS already built, skipping...");
-  console.log("");
-} else {
+//
+// Main
+//
+
+async function main() {
+  console.log("🏗️  Building for production...\n");
+
+  // Build client scripts
+  const patterns = loadClientScriptPatterns();
+  const external = loadExternalDependencies();
+
+  if (patterns.length > 0) {
+    console.log("Building client scripts...");
+    const entrypoints = await discoverClientScripts(patterns);
+
+    await buildClientScripts(entrypoints, OUTDIR, {
+      minify: true,
+      sourcemap: "external",
+      external,
+    });
+
+    console.log("");
+  } else {
+    console.log("No client script patterns configured");
+    console.log("");
+  }
+
+  // Build Tailwind CSS
   console.log("Building Tailwind CSS...");
 
-  await $`./bin/node_modules/.bin/tailwindcss -i sources/web/src/ui/tailwind.css -o bin/public/built/tailwind.css --config bin/tailwind.config.js`.cwd(
-    "..",
+  await $`./bin/node_modules/.bin/tailwindcss -i sources/web/src/ui/tailwind.css -o bin/public/built/tailwind.css --config bin/tailwind.config.js --minify`.cwd(
+    PROJECT_ROOT,
   );
 
-  console.log("✓ Tailwind CSS built successfully");
+  console.log("✓ Tailwind CSS built");
   console.log("");
+
+  console.log("✅ Production build complete!");
 }
 
-// Build client scripts (auto-discovered from bunfig.toml)
-await buildAllClientScripts(outdir, { minify });
-
-export {};
+main().catch((error) => {
+  console.error("❌ Build failed:", error);
+  process.exit(1);
+});

@@ -1,15 +1,17 @@
 //
 
-import NProgress from "nprogress";
+import nProgress from "nprogress";
 
 //
 
-declare global {
-  interface Window {
-    NProgress: typeof NProgress;
-  }
-}
+document.addEventListener("htmx:beforeSend", () => {
+  nProgress.start();
+});
 
-//
+document.addEventListener("htmx:afterOnLoad", () => {
+  nProgress.done();
+});
 
-window.NProgress = NProgress;
+document.addEventListener("htmx:afterSettle", () => {
+  nProgress.done();
+});

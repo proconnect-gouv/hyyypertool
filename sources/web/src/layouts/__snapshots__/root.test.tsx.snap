@@ -78,7 +78,8 @@ exports[`development 1`] = `
           {
             "imports": {
               "#src/config": "/assets/ASSETS_PATH/bundle/config.js",
-              "/src/": "/assets/PUBLIC_ASSETS_PATH/public/built/"
+              "/src/": "/assets/PUBLIC_ASSETS_PATH/public/built/",
+              "alpinejs": "/assets/ASSETS_PATH/node_modules/alpinejs/dist/module.esm.js"
             }
           }
         </script>
@@ -87,14 +88,7 @@ exports[`development 1`] = `
           Hyyyyypertool
         </title>
       </head>
-      <body
-        _="
-          on every htmx:beforeSend NProgress.start()
-          on every htmx:afterOnLoad NProgress.done()
-          on every htmx:afterSettle NProgress.done()
-        "
-        class="flex min-h-screen flex-col"
-      >
+      <body class="flex min-h-screen flex-col">
         <div class="flex flex-1 flex-col"></div>
         <footer class="container mx-auto flex flex-row justify-between p-2">
           <div>© 2222 🇫🇷</div>
@@ -167,10 +161,13 @@ exports[`development 1`] = `
         nonce="nonce"
         src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/template.js"
       ></script>
+
+      <!--  -->
+
       <script
-        defer
         nonce="nonce"
-        src="/assets/ASSETS_PATH/node_modules/alpinejs/dist/cdn.min.js"
+        src="/assets/PUBLIC_ASSETS_PATH/public/built/lib/alpine/alpine-init.client.js"
+        type="module"
       ></script>
     </html>
   "
@@ -254,7 +251,8 @@ exports[`production 1`] = `
           {
             "imports": {
               "#src/config": "/assets/ASSETS_PATH/bundle/config.js",
-              "/src/": "/assets/PUBLIC_ASSETS_PATH/public/built/"
+              "/src/": "/assets/PUBLIC_ASSETS_PATH/public/built/",
+              "alpinejs": "/assets/ASSETS_PATH/node_modules/alpinejs/dist/module.esm.js"
             }
           }
         </script>
@@ -263,14 +261,7 @@ exports[`production 1`] = `
           Hyyyyypertool
         </title>
       </head>
-      <body
-        _="
-          on every htmx:beforeSend NProgress.start()
-          on every htmx:afterOnLoad NProgress.done()
-          on every htmx:afterSettle NProgress.done()
-        "
-        class="flex min-h-screen flex-col"
-      >
+      <body class="flex min-h-screen flex-col">
         <div class="flex flex-1 flex-col"></div>
         <footer class="container mx-auto flex flex-row justify-between p-2">
           <div>© 2222 🇫🇷</div>
@@ -338,10 +329,13 @@ exports[`production 1`] = `
         nonce="nonce"
         src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/template.js"
       ></script>
+
+      <!--  -->
+
       <script
-        defer
         nonce="nonce"
-        src="/assets/ASSETS_PATH/node_modules/alpinejs/dist/cdn.min.js"
+        src="/assets/PUBLIC_ASSETS_PATH/public/built/lib/alpine/alpine-init.client.js"
+        type="module"
       ></script>
     </html>
   "

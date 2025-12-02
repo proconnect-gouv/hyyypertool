@@ -10,13 +10,7 @@
  * ```
  */
 
-declare global {
-  interface Window {
-    Alpine?: {
-      data: (name: string, callback: () => object) => void;
-    };
-  }
-}
+import Alpine from "alpinejs";
 
 const clipboard = {
   /**
@@ -43,7 +37,5 @@ const clipboard = {
   },
 };
 
-// Register with Alpine.js when available
-document.addEventListener("alpine:init", () => {
-  window.Alpine?.data("clipboard", () => clipboard);
-});
+// Register clipboard utilities with Alpine
+Alpine.data("clipboard", () => clipboard);

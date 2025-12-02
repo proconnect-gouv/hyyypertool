@@ -79,13 +79,11 @@ const appFetch = async (req: Request, env?: object, ctx?: ExecutionContext) => {
   return app.fetch(req, env, ctx);
 };
 
-let fetchHandler;
+let fetchHandler = appFetch;
 try {
-  const { withHtmlLiveReload, reloadClients } = await import(
-    "bun-html-live-reload"
-  );
+  const { withHtmlLiveReload } = await import("bun-html-live-reload");
   fetchHandler = withHtmlLiveReload(appFetch);
-  reloadClients();
+  console.log("[live-reload] Enabled");
 } catch {
   fetchHandler = appFetch;
 }
