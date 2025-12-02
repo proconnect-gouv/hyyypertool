@@ -2,6 +2,7 @@ declare const app: import("hono/hono-base").HonoBase<
   import("../middleware/nonce/set_nonce").NonceVariablesContext &
     import("#src/middleware/config").ConfigVariables_Context &
     import("#src/middleware/auth").UserInfoVariablesContext &
+    import("#src/middleware/crisp").CrispClientContext &
     import("#src/middleware/identite-pg").IdentiteProconnect_Pg_Context,
   | ({
       "/healthz": {
@@ -24,7 +25,7 @@ declare const app: import("hono/hono-base").HonoBase<
     })
   | import("hono/types").MergeSchemaPath<
       | ({
-          "/public/*": {};
+          "/src/*": {};
         } & {
           "/bundle/config.js": {
             $get: {
@@ -377,6 +378,19 @@ declare const app: import("hono/hono-base").HonoBase<
                 };
               } & {
                 "/reset/email_verified": {
+                  $patch: {
+                    input: {
+                      param: {
+                        id: string;
+                      };
+                    };
+                    output: "OK";
+                    outputFormat: "text";
+                    status: 200;
+                  };
+                };
+              } & {
+                "/reset/france_connect": {
                   $patch: {
                     input: {
                       param: {

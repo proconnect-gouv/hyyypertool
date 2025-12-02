@@ -185,6 +185,16 @@ async function Actions({ user }: { user: User }) {
         </button>
         <button
           class={button({ intent: "danger" })}
+          hx-confirm={"Confirmez-vous la réinitialisation du mot de passe ?"}
+          {...await hx_urls.users[":id"].reset.france_connect.$patch({
+            param: { id: id.toString() },
+          })}
+          hx-swap="none"
+        >
+          🪪 révoquer les données FranceConnect
+        </button>
+        <button
+          class={button({ intent: "danger" })}
           hx-confirm={"Confirmez-vous la réinitialisation de la MFA ?"}
           {...await hx_urls.users[":id"].reset.mfa.$patch({
             param: { id: id.toString() },
