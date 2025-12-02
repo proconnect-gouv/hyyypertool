@@ -14,3 +14,5 @@ export function hyper_ref(given_name?: string) {
     ? `hyyyper_${given_name}_${short_sha}`
     : `hyyyper_${short_sha}`;
 }
+
+export { ClientScript } from "./ClientScript";

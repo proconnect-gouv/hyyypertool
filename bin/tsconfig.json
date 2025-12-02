@@ -2,7 +2,9 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
-    "outDir": "./node_modules/.cache/tsc"
+    "outDir": "./node_modules/.cache/tsc",
+    "rootDir": "..",
+    "baseUrl": ".."
   },
   "extends": "@~/config.typescript/api/tsconfig.json",
   "references": [
@@ -12,5 +14,6 @@
     {
       "path": "../sources/core"
     }
-  ]
+  ],
+  "include": ["src/**/*.ts"]
 }

@@ -1,10 +1,14 @@
 //
 
-import { beforeEach, expect, test } from "bun:test";
+import { GlobalRegistrator } from "@happy-dom/global-registrator";
+import { afterAll, beforeAll, beforeEach, expect, test } from "bun:test";
 import _hyperscript from "hyperscript.org";
 import { copy_text_content_to_clipboard } from "./copy_text_content_to_clipboard";
 
 //
+
+beforeAll(() => GlobalRegistrator.register());
+afterAll(() => GlobalRegistrator.unregister());
 
 beforeEach(async () => {
   await window.navigator.clipboard.write([]);

@@ -1,8 +1,14 @@
 //
 
-import { expect, test } from "bun:test";
+import { GlobalRegistrator } from "@happy-dom/global-registrator";
+import { afterAll, beforeAll, expect, test } from "bun:test";
 import _hyperscript from "hyperscript.org";
 import { disable_until_htmx_afterOnLoad } from "./disable_until_htmx:afterOnLoad";
+
+//
+
+beforeAll(() => GlobalRegistrator.register());
+afterAll(() => GlobalRegistrator.unregister());
 
 //
 

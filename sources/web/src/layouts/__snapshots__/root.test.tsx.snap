@@ -74,14 +74,12 @@ exports[`development 1`] = `
 
         <!--  -->
 
-        <script
-          hash="sha256-ZtVO4euNrRnx0KrqoCatLuOIaHv1Z7zi++KgINh8SqM="
-          nonce="nonce"
-          type="importmap"
-        >
+        <script nonce="nonce" type="importmap">
           {
             "imports": {
-              "#src/config": "/assets/ASSETS_PATH/bundle/config.js"
+              "#src/config": "/assets/ASSETS_PATH/bundle/config.js",
+              "/src/": "/assets/PUBLIC_ASSETS_PATH/public/built/",
+              "alpinejs": "/assets/ASSETS_PATH/node_modules/alpinejs/dist/module.esm.js"
             }
           }
         </script>
@@ -90,14 +88,7 @@ exports[`development 1`] = `
           Hyyyyypertool
         </title>
       </head>
-      <body
-        _="
-          on every htmx:beforeSend NProgress.start()
-          on every htmx:afterOnLoad NProgress.done()
-          on every htmx:afterSettle NProgress.done()
-        "
-        class="flex min-h-screen flex-col"
-      >
+      <body class="flex min-h-screen flex-col">
         <div class="flex flex-1 flex-col"></div>
         <footer class="container mx-auto flex flex-row justify-between p-2">
           <div>© 2222 🇫🇷</div>
@@ -116,7 +107,7 @@ exports[`development 1`] = `
 
       <script
         nonce="nonce"
-        src="/assets/PUBLIC_ASSETS_PATH/public/built/layouts/_client/nprogress.js"
+        src="/assets/PUBLIC_ASSETS_PATH/public/built/layouts/nprogress.client.js"
         type="module"
       ></script>
 
@@ -170,10 +161,13 @@ exports[`development 1`] = `
         nonce="nonce"
         src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/template.js"
       ></script>
+
+      <!--  -->
+
       <script
-        defer
         nonce="nonce"
-        src="/assets/ASSETS_PATH/node_modules/alpinejs/dist/cdn.min.js"
+        src="/assets/PUBLIC_ASSETS_PATH/public/built/lib/alpine/alpine-init.client.js"
+        type="module"
       ></script>
     </html>
   "
@@ -253,14 +247,12 @@ exports[`production 1`] = `
 
         <!--  -->
 
-        <script
-          hash="sha256-ZtVO4euNrRnx0KrqoCatLuOIaHv1Z7zi++KgINh8SqM="
-          nonce="nonce"
-          type="importmap"
-        >
+        <script nonce="nonce" type="importmap">
           {
             "imports": {
-              "#src/config": "/assets/ASSETS_PATH/bundle/config.js"
+              "#src/config": "/assets/ASSETS_PATH/bundle/config.js",
+              "/src/": "/assets/PUBLIC_ASSETS_PATH/public/built/",
+              "alpinejs": "/assets/ASSETS_PATH/node_modules/alpinejs/dist/module.esm.js"
             }
           }
         </script>
@@ -269,14 +261,7 @@ exports[`production 1`] = `
           Hyyyyypertool
         </title>
       </head>
-      <body
-        _="
-          on every htmx:beforeSend NProgress.start()
-          on every htmx:afterOnLoad NProgress.done()
-          on every htmx:afterSettle NProgress.done()
-        "
-        class="flex min-h-screen flex-col"
-      >
+      <body class="flex min-h-screen flex-col">
         <div class="flex flex-1 flex-col"></div>
         <footer class="container mx-auto flex flex-row justify-between p-2">
           <div>© 2222 🇫🇷</div>
@@ -295,7 +280,7 @@ exports[`production 1`] = `
 
       <script
         nonce="nonce"
-        src="/assets/PUBLIC_ASSETS_PATH/public/built/layouts/_client/nprogress.js"
+        src="/assets/PUBLIC_ASSETS_PATH/public/built/layouts/nprogress.client.js"
         type="module"
       ></script>
 
@@ -344,10 +329,13 @@ exports[`production 1`] = `
         nonce="nonce"
         src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/template.js"
       ></script>
+
+      <!--  -->
+
       <script
-        defer
         nonce="nonce"
-        src="/assets/ASSETS_PATH/node_modules/alpinejs/dist/cdn.min.js"
+        src="/assets/PUBLIC_ASSETS_PATH/public/built/lib/alpine/alpine-init.client.js"
+        type="module"
       ></script>
     </html>
   "

@@ -6,7 +6,7 @@ import { urls } from "#src/urls";
 import { z_username } from "@~/core/schema";
 import type { PropsWithChildren } from "hono/jsx";
 import { useRequestContext } from "hono/jsx-renderer";
-import { Root_Layout } from "./root";
+import { RootLayout } from "./root";
 
 //
 export function Main_Layout({ children }: PropsWithChildren) {
@@ -15,7 +15,7 @@ export function Main_Layout({ children }: PropsWithChildren) {
   } = useRequestContext<UserInfoVariablesContext>();
   const username = z_username.parse(userinfo);
   return (
-    <Root_Layout>
+    <RootLayout>
       <div class="flex min-h-full grow flex-col">
         <header role="banner" class="fr-header">
           <div class="fr-header__body">
@@ -36,7 +36,7 @@ export function Main_Layout({ children }: PropsWithChildren) {
         <div class="relative flex flex-1 flex-col">{children}</div>
       </div>
       <ToasterContainer />
-    </Root_Layout>
+    </RootLayout>
   );
 }
 

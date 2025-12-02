@@ -1,9 +1,15 @@
 //
 
-import { expect, test } from "bun:test";
+import { GlobalRegistrator } from "@happy-dom/global-registrator";
+import { afterAll, beforeAll, expect, test } from "bun:test";
 import _hyperscript from "hyperscript.org";
 import "hyperscript.org/src/hdb";
 import { hide_on_click_elsewere } from "./hide_on_click_elsewere";
+
+//
+
+beforeAll(() => GlobalRegistrator.register());
+afterAll(() => GlobalRegistrator.unregister());
 
 //
 

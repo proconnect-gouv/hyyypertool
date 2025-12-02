@@ -5,7 +5,7 @@ import { set_nonce } from "#src/middleware/nonce";
 import { beforeAll, expect, setSystemTime, test } from "bun:test";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
-import { Root_Layout } from "./root";
+import { RootLayout } from "./root";
 
 //
 
@@ -24,7 +24,7 @@ test("development", async () => {
       }),
     )
     .use(set_nonce("nonce"))
-    .use(jsxRenderer(Root_Layout))
+    .use(jsxRenderer(RootLayout))
     .get("/", (c) => {
       return c.render("");
     });
@@ -45,7 +45,7 @@ test("production", async () => {
       }),
     )
     .use(set_nonce("nonce"))
-    .use(jsxRenderer(Root_Layout))
+    .use(jsxRenderer(RootLayout))
     .get("/", (c) => {
       return c.render("");
     });

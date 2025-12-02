@@ -1,6 +1,5 @@
 //
 
-import { HtmxEvents } from "#src/htmx";
 import type { App_Context } from "#src/middleware/context";
 import { html, raw } from "hono/html";
 import type { PropsWithChildren } from "hono/jsx";
@@ -8,7 +7,7 @@ import { useRequestContext } from "hono/jsx-renderer";
 
 //
 
-export function Root_Layout({ children }: PropsWithChildren) {
+export function RootLayout({ children }: PropsWithChildren) {
   const {
     var: { config, nonce, sentry_trace_meta_tags, page_title },
   } = useRequestContext<App_Context>();
@@ -100,14 +99,12 @@ export function Root_Layout({ children }: PropsWithChildren) {
 
         <!--  -->
 
-        <script
-          hash="sha256-ZtVO4euNrRnx0KrqoCatLuOIaHv1Z7zi++KgINh8SqM="
-          nonce="${nonce}"
-          type="importmap"
-        >
+        <script nonce="${nonce}" type="importmap">
           {
             "imports": {
-              "#src/config": "${config.ASSETS_PATH}/bundle/config.js"
+              "#src/config": "${config.ASSETS_PATH}/bundle/config.js",
+              "/src/": "${config.PUBLIC_ASSETS_PATH}/",
+              "alpinejs": "${config.ASSETS_PATH}/node_modules/alpinejs/dist/module.esm.js"
             }
           }
         </script>
@@ -121,14 +118,7 @@ export function Root_Layout({ children }: PropsWithChildren) {
           }`}
         </title>
       </head>
-      <body
-        _="
-          on every ${HtmxEvents.enum.beforeSend} NProgress.start()
-          on every ${HtmxEvents.enum.afterOnLoad} NProgress.done()
-          on every ${HtmxEvents.enum.afterSettle} NProgress.done()
-        "
-        class="flex min-h-screen flex-col"
-      >
+      <body class="flex min-h-screen flex-col">
         <div class="flex flex-1 flex-col">${children}</div>
         <footer class="container mx-auto flex flex-row justify-between p-2">
           <div>© ${new Date().getFullYear()} 🇫🇷</div>
@@ -147,7 +137,7 @@ export function Root_Layout({ children }: PropsWithChildren) {
 
       <script
         nonce="${nonce}"
-        src="${config.PUBLIC_ASSETS_PATH}/layouts/_client/nprogress.js"
+        src="${config.PUBLIC_ASSETS_PATH}/layouts/nprogress.client.js"
         type="module"
       ></script>
 
@@ -221,10 +211,13 @@ export function Root_Layout({ children }: PropsWithChildren) {
         nonce="${nonce}"
         src="${config.ASSETS_PATH}/node_modules/hyperscript.org/dist/template.js"
       ></script>
+
+      <!--  -->
+
       <script
-        defer
         nonce="${nonce}"
-        src="${config.ASSETS_PATH}/node_modules/alpinejs/dist/cdn.min.js"
+        src="${config.PUBLIC_ASSETS_PATH}/lib/alpine/alpine-init.client.js"
+        type="module"
       ></script>
     </html>
   `;

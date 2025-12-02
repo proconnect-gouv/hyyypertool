@@ -41,6 +41,14 @@ export default new Hono<AppVariables_Context>()
       rewriteRequestPath: rewriteAssetRequestPath,
     }),
   )
+  .use(
+    "/src/*",
+    serveStatic({
+      root: publicRoot,
+      path: "public/built",
+      rewriteRequestPath: (requestPath) => requestPath.replace(/^\/src/, ""),
+    }),
+  )
   .get("/bundle/config.js", async ({ text, var: { config } }) => {
     const { ASSETS_PATH, PUBLIC_ASSETS_PATH, VERSION } = config;
     return text(

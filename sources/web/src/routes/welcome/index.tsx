@@ -1,7 +1,7 @@
 //
 
 import config from "#src/config";
-import { Root_Layout } from "#src/layouts";
+import { RootLayout } from "#src/layouts";
 import type { App_Context } from "#src/middleware/context";
 import { urls } from "#src/urls";
 import { Hono } from "hono";
@@ -11,7 +11,7 @@ import { jsxRenderer } from "hono/jsx-renderer";
 
 export default new Hono<App_Context>().get(
   "/",
-  jsxRenderer(Root_Layout),
+  jsxRenderer(RootLayout),
   function GET({ render, redirect, var: { nonce, userinfo } }) {
     if (userinfo) {
       return redirect(urls.moderations.$url().pathname);
@@ -23,7 +23,7 @@ export default new Hono<App_Context>().get(
           <hyyyper-title>Bonjour Hyyypertool !</hyyyper-title>
           <script
             nonce={nonce}
-            src={`${config.PUBLIC_ASSETS_PATH}/routes/welcome/_client/hyyypertitle.js`}
+            src={`${config.PUBLIC_ASSETS_PATH}/routes/welcome/hyyypertitle.client.js`}
             type="module"
           ></script>
         </h1>

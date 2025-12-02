@@ -11,10 +11,7 @@ import { fileURLToPath } from "node:url";
 import { parseArgs } from "util";
 
 //
-//
-//
 
-// Load environment variables at bin level
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const binRoot = join(__dirname, "..");
 
@@ -26,7 +23,6 @@ dotenv.config({
   ],
 });
 
-// Handle -p PORT flag for Scalingo deployment (e.g., bun start -p 23573)
 const { values } = parseArgs({
   options: {
     p: {
@@ -72,20 +68,16 @@ if (consola.level >= LogLevels.debug) {
 }
 
 //
-//
-//
 
 const appFetch = async (req: Request, env?: object, ctx?: ExecutionContext) => {
   return app.fetch(req, env, ctx);
 };
 
-let fetchHandler;
+let fetchHandler = appFetch;
 try {
-  const { withHtmlLiveReload, reloadClients } = await import(
-    "bun-html-live-reload"
-  );
+  const { withHtmlLiveReload } = await import("bun-html-live-reload");
   fetchHandler = withHtmlLiveReload(appFetch);
-  reloadClients();
+  console.log("[live-reload] Enabled");
 } catch {
   fetchHandler = appFetch;
 }

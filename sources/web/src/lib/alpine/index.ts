@@ -1,0 +1,1 @@
+export { ClipboardScript } from "./ClipboardScript";
