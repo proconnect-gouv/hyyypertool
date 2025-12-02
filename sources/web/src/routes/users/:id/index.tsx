@@ -77,6 +77,17 @@ export default new Hono<App_Context>()
     },
   )
   .patch(
+    "/reset/france_connect",
+    zValidator("param", EntitySchema),
+    async function reset_email_verified({ text, req, var: { identite_pg } }) {
+      const { id } = req.valid("param");
+      await identite_pg
+        .delete(schema.franceconnect_userinfo)
+        .where(eq(schema.franceconnect_userinfo.user_id, id));
+      return text("OK", 200, { "HX-Refresh": "true" } as HtmxHeader);
+    },
+  )
+  .patch(
     "/reset/password",
     zValidator("param", EntitySchema),
     async function reset_password({
