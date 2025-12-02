@@ -66,7 +66,7 @@ async function ModerationPageContent() {
   return (
     <main class="fr-container my-12">
       <button
-        _="on click go back"
+        x-on:click="history.back()"
         class={button({
           class: "fr-btn--icon-left fr-icon-arrow-go-back-fill",
           type: "tertiary",
