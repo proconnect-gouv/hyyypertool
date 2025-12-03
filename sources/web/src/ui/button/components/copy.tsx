@@ -35,11 +35,13 @@ export function CopyButton(
         class="fr-icon-clipboard-line"
         aria-hidden="true"
         x-show="!copied"
+        x-transition:enter="animated bounceIn"
       ></span>
       <span
         class="fr-icon-check-line"
         aria-hidden="true"
         x-show="copied"
+        x-transition:enter="animated bounceIn"
       ></span>
       {children}
     </button>

@@ -228,7 +228,7 @@ function Fiche({ user }: { user: User }) {
 
       <dt class={dt()}>email</dt>
       <dd class={dd()}>
-        <b>{user.email}</b>
+        <b> {user.email}</b>
         <CopyButton
           class="fr-p-O leading-none"
           text={user.email}
@@ -239,7 +239,7 @@ function Fiche({ user }: { user: User }) {
 
       <dt class={dt()}>domain</dt>
       <dd class={dd()}>
-        <b>{domain}</b>
+        <b> {domain}</b>
         <CopyButton
           class="fr-p-O leading-none"
           text={domain}

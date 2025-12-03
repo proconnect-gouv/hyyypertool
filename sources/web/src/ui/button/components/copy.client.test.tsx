@@ -9,7 +9,8 @@ beforeAll(async () => {
   GlobalRegistrator.register();
 
   // Import Alpine init (starts Alpine)
-  await import("../../../lib/alpine/alpine-init.client.ts");
+  const { default: Alpine } = await import("alpinejs");
+  Alpine.start();
 });
 
 beforeEach(async () => {
