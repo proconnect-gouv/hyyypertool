@@ -21,7 +21,8 @@ export function CopyButton(
         if (!$el.dataset.text) return;
         navigator.clipboard.writeText($el.dataset.text);
         copied = true;
-        setTimeout(function() { copied = false }, 1000)
+        setTimeout(function() { copied = false }, 1000);
+        $dispatch('notify', { variant: 'success', title: 'Copié !', message: $el.dataset.text })
       "
       class={copy_button_style({
         ...variant,

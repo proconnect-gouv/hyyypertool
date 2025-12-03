@@ -1,7 +1,7 @@
 //
 
 import type { UserInfoVariablesContext } from "#src/middleware/auth";
-import { ToasterContainer } from "#src/ui/toast/components";
+import { NotificationContainer } from "#src/ui/notifications";
 import { urls } from "#src/urls";
 import { z_username } from "@~/core/schema";
 import type { PropsWithChildren } from "hono/jsx";
@@ -35,7 +35,7 @@ export function Main_Layout({ children }: PropsWithChildren) {
         </header>
         <div class="relative flex flex-1 flex-col">{children}</div>
       </div>
-      <ToasterContainer />
+      <NotificationContainer />
     </RootLayout>
   );
 }
