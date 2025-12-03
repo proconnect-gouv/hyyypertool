@@ -30,7 +30,6 @@
   "devDependencies": {
     "@~/config.bun-plugin-client-scripts": "workspace:*",
     "@~/config.tailwindcss": "workspace:*",
-    "@~/config.typescript": "workspace:*",
-    "bun-html-live-reload": "1.0.4"
+    "@~/config.typescript": "workspace:*"
   }
 }
