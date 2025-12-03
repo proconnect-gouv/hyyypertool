@@ -170,22 +170,26 @@ export function RootLayout({ children }: PropsWithChildren) {
 
       ${config.DEPLOY_ENV === "preview"
         ? html`<script
+            defer
             nonce="${nonce}"
             src="${config.ASSETS_PATH}/node_modules/htmx-ext-debug/debug.js"
           ></script>`
         : ""}
 
       <script
+        defer
         nonce="${nonce}"
         src="${config.ASSETS_PATH}/node_modules/htmx-ext-include-vals/include-vals.js"
         type="module"
       ></script>
       <script
+        defer
         nonce="${nonce}"
         src="${config.ASSETS_PATH}/node_modules/htmx-ext-sse/dist/sse.js"
         type="module"
       ></script>
       <script
+        defer
         nonce="${nonce}"
         src="${config.ASSETS_PATH}/node_modules/htmx.ext...chunked-transfer/dist/index.js"
         type="module"
@@ -215,13 +219,15 @@ export function RootLayout({ children }: PropsWithChildren) {
       <!--  -->
 
       <script
+        defer
         nonce="${nonce}"
-        src="${config.PUBLIC_ASSETS_PATH}/lib/alpine/alpine-init.client.js"
+        src="${config.PUBLIC_ASSETS_PATH}/lib/alpine/alpine_start.client.js"
         type="module"
       ></script>
 
       ${config.NODE_ENV === "development"
         ? html`<script
+            defer
             nonce="${nonce}"
             src="${config.PUBLIC_ASSETS_PATH}/routes/__dev__/live-reload.client.js"
             type="module"
