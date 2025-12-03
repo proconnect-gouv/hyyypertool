@@ -56,7 +56,6 @@
         "@~/config.bun-plugin-client-scripts": "workspace:*",
         "@~/config.tailwindcss": "workspace:*",
         "@~/config.typescript": "workspace:*",
-        "bun-html-live-reload": "1.0.4",
       },
     },
     "packages/hono-slotify": {
@@ -669,8 +668,6 @@
     "browser-stdout": ["browser-stdout@1.3.1", "", {}, "sha512-qhAVI1+Av2X7qelOfAIYwXONood6XlZE/fXaBSmW/T5SzLAmCgzi+eiWE7fUvbHaeNBQH13UftjpXxsfLkMpgw=="],
 
     "buffer-from": ["buffer-from@1.1.2", "", {}, "sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ=="],
-
-    "bun-html-live-reload": ["bun-html-live-reload@1.0.4", "", {}, "sha512-8VF9aK4SXeOcxVhEzI+Ila0iEt4jt2xSZP9JMqG3gDWYRjTCUkqfBonms+50ELryk+MAa8tpDf5Ik8PwbHalUw=="],
 
     "bun-types": ["bun-types@1.2.21", "", { "dependencies": { "@types/node": "*" }, "peerDependencies": { "@types/react": "^19" } }, "sha512-sa2Tj77Ijc/NTLS0/Odjq/qngmEPZfbfnOERi0KRUYhT9R8M4VBioWVmMWE5GrYbKMc+5lVybXygLdibHaqVqw=="],
 
