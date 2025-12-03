@@ -1,5 +1,3 @@
-//
-
 import type { JSX, PropsWithChildren } from "hono/jsx";
 import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
@@ -18,17 +16,13 @@ export function CopyButton(
 
   return (
     <button
-      _="
-      on click
-        set text to @data-text
-        js(me, text)
-          if ('clipboard' in window.navigator) {
-            navigator.clipboard.writeText(text)
-          }
-        end
-        add .copied to me
-        wait 1s
-        remove .copied from me"
+      x-data="{ copied: false }"
+      x-on:click="
+        if (!$el.dataset.text) return;
+        navigator.clipboard.writeText($el.dataset.text);
+        copied = true;
+        setTimeout(function() { copied = false }, 1000)
+      "
       class={copy_button_style({
         ...variant,
         className: String(className),
@@ -38,17 +32,23 @@ export function CopyButton(
       {...other_props}
     >
       <span
-        class="fr-icon-clipboard-line in-[.copied]:hidden"
+        class="fr-icon-clipboard-line"
         aria-hidden="true"
+        x-show="!copied"
+        x-transition:enter="animated bounceIn"
       ></span>
       <span
-        class="fr-icon-check-line animated bounceIn in-[.copied]:inline hidden"
+        class="fr-icon-check-line"
         aria-hidden="true"
+        x-show="copied"
+        x-transition:enter="animated bounceIn"
       ></span>
       {children}
     </button>
   );
 }
+
+//
 
 const copy_button_style = tv({
   base: "text-(--text-action-high-blue-france)",
