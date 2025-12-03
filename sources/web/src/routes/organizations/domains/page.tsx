@@ -1,5 +1,4 @@
-import { hyper_ref } from "#src/html";
-import { copy_text_content_to_clipboard } from "#src/ui/button/scripts";
+import { CopyButton } from "#src/ui/button/components";
 import { Foot } from "#src/ui/hx_table";
 import { row } from "#src/ui/table";
 import { urls } from "#src/urls";
@@ -131,7 +130,6 @@ function Row({
   key?: string;
   domains: UnverifiedDomainsDto["domains"][number];
 }) {
-  const $domain = hyper_ref();
   return (
     <tr
       aria-label={`Domaine non vérifié ${domainName} pour ${organization.cached_libelle}`}
@@ -145,19 +143,13 @@ function Row({
     >
       <td></td>
       <td>
-        <span id={$domain}> {domainName} </span>
-        <button
-          aria-hidden="true"
+        <span>{domainName}</span>
+        <CopyButton
           class="fr-p-O leading-none"
+          text={domainName}
           title="Copier le nom de domaine"
-          _={copy_text_content_to_clipboard(`#${$domain}`)}
-        >
-          <span
-            aria-hidden="true"
-            class="fr-icon-device-line"
-            style={{ color: "var(--text-disabled-grey)" }}
-          />
-        </button>
+          variant={{ size: "sm", type: "tertiary" }}
+        />
       </td>
       <td>{organization.siret}</td>
       <td>{organization.cached_libelle}</td>

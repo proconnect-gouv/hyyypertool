@@ -14,27 +14,25 @@ exports[`render about section 1`] = `
     <dd>
       <abbr title="cached_nom_complet">cached_libelle</abbr>
       <button
-        _="
-      on click
-        set text to @data-text
-        js(me, text)
-          if (&#39;clipboard&#39; in window.navigator) {
-            navigator.clipboard.writeText(text)
-          }
-        end
-        add .copied to me
-        wait 1s
-        remove .copied from me"
+        x-data="{ copied: false }"
+        x-on:click="
+        if (!$el.dataset.text) return;
+        navigator.clipboard.writeText($el.dataset.text);
+        copied = true;
+        setTimeout(function() { copied = false }, 1000)
+      "
         class="fr-btn hover:bg-(--background-default-grey-hover)! bg-transparent text-black fr-btn--sm fr-btn--tertiary ml-2"
         data-text="cached_libelle"
       >
         <span
-          class="fr-icon-clipboard-line in-[.copied]:hidden"
+          class="fr-icon-clipboard-line"
           aria-hidden="true"
+          x-show="!copied"
         ></span
         ><span
-          class="fr-icon-check-line animated bounceIn in-[.copied]:inline hidden"
+          class="fr-icon-check-line"
           aria-hidden="true"
+          x-show="copied"
         ></span>
       </button>
     </dd>
@@ -48,27 +46,25 @@ exports[`render about section 1`] = `
         target="_blank"
         >Fiche annuaire</a
       ><button
-        _="
-      on click
-        set text to @data-text
-        js(me, text)
-          if (&#39;clipboard&#39; in window.navigator) {
-            navigator.clipboard.writeText(text)
-          }
-        end
-        add .copied to me
-        wait 1s
-        remove .copied from me"
+        x-data="{ copied: false }"
+        x-on:click="
+        if (!$el.dataset.text) return;
+        navigator.clipboard.writeText($el.dataset.text);
+        copied = true;
+        setTimeout(function() { copied = false }, 1000)
+      "
         class="fr-btn hover:bg-(--background-default-grey-hover)! bg-transparent text-black fr-btn--sm fr-btn--tertiary ml-2"
         data-text="siret"
       >
         <span
-          class="fr-icon-clipboard-line in-[.copied]:hidden"
+          class="fr-icon-clipboard-line"
           aria-hidden="true"
+          x-show="!copied"
         ></span
         ><span
-          class="fr-icon-check-line animated bounceIn in-[.copied]:inline hidden"
+          class="fr-icon-check-line"
           aria-hidden="true"
+          x-show="copied"
         ></span>
       </button>
     </dd>

@@ -1,1 +1,1 @@
-export { ClipboardScript } from "./ClipboardScript";
+//

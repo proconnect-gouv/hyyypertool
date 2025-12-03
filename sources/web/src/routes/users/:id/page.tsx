@@ -1,10 +1,8 @@
 //
 
 import { hyper_ref } from "#src/html";
-import { ClipboardScript } from "#src/lib/alpine";
 import { button } from "#src/ui/button";
-import { GoogleSearchButton } from "#src/ui/button/components";
-import { copy_text_content_to_clipboard } from "#src/ui/button/scripts";
+import { CopyButton, GoogleSearchButton } from "#src/ui/button/components";
 import { badge_description_list } from "#src/ui/list";
 import { FrNumberConverter } from "#src/ui/number";
 import { LocalTime } from "#src/ui/time";
@@ -96,8 +94,6 @@ export async function UserPage({
         <h1 id="mfa">🔓 MFA</h1>
         <MFA user={user} authenticators={authenticators} />
       </div>
-      <hr />
-      <ClipboardScript />
     </main>
   );
 }
@@ -221,9 +217,6 @@ async function Actions({ user }: { user: User }) {
 function Fiche({ user }: { user: User }) {
   const { base, dd, dt } = badge_description_list();
 
-  const $domain = hyper_ref();
-  const $email = hyper_ref();
-
   const domain = z_email_domain.parse(user.email);
 
   return (
@@ -235,36 +228,24 @@ function Fiche({ user }: { user: User }) {
 
       <dt class={dt()}>email</dt>
       <dd class={dd()}>
-        <b id={$email}> {user.email} </b>
-        <button
-          aria-hidden="true"
+        <b>{user.email}</b>
+        <CopyButton
           class="fr-p-O leading-none"
+          text={user.email}
           title="Copier l'email"
-          _={copy_text_content_to_clipboard(`#${$email}`)}
-        >
-          <span
-            aria-hidden="true"
-            class="fr-icon-device-line"
-            style={{ color: "var(--text-disabled-grey)" }}
-          />
-        </button>
+          variant={{ size: "sm", type: "tertiary" }}
+        />
       </dd>
 
       <dt class={dt()}>domain</dt>
       <dd class={dd()}>
-        <b id={$domain}> {domain} </b>
-        <button
-          aria-hidden="true"
+        <b>{domain}</b>
+        <CopyButton
           class="fr-p-O leading-none"
+          text={domain}
           title="Copier le nom de domaine"
-          _={copy_text_content_to_clipboard(`#${$domain}`)}
-        >
-          <span
-            aria-hidden="true"
-            class="fr-icon-device-line"
-            style={{ color: "var(--text-disabled-grey)" }}
-          />
-        </button>
+          variant={{ size: "sm", type: "tertiary" }}
+        />
 
         <GoogleSearchButton
           class={button({ class: "align-bottom", size: "sm" })}

@@ -1,0 +1,91 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`renders CopyButton with text 1`] = `
+"<button
+  x-data="{ copied: false }"
+  x-on:click="
+        if (!$el.dataset.text) return;
+        navigator.clipboard.writeText($el.dataset.text);
+        copied = true;
+        setTimeout(function() { copied = false }, 1000)
+      "
+  class="fr-btn hover:bg-(--background-default-grey-hover)! bg-transparent text-black fr-btn--sm fr-btn--tertiary undefined"
+  data-text="Copy me"
+>
+  <span
+    class="fr-icon-clipboard-line"
+    aria-hidden="true"
+    x-show="!copied"
+  ></span
+  ><span class="fr-icon-check-line" aria-hidden="true" x-show="copied"></span>
+</button>
+"
+`;
+
+exports[`renders CopyButton with children 1`] = `
+"<button
+  x-data="{ copied: false }"
+  x-on:click="
+        if (!$el.dataset.text) return;
+        navigator.clipboard.writeText($el.dataset.text);
+        copied = true;
+        setTimeout(function() { copied = false }, 1000)
+      "
+  class="fr-btn hover:bg-(--background-default-grey-hover)! bg-transparent text-black undefined"
+  data-text="Copy me"
+>
+  <span
+    class="fr-icon-clipboard-line"
+    aria-hidden="true"
+    x-show="!copied"
+  ></span
+  ><span class="fr-icon-check-line" aria-hidden="true" x-show="copied"></span
+  ><span>Custom label</span>
+</button>
+"
+`;
+
+exports[`renders CopyButton with custom class 1`] = `
+"<button
+  x-data="{ copied: false }"
+  x-on:click="
+        if (!$el.dataset.text) return;
+        navigator.clipboard.writeText($el.dataset.text);
+        copied = true;
+        setTimeout(function() { copied = false }, 1000)
+      "
+  class="fr-btn hover:bg-(--background-default-grey-hover)! bg-transparent text-black custom-class"
+  data-text="Copy me"
+>
+  <span
+    class="fr-icon-clipboard-line"
+    aria-hidden="true"
+    x-show="!copied"
+  ></span
+  ><span class="fr-icon-check-line" aria-hidden="true" x-show="copied"></span>
+</button>
+"
+`;
+
+exports[`renders CopyButton with title attribute 1`] = `
+"<button
+  x-data="{ copied: false }"
+  x-on:click="
+        if (!$el.dataset.text) return;
+        navigator.clipboard.writeText($el.dataset.text);
+        copied = true;
+        setTimeout(function() { copied = false }, 1000)
+      "
+  class="fr-btn hover:bg-(--background-default-grey-hover)! bg-transparent text-black undefined"
+  data-text="Copy me"
+  title="Copy to clipboard"
+>
+  <span
+    class="fr-icon-clipboard-line"
+    aria-hidden="true"
+    x-show="!copied"
+  ></span
+  ><span class="fr-icon-check-line" aria-hidden="true" x-show="copied"></span>
+</button>
+"
+`;
