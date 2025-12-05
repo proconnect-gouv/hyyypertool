@@ -102,9 +102,14 @@ export function RootLayout({ children }: PropsWithChildren) {
         <script nonce="${nonce}" type="importmap">
           {
             "imports": {
-              "#src/config": "${config.ASSETS_PATH}/bundle/config.js",
+              "@preact/signals-core": "${config.ASSETS_PATH}/node_modules/@preact/signals-core/dist/signals-core.module.js",
+              "@preact/signals": "${config.ASSETS_PATH}/node_modules/@preact/signals/dist/signals.module.js",
               "/src/": "${config.PUBLIC_ASSETS_PATH}/",
-              "alpinejs": "${config.ASSETS_PATH}/node_modules/alpinejs/dist/module.esm.js"
+              "#src/config": "${config.ASSETS_PATH}/bundle/config.js",
+              "alpinejs": "${config.ASSETS_PATH}/node_modules/alpinejs/dist/module.esm.js",
+              "preact": "${config.ASSETS_PATH}/node_modules/preact/dist/preact.module.js",
+              "preact/hooks": "${config.ASSETS_PATH}/node_modules/preact/hooks/dist/hooks.module.js",
+              "preact/jsx-dev-runtime": "${config.ASSETS_PATH}/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js"
             }
           }
         </script>

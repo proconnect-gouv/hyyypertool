@@ -8,6 +8,7 @@ publicHoistPattern = [ "drizzle-orm", "pg" ]
 
 [build]
 clientScripts = [
-  "sources/web/src/**/*.client.ts"
+  "sources/web/src/**/*.client.ts",
+  "sources/web/src/**/*.client.tsx"
 ]
-external = ["alpinejs"]
+external = ["@preact/signals", "alpinejs", "preact"]

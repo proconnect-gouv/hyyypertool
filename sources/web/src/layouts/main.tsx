@@ -1,7 +1,7 @@
 //
 
-import type { UserInfoVariablesContext } from "#src/middleware/auth";
-import { ToasterContainer } from "#src/ui/toast/components";
+import type { App_Context } from "#src/middleware/context";
+import { NotificationIsland } from "#src/ui/notifications";
 import { urls } from "#src/urls";
 import { z_username } from "@~/core/schema";
 import type { PropsWithChildren } from "hono/jsx";
@@ -11,8 +11,8 @@ import { RootLayout } from "./root";
 //
 export function Main_Layout({ children }: PropsWithChildren) {
   const {
-    var: { userinfo },
-  } = useRequestContext<UserInfoVariablesContext>();
+    var: { userinfo, nonce },
+  } = useRequestContext<App_Context>();
   const username = z_username.parse(userinfo);
   return (
     <RootLayout>
@@ -35,7 +35,7 @@ export function Main_Layout({ children }: PropsWithChildren) {
         </header>
         <div class="relative flex flex-1 flex-col">{children}</div>
       </div>
-      <ToasterContainer />
+      <NotificationIsland nonce={nonce} />
     </RootLayout>
   );
 }

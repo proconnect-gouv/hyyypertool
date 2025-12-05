@@ -77,9 +77,14 @@ exports[`development 1`] = `
         <script nonce="nonce" type="importmap">
           {
             "imports": {
-              "#src/config": "/assets/ASSETS_PATH/bundle/config.js",
+              "@preact/signals-core": "/assets/ASSETS_PATH/node_modules/@preact/signals-core/dist/signals-core.module.js",
+              "@preact/signals": "/assets/ASSETS_PATH/node_modules/@preact/signals/dist/signals.module.js",
               "/src/": "/assets/PUBLIC_ASSETS_PATH/public/built/",
-              "alpinejs": "/assets/ASSETS_PATH/node_modules/alpinejs/dist/module.esm.js"
+              "#src/config": "/assets/ASSETS_PATH/bundle/config.js",
+              "alpinejs": "/assets/ASSETS_PATH/node_modules/alpinejs/dist/module.esm.js",
+              "preact": "/assets/ASSETS_PATH/node_modules/preact/dist/preact.module.js",
+              "preact/hooks": "/assets/ASSETS_PATH/node_modules/preact/hooks/dist/hooks.module.js",
+              "preact/jsx-dev-runtime": "/assets/ASSETS_PATH/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js"
             }
           }
         </script>
@@ -131,16 +136,19 @@ exports[`development 1`] = `
       
 
       <script
+        defer
         nonce="nonce"
         src="/assets/ASSETS_PATH/node_modules/htmx-ext-include-vals/include-vals.js"
         type="module"
       ></script>
       <script
+        defer
         nonce="nonce"
         src="/assets/ASSETS_PATH/node_modules/htmx-ext-sse/dist/sse.js"
         type="module"
       ></script>
       <script
+        defer
         nonce="nonce"
         src="/assets/ASSETS_PATH/node_modules/htmx.ext...chunked-transfer/dist/index.js"
         type="module"
@@ -165,12 +173,14 @@ exports[`development 1`] = `
       <!--  -->
 
       <script
+        defer
         nonce="nonce"
-        src="/assets/PUBLIC_ASSETS_PATH/public/built/lib/alpine/alpine-init.client.js"
+        src="/assets/PUBLIC_ASSETS_PATH/public/built/lib/alpine/alpine_start.client.js"
         type="module"
       ></script>
 
       <script
+            defer
             nonce="nonce"
             src="/assets/PUBLIC_ASSETS_PATH/public/built/routes/__dev__/live-reload.client.js"
             type="module"
@@ -256,9 +266,14 @@ exports[`production 1`] = `
         <script nonce="nonce" type="importmap">
           {
             "imports": {
-              "#src/config": "/assets/ASSETS_PATH/bundle/config.js",
+              "@preact/signals-core": "/assets/ASSETS_PATH/node_modules/@preact/signals-core/dist/signals-core.module.js",
+              "@preact/signals": "/assets/ASSETS_PATH/node_modules/@preact/signals/dist/signals.module.js",
               "/src/": "/assets/PUBLIC_ASSETS_PATH/public/built/",
-              "alpinejs": "/assets/ASSETS_PATH/node_modules/alpinejs/dist/module.esm.js"
+              "#src/config": "/assets/ASSETS_PATH/bundle/config.js",
+              "alpinejs": "/assets/ASSETS_PATH/node_modules/alpinejs/dist/module.esm.js",
+              "preact": "/assets/ASSETS_PATH/node_modules/preact/dist/preact.module.js",
+              "preact/hooks": "/assets/ASSETS_PATH/node_modules/preact/hooks/dist/hooks.module.js",
+              "preact/jsx-dev-runtime": "/assets/ASSETS_PATH/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js"
             }
           }
         </script>
@@ -310,16 +325,19 @@ exports[`production 1`] = `
       
 
       <script
+        defer
         nonce="nonce"
         src="/assets/ASSETS_PATH/node_modules/htmx-ext-include-vals/include-vals.js"
         type="module"
       ></script>
       <script
+        defer
         nonce="nonce"
         src="/assets/ASSETS_PATH/node_modules/htmx-ext-sse/dist/sse.js"
         type="module"
       ></script>
       <script
+        defer
         nonce="nonce"
         src="/assets/ASSETS_PATH/node_modules/htmx.ext...chunked-transfer/dist/index.js"
         type="module"
@@ -339,8 +357,9 @@ exports[`production 1`] = `
       <!--  -->
 
       <script
+        defer
         nonce="nonce"
-        src="/assets/PUBLIC_ASSETS_PATH/public/built/lib/alpine/alpine-init.client.js"
+        src="/assets/PUBLIC_ASSETS_PATH/public/built/lib/alpine/alpine_start.client.js"
         type="module"
       ></script>
 
