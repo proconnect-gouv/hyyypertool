@@ -13,10 +13,11 @@ import { InactiveWarning } from "./InactiveWarning";
 
 type Props = JSX.IntrinsicElements["section"] & {
   organization: Awaited<ReturnType<GetFicheOrganizationByIdHandler>>;
+  nonce?: string;
 };
 
 export function About(props: Props) {
-  const { organization, ...section_props } = props;
+  const { organization, nonce = "", ...section_props } = props;
 
   return (
     <section class="mt-6" {...section_props}>
@@ -44,6 +45,7 @@ export function About(props: Props) {
           </abbr>{" "}
           <CopyButton
             class="ml-2"
+            nonce={nonce}
             text={organization.cached_libelle ?? ""}
             variant={{ size: "sm", type: "tertiary" }}
           ></CopyButton>
@@ -62,6 +64,7 @@ export function About(props: Props) {
           </a>
           <CopyButton
             class="ml-2"
+            nonce={nonce}
             text={organization.siret}
             variant={{ size: "sm", type: "tertiary" }}
           ></CopyButton>

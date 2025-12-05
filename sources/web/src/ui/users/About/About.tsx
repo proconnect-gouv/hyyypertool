@@ -12,11 +12,12 @@ import type { GetUserInfoOutput } from "#src/lib/users";
 type AboutProps = {
   user: GetUserInfoOutput;
   organization: { siret: string };
+  nonce?: string;
 };
 
 //
 
-export function About({ user, organization }: AboutProps) {
+export function About({ user, organization, nonce = "" }: AboutProps) {
   const domain = z_email_domain.parse(user.email);
 
   return (
@@ -39,6 +40,7 @@ export function About({ user, organization }: AboutProps) {
           {user.email}{" "}
           <CopyButton
             class="ml-2"
+            nonce={nonce}
             text={user.email}
             variant={{ size: "sm", type: "tertiary" }}
           ></CopyButton>
@@ -49,6 +51,7 @@ export function About({ user, organization }: AboutProps) {
           {domain}{" "}
           <CopyButton
             class="ml-2"
+            nonce={nonce}
             text={domain}
             variant={{ size: "sm", type: "tertiary" }}
           ></CopyButton>

@@ -15,7 +15,7 @@ import {
   notify,
   removeNotification,
   resetNotificationCounter,
-} from "./notifications.client";
+} from "./notifications.client.tsx";
 
 //
 

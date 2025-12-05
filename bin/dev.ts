@@ -20,9 +20,7 @@ const OUTDIR = join(PROJECT_ROOT, "bin/public/built");
 let notifyReload: (() => void) | undefined;
 async function loadReloadNotifier() {
   try {
-    const module = await import(
-      "../sources/web/src/routes/__dev__/reload.tsx"
-    );
+    const module = await import("../sources/web/src/routes/__dev__/reload.tsx");
     notifyReload = module.notifyReload;
     console.log("[live-reload] Notifier loaded");
   } catch (error) {
@@ -75,8 +73,10 @@ function watchClientScripts() {
     { recursive: true },
     (event, filename) => {
       if (!filename) return;
-      if (!filename.endsWith(".client.ts")) return;
-      if (filename.includes(".test.") || filename.includes(".spec.")) return;
+      if (
+        !(filename.endsWith(".client.ts") || filename.endsWith(".client.tsx"))
+      )
+        if (filename.includes(".test.") || filename.includes(".spec.")) return;
 
       console.log(
         `\n[${new Date().toLocaleTimeString()}] Detected ${event}: ${filename}`,
