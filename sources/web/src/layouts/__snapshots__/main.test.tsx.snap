@@ -81,7 +81,6 @@ exports[`Main Layout 1`] = `
               "@preact/signals": "/node_modules/@preact/signals/dist/signals.module.js",
               "/src/": "/",
               "#src/config": "/bundle/config.js",
-              "alpinejs": "/node_modules/alpinejs/dist/module.esm.js",
               "preact": "/node_modules/preact/dist/preact.module.js",
               "preact/hooks": "/node_modules/preact/hooks/dist/hooks.module.js",
               "preact/jsx-dev-runtime": "/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js"
@@ -176,9 +175,11 @@ document.addEventListener('DOMContentLoaded', () => {
       <script
         defer
         nonce="nonce"
-        src="/lib/alpine/alpine_start.client.js"
+        src="/lib/htmx.client.js"
         type="module"
       ></script>
+
+      <!--  -->
 
       
     </html>

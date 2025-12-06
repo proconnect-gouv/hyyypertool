@@ -106,7 +106,6 @@ export function RootLayout({ children }: PropsWithChildren) {
               "@preact/signals": "${config.ASSETS_PATH}/node_modules/@preact/signals/dist/signals.module.js",
               "/src/": "${config.PUBLIC_ASSETS_PATH}/",
               "#src/config": "${config.ASSETS_PATH}/bundle/config.js",
-              "alpinejs": "${config.ASSETS_PATH}/node_modules/alpinejs/dist/module.esm.js",
               "preact": "${config.ASSETS_PATH}/node_modules/preact/dist/preact.module.js",
               "preact/hooks": "${config.ASSETS_PATH}/node_modules/preact/hooks/dist/hooks.module.js",
               "preact/jsx-dev-runtime": "${config.ASSETS_PATH}/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js"
@@ -226,9 +225,11 @@ export function RootLayout({ children }: PropsWithChildren) {
       <script
         defer
         nonce="${nonce}"
-        src="${config.PUBLIC_ASSETS_PATH}/lib/alpine/alpine_start.client.js"
+        src="${config.PUBLIC_ASSETS_PATH}/lib/htmx.client.js"
         type="module"
       ></script>
+
+      <!--  -->
 
       ${config.NODE_ENV === "development"
         ? html`<script
