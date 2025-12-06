@@ -4,6 +4,7 @@
 //
 
 import type { App_Context } from "#src/middleware/context";
+import consola from "consola";
 import { Hono } from "hono";
 import { streamSSE } from "hono/streaming";
 
@@ -13,7 +14,7 @@ type SSEStreamContext = { write: (message: string) => Promise<void> };
 const clients = new Set<SSEStreamContext>();
 
 export function notifyReload() {
-  console.log(
+  consola.trace(
     `[live-reload] Sending reload signal to ${clients.size} connected clients`,
   );
 
@@ -21,6 +22,7 @@ export function notifyReload() {
     try {
       client.write("reload");
     } catch (error) {
+      consola.trace(`[live-reload] `, error);
       // Client disconnected
       clients.delete(client);
     }
@@ -36,7 +38,7 @@ export default new Hono<App_Context>().get("/reload", (c) => {
     };
 
     clients.add(client);
-    console.log(`[live-reload] Client connected (${clients.size} total)`);
+    consola.trace(`[live-reload] Client connected (${clients.size} total)`);
 
     // Send initial connection message
     await stream.writeSSE({ data: "connected" });
@@ -44,14 +46,14 @@ export default new Hono<App_Context>().get("/reload", (c) => {
     // Clean up when client disconnects
     c.req.raw.signal.addEventListener("abort", () => {
       clients.delete(client);
-      console.log(
+      consola.trace(
         `[live-reload] Client disconnected (${clients.size} remaining)`,
       );
     });
 
     // Keep connection alive with periodic pings
     while (true) {
-      await stream.sleep(30000); // ping every 30 seconds
+      await stream.sleep(30_000); // ping every 30 seconds
       await stream.writeSSE({ data: "ping" });
     }
   });
