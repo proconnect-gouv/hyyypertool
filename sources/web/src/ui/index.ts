@@ -23,6 +23,5 @@ export * from "./quote";
 export * from "./table";
 export * from "./tag";
 export * from "./time";
-export * from "./toast";
 export * from "./users";
 export * from "./visually_hidden";
