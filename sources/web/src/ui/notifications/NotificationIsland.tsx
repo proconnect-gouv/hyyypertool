@@ -13,30 +13,16 @@
  */
 
 import config from "#src/config";
-import { randomUUID } from "node:crypto";
+import { createIsland } from "../../lib/create-island";
+import { NotificationContainer } from "./notifications.client";
 
 //
 
-export function NotificationIsland({ nonce = "" }: { nonce?: string } = {}) {
-  const clientPath = `${config.PUBLIC_ASSETS_PATH}/ui/notifications/notifications.client.js`;
-  const root_id = randomUUID();
-  return (
-    <x-notification-island>
-      <x-notification-island-root id={root_id} />
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-import { render, h } from "preact";
-import { NotificationContainer } from "${clientPath}";
-document.addEventListener('DOMContentLoaded', () => {
-  render(h(NotificationContainer, null), document.getElementById("${root_id}"));
+export const NotificationIsland = createIsland({
+  component: NotificationContainer,
+  clientPath: `${config.PUBLIC_ASSETS_PATH}/ui/notifications/notifications.client.js`,
+  mode: "render",
+  exportName: "NotificationContainer",
+  tagName: "x-notification-island",
+  rootTagName: "x-notification-island-root",
 });
-`,
-        }}
-        defer
-        nonce={nonce}
-        type="module"
-      />
-    </x-notification-island>
-  );
-}

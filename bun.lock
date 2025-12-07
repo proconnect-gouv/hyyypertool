@@ -177,7 +177,8 @@
         "lodash.sortby": "4.7.0",
         "nprogress": "0.2.0",
         "openid-client": "6.8.1",
-        "preact": "^10.28.0",
+        "preact": "10.28.0",
+        "preact-render-to-string": "6.6.3",
         "rehype-sanitize": "6.0.0",
         "rehype-stringify": "10.0.1",
         "remark-parse": "11.0.0",
@@ -1301,6 +1302,8 @@
     "postgres-interval": ["postgres-interval@1.2.0", "", { "dependencies": { "xtend": "^4.0.0" } }, "sha512-9ZhXKM/rw350N1ovuWHbGxnGh/SNJ4cnxHiM0rxE4VN41wsg8P8zWn9hv/buK00RP4WvlOyr/RBDiptyxVbkZQ=="],
 
     "preact": ["preact@10.28.0", "", {}, "sha512-rytDAoiXr3+t6OIP3WGlDd0ouCUG1iCWzkcY3++Nreuoi17y6T5i/zRhe6uYfoVcxq6YU+sBtJouuRDsq8vvqA=="],
+
+    "preact-render-to-string": ["preact-render-to-string@6.6.3", "", { "peerDependencies": { "preact": ">=10 || >= 11.0.0-0" } }, "sha512-7oHG7jzjriqsFPkSPiPnzrQ0GcxFm6wOkYWNdStK5Ks9YlWSQQXKGBRAX4nKDdqX7HAQuRvI4pZNZMycK4WwDw=="],
 
     "prettier": ["prettier@3.6.2", "", { "bin": { "prettier": "bin/prettier.cjs" } }, "sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ=="],
 

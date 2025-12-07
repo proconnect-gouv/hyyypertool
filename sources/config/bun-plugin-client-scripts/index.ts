@@ -99,14 +99,34 @@ export async function buildClientScripts(
     outdir,
     root: join(PROJECT_ROOT, "sources/web/src"),
     sourcemap: options.sourcemap ?? "external",
-    external: options.external ?? [],
+    external: options.external ?? [], // Specific externals (preact, @preact/signals)
     plugins: options.plugins ?? [],
-    naming: { entry: "[dir]/[name].[ext]" },
-  });
+    naming: {
+      entry: "[dir]/[name].[ext]",
+    },
+    splitting: true,
+    format: "esm", // Ensure ESM output
+  } as any);
 
   if (!success) {
     console.error("Client script build failed:", logs);
     throw new Error("Client script build failed");
+  }
+
+  // WORKAROUND: Bun doesn't add sourceMappingURL comments for external sourcemaps
+  // Note: "inline" sourcemaps work automatically but increase file size
+  // We prefer external sourcemaps (smaller downloads) and add the link manually
+  if (options.sourcemap === "external") {
+    const { appendFileSync } = await import("node:fs");
+    for (const output of outputs) {
+      if (output.path.endsWith(".js")) {
+        const sourcemapFilename = `${output.path.split("/").pop()}.map`;
+        appendFileSync(
+          output.path,
+          `\n//# sourceMappingURL=${sourcemapFilename}\n`,
+        );
+      }
+    }
   }
 
   for (const output of outputs) {

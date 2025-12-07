@@ -11,4 +11,4 @@ clientScripts = [
   "sources/web/src/**/*.client.ts",
   "sources/web/src/**/*.client.tsx"
 ]
-external = ["@preact/signals", "preact"]
+external = ["preact", "preact/jsx-dev-runtime", "preact/jsx-runtime", "@preact/signals"]
