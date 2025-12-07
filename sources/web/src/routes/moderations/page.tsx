@@ -18,6 +18,9 @@ import {
   type Search,
 } from "./context";
 import type { get_moderations_list } from "./get_moderations_list.query";
+import { ProcessedCheckboxIsland } from "./ProcessedCheckboxIsland";
+import { SearchEmailIsland } from "./SearchEmailIsland";
+import { SearchSiretIsland } from "./SearchSiretIsland";
 
 //
 
@@ -50,10 +53,12 @@ export function ModerationsPage({
   pagination,
   search,
   query_result,
+  nonce,
 }: {
   pagination: Pagination;
   search: Search;
   query_result: QueryResult;
+  nonce?: string;
 }) {
   return (
     <Moderations_Context.Provider
@@ -62,41 +67,32 @@ export function ModerationsPage({
         query_result,
       }}
     >
-      <Main search={search} />
+      <Main search={search} nonce={nonce} />
     </Moderations_Context.Provider>
   );
 }
 
 //
 
-function Main({ search }: { search: Search }) {
+function Main({ search, nonce }: { search: Search; nonce?: string }) {
   return (
     <main
       class="fr-container my-12"
       {...hx_moderations_query_props}
-      hx-sync="this"
+      hx-sync="this:abort"
       hx-trigger={[
-        `every 33s [document.visibilityState === 'visible']`,
-        `visibilitychange[document.visibilityState === 'visible'] from:document`,
+        `every 33s [document.visibilityState === 'visible'] throttle:1s`,
+        `visibilitychange[document.visibilityState === 'visible'] from:document throttle:1s`,
       ].join(", ")}
     >
       <h1>Liste des moderations</h1>
-      <Filter search={search} />
+      <Filter search={search} nonce={nonce} />
       <ModerationList_Table />
     </main>
   );
 }
 
-function Filter({ search }: { search: Search }) {
-  const on_search_show_processed_requests = `
-  on keyup
-    if no my value
-      return false
-    end
-
-    set #${page_query_keys.enum.processed_requests}.checked to "checked"
-    set #${page_query_keys.enum.processed_requests}.value to "true"
-  `;
+function Filter({ search, nonce }: { search: Search; nonce?: string }) {
   return (
     <form
       {...hx_moderations_query_props}
@@ -115,42 +111,37 @@ function Filter({ search }: { search: Search }) {
           <label class="fr-label" for={page_query_keys.enum.search_email}>
             Email
           </label>
-          <input
-            _={on_search_show_processed_requests}
-            class="fr-input"
+          <SearchEmailIsland
             id={page_query_keys.enum.search_email}
             name={page_query_keys.enum.search_email}
+            nonce={nonce}
             placeholder="Recherche par Email"
-            value={search.search_email}
+            initialValue={search.search_email}
           />
         </div>
         <div class="fr-input-group">
           <label class="fr-label" for={page_query_keys.enum.search_siret}>
             Siret
           </label>
-          <input
-            _={on_search_show_processed_requests}
-            class="fr-input"
+          <SearchSiretIsland
             id={page_query_keys.enum.search_siret}
             name={page_query_keys.enum.search_siret}
+            nonce={nonce}
             placeholder="Recherche par SIRET"
-            value={search.search_siret}
+            initialValue={search.search_siret}
           />
         </div>
       </div>
       <div class="fr-fieldset__element">
-        <div class="fr-checkbox-group">
-          <input
-            id={page_query_keys.enum.processed_requests}
-            name={page_query_keys.enum.processed_requests}
-            value={"true"}
-            checked={search.processed_requests}
-            type="checkbox"
-          />
-          <label class="fr-label" for={page_query_keys.enum.processed_requests}>
-            Voir les demandes traitées
-          </label>
-        </div>
+        <ProcessedCheckboxIsland
+          nonce={nonce}
+          id={page_query_keys.enum.processed_requests}
+          name={page_query_keys.enum.processed_requests}
+          value="true"
+          initialChecked={search.processed_requests}
+          searchEmailId={page_query_keys.enum.search_email}
+          searchSiretId={page_query_keys.enum.search_siret}
+        />
       </div>
       <div class="fr-fieldset__element">
         <div class="fr-checkbox-group">

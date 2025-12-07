@@ -20,7 +20,7 @@ export default new Hono<App_Context>()
   .get(
     "/",
     jsxRenderer(Main_Layout),
-    async function GET({ render, req, set, var: { identite_pg } }) {
+    async function GET({ render, req, set, var: { identite_pg, nonce } }) {
       const query = req.query();
 
       const search = match(search_schema.parse(query))
@@ -51,6 +51,7 @@ export default new Hono<App_Context>()
           pagination={pagination}
           search={search}
           query_result={query_moderations_list}
+          nonce={nonce}
         />,
       );
     },
