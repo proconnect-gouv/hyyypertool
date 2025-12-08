@@ -139,8 +139,6 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
           name={page_query_keys.enum.processed_requests}
           value="true"
           initialChecked={search.processed_requests}
-          searchEmailId={page_query_keys.enum.search_email}
-          searchSiretId={page_query_keys.enum.search_siret}
         />
       </div>
       <div class="fr-fieldset__element">

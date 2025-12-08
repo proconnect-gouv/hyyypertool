@@ -31,8 +31,8 @@ const OUTDIR = join(PROJECT_ROOT, "bin/public/built");
 console.log("🏗️  Building for production...\n");
 
 // Build client scripts
-const patterns = loadClientScriptPatterns();
-const external = loadExternalDependencies();
+const patterns = await loadClientScriptPatterns();
+const external = await loadExternalDependencies();
 
 if (patterns.length > 0) {
   console.log("Building client scripts...");

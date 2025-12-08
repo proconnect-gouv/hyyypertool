@@ -70,6 +70,7 @@ jobs:
           NODE_ENV: "development"
         with:
           browser: chrome
+          build: bun run build
           install-command: bun install --frozen-lockfile
           spec: features/${{ matrix.e2e_test }}
           start: bun run start
