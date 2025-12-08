@@ -5,11 +5,13 @@ import { RootLayout } from "#src/layouts";
 import { set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
 import { set_crisp_client_from_config } from "#src/middleware/crisp";
+import { set_fetch } from "#src/middleware/fetch";
 import { set_identite_pg_database } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
 import { set_sentry } from "#src/middleware/sentry";
 import consola from "consola";
 import { Hono } from "hono";
+import dev_router from "./__dev__/reload";
 import auth_router from "./auth";
 import domains_deliverability_router from "./domains-deliverability";
 import moderations_router from "./moderations";
@@ -17,7 +19,6 @@ import organizations_router from "./organizations";
 import proxy_router from "./proxy";
 import users_router from "./users";
 import welcome_router from "./welcome";
-import dev_router from "./__dev__/reload";
 // TODO: Re-enable compression when Bun supports CompressionStream
 // import { compress } from "hono/compress";
 import { hyyyyyypertool_session } from "#src/middleware/session";
@@ -39,6 +40,7 @@ const app = new Hono()
   .use(set_sentry())
   .use(set_nonce())
   .use(set_config())
+  .use(set_fetch())
 
   .get("/healthz", ({ text }) => text(`healthz check passed`))
   .get("/livez", ({ text }) => text(`livez check passed`))
