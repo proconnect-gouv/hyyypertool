@@ -3,6 +3,8 @@
  * Email Search Input (Client-side Preact Component)
  */
 
+import { searchEmail } from "./filter-signals.client";
+
 export interface SearchEmailProps extends Record<string, unknown> {
   id: string;
   name: string;
@@ -21,8 +23,9 @@ export function SearchEmail({
       class="fr-input"
       id={id}
       name={name}
+      onInput={(e) => (searchEmail.value = e.currentTarget.value)}
       placeholder={placeholder}
-      defaultValue={initialValue}
+      value={searchEmail.value || initialValue}
     />
   );
 }

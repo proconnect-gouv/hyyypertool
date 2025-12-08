@@ -12,7 +12,9 @@
   "main": "./index.ts",
   "module": "./index.ts",
   "files": [],
-  "dependencies": {},
+  "dependencies": {
+    "oxc-parser": "0.102.0"
+  },
   "devDependencies": {
     "@~/config.typescript": "workspace:*"
   }

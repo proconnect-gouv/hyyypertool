@@ -31,8 +31,8 @@ async function loadReloadNotifier() {
 //
 
 async function buildAllClientScripts() {
-  const patterns = loadClientScriptPatterns();
-  const external = loadExternalDependencies();
+  const patterns = await loadClientScriptPatterns();
+  const external = await loadExternalDependencies();
 
   if (patterns.length === 0) {
     console.log("No client script patterns configured in bunfig.toml");
@@ -76,7 +76,8 @@ function watchClientScripts() {
       if (
         !(filename.endsWith(".client.ts") || filename.endsWith(".client.tsx"))
       )
-        if (filename.includes(".test.") || filename.includes(".spec.")) return;
+        return;
+      if (filename.includes(".test.") || filename.includes(".spec.")) return;
 
       console.log(
         `\n[${new Date().toLocaleTimeString()}] Detected ${event}: ${filename}`,

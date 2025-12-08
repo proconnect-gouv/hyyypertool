@@ -3,6 +3,8 @@
  * SIRET Search Input (Client-side Preact Component)
  */
 
+import { searchSiret } from "./filter-signals.client";
+
 export interface SearchSiretProps extends Record<string, unknown> {
   id: string;
   name: string;
@@ -21,8 +23,9 @@ export function SearchSiret({
       class="fr-input"
       id={id}
       name={name}
+      onInput={(e) => (searchSiret.value = e.currentTarget.value)}
       placeholder={placeholder}
-      defaultValue={initialValue}
+      value={searchSiret.value || initialValue}
     />
   );
 }

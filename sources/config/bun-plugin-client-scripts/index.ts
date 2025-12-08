@@ -1,8 +1,13 @@
 //
 
-import { Glob, plugin, TOML, type BunPlugin } from "bun";
-import { existsSync, readFileSync } from "node:fs";
+import { Glob, TOML, type BunPlugin } from "bun";
+import { appendFile, exists, readFile, writeFile } from "node:fs/promises";
 import { dirname, join, relative } from "node:path";
+import {
+  buildImportFixMap,
+  dedupeExports,
+  fixChunkImports,
+} from "./dedupe-exports";
 
 //
 
@@ -15,16 +20,15 @@ interface BunfigBuildConfig {
 
 //
 
-function findProjectRoot(): string {
+async function findProjectRoot(): Promise<string> {
   let dir = process.cwd();
 
   while (dir !== "/") {
     const bunfigPath = join(dir, "bunfig.toml");
-    if (existsSync(bunfigPath)) {
+    if (await exists(bunfigPath)) {
       try {
-        const content = readFileSync(bunfigPath, "utf-8");
+        const content = await readFile(bunfigPath, "utf-8");
         const config = TOML.parse(content) as BunfigBuildConfig;
-        // Only return if this bunfig has a [build] section
         if (config.build?.clientScripts) {
           return dir;
         }
@@ -38,12 +42,20 @@ function findProjectRoot(): string {
   return process.cwd();
 }
 
-const PROJECT_ROOT = findProjectRoot();
+let PROJECT_ROOT: string;
 
-function loadBuildConfig(): BunfigBuildConfig["build"] {
+async function getProjectRoot(): Promise<string> {
+  if (!PROJECT_ROOT) {
+    PROJECT_ROOT = await findProjectRoot();
+  }
+  return PROJECT_ROOT;
+}
+
+async function loadBuildConfig(): Promise<BunfigBuildConfig["build"]> {
   try {
-    const bunfigPath = join(PROJECT_ROOT, "bunfig.toml");
-    const bunfigContent = readFileSync(bunfigPath, "utf-8");
+    const root = await getProjectRoot();
+    const bunfigPath = join(root, "bunfig.toml");
+    const bunfigContent = await readFile(bunfigPath, "utf-8");
     const config = TOML.parse(bunfigContent) as BunfigBuildConfig;
     return config.build ?? {};
   } catch (error) {
@@ -52,24 +64,27 @@ function loadBuildConfig(): BunfigBuildConfig["build"] {
   }
 }
 
-export function loadClientScriptPatterns(): string[] {
-  return loadBuildConfig()?.clientScripts ?? [];
+export async function loadClientScriptPatterns(): Promise<string[]> {
+  const config = await loadBuildConfig();
+  return config?.clientScripts ?? [];
 }
 
-export function loadExternalDependencies(): string[] {
-  return loadBuildConfig()?.external ?? [];
+export async function loadExternalDependencies(): Promise<string[]> {
+  const config = await loadBuildConfig();
+  return config?.external ?? [];
 }
 
 export async function discoverClientScripts(
   patterns: string[],
 ): Promise<string[]> {
+  const root = await getProjectRoot();
   const files: string[] = [];
 
   for (const pattern of patterns) {
     const glob = new Glob(pattern);
-    for await (const file of glob.scan({ cwd: PROJECT_ROOT })) {
+    for await (const file of glob.scan({ cwd: root })) {
       if (file.includes(".test.") || file.includes(".spec.")) continue;
-      files.push(join(PROJECT_ROOT, file));
+      files.push(join(root, file));
     }
   }
 
@@ -91,21 +106,22 @@ export async function buildClientScripts(
     return;
   }
 
+  const root = await getProjectRoot();
   console.log(`Building ${entrypoints.length} client script(s)...`);
 
   const { logs, outputs, success } = await Bun.build({
     entrypoints,
     minify: options.minify ?? true,
     outdir,
-    root: join(PROJECT_ROOT, "sources/web/src"),
+    root: join(root, "sources/web/src"),
     sourcemap: options.sourcemap ?? "external",
-    external: options.external ?? [], // Specific externals (preact, @preact/signals)
+    external: options.external ?? [],
     plugins: options.plugins ?? [],
     naming: {
       entry: "[dir]/[name].[ext]",
     },
     splitting: true,
-    format: "esm", // Ensure ESM output
+    format: "esm",
   } as any);
 
   if (!success) {
@@ -117,11 +133,10 @@ export async function buildClientScripts(
   // Note: "inline" sourcemaps work automatically but increase file size
   // We prefer external sourcemaps (smaller downloads) and add the link manually
   if (options.sourcemap === "external") {
-    const { appendFileSync } = await import("node:fs");
     for (const output of outputs) {
       if (output.path.endsWith(".js")) {
         const sourcemapFilename = `${output.path.split("/").pop()}.map`;
-        appendFileSync(
+        await appendFile(
           output.path,
           `\n//# sourceMappingURL=${sourcemapFilename}\n`,
         );
@@ -129,55 +144,45 @@ export async function buildClientScripts(
     }
   }
 
+  // WORKAROUND: Bun code splitting bugs
+  // 1. Duplicate export statements: https://github.com/oven-sh/bun/issues/5344
+  // 2. Minification uses buggy internal names in cross-chunk imports
+  const jsOutputs = outputs.filter((o) => o.path.endsWith(".js"));
+
+  // Step 1: Read all files and build import fix map from ORIGINAL content
+  // (before deduping, so we can map buggy export names to correct ones)
+  const originalFiles = await Promise.all(
+    jsOutputs.map(async (o) => ({
+      content: await readFile(o.path, "utf-8"),
+      path: o.path,
+    })),
+  );
+  const importFixMap = await buildImportFixMap(originalFiles);
+
+  // Step 2: Dedupe exports and fix imports
+  await Promise.all(
+    originalFiles.map(async (file) => {
+      try {
+        // Remove duplicate exports
+        let content = await dedupeExports(file.content, file.path);
+
+        // Fix cross-chunk imports using the buggy->correct name mapping
+        content = fixChunkImports(content, importFixMap);
+
+        await writeFile(file.path, content, "utf-8");
+      } catch (error) {
+        console.warn(
+          `Warning: Could not process ${file.path}:`,
+          error instanceof Error ? error.message : String(error),
+        );
+      }
+    }),
+  );
+
   for (const output of outputs) {
-    const relativePath = relative(PROJECT_ROOT, output.path);
+    const relativePath = relative(root, output.path);
     console.log(`  ✓ ${relativePath}`);
   }
 
   console.log(`✓ Built ${outputs.length} client script(s)`);
 }
-
-const clientScriptsPlugin: BunPlugin = {
-  name: "client-scripts",
-
-  async setup() {
-    const patterns = loadClientScriptPatterns();
-
-    if (patterns.length === 0) {
-      console.log(
-        "[bun-plugin-client-scripts] No client script patterns configured",
-      );
-      return;
-    }
-
-    const outdir = join(PROJECT_ROOT, "bin/public/built");
-    const isDev = process.env.NODE_ENV === "development";
-    const external = loadExternalDependencies();
-
-    // Build client scripts
-    try {
-      const entrypoints = await discoverClientScripts(patterns);
-
-      const watcherPlugin: BunPlugin = {
-        name: "client-scripts-watcher",
-        setup(build) {
-          build.onLoad({ filter: /\.client\.ts$/ }, async (args) => {
-            const contents = readFileSync(args.path, "utf-8");
-            return { contents, loader: "tsx" };
-          });
-        },
-      };
-
-      await buildClientScripts(entrypoints, outdir, {
-        minify: !isDev,
-        sourcemap: isDev ? "inline" : "external", // Inline in dev for browser compatibility
-        external,
-        plugins: [watcherPlugin],
-      });
-    } catch (error) {
-      console.error("[bun-plugin-client-scripts] Build failed:", error);
-    }
-  },
-};
-
-plugin(clientScriptsPlugin);
