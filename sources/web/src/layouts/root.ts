@@ -108,6 +108,7 @@ export function RootLayout({ children }: PropsWithChildren) {
               "#src/config": "${config.ASSETS_PATH}/bundle/config.js",
               "preact": "${config.ASSETS_PATH}/node_modules/preact/dist/preact.module.js",
               "preact/hooks": "${config.ASSETS_PATH}/node_modules/preact/hooks/dist/hooks.module.js",
+              "preact/jsx-runtime": "${config.ASSETS_PATH}/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js",
               "preact/jsx-dev-runtime": "${config.ASSETS_PATH}/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js"
             }
           }

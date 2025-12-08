@@ -83,6 +83,7 @@ exports[`development 1`] = `
               "#src/config": "/assets/ASSETS_PATH/bundle/config.js",
               "preact": "/assets/ASSETS_PATH/node_modules/preact/dist/preact.module.js",
               "preact/hooks": "/assets/ASSETS_PATH/node_modules/preact/hooks/dist/hooks.module.js",
+              "preact/jsx-runtime": "/assets/ASSETS_PATH/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js",
               "preact/jsx-dev-runtime": "/assets/ASSETS_PATH/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js"
             }
           }
@@ -273,6 +274,7 @@ exports[`production 1`] = `
               "#src/config": "/assets/ASSETS_PATH/bundle/config.js",
               "preact": "/assets/ASSETS_PATH/node_modules/preact/dist/preact.module.js",
               "preact/hooks": "/assets/ASSETS_PATH/node_modules/preact/hooks/dist/hooks.module.js",
+              "preact/jsx-runtime": "/assets/ASSETS_PATH/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js",
               "preact/jsx-dev-runtime": "/assets/ASSETS_PATH/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js"
             }
           }

@@ -83,6 +83,7 @@ exports[`Main Layout 1`] = `
               "#src/config": "/bundle/config.js",
               "preact": "/node_modules/preact/dist/preact.module.js",
               "preact/hooks": "/node_modules/preact/hooks/dist/hooks.module.js",
+              "preact/jsx-runtime": "/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js",
               "preact/jsx-dev-runtime": "/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js"
             }
           }
