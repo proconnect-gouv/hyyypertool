@@ -1,0 +1,6 @@
+{
+  "name": "@~/release-it-plugin-types",
+  "version": "0.0.0",
+  "private": true,
+  "types": "src/index.d.ts"
+}

@@ -1,5 +1,5 @@
 {
-  "name": "@~/release-it-changeset-plugin",
+  "name": "@~/release-it-gitmoji-changelog-plugin",
   "version": "1.0.0",
   "private": true,
   "type": "module",
