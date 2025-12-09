@@ -7,7 +7,7 @@ import { schema, type IdentiteProconnectPgDatabase } from "..";
 export async function create_zombie_organization(
   pg: IdentiteProconnectPgDatabase,
 ) {
-  const [{ id: organization_id }] = await pg
+  const [{ id: organization_id } = { id: NaN }] = await pg
     .insert(schema.organizations)
     .values({
       cached_libelle: "🧟‍♂️ libelle",

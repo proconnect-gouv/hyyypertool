@@ -10,7 +10,6 @@
     "ignoreDeprecations": "5.0",
     "isolatedModules": true,
     "noEmit": false,
-    "preserveWatchOutput": true,
-    "skipLibCheck": true
+    "preserveWatchOutput": true
   }
 }

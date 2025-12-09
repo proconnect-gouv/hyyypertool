@@ -14,7 +14,7 @@ export function CountOrganizationMembers(pg: IdentiteProconnectPgDatabase) {
   }: {
     organization_id: number;
   }) {
-    const [{ value: count }] = await pg
+    const [{ value: count } = { value: NaN }] = await pg
       .select({ value: drizzle_count() })
       .from(schema.users_organizations)
       .where(eq(schema.users_organizations.organization_id, organization_id));

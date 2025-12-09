@@ -119,7 +119,7 @@ test("PUT /organizations/:id/domains adds new domain", async () => {
 test("DELETE /organizations/:id/domains/:domain_id removes domain", async () => {
   const organization_id = await create_unicorn_organization(pg);
 
-  const [{ id: domain_id }] = await pg
+  const [{ id: domain_id } = { id: NaN }] = await pg
     .insert(schema.email_domains)
     .values({
       domain: "tobedeleted.xyz",
@@ -165,7 +165,7 @@ test("DELETE /organizations/:id/domains/:domain_id removes domain", async () => 
 test("PATCH /organizations/:id/domains/:domain_id updates verification type to verified", async () => {
   const organization_id = await create_unicorn_organization(pg);
 
-  const [{ id: domain_id }] = await pg
+  const [{ id: domain_id } = { id: NaN }] = await pg
     .insert(schema.email_domains)
     .values({
       domain: "toverify.xyz",
@@ -221,7 +221,7 @@ test("PATCH /organizations/:id/domains/:domain_id updates verification type to v
 test("PATCH /organizations/:id/domains/:domain_id updates verification type to null", async () => {
   const organization_id = await create_unicorn_organization(pg);
 
-  const [{ id: domain_id }] = await pg
+  const [{ id: domain_id } = { id: NaN }] = await pg
     .insert(schema.email_domains)
     .values({
       domain: "tounverify.xyz",
