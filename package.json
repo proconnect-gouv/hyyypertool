@@ -16,7 +16,6 @@
   "scripts": {
     "build": "bun x npm-run-all --serial build:*",
     "build:bun": "cd bin && bun run build",
-    "build:tsc": "bun x tsc --build",
     "database:identite-proconnect:migrator": "bun run database:identite-proconnect:run migration",
     "database:identite-proconnect:run": "bun run --cwd sources/identite-proconnect",
     "database:identite-proconnect:seed": "bun run database:identite-proconnect:run seed",
@@ -36,7 +35,7 @@
     "test": "bun run test:type-check && bun run test:all",
     "test:all": "bun test",
     "test:inspect": "bun test --inspect-wait=localhost:6499/",
-    "test:type-check": "bun run build:tsc"
+    "test:type-check": "bun x tsc --build"
   },
   "prettier": {
     "plugins": [
