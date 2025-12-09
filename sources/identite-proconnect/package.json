@@ -27,7 +27,7 @@
     "@proconnect-gouv/proconnect.insee": "1.0.0",
     "@proconnect-gouv/proconnect.api_entreprise": "1.1.0",
     "@proconnect-gouv/proconnect.identite.database": "1.0.0",
-    "drizzle-orm": "0.44.7",
+    "drizzle-orm": "0.45.0",
     "consola": "3.4.2",
     "hono": "4.10.6",
     "pg": "8.16.3"
