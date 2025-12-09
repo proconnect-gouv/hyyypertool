@@ -1,13 +1,9 @@
 //
 
-import {
-  EntitySchema,
-  PaginationSchema,
-  SearchSchema,
-} from "@~/core/schema";
+import { EntitySchema, PaginationSchema, SearchSchema } from "@~/core/schema";
 
 //
 
-export const query_schema = PaginationSchema.extend(
-  SearchSchema.shape,
-).extend(EntitySchema.partial().shape);
+export const query_schema = PaginationSchema.extend(SearchSchema.shape).extend(
+  EntitySchema.partial().shape,
+);

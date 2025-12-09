@@ -16,9 +16,8 @@ import { insert_database } from "../sources/identite-proconnect/src/database/see
 export default defineConfig({
   e2e: {
     baseUrl: "http://localhost:3000",
-    reporter: require.resolve(
-      "@badeball/cypress-cucumber-preprocessor/pretty-reporter",
-    ),
+    reporter:
+      require.resolve("@badeball/cypress-cucumber-preprocessor/pretty-reporter"),
     setupNodeEvents,
     specPattern: "**/*.feature",
     supportFile: false,

@@ -31,8 +31,10 @@ export interface Ticket {
   state: "closed" | "open";
   title: string;
 }
-export interface NewArticle
-  extends Omit<Article, "id" | "created_at" | "created_by"> {} //
+export interface NewArticle extends Omit<
+  Article,
+  "id" | "created_at" | "created_by"
+> {} //
 
 export interface SearchResult {
   tickets: number[];
@@ -49,8 +51,10 @@ export interface NewTicket extends Omit<Ticket, "article_ids" | "id"> {
   article: NewArticle;
 }
 
-export interface UpdateTicket
-  extends Omit<Partial<Ticket>, "article_ids" | "customer_id" | "id"> {
+export interface UpdateTicket extends Omit<
+  Partial<Ticket>,
+  "article_ids" | "customer_id" | "id"
+> {
   article: NewArticle;
 }
 

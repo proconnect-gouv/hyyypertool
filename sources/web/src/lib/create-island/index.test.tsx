@@ -2,8 +2,8 @@
  * Tests for createIsland helper
  */
 
-import { renderToString } from "hono/jsx/dom/server";
 import { describe, expect, test } from "bun:test";
+import { renderToString } from "hono/jsx/dom/server";
 import { createIsland } from "./index";
 
 // Mock Preact components for testing
@@ -67,8 +67,8 @@ describe("createIsland", () => {
       const html = renderToString(<Island />);
 
       // Should have empty root element (no pre-rendered content)
-      expect(html).toContain('<x-island-root id=');
-      expect(html).toContain('></x-island-root>');
+      expect(html).toContain("<x-island-root id=");
+      expect(html).toContain("></x-island-root>");
     });
 
     test("uses render() in client script", () => {
@@ -97,7 +97,7 @@ describe("createIsland", () => {
 
       const html = renderToString(<Island />);
 
-      expect(html).toContain('import { CustomExportName } from');
+      expect(html).toContain("import { CustomExportName } from");
       expect(html).toContain("h(CustomExportName, props)");
     });
 
@@ -122,12 +122,15 @@ describe("createIsland", () => {
         component: TestComponent,
         clientPath: "/assets/test.client.js",
         mode: "render",
-        serializeProps: (props) => `customSerialization(${JSON.stringify(props)})`,
+        serializeProps: (props) =>
+          `customSerialization(${JSON.stringify(props)})`,
       });
 
       const html = renderToString(<Island message="Custom" />);
 
-      expect(html).toContain('const props = customSerialization({"message":"Custom"})');
+      expect(html).toContain(
+        'const props = customSerialization({"message":"Custom"})',
+      );
     });
 
     test("defaults exportName to component.name", () => {
@@ -139,7 +142,7 @@ describe("createIsland", () => {
 
       const html = renderToString(<Island />);
 
-      expect(html).toContain('import { TestComponent } from');
+      expect(html).toContain("import { TestComponent } from");
     });
   });
 
@@ -221,7 +224,7 @@ describe("createIsland", () => {
 
       const html = renderToString(<Island />);
 
-      expect(html).toContain('defer');
+      expect(html).toContain("defer");
       expect(html).toContain('type="module"');
     });
 

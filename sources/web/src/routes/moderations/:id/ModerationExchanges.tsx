@@ -2,14 +2,18 @@
 
 import { hyper_ref } from "#src/html";
 import { hx_trigger_from_body } from "#src/htmx";
-import { Loader } from "#src/ui/loader";
-import { hx_urls } from "#src/urls";
 import { MODERATION_EVENTS } from "#src/lib/moderations";
 import type { GetModerationWithDetailsDto } from "#src/queries/moderations";
+import { Loader } from "#src/ui/loader";
+import { hx_urls } from "#src/urls";
 
 //
 
-export async function ModerationExchanges({ moderation }: { moderation: GetModerationWithDetailsDto }) {
+export async function ModerationExchanges({
+  moderation,
+}: {
+  moderation: GetModerationWithDetailsDto;
+}) {
   const $describedby = hyper_ref();
 
   const hx_query_moderation_emails = await hx_urls.moderations[

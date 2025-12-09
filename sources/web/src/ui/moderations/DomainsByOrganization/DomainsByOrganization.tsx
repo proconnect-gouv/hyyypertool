@@ -2,10 +2,10 @@
 
 import { hyper_ref } from "#src/html";
 import { hx_trigger_from_body } from "#src/htmx";
+import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import { Loader } from "#src/ui/loader";
 import { formattedPlural } from "#src/ui/plurial";
 import { hx_urls } from "#src/urls";
-import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 
 //
 

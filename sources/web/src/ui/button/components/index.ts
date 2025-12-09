@@ -1,4 +1,7 @@
 //
 
-export { CopyButtonIsland, CopyButtonIsland as CopyButton } from "./CopyButtonIsland";
+export {
+  CopyButtonIsland as CopyButton,
+  CopyButtonIsland,
+} from "./CopyButtonIsland";
 export * from "./search";

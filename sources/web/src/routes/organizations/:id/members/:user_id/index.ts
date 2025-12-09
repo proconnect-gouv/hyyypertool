@@ -50,9 +50,7 @@ export default new Hono<App_Context>()
     zValidator(
       "form",
       z.object({
-        verification_type: VerificationTypeSchema.or(
-          z.literal(""),
-        ).optional(),
+        verification_type: VerificationTypeSchema.or(z.literal("")).optional(),
         is_external: z.string().pipe(z_coerce_boolean).optional(),
       }),
     ),
