@@ -11,7 +11,7 @@ updates:
       prefix: ":arrow_upper_right: [patch]"
       include: "scope"
 
-  - package-ecosystem: "npm"
+  - package-ecosystem: "bun"
     directory: "/"
     groups:
       sentry:
@@ -29,7 +29,7 @@ updates:
       prefix: ":arrow_upper_right: [patch]"
       include: "scope"
 
-  - package-ecosystem: "npm"
+  - package-ecosystem: "bun"
     directory: "/e2e"
     schedule:
       interval: "weekly"
