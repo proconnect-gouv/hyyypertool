@@ -48,7 +48,7 @@ export async function get_users_by_organization(
       .limit(take)
       .offset(page * take);
 
-    const [{ value: count }] = await pg_t
+    const [{ value: count } = { value: NaN }] = await pg_t
       .select({ value: drizzle_count() })
       .from(schema.users)
       .innerJoin(

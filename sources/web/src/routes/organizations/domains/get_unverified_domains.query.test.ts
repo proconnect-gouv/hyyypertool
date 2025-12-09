@@ -200,7 +200,7 @@ test.each(
   "returns no unipersonnelle organizations %p",
   async ({ categorie_juridique, tranche_effectifs }) => {
     {
-      const [{ organization_id }] = await pg
+      const [{ organization_id } = { organization_id: NaN }] = await pg
         .insert(schema.organizations)
         .values({
           siret: categorie_juridique,

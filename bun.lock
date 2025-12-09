@@ -8,7 +8,7 @@
         "@gouvfr/dsfr": "1.14.0",
         "@preact/signals": "2.5.1",
         "@preact/signals-core": "1.12.1",
-        "@tsconfig/bun": "1.0.7",
+        "@tsconfig/bun": "1.0.10",
         "@~/bin": "workspace:*",
         "animate.css": "4.1.1",
         "dotenv": "17.2.2",
@@ -95,7 +95,7 @@
       "name": "@~/config.typescript",
       "version": "0.0.0",
       "dependencies": {
-        "@tsconfig/bun": "1.0.7",
+        "@tsconfig/bun": "1.0.10",
         "@tsconfig/strictest": "2.0.8",
         "@types/bun": "1.2.21",
         "hono": "4.10.6",
@@ -570,7 +570,7 @@
 
     "@tootallnate/quickjs-emscripten": ["@tootallnate/quickjs-emscripten@0.23.0", "", {}, "sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA=="],
 
-    "@tsconfig/bun": ["@tsconfig/bun@1.0.7", "", {}, "sha512-udGrGJBNQdXGVulehc1aWT73wkR9wdaGBtB6yL70RJsqwW/yJhIg6ZbRlPOfIUiFNrnBuYLBi9CSmMKfDC7dvA=="],
+    "@tsconfig/bun": ["@tsconfig/bun@1.0.10", "", {}, "sha512-5AV5YknQjNyoYzZ/8NG0dawqew/wH+x7ANiCfCIn29qo0cdbd1EryvFD1k5NSZWLBMOI/fGqMIaxi58GPIP9Cg=="],
 
     "@tsconfig/strictest": ["@tsconfig/strictest@2.0.8", "", {}, "sha512-XnQ7vNz5HRN0r88GYf1J9JJjqtZPiHt2woGJOo2dYqyHGGcd6OLGqSlBB6p1j9mpzja6Oe5BoPqWmeDx6X9rLw=="],
 

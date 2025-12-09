@@ -12,7 +12,7 @@ import { schema, type IdentiteProconnectPgDatabase } from "..";
 export async function create_unicorn_organization(
   pg: IdentiteProconnectPgDatabase,
 ) {
-  const [{ id: organization_id }] = await pg
+  const [{ id: organization_id } = { id: NaN }] = await pg
     .insert(schema.organizations)
     .values({
       cached_libelle: "🦄 libelle",
@@ -31,10 +31,8 @@ export async function create_unicorn_organization(
 
 //
 
-export async function create_adora_pony_user(
-  pg: IdentiteProconnectPgDatabase,
-) {
-  const [{ id: user_id }] = await pg
+export async function create_adora_pony_user(pg: IdentiteProconnectPgDatabase) {
+  const [{ id: user_id } = { id: NaN }] = await pg
     .insert(schema.users)
     .values({
       created_at: new Date().toISOString(),
@@ -63,7 +61,7 @@ export async function create_adora_pony_moderation(
     columns: { id: true },
     where: eq(schema.users.email, "adora.pony@unicorn.xyz"),
   });
-  const [{ id: moderation_id }] = await pg
+  const [{ id: moderation_id } = { id: NaN }] = await pg
     .insert(schema.moderations)
     .values({
       ...moderation,
@@ -79,7 +77,7 @@ export async function create_adora_pony_moderation(
 export async function create_pink_diamond_user(
   pg: IdentiteProconnectPgDatabase,
 ) {
-  const [{ id: user_id }] = await pg
+  const [{ id: user_id } = { id: NaN }] = await pg
     .insert(schema.users)
     .values({
       created_at: new Date().toISOString(),
@@ -96,7 +94,7 @@ export async function create_pink_diamond_user(
 export async function create_red_diamond_user(
   pg: IdentiteProconnectPgDatabase,
 ) {
-  const [{ id: user_id }] = await pg
+  const [{ id: user_id } = { id: NaN }] = await pg
     .insert(schema.users)
     .values({
       created_at: new Date().toISOString(),

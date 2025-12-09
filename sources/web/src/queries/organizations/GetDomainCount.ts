@@ -10,7 +10,7 @@ import { count as drizzle_count, eq } from "drizzle-orm";
 
 export function GetDomainCount(pg: IdentiteProconnectPgDatabase) {
   return async function get_domain_count(organization_id: number) {
-    const [{ value: count }] = await pg
+    const [{ value: count } = { value: NaN }] = await pg
       .select({ value: drizzle_count() })
       .from(schema.email_domains)
       .innerJoin(

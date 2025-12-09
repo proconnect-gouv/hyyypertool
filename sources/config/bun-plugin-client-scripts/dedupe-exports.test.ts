@@ -203,17 +203,17 @@ describe("integration: buildImportFixMap + fixChunkImports + dedupeExports", () 
     );
 
     // filter-signals should have duplicate export removed
-    expect(results[0].content).toBe(
+    expect(results[0]?.content).toBe(
       `var _X=signal(""),gX=signal("");export{gX as searchSiret,_X as searchEmail};`,
     );
 
     // search-email: 'b' should be fixed to 'searchSiret'
-    expect(results[1].content).toBe(
+    expect(results[1]?.content).toBe(
       `import{a as v,searchSiret as P}from"./filter-signals.client.js";console.log(P.value)`,
     );
 
     // search-siret: 'b' should be fixed to 'searchSiret'
-    expect(results[2].content).toBe(
+    expect(results[2]?.content).toBe(
       `import{searchSiret as e}from"./filter-signals.client.js";console.log(e.value)`,
     );
   });

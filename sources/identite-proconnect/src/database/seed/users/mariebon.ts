@@ -5,7 +5,7 @@ import { schema, type IdentiteProconnectPgDatabase } from "../..";
 //
 
 export async function insert_mariebon(pg: IdentiteProconnectPgDatabase) {
-  const [{ id: user_id }] = await pg
+  const [{ id: user_id } = { id: NaN }] = await pg
     .insert(schema.users)
     .values({
       created_at: "2014-02-13T18:25:09.000+02:00",

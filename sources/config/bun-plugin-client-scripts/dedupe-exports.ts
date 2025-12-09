@@ -82,10 +82,10 @@ export async function buildImportFixMap(
       const buggyExports = exportStatements[i]; // localVar -> buggyExportName
 
       // Find variables exported in both - map buggy name to correct name
-      for (const [localVar, buggyName] of buggyExports) {
-        const correctName = correctExports.get(localVar);
+      for (const [localVar, buggyName] of buggyExports!) {
+        const correctName = correctExports!.get(localVar);
         if (correctName && correctName !== buggyName) {
-          fileFixes.set(buggyName, correctName);
+          fileFixes.set(buggyName, correctName!);
         }
       }
     }
@@ -129,8 +129,8 @@ export function fixChunkImports(
         spec = spec.trim();
         // Handle "a as b" or just "a"
         const asMatch = spec.match(/^(\w+)\s+as\s+(\w+)$/);
-        if (asMatch) {
-          const [, importedName, localAlias] = asMatch;
+        const [, importedName, localAlias] = asMatch ?? [];
+        if (importedName && localAlias) {
           const correctName = fileFixes.get(importedName);
           if (correctName) {
             return `${correctName} as ${localAlias}`;

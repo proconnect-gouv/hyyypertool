@@ -21,7 +21,7 @@ const remove_domain_email_by_id = RemoveDomainEmailById({ pg });
 
 test("returns no membership", async () => {
   const organization_id = await create_unicorn_organization(pg);
-  const [{ domain_id }] = await pg
+  const [{ domain_id } = { domain_id: NaN }] = await pg
     .insert(schema.email_domains)
     .values({
       domain: "unicorn.xyz",

@@ -41,7 +41,7 @@ export function GetOrganizationsList(pg: IdentiteProconnectPgDatabase) {
         where,
         with: { email_domains: { columns: { domain: true } } },
       });
-      const [{ value: count }] = await tx
+      const [{ value: count } = { value: NaN }] = await tx
         .select({ value: drizzle_count() })
         .from(schema.organizations)
         .where(where);

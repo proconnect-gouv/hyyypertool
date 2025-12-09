@@ -123,10 +123,7 @@ export async function get_unverified_domains(
       )
       .leftJoin(
         member_count,
-        eq(
-          schema.email_domains.organization_id,
-          member_count.organization_id,
-        ),
+        eq(schema.email_domains.organization_id, member_count.organization_id),
       )
       .where(where)
       .offset(page * take)
@@ -137,7 +134,7 @@ export async function get_unverified_domains(
         asc(schema.organizations.id),
       );
 
-    const [{ value: count }] = await tx
+    const [{ value: count } = { value: NaN }] = await tx
       .select({ value: drizzle_count() })
       .from(schema.email_domains)
       .innerJoin(

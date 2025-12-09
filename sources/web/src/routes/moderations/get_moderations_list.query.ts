@@ -77,7 +77,7 @@ export async function get_moderations_list(
       .orderBy(asc(schema.moderations.created_at))
       .limit(take)
       .offset(page * take);
-    const [{ value: count }] = await tx
+    const [{ value: count } = { value: NaN }] = await tx
       .select({ value: drizzle_count() })
       .from(schema.moderations)
       .innerJoin(schema.users, eq(schema.moderations.user_id, schema.users.id))

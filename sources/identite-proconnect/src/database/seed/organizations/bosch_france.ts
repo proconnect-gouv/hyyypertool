@@ -5,7 +5,7 @@ import { schema, type IdentiteProconnectPgDatabase } from "../..";
 //
 
 export async function insert_bosch_france(pg: IdentiteProconnectPgDatabase) {
-  const [{ id: organization_id }] = await pg
+  const [{ id: organization_id } = { id: NaN }] = await pg
     .insert(schema.organizations)
     .values({
       cached_activite_principale: "29.32Z",
