@@ -87,7 +87,7 @@
       "dependencies": {
         "@tailwindcss/typography": "0.5.19",
         "tailwind-merge": "3.3.1",
-        "tailwind-variants": "3.1.0",
+        "tailwind-variants": "3.2.2",
         "tailwindcss": "4.1.17",
       },
     },
@@ -187,7 +187,7 @@
         "remark-parse": "11.0.0",
         "remark-rehype": "11.1.2",
         "static-path": "0.0.4",
-        "tailwind-variants": "3.1.0",
+        "tailwind-variants": "3.2.2",
         "tailwindcss": "4.1.17",
         "ts-dedent": "2.2.0",
         "ts-pattern": "5.8.0",
@@ -1490,7 +1490,7 @@
 
     "tailwind-merge": ["tailwind-merge@3.3.1", "", {}, "sha512-gBXpgUm/3rp1lMZZrM/w7D8GKqshif0zAymAhbCyIt8KMe+0v9DQ7cdYLR4FHH/cKpdTXb+A/tKKU3eolfsI+g=="],
 
-    "tailwind-variants": ["tailwind-variants@3.1.0", "", { "peerDependencies": { "tailwind-merge": ">=3.0.0", "tailwindcss": "*" }, "optionalPeers": ["tailwind-merge"] }, "sha512-ieiYaEfUr+sNhw/k++dosmZfVA4VIG5bV+G1eGdJSC4FcflqQv0iSIlOLj/RbzRuTu/VrIiNSlwh1esBM3BXUg=="],
+    "tailwind-variants": ["tailwind-variants@3.2.2", "", { "peerDependencies": { "tailwind-merge": ">=3.0.0", "tailwindcss": "*" }, "optionalPeers": ["tailwind-merge"] }, "sha512-Mi4kHeMTLvKlM98XPnK+7HoBPmf4gygdFmqQPaDivc3DpYS6aIY6KiG/PgThrGvii5YZJqRsPz0aPyhoFzmZgg=="],
 
     "tailwindcss": ["tailwindcss@4.1.17", "", {}, "sha512-j9Ee2YjuQqYT9bbRTfTZht9W/ytp5H+jJpZKiYdP/bpnXARAuELt9ofP0lPnmHjbga7SNQIxdTAXCmtKVYjN+Q=="],
 
