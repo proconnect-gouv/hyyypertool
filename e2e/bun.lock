@@ -6,7 +6,7 @@
       "name": "e2e",
       "dependencies": {
         "@badeball/cypress-cucumber-preprocessor": "24.0.0",
-        "@bahmutov/cypress-esbuild-preprocessor": "2.2.7",
+        "@bahmutov/cypress-esbuild-preprocessor": "2.2.8",
         "@proconnect-gouv/proconnect.identite.database": "1.0.0",
         "@testing-library/cypress": "10.1.0",
         "cypress": "15.7.1",
@@ -68,7 +68,7 @@
 
     "@badeball/cypress-cucumber-preprocessor": ["@badeball/cypress-cucumber-preprocessor@24.0.0", "", { "dependencies": { "@cucumber/ci-environment": "^12.0.0", "@cucumber/cucumber": "^12.0.0", "@cucumber/cucumber-expressions": "^18.0.0", "@cucumber/gherkin": "^37.0.0", "@cucumber/html-formatter": "^22.2.0", "@cucumber/message-streams": "^4.0.1", "@cucumber/messages": "^31.0.0", "@cucumber/pretty-formatter": "^1.0.1", "@cucumber/tag-expressions": "^8.0.0", "@jridgewell/trace-mapping": "^0.3.31", "base64-js": "^1.5.1", "chalk": "^4.1.2", "cli-table": "^0.3.11", "common-ancestor-path": "^2.0.0", "cosmiconfig": "^9.0.0", "debug": "^4.3.6", "error-stack-parser": "^2.1.4", "find-cypress-specs": "^1.45.2", "fp-ts": "^2.16.11", "glob": "^13.0.0", "io-ts": "^2.2.22", "mocha": "^11.0.0", "seedrandom": "^3.0.5", "split": "^1.0.1", "uuid": "^13.0.0" }, "peerDependencies": { "cypress": "^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0" }, "bin": { "cucumber-html-formatter": "dist/bin/cucumber-html-formatter.js", "cucumber-json-formatter": "dist/bin/cucumber-json-formatter.js", "cucumber-merge-messages": "dist/bin/cucumber-merge-messages.js" } }, "sha512-WjmmnjkN49E52vp65TldsbiP3WtgTp7JQDZal8qNCHpnjmGjBW70JjIUL4/RfvxujZIUDx13W/VFiPTlG0FhRw=="],
 
-    "@bahmutov/cypress-esbuild-preprocessor": ["@bahmutov/cypress-esbuild-preprocessor@2.2.7", "", { "dependencies": { "debug": "4.4.3" }, "peerDependencies": { "esbuild": ">=0.17.0" } }, "sha512-n5kYNQ830Tics+04/pRR/IdJsCoc2xf4iO7emI2ofGIWGuDkE4ewIJt1jYJ+FfN41I2B7jTWQRvU274T4NloTQ=="],
+    "@bahmutov/cypress-esbuild-preprocessor": ["@bahmutov/cypress-esbuild-preprocessor@2.2.8", "", { "dependencies": { "debug": "4.4.3" }, "peerDependencies": { "esbuild": ">=0.17.0" } }, "sha512-pN90es4T1DYcQbBuDEpa7yotC/VhE+BgfHIEGpS0uxibTIqt7g4ZITQZbTFcaQATZh3QmPIMMkeZyBE7PWf1LA=="],
 
     "@colors/colors": ["@colors/colors@1.5.0", "", {}, "sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ=="],
 
