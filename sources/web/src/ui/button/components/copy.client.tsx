@@ -3,7 +3,7 @@
  * Preact CopyButton client-side component
  */
 
-import { useState, useCallback } from "preact/hooks";
+import { useCallback, useState } from "preact/hooks";
 
 //
 

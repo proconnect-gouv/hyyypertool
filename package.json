@@ -32,7 +32,7 @@
     "renovate": "bun x npm-check-updates --packageManager bun --interactive --upgrade --deep",
     "start": "tsx --tsconfig tsconfig.json bin/src/node/index.ts",
     "studio:identite-proconnect": "bun run database:identite-proconnect:run studio",
-    "test": "bun run test:type-check && bun run test:all",
+    "test": "bun run format && bun run test:type-check && bun run test:all",
     "test:all": "bun test",
     "test:inspect": "bun test --inspect-wait=localhost:6499/",
     "test:type-check": "bun x tsc --build"

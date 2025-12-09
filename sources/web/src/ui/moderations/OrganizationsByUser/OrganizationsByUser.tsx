@@ -2,12 +2,11 @@
 
 import { hyper_ref } from "#src/html";
 import { hx_include, hx_trigger_from_body } from "#src/htmx";
+import { ORGANISATION_EVENTS } from "#src/lib/organizations";
+import type { CountUserMembershipsHandler, User } from "#src/lib/users";
 import { Loader } from "#src/ui/loader";
 import { formattedPlural } from "#src/ui/plurial";
 import { hx_urls } from "#src/urls";
-import { ORGANISATION_EVENTS } from "#src/lib/organizations";
-import type { User } from "#src/lib/users";
-import type { CountUserMembershipsHandler } from "#src/lib/users";
 
 //
 

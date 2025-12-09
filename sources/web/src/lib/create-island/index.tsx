@@ -25,10 +25,10 @@
  * ```
  */
 
+import { randomUUID } from "node:crypto";
 import type { ComponentType } from "preact";
 import { h } from "preact";
 import { renderToString } from "preact-render-to-string";
-import { randomUUID } from "node:crypto";
 
 //
 

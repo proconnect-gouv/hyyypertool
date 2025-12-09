@@ -1,5 +1,5 @@
-import { type get_crisp_mail, is_crisp_ticket } from "#src/lib/crisp";
 import type { Config } from "#src/lib/crisp";
+import { type get_crisp_mail, is_crisp_ticket } from "#src/lib/crisp";
 import { to } from "await-to-js";
 
 export function GetCripsFromSessionId({

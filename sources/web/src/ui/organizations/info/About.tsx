@@ -1,11 +1,11 @@
 //
 
+import type { GetFicheOrganizationByIdHandler } from "#src/lib/organizations/usecase";
 import { button } from "#src/ui/button";
 import { CopyButton } from "#src/ui/button/components";
 import { description_list } from "#src/ui/list";
 import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
-import type { GetFicheOrganizationByIdHandler } from "#src/lib/organizations/usecase";
 import { type JSX } from "hono/jsx";
 import { InactiveWarning } from "./InactiveWarning";
 

@@ -1,8 +1,10 @@
 //
 
-import type { IdentiteProconnectPgDatabase } from "@~/identite-proconnect/database";
-import type { schema } from "@~/identite-proconnect/database";
 import { UpdateModerationById } from "#src/queries/moderations";
+import type {
+  IdentiteProconnectPgDatabase,
+  schema,
+} from "@~/identite-proconnect/database";
 import { build_moderation_update } from "@~/moderations/build_moderation_update";
 
 //

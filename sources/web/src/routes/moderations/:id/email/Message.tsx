@@ -1,15 +1,21 @@
 //
 
 import env from "#src/config";
+import type { Article } from "#src/lib/zammad";
+import { GROUP_MONCOMPTEPRO_SENDER_ID } from "#src/lib/zammad";
 import { quote } from "#src/ui/quote";
 import { LocalTime } from "#src/ui/time";
-import { GROUP_MONCOMPTEPRO_SENDER_ID } from "#src/lib/zammad";
-import type { Article } from "#src/lib/zammad";
 import { tv } from "tailwind-variants";
 
 //
 
-export function Message({ article, ticket_id }: { article: Article; ticket_id: string }) {
+export function Message({
+  article,
+  ticket_id,
+}: {
+  article: Article;
+  ticket_id: string;
+}) {
   const is_family = article.sender_id === GROUP_MONCOMPTEPRO_SENDER_ID;
   const { author, base, body, caption, source } = message_variants({
     is_family,

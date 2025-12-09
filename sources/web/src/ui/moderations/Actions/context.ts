@@ -1,10 +1,11 @@
 //
 
 import { hyper_ref } from "#src/html";
-import type { Moderation } from "#src/lib/moderations";
-import type { IsUserExternalMemberHandler } from "#src/lib/moderations";
-import type { User } from "#src/lib/users";
-import type { SuggestSameUserEmailsHandler } from "#src/lib/users";
+import type {
+  IsUserExternalMemberHandler,
+  Moderation,
+} from "#src/lib/moderations";
+import type { SuggestSameUserEmailsHandler, User } from "#src/lib/users";
 import { createContext } from "hono/jsx";
 import type { SimplifyDeep } from "type-fest";
 
