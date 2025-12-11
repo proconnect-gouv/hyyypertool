@@ -17,8 +17,8 @@ export default async function Page({ whitelist }: { whitelist: Whitelist[] }) {
           hx-trigger="domains-deliverability-updated"
           hx-swap="innerHTML"
         >
-          <Table whitelist={whitelist} />
           <AddDomain />
+          <Table whitelist={whitelist} />
         </div>
       </div>
     </main>
