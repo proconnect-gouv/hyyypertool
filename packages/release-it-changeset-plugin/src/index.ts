@@ -51,12 +51,7 @@ export default class ChangesetPlugin extends Plugin {
 
     await this.prependToChangelog(cwd);
 
-    await this.exec("git add CHANGELOG.md .release-it-changeset/");
-    this.log.log("Staged changelog changes.");
-  }
-
-  override async release() {
-    const cwd = this.options.cwd || process.cwd();
+    // Delete changeset files after processing them
     for (const cs of this.changesets) {
       const filePath = path.join(cwd, ".release-it-changeset", `${cs.id}.md`);
       try {
@@ -66,7 +61,10 @@ export default class ChangesetPlugin extends Plugin {
         this.log.warn(`Failed to remove ${cs.id}.md: ${error}`);
       }
     }
-    this.log.log("Changeset plugin release complete.");
+
+    // Stage the changelog and the deleted changeset files
+    await this.exec("git add CHANGELOG.md .release-it-changeset/");
+    this.log.log("Staged changelog changes and removed changesets.");
   }
 
   private async readChangesets(cwd: string): Promise<Changeset[]> {
