@@ -12,14 +12,14 @@
  * // With hydration (SSR + client interactivity)
  * export const CounterIsland = createIsland({
  *   component: Counter,
- *   clientPath: `${config.PUBLIC_ASSETS_PATH}/ui/demo/counter.client.js`,
+ *   clientPath: '/src/ui/demo/counter.client.js',
  *   mode: 'hydrate'
  * });
  *
  * // Client-only rendering
  * export const NotificationIsland = createIsland({
  *   component: NotificationContainer,
- *   clientPath: `${config.PUBLIC_ASSETS_PATH}/ui/notifications/notifications.client.js`,
+ *   clientPath: '/src/ui/notifications/notifications.client.js',
  *   mode: 'render'
  * });
  * ```
@@ -37,7 +37,7 @@ export type IslandMode = "hydrate" | "render";
 export interface CreateIslandOptions<P = Record<string, unknown>> {
   /** The Preact component to wrap (must be imported from .client.tsx file) */
   component: ComponentType<P>;
-  /** The client-side bundle path (e.g., `${config.PUBLIC_ASSETS_PATH}/ui/demo/counter.client.js`) */
+  /** The client-side bundle path using import map (e.g., '/src/ui/demo/counter.client.js') */
   clientPath: string;
   /** Rendering mode: 'hydrate' for SSR+hydration, 'render' for client-only */
   mode: IslandMode;

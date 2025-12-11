@@ -42,48 +42,40 @@ Hyyypertool now uses a custom changeset plugin for automated versioning and chan
 
 #### 1. Create Release Notes
 
-When making changes that should trigger a release:
+When making changes that deserve a user-facing changelog entry, create a changeset file:
 
 ```bash
-# Create the release notes directory
-mkdir -p .release-it-changeset
-
-# Create a release note file
-touch .release-it-changeset/my-changes.md
+echo "Brief description of the change" > .release-it-changeset/my-feature.md
 ```
 
-Edit the file with your changes:
+For more detailed changes:
 
 ```markdown
----
-"package-name": patch # or minor/major
-"@scope/package-name": minor
----
+Improved moderation interface
 
-Description of the changes made.
-
-**Details:**
-
-- Specific change details
-- Additional context
+- New status filter
+- CSV export for results
 ```
+
+> [!NOTE]
+> Unlike `@changesets/cli`, this plugin uses plain markdown files without frontmatter.
+> Versioning is handled by `@csmith/release-it-calver-plugin` (CalVer format: `yyyy.mm.minor`).
 
 #### 2. Automated Release
 
-The release process is now automated via GitHub Actions:
+The release process is automated via GitHub Actions:
 
-1. Go to the [Hyyypertool](https://github.com/proconnect-gouv/hyyypertool/actions) repository
-2. Go to the 'Actions' tab, click on 'Release it!'
+1. Go to the [Hyyypertool Actions](https://github.com/proconnect-gouv/hyyypertool/actions)
+2. Click on 'Release it!'
 3. Run the workflow from the master branch
 
 The release-it plugin will:
 
-- ✅ Detect unreleased changesets
-- ✅ Determine appropriate version bump (patch/minor/major)
-- ✅ Update package versions
-- ✅ Generate changelog entries
+- ✅ Detect unreleased changesets in `.release-it-changeset/`
+- ✅ Generate changelog entries under "Changements" section
+- ✅ Format changelog with Prettier
 - ✅ Create git tags and releases
-- ✅ Clean up consumed changesets
+- ✅ Clean up consumed changeset files
 
 #### 3. Deploy to Environments
 
@@ -112,19 +104,3 @@ npx release-it
 ### Release Configuration
 
 The release process uses the `@~/release-it-changeset-plugin` which integrates with changesets. See the [plugin documentation](packages/release-it-changeset-plugin/README.md) for detailed configuration options.
-
-You need to create a release, for that:
-
-Go to the [Hyyypertool](https://github.com/proconnect-gouv/hyyypertool/actions) repository
-
-Go to the ‘Actions’ tab, click on 'Release it!'
-
-Run the workflow from the master branch
-
-Once the release is complete, go to [Hyyypertool Sandbox](https://dashboard.scalingo.com/apps/osc-secnum-fr1/hyyypertool-sandbox) Scalingo
-
-Manually deploy the release branch (the branch name looks like: release/year.month.number)
-
-Repeat the same action in the [Hyypertool production](https://dashboard.scalingo.com/apps/osc-secnum-fr1/hyyypertool) Scalingo
-
-Finally, you need to make a summary note in the ProConnect general channel and pin the message.
