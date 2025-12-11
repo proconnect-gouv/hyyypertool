@@ -20,7 +20,7 @@ declare module "release-it" {
     init(): any;
     getName(): string;
     getLatestVersion(): string;
-    getChangelog(): string;
+    getChangelog(): Promise<string>;
     getIncrement(): string;
     getIncrementedVersionCI(): string;
     getIncrementedVersion(): string;

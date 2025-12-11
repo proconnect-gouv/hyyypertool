@@ -98,6 +98,46 @@ export default class GitmojiChangelogPlugin extends Plugin {
 
   private commits: Commit[] = [];
 
+  override async getChangelog() {
+    // Read the complete CHANGELOG.md which includes both changeset and gitmoji content
+    // This plugin is listed first, so it will be the one providing changelog to GitHub
+    const cwd = (this.options as PluginOptions).cwd || process.cwd();
+    const infile = (this.options as PluginOptions).infile || "CHANGELOG.md";
+    const changelogPath = path.join(cwd, infile);
+
+    try {
+      const changelog = await readFile(changelogPath, "utf-8");
+      return this.extractLatestVersionSection(changelog);
+    } catch (error) {
+      this.log.warn(`Failed to read ${infile}: ${error}`);
+      return "";
+    }
+  }
+
+  private extractLatestVersionSection(changelog: string): string {
+    const lines = changelog.split("\n");
+    let inSection = false;
+    const content: string[] = [];
+
+    for (const line of lines) {
+      if (line.startsWith("## ")) {
+        if (inSection) {
+          // Found the next version section, stop
+          break;
+        } else {
+          // Found the first version section, start capturing (skip the header)
+          inSection = true;
+          continue;
+        }
+      }
+      if (inSection) {
+        content.push(line);
+      }
+    }
+
+    return content.join("\n").trim();
+  }
+
   override getInitialOptions(options: PluginOptions) {
     return Object.assign(
       {
