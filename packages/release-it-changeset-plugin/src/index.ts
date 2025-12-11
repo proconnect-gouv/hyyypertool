@@ -1,3 +1,5 @@
+/// <reference types="@~/release-it-plugin-types" />
+
 //
 
 import { readdir, readFile, unlink, writeFile } from "node:fs/promises";
