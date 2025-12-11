@@ -6,7 +6,6 @@
 
 - Un nouveau test de mon release-it changeset
 
-
 ### Modifié
 
 - 🔧 chore: add prettier formatting and improve changeset handling (f06f3a47)
