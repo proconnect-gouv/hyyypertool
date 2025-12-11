@@ -62,6 +62,9 @@ export default class ChangesetPlugin extends Plugin {
       }
     }
 
+    // Format CHANGELOG.md with prettier
+    await this.exec("bunx prettier --write CHANGELOG.md");
+
     // Stage the changelog and the deleted changeset files
     await this.exec("git add CHANGELOG.md .release-it-changeset/");
     this.log.log("Staged changelog changes and removed changesets.");

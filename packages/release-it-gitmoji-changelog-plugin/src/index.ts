@@ -3,7 +3,7 @@
 //
 
 import { execSync } from "node:child_process";
-import { readFile, writeFile } from "node:fs/promises";
+import { readdir, readFile, writeFile } from "node:fs/promises";
 import path from "path";
 import { Plugin } from "release-it";
 
@@ -97,45 +97,71 @@ export default class GitmojiChangelogPlugin extends Plugin {
   }
 
   private commits: Commit[] = [];
+  private latestChangelog: string = "";
 
-  override async getChangelog() {
-    // Read the complete CHANGELOG.md which includes both changeset and gitmoji content
-    // This plugin is listed first, so it will be the one providing changelog to GitHub
+  override async getChangelog(version: string) {
+    // Generate changelog content for this version
+    // This is called BEFORE bump(), so we can't read from CHANGELOG.md yet
     const cwd = (this.options as PluginOptions).cwd || process.cwd();
-    const infile = (this.options as PluginOptions).infile || "CHANGELOG.md";
-    const changelogPath = path.join(cwd, infile);
 
-    try {
-      const changelog = await readFile(changelogPath, "utf-8");
-      return this.extractLatestVersionSection(changelog);
-    } catch (error) {
-      this.log.warn(`Failed to read ${infile}: ${error}`);
+    // Get the last tag
+    const lastTag = this.getLastTag(cwd);
+
+    // Get commits since last tag
+    const commits = this.getCommitsSinceTag(cwd, lastTag);
+
+    if (commits.length === 0) {
       return "";
     }
-  }
 
-  private extractLatestVersionSection(changelog: string): string {
-    const lines = changelog.split("\n");
-    let inSection = false;
-    const content: string[] = [];
+    // Group commits
+    const grouped = this.groupCommits(commits);
 
-    for (const line of lines) {
-      if (line.startsWith("## ")) {
-        if (inSection) {
-          // Found the next version section, stop
-          break;
-        } else {
-          // Found the first version section, start capturing (skip the header)
-          inSection = true;
-          continue;
-        }
+    // Read changesets if they exist
+    const changesets = await this.readChangesets(cwd);
+
+    // Generate changelog content (without version header)
+    let content = "";
+
+    if (changesets.length > 0) {
+      content += "### Changements\n\n";
+      for (const cs of changesets) {
+        content += `- ${cs}\n`;
       }
-      if (inSection) {
-        content.push(line);
-      }
+      content += "\n";
     }
 
-    return content.join("\n").trim();
+    for (const group of grouped) {
+      content += `### ${group.label}\n\n`;
+      for (const commit of group.commits) {
+        content += `- ${commit.subject} (${commit.shortHash})\n`;
+      }
+      content += "\n";
+    }
+
+    this.latestChangelog = content.trim();
+    return this.latestChangelog;
+  }
+
+  private async readChangesets(cwd: string): Promise<string[]> {
+    const changesetDir = path.join(cwd, ".release-it-changeset");
+    try {
+      const files = await readdir(changesetDir);
+      const changesets: string[] = [];
+      for (const file of files) {
+        if (file.endsWith(".md")) {
+          const content = await readFile(
+            path.join(changesetDir, file),
+            "utf-8",
+          );
+          const trimmed = content.trim();
+          if (trimmed) changesets.push(trimmed);
+        }
+      }
+      return changesets;
+    } catch {
+      return [];
+    }
   }
 
   override getInitialOptions(options: PluginOptions) {
@@ -203,6 +229,9 @@ export default class GitmojiChangelogPlugin extends Plugin {
       await writeFile(changelogPath, newChangelog);
 
       this.log.log(`Updated ${infile} with ${this.commits.length} commits`);
+
+      // Format CHANGELOG.md with prettier
+      await this.exec(`bunx prettier --write ${infile}`);
 
       // Stage the changelog
       await this.exec(`git add ${infile}`);
