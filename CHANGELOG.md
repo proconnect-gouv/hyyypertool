@@ -1,5 +1,17 @@
 # Changelog
 
+## [2025.12.3](https://github.com/proconnect-gouv/hyyypertool/compare/2025.12.2...2025.12.3) (2025-12-11)
+
+### Modifié
+
+- 🔧 fix: remove debug extension from main layout snapshot (52b7022e)
+- 🔧 chore: update asset paths to use import map resolution (1029c706)
+
+### Documentation
+
+- 📝 docs: update README and fix asset paths (4d1ccb13)
+- 📝 docs: fix CHANGELOG.md formatting (9c98606f)
+
 ## [2025.12.2](https://github.com/proconnect-gouv/hyyypertool/compare/2025.12.1...2025.12.2) (2025-12-11)
 
 ### Changements
