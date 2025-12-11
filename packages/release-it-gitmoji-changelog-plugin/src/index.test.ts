@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, setSystemTime, test } from "bun:test";
 import GitmojiChangelogPlugin from "./index";
 
 describe("GitmojiChangelogPlugin", () => {
@@ -207,6 +207,7 @@ describe("GitmojiChangelogPlugin", () => {
 
   describe("generateMarkdown", () => {
     test("should generate markdown with version header (no compare link)", () => {
+      setSystemTime(new Date("2222-11-11T00:00:00.000Z"));
       const plugin = new GitmojiChangelogPlugin({});
       const grouped = [
         {
@@ -226,7 +227,7 @@ describe("GitmojiChangelogPlugin", () => {
       const result = plugin.generateMarkdown("1.0.0", grouped, null, null);
 
       expect(result).toMatchInlineSnapshot(`
-        "## 1.0.0 (2025-12-09)
+        "## 1.0.0 (2222-11-11)
 
         ### Ajouté
 
