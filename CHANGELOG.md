@@ -1,5 +1,16 @@
 # Changelog
 
+## [2025.12.4](https://github.com/proconnect-gouv/hyyypertool/compare/2025.12.3...2025.12.4) (2025-12-11)
+
+### Changements
+
+- Le champs d'ajout de domain est au dessus du tableau
+
+
+### Modifié
+
+- 🎨 Move add domain component before to add pagination (#1269) (ae8f986c)
+
 ## [2025.12.3](https://github.com/proconnect-gouv/hyyypertool/compare/2025.12.2...2025.12.3) (2025-12-11)
 
 ### Modifié
