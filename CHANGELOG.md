@@ -1,11 +1,25 @@
 # Changelog
 
+## [2025.12.2](https://github.com/proconnect-gouv/hyyypertool/compare/2025.12.1...2025.12.2) (2025-12-11)
+
+### Changements
+
+- Un nouveau test de mon release-it changeset
+
+
+### Modifié
+
+- 🔧 chore: add prettier formatting and improve changeset handling (f06f3a47)
+
+### Documentation
+
+- 📝 docs: add test changeset for release-it (c366e8e4)
+
 ## [2025.12.1](https://github.com/proconnect-gouv/hyyypertool/compare/2025.12.0...2025.12.1) (2025-12-11)
 
 ### Changements
 
 - Nouveau system de collection de changements : release-it-changeset-plugin
-
 
 ### Modifié
 
@@ -16,13 +30,11 @@
 
 - 📝 docs: update changelog with recent changes (0ccff78d)
 
-
 ## [2025.12.0](https://github.com/proconnect-gouv/hyyypertool/compare/2025.11.2...2025.12.0) (2025-12-11)
 
 ### Changements
 
 - Nouveau system de collection de changements : release-it-changeset-plugin
-
 
 ### Ajouté
 
@@ -91,9 +103,8 @@
 
 - Revert "✨ feat: extract release-it plugin types and add gitmoji changelog plugin (#1267)" (4143d5ff)
 - chore(dependabot): update package ecosystem to bun (46658b7a)
-- Revert "chore(dependabot): use  enable-beta-ecosystems" (12c4b30b)
+- Revert "chore(dependabot): use enable-beta-ecosystems" (12c4b30b)
 - chore(lock): update lockfile (dec181be)
-
 
 ## [2025.12.0](https://github.com/proconnect-gouv/hyyypertool/compare/2025.11.2...2025.12.0) (2025-12-11)
 
