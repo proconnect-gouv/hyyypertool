@@ -1,5 +1,22 @@
 # Changelog
 
+## [2025.12.1](https://github.com/proconnect-gouv/hyyypertool/compare/2025.12.0...2025.12.1) (2025-12-11)
+
+### Changements
+
+- Nouveau system de collection de changements : release-it-changeset-plugin
+
+
+### Modifié
+
+- 🔧 fix: move git add to release phase and improve changeset cleanup (8ddc23fb)
+- 🔧 fix: update plugin types and changelog extraction logic (d820b5eb)
+
+### Documentation
+
+- 📝 docs: update changelog with recent changes (0ccff78d)
+
+
 ## [2025.12.0](https://github.com/proconnect-gouv/hyyypertool/compare/2025.11.2...2025.12.0) (2025-12-11)
 
 ### Changements
