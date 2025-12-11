@@ -5,7 +5,7 @@ exports[`Main Layout 1`] = `
     <html
       lang="fr"
       data-fr-scheme="system"
-      hx-ext="debug, chunked-transfer, include-vals"
+      hx-ext="chunked-transfer, include-vals"
     >
       <head>
         <meta charset="utf-8" />
@@ -22,21 +22,21 @@ exports[`Main Layout 1`] = `
 
         <link
           rel="apple-touch-icon"
-          href="/assets/0.0.0-test/node_modules/@gouvfr/dsfr/dist/favicon/apple-touch-icon.png"
+          href="/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/favicon/apple-touch-icon.png"
         />
         <link
           rel="icon"
-          href="/assets/0.0.0-test/node_modules/@gouvfr/dsfr/dist/favicon/favicon.svg"
+          href="/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/favicon/favicon.svg"
           type="image/svg+xml"
         />
         <link
           rel="shortcut icon"
-          href="/assets/0.0.0-test/node_modules/@gouvfr/dsfr/dist/favicon/favicon.ico"
+          href="/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/favicon/favicon.ico"
           type="image/x-icon"
         />
         <link
           rel="manifest"
-          href="/assets/0.0.0-test/node_modules/@gouvfr/dsfr/dist/favicon/manifest.webmanifest"
+          href="/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/favicon/manifest.webmanifest"
           crossorigin="use-credentials"
         />
 
@@ -44,24 +44,24 @@ exports[`Main Layout 1`] = `
 
         <link
           rel="stylesheet"
-          href="/assets/0.0.0-test/node_modules/animate.css/source/_vars.css"
+          href="/assets/ASSETS_PATH/node_modules/animate.css/source/_vars.css"
         />
         <link
           rel="stylesheet"
-          href="/assets/0.0.0-test/node_modules/animate.css/source/_base.css"
+          href="/assets/ASSETS_PATH/node_modules/animate.css/source/_base.css"
         />
         <link
           rel="stylesheet"
-          href="/assets/0.0.0-test/node_modules/animate.css/source/bouncing_entrances/bounceIn.css"
+          href="/assets/ASSETS_PATH/node_modules/animate.css/source/bouncing_entrances/bounceIn.css"
         />
 
         <!--  -->
 
         <style>
-              @import "/assets/0.0.0-test/node_modules/@gouvfr/dsfr/dist/dsfr/dsfr.css"
+              @import "/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/dsfr/dsfr.min.css"
                 layer(dsfr);
 
-              @import "/assets/0.0.0-test/node_modules/@gouvfr/dsfr/dist/utility/utility.css"
+              @import "/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/utility/utility.min.css"
                 layer(dsfr-utility);
             </style>
 
@@ -69,7 +69,7 @@ exports[`Main Layout 1`] = `
 
         <link
           rel="stylesheet"
-          href="/assets/0.0.0-test/public/built/tailwind.css"
+          href="/assets/PUBLIC_ASSETS_PATH/public/built/tailwind.css"
         />
 
         <!--  -->
@@ -77,14 +77,14 @@ exports[`Main Layout 1`] = `
         <script nonce="nonce" type="importmap">
           {
             "imports": {
-              "@preact/signals-core": "/assets/0.0.0-test/node_modules/@preact/signals-core/dist/signals-core.module.js",
-              "@preact/signals": "/assets/0.0.0-test/node_modules/@preact/signals/dist/signals.module.js",
-              "/src/": "/assets/0.0.0-test/public/built/",
-              "#src/config": "/assets/0.0.0-test/bundle/config.js",
-              "preact": "/assets/0.0.0-test/node_modules/preact/dist/preact.module.js",
-              "preact/hooks": "/assets/0.0.0-test/node_modules/preact/hooks/dist/hooks.module.js",
-              "preact/jsx-runtime": "/assets/0.0.0-test/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js",
-              "preact/jsx-dev-runtime": "/assets/0.0.0-test/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js"
+              "@preact/signals-core": "/assets/ASSETS_PATH/node_modules/@preact/signals-core/dist/signals-core.module.js",
+              "@preact/signals": "/assets/ASSETS_PATH/node_modules/@preact/signals/dist/signals.module.js",
+              "/src/": "/assets/PUBLIC_ASSETS_PATH/public/built/",
+              "#src/config": "/assets/ASSETS_PATH/bundle/config.js",
+              "preact": "/assets/ASSETS_PATH/node_modules/preact/dist/preact.module.js",
+              "preact/hooks": "/assets/ASSETS_PATH/node_modules/preact/hooks/dist/hooks.module.js",
+              "preact/jsx-runtime": "/assets/ASSETS_PATH/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js",
+              "preact/jsx-dev-runtime": "/assets/ASSETS_PATH/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js"
             }
           }
         </script>
@@ -103,12 +103,12 @@ document.addEventListener('DOMContentLoaded', () => {
         <footer class="container mx-auto flex flex-row justify-between p-2">
           <div>© 2222 🇫🇷</div>
           <a
-            href="https://github.com/proconnect-gouv/hyyypertool/tree/0.0.0-test"
+            href="https://github.com/proconnect-gouv/hyyypertool/tree/__VERSION__"
             rel="noopener noreferrer"
             target="_blank"
             safe
           >
-            <small>version 0.0.0-test</small>
+            <small>version __VERSION__</small>
           </a>
         </footer>
       </body>
@@ -117,20 +117,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <script
         nonce="nonce"
-        src="/assets/0.0.0-test/public/built/layouts/nprogress.client.js"
+        src="/assets/PUBLIC_ASSETS_PATH/public/built/layouts/nprogress.client.js"
         type="module"
       ></script>
 
       <link
         rel="stylesheet"
-        href="/assets/0.0.0-test/node_modules/nprogress/nprogress.css"
+        href="/assets/ASSETS_PATH/node_modules/nprogress/nprogress.css"
       />
 
       <!--  -->
 
       <script
             nonce="nonce"
-            src="/assets/0.0.0-test/node_modules/htmx.org/dist/htmx.min.js"
+            src="/assets/ASSETS_PATH/node_modules/htmx.org/dist/htmx.min.js"
           ></script>
 
       <meta
@@ -143,19 +143,19 @@ document.addEventListener('DOMContentLoaded', () => {
       <script
         defer
         nonce="nonce"
-        src="/assets/0.0.0-test/node_modules/htmx-ext-include-vals/include-vals.js"
+        src="/assets/ASSETS_PATH/node_modules/htmx-ext-include-vals/include-vals.js"
         type="module"
       ></script>
       <script
         defer
         nonce="nonce"
-        src="/assets/0.0.0-test/node_modules/htmx-ext-sse/dist/sse.js"
+        src="/assets/ASSETS_PATH/node_modules/htmx-ext-sse/dist/sse.js"
         type="module"
       ></script>
       <script
         defer
         nonce="nonce"
-        src="/assets/0.0.0-test/node_modules/htmx.ext...chunked-transfer/dist/index.js"
+        src="/assets/ASSETS_PATH/node_modules/htmx.ext...chunked-transfer/dist/index.js"
         type="module"
       ></script>
 
@@ -163,11 +163,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <script
             nonce="nonce"
-            src="/assets/0.0.0-test/node_modules/hyperscript.org/dist/_hyperscript.min.js"
+            src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/_hyperscript.min.js"
           ></script>
       <script
         nonce="nonce"
-        src="/assets/0.0.0-test/node_modules/hyperscript.org/dist/template.js"
+        src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/template.js"
       ></script>
 
       <!--  -->
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <script
         defer
         nonce="nonce"
-        src="/assets/0.0.0-test/public/built/lib/htmx.client.js"
+        src="/assets/PUBLIC_ASSETS_PATH/public/built/lib/htmx.client.js"
         type="module"
       ></script>
 
