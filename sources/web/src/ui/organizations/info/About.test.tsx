@@ -65,7 +65,7 @@ test("render about section", async () => {
             ><x-copy-button-root id="test-uuid-1"></x-copy-button-root>
             <script defer="" nonce="" type="module">
               import { render, h } from "preact";
-              import { CopyButtonClient } from "/assets/2025.11.2/public/built/ui/button/components/copy.client.js";
+              import { CopyButtonClient } from "/src/ui/button/components/copy.client.js";
               document.addEventListener("DOMContentLoaded", () => {
                 const props = {
                   children: "",
@@ -94,7 +94,7 @@ test("render about section", async () => {
             ><x-copy-button-root id="test-uuid-2"></x-copy-button-root>
             <script defer="" nonce="" type="module">
               import { render, h } from "preact";
-              import { CopyButtonClient } from "/assets/2025.11.2/public/built/ui/button/components/copy.client.js";
+              import { CopyButtonClient } from "/src/ui/button/components/copy.client.js";
               document.addEventListener("DOMContentLoaded", () => {
                 const props = {
                   children: "",

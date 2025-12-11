@@ -22,21 +22,21 @@ exports[`Main Layout 1`] = `
 
         <link
           rel="apple-touch-icon"
-          href="/node_modules/@gouvfr/dsfr/dist/favicon/apple-touch-icon.png"
+          href="/assets/0.0.0-test/node_modules/@gouvfr/dsfr/dist/favicon/apple-touch-icon.png"
         />
         <link
           rel="icon"
-          href="/node_modules/@gouvfr/dsfr/dist/favicon/favicon.svg"
+          href="/assets/0.0.0-test/node_modules/@gouvfr/dsfr/dist/favicon/favicon.svg"
           type="image/svg+xml"
         />
         <link
           rel="shortcut icon"
-          href="/node_modules/@gouvfr/dsfr/dist/favicon/favicon.ico"
+          href="/assets/0.0.0-test/node_modules/@gouvfr/dsfr/dist/favicon/favicon.ico"
           type="image/x-icon"
         />
         <link
           rel="manifest"
-          href="/node_modules/@gouvfr/dsfr/dist/favicon/manifest.webmanifest"
+          href="/assets/0.0.0-test/node_modules/@gouvfr/dsfr/dist/favicon/manifest.webmanifest"
           crossorigin="use-credentials"
         />
 
@@ -44,24 +44,24 @@ exports[`Main Layout 1`] = `
 
         <link
           rel="stylesheet"
-          href="/node_modules/animate.css/source/_vars.css"
+          href="/assets/0.0.0-test/node_modules/animate.css/source/_vars.css"
         />
         <link
           rel="stylesheet"
-          href="/node_modules/animate.css/source/_base.css"
+          href="/assets/0.0.0-test/node_modules/animate.css/source/_base.css"
         />
         <link
           rel="stylesheet"
-          href="/node_modules/animate.css/source/bouncing_entrances/bounceIn.css"
+          href="/assets/0.0.0-test/node_modules/animate.css/source/bouncing_entrances/bounceIn.css"
         />
 
         <!--  -->
 
         <style>
-              @import "/node_modules/@gouvfr/dsfr/dist/dsfr/dsfr.css"
+              @import "/assets/0.0.0-test/node_modules/@gouvfr/dsfr/dist/dsfr/dsfr.css"
                 layer(dsfr);
 
-              @import "/node_modules/@gouvfr/dsfr/dist/utility/utility.css"
+              @import "/assets/0.0.0-test/node_modules/@gouvfr/dsfr/dist/utility/utility.css"
                 layer(dsfr-utility);
             </style>
 
@@ -69,7 +69,7 @@ exports[`Main Layout 1`] = `
 
         <link
           rel="stylesheet"
-          href="/tailwind.css"
+          href="/assets/0.0.0-test/public/built/tailwind.css"
         />
 
         <!--  -->
@@ -77,14 +77,14 @@ exports[`Main Layout 1`] = `
         <script nonce="nonce" type="importmap">
           {
             "imports": {
-              "@preact/signals-core": "/node_modules/@preact/signals-core/dist/signals-core.module.js",
-              "@preact/signals": "/node_modules/@preact/signals/dist/signals.module.js",
-              "/src/": "/",
-              "#src/config": "/bundle/config.js",
-              "preact": "/node_modules/preact/dist/preact.module.js",
-              "preact/hooks": "/node_modules/preact/hooks/dist/hooks.module.js",
-              "preact/jsx-runtime": "/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js",
-              "preact/jsx-dev-runtime": "/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js"
+              "@preact/signals-core": "/assets/0.0.0-test/node_modules/@preact/signals-core/dist/signals-core.module.js",
+              "@preact/signals": "/assets/0.0.0-test/node_modules/@preact/signals/dist/signals.module.js",
+              "/src/": "/assets/0.0.0-test/public/built/",
+              "#src/config": "/assets/0.0.0-test/bundle/config.js",
+              "preact": "/assets/0.0.0-test/node_modules/preact/dist/preact.module.js",
+              "preact/hooks": "/assets/0.0.0-test/node_modules/preact/hooks/dist/hooks.module.js",
+              "preact/jsx-runtime": "/assets/0.0.0-test/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js",
+              "preact/jsx-dev-runtime": "/assets/0.0.0-test/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js"
             }
           }
         </script>
@@ -95,7 +95,7 @@ exports[`Main Layout 1`] = `
       </head>
       <body class="flex min-h-screen flex-col">
         <div class="flex flex-1 flex-col"><div class="flex min-h-full grow flex-col"><header role="banner" class="fr-header"><div class="fr-header__body"><div class="fr-container"><div class="fr-header__body-row"><div class="fr-header__brand fr-enlarge-link"><div class="fr-header__brand-top"><div class="fr-header__logo"><p class="fr-logo">République<br/>Française</p></div></div><div class="fr-header__service"><a href="/" title="Accueil "><p class="fr-header__service-title">Hyyypertool</p></a><p class="fr-header__service-tagline">hyyyyyyyypertool</p></div></div><div class="fr-header__tools"><div class="fr-header__tools-links"><ul class="fr-btns-group"><li><a class="fr-btn fr-btn--sm fr-btn--tertiary-no-outline fr-fi-logout-box-r-line fr-btn--icon-left" href="/auth/logout">Lara Croft</a></li></ul></div></div></div></div></div><div class="fr-header__menu fr-modal"><div class="fr-container"><nav class="fr-nav" id="navigation-494" role="navigation" aria-label="Menu principal"><ul class="fr-nav__list"><li class="fr-nav__item"><a aria-current="false" class="fr-nav__link" href="/moderations" target="_self">Moderations</a></li><li class="fr-nav__item"><a aria-current="false" class="fr-nav__link" href="/users" target="_self">Utilisateurs</a></li><li class="fr-nav__item"><a aria-current="false" class="fr-nav__link" href="/organizations" target="_self">Organisations</a></li><li class="fr-nav__item"><a aria-current="false" class="fr-nav__link" href="/organizations/domains" target="_self">Domaines à vérifier</a></li><li class="fr-nav__item"><a aria-current="false" class="fr-nav__link" href="/domains-deliverability" target="_self">Délivrabilité des domaines</a></li></ul></nav></div></div></header><div class="relative flex flex-1 flex-col">✅</div></div><x-notification-island><x-notification-island-root id="test-uuid-1"></x-notification-island-root><script defer="" nonce="nonce" type="module">import { render, h } from "preact";
-import { NotificationContainer } from "/assets/2025.11.2/public/built/ui/notifications/notifications.client.js";
+import { NotificationContainer } from "/src/ui/notifications/notifications.client.js";
 document.addEventListener('DOMContentLoaded', () => {
   const props = {};
   render(h(NotificationContainer, props), document.getElementById("test-uuid-1"));
@@ -103,12 +103,12 @@ document.addEventListener('DOMContentLoaded', () => {
         <footer class="container mx-auto flex flex-row justify-between p-2">
           <div>© 2222 🇫🇷</div>
           <a
-            href="https://github.com/proconnect-gouv/hyyypertool/tree/"
+            href="https://github.com/proconnect-gouv/hyyypertool/tree/0.0.0-test"
             rel="noopener noreferrer"
             target="_blank"
             safe
           >
-            <small>version </small>
+            <small>version 0.0.0-test</small>
           </a>
         </footer>
       </body>
@@ -117,20 +117,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <script
         nonce="nonce"
-        src="/layouts/nprogress.client.js"
+        src="/assets/0.0.0-test/public/built/layouts/nprogress.client.js"
         type="module"
       ></script>
 
       <link
         rel="stylesheet"
-        href="/node_modules/nprogress/nprogress.css"
+        href="/assets/0.0.0-test/node_modules/nprogress/nprogress.css"
       />
 
       <!--  -->
 
       <script
             nonce="nonce"
-            src="/node_modules/htmx.org/dist/htmx.min.js"
+            src="/assets/0.0.0-test/node_modules/htmx.org/dist/htmx.min.js"
           ></script>
 
       <meta
@@ -143,19 +143,19 @@ document.addEventListener('DOMContentLoaded', () => {
       <script
         defer
         nonce="nonce"
-        src="/node_modules/htmx-ext-include-vals/include-vals.js"
+        src="/assets/0.0.0-test/node_modules/htmx-ext-include-vals/include-vals.js"
         type="module"
       ></script>
       <script
         defer
         nonce="nonce"
-        src="/node_modules/htmx-ext-sse/dist/sse.js"
+        src="/assets/0.0.0-test/node_modules/htmx-ext-sse/dist/sse.js"
         type="module"
       ></script>
       <script
         defer
         nonce="nonce"
-        src="/node_modules/htmx.ext...chunked-transfer/dist/index.js"
+        src="/assets/0.0.0-test/node_modules/htmx.ext...chunked-transfer/dist/index.js"
         type="module"
       ></script>
 
@@ -163,11 +163,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <script
             nonce="nonce"
-            src="/node_modules/hyperscript.org/dist/_hyperscript.min.js"
+            src="/assets/0.0.0-test/node_modules/hyperscript.org/dist/_hyperscript.min.js"
           ></script>
       <script
         nonce="nonce"
-        src="/node_modules/hyperscript.org/dist/template.js"
+        src="/assets/0.0.0-test/node_modules/hyperscript.org/dist/template.js"
       ></script>
 
       <!--  -->
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <script
         defer
         nonce="nonce"
-        src="/lib/htmx.client.js"
+        src="/assets/0.0.0-test/public/built/lib/htmx.client.js"
         type="module"
       ></script>
 

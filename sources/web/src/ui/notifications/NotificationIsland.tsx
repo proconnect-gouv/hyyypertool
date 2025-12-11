@@ -12,7 +12,6 @@
  * ```
  */
 
-import config from "#src/config";
 import { createIsland } from "../../lib/create-island";
 import { NotificationContainer } from "./notifications.client";
 
@@ -20,7 +19,7 @@ import { NotificationContainer } from "./notifications.client";
 
 export const NotificationIsland = createIsland({
   component: NotificationContainer,
-  clientPath: `${config.PUBLIC_ASSETS_PATH}/ui/notifications/notifications.client.js`,
+  clientPath: "/src/ui/notifications/notifications.client.js",
   mode: "render",
   exportName: "NotificationContainer",
   tagName: "x-notification-island",

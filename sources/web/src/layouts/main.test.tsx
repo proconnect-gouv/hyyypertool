@@ -36,7 +36,14 @@ beforeEach(() => {
 
 test("Main Layout", async () => {
   const app = new Hono()
-    .use(set_config({}))
+    .use(
+      set_config({
+        ASSETS_PATH: "/assets/ASSETS_PATH",
+        NODE_ENV: "production",
+        PUBLIC_ASSETS_PATH: `/assets/PUBLIC_ASSETS_PATH/public/built`,
+        VERSION: "__VERSION__",
+      }),
+    )
     .use(set_userinfo({ given_name: "Lara", usual_name: "Croft" }))
     .use(set_nonce("nonce"))
     .use(jsxRenderer(Main_Layout))

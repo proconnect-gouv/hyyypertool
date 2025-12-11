@@ -44,6 +44,7 @@ test("GET /moderations/:id/duplicate_warning", async () => {
       set_config({
         ALLOWED_USERS: "good@captain.yargs",
         ZAMMAD_URL: "http://localhost:6500",
+        HOST: "http://localhost:6500",
       }),
     )
     .use(set_identite_pg(pg))

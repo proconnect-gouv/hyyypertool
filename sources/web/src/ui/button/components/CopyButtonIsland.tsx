@@ -4,7 +4,6 @@
  * Renders a Preact-powered copy button that hydrates on the client
  */
 
-import config from "#src/config";
 import type { JSX, PropsWithChildren } from "hono/jsx";
 import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
@@ -28,10 +27,10 @@ const copy_button_style = tv({
   extend: button,
 });
 
-// Base Island with custom prop transformation
+// Base Island with import map path (resolves via importmap to versioned path)
 const BaseCopyButtonIsland = createIsland({
   component: CopyButtonClient,
-  clientPath: `${config.PUBLIC_ASSETS_PATH}/ui/button/components/copy.client.js`,
+  clientPath: "/src/ui/button/components/copy.client.js",
   mode: "render",
   exportName: "CopyButtonClient",
   tagName: "x-copy-button-island",
