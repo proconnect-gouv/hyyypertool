@@ -2,6 +2,232 @@
 
 ## [2025.12.0](https://github.com/proconnect-gouv/hyyypertool/compare/2025.11.2...2025.12.0) (2025-12-11)
 
+### Ajouté
+
+- ✨ feat: extract release-it plugin types and add gitmoji changelog plugin (#1267) (5fa1ccb1)
+- ✨ release-it-changeset-plugin (#1216) (95917842)
+- ✨ feat: extract release-it plugin types and add gitmoji changelog plugin (#1267) (efbb6cd9)
+- ✨ release-it-changeset-plugin (#1266) (e70f7c9c)
+- ✨ feat: add prettier formatting to CI pipeline and apply code formatting (#1265) (f8bc1bba)
+- ✨ add Preact notification system with reliable test isolation (#1234) (8b713eb5)
+- ✨ add live reload functionality for development (#1230) (b53451f0)
+- ✨ Add FranceConnect reset button (#1228) (4c51656e)
+- ✨ Client scripts Level Up (#1227) (e3be58f1)
+
+### Modifié
+
+- 🔧 chore(ci): add build steps for release plugins in CI workflow (7167ce53)
+- 🔧 fix: update release workflow and changelog formatting (b45556cc)
+- 🔧 test: add deterministic date to gitmoji changelog plugin test (60e365da)
+- 🔧 refactor: remove build:tsc script and inline tsc command (#1249) (75f732cd)
+- ♻️ use preact moderation filter (#1236) (0ef00fcf)
+- 🔧 refactor: replace console.log with consola.trace for better logging (c1a8c097)
+- ♻️ use preact notif system for htmx events (#1235) (1b065def)
+- ♻️ Consolidate clipboard to CopyButton component (#1231) (fa05616e)
+- 🔧 refactor: migrate moderation page from hyperscript to Alpine.js (#1229) (b4323fde)
+
+### Corrigé
+
+- 🐛 Fixes a title that was displayed twice after an action (#1268) (287c298f)
+- 🐛 add duplicate export on bun splitting build fix (#1239) (8d7882fd)
+- 🐛 add preact/jsx-runtime in production (#1238) (c6f29504)
+- 🐛 add retry button if we have an fetching leader error (#1237) (b5366635)
+- 🐛 buggy back button (33351add)
+- 🐛 correct the live reload hell (#1232) (09482c25)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): bump htmx.org from 2.0.7 to 2.0.8 (#1263) (d675b489)
+- :arrow_upper_right: [patch](deps): bump @tsconfig/bun from 1.0.7 to 1.0.10 (#1261) (dd64648c)
+- :arrow_upper_right: [patch](deps): bump @proconnect-gouv/proconnect.identite (#1262) (e3acfaaf)
+- :arrow_upper_right: [patch](deps): bump tailwind-merge (#1264) (46994247)
+- :arrow_upper_right: [patch](deps-dev): bump typescript (#1258) (26a7ef8e)
+- :arrow_upper_right: [patch](deps): bump @proconnect-gouv/proconnect.insee (#1260) (3c603293)
+- :arrow_upper_right: [patch](deps-dev): bump prettier from 3.6.2 to 3.7.4 (#1257) (e0b2f133)
+- :arrow_upper_right: [patch](deps): bump type-fest from 5.2.0 to 5.3.1 (#1254) (61fe2999)
+- :arrow_upper_right: [patch](deps): bump drizzle-orm in /e2e (#1250) (0a7e1986)
+- :arrow_upper_right: [patch](deps): bump @bahmutov/cypress-esbuild-preprocessor (#1251) (97b57975)
+- :arrow_upper_right: [patch](deps): bump the sentry group with 2 updates (#1252) (41dea3c8)
+- :arrow_upper_right: [patch](deps): bump drizzle-orm (#1253) (9b0ffcbc)
+- :arrow_upper_right: [patch](deps): bump tailwind-variants (#1255) (6a2c8acf)
+- :arrow_upper_right: [patch](deps-dev): bump release-it (#1256) (f73de750)
+- :arrow_upper_right: [patch](deps): bump actions/checkout (#1240) (e3942ce5)
+- :arrow_upper_right: [patch](deps): bump actions/setup-node (#1241) (8f9312f5)
+- :arrow_upper_right: [patch](deps): bump cypress in /e2e (#1246) (7078153e)
+- :arrow_upper_right: [patch](deps): bump @proconnect-gouv/proconnect.identite.database from 0.1.0 to 1.0.0 (#1206) (f110450d)
+- :arrow_upper_right: [patch](deps): remove autoprefixer (#1218) (5ca3865f)
+- :arrow_upper_right: [patch](deps): bump @badeball/cypress-cucumber-preprocessor (#1226) (b27ba721)
+- :arrow_upper_right: [patch](deps-dev): bump @types/pg (#1219) (2a3c3892)
+- :arrow_upper_right: [patch](deps-dev): bump @release-it/conventional-changelog (#1214) (d0251b8c)
+
+### Documentation
+
+- ✍️ Fix little coquille (#1225) (72125e49)
+
+### Divers
+
+- Revert "✨ feat: extract release-it plugin types and add gitmoji changelog plugin (#1267)" (4143d5ff)
+- chore(dependabot): update package ecosystem to bun (46658b7a)
+- Revert "chore(dependabot): use  enable-beta-ecosystems" (12c4b30b)
+- chore(lock): update lockfile (dec181be)
+
+
+## [2025.12.0](https://github.com/proconnect-gouv/hyyypertool/compare/2025.11.2...2025.12.0) (2025-12-11)
+
+### Changements
+
+- Nouveau system de collection de changements : release-it-changeset-plugin
+
+
+### Ajouté
+
+- ✨ feat: extract release-it plugin types and add gitmoji changelog plugin (#1267) (5fa1ccb1)
+- ✨ release-it-changeset-plugin (#1216) (95917842)
+- ✨ feat: extract release-it plugin types and add gitmoji changelog plugin (#1267) (efbb6cd9)
+- ✨ release-it-changeset-plugin (#1266) (e70f7c9c)
+- ✨ feat: add prettier formatting to CI pipeline and apply code formatting (#1265) (f8bc1bba)
+- ✨ add Preact notification system with reliable test isolation (#1234) (8b713eb5)
+- ✨ add live reload functionality for development (#1230) (b53451f0)
+- ✨ Add FranceConnect reset button (#1228) (4c51656e)
+- ✨ Client scripts Level Up (#1227) (e3be58f1)
+
+### Modifié
+
+- 🔧 chore(ci): add build steps for release plugins in CI workflow (7167ce53)
+- 🔧 fix: update release workflow and changelog formatting (b45556cc)
+- 🔧 test: add deterministic date to gitmoji changelog plugin test (60e365da)
+- 🔧 refactor: remove build:tsc script and inline tsc command (#1249) (75f732cd)
+- ♻️ use preact moderation filter (#1236) (0ef00fcf)
+- 🔧 refactor: replace console.log with consola.trace for better logging (c1a8c097)
+- ♻️ use preact notif system for htmx events (#1235) (1b065def)
+- ♻️ Consolidate clipboard to CopyButton component (#1231) (fa05616e)
+- 🔧 refactor: migrate moderation page from hyperscript to Alpine.js (#1229) (b4323fde)
+
+### Corrigé
+
+- 🐛 Fixes a title that was displayed twice after an action (#1268) (287c298f)
+- 🐛 add duplicate export on bun splitting build fix (#1239) (8d7882fd)
+- 🐛 add preact/jsx-runtime in production (#1238) (c6f29504)
+- 🐛 add retry button if we have an fetching leader error (#1237) (b5366635)
+- 🐛 buggy back button (33351add)
+- 🐛 correct the live reload hell (#1232) (09482c25)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): bump htmx.org from 2.0.7 to 2.0.8 (#1263) (d675b489)
+- :arrow_upper_right: [patch](deps): bump @tsconfig/bun from 1.0.7 to 1.0.10 (#1261) (dd64648c)
+- :arrow_upper_right: [patch](deps): bump @proconnect-gouv/proconnect.identite (#1262) (e3acfaaf)
+- :arrow_upper_right: [patch](deps): bump tailwind-merge (#1264) (46994247)
+- :arrow_upper_right: [patch](deps-dev): bump typescript (#1258) (26a7ef8e)
+- :arrow_upper_right: [patch](deps): bump @proconnect-gouv/proconnect.insee (#1260) (3c603293)
+- :arrow_upper_right: [patch](deps-dev): bump prettier from 3.6.2 to 3.7.4 (#1257) (e0b2f133)
+- :arrow_upper_right: [patch](deps): bump type-fest from 5.2.0 to 5.3.1 (#1254) (61fe2999)
+- :arrow_upper_right: [patch](deps): bump drizzle-orm in /e2e (#1250) (0a7e1986)
+- :arrow_upper_right: [patch](deps): bump @bahmutov/cypress-esbuild-preprocessor (#1251) (97b57975)
+- :arrow_upper_right: [patch](deps): bump the sentry group with 2 updates (#1252) (41dea3c8)
+- :arrow_upper_right: [patch](deps): bump drizzle-orm (#1253) (9b0ffcbc)
+- :arrow_upper_right: [patch](deps): bump tailwind-variants (#1255) (6a2c8acf)
+- :arrow_upper_right: [patch](deps-dev): bump release-it (#1256) (f73de750)
+- :arrow_upper_right: [patch](deps): bump actions/checkout (#1240) (e3942ce5)
+- :arrow_upper_right: [patch](deps): bump actions/setup-node (#1241) (8f9312f5)
+- :arrow_upper_right: [patch](deps): bump cypress in /e2e (#1246) (7078153e)
+- :arrow_upper_right: [patch](deps): bump @proconnect-gouv/proconnect.identite.database from 0.1.0 to 1.0.0 (#1206) (f110450d)
+- :arrow_upper_right: [patch](deps): remove autoprefixer (#1218) (5ca3865f)
+- :arrow_upper_right: [patch](deps): bump @badeball/cypress-cucumber-preprocessor (#1226) (b27ba721)
+- :arrow_upper_right: [patch](deps-dev): bump @types/pg (#1219) (2a3c3892)
+- :arrow_upper_right: [patch](deps-dev): bump @release-it/conventional-changelog (#1214) (d0251b8c)
+
+### Documentation
+
+- ✍️ Fix little coquille (#1225) (72125e49)
+
+### Divers
+
+- Revert "✨ feat: extract release-it plugin types and add gitmoji changelog plugin (#1267)" (4143d5ff)
+- chore(dependabot): update package ecosystem to bun (46658b7a)
+- Revert "chore(dependabot): use  enable-beta-ecosystems" (12c4b30b)
+- chore(lock): update lockfile (dec181be)
+
+
+## [2025.12.0](https://github.com/proconnect-gouv/hyyypertool/compare/2025.11.2...2025.12.0) (2025-12-11)
+
+### Changements
+
+- Nouveau system de collection de changements : release-it-changeset-plugin
+
+
+### Ajouté
+
+- ✨ feat: extract release-it plugin types and add gitmoji changelog plugin (#1267) (5fa1ccb1)
+- ✨ release-it-changeset-plugin (#1216) (95917842)
+- ✨ feat: extract release-it plugin types and add gitmoji changelog plugin (#1267) (efbb6cd9)
+- ✨ release-it-changeset-plugin (#1266) (e70f7c9c)
+- ✨ feat: add prettier formatting to CI pipeline and apply code formatting (#1265) (f8bc1bba)
+- ✨ add Preact notification system with reliable test isolation (#1234) (8b713eb5)
+- ✨ add live reload functionality for development (#1230) (b53451f0)
+- ✨ Add FranceConnect reset button (#1228) (4c51656e)
+- ✨ Client scripts Level Up (#1227) (e3be58f1)
+
+### Modifié
+
+- 🔧 chore(ci): add build steps for release plugins in CI workflow (7167ce53)
+- 🔧 fix: update release workflow and changelog formatting (b45556cc)
+- 🔧 test: add deterministic date to gitmoji changelog plugin test (60e365da)
+- 🔧 refactor: remove build:tsc script and inline tsc command (#1249) (75f732cd)
+- ♻️ use preact moderation filter (#1236) (0ef00fcf)
+- 🔧 refactor: replace console.log with consola.trace for better logging (c1a8c097)
+- ♻️ use preact notif system for htmx events (#1235) (1b065def)
+- ♻️ Consolidate clipboard to CopyButton component (#1231) (fa05616e)
+- 🔧 refactor: migrate moderation page from hyperscript to Alpine.js (#1229) (b4323fde)
+
+### Corrigé
+
+- 🐛 Fixes a title that was displayed twice after an action (#1268) (287c298f)
+- 🐛 add duplicate export on bun splitting build fix (#1239) (8d7882fd)
+- 🐛 add preact/jsx-runtime in production (#1238) (c6f29504)
+- 🐛 add retry button if we have an fetching leader error (#1237) (b5366635)
+- 🐛 buggy back button (33351add)
+- 🐛 correct the live reload hell (#1232) (09482c25)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): bump htmx.org from 2.0.7 to 2.0.8 (#1263) (d675b489)
+- :arrow_upper_right: [patch](deps): bump @tsconfig/bun from 1.0.7 to 1.0.10 (#1261) (dd64648c)
+- :arrow_upper_right: [patch](deps): bump @proconnect-gouv/proconnect.identite (#1262) (e3acfaaf)
+- :arrow_upper_right: [patch](deps): bump tailwind-merge (#1264) (46994247)
+- :arrow_upper_right: [patch](deps-dev): bump typescript (#1258) (26a7ef8e)
+- :arrow_upper_right: [patch](deps): bump @proconnect-gouv/proconnect.insee (#1260) (3c603293)
+- :arrow_upper_right: [patch](deps-dev): bump prettier from 3.6.2 to 3.7.4 (#1257) (e0b2f133)
+- :arrow_upper_right: [patch](deps): bump type-fest from 5.2.0 to 5.3.1 (#1254) (61fe2999)
+- :arrow_upper_right: [patch](deps): bump drizzle-orm in /e2e (#1250) (0a7e1986)
+- :arrow_upper_right: [patch](deps): bump @bahmutov/cypress-esbuild-preprocessor (#1251) (97b57975)
+- :arrow_upper_right: [patch](deps): bump the sentry group with 2 updates (#1252) (41dea3c8)
+- :arrow_upper_right: [patch](deps): bump drizzle-orm (#1253) (9b0ffcbc)
+- :arrow_upper_right: [patch](deps): bump tailwind-variants (#1255) (6a2c8acf)
+- :arrow_upper_right: [patch](deps-dev): bump release-it (#1256) (f73de750)
+- :arrow_upper_right: [patch](deps): bump actions/checkout (#1240) (e3942ce5)
+- :arrow_upper_right: [patch](deps): bump actions/setup-node (#1241) (8f9312f5)
+- :arrow_upper_right: [patch](deps): bump cypress in /e2e (#1246) (7078153e)
+- :arrow_upper_right: [patch](deps): bump @proconnect-gouv/proconnect.identite.database from 0.1.0 to 1.0.0 (#1206) (f110450d)
+- :arrow_upper_right: [patch](deps): remove autoprefixer (#1218) (5ca3865f)
+- :arrow_upper_right: [patch](deps): bump @badeball/cypress-cucumber-preprocessor (#1226) (b27ba721)
+- :arrow_upper_right: [patch](deps-dev): bump @types/pg (#1219) (2a3c3892)
+- :arrow_upper_right: [patch](deps-dev): bump @release-it/conventional-changelog (#1214) (d0251b8c)
+
+### Documentation
+
+- ✍️ Fix little coquille (#1225) (72125e49)
+
+### Divers
+
+- Revert "✨ feat: extract release-it plugin types and add gitmoji changelog plugin (#1267)" (4143d5ff)
+- chore(dependabot): update package ecosystem to bun (46658b7a)
+- Revert "chore(dependabot): use  enable-beta-ecosystems" (12c4b30b)
+- chore(lock): update lockfile (dec181be)
+
+
+## [2025.12.0](https://github.com/proconnect-gouv/hyyypertool/compare/2025.11.2...2025.12.0) (2025-12-11)
+
 ### Changements
 
 - Nouveau system de collection de changements : release-it-changeset-plugin
