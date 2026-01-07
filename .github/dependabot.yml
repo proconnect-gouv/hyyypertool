@@ -23,6 +23,8 @@ updates:
           - "tailwindcss"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 7
     labels:
       - dependencies
     commit-message:
@@ -33,6 +35,8 @@ updates:
     directory: "/e2e"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 7
     labels:
       - dependencies
     commit-message:
