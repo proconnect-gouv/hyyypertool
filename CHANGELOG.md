@@ -6,7 +6,6 @@
 
 - Le champs d'ajout de domain est au dessus du tableau
 
-
 ### Modifié
 
 - 🎨 Move add domain component before to add pagination (#1269) (ae8f986c)
