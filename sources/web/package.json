@@ -22,7 +22,7 @@
     "start:node": "tsx src/node/index.ts"
   },
   "dependencies": {
-    "@hono/node-server": "1.19.6",
+    "@hono/node-server": "1.19.7",
     "@hono/sentry": "1.2.2",
     "@hono/zod-validator": "0.7.5",
     "@proconnect-gouv/proconnect.core": "1.0.0",
