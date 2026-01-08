@@ -18,13 +18,13 @@
   },
   "dependencies": {
     "@hono/node-server": "1.19.6",
-    "@tailwindcss/cli": "4.1.17",
+    "@tailwindcss/cli": "4.1.18",
     "@tailwindcss/typography": "0.5.19",
     "@~/web": "workspace:*",
     "@~/core": "workspace:*",
     "consola": "3.4.2",
     "hono": "4.10.6",
-    "tailwindcss": "4.1.17",
+    "tailwindcss": "4.1.18",
     "tsx": "4.20.5"
   },
   "devDependencies": {
