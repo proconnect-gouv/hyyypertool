@@ -70,7 +70,7 @@ test("render about section", async () => {
                 const props = {
                   children: "",
                   className:
-                    "fr-btn hover:bg-(--background-default-grey-hover)! bg-transparent text-black fr-btn--sm fr-btn--tertiary ml-2",
+                    "fr-btn bg-transparent text-black hover:bg-(--background-default-grey-hover)! fr-btn--sm fr-btn--tertiary ml-2",
                   text: "cached_libelle",
                 };
                 render(
@@ -99,7 +99,7 @@ test("render about section", async () => {
                 const props = {
                   children: "",
                   className:
-                    "fr-btn hover:bg-(--background-default-grey-hover)! bg-transparent text-black fr-btn--sm fr-btn--tertiary ml-2",
+                    "fr-btn bg-transparent text-black hover:bg-(--background-default-grey-hover)! fr-btn--sm fr-btn--tertiary ml-2",
                   text: "siret",
                 };
                 render(

@@ -13,7 +13,7 @@ export async function RefusalModal({ userEmail }: { userEmail: string }) {
 
   return (
     <div
-      class="z-751 border-(--text-action-high-blue-france) bg-(--blue-france-975-75) fixed bottom-14 right-0 m-2 hidden w-4/6 justify-self-end border-solid px-4 py-2"
+      class="fixed right-0 bottom-14 z-751 m-2 hidden w-4/6 justify-self-end border-solid border-(--text-action-high-blue-france) bg-(--blue-france-975-75) px-4 py-2"
       id="refusalModal"
       aria-label="la modale de refus"
     >

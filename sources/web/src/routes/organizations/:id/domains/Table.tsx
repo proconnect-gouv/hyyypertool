@@ -156,7 +156,7 @@ function Row({
           </>
         ) : null}
       </td>
-      <td class="text-end! space-x-2">
+      <td class="space-x-2 text-end!">
         <GoogleSearchButton
           class={button({ class: "align-bottom", size: "sm" })}
           query={domain}

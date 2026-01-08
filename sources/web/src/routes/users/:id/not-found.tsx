@@ -7,7 +7,7 @@ import { urls } from "#src/urls";
 
 export function UserNotFound({ user_id }: { user_id?: number | undefined }) {
   return (
-    <main class="bg-(--blue-france-975-75) flex h-full grow flex-col items-center justify-center ">
+    <main class="flex h-full grow flex-col items-center justify-center bg-(--blue-france-975-75) ">
       <div class="fr-container grid h-full grid-cols-2 items-center gap-6">
         <section>
           <h1>
