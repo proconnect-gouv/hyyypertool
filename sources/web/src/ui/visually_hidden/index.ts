@@ -5,6 +5,7 @@ import { tv } from "tailwind-variants";
 //
 export const visually_hidden = tv({
   base: `
+    !absolute
     -m-px!
     h-px!
     w-px!
@@ -13,6 +14,5 @@ export const visually_hidden = tv({
     p-0!
     whitespace-nowrap!
     [clip:rect(0,0,0,0)]!
-    !absolute
   `,
 });
