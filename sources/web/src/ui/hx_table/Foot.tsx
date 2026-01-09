@@ -7,12 +7,14 @@ import { FrNumberConverter } from "../number";
 //
 
 export function Foot({
+  colspan = 6,
   count,
   hx_query_props,
   id,
   name,
   pagination,
 }: {
+  colspan?: number;
   count: number;
   hx_query_props: {};
   id?: string | undefined;
@@ -23,15 +25,20 @@ export function Foot({
   const last_page = Math.ceil(count / page_size);
   const page_index = page - 1;
 
+  // Distribute columns: 2 for info, remaining-1 for pagination, 1 for refresh
+  const info_colspan = 2;
+  const refresh_colspan = 1;
+  const pagination_colspan = Math.max(1, colspan - info_colspan - refresh_colspan);
+
   return (
     <tfoot>
       <tr>
-        <th colspan={2} class="whitespace-nowrap" scope="row">
+        <th colspan={info_colspan} class="whitespace-nowrap" scope="row">
           Affiche de {FrNumberConverter.format(page_index * page_size)}-
           {FrNumberConverter.format(page_index * page_size + page_size)} sur{" "}
           {FrNumberConverter.format(count)}
         </th>
-        <td colspan={3}>
+        <td colspan={pagination_colspan}>
           <button
             class={button({ class: "fr-btn--tertiary-no-outline" })}
             disabled={page <= 1}
@@ -57,7 +64,7 @@ export function Foot({
             Suivant
           </button>
         </td>
-        <td>
+        <td colspan={refresh_colspan}>
           <button class={button({ type: "tertiary" })} {...hx_query_props}>
             Rafraichir
           </button>

@@ -28,6 +28,7 @@ export async function get_users_by_organization(
   return pg.transaction(async (pg_t) => {
     const users = await pg_t
       .select({
+        created_at: schema.users_organizations.created_at,
         email: schema.users.email,
         family_name: schema.users.family_name,
         given_name: schema.users.given_name,
@@ -36,6 +37,7 @@ export async function get_users_by_organization(
         job: schema.users.job,
         needs_official_contact_email_verification:
           schema.users_organizations.needs_official_contact_email_verification,
+        updated_at: schema.users_organizations.updated_at,
         verification_type: schema.users_organizations.verification_type,
       })
       .from(schema.users)
