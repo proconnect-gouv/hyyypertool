@@ -1,5 +1,39 @@
 # Changelog
 
+## [2026.1.0](https://github.com/proconnect-gouv/hyyypertool/compare/2025.12.4...2026.1.0) (2026-01-09)
+
+### Changements
+
+- Affichage des dates d'ajout et de modification des membres dans le tableau des membres d'une organisation
+
+
+### Ajouté
+
+- ✨ Add member dates to organization members table (#1283) (6a5b9e75)
+
+### Corrigé
+
+- 🔒️ add cooldown option on dependabot (#1278) (17d644d8)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps-dev): bump prettier-plugin-tailwindcss from 0.6.14 to 0.7.2 (#1281) (b411b518)
+- :arrow_upper_right: [patch](deps-dev): bump @electric-sql/pglite (#1280) (a38023b3)
+- :arrow_upper_right: [patch](deps): bump @hono/node-server (#1275) (9c340d6d)
+- :arrow_upper_right: [patch](deps-dev): bump @types/pg (#1276) (2b5a3b71)
+- :arrow_upper_right: [patch](deps): bump the tailwindcss group with 2 updates (#1274) (600c823a)
+- :arrow_upper_right: [patch](deps): bump drizzle-orm in /e2e (#1273) (883daabd)
+- :arrow_upper_right: [patch](deps): bump oven-sh/setup-bun (#1282) (efc61bca)
+- :arrow_upper_right: [patch](deps): bump actions/upload-artifact (#1271) (e0a9964f)
+- :arrow_upper_right: [patch](deps): bump cypress-io/github-action (#1270) (438e9b05)
+- :arrow_upper_right: [patch](deps): bump htmx.ext...chunked-transfer (#1259) (61d4bf24)
+- :arrow_upper_right: [patch](deps): bump cypress in /e2e (#1277) (829f2be0)
+- :arrow_upper_right: [patch](deps): bump the sentry group with 2 updates (#1272) (9c69b46b)
+
+### Divers
+
+- style: make prettier happy (98ff0780)
+
 ## [2025.12.4](https://github.com/proconnect-gouv/hyyypertool/compare/2025.12.3...2025.12.4) (2025-12-11)
 
 ### Changements
