@@ -28,7 +28,10 @@ export function Foot({
   // Distribute columns: 2 for info, remaining-1 for pagination, 1 for refresh
   const info_colspan = 2;
   const refresh_colspan = 1;
-  const pagination_colspan = Math.max(1, colspan - info_colspan - refresh_colspan);
+  const pagination_colspan = Math.max(
+    1,
+    colspan - info_colspan - refresh_colspan,
+  );
 
   return (
     <tfoot>
