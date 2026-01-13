@@ -29,7 +29,7 @@
     "@proconnect-gouv/proconnect.identite.database": "1.0.0",
     "drizzle-orm": "0.45.0",
     "consola": "3.4.2",
-    "hono": "4.10.6",
+    "hono": "4.11.4",
     "pg": "8.16.3"
   },
   "devDependencies": {
