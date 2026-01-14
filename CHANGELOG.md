@@ -6,7 +6,6 @@
 
 - Affichage des dates d'ajout et de modification des membres dans le tableau des membres d'une organisation
 
-
 ### Ajouté
 
 - ✨ Add member dates to organization members table (#1283) (6a5b9e75)
