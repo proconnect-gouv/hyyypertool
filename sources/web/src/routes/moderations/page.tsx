@@ -20,6 +20,7 @@ import {
 import type { get_moderations_list } from "./get_moderations_list.query";
 import { ProcessedCheckboxIsland } from "./ProcessedCheckboxIsland";
 import { SearchEmailIsland } from "./SearchEmailIsland";
+import { SearchModeratedByIsland } from "./SearchModeratedByIsland";
 import { SearchSiretIsland } from "./SearchSiretIsland";
 
 //
@@ -38,6 +39,7 @@ const hx_moderations_query_props = {
     page_query_keys.enum.hide_non_verified_domain,
     page_query_keys.enum.processed_requests,
     page_query_keys.enum.search_email,
+    page_query_keys.enum.search_moderated_by,
     page_query_keys.enum.search_siret,
   ]),
   "hx-replace-url": true,
@@ -102,6 +104,7 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
         `input from:#${page_query_keys.enum.hide_non_verified_domain}`,
         `input from:#${page_query_keys.enum.processed_requests}`,
         `keyup changed delay:500ms from:#${page_query_keys.enum.search_email}`,
+        `keyup changed delay:500ms from:#${page_query_keys.enum.search_moderated_by}`,
         `keyup changed delay:500ms from:#${page_query_keys.enum.search_siret}`,
       ].join(", ")}
       hx-vals={JSON.stringify({ page: 1 } as Pagination)}
@@ -190,6 +193,23 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
             name={page_query_keys.enum.day}
             type="date"
             value={date_to_dom_string(search.day)}
+          />
+        </div>
+      </div>
+      <div class="fr-fieldset__element">
+        <div class="fr-input-group">
+          <label
+            class="fr-label"
+            for={page_query_keys.enum.search_moderated_by}
+          >
+            Filtrer par modérateur
+          </label>
+          <SearchModeratedByIsland
+            id={page_query_keys.enum.search_moderated_by}
+            name={page_query_keys.enum.search_moderated_by}
+            nonce={nonce}
+            placeholder="Recherche par email du modérateur"
+            initialValue={search.search_moderated_by}
           />
         </div>
       </div>
