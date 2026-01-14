@@ -26,7 +26,7 @@
         "@csmith/release-it-calver-plugin": "2023.12.0",
         "@testing-library/preact": "3.2.4",
         "@types/bun": "1.2.21",
-        "hono": "4.10.6",
+        "hono": "4.11.4",
         "htmx-ext-debug": "2.0.2",
         "prettier": "3.7.4",
         "prettier-plugin-organize-imports": "4.2.0",
@@ -49,7 +49,7 @@
         "@~/core": "workspace:*",
         "@~/web": "workspace:*",
         "consola": "3.4.2",
-        "hono": "4.10.6",
+        "hono": "4.11.4",
         "tailwindcss": "4.1.18",
         "tsx": "4.20.5",
       },
@@ -63,7 +63,7 @@
       "name": "hono-slotify",
       "version": "1.0.0",
       "dependencies": {
-        "hono": "4.10.6",
+        "hono": "4.11.4",
       },
       "devDependencies": {
         "@types/bun": "1.2.21",
@@ -127,14 +127,14 @@
         "@tsconfig/bun": "1.0.10",
         "@tsconfig/strictest": "2.0.8",
         "@types/bun": "1.2.21",
-        "hono": "4.10.6",
+        "hono": "4.11.4",
       },
     },
     "sources/core": {
       "name": "@~/core",
       "version": "0.0.0",
       "dependencies": {
-        "hono": "4.10.6",
+        "hono": "4.11.4",
         "ts-pattern": "5.8.0",
       },
       "devDependencies": {
@@ -156,7 +156,7 @@
         "@~/core": "workspace:*",
         "consola": "3.4.2",
         "drizzle-orm": "0.45.0",
-        "hono": "4.10.6",
+        "hono": "4.11.4",
         "pg": "8.16.3",
       },
       "devDependencies": {
@@ -202,7 +202,7 @@
         "@~/organizations": "workspace:*",
         "await-to-js": "3.0.0",
         "consola": "3.4.2",
-        "hono": "4.10.6",
+        "hono": "4.11.4",
         "hono-sessions": "0.8.0",
         "hono-slotify": "workspace:*",
         "is-disposable-email-domain": "1.0.7",
@@ -977,7 +977,7 @@
 
     "he": ["he@1.2.0", "", { "bin": { "he": "bin/he" } }, "sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw=="],
 
-    "hono": ["hono@4.10.6", "", {}, "sha512-BIdolzGpDO9MQ4nu3AUuDwHZZ+KViNm+EZ75Ae55eMXMqLVhDFqEMXxtUe9Qh8hjL+pIna/frs2j6Y2yD5Ua/g=="],
+    "hono": ["hono@4.11.4", "", {}, "sha512-U7tt8JsyrxSRKspfhtLET79pU8K+tInj5QZXs1jSugO1Vq5dFj3kmZsRldo29mTBfcjDRVRXrEZ6LS63Cog9ZA=="],
 
     "hono-sessions": ["hono-sessions@0.8.0", "", { "dependencies": { "hono": "^4.0.0", "iron-webcrypto": "^1.2.1", "ohash": "^2" } }, "sha512-44nDuxcGTlk1hKE+7vH8KnNleKYnr8p3i/vkT8640jU8V0F1Tm873F5NdfXpctZax3CtnQ4cUKyEF1axXdkZrw=="],
 
@@ -1620,6 +1620,8 @@
     "glob/minimatch": ["minimatch@5.1.6", "", { "dependencies": { "brace-expansion": "^2.0.1" } }, "sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g=="],
 
     "happy-dom/@types/node": ["@types/node@20.19.26", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-0l6cjgF0XnihUpndDhk+nyD3exio3iKaYROSgvh/qSevPXax3L8p5DBRFjbvalnwatGgHEQn2R88y2fA3g4irg=="],
+
+    "hono-sessions/hono": ["hono@4.10.6", "", {}, "sha512-BIdolzGpDO9MQ4nu3AUuDwHZZ+KViNm+EZ75Ae55eMXMqLVhDFqEMXxtUe9Qh8hjL+pIna/frs2j6Y2yD5Ua/g=="],
 
     "htmx-ext-debug/htmx.org": ["htmx.org@2.0.7", "", {}, "sha512-YiJqF3U5KyO28VC5mPfehKJPF+n1Gni+cupK+D69TF0nm7wY6AXn3a4mPWIikfAXtl1u1F1+ZhSCS7KT8pVmqA=="],
 

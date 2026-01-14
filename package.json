@@ -69,7 +69,7 @@
     "@csmith/release-it-calver-plugin": "2023.12.0",
     "@testing-library/preact": "3.2.4",
     "@types/bun": "1.2.21",
-    "hono": "4.10.6",
+    "hono": "4.11.4",
     "htmx-ext-debug": "2.0.2",
     "prettier": "3.7.4",
     "prettier-plugin-organize-imports": "4.2.0",
