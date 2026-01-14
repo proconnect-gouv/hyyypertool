@@ -112,7 +112,6 @@ export default class ChangesetPlugin extends Plugin {
     for (const cs of this.changesets) {
       changementsSection += `- ${cs.content}\n`;
     }
-    changementsSection += "\n";
 
     // Find where to insert (after the first ## header line)
     const lines = changelog.split("\n");
