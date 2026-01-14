@@ -88,6 +88,7 @@
       "release": true
     },
     "hooks": {
+      "before:release": "bun x prettier --write package.json CHANGELOG.md && git add package.json CHANGELOG.md",
       "after:git:release": "git switch -c release/${version} && git push origin release/${version}"
     },
     "npm": {
