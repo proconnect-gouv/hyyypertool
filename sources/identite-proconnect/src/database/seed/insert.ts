@@ -184,6 +184,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
     await insert_moderation(db, {
       created_at: "2011-11-12T12:11:12+02:00",
       moderated_at: "2023-06-22T16:34:34+02:00",
+      moderated_by: "moderateur@example.com",
       organization_id: bosch_rexroth,
       status: "accepted",
       ticket_id: "session_987",

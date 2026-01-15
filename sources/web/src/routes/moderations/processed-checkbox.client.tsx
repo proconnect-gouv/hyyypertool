@@ -6,7 +6,11 @@
  */
 
 import { computed } from "@preact/signals";
-import { searchEmail, searchSiret } from "./filter-signals.client";
+import {
+  searchEmail,
+  searchModeratedBy,
+  searchSiret,
+} from "./filter-signals.client";
 
 export interface ProcessedCheckboxProps extends Record<string, unknown> {
   id: string;
@@ -16,7 +20,7 @@ export interface ProcessedCheckboxProps extends Record<string, unknown> {
 }
 
 const hasSearchValue = computed(
-  () => !!searchEmail.value || !!searchSiret.value,
+  () => !!searchEmail.value || !!searchModeratedBy.value || !!searchSiret.value,
 );
 
 export function ProcessedCheckbox({

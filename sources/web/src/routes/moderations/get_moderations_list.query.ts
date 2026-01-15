@@ -33,6 +33,7 @@ export async function get_moderations_list(
   const {
     day: created_at,
     search_email: email,
+    search_moderated_by: moderated_by,
     hide_join_organization,
     hide_non_verified_domain,
     processed_requests: show_archived,
@@ -42,6 +43,9 @@ export async function get_moderations_list(
   const where = and(
     ilike(schema.organizations.siret, `%${siret ?? ""}%`),
     ilike(schema.users.email, `%${email ?? ""}%`),
+    moderated_by
+      ? ilike(schema.moderations.moderated_by, `%${moderated_by}%`)
+      : undefined,
     show_archived ? undefined : isNull(schema.moderations.moderated_at),
     hide_non_verified_domain
       ? not(eq(schema.moderations.type, "non_verified_domain"))

@@ -204,6 +204,54 @@ test("includes archived moderations when show_archived is true", async () => {
   `);
 });
 
+test("filters by moderated_by search", async () => {
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+
+  // Create a moderation with moderated_by
+  await create_adora_pony_moderation(pg, {
+    type: "",
+    moderated_at: "2222-01-01T00:00:00.000Z",
+    moderated_by: "admin@example.com",
+  });
+
+  // Create another moderation with different moderator
+  await create_adora_pony_moderation(pg, {
+    type: "",
+    moderated_at: "2222-01-01T00:00:00.000Z",
+    moderated_by: "other@example.com",
+  });
+
+  const result = await get_moderations_list(pg, {
+    search: {
+      search_moderated_by: "admin",
+      processed_requests: true,
+    },
+  });
+
+  expect(result).toMatchInlineSnapshot(`
+    {
+      "count": 1,
+      "moderations": [
+        {
+          "created_at": "2222-01-01 00:00:00+00",
+          "id": 1,
+          "moderated_at": "2222-01-01 00:00:00+00",
+          "organization": {
+            "siret": "🦄 siret",
+          },
+          "type": "",
+          "user": {
+            "email": "adora.pony@unicorn.xyz",
+            "family_name": "Pony",
+            "given_name": "Adora",
+          },
+        },
+      ],
+    }
+  `);
+});
+
 test("supports pagination", async () => {
   await create_unicorn_organization(pg);
   await create_adora_pony_user(pg);
