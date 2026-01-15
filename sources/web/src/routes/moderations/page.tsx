@@ -8,6 +8,7 @@ import {
 import { date_to_dom_string, date_to_string } from "#src/time";
 import { Foot } from "#src/ui/hx_table";
 import { row } from "#src/ui/table";
+import { tag } from "#src/ui/tag";
 import { hx_urls, urls } from "#src/urls";
 import type { Pagination } from "@~/core/schema";
 import { createContext, useContext } from "hono/jsx";
@@ -132,52 +133,61 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
           />
         </div>
       </div>
-      <div class="fr-fieldset__element">
-        <ProcessedCheckboxIsland
-          nonce={nonce}
-          id={page_query_keys.enum.processed_requests}
-          name={page_query_keys.enum.processed_requests}
-          value="true"
-          initialChecked={search.processed_requests}
-        />
-      </div>
-      <div class="fr-fieldset__element">
-        <div class="fr-checkbox-group">
-          <input
-            id={page_query_keys.enum.hide_non_verified_domain}
-            name={page_query_keys.enum.hide_non_verified_domain}
-            value={"true"}
-            checked={search.hide_non_verified_domain}
-            type="checkbox"
+      <ul class="fr-tags-group">
+        <li>
+          <ProcessedCheckboxIsland
+            nonce={nonce}
+            id={page_query_keys.enum.processed_requests}
+            name={page_query_keys.enum.processed_requests}
+            value="true"
+            initialChecked={search.processed_requests}
           />
-          <label
-            class="fr-label"
-            for={page_query_keys.enum.hide_non_verified_domain}
-          >
-            Cacher les {moderation_type_to_emoji("non_verified_domain")}{" "}
+        </li>
+        <li>
+          <label class={tag()}>
+            <input
+              hidden
+              id={page_query_keys.enum.hide_non_verified_domain}
+              name={page_query_keys.enum.hide_non_verified_domain}
+              value={"true"}
+              checked={search.hide_non_verified_domain}
+              type="checkbox"
+            />
+            <span
+              class="fr-icon-eye-line fr-icon--sm has-checked:hidden"
+              aria-hidden="true"
+            />
+            <span
+              class="fr-icon-eye-off-line fr-icon--sm hidden has-checked:inline"
+              aria-hidden="true"
+            />
+            {moderation_type_to_emoji("non_verified_domain")}{" "}
             {moderation_type_to_title("non_verified_domain")}
           </label>
-        </div>
-      </div>
-      <div class="fr-fieldset__element">
-        <div class="fr-checkbox-group">
-          <input
-            id={page_query_keys.enum.hide_join_organization}
-            name={page_query_keys.enum.hide_join_organization}
-            value={"true"}
-            checked={search.hide_join_organization}
-            type="checkbox"
-          />
-          <label
-            class="fr-label"
-            for={page_query_keys.enum.hide_join_organization}
-          >
-            Cacher les
+        </li>
+        <li>
+          <label class={tag()}>
+            <input
+              hidden
+              id={page_query_keys.enum.hide_join_organization}
+              name={page_query_keys.enum.hide_join_organization}
+              value={"true"}
+              checked={search.hide_join_organization}
+              type="checkbox"
+            />
+            <span
+              class="fr-icon-eye-line fr-icon--sm has-checked:hidden"
+              aria-hidden="true"
+            />
+            <span
+              class="fr-icon-eye-off-line fr-icon--sm hidden has-checked:inline"
+              aria-hidden="true"
+            />
             {moderation_type_to_emoji("organization_join_block")}{" "}
             {moderation_type_to_title("organization_join_block")}
           </label>
-        </div>
-      </div>
+        </li>
+      </ul>
       <div class="fr-fieldset__element">
         <div class="fr-input-group">
           <label class="fr-label" for={page_query_keys.enum.day}>
