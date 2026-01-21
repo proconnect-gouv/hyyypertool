@@ -32,19 +32,20 @@ export function ProcessedCheckbox({
   return (
     <label class="fr-tag m-1 bg-(--background-action-low-blue-france) has-checked:bg-(--blue-france-sun-113-625) has-checked:text-white">
       <input
-        hidden
         checked={hasSearchValue.value || initialChecked}
+        class="peer"
+        hidden
         id={id}
         name={name}
         type="checkbox"
         value={value}
       />
       <span
-        class="fr-icon-eye-off-line fr-icon--sm has-checked:hidden"
+        class="fr-icon-eye-off-line fr-icon--sm peer-checked:hidden"
         aria-hidden="true"
       />
       <span
-        class="fr-icon-eye-line fr-icon--sm hidden has-checked:inline"
+        class="fr-icon-eye-line fr-icon--sm hidden peer-checked:inline"
         aria-hidden="true"
       />
       Voir les demandes traitées

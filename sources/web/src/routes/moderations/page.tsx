@@ -149,19 +149,20 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
         <li>
           <label class={tag()}>
             <input
+              checked={search.hide_non_verified_domain}
+              class="peer"
               hidden
               id={page_query_keys.enum.hide_non_verified_domain}
               name={page_query_keys.enum.hide_non_verified_domain}
-              value={"true"}
-              checked={search.hide_non_verified_domain}
               type="checkbox"
+              value={"true"}
             />
             <span
-              class="fr-icon-eye-line fr-icon--sm has-checked:hidden"
+              class="fr-icon-eye-line fr-icon--sm peer-checked:hidden"
               aria-hidden="true"
             />
             <span
-              class="fr-icon-eye-off-line fr-icon--sm hidden has-checked:inline"
+              class="fr-icon-eye-off-line fr-icon--sm hidden peer-checked:inline"
               aria-hidden="true"
             />
             {moderation_type_to_emoji("non_verified_domain")}{" "}
@@ -171,19 +172,20 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
         <li>
           <label class={tag()}>
             <input
+              checked={search.hide_join_organization}
+              class="peer"
               hidden
               id={page_query_keys.enum.hide_join_organization}
               name={page_query_keys.enum.hide_join_organization}
-              value={"true"}
-              checked={search.hide_join_organization}
               type="checkbox"
+              value={"true"}
             />
             <span
-              class="fr-icon-eye-line fr-icon--sm has-checked:hidden"
+              class="fr-icon-eye-line fr-icon--sm peer-checked:hidden"
               aria-hidden="true"
             />
             <span
-              class="fr-icon-eye-off-line fr-icon--sm hidden has-checked:inline"
+              class="fr-icon-eye-off-line fr-icon--sm hidden peer-checked:inline"
               aria-hidden="true"
             />
             {moderation_type_to_emoji("organization_join_block")}{" "}
