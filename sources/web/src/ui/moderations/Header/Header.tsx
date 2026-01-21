@@ -9,8 +9,21 @@ import { LocalTime } from "#src/ui/time";
 import { hx_urls } from "#src/urls";
 import { raw } from "hono/html";
 import { createContext, useContext } from "hono/jsx";
+import { tv } from "tailwind-variants";
 import { match } from "ts-pattern";
 import { MessageInfo } from "../MessageInfo";
+
+//
+
+const comment_item = tv({
+  base: "",
+  variants: {
+    is_latest: {
+      true: "opacity-100",
+      false: "opacity-50",
+    },
+  },
+});
 
 //
 
@@ -165,13 +178,17 @@ function LastComment() {
 function Comments() {
   const { comment } = useContext(context).moderation;
   const parsed_comment = parse_comment(comment);
+  const last_index = parsed_comment.length - 1;
   return (
     <details>
       <summary>Commentaires</summary>
 
       <ul class="ml-4">
-        {parsed_comment.map(({ created_at, created_by, value }) => (
-          <li key={created_at}>
+        {parsed_comment.map(({ created_at, created_by, value }, index) => (
+          <li
+            key={created_at}
+            class={comment_item({ is_latest: index === last_index })}
+          >
             <b>{created_by}</b>{" "}
             <small>
               <LocalTime date={created_at} />
