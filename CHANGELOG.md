@@ -1,5 +1,43 @@
 # Changelog
 
+## [2026.1.1](https://github.com/proconnect-gouv/hyyypertool/compare/2026.1.0...2026.1.1) (2026-01-21)
+
+### Changements
+
+- Ajout d'un filtre "Filtrer par modérateur" sur la liste des modérations
+
+- Permet de filtrer les modérations par l'adresse email du modérateur (correspondance partielle)
+- Coche automatiquement "Voir les demandes traitées" lors de la saisie
+- 💄 Utilisation des tags dsfr sur les filtres de la table des modérations
+
+### Ajouté
+
+- ✨ moderations: add moderated by filter (#1293) (39dcb03b)
+
+### Modifié
+
+- 💄 Use DSFR icon size utility classes instead of CSS variable (#1294) (b5688a32)
+- 🔧 Add prettier formatting hook to release process (#1292) (c89d0252)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps-dev): bump drizzle-kit (#1305) (ecc793b0)
+- :arrow_upper_right: [patch](deps-dev): bump @happy-dom/global-registrator (#1303) (f4ae5d34)
+- :arrow_upper_right: [patch](deps): bump the sentry group with 2 updates (#1302) (c9086776)
+- :arrow_upper_right: [patch](deps): bump @types/bun from 1.2.21 to 1.3.6 (#1304) (ad2f9413)
+- :arrow_upper_right: [patch](deps): bump @proconnect-gouv/proconnect.crisp (#1297) (b8e9e3d3)
+- :arrow_upper_right: [patch](deps): bump @hono/zod-validator (#1296) (e6ba4cc1)
+- :arrow_upper_right: [patch](deps): bump tsx from 4.20.5 to 4.21.0 (#1300) (8573853f)
+- :arrow_upper_right: [patch](deps): bump drizzle-orm (#1301) (6575d4a0)
+- :arrow_upper_right: [patch](deps): bump cypress in /e2e (#1299) (4db11427)
+- ⬆️ Bump hono from 4.10.6 to 4.11.4 (#1291) (a9761d85)
+
+### Divers
+
+- 🚮 did the bun team fixed the duplicat export issue (#1306) (76fc11f8)
+- ✅ add missing e2e tests to workflow (#1295) (677fcfc0)
+- chore(deps): bump preact from 10.28.0 to 10.28.2 in /sources/web (#1284) (9efba852)
+
 ## [2026.1.0](https://github.com/proconnect-gouv/hyyypertool/compare/2025.12.4...2026.1.0) (2026-01-09)
 
 ### Changements
