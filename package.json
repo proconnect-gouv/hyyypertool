@@ -72,7 +72,7 @@
     "hono": "4.11.4",
     "htmx-ext-debug": "2.0.2",
     "prettier": "3.7.4",
-    "prettier-plugin-organize-imports": "4.2.0",
+    "prettier-plugin-organize-imports": "4.3.0",
     "prettier-plugin-tailwindcss": "0.7.2",
     "release-it": "19.0.6",
     "typescript": "5.9.3"
