@@ -165,7 +165,6 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
               class="fr-icon-eye-off-line fr-icon--sm hidden peer-checked:inline"
               aria-hidden="true"
             />
-            {moderation_type_to_emoji("non_verified_domain")}{" "}
             {moderation_type_to_title("non_verified_domain")}
           </label>
         </li>
@@ -188,7 +187,6 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
               class="fr-icon-eye-off-line fr-icon--sm hidden peer-checked:inline"
               aria-hidden="true"
             />
-            {moderation_type_to_emoji("organization_join_block")}{" "}
             {moderation_type_to_title("organization_join_block")}
           </label>
         </li>
