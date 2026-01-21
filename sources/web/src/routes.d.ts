@@ -1,6 +1,7 @@
 declare const app: import("hono/hono-base").HonoBase<
   import("../middleware/nonce/set_nonce").NonceVariablesContext &
     import("#src/middleware/config").ConfigVariables_Context &
+    import("#src/middleware/fetch").FetchVariables_Context &
     import("#src/middleware/auth").UserInfoVariablesContext &
     import("#src/middleware/crisp").CrispClientContext &
     import("#src/middleware/identite-pg").IdentiteProconnect_Pg_Context,
@@ -25,8 +26,6 @@ declare const app: import("hono/hono-base").HonoBase<
     })
   | import("hono/types").MergeSchemaPath<
       | ({
-          "/src/*": {};
-        } & {
           "/bundle/config.js": {
             $get: {
               input: {};
@@ -77,10 +76,6 @@ declare const app: import("hono/hono-base").HonoBase<
           };
         };
       } & {
-        "/sentry": {
-          $get: never;
-        };
-      } & {
         "/zammad": {
           $get: {
             input: {};
@@ -100,6 +95,19 @@ declare const app: import("hono/hono-base").HonoBase<
         };
       },
       "/readyz"
+    >
+  | import("hono/types").MergeSchemaPath<
+      {
+        "/reload": {
+          $get: {
+            input: {};
+            output: {};
+            outputFormat: string;
+            status: import("hono/utils/http-status").StatusCode;
+          };
+        };
+      },
+      "/__dev__"
     >
   | import("hono/types").MergeSchemaPath<
       {
@@ -129,8 +137,6 @@ declare const app: import("hono/hono-base").HonoBase<
     >
   | import("hono/types").MergeSchemaPath<
       {
-        "*": {};
-      } & {
         "/login": {
           $post: {
             input: {};
@@ -455,8 +461,6 @@ declare const app: import("hono/hono-base").HonoBase<
               >
             | import("hono/types").MergeSchemaPath<
                 {
-                  "/": {};
-                } & {
                   "/": {
                     $get: {
                       input: {
@@ -519,6 +523,7 @@ declare const app: import("hono/hono-base").HonoBase<
                   input: {
                     query: {
                       siret: string;
+                      retry?: string | undefined;
                     };
                   };
                   output: {};
@@ -531,8 +536,6 @@ declare const app: import("hono/hono-base").HonoBase<
           >
         | import("hono/types").MergeSchemaPath<
             {
-              "/": {};
-            } & {
               "/": {
                 $get:
                   | {
@@ -564,9 +567,7 @@ declare const app: import("hono/hono-base").HonoBase<
             "/domains"
           >
         | import("hono/types").MergeSchemaPath<
-            | ({
-                "/": {};
-              } & {
+            | {
                 "/": {
                   $get: {
                     input: {
@@ -579,7 +580,7 @@ declare const app: import("hono/hono-base").HonoBase<
                     status: import("hono/utils/http-status").StatusCode;
                   };
                 };
-              })
+              }
             | import("hono/types").MergeSchemaPath<
                 | {
                     "/": {
@@ -754,9 +755,9 @@ declare const app: import("hono/hono-base").HonoBase<
                       } & {
                         query: {
                           type:
+                            | "external"
                             | "null"
                             | "verified"
-                            | "external"
                             | "official_contact"
                             | "trackdechets_postal_mail"
                             | "blacklisted"
@@ -842,7 +843,8 @@ declare const app: import("hono/hono-base").HonoBase<
       },
       "/domains-deliverability"
     >,
-  "/"
+  "/",
+  "*"
 >;
 export type Router = typeof app;
 export default app;

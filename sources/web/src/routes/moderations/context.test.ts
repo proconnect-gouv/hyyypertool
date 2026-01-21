@@ -10,11 +10,12 @@ test("SearchSchema > empty object", () => {
 
   expect(search).toEqual({
     day: undefined,
-    search_siret: "",
-    search_email: "",
-    processed_requests: false,
-    hide_non_verified_domain: false,
     hide_join_organization: false,
+    hide_non_verified_domain: false,
+    processed_requests: false,
+    search_email: "",
+    search_moderated_by: "",
+    search_siret: "",
   });
 });
 
@@ -23,10 +24,11 @@ test("SearchSchema > day 2011-01-11", () => {
 
   expect(search).toEqual({
     day: new Date("2011-01-11"),
-    search_siret: "",
-    search_email: "",
-    processed_requests: false,
-    hide_non_verified_domain: false,
     hide_join_organization: false,
+    hide_non_verified_domain: false,
+    processed_requests: false,
+    search_email: "",
+    search_moderated_by: "",
+    search_siret: "",
   });
 });

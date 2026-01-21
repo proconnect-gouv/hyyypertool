@@ -16,8 +16,9 @@ export const search_schema = z.object({
       if (v === "") return undefined;
       return new Date(v);
     }),
-  search_siret: z.string().default(""),
   search_email: z.string().default(""),
+  search_moderated_by: z.string().default(""),
+  search_siret: z.string().default(""),
   processed_requests: z
     .string()
     .default("false")

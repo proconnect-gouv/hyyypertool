@@ -8,4 +8,5 @@
 import { signal } from "@preact/signals";
 
 export const searchEmail = signal("");
+export const searchModeratedBy = signal("");
 export const searchSiret = signal("");
