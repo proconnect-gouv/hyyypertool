@@ -62,13 +62,13 @@
     "hyperscript.org": "0.9.14",
     "nprogress": "0.2.0",
     "preact": "10.28.2",
-    "tsx": "4.20.5",
+    "tsx": "4.21.0",
     "zod": "4.1.12"
   },
   "devDependencies": {
     "@csmith/release-it-calver-plugin": "2023.12.0",
     "@testing-library/preact": "3.2.4",
-    "@types/bun": "1.2.21",
+    "@types/bun": "1.3.6",
     "hono": "4.11.4",
     "htmx-ext-debug": "2.0.2",
     "prettier": "3.7.4",

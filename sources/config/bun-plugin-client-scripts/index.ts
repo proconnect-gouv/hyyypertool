@@ -1,13 +1,8 @@
 //
 
 import { Glob, TOML, type BunPlugin } from "bun";
-import { appendFile, exists, readFile, writeFile } from "node:fs/promises";
+import { appendFile, exists, readFile } from "node:fs/promises";
 import { dirname, join, relative } from "node:path";
-import {
-  buildImportFixMap,
-  dedupeExports,
-  fixChunkImports,
-} from "./dedupe-exports";
 
 //
 
@@ -143,41 +138,6 @@ export async function buildClientScripts(
       }
     }
   }
-
-  // WORKAROUND: Bun code splitting bugs
-  // 1. Duplicate export statements: https://github.com/oven-sh/bun/issues/5344
-  // 2. Minification uses buggy internal names in cross-chunk imports
-  const jsOutputs = outputs.filter((o) => o.path.endsWith(".js"));
-
-  // Step 1: Read all files and build import fix map from ORIGINAL content
-  // (before deduping, so we can map buggy export names to correct ones)
-  const originalFiles = await Promise.all(
-    jsOutputs.map(async (o) => ({
-      content: await readFile(o.path, "utf-8"),
-      path: o.path,
-    })),
-  );
-  const importFixMap = await buildImportFixMap(originalFiles);
-
-  // Step 2: Dedupe exports and fix imports
-  await Promise.all(
-    originalFiles.map(async (file) => {
-      try {
-        // Remove duplicate exports
-        let content = await dedupeExports(file.content, file.path);
-
-        // Fix cross-chunk imports using the buggy->correct name mapping
-        content = fixChunkImports(content, importFixMap);
-
-        await writeFile(file.path, content, "utf-8");
-      } catch (error) {
-        console.warn(
-          `Warning: Could not process ${file.path}:`,
-          error instanceof Error ? error.message : String(error),
-        );
-      }
-    }),
-  );
 
   for (const output of outputs) {
     const relativePath = relative(root, output.path);
