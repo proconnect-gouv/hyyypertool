@@ -67,7 +67,7 @@ The release process is automated via GitHub Actions:
 
 1. Go to the [Hyyypertool Actions](https://github.com/proconnect-gouv/hyyypertool/actions)
 2. Click on 'Release it!'
-3. Run the workflow from the master branch
+3. Run the workflow from the main branch
 
 The release-it plugin will:
 
