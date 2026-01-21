@@ -1,5 +1,24 @@
 # Changelog
 
+## [2026.1.2](https://github.com/proconnect-gouv/hyyypertool/compare/2026.1.1...2026.1.2) (2026-01-21)
+
+### Corrigé
+
+- 🐛 eye icon bug with siblings checkbox (#1316) (e52b98b8)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps-dev): bump prettier-plugin-organize-imports (#1314) (02560295)
+- :arrow_upper_right: [patch](deps): bump ts-pattern from 5.8.0 to 5.9.0 (#1311) (4b593466)
+- :arrow_upper_right: [patch](deps): bump type-fest from 5.3.1 to 5.4.1 (#1315) (0e82ee09)
+- :arrow_upper_right: [patch](deps): bump actions/setup-node (#1310) (9cda8d91)
+- :arrow_upper_right: [patch](deps): bump cypress in /e2e (#1313) (4beb90cc)
+- :arrow_upper_right: [patch](deps): bump oven-sh/setup-bun (#1308) (e3c88ecb)
+
+### Divers
+
+- 🪧 main is the new default branch (142b402a)
+
 ## [2026.1.1](https://github.com/proconnect-gouv/hyyypertool/compare/2026.1.0...2026.1.1) (2026-01-21)
 
 ### Changements
