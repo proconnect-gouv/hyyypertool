@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@~/core": "workspace:*",
-    "ts-pattern": "^5.5.0",
+    "ts-pattern": "^5.9.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
