@@ -198,3 +198,10 @@ When("je clique sur l'élément nommé {string}", (ariaLabel: string) => {
 When("je confirme la suppression", () => {
   cy.on("window:confirm", () => true);
 });
+
+When(
+  "je sélectionne {string} dans la liste déroulante nommée {string}",
+  (value: string, label: string) => {
+    get_within_context().within(() => cy.findByLabelText(label).select(value));
+  },
+);

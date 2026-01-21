@@ -151,9 +151,10 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
 
     await insert_moderation(db, {
       comment: [
-        "1687445474000 moderateur@example.com | Validé par moderateur@example.com",
+        "1687445474000 moderateur@beta.gouv.fr | Validé par moderateur@beta.gouv.fr",
       ].join("\n"),
       moderated_at: "2023-06-22T16:34:34+02:00",
+      moderated_by: "moderateur@beta.gouv.fr",
       organization_id: dengi.id,
       status: "accepted",
       ticket_id: "session_789",
@@ -190,11 +191,11 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
       comment: [
         '1687430000000 support@example.com | Rejeté par support@example.com | Raison : "Documents manquants"',
         "1687438000000 admin@example.com | Réouverte par admin@example.com",
-        "1687445474000 moderateur@example.com | Validé par moderateur@example.com",
+        "1687445474000 moderateur@beta.gouv.fr | Validé par moderateur@beta.gouv.fr",
       ].join("\n"),
       created_at: "2011-11-12T12:11:12+02:00",
       moderated_at: "2023-06-22T16:34:34+02:00",
-      moderated_by: "moderateur@example.com",
+      moderated_by: "moderateur@beta.gouv.fr",
       organization_id: bosch_rexroth,
       status: "accepted",
       ticket_id: "session_987",
@@ -206,7 +207,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
     );
     await insert_moderation(db, {
       comment:
-        '1687445474000 moderateur@example.com | Rejeté par moderateur@example.com | Raison : "Domaine non autorisé"',
+        '1687445474000 moderateur@beta.gouv.fr | Rejeté par moderateur@beta.gouv.fr | Raison : "Domaine non autorisé"',
       moderated_at: "2023-06-22T16:34:34+02:00",
       organization_id: dinum.id,
       status: "rejected",

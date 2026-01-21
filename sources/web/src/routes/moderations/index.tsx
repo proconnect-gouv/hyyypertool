@@ -27,6 +27,7 @@ export default new Hono<App_Context>()
         .with(
           { search_email: P.not("") },
           { search_siret: P.not("") },
+          { search_moderated_by: P.not("") },
           (search) => ({
             ...search,
             hide_join_organization: false,

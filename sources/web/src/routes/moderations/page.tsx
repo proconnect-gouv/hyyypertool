@@ -1,5 +1,6 @@
 //
 
+import type { AppEnv_Context } from "#src/config";
 import { hx_include } from "#src/htmx";
 import {
   moderation_type_to_emoji,
@@ -12,6 +13,7 @@ import { tag } from "#src/ui/tag";
 import { hx_urls, urls } from "#src/urls";
 import type { Pagination } from "@~/core/schema";
 import { createContext, useContext } from "hono/jsx";
+import { useRequestContext } from "hono/jsx-renderer";
 import {
   MODERATION_TABLE_ID,
   MODERATION_TABLE_PAGE_ID,
@@ -96,6 +98,10 @@ function Main({ search, nonce }: { search: Search; nonce?: string }) {
 }
 
 function Filter({ search, nonce }: { search: Search; nonce?: string }) {
+  const {
+    var: { config },
+  } = useRequestContext<AppEnv_Context>();
+
   return (
     <form
       {...hx_moderations_query_props}
@@ -105,7 +111,7 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
         `input from:#${page_query_keys.enum.hide_non_verified_domain}`,
         `input from:#${page_query_keys.enum.processed_requests}`,
         `keyup changed delay:500ms from:#${page_query_keys.enum.search_email}`,
-        `keyup changed delay:500ms from:#${page_query_keys.enum.search_moderated_by}`,
+        `change from:#${page_query_keys.enum.search_moderated_by}`,
         `keyup changed delay:500ms from:#${page_query_keys.enum.search_siret}`,
       ].join(", ")}
       hx-vals={JSON.stringify({ page: 1 } as Pagination)}
@@ -218,8 +224,8 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
             id={page_query_keys.enum.search_moderated_by}
             name={page_query_keys.enum.search_moderated_by}
             nonce={nonce}
-            placeholder="Recherche par email du modérateur"
             initialValue={search.search_moderated_by}
+            allowedUsers={config.ALLOWED_USERS.split(",").filter(Boolean)}
           />
         </div>
       </div>
