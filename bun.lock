@@ -13,7 +13,7 @@
         "animate.css": "4.1.1",
         "dotenv": "17.2.2",
         "htmx-ext-include-vals": "2.0.2",
-        "htmx-ext-sse": "2.2.3",
+        "htmx-ext-sse": "2.2.4",
         "htmx.ext...chunked-transfer": "2.3.0",
         "htmx.org": "2.0.8",
         "hyperscript.org": "0.9.14",
@@ -989,7 +989,7 @@
 
     "htmx-ext-include-vals": ["htmx-ext-include-vals@2.0.2", "", { "dependencies": { "htmx.org": "^2.0.2" } }, "sha512-gOo01kQGvWAPtWHVtm64cRFoEEX71V5H5TgBvVZqh7bU+Lu/Q5U5+tGGB96SLyifh410vqVUxf/+kdvNQ/GTsQ=="],
 
-    "htmx-ext-sse": ["htmx-ext-sse@2.2.3", "", { "dependencies": { "htmx.org": "^2.0.2" } }, "sha512-DDahTngA+XSUeX4/EFAzAGDkvY8pdr/FmelHzag0FvZpUOh41G08P1fwp+jfFZCQphkA7/z06l90FN4iyD6O2w=="],
+    "htmx-ext-sse": ["htmx-ext-sse@2.2.4", "", { "dependencies": { "htmx.org": "^2.0.2" } }, "sha512-LJmxVhykyflBWgh5PvbRidcyuqMHlgfajmmzumvKctv9puvsufeH6OaejSMZTNTnEI8O2wXXn4ZZtBdpEMqmEQ=="],
 
     "htmx.ext...chunked-transfer": ["htmx.ext...chunked-transfer@2.3.0", "", {}, "sha512-MxUZCjjNZ38yPmiqvjqnKLnRo7owdBx+LhflfoxYklq4bp9wdcA3LsH+kTAUiZGg1wVs+tGoRooVe+mIqn3YrQ=="],
 
@@ -1628,8 +1628,6 @@
     "htmx-ext-debug/htmx.org": ["htmx.org@2.0.7", "", {}, "sha512-YiJqF3U5KyO28VC5mPfehKJPF+n1Gni+cupK+D69TF0nm7wY6AXn3a4mPWIikfAXtl1u1F1+ZhSCS7KT8pVmqA=="],
 
     "htmx-ext-include-vals/htmx.org": ["htmx.org@2.0.7", "", {}, "sha512-YiJqF3U5KyO28VC5mPfehKJPF+n1Gni+cupK+D69TF0nm7wY6AXn3a4mPWIikfAXtl1u1F1+ZhSCS7KT8pVmqA=="],
-
-    "htmx-ext-sse/htmx.org": ["htmx.org@2.0.7", "", {}, "sha512-YiJqF3U5KyO28VC5mPfehKJPF+n1Gni+cupK+D69TF0nm7wY6AXn3a4mPWIikfAXtl1u1F1+ZhSCS7KT8pVmqA=="],
 
     "lightningcss/detect-libc": ["detect-libc@2.1.2", "", {}, "sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ=="],
 
