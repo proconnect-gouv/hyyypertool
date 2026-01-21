@@ -14,7 +14,7 @@
     "@bahmutov/cypress-esbuild-preprocessor": "2.2.8",
     "@proconnect-gouv/proconnect.identite.database": "1.0.0",
     "@testing-library/cypress": "10.1.0",
-    "cypress": "15.8.2",
+    "cypress": "15.9.0",
     "drizzle-orm": "0.45.1",
     "pg": "8.16.3",
     "typescript": "5.9.3"
