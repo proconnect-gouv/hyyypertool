@@ -1,5 +1,30 @@
 # Changelog
 
+## [2026.1.3](https://github.com/proconnect-gouv/hyyypertool/compare/2026.1.2...2026.1.3) (2026-01-23)
+
+### Changements
+
+- Amélioration de l'affichage des commentaires de modération
+
+- Les anciens commentaires s'affichent avec une opacité réduite (50%)
+- Le commentaire le plus récent reste à pleine opacité
+
+### Modifié
+
+- :lipstick: improve commentaire section readability with opacity levels (#1317) (9792f739)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps-dev): bump release-it (#1321) (0f943b82)
+- :arrow_upper_right: [patch](deps): bump the sentry group with 2 updates (#1320) (0373d0a9)
+- :arrow_upper_right: [patch](deps): bump cypress-io/github-action (#1318) (13533ed4)
+- :arrow_upper_right: [patch](deps): bump pg from 8.16.3 to 8.17.0 in /e2e (#1319) (c549310c)
+- :arrow_upper_right: [patch](deps): bump htmx-ext-sse from 2.2.3 to 2.2.4 (#1322) (9201b782)
+
+### Divers
+
+- ↗️ (deps): bump @proconnect-gouv/proconnect.identite.database from 1.1.0 (#1327) (3d46c3da)
+
 ## [2026.1.2](https://github.com/proconnect-gouv/hyyypertool/compare/2026.1.1...2026.1.2) (2026-01-21)
 
 ### Corrigé
