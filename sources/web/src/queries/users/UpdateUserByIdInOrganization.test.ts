@@ -34,6 +34,7 @@ test("updates user verification type in organization", async () => {
     organization_id,
     user_id,
     is_external: false,
+    verification_type: "domain_not_verified_yet",
   });
 
   setSystemTime(new Date("2222-01-11T00:00:00.000Z"));
@@ -83,6 +84,7 @@ test("updates multiple fields in user organization", async () => {
     organization_id,
     user_id,
     is_external: false,
+    verification_type: "domain_not_verified_yet",
   });
 
   setSystemTime(new Date("2222-01-11T00:00:00.000Z"));

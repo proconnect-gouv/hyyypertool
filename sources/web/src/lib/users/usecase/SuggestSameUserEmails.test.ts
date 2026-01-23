@@ -59,16 +59,19 @@ async function given_unicorn_organization() {
   await add_user_to_organization({
     organization_id: unicorn_organization_id,
     user_id: adora_pony_user_id,
+    verification_type: "domain_not_verified_yet",
   });
   const pink_diamond_user_id = await create_pink_diamond_user(pg);
   await add_user_to_organization({
     organization_id: unicorn_organization_id,
     user_id: pink_diamond_user_id,
+    verification_type: "domain_not_verified_yet",
   });
   const red_diamond_user_id = await create_red_diamond_user(pg);
   await add_user_to_organization({
     organization_id: unicorn_organization_id,
     user_id: red_diamond_user_id,
+    verification_type: "domain_not_verified_yet",
   });
   return unicorn_organization_id;
 }

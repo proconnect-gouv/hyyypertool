@@ -30,6 +30,7 @@ test("GET /users/:id/organizations returns user's organizations", async () => {
   await add_user_to_organization({
     organization_id,
     user_id,
+    verification_type: "domain_not_verified_yet",
   });
 
   const response = await new Hono()
@@ -55,6 +56,7 @@ test("GET /users/:id/organizations handles pagination", async () => {
   await add_user_to_organization({
     organization_id,
     user_id,
+    verification_type: "domain_not_verified_yet",
   });
 
   const response = await new Hono()

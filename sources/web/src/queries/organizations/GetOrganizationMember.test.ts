@@ -29,6 +29,7 @@ test("get organization member relationship", async () => {
     organization_id,
     user_id,
     is_external: false,
+    verification_type: "domain_not_verified_yet",
   });
 
   const get_organization_member = GetOrganizationMember(pg);
