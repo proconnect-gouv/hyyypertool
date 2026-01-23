@@ -38,11 +38,13 @@ test("returns two memberships", async () => {
   await add_user_to_organization({
     organization_id: unicorn_organization_id,
     user_id: pink_diamond_user_id,
+    verification_type: "domain_not_verified_yet",
   });
   const cactus_organization_id = await create_cactus_organization(pg);
   await add_user_to_organization({
     organization_id: cactus_organization_id,
     user_id: pink_diamond_user_id,
+    verification_type: "domain_not_verified_yet",
   });
 
   const memberships = await count_user_merbership(pink_diamond_user_id);

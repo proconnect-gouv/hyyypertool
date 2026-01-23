@@ -89,6 +89,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
     await insert_users_organizations(db, {
       organization_id: dinum.id,
       user_id: raphael.id,
+      verification_type: "domain_not_verified_yet",
     });
     consola.verbose(
       `🌱 INSERT ${raphael.given_name} join ${dinum.cached_libelle} `,
@@ -97,6 +98,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
     await insert_users_organizations(db, {
       organization_id: bosch_rexroth,
       user_id: marie_bon,
+      verification_type: "domain_not_verified_yet",
     });
     consola.verbose(`🌱 INSERT ${marie_bon} join ${bosch_rexroth}`);
 

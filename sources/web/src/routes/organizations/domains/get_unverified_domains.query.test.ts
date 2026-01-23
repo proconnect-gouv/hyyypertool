@@ -38,6 +38,7 @@ test("returns bi.corn then troll.corn organizations", async () => {
   await pg.insert(schema.users_organizations).values({
     organization_id: unicorn_organization_id,
     user_id: adora_pony_user_id,
+    verification_type: "domain_not_verified_yet",
   });
 
   await pg.insert(schema.moderations).values({

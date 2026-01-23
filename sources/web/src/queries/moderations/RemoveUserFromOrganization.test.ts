@@ -31,6 +31,7 @@ test("remove adora from unicorn organization", async () => {
   await pg.insert(schema.users_organizations).values({
     organization_id: unicorn_organization_id,
     user_id: adora_pony_user_id,
+    verification_type: "domain_not_verified_yet",
   });
 
   const remove_user_from_organization = RemoveUserFromOrganization({ pg });

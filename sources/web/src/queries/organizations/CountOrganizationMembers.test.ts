@@ -23,7 +23,11 @@ beforeEach(empty_database);
 test("counts organization members", async () => {
   const organization_id = await create_unicorn_organization(pg);
   const user_id = await create_pink_diamond_user(pg);
-  await add_user_to_organization({ organization_id, user_id });
+  await add_user_to_organization({
+    organization_id,
+    user_id,
+    verification_type: "domain_not_verified_yet",
+  });
 
   const count_organization_members = CountOrganizationMembers(pg);
   const count = await count_organization_members({ organization_id });

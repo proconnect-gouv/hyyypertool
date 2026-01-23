@@ -30,6 +30,7 @@ test("get an organization member", async () => {
   await pg.insert(schema.users_organizations).values({
     organization_id,
     user_id,
+    verification_type: "domain_not_verified_yet",
   });
 
   const get_member = GetMember({

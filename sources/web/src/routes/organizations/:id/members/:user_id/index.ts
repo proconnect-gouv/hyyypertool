@@ -63,7 +63,9 @@ export default new Hono<App_Context>()
         .update(schema.users_organizations)
         .set({
           is_external,
-          verification_type: no_verification_type ? null : verification_type,
+          verification_type: no_verification_type
+            ? "domain_not_verified_yet"
+            : verification_type,
           verified_at: no_verification_type ? null : new Date().toISOString(),
           updated_at: new Date().toISOString(),
         })

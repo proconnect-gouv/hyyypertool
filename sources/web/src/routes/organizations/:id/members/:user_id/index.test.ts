@@ -139,7 +139,7 @@ test("PATCH /organizations/:id/members/:user_id updates user organization member
     organization_id,
     user_id,
     is_external: false,
-    verification_type: null,
+    verification_type: "domain_not_verified_yet",
   });
 
   {
@@ -158,7 +158,7 @@ test("PATCH /organizations/:id/members/:user_id updates user organization member
           "organization_id": 1,
           "updated_at": "1970-01-01 00:00:00+00",
           "user_id": 1,
-          "verification_type": null,
+          "verification_type": "domain_not_verified_yet",
           "verified_at": null,
         },
       ]
@@ -273,7 +273,7 @@ test("PATCH /organizations/:id/members/:user_id updates verification type to nul
           "organization_id": 1,
           "updated_at": "2222-02-22 00:22:22+00",
           "user_id": 1,
-          "verification_type": null,
+          "verification_type": "domain_not_verified_yet",
           "verified_at": null,
         },
       ]
@@ -289,7 +289,7 @@ test("DELETE /organizations/:id/members/:user_id removes user from organization"
     organization_id,
     user_id,
     is_external: true,
-    verification_type: null,
+    verification_type: "domain_not_verified_yet",
   });
 
   {

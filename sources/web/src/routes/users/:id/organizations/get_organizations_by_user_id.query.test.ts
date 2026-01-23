@@ -26,6 +26,7 @@ test("returns organizations for a user", async () => {
   await add_user_to_organization({
     organization_id,
     user_id,
+    verification_type: "email",
   });
 
   const result = await get_organizations_by_user_id(pg, { user_id });
@@ -45,7 +46,7 @@ test("returns organizations for a user", async () => {
           ],
           "id": 1,
           "siret": "🦄 siret",
-          "verification_type": null,
+          "verification_type": "email",
         },
       ],
     }
@@ -58,6 +59,7 @@ test("supports pagination", async () => {
   await add_user_to_organization({
     organization_id,
     user_id,
+    verification_type: "domain_not_verified_yet",
   });
 
   const result = await get_organizations_by_user_id(pg, {
@@ -80,7 +82,7 @@ test("supports pagination", async () => {
           ],
           "id": 1,
           "siret": "🦄 siret",
-          "verification_type": null,
+          "verification_type": "domain_not_verified_yet",
         },
       ],
     }
