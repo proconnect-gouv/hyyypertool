@@ -8,6 +8,6 @@
     "@tsconfig/bun": "1.0.10",
     "@tsconfig/strictest": "2.0.8",
     "@types/bun": "1.3.6",
-    "hono": "4.11.4"
+    "hono": "4.11.7"
   }
 }

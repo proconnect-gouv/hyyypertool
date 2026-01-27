@@ -23,7 +23,7 @@
     "@~/web": "workspace:*",
     "@~/core": "workspace:*",
     "consola": "3.4.2",
-    "hono": "4.11.4",
+    "hono": "4.11.7",
     "tailwindcss": "4.1.18",
     "tsx": "4.21.0"
   },
