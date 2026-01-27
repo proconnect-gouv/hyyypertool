@@ -445,8 +445,8 @@ declare const app: import("hono/hono-base").HonoBase<
                         };
                       } & {
                         query: {
-                          describedby: string;
-                          page_ref: string;
+                          describedby: string | string[];
+                          page_ref: string | string[];
                           page?: string | string[] | undefined;
                           page_size?: string | string[] | undefined;
                         };
@@ -490,7 +490,7 @@ declare const app: import("hono/hono-base").HonoBase<
                   query: {
                     page?: string | string[] | undefined;
                     page_size?: string | string[] | undefined;
-                    q?: string | string[] | undefined;
+                    q?: string | undefined;
                   };
                 };
                 output: {};
@@ -502,7 +502,7 @@ declare const app: import("hono/hono-base").HonoBase<
                   query: {
                     page?: string | string[] | undefined;
                     page_size?: string | string[] | undefined;
-                    q?: string | string[] | undefined;
+                    q?: string | undefined;
                   };
                 };
                 output: undefined;
@@ -543,7 +543,7 @@ declare const app: import("hono/hono-base").HonoBase<
                         query: {
                           page?: string | string[] | undefined;
                           page_size?: string | string[] | undefined;
-                          q?: string | string[] | undefined;
+                          q?: string | undefined;
                         };
                       };
                       output: {};
@@ -555,7 +555,7 @@ declare const app: import("hono/hono-base").HonoBase<
                         query: {
                           page?: string | string[] | undefined;
                           page_size?: string | string[] | undefined;
-                          q?: string | string[] | undefined;
+                          q?: string | undefined;
                         };
                       };
                       output: undefined;
@@ -591,8 +591,8 @@ declare const app: import("hono/hono-base").HonoBase<
                           };
                         } & {
                           query: {
-                            describedby: string;
-                            page_ref: string;
+                            describedby: string | string[];
+                            page_ref: string | string[];
                             page?: string | string[] | undefined;
                             page_size?: string | string[] | undefined;
                           };
@@ -681,8 +681,8 @@ declare const app: import("hono/hono-base").HonoBase<
                           };
                         } & {
                           query: {
-                            describedby: string;
-                            page_ref: string;
+                            describedby: string | string[];
+                            page_ref: string | string[];
                             page?: string | string[] | undefined;
                             page_size?: string | string[] | undefined;
                           };
@@ -781,8 +781,8 @@ declare const app: import("hono/hono-base").HonoBase<
               query: {
                 page?: string | string[] | undefined;
                 page_size?: string | string[] | undefined;
-                q?: string | string[] | undefined;
-                id?: string | string[] | undefined;
+                q?: string | undefined;
+                id?: string | undefined;
               };
             };
             output: {};
