@@ -48,7 +48,7 @@
     "tailwindPreserveWhitespace": true
   },
   "dependencies": {
-    "@gouvfr/dsfr": "1.14.0",
+    "@gouvfr/dsfr": "1.14.3",
     "@preact/signals": "2.5.1",
     "@preact/signals-core": "1.12.2",
     "@tsconfig/bun": "1.0.10",
