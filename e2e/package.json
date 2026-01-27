@@ -16,7 +16,7 @@
     "@testing-library/cypress": "10.1.0",
     "cypress": "15.9.0",
     "drizzle-orm": "0.45.1",
-    "pg": "8.17.1",
+    "pg": "8.17.2",
     "typescript": "5.9.3"
   },
   "trustedDependencies": [
