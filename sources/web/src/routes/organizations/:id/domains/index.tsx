@@ -17,7 +17,7 @@ import {
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
-import { z } from "zod/v4";
+import { z } from "zod";
 import { get_organization_domains } from "./get_organization_domains.query";
 import { AddDomain, Table } from "./Table";
 

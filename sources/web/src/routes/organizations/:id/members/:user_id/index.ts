@@ -11,7 +11,7 @@ import { ForceJoinOrganization } from "@~/identite-proconnect/sdk";
 import { VerificationTypeSchema } from "@~/identite-proconnect/types";
 import { and, eq } from "drizzle-orm";
 import { Hono } from "hono";
-import { z } from "zod/v4";
+import { z } from "zod";
 
 //
 const params_schema = EntitySchema.extend({

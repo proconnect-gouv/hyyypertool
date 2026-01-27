@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import { join } from "node:path";
 import { cwd, env } from "node:process";
 import { match } from "ts-pattern";
-import { z } from "zod/v4";
+import { z } from "zod";
 
 //
 
