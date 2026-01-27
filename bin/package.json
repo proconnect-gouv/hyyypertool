@@ -17,13 +17,13 @@
     "start:bun": "bun run src/bun/index.ts"
   },
   "dependencies": {
-    "@hono/node-server": "1.19.7",
+    "@hono/node-server": "1.19.9",
     "@tailwindcss/cli": "4.1.18",
     "@tailwindcss/typography": "0.5.19",
     "@~/web": "workspace:*",
     "@~/core": "workspace:*",
     "consola": "3.4.2",
-    "hono": "4.11.4",
+    "hono": "4.11.7",
     "tailwindcss": "4.1.18",
     "tsx": "4.21.0"
   },
