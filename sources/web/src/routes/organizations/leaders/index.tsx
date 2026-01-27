@@ -10,7 +10,7 @@ import consola from "consola";
 import { Hono } from "hono";
 import lodash_sortby from "lodash.sortby";
 import { match, P } from "ts-pattern";
-import { z } from "zod/v4";
+import { z } from "zod";
 
 //
 

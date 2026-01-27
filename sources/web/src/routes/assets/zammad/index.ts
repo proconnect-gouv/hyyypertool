@@ -5,7 +5,7 @@ import { zValidator } from "@hono/zod-validator";
 import { IdSchema } from "@~/core/schema";
 import { Hono } from "hono";
 import { P, match } from "ts-pattern";
-import { z } from "zod/v4";
+import { z } from "zod";
 
 //
 

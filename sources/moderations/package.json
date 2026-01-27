@@ -11,7 +11,7 @@
   "dependencies": {
     "@~/core": "workspace:*",
     "ts-pattern": "^5.9.0",
-    "zod": "^3.23.8"
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "@~/config.typescript": "workspace:*"

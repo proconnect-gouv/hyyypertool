@@ -1,7 +1,6 @@
 //
 
-import { z } from "zod/v4";
-export { z_coerce_boolean } from "./z_coerce_boolean";
+import { z } from "zod";
 export { z_email_domain } from "./z_email_domain";
 export { z_empty_string_to_undefined } from "./z_empty_string_to_undefined";
 export { z_username } from "./z_username";

@@ -316,7 +316,7 @@
         "name": "🐞 WWW",
         "type": "node",
         "request": "launch",
-        "program": "bin/src/index.ts",
+        "program": "bin/src/node/index.ts",
         "cwd": "${workspaceFolder:/}",
         "runtimeExecutable": "${workspaceFolder:/}/node_modules/.bin/tsx",
         "console": "integratedTerminal",

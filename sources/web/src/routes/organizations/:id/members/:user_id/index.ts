@@ -5,13 +5,13 @@ import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import type { App_Context } from "#src/middleware/context";
 import { RemoveUserFromOrganization } from "#src/queries/moderations";
 import { zValidator } from "@hono/zod-validator";
-import { EntitySchema, z_coerce_boolean } from "@~/core/schema";
+import { EntitySchema } from "@~/core/schema";
 import { schema } from "@~/identite-proconnect/database";
 import { ForceJoinOrganization } from "@~/identite-proconnect/sdk";
 import { VerificationTypeSchema } from "@~/identite-proconnect/types";
 import { and, eq } from "drizzle-orm";
 import { Hono } from "hono";
-import { z } from "zod/v4";
+import { z } from "zod";
 
 //
 const params_schema = EntitySchema.extend({
@@ -24,7 +24,7 @@ export default new Hono<App_Context>()
     zValidator(
       "form",
       z.object({
-        is_external: z.string().pipe(z_coerce_boolean),
+        is_external: z.stringbool(),
       }),
     ),
     zValidator("param", params_schema),
@@ -51,7 +51,7 @@ export default new Hono<App_Context>()
       "form",
       z.object({
         verification_type: VerificationTypeSchema.or(z.literal("")).optional(),
-        is_external: z.string().pipe(z_coerce_boolean).optional(),
+        is_external: z.stringbool().optional(),
       }),
     ),
     async function PATCH({ text, req, var: { identite_pg } }) {

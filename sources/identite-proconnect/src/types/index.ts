@@ -2,7 +2,7 @@
 
 import type { UserOrganizationLinkVerificationType } from "@proconnect-gouv/proconnect.identite/types";
 import { UserOrganizationLinkVerificationTypeSchema } from "@proconnect-gouv/proconnect.identite/types";
-import z from "zod/v4";
+import z from "zod";
 
 //
 

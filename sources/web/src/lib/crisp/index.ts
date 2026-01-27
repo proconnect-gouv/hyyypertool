@@ -11,7 +11,7 @@ import type {
   GetMessagesInAConversationRoute,
 } from "@proconnect-gouv/proconnect.crisp/router";
 import type { Config } from "@proconnect-gouv/proconnect.crisp/types";
-import { z } from "zod/v4";
+import { z } from "zod";
 import type { CrispApi } from "./api";
 
 //

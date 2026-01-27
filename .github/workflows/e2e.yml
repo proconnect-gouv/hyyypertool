@@ -91,7 +91,7 @@ jobs:
           path: e2e/cypress/videos
 
     strategy:
-      max-parallel: 6
+      fail-fast: false
       matrix:
         e2e_test:
           - auth
