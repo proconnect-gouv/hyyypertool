@@ -45,7 +45,7 @@ Hyyypertool now uses a custom changeset plugin for automated versioning and chan
 When making changes that deserve a user-facing changelog entry, create a changeset file:
 
 ```bash
-echo "Brief description of the change" > .release-it-changeset/my-feature.md
+echo "✨ Brief description of the change" > .release-it-changeset/$(date +%N)+my-feature.md
 ```
 
 For more detailed changes:
