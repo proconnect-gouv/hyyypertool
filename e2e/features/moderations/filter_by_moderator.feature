@@ -12,5 +12,5 @@ Fonctionnalité: Filtrer les modérations par modérateur
   Scénario: Filtrer par modérateur auto-coche les demandes traitées et filtre la table
     Alors je vois "Filtrer par modérateur"
     Et je ne vois pas "44023386400014"
-    Quand je saisie le mot "moderateur" dans la boîte à texte nommée "Recherche par email du modérateur"
+    Quand je sélectionne "moderateur@beta.gouv.fr" dans la liste déroulante nommée "Filtrer par modérateur"
     Alors je vois "44023386400014"
