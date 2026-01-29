@@ -10,7 +10,7 @@ import {
   migrate,
   pg,
 } from "@~/identite-proconnect/database/testing";
-import { UserOrganizationLinkVerificationTypeSchema } from "@~/identite-proconnect/types";
+import { VerificationTypeSchema } from "@~/identite-proconnect/types";
 import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
 import { UpdateUserByIdInOrganization } from "./UpdateUserByIdInOrganization";
 
@@ -46,7 +46,7 @@ test("updates user verification type in organization", async () => {
   await update_user_by_id_in_organization(
     { organization_id, user_id },
     {
-      verification_type: UserOrganizationLinkVerificationTypeSchema.enum.domain,
+      verification_type: VerificationTypeSchema.enum.domain,
     },
   );
 
@@ -97,8 +97,7 @@ test("updates multiple fields in user organization", async () => {
     { organization_id, user_id },
     {
       verification_type:
-        UserOrganizationLinkVerificationTypeSchema.enum
-          .no_validation_means_available,
+        VerificationTypeSchema.enum.no_validation_means_available,
       is_external: true,
     },
   );

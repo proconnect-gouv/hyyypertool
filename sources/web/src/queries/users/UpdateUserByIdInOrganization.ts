@@ -4,7 +4,7 @@ import {
   schema,
   type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
-import type { UserOrganizationLinkVerificationType } from "@~/identite-proconnect/types";
+import type { VerificationType } from "@~/identite-proconnect/types";
 import { and, eq } from "drizzle-orm";
 
 //
@@ -18,7 +18,7 @@ export function UpdateUserByIdInOrganization({
     { organization_id, user_id }: { organization_id: number; user_id: number },
     values: Partial<{
       is_external: boolean;
-      verification_type: UserOrganizationLinkVerificationType;
+      verification_type: VerificationType;
     }>,
   ) {
     await pg

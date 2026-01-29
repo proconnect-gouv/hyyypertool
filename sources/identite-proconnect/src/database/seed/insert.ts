@@ -142,7 +142,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
 
     await insert_moderation(db, {
       organization_id: aldp.id,
-      type: MODERATION_TYPES.enum.big_organization_join,
+      type: "big_organization_join",
       user_id: pierre_bon.id,
     });
     consola.verbose(

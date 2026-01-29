@@ -1,11 +1,7 @@
 //
 
 import { NotFoundError } from "#src/errors";
-import {
-  schema,
-  type IdentiteProconnectPgDatabase,
-} from "@~/identite-proconnect/database";
-import { eq } from "drizzle-orm";
+import { type IdentiteProconnectPgDatabase } from "@~/identite-proconnect/database";
 
 //
 
@@ -20,7 +16,7 @@ export function GetModerationWithUser(pg: IdentiteProconnectPgDatabase) {
         ticket_id: true,
       },
       with: { user: { columns: { email: true } } },
-      where: eq(schema.moderations.id, moderation_id),
+      where: (table, { eq }) => eq(table.id, moderation_id),
     });
 
     if (!moderation) throw new NotFoundError("Moderation not found.");

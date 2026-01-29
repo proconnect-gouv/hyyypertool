@@ -50,24 +50,25 @@ export default new Hono<App_Context>()
     zValidator(
       "form",
       z.object({
-        verification_type: VerificationTypeSchema.or(z.literal("")).optional(),
+        verification_type: VerificationTypeSchema.optional(),
         is_external: z.stringbool().optional(),
       }),
     ),
     async function PATCH({ text, req, var: { identite_pg } }) {
       const { id: organization_id, user_id } = req.valid("param");
       const { verification_type, is_external } = req.valid("form");
-      const no_verification_type = verification_type === "";
 
       await identite_pg
         .update(schema.users_organizations)
         .set({
           is_external,
-          verification_type: no_verification_type
-            ? "domain_not_verified_yet"
-            : verification_type,
-          verified_at: no_verification_type ? null : new Date().toISOString(),
           updated_at: new Date().toISOString(),
+          verification_type,
+          verified_at:
+            verification_type ===
+            VerificationTypeSchema.enum.domain_not_verified_yet
+              ? null
+              : verification_type && new Date().toISOString(),
         })
         .where(
           and(
