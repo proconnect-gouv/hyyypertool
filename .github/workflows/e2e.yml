@@ -63,7 +63,7 @@ jobs:
           touch package-lock.json
 
       - name: Cypress run
-        uses: cypress-io/github-action@dca986193e4336cb32820819b07e9ecacacaaaf6 # v7.0.0
+        uses: cypress-io/github-action@0f330ebf0d60f87608ed72f1d6232e5644aa3171 # v7.1.1
         env:
           CONSOLA_LEVEL: "2"
           DEPLOY_ENV: "production"
