@@ -25,7 +25,7 @@ updates:
       interval: "weekly"
     cooldown:
       default-days: 7
-      exclude: 
+      exclude:
         - "@proconnect-gouv/*"
     labels:
       - dependencies
