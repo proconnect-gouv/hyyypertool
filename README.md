@@ -42,20 +42,13 @@ Hyyypertool now uses a custom changeset plugin for automated versioning and chan
 
 #### 1. Create Release Notes
 
-When making changes that deserve a user-facing changelog entry, create a changeset file:
-
 ```bash
-echo "✨ Brief description of the change" > .release-it-changeset/$(date +%N)+my-feature.md
+echo "✨ Ajout de la recherche avancée" > .release-it-changeset/$(date +%s)-feature.md
+echo "🐛 Correction d'un problème d'affichage" > .release-it-changeset/$(date +%s)-bug.md
+echo "💄 Simplification du parcours de connexion" > .release-it-changeset/$(date +%s)-ui.md
 ```
 
-For more detailed changes:
-
-```markdown
-Improved moderation interface
-
-- New status filter
-- CSV export for results
-```
+See [plugin documentation](packages/release-it-changeset-plugin/README.md) for more examples.
 
 > [!NOTE]
 > Unlike `@changesets/cli`, this plugin uses plain markdown files without frontmatter.
