@@ -18,7 +18,7 @@ import {
 } from "#src/ui/organizations/info";
 import { About as About_User } from "#src/ui/users/About";
 import { Investigation as Investigation_User } from "#src/ui/users/Investigation";
-import { hx_urls } from "#src/urls";
+import { urls } from "#src/urls";
 import type { IdentiteProconnectPgDatabase } from "@~/identite-proconnect/database";
 import { createContext, useContext } from "hono/jsx";
 import { ModerationExchanges } from "./ModerationExchanges";
@@ -61,7 +61,7 @@ async function ModerationPageContent() {
     query_organization_members_count,
   } = useContext(PageContext)!;
 
-  const moderation_id = `moderation-${moderation.id.toString()}`;
+  const moderation_id = `moderation-${moderation.id}`;
 
   return (
     <main class="fr-container my-12">
@@ -80,12 +80,9 @@ async function ModerationPageContent() {
       <hr class="bg-none pb-5" />
       <section
         hx-disinherit="*"
-        {...await hx_urls.moderations[":id"].$get(
-          {
-            param: { id: moderation.id.toString() },
-          },
-          {},
-        )}
+        {...urls.moderations[":id"].$hx_get({
+          param: { id: moderation.id },
+        })}
         hx-select={`#${moderation_id}`}
         hx-trigger={hx_trigger_from_body([
           MODERATION_EVENTS.enum.MODERATION_UPDATED,

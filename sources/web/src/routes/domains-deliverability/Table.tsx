@@ -1,5 +1,5 @@
 import { LocalTime } from "#src/ui";
-import { hx_urls } from "#src/urls";
+import { urls } from "#src/urls";
 import { get_email_deliverability_whitelist } from "./get_email_deliverability_whitelist.query";
 
 type EmailDelivrabilityWhiteList = Awaited<
@@ -43,9 +43,9 @@ async function Row({
   const { verified_at, problematic_email, email_domain, verified_by } =
     whitelist_item;
 
-  const hx_delete_props = await hx_urls["domains-deliverability"][
+  const hx_delete_props = urls["domains-deliverability"][
     ":email_domain"
-  ].$delete({
+  ].$hx_delete({
     param: { email_domain: email_domain },
   });
 

@@ -6,7 +6,7 @@ import { GoogleSearchButton } from "#src/ui/button/components";
 import { menu_item } from "#src/ui/menu";
 import { Horizontal_Menu } from "#src/ui/menu/components";
 import { LocalTime } from "#src/ui/time";
-import { hx_urls } from "#src/urls";
+import { urls } from "#src/urls";
 import type { EmailDomainVerificationType } from "@~/identite-proconnect/types";
 import { match } from "ts-pattern";
 import { add_params } from "./context";
@@ -54,9 +54,9 @@ export async function AddDomain({
 }) {
   const $describedby = hyper_ref("add_domain");
 
-  const hx_add_domain_props = await hx_urls.organizations[":id"].domains.$put({
+  const hx_add_domain_props = urls.organizations[":id"].domains.$hx_put({
     param: {
-      id: organization_id.toString(),
+      id: organization_id,
     },
   });
 
@@ -183,15 +183,15 @@ async function Row_Actions({
   const { domain, id, organization, organization_id } = organization_domain;
 
   const hx_change_type_props = (type: EmailDomainVerificationType) =>
-    hx_urls.organizations[":id"].domains[":domain_id"].$patch({
-      param: { id: organization_id.toString(), domain_id: id.toString() },
+    urls.organizations[":id"].domains[":domain_id"].$hx_patch({
+      param: { id: organization_id, domain_id: id },
       query: { type: type ?? "null" },
     });
 
-  const hx_delete_domain_props = await hx_urls.organizations[":id"].domains[
+  const hx_delete_domain_props = urls.organizations[":id"].domains[
     ":domain_id"
-  ].$delete({
-    param: { id: organization_id.toString(), domain_id: id.toString() },
+  ].$hx_delete({
+    param: { id: organization_id, domain_id: id },
   });
 
   return (

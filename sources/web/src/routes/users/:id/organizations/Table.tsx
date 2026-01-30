@@ -5,7 +5,7 @@ import { date_to_dom_string } from "#src/time";
 import { Foot } from "#src/ui/hx_table";
 import { notice } from "#src/ui/notice";
 import { Time } from "#src/ui/time";
-import { hx_urls, urls } from "#src/urls";
+import { urls } from "#src/urls";
 import type { Pagination } from "@~/core/schema";
 import type { get_organizations_by_user_id } from "./get_organizations_by_user_id.query";
 
@@ -32,12 +32,12 @@ export async function Table({
   const { organizations, count } = organizations_collection;
 
   const hx_get_organizations_query_props = {
-    ...(await hx_urls.users[":id"].organizations.$get({
+    ...urls.users[":id"].organizations.$hx_get({
       param: {
-        id: user_id.toString(),
+        id: user_id,
       },
       query: { describedby, page_ref },
-    })),
+    }),
     "hx-include": hx_include([page_ref]),
   };
 
@@ -105,10 +105,7 @@ export function Row({
       <td class="text-right!">
         <a
           class="p-3"
-          href={
-            urls.organizations[":id"].$url({ param: { id: id.toString() } })
-              .pathname
-          }
+          href={urls.organizations[":id"].$url({ param: { id: id } }).pathname}
         >
           ➡️
         </a>

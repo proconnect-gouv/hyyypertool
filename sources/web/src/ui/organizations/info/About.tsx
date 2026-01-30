@@ -28,7 +28,7 @@ export function About(props: Props) {
           href={
             urls.organizations[":id"].$url({
               param: {
-                id: organization.id.toString(),
+                id: organization.id,
               },
             }).pathname
           }

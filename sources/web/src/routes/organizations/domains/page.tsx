@@ -135,7 +135,7 @@ function Row({
       aria-label={`Domaine non vérifié ${domainName} pour ${organization.cached_libelle}`}
       onclick={`window.location = '${
         urls.organizations[":id"].$url({
-          param: { id: organization.id.toString() },
+          param: { id: organization.id },
         }).pathname
       }'`}
       class={row({ is_clickable: true })}

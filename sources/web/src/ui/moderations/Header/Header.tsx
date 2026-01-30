@@ -6,7 +6,7 @@ import { button } from "#src/ui/button";
 import { callout } from "#src/ui/callout";
 import { notice } from "#src/ui/notice";
 import { LocalTime } from "#src/ui/time";
-import { hx_urls } from "#src/urls";
+import { urls } from "#src/urls";
 import { raw } from "hono/html";
 import { createContext, useContext } from "hono/jsx";
 import { tv } from "tailwind-variants";
@@ -36,15 +36,15 @@ const context = createContext<Values>({} as any);
 
 export async function Header() {
   const { moderation } = useContext(context);
-  const hx_get_duplicate_warning = await hx_urls.moderations[
+  const hx_get_duplicate_warning = urls.moderations[
     ":id"
-  ].duplicate_warning.$get({
+  ].duplicate_warning.$hx_get({
     param: {
-      id: moderation.id.toString(),
+      id: moderation.id,
     },
     query: {
-      organization_id: moderation.organization.id.toString(),
-      user_id: moderation.user.id.toString(),
+      organization_id: moderation.organization.id,
+      user_id: moderation.user.id,
     },
   });
 
@@ -124,10 +124,10 @@ async function ModerationCallout() {
       .with("rejected", () => "warning" as const)
       .otherwise(() => "success" as const),
   });
-  const hx_patch_moderation_reprocess = await hx_urls.moderations[
+  const hx_patch_moderation_reprocess = urls.moderations[
     ":id"
-  ].reprocess.$patch({
-    param: { id: moderation.id.toString() },
+  ].reprocess.$hx_patch({
+    param: { id: moderation.id },
   });
 
   const state = match(moderation.status)

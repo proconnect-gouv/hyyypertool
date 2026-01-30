@@ -10,7 +10,7 @@ import { date_to_dom_string, date_to_string } from "#src/time";
 import { Foot } from "#src/ui/hx_table";
 import { row } from "#src/ui/table";
 import { tag } from "#src/ui/tag";
-import { hx_urls, urls } from "#src/urls";
+import { urls } from "#src/urls";
 import type { Pagination } from "@~/core/schema";
 import { createContext, useContext } from "hono/jsx";
 import { useRequestContext } from "hono/jsx-renderer";
@@ -34,7 +34,7 @@ type Moderation = QueryResult["moderations"][number];
 const page_query_keys = query_schema.keyof();
 
 const hx_moderations_query_props = {
-  ...(await hx_urls.moderations.$get()),
+  ...urls.moderations.$hx_get(),
   "hx-include": hx_include([
     MODERATION_TABLE_PAGE_ID,
     page_query_keys.enum.day,
@@ -276,7 +276,7 @@ function Row({ key, moderation }: { key?: string; moderation: Moderation }) {
       key={key}
       onclick={`window.location = '${
         urls.moderations[":id"].$url({
-          param: { id: moderation.id.toString() },
+          param: { id: moderation.id },
         }).pathname
       }'`}
       class={row({ is_clickable: true })}

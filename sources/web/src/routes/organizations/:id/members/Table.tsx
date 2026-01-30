@@ -6,7 +6,7 @@ import { menu_item } from "#src/ui/menu";
 import { Horizontal_Menu } from "#src/ui/menu/components";
 import { row } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
-import { hx_urls, urls } from "#src/urls";
+import { urls } from "#src/urls";
 import type { Pagination } from "@~/core/schema";
 import { VerificationTypeSchema } from "@~/identite-proconnect/types";
 import { useContext } from "hono/jsx";
@@ -34,12 +34,12 @@ export async function Table({
   const { users, count } = query_members_collection;
 
   const hx_member_query_props = {
-    ...(await hx_urls.organizations[":id"].members.$get({
+    ...urls.organizations[":id"].members.$hx_get({
       param: {
-        id: organization_id.toString(),
+        id: organization_id,
       },
       query: { describedby, page_ref },
-    })),
+    }),
     "hx-include": hx_include([page_ref]),
   };
 
@@ -130,10 +130,7 @@ async function Row_Actions() {
         <li>
           <a
             class={menu_item({ override: "[href]" })}
-            href={
-              urls.users[":id"].$url({ param: { id: user.id.toString() } })
-                .pathname
-            }
+            href={urls.users[":id"].$url({ param: { id: user.id } }).pathname}
           >
             Ouvrir
           </a>
@@ -141,10 +138,10 @@ async function Row_Actions() {
         <li>
           <button
             class={menu_item()}
-            {...await hx_urls.organizations[":id"].members[":user_id"].$delete({
+            {...urls.organizations[":id"].members[":user_id"].$hx_delete({
               param: {
-                id: organization_id.toString(),
-                user_id: user_id.toString(),
+                id: organization_id,
+                user_id: user_id,
               },
             })}
             hx-swap="none"
@@ -155,10 +152,10 @@ async function Row_Actions() {
         <li>
           <button
             class={menu_item()}
-            {...await hx_urls.organizations[":id"].members[":user_id"].$patch({
+            {...urls.organizations[":id"].members[":user_id"].$hx_patch({
               param: {
-                id: organization_id.toString(),
-                user_id: user_id.toString(),
+                id: organization_id,
+                user_id: user_id,
               },
               form: {
                 verification_type:
@@ -173,10 +170,10 @@ async function Row_Actions() {
         <li>
           <button
             class={menu_item()}
-            {...await hx_urls.organizations[":id"].members[":user_id"].$patch({
+            {...urls.organizations[":id"].members[":user_id"].$hx_patch({
               param: {
-                id: organization_id.toString(),
-                user_id: user_id.toString(),
+                id: organization_id,
+                user_id: user_id,
               },
               form: {
                 verification_type: VerificationTypeSchema.enum.domain,
@@ -190,10 +187,10 @@ async function Row_Actions() {
         <li>
           <button
             class={menu_item()}
-            {...await hx_urls.organizations[":id"].members[":user_id"].$patch({
+            {...urls.organizations[":id"].members[":user_id"].$hx_patch({
               param: {
-                id: organization_id.toString(),
-                user_id: user_id.toString(),
+                id: organization_id,
+                user_id: user_id,
               },
               form: {
                 verification_type:
@@ -208,10 +205,10 @@ async function Row_Actions() {
         <li>
           <button
             class={menu_item()}
-            {...await hx_urls.organizations[":id"].members[":user_id"].$patch({
+            {...urls.organizations[":id"].members[":user_id"].$hx_patch({
               param: {
-                id: organization_id.toString(),
-                user_id: user_id.toString(),
+                id: organization_id,
+                user_id: user_id,
               },
               form: {
                 verification_type:
@@ -226,10 +223,10 @@ async function Row_Actions() {
         <li>
           <button
             class={menu_item()}
-            {...await hx_urls.organizations[":id"].members[":user_id"].$patch({
+            {...urls.organizations[":id"].members[":user_id"].$hx_patch({
               param: {
-                id: organization_id.toString(),
-                user_id: user_id.toString(),
+                id: organization_id,
+                user_id: user_id,
               },
               form: {
                 verification_type:
@@ -246,18 +243,16 @@ async function Row_Actions() {
           {verification_type ? (
             <button
               class={menu_item()}
-              {...await hx_urls.organizations[":id"].members[":user_id"].$patch(
-                {
-                  param: {
-                    id: organization_id.toString(),
-                    user_id: user_id.toString(),
-                  },
-                  form: {
-                    verification_type:
-                      VerificationTypeSchema.enum.domain_not_verified_yet,
-                  },
+              {...urls.organizations[":id"].members[":user_id"].$hx_patch({
+                param: {
+                  id: organization_id,
+                  user_id: user_id,
                 },
-              )}
+                form: {
+                  verification_type:
+                    VerificationTypeSchema.enum.domain_not_verified_yet,
+                },
+              })}
               hx-swap="none"
             >
               🚫 non vérifié
@@ -269,10 +264,10 @@ async function Row_Actions() {
         <li>
           <button
             class={menu_item()}
-            {...await hx_urls.organizations[":id"].members[":user_id"].$patch({
+            {...urls.organizations[":id"].members[":user_id"].$hx_patch({
               param: {
-                id: organization_id.toString(),
-                user_id: user_id.toString(),
+                id: organization_id,
+                user_id: user_id,
               },
               form: {
                 is_external: String(!is_external),

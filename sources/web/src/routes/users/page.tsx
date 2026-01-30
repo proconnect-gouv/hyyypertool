@@ -5,7 +5,7 @@ import { hx_include } from "#src/htmx";
 import { Foot } from "#src/ui/hx_table";
 import { row } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
-import { hx_urls, urls } from "#src/urls";
+import { urls } from "#src/urls";
 import type { Pagination } from "@~/core/schema";
 import { query_schema } from "./context";
 import type { get_users_list } from "./get_users_list.query";
@@ -15,7 +15,7 @@ import type { get_users_list } from "./get_users_list.query";
 const $search = hyper_ref();
 const $table = hyper_ref();
 const hx_users_list_query_props = {
-  ...(await hx_urls.users.$get({ query: {} })),
+  ...urls.users.$hx_get({ query: {} }),
   "hx-include": hx_include([$table, $search, query_schema.keyof().enum.page]),
   "hx-replace-url": true,
   "hx-select": `#${$table} > table`,
@@ -120,7 +120,7 @@ function Row({ key, user }: { key?: string; user: User }) {
       aria-label={`Utilisateur ${user.given_name} ${user.family_name} (${user.email})`}
       onclick={`window.location = '${
         urls.users[":id"].$url({
-          param: { id: user.id.toString() },
+          param: { id: user.id },
         }).pathname
       }'`}
       class={row({ is_clickable: true })}

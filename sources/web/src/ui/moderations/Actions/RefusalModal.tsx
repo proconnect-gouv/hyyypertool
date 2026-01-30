@@ -1,7 +1,7 @@
 import { HtmxEvents, hx_disabled_form_elements } from "#src/htmx";
 import { reject_form_schema } from "#src/lib/moderations";
 import { button } from "#src/ui/button";
-import { hx_urls } from "#src/urls";
+import { urls } from "#src/urls";
 import { useContext } from "hono/jsx";
 import { AUTO_GO_BACK_EVENT } from "../AutoGoBack";
 import { context, reject_context } from "./context";
@@ -18,8 +18,8 @@ export async function RefusalModal({ userEmail }: { userEmail: string }) {
       aria-label="la modale de refus"
     >
       <form
-        {...await hx_urls.moderations[":id"].rejected.$patch({
-          param: { id: moderation.id.toString() },
+        {...urls.moderations[":id"].rejected.$hx_patch({
+          param: { id: moderation.id },
         })}
         {...hx_disabled_form_elements}
         hx-swap="none"

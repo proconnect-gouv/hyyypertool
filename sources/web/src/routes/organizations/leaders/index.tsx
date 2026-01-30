@@ -3,7 +3,7 @@
 import env from "#src/config";
 import type { FetchVariables_Context } from "#src/middleware/fetch";
 import { button } from "#src/ui/button";
-import { hx_urls } from "#src/urls";
+import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
 import { to } from "await-to-js";
 import consola from "consola";
@@ -26,10 +26,9 @@ export default new Hono<FetchVariables_Context>().get(
   async function GET({ html, req, var: { fetch } }) {
     const { siret, retry } = req.valid("query");
     const useRetry = retry === "true";
-    const hx_organizations_leaders_props =
-      await hx_urls.organizations.leaders.$get({
-        query: { retry: "true", siret },
-      });
+    const hx_organizations_leaders_props = urls.organizations.leaders.$hx_get({
+      query: { retry: "true", siret },
+    });
 
     const doc = await load_leaders({ siret, fetch, useRetry });
 

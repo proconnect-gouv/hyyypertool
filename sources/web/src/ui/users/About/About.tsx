@@ -26,10 +26,7 @@ export function About({ user, organization, nonce = "" }: AboutProps) {
         <a
           class="bg-none"
           target="_blank"
-          href={
-            urls.users[":id"].$url({ param: { id: user.id.toString() } })
-              .pathname
-          }
+          href={urls.users[":id"].$url({ param: { id: user.id } }).pathname}
         >
           👨‍💻 Profile
         </a>

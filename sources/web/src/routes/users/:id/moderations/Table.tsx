@@ -76,7 +76,7 @@ export function Row({
           class="p-3"
           href={
             urls.moderations[":id"].$url({
-              param: { id: moderation.id.toString() },
+              param: { id: moderation.id },
             }).pathname
           }
         >
