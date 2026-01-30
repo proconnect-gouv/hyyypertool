@@ -14,7 +14,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "bun x npm-run-all --serial build:*",
+    "build": "bun run build:bun",
     "build:bun": "cd bin && bun run build",
     "database:identite-proconnect:migrator": "bun run database:identite-proconnect:run migration",
     "database:identite-proconnect:run": "bun run --cwd sources/identite-proconnect",
@@ -23,7 +23,7 @@
     "dev:inspect-brk": "tsx --inspect-brk bin/src/index.ts",
     "e2e:install": "cd e2e && bun install",
     "e2e:run": "cd e2e && bun run",
-    "fixtures:load": "bun x run-z database:identite-proconnect:migrator database:identite-proconnect:seed",
+    "fixtures:load": "bun run database:identite-proconnect:migrator && bun run database:identite-proconnect:seed",
     "format": "bun x prettier --check .",
     "format:fix": "bun x prettier --log-level silent --write .",
     "format:pkg": "bun x sort-package-json ./package.json ./sources/*/package.json ./sources/*/*/package.json ./e2e/package.json",
