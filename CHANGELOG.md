@@ -1,5 +1,28 @@
 # Changelog
 
+## [2026.1.6](https://github.com/proconnect-gouv/hyyypertool/compare/2026.1.5...2026.1.6) (2026-01-30)
+
+### Changements
+
+- ✨ Ajouter des données partiel FranceConnect sur la page du profile
+- 🐛 Autorisation de nom d'utilisateur vide sur les overtures de conversation crisp
+
+### Ajouté
+
+- ✨ add franceconnect section (#1360) (80ad0a3a)
+
+### Corrigé
+
+- 🐛 allow username to be null (#1361) (87a24017)
+
+### Documentation
+
+- 📝 refine the release it changeset examples [skip ci] (#1358) (2b4bec1c)
+
+### Divers
+
+- 🧪 reintroduce hx_url unit tests (#1359) (fdb12ce5)
+
 ## [2026.1.5](https://github.com/proconnect-gouv/hyyypertool/compare/2026.1.4...2026.1.5) (2026-01-30)
 
 ### Changements
