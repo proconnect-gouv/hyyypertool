@@ -5,7 +5,7 @@ import { hx_trigger_from_body } from "#src/htmx";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import { Loader } from "#src/ui/loader";
 import { formattedPlural } from "#src/ui/plurial";
-import { hx_urls } from "#src/urls";
+import { urls } from "#src/urls";
 
 //
 
@@ -17,9 +17,9 @@ export async function DomainsByOrganization(props: Props) {
   const $describedby = hyper_ref();
   const { organization, query_domain_count } = props;
   const count = await query_domain_count;
-  const query_domains_by_organization_id = hx_urls.organizations[
+  const query_domains_by_organization_id = urls.organizations[
     ":id"
-  ].domains.$get({
+  ].domains.$hx_get({
     param: {
       id: organization.id,
     },

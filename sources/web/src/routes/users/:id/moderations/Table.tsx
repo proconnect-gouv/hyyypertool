@@ -5,7 +5,7 @@ import {
   moderation_type_to_title,
 } from "#src/lib/moderations";
 import { date_to_string } from "#src/time";
-import { hx_urls } from "#src/urls";
+import { urls } from "#src/urls";
 import type { get_moderations_by_user_id } from "./get_moderations_by_user_id.query";
 
 //
@@ -75,7 +75,7 @@ export function Row({
         <a
           class="p-3"
           href={
-            hx_urls.moderations[":id"].$url({
+            urls.moderations[":id"].$url({
               param: { id: moderation.id },
             }).pathname
           }

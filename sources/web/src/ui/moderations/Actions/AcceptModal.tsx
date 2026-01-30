@@ -1,6 +1,6 @@
 import { HtmxEvents } from "#src/htmx";
 import { button } from "#src/ui/button";
-import { hx_urls } from "#src/urls";
+import { urls } from "#src/urls";
 import { AUTO_GO_BACK_EVENT } from "../AutoGoBack";
 import { AddAsMemberExternal } from "./AddAsMemberExternal";
 import { AddAsMemberInternal } from "./AddAsMemberInternal";
@@ -16,9 +16,9 @@ export async function AcceptModal({
   userEmail: string;
   moderation: Values["moderation"];
 }) {
-  const hx_path_validate_moderation = hx_urls.moderations[
+  const hx_path_validate_moderation = urls.moderations[
     ":id"
-  ].validate.$patch({
+  ].validate.$hx_patch({
     param: { id: moderation.id },
   });
   return (

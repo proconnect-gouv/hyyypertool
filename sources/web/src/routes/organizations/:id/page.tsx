@@ -5,7 +5,7 @@ import { hx_include, hx_trigger_from_body } from "#src/htmx";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import { FrNumberConverter } from "#src/ui/number";
 import { formattedPlural } from "#src/ui/plurial";
-import { hx_urls } from "#src/urls";
+import { urls } from "#src/urls";
 import { Fiche } from "./Fiche";
 import type { get_organization_by_id } from "./get_organization_by_id.query";
 
@@ -28,7 +28,7 @@ export default async function Page({
 }) {
   const $domains_describedby = hyper_ref();
 
-  const hx_get_domains_query_props = hx_urls.organizations[":id"].domains.$get({
+  const hx_get_domains_query_props = urls.organizations[":id"].domains.$hx_get({
     param: { id: organization.id },
     query: { describedby: $domains_describedby },
   });
@@ -81,7 +81,7 @@ async function MembersInTheOrganization({
   const $members_describedby = hyper_ref();
   const $page_ref = hyper_ref();
 
-  const hx_get_members_query_props = hx_urls.organizations[":id"].members.$get({
+  const hx_get_members_query_props = urls.organizations[":id"].members.$hx_get({
     param: { id: organization.id },
     query: { describedby: $members_describedby, page_ref: $page_ref },
   });

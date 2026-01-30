@@ -1,123 +1,117 @@
-//
-
 import { expect, test } from "bun:test";
 import { Hono } from "hono";
 import { validator } from "hono/validator";
-import { hono_hx_attibute } from "./hx_urls";
+import { create_urls } from "./urls";
 
-//
-
-test("index.$get() returns a hx-get attibute", () => {
+test("index.$hx_get() returns a hx-get attribute", () => {
   const app = new Hono().get("/", ({ text }) => text("OK"));
-  const attibute = hono_hx_attibute<typeof app>().index.$get();
-  expect(attibute).toEqual({
+  const attribute = create_urls<typeof app>().index.$hx_get();
+  expect(attribute).toEqual({
     "hx-get": "/",
   });
 });
 
-test(":slug.$get() returns a hx-get attibute", () => {
+test(":slug.$hx_get() returns a hx-get attribute", () => {
   const app = new Hono().get("/:slug", ({ text }) => text("OK"));
-  const attibute = hono_hx_attibute<typeof app>()[":slug"].$get({
+  const attribute = create_urls<typeof app>()[":slug"].$hx_get({
     param: { slug: "foo" },
   });
-  expect(attibute).toEqual({
+  expect(attribute).toEqual({
     "hx-get": "/foo",
   });
 });
 
-test("index.$post() returns a hx-post attibute", () => {
+test("index.$hx_post() returns a hx-post attribute", () => {
   const app = new Hono().post("/", ({ text }) => text("OK"));
-  const attibute = hono_hx_attibute<typeof app>().index.$post();
-  expect(attibute).toEqual({
+  const attribute = create_urls<typeof app>().index.$hx_post();
+  expect(attribute).toEqual({
     "hx-post": "/",
   });
 });
 
-test(":slug.$post() returns a hx-post attibute", () => {
+test(":slug.$hx_post() returns a hx-post attribute", () => {
   const app = new Hono().post("/:slug", ({ text }) => text("OK"));
-  const attibute = hono_hx_attibute<typeof app>()[":slug"].$post({
+  const attribute = create_urls<typeof app>()[":slug"].$hx_post({
     param: { slug: "foo" },
   });
-  expect(attibute).toEqual({
+  expect(attribute).toEqual({
     "hx-post": "/foo",
   });
 });
 
-test("index.$put() returns a hx-put attibute", () => {
+test("index.$hx_put() returns a hx-put attribute", () => {
   const app = new Hono().put("/", ({ text }) => text("OK"));
-  const attibute = hono_hx_attibute<typeof app>().index.$put();
-  expect(attibute).toEqual({
+  const attribute = create_urls<typeof app>().index.$hx_put();
+  expect(attribute).toEqual({
     "hx-put": "/",
   });
 });
 
-test(":slug.$put() returns a hx-put attibute", () => {
+test(":slug.$hx_put() returns a hx-put attribute", () => {
   const app = new Hono().put("/:slug", ({ text }) => text("OK"));
-  const attibute = hono_hx_attibute<typeof app>()[":slug"].$put({
+  const attribute = create_urls<typeof app>()[":slug"].$hx_put({
     param: { slug: "foo" },
   });
-  expect(attibute).toEqual({
+  expect(attribute).toEqual({
     "hx-put": "/foo",
   });
 });
 
-test("index.$delete() returns a hx-delete attibute", () => {
+test("index.$hx_delete() returns a hx-delete attribute", () => {
   const app = new Hono().delete("/", ({ text }) => text("OK"));
-  const attibute = hono_hx_attibute<typeof app>().index.$delete();
-  expect(attibute).toEqual({
+  const attribute = create_urls<typeof app>().index.$hx_delete();
+  expect(attribute).toEqual({
     "hx-delete": "/",
   });
 });
 
-test(":slug.$delete() returns a hx-delete attibute", () => {
+test(":slug.$hx_delete() returns a hx-delete attribute", () => {
   const app = new Hono().delete("/:slug", ({ text }) => text("OK"));
-  const attibute = hono_hx_attibute<typeof app>()[":slug"].$delete({
+  const attribute = create_urls<typeof app>()[":slug"].$hx_delete({
     param: { slug: "foo" },
   });
-  expect(attibute).toEqual({
+  expect(attribute).toEqual({
     "hx-delete": "/foo",
   });
 });
 
-test("index.$patch() returns a hx-patch attibute", () => {
+test("index.$hx_patch() returns a hx-patch attribute", () => {
   const app = new Hono().patch("/", ({ text }) => text("OK"));
-  const attibute = hono_hx_attibute<typeof app>().index.$patch();
-  expect(attibute).toEqual({
+  const attribute = create_urls<typeof app>().index.$hx_patch();
+  expect(attribute).toEqual({
     "hx-patch": "/",
   });
 });
 
-test(":slug.$patch() returns a hx-patch attibute", () => {
+test(":slug.$hx_patch() returns a hx-patch attribute", () => {
   const app = new Hono().patch("/:slug", ({ text }) => text("OK"));
-  const attibute = hono_hx_attibute<typeof app>()[":slug"].$patch({
+  const attribute = create_urls<typeof app>()[":slug"].$hx_patch({
     param: { slug: "foo" },
   });
-  expect(attibute).toEqual({
+  expect(attribute).toEqual({
     "hx-patch": "/foo",
   });
 });
 
-test("index.$options() returns a hx-options attibute", () => {
+test("index.$hx_options() returns a hx-options attribute", () => {
   const app = new Hono().options("/", ({ text }) => text("OK"));
-  const attibute = hono_hx_attibute<typeof app>().index.$options();
-  expect(attibute).toEqual({
+  const attribute = create_urls<typeof app>().index.$hx_options();
+  expect(attribute).toEqual({
     "hx-options": "/",
   });
 });
 
-test(":slug.$options() returns a hx-options attibute", () => {
+test(":slug.$hx_options() returns a hx-options attribute", () => {
   const app = new Hono().options("/:slug", ({ text }) => text("OK"));
-  const attibute = hono_hx_attibute<typeof app>()[":slug"].$options({
+  const attribute = create_urls<typeof app>()[":slug"].$hx_options({
     param: { slug: "foo" },
   });
-  expect(attibute).toEqual({
+  expect(attribute).toEqual({
     "hx-options": "/foo",
   });
 });
 
-//
-
-test("index.$get() with query returns a hx-get attibute with query", () => {
+test("index.$hx_get() with query returns a hx-get attribute with query", () => {
   const app = new Hono().get(
     "/",
     validator("query", (value) => ({
@@ -128,18 +122,16 @@ test("index.$get() with query returns a hx-get attibute with query", () => {
     ({ text }) => text("OK"),
   );
 
-  const attibute = hono_hx_attibute<typeof app>().index.$get({
+  const attribute = create_urls<typeof app>().index.$hx_get({
     query: { weapon: "axe" },
   });
 
-  expect(attibute).toEqual({
+  expect(attribute).toEqual({
     "hx-get": "/?weapon=axe",
   });
 });
 
-//
-
-test("with form data returns a hx-val attibute", () => {
+test("with form data returns a hx-vals attribute", () => {
   const app = new Hono().post(
     "/",
     validator("form", (value) => ({
@@ -150,17 +142,17 @@ test("with form data returns a hx-val attibute", () => {
     ({ text }) => text("OK"),
   );
 
-  const attibute = hono_hx_attibute<typeof app>().index.$post({
+  const attribute = create_urls<typeof app>().index.$hx_post({
     form: { weapon: "axe" },
   });
 
-  expect(attibute).toEqual({
+  expect(attribute).toEqual({
     "hx-post": "/",
     "hx-vals": JSON.stringify({ weapon: "axe" }),
   });
 });
 
-test("hx-val attibute is optional", () => {
+test("hx-vals attribute is optional", () => {
   const app = new Hono().post(
     "/",
     validator("form", (value) => ({
@@ -171,9 +163,9 @@ test("hx-val attibute is optional", () => {
     ({ text }) => text("OK"),
   );
 
-  const attibute = hono_hx_attibute<typeof app>().index.$post();
+  const attribute = create_urls<typeof app>().index.$hx_post();
 
-  expect(attibute).toEqual({
+  expect(attribute).toEqual({
     "hx-post": "/",
   });
 });
@@ -189,28 +181,21 @@ test("should keep mandatory href params", () => {
     ({ text }) => text("OK"),
   );
 
-  const attibute = hono_hx_attibute<typeof app>().foo[":slug"].quz.$post({
+  const attribute = create_urls<typeof app>().foo[":slug"].quz.$hx_post({
     param: { slug: "bar" },
   });
 
-  expect(attibute).toEqual({
+  expect(attribute).toEqual({
     "hx-post": "/foo/bar/quz",
   });
 });
 
-//
-
 test("params accept numbers and convert them to strings", () => {
   const app = new Hono().get("/:id", ({ text }) => text("OK"));
-  const attibute = hono_hx_attibute<typeof app>()[":id"].$get({
+  const attribute = create_urls<typeof app>()[":id"].$hx_get({
     param: { id: 42 },
   });
-  expect(attibute).toEqual({
+  expect(attribute).toEqual({
     "hx-get": "/42",
   });
 });
-
-//
-
-// NOTE: form fields are intentionally not type-checked because in HTMX
-// form data can come from the HTML <form> element, not just hx-vals

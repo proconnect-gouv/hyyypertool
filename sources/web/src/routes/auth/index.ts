@@ -4,7 +4,7 @@ import env from "#src/config";
 import { AuthError } from "#src/errors";
 import type { AgentConnectUserInfo } from "#src/middleware/auth";
 import type { App_Context } from "#src/middleware/context";
-import { hx_urls } from "#src/urls";
+import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
 import { MfaAcrValueSchema } from "@~/core/schema";
 import { Hono } from "hono";
@@ -96,7 +96,7 @@ export default new Hono<Oidc_Context & App_Context>()
     });
     session.set("idtoken", "");
 
-    return redirect(hx_urls.moderations.$url().pathname);
+    return redirect(urls.moderations.$url().pathname);
   })
   .get(
     `/login/callback`,
@@ -143,7 +143,7 @@ export default new Hono<Oidc_Context & App_Context>()
       session.set("userinfo", userinfo as AgentConnectUserInfo);
       session.set("idtoken", tokens.id_token ?? "");
 
-      return redirect(hx_urls.moderations.$url().pathname);
+      return redirect(urls.moderations.$url().pathname);
     },
   )
   .get("/logout", ({ redirect, req, set, var: { oidc_config, session } }) => {
@@ -166,7 +166,7 @@ export default new Hono<Oidc_Context & App_Context>()
 
 function get_redirect_uri(url: string) {
   const _url = new URL(url);
-  const redirect_uri = `${env.HOST ? env.HOST : _url.origin}${hx_urls.auth.login.callback.$url().pathname}`;
+  const redirect_uri = `${env.HOST ? env.HOST : _url.origin}${urls.auth.login.callback.$url().pathname}`;
   return redirect_uri;
 }
 

@@ -19,6 +19,7 @@ type InputEndpoint = { form?: {}; query?: {}; param?: {} };
 type RelaxParams<T> = T extends { param: infer P }
   ? { param: { [K in keyof P]: P[K] extends string ? string | number : P[K] } }
   : T;
+
 type HtmxSpecifiedAttributes<
   Method extends Methods,
   Input extends InputEndpoint,
@@ -28,8 +29,10 @@ type HtmxSpecifiedAttributes<
     ? Record<`hx-${Method}`, string> & Record<`hx-vals`, string>
     : Record<`hx-${Method}`, string>;
 
-type HxClientRequest<TSchema extends Schema> = {
-  [$$Method in keyof TSchema]: TSchema[$$Method] extends Endpoint & {
+type UrlClientRequest<TSchema extends Schema> = {
+  [$$Method in keyof TSchema as $$Method extends `$${infer Method}`
+    ? `$hx_${Method}`
+    : never]: TSchema[$$Method] extends Endpoint & {
     input: infer $Input;
   }
     ? { input: $Input; method: $$Method } extends {
@@ -62,6 +65,7 @@ type HxClientRequest<TSchema extends Schema> = {
       : {},
   ) => URL;
 };
+
 type PathToChain<
   TPath extends string,
   TSchema extends Schema,
@@ -73,12 +77,12 @@ type PathToChain<
         [K in $ParentPath]: PathToChain<$SubPath, TSchema, Original>;
       }
     : {
-        [K in TPath extends "" ? "index" : TPath]: HxClientRequest<
+        [K in TPath extends "" ? "index" : TPath]: UrlClientRequest<
           TSchema extends Record<string, unknown> ? TSchema[Original] : never
         >;
       };
 
-type HxClient<T> =
+type UrlClient<T> =
   T extends HonoBase<any, infer $Schema, any>
     ? $Schema extends Record<infer $Path, Schema>
       ? $Path extends string
@@ -92,7 +96,7 @@ function build_path(segments: string[]): string {
   return "/" + filtered.join("/");
 }
 
-function create_hx_proxy(path_segments: string[] = []): any {
+function create_url_proxy(path_segments: string[] = []): any {
   return new Proxy(() => {}, {
     get(_, prop: string) {
       if (prop === "$url") {
@@ -107,8 +111,8 @@ function create_hx_proxy(path_segments: string[] = []): any {
         };
       }
 
-      if (prop.startsWith("$")) {
-        const method = prop.slice(1) as Methods;
+      if (prop.startsWith("$hx_")) {
+        const method = prop.slice(4) as Methods;
         return (args?: {
           param?: Record<string, string | number>;
           query?: Record<string, string>;
@@ -135,15 +139,15 @@ function create_hx_proxy(path_segments: string[] = []): any {
         };
       }
 
-      return create_hx_proxy([...path_segments, prop]);
+      return create_url_proxy([...path_segments, prop]);
     },
   });
 }
 
-export function hono_hx_attibute<
+export function create_urls<
   T extends Hono<any, any, any>,
->(): UnionToIntersection<HxClient<T>> {
-  return create_hx_proxy() as UnionToIntersection<HxClient<T>>;
+>(): UnionToIntersection<UrlClient<T>> {
+  return create_url_proxy() as UnionToIntersection<UrlClient<T>>;
 }
 
-export const hx_urls = hono_hx_attibute<Router>();
+export const urls = create_urls<Router>();

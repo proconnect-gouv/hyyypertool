@@ -6,7 +6,7 @@ import { date_to_dom_string } from "#src/time";
 import { Foot } from "#src/ui/hx_table";
 import { row } from "#src/ui/table";
 import { Time } from "#src/ui/time";
-import { hx_urls } from "#src/urls";
+import { urls } from "#src/urls";
 import type { Pagination } from "@~/core/schema";
 import { query_schema } from "./context";
 import type { get_organizations_list } from "./get_organizations_list.query";
@@ -17,7 +17,7 @@ const $table = hyper_ref();
 const $search = hyper_ref();
 
 const hx_organizations_query_props = {
-  ...hx_urls.organizations.$get({ query: {} }),
+  ...urls.organizations.$hx_get({ query: {} }),
   "hx-include": hx_include([$table, $search, query_schema.keyof().enum.page]),
   "hx-replace-url": true,
   "hx-select": `#${$table} > table`,
@@ -124,7 +124,7 @@ function Row({
     <tr
       aria-label={`Organisation ${organization.cached_libelle} (${organization.siret})`}
       onclick={`window.location = '${
-        hx_urls.organizations[":id"].$url({
+        urls.organizations[":id"].$url({
           param: { id: organization.id },
         }).pathname
       }'`}

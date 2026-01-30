@@ -18,7 +18,7 @@ import {
 } from "#src/ui/organizations/info";
 import { About as About_User } from "#src/ui/users/About";
 import { Investigation as Investigation_User } from "#src/ui/users/Investigation";
-import { hx_urls } from "#src/urls";
+import { urls } from "#src/urls";
 import type { IdentiteProconnectPgDatabase } from "@~/identite-proconnect/database";
 import { createContext, useContext } from "hono/jsx";
 import { ModerationExchanges } from "./ModerationExchanges";
@@ -80,7 +80,7 @@ async function ModerationPageContent() {
       <hr class="bg-none pb-5" />
       <section
         hx-disinherit="*"
-        {...hx_urls.moderations[":id"].$get({
+        {...urls.moderations[":id"].$hx_get({
           param: { id: moderation.id },
         })}
         hx-select={`#${moderation_id}`}

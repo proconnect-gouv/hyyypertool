@@ -3,7 +3,7 @@
 import { Main_Layout } from "#src/layouts";
 import { authorized } from "#src/middleware/auth";
 import type { App_Context } from "#src/middleware/context";
-import { hx_urls } from "#src/urls";
+import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
 import consola from "consola";
 import { Hono } from "hono";
@@ -27,7 +27,7 @@ export default new Hono<App_Context>()
     zValidator("query", query_schema, function hook(result, { redirect }) {
       if (result.success) return undefined;
       consola.error(result.error);
-      return redirect(hx_urls.users.$url().pathname);
+      return redirect(urls.users.$url().pathname);
     }),
     async function GET({ render, set, req, var: { identite_pg } }) {
       set("page_title", "Liste des utilisateurs");

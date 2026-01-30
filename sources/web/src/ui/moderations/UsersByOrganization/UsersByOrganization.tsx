@@ -5,7 +5,7 @@ import { hx_include, hx_trigger_from_body } from "#src/htmx";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import { Loader } from "#src/ui/loader";
 import { formattedPlural } from "#src/ui/plurial";
-import { hx_urls } from "#src/urls";
+import { urls } from "#src/urls";
 import { match, P } from "ts-pattern";
 
 //
@@ -27,7 +27,7 @@ export async function UsersByOrganization(props: Props) {
       .with(P.number.between(1, 3), () => true)
       .otherwise(() => false);
   const hx_get_users_by_organization_props = {
-    ...hx_urls.organizations[":id"].members.$get({
+    ...urls.organizations[":id"].members.$hx_get({
       param: { id: organization.id },
       query: { describedby: $describedby, page_ref: $page_ref },
     }),

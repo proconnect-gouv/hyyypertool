@@ -5,7 +5,7 @@ import type { HtmxHeader } from "#src/htmx";
 import { Main_Layout } from "#src/layouts";
 import { ResetMFA, ResetPassword } from "#src/lib/users";
 import type { App_Context } from "#src/middleware/context";
-import { hx_urls } from "#src/urls";
+import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
 import { EntitySchema } from "@~/core/schema";
 import { schema } from "@~/identite-proconnect/database";
@@ -58,7 +58,7 @@ export default new Hono<App_Context>()
       const { id } = req.valid("param");
       await identite_pg.delete(schema.users).where(eq(schema.users.id, id));
       return text("OK", 200, {
-        "HX-Location": hx_urls.users.$url().pathname,
+        "HX-Location": urls.users.$url().pathname,
       } as HtmxHeader);
     },
   )

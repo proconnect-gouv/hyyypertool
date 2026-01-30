@@ -4,7 +4,7 @@ import type { GetUserInfoOutput } from "#src/lib/users";
 import { button } from "#src/ui/button";
 import { CopyButton } from "#src/ui/button/components";
 import { description_list } from "#src/ui/list";
-import { hx_urls } from "#src/urls";
+import { urls } from "#src/urls";
 import { z_email_domain } from "@~/core/schema";
 
 //
@@ -26,7 +26,7 @@ export function About({ user, organization, nonce = "" }: AboutProps) {
         <a
           class="bg-none"
           target="_blank"
-          href={hx_urls.users[":id"].$url({ param: { id: user.id } }).pathname}
+          href={urls.users[":id"].$url({ param: { id: user.id } }).pathname}
         >
           👨‍💻 Profile
         </a>

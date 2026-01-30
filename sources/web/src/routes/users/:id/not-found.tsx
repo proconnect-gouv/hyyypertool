@@ -1,7 +1,7 @@
 //
 
 import config from "#src/config";
-import { hx_urls } from "#src/urls";
+import { urls } from "#src/urls";
 
 //
 
@@ -19,7 +19,7 @@ export function UserNotFound({ user_id }: { user_id?: number | undefined }) {
             <br />
             Excusez-nous pour la gène occasionnée.
           </p>
-          <a href={hx_urls.users.$url().pathname} class="fr-btn">
+          <a href={urls.users.$url().pathname} class="fr-btn">
             Retour aux utilisateurs
           </a>
         </section>

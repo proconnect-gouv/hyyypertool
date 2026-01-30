@@ -5,7 +5,7 @@ import { button } from "#src/ui/button";
 import { CopyButton } from "#src/ui/button/components";
 import { description_list } from "#src/ui/list";
 import { LocalTime } from "#src/ui/time";
-import { hx_urls } from "#src/urls";
+import { urls } from "#src/urls";
 import { type JSX } from "hono/jsx";
 import { InactiveWarning } from "./InactiveWarning";
 
@@ -26,7 +26,7 @@ export function About(props: Props) {
           class="bg-none"
           target="_blank"
           href={
-            hx_urls.organizations[":id"].$url({
+            urls.organizations[":id"].$url({
               param: {
                 id: organization.id,
               },

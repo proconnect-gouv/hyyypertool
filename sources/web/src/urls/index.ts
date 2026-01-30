@@ -1,1 +1,1 @@
-export { hx_urls } from "./hx_urls";
+export { urls } from "./urls";

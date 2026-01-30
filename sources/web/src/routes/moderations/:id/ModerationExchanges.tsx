@@ -5,7 +5,7 @@ import { hx_trigger_from_body } from "#src/htmx";
 import { MODERATION_EVENTS } from "#src/lib/moderations";
 import type { GetModerationWithDetailsDto } from "#src/queries/moderations";
 import { Loader } from "#src/ui/loader";
-import { hx_urls } from "#src/urls";
+import { urls } from "#src/urls";
 
 //
 
@@ -16,7 +16,7 @@ export async function ModerationExchanges({
 }) {
   const $describedby = hyper_ref();
 
-  const hx_query_moderation_emails = hx_urls.moderations[":id"].email.$get({
+  const hx_query_moderation_emails = urls.moderations[":id"].email.$hx_get({
     param: { id: moderation.id },
     query: { describedby: $describedby },
   });

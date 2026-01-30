@@ -6,7 +6,7 @@ import { menu_item } from "#src/ui/menu";
 import { Horizontal_Menu } from "#src/ui/menu/components";
 import { row } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
-import { hx_urls } from "#src/urls";
+import { urls } from "#src/urls";
 import type { Pagination } from "@~/core/schema";
 import { VerificationTypeSchema } from "@~/identite-proconnect/types";
 import { useContext } from "hono/jsx";
@@ -34,7 +34,7 @@ export async function Table({
   const { users, count } = query_members_collection;
 
   const hx_member_query_props = {
-    ...hx_urls.organizations[":id"].members.$get({
+    ...urls.organizations[":id"].members.$hx_get({
       param: {
         id: organization_id,
       },
@@ -130,9 +130,7 @@ async function Row_Actions() {
         <li>
           <a
             class={menu_item({ override: "[href]" })}
-            href={
-              hx_urls.users[":id"].$url({ param: { id: user.id } }).pathname
-            }
+            href={urls.users[":id"].$url({ param: { id: user.id } }).pathname}
           >
             Ouvrir
           </a>
@@ -140,7 +138,7 @@ async function Row_Actions() {
         <li>
           <button
             class={menu_item()}
-            {...hx_urls.organizations[":id"].members[":user_id"].$delete({
+            {...urls.organizations[":id"].members[":user_id"].$hx_delete({
               param: {
                 id: organization_id,
                 user_id: user_id,
@@ -154,7 +152,7 @@ async function Row_Actions() {
         <li>
           <button
             class={menu_item()}
-            {...hx_urls.organizations[":id"].members[":user_id"].$patch({
+            {...urls.organizations[":id"].members[":user_id"].$hx_patch({
               param: {
                 id: organization_id,
                 user_id: user_id,
@@ -172,7 +170,7 @@ async function Row_Actions() {
         <li>
           <button
             class={menu_item()}
-            {...hx_urls.organizations[":id"].members[":user_id"].$patch({
+            {...urls.organizations[":id"].members[":user_id"].$hx_patch({
               param: {
                 id: organization_id,
                 user_id: user_id,
@@ -189,7 +187,7 @@ async function Row_Actions() {
         <li>
           <button
             class={menu_item()}
-            {...hx_urls.organizations[":id"].members[":user_id"].$patch({
+            {...urls.organizations[":id"].members[":user_id"].$hx_patch({
               param: {
                 id: organization_id,
                 user_id: user_id,
@@ -207,7 +205,7 @@ async function Row_Actions() {
         <li>
           <button
             class={menu_item()}
-            {...hx_urls.organizations[":id"].members[":user_id"].$patch({
+            {...urls.organizations[":id"].members[":user_id"].$hx_patch({
               param: {
                 id: organization_id,
                 user_id: user_id,
@@ -225,7 +223,7 @@ async function Row_Actions() {
         <li>
           <button
             class={menu_item()}
-            {...hx_urls.organizations[":id"].members[":user_id"].$patch({
+            {...urls.organizations[":id"].members[":user_id"].$hx_patch({
               param: {
                 id: organization_id,
                 user_id: user_id,
@@ -245,7 +243,7 @@ async function Row_Actions() {
           {verification_type ? (
             <button
               class={menu_item()}
-              {...hx_urls.organizations[":id"].members[":user_id"].$patch({
+              {...urls.organizations[":id"].members[":user_id"].$hx_patch({
                 param: {
                   id: organization_id,
                   user_id: user_id,
@@ -266,7 +264,7 @@ async function Row_Actions() {
         <li>
           <button
             class={menu_item()}
-            {...hx_urls.organizations[":id"].members[":user_id"].$patch({
+            {...urls.organizations[":id"].members[":user_id"].$hx_patch({
               param: {
                 id: organization_id,
                 user_id: user_id,

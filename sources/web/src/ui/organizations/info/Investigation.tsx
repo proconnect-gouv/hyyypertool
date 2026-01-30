@@ -1,7 +1,7 @@
 //
 
 import { button } from "#src/ui/button";
-import { hx_urls } from "#src/urls";
+import { urls } from "#src/urls";
 
 import type { JSX } from "hono/jsx";
 
@@ -16,7 +16,7 @@ type Props = JSX.IntrinsicElements["section"] & {
 
 export async function Investigation(props: Props) {
   const { banaticUrl, organization } = props;
-  const hx_organizations_leaders_props = hx_urls.organizations.leaders.$get({
+  const hx_organizations_leaders_props = urls.organizations.leaders.$hx_get({
     query: { siret: organization.siret },
   });
   const button_classes = button({
