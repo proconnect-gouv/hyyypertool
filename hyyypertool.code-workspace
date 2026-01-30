@@ -1,6 +1,10 @@
 {
   "folders": [
     {
+      "name": "/",
+      "path": ".",
+    },
+    {
       "name": "🈸 sources/core/",
       "path": "sources/core",
     },
@@ -35,10 +39,6 @@
     {
       "name": "🚥 e2e/",
       "path": "e2e",
-    },
-    {
-      "name": "/",
-      "path": ".",
     },
   ],
   "extensions": {
