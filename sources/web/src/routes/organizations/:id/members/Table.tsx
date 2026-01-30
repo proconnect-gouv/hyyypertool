@@ -8,10 +8,7 @@ import { row } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
 import { hx_urls, urls } from "#src/urls";
 import type { Pagination } from "@~/core/schema";
-import {
-  VerificationTypeSchema,
-  type VerificationType,
-} from "@~/identite-proconnect/types";
+import { VerificationTypeSchema } from "@~/identite-proconnect/types";
 import { useContext } from "hono/jsx";
 import type { VariantProps } from "tailwind-variants";
 import { MemberContext } from "./context";
@@ -84,7 +81,9 @@ export async function Table({
 
 function Row({ variants }: { variants?: VariantProps<typeof row> }) {
   const { user } = useContext(MemberContext);
-  const verification_type = user.verification_type as VerificationType;
+  const verification_type = VerificationTypeSchema.parse(
+    user.verification_type,
+  );
 
   return (
     <tr
@@ -233,7 +232,9 @@ async function Row_Actions() {
                 user_id: user_id.toString(),
               },
               form: {
-                verification_type: "verified_by_coop_mediation_numerique",
+                verification_type:
+                  VerificationTypeSchema.enum
+                    .imported_from_coop_mediation_numerique,
               },
             })}
             hx-swap="none"
@@ -252,7 +253,8 @@ async function Row_Actions() {
                     user_id: user_id.toString(),
                   },
                   form: {
-                    verification_type: "",
+                    verification_type:
+                      VerificationTypeSchema.enum.domain_not_verified_yet,
                   },
                 },
               )}

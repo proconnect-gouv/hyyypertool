@@ -253,24 +253,23 @@ declare const app: import("hono/hono-base").HonoBase<
                       } & {
                         form: {
                           add_member: "AS_INTERNAL" | "AS_EXTERNAL";
-                          add_domain?: string | undefined;
-                          send_notification?: string | undefined;
-                          verification_type?:
+                          verification_type:
                             | "domain"
-                            | "null"
                             | "code_sent_to_official_contact_email"
                             | "imported_from_coop_mediation_numerique"
                             | "imported_from_inclusion_connect"
                             | "in_liste_dirigeants_rna"
                             | "in_liste_dirigeants_rne"
+                            | "official_contact_email"
+                            | "proof_received"
+                            | "bypassed"
+                            | "organization_dirigeant"
                             | "no_validation_means_available"
                             | "no_verification_means_for_entreprise_unipersonnelle"
                             | "no_verification_means_for_small_association"
-                            | "official_contact_email"
-                            | "organization_dirigeant"
-                            | "proof_received"
-                            | "bypassed"
-                            | undefined;
+                            | "domain_not_verified_yet";
+                          add_domain?: string | undefined;
+                          send_notification?: string | undefined;
                         };
                       };
                       output: {};
@@ -632,22 +631,21 @@ declare const app: import("hono/hono-base").HonoBase<
                             };
                           } & {
                             form: {
-                              verification_type?:
-                                | ""
+                              verification_type:
                                 | "domain"
                                 | "code_sent_to_official_contact_email"
                                 | "imported_from_coop_mediation_numerique"
                                 | "imported_from_inclusion_connect"
                                 | "in_liste_dirigeants_rna"
                                 | "in_liste_dirigeants_rne"
+                                | "official_contact_email"
+                                | "proof_received"
+                                | "bypassed"
+                                | "organization_dirigeant"
                                 | "no_validation_means_available"
                                 | "no_verification_means_for_entreprise_unipersonnelle"
                                 | "no_verification_means_for_small_association"
-                                | "official_contact_email"
-                                | "organization_dirigeant"
-                                | "proof_received"
-                                | "bypassed"
-                                | undefined;
+                                | "domain_not_verified_yet";
                               is_external?: string | undefined;
                             };
                           };

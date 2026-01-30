@@ -139,7 +139,7 @@ test("PATCH /organizations/:id/members/:user_id updates user organization member
     organization_id,
     user_id,
     is_external: false,
-    verification_type: "domain_not_verified_yet",
+    verification_type: VerificationTypeSchema.enum.domain_not_verified_yet,
   });
 
   {
@@ -207,7 +207,7 @@ test("PATCH /organizations/:id/members/:user_id updates user organization member
   }
 });
 
-test("PATCH /organizations/:id/members/:user_id updates verification type to null", async () => {
+test("PATCH /organizations/:id/members/:user_id clears verification with domain_not_verified_yet", async () => {
   const organization_id = await create_unicorn_organization(pg);
   const user_id = await create_adora_pony_user(pg);
 
@@ -250,7 +250,9 @@ test("PATCH /organizations/:id/members/:user_id updates verification type to nul
     .route("/:id/members/:user_id", app)
     .request(`/${organization_id}/members/${user_id}`, {
       method: "PATCH",
-      body: new URLSearchParams({ verification_type: "" }),
+      body: new URLSearchParams({
+        verification_type: VerificationTypeSchema.enum.domain_not_verified_yet,
+      }),
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
     });
 
@@ -289,7 +291,7 @@ test("DELETE /organizations/:id/members/:user_id removes user from organization"
     organization_id,
     user_id,
     is_external: true,
-    verification_type: "domain_not_verified_yet",
+    verification_type: VerificationTypeSchema.enum.domain_not_verified_yet,
   });
 
   {
