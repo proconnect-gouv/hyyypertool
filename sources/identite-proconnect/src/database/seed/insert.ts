@@ -224,6 +224,23 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
     );
     await insert_nordPass_authenticator(db, raphael_alpha.id);
     consola.verbose(`🌱 INSERT ${raphael_alpha.given_name} NordPass setup...`);
+
+    await insert_franceconnect_userinfo(db, {
+      birthcountry: "99100",
+      birthdate: "1985-03-15T00:00:00+01:00",
+      birthplace: "75056",
+      created_at: "2023-01-15T10:30:00+01:00",
+      family_name: "Dubigny",
+      gender: "male",
+      given_name: "Raphael",
+      preferred_username: "rdubigny",
+      sub: "fc-sub-raphael-alpha-1234567890abcdef",
+      updated_at: "2023-06-22T16:34:34+02:00",
+      user_id: raphael_alpha.id,
+    });
+    consola.verbose(
+      `🌱 INSERT ${raphael_alpha.given_name} FranceConnect data...`,
+    );
   } catch (err) {
     console.error("Something went wrong...");
     console.error(err);
@@ -237,6 +254,13 @@ function insert_moderation(
   insert_moderation: typeof schema.moderations.$inferInsert,
 ) {
   return db.insert(schema.moderations).values(insert_moderation);
+}
+
+function insert_franceconnect_userinfo(
+  db: IdentiteProconnectPgDatabase,
+  insert_franceconnect: typeof schema.franceconnect_userinfo.$inferInsert,
+) {
+  return db.insert(schema.franceconnect_userinfo).values(insert_franceconnect);
 }
 
 function insert_users_organizations(

@@ -9,19 +9,23 @@ import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
 import { z_email_domain } from "@~/core/schema";
 import type { get_authenticators_by_user_id } from "./get_authenticators_by_user_id.query";
+import type { get_franceconnect_by_user_id } from "./get_franceconnect_by_user_id.query";
 import type { get_user_by_id } from "./get_user_by_id.query";
 
 //
 
-type User = Awaited<ReturnType<typeof get_user_by_id>>;
 type Authenticators = Awaited<ReturnType<typeof get_authenticators_by_user_id>>;
+type FranceConnect = Awaited<ReturnType<typeof get_franceconnect_by_user_id>>;
+type User = Awaited<ReturnType<typeof get_user_by_id>>;
 
 export async function UserPage({
-  user,
   authenticators,
+  franceconnect,
+  user,
 }: {
-  user: User;
   authenticators: Authenticators;
+  franceconnect: FranceConnect;
+  user: User;
 }) {
   const $organizations_describedby = hyper_ref("user_organizations");
   const $moderations_describedby = hyper_ref("user_moderations");
@@ -90,7 +94,12 @@ export async function UserPage({
       <hr />
       <div aria-describedby="mfa" class="fr-container py-6">
         <h1 id="mfa">🔓 MFA</h1>
-        <MFA user={user} authenticators={authenticators} />
+        <MFA authenticators={authenticators} user={user} />
+      </div>
+      <hr />
+      <div aria-describedby="franceconnect" class="fr-container py-6">
+        <h1 id="franceconnect">🪪 FranceConnect</h1>
+        <FranceConnectInfo franceconnect={franceconnect} />
       </div>
     </main>
   );
@@ -148,6 +157,63 @@ async function MFA({
           </p>
         </div>
       ))}
+    </div>
+  );
+}
+
+function FranceConnectInfo({
+  franceconnect,
+}: {
+  franceconnect: FranceConnect;
+}) {
+  if (!franceconnect) {
+    return <p>L'utilisateur n'a pas de données FranceConnect.</p>;
+  }
+
+  const { base, dd, dt } = badge_description_list();
+
+  return (
+    <div class="fr-card p-6!">
+      <dl class={base({ className: "grid-cols-[150px_1fr]" })}>
+        <dt class={dt()}>sub</dt>
+        <dd class={dd()}>
+          <b>{franceconnect.sub}</b>
+        </dd>
+
+        <dt class={dt()}>prénom</dt>
+        <dd class={dd()}>
+          <b>{franceconnect.given_name}</b>
+        </dd>
+
+        <dt class={dt()}>nom</dt>
+        <dd class={dd()}>
+          <b>{franceconnect.family_name}</b>
+        </dd>
+
+        <dt class={dt()}>genre</dt>
+        <dd class={dd()}>
+          <b>{franceconnect.gender}</b>
+        </dd>
+
+        <dt class={dt()}>pseudo</dt>
+        <dd class={dd()}>
+          <b>{franceconnect.preferred_username}</b>
+        </dd>
+
+        <dt class={dt()}>créé le</dt>
+        <dd class={dd()}>
+          <b>
+            <LocalTime date={franceconnect.created_at} />
+          </b>
+        </dd>
+
+        <dt class={dt()}>mis à jour le</dt>
+        <dd class={dd()}>
+          <b>
+            <LocalTime date={franceconnect.updated_at} />
+          </b>
+        </dd>
+      </dl>
     </div>
   );
 }
