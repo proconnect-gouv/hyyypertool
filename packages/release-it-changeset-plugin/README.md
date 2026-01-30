@@ -31,19 +31,26 @@ This plugin reads `.md` files from `.release-it-changeset/` and inserts them as 
 
 ## Usage
 
-### Create a changeset
+### Exemples
 
 ```bash
-echo "New user management system" > .release-it-changeset/user-management.md
-```
+# ✨ Nouvelle fonctionnalité
+echo "✨ Ajout de la recherche avancée" > .release-it-changeset/$(date +%s)-feature.md
 
-Content can be as detailed as needed:
+# 🐛 Correction de bug
+echo "🐛 Correction d'un problème d'affichage" > .release-it-changeset/$(date +%s)-bug.md
 
-```markdown
-Improved moderation interface
+# 💄 Amélioration d'interface
+echo "💄 Simplification du parcours de connexion" > .release-it-changeset/$(date +%s)-ui.md
 
-- New status filter
-- CSV export for results
+# ⚡ Performance
+echo "⚡ Optimisation du chargement des listes" > .release-it-changeset/$(date +%s)-perf.md
+
+# 🔒 Sécurité
+echo "🔒 Renforcement de la validation des données" > .release-it-changeset/$(date +%s)-security.md
+
+# ♿ Accessibilité
+echo "♿ Amélioration de la navigation au clavier" > .release-it-changeset/$(date +%s)-a11y.md
 ```
 
 ### Run the release
@@ -55,20 +62,20 @@ npx release-it
 ## Output
 
 ```markdown
-## [2025.12.1](compare-link) (2025-12-09)
+## [2026.1.5](compare-link) (2026-01-30)
 
 ### Changements
 
-- New user management system
-- Improved moderation interface
+- ✨ Ajout de la possibilité de filtrer les organisations par statut
+- 🐛 Correction d'un problème d'affichage sur la page de connexion
 
-### Features
+### Ajouté
 
-- add new dashboard (#123)
+- ✨ feat: add new dashboard (#123)
 
-### Bug Fixes
+### Corrigé
 
-- fix login issue (#124)
+- 🐛 fix: login issue (#124)
 ```
 
 ## Development
