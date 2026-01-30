@@ -16,10 +16,8 @@ export async function ModerationExchanges({
 }) {
   const $describedby = hyper_ref();
 
-  const hx_query_moderation_emails = await hx_urls.moderations[
-    ":id"
-  ].email.$get({
-    param: { id: moderation.id.toString() },
+  const hx_query_moderation_emails = hx_urls.moderations[":id"].email.$get({
+    param: { id: moderation.id },
     query: { describedby: $describedby },
   });
 

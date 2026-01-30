@@ -3,7 +3,7 @@
 import config from "#src/config";
 import { RootLayout } from "#src/layouts";
 import type { App_Context } from "#src/middleware/context";
-import { urls } from "#src/urls";
+import { hx_urls } from "#src/urls";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 
@@ -14,7 +14,7 @@ export default new Hono<App_Context>().get(
   jsxRenderer(RootLayout),
   function GET({ render, redirect, var: { nonce, userinfo } }) {
     if (userinfo) {
-      return redirect(urls.moderations.$url().pathname);
+      return redirect(hx_urls.moderations.$url().pathname);
     }
 
     return render(
@@ -30,7 +30,7 @@ export default new Hono<App_Context>().get(
 
         <div class="animated delay-2s fadeInLeftBig flex flex-col items-center">
           <button class="agentconnect-button"></button>
-          <form method="post" action={urls.auth.login.$url().pathname}>
+          <form method="post" action={hx_urls.auth.login.$url().pathname}>
             <div class="fr-connect-group">
               <button class="fr-connect" type="submit">
                 <span class="fr-connect__login">S’identifier avec</span>

@@ -16,10 +16,9 @@ type Props = JSX.IntrinsicElements["section"] & {
 
 export async function Investigation(props: Props) {
   const { banaticUrl, organization } = props;
-  const hx_organizations_leaders_props =
-    await hx_urls.organizations.leaders.$get({
-      query: { siret: organization.siret },
-    });
+  const hx_organizations_leaders_props = hx_urls.organizations.leaders.$get({
+    query: { siret: organization.siret },
+  });
   const button_classes = button({
     class: "mr-2 bg-white",
     size: "sm",

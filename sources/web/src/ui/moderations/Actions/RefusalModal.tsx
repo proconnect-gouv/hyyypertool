@@ -18,8 +18,8 @@ export async function RefusalModal({ userEmail }: { userEmail: string }) {
       aria-label="la modale de refus"
     >
       <form
-        {...await hx_urls.moderations[":id"].rejected.$patch({
-          param: { id: moderation.id.toString() },
+        {...hx_urls.moderations[":id"].rejected.$patch({
+          param: { id: moderation.id },
         })}
         {...hx_disabled_form_elements}
         hx-swap="none"

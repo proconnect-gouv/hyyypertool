@@ -28,10 +28,8 @@ export default async function Page({
 }) {
   const $domains_describedby = hyper_ref();
 
-  const hx_get_domains_query_props = await hx_urls.organizations[
-    ":id"
-  ].domains.$get({
-    param: { id: organization.id.toString() },
+  const hx_get_domains_query_props = hx_urls.organizations[":id"].domains.$get({
+    param: { id: organization.id },
     query: { describedby: $domains_describedby },
   });
 
@@ -83,10 +81,8 @@ async function MembersInTheOrganization({
   const $members_describedby = hyper_ref();
   const $page_ref = hyper_ref();
 
-  const hx_get_members_query_props = await hx_urls.organizations[
-    ":id"
-  ].members.$get({
-    param: { id: organization.id.toString() },
+  const hx_get_members_query_props = hx_urls.organizations[":id"].members.$get({
+    param: { id: organization.id },
     query: { describedby: $members_describedby, page_ref: $page_ref },
   });
 

@@ -1,7 +1,7 @@
 import { CopyButton } from "#src/ui/button/components";
 import { Foot } from "#src/ui/hx_table";
 import { row } from "#src/ui/table";
-import { urls } from "#src/urls";
+import { hx_urls } from "#src/urls";
 import type { Pagination } from "@~/core/schema";
 import { createContext, useContext } from "hono/jsx";
 import type { get_unverified_domains } from "./get_unverified_domains.query";
@@ -134,8 +134,8 @@ function Row({
     <tr
       aria-label={`Domaine non vérifié ${domainName} pour ${organization.cached_libelle}`}
       onclick={`window.location = '${
-        urls.organizations[":id"].$url({
-          param: { id: organization.id.toString() },
+        hx_urls.organizations[":id"].$url({
+          param: { id: organization.id },
         }).pathname
       }'`}
       class={row({ is_clickable: true })}

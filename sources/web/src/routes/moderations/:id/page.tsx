@@ -61,7 +61,7 @@ async function ModerationPageContent() {
     query_organization_members_count,
   } = useContext(PageContext)!;
 
-  const moderation_id = `moderation-${moderation.id.toString()}`;
+  const moderation_id = `moderation-${moderation.id}`;
 
   return (
     <main class="fr-container my-12">
@@ -80,12 +80,9 @@ async function ModerationPageContent() {
       <hr class="bg-none pb-5" />
       <section
         hx-disinherit="*"
-        {...await hx_urls.moderations[":id"].$get(
-          {
-            param: { id: moderation.id.toString() },
-          },
-          {},
-        )}
+        {...hx_urls.moderations[":id"].$get({
+          param: { id: moderation.id },
+        })}
         hx-select={`#${moderation_id}`}
         hx-trigger={hx_trigger_from_body([
           MODERATION_EVENTS.enum.MODERATION_UPDATED,

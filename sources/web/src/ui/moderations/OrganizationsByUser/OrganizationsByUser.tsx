@@ -21,10 +21,8 @@ export async function OrganizationsByUser(props: Props) {
   const $page_ref = hyper_ref("organizations_by_user_page");
   const count = await query_organization_count(user.id);
   const isOpen = props.isOpen ?? false;
-  const hx_get_organizations_by_user = await hx_urls.users[
-    ":id"
-  ].organizations.$get({
-    param: { id: user.id.toString() },
+  const hx_get_organizations_by_user = hx_urls.users[":id"].organizations.$get({
+    param: { id: user.id },
     query: { describedby: $describedby, page_ref: $page_ref },
   });
 

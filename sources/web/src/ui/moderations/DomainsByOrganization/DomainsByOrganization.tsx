@@ -17,11 +17,11 @@ export async function DomainsByOrganization(props: Props) {
   const $describedby = hyper_ref();
   const { organization, query_domain_count } = props;
   const count = await query_domain_count;
-  const query_domains_by_organization_id = await hx_urls.organizations[
+  const query_domains_by_organization_id = hx_urls.organizations[
     ":id"
   ].domains.$get({
     param: {
-      id: organization.id.toString(),
+      id: organization.id,
     },
     query: { describedby: $describedby },
   });

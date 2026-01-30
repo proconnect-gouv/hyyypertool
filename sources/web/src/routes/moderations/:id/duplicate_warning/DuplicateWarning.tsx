@@ -5,7 +5,7 @@ import { button } from "#src/ui/button";
 import { fieldset } from "#src/ui/form";
 import { formattedPlural } from "#src/ui/plurial";
 import { OpenInZammad, SearchInZammad } from "#src/ui/zammad/components";
-import { hx_urls, urls } from "#src/urls";
+import { hx_urls } from "#src/urls";
 import { MODERATION_STATUS } from "@~/identite-proconnect/types";
 import { raw } from "hono/html";
 import { match } from "ts-pattern";
@@ -100,8 +100,7 @@ async function Alert_Duplicate_User({
             <li key={user_id}>
               <a
                 href={
-                  urls.users[":id"].$url({ param: { id: user_id.toString() } })
-                    .pathname
+                  hx_urls.users[":id"].$url({ param: { id: user_id } }).pathname
                 }
               >
                 {given_name} {family_name} {`<${email}>`}
@@ -143,8 +142,8 @@ async function Alert_Duplicate_Moderation({
           <li key={moderation.id.toString()}>
             <a
               href={
-                urls.moderations[":id"].$url({
-                  param: { id: moderation.id.toString() },
+                hx_urls.moderations[":id"].$url({
+                  param: { id: moderation.id },
                 }).pathname
               }
             >
@@ -204,7 +203,7 @@ async function MarkModerationAsProcessed({
         go back
       `}
       {...await hx_urls.moderations[":id"].processed.$patch({
-        param: { id: moderation_id.toString() },
+        param: { id: moderation_id },
       })}
       hx-swap="none"
     >

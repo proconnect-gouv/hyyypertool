@@ -26,16 +26,14 @@ export async function UserPage({
   const $organizations_describedby = hyper_ref("user_organizations");
   const $moderations_describedby = hyper_ref("user_moderations");
 
-  const hx_get_user_organizations_props = await hx_urls.users[
+  const hx_get_user_organizations_props = hx_urls.users[
     ":id"
   ].organizations.$get({
-    param: { id: user.id.toString() },
+    param: { id: user.id },
     query: { describedby: $organizations_describedby, page_ref: hyper_ref() },
   });
-  const hx_get_user_moderations_props = await hx_urls.users[
-    ":id"
-  ].moderations.$get({
-    param: { id: user.id.toString() },
+  const hx_get_user_moderations_props = hx_urls.users[":id"].moderations.$get({
+    param: { id: user.id },
     query: { describedby: $moderations_describedby },
   });
 
@@ -162,8 +160,8 @@ async function Actions({ user }: { user: User }) {
       <div class="flex justify-between gap-1">
         <button
           class={button({ intent: "danger" })}
-          {...await hx_urls.users[":id"].reset.email_verified.$patch({
-            param: { id: id.toString() },
+          {...hx_urls.users[":id"].reset.email_verified.$patch({
+            param: { id: id },
           })}
           hx-swap="none"
         >
@@ -172,8 +170,8 @@ async function Actions({ user }: { user: User }) {
         <button
           class={button({ intent: "danger" })}
           hx-confirm={"Confirmez-vous la réinitialisation du mot de passe ?"}
-          {...await hx_urls.users[":id"].reset.password.$patch({
-            param: { id: id.toString() },
+          {...hx_urls.users[":id"].reset.password.$patch({
+            param: { id: id },
           })}
           hx-swap="none"
         >
@@ -182,8 +180,8 @@ async function Actions({ user }: { user: User }) {
         <button
           class={button({ intent: "danger" })}
           hx-confirm={"Confirmez-vous la réinitialisation du mot de passe ?"}
-          {...await hx_urls.users[":id"].reset.france_connect.$patch({
-            param: { id: id.toString() },
+          {...hx_urls.users[":id"].reset.france_connect.$patch({
+            param: { id: id },
           })}
           hx-swap="none"
         >
@@ -192,8 +190,8 @@ async function Actions({ user }: { user: User }) {
         <button
           class={button({ intent: "danger" })}
           hx-confirm={"Confirmez-vous la réinitialisation de la MFA ?"}
-          {...await hx_urls.users[":id"].reset.mfa.$patch({
-            param: { id: id.toString() },
+          {...hx_urls.users[":id"].reset.mfa.$patch({
+            param: { id: id },
           })}
           hx-swap="none"
         >
@@ -204,8 +202,8 @@ async function Actions({ user }: { user: User }) {
         class={button({ class: "mt-5 w-full justify-center", intent: "dark" })}
         hx-confirm={"Confirmez-vous la suppression de ce compte ?"}
         hx-swap="none"
-        {...await hx_urls.users[":id"].$delete({
-          param: { id: id.toString() },
+        {...hx_urls.users[":id"].$delete({
+          param: { id: id },
         })}
       >
         🗑️ supprimer définitivement ce compte

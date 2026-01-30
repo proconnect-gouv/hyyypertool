@@ -16,10 +16,10 @@ export async function AcceptModal({
   userEmail: string;
   moderation: Values["moderation"];
 }) {
-  const hx_path_validate_moderation = await hx_urls.moderations[
+  const hx_path_validate_moderation = hx_urls.moderations[
     ":id"
   ].validate.$patch({
-    param: { id: moderation.id.toString() },
+    param: { id: moderation.id },
   });
   return (
     <div

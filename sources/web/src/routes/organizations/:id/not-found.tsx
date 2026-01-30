@@ -1,7 +1,7 @@
 //
 
 import config from "#src/config";
-import { urls } from "#src/urls";
+import { hx_urls } from "#src/urls";
 
 //
 
@@ -23,7 +23,7 @@ export function Organization_NotFound({
             <br />
             Excusez-nous pour la gène occasionnée.
           </p>
-          <a href={urls.organizations.$url().pathname} class="fr-btn">
+          <a href={hx_urls.organizations.$url().pathname} class="fr-btn">
             Retour aux organisations
           </a>
         </section>

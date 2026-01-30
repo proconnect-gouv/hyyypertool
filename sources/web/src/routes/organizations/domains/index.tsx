@@ -4,7 +4,7 @@ import { hyper_ref } from "#src/html";
 import { hx_include } from "#src/htmx";
 import { Main_Layout } from "#src/layouts";
 import type { App_Context } from "#src/middleware/context";
-import { hx_urls, urls } from "#src/urls";
+import { hx_urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
 import { PaginationSchema, SearchSchema } from "@~/core/schema";
 import consola from "consola";
@@ -25,7 +25,7 @@ export default new Hono<App_Context>().use("/", jsxRenderer(Main_Layout)).get(
   zValidator("query", query_schema, function hook(result, { redirect }) {
     if (result.success) return undefined;
     consola.error(result.error);
-    return redirect(urls.organizations.domains.$url().pathname);
+    return redirect(hx_urls.organizations.domains.$url().pathname);
   }),
   async function GET({ render, set, req, var: { identite_pg } }) {
     set("page_title", "Liste des domaines à vérifier");
@@ -36,7 +36,7 @@ export default new Hono<App_Context>().use("/", jsxRenderer(Main_Layout)).get(
     const $search = hyper_ref();
 
     const hx_domains_query_props = {
-      ...(await hx_urls.organizations.domains.$get({ query: {} })),
+      ...hx_urls.organizations.domains.$get({ query: {} }),
       "hx-include": hx_include([
         $search,
         $table,

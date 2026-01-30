@@ -2,7 +2,7 @@
 
 import type { App_Context } from "#src/middleware/context";
 import { NotificationIsland } from "#src/ui/notifications";
-import { urls } from "#src/urls";
+import { hx_urls } from "#src/urls";
 import { z_username } from "@~/core/schema";
 import type { PropsWithChildren } from "hono/jsx";
 import { useRequestContext } from "hono/jsx-renderer";
@@ -72,7 +72,7 @@ function Tools({ username }: { username?: string | undefined }) {
           <li>
             <a
               class="fr-btn fr-btn--sm fr-btn--tertiary-no-outline fr-fi-logout-box-r-line fr-btn--icon-left"
-              href={urls.auth.logout.$url().pathname}
+              href={hx_urls.auth.logout.$url().pathname}
             >
               {username}
             </a>
@@ -98,7 +98,7 @@ function Nav() {
           <a
             aria-current={req.routePath.startsWith("/moderations")}
             class="fr-nav__link"
-            href={urls.moderations.$url().pathname}
+            href={hx_urls.moderations.$url().pathname}
             target="_self"
           >
             Moderations
@@ -108,7 +108,7 @@ function Nav() {
           <a
             aria-current={req.routePath.startsWith("/users")}
             class="fr-nav__link"
-            href={urls.users.$url().pathname}
+            href={hx_urls.users.$url().pathname}
             target="_self"
           >
             Utilisateurs
@@ -121,7 +121,7 @@ function Nav() {
               !req.routePath.startsWith("/organizations/domains")
             }
             class="fr-nav__link"
-            href={urls.organizations.$url().pathname}
+            href={hx_urls.organizations.$url().pathname}
             target="_self"
           >
             Organisations
@@ -131,7 +131,7 @@ function Nav() {
           <a
             aria-current={req.routePath.startsWith("/organizations/domains")}
             class="fr-nav__link"
-            href={urls.organizations.domains.$url().pathname}
+            href={hx_urls.organizations.domains.$url().pathname}
             target="_self"
           >
             Domaines à vérifier
@@ -141,7 +141,7 @@ function Nav() {
           <a
             aria-current={req.routePath.startsWith("/domains-deliverability")}
             class="fr-nav__link"
-            href={urls["domains-deliverability"].$url().pathname}
+            href={hx_urls["domains-deliverability"].$url().pathname}
             target="_self"
           >
             Délivrabilité des domaines

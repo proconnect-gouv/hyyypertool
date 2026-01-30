@@ -54,9 +54,9 @@ export async function AddDomain({
 }) {
   const $describedby = hyper_ref("add_domain");
 
-  const hx_add_domain_props = await hx_urls.organizations[":id"].domains.$put({
+  const hx_add_domain_props = hx_urls.organizations[":id"].domains.$put({
     param: {
-      id: organization_id.toString(),
+      id: organization_id,
     },
   });
 
@@ -184,14 +184,14 @@ async function Row_Actions({
 
   const hx_change_type_props = (type: EmailDomainVerificationType) =>
     hx_urls.organizations[":id"].domains[":domain_id"].$patch({
-      param: { id: organization_id.toString(), domain_id: id.toString() },
+      param: { id: organization_id, domain_id: id },
       query: { type: type ?? "null" },
     });
 
-  const hx_delete_domain_props = await hx_urls.organizations[":id"].domains[
+  const hx_delete_domain_props = hx_urls.organizations[":id"].domains[
     ":domain_id"
   ].$delete({
-    param: { id: organization_id.toString(), domain_id: id.toString() },
+    param: { id: organization_id, domain_id: id },
   });
 
   return (

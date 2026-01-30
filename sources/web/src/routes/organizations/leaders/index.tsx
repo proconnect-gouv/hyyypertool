@@ -26,10 +26,9 @@ export default new Hono<FetchVariables_Context>().get(
   async function GET({ html, req, var: { fetch } }) {
     const { siret, retry } = req.valid("query");
     const useRetry = retry === "true";
-    const hx_organizations_leaders_props =
-      await hx_urls.organizations.leaders.$get({
-        query: { retry: "true", siret },
-      });
+    const hx_organizations_leaders_props = hx_urls.organizations.leaders.$get({
+      query: { retry: "true", siret },
+    });
 
     const doc = await load_leaders({ siret, fetch, useRetry });
 

@@ -27,10 +27,10 @@ export async function UsersByOrganization(props: Props) {
       .with(P.number.between(1, 3), () => true)
       .otherwise(() => false);
   const hx_get_users_by_organization_props = {
-    ...(await hx_urls.organizations[":id"].members.$get({
-      param: { id: organization.id.toString() },
+    ...hx_urls.organizations[":id"].members.$get({
+      param: { id: organization.id },
       query: { describedby: $describedby, page_ref: $page_ref },
-    })),
+    }),
   };
 
   return (

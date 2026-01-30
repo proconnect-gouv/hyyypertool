@@ -2,7 +2,7 @@
 
 import type { AppEnv_Context } from "#src/config";
 import { button } from "#src/ui/button";
-import { urls } from "#src/urls";
+import { hx_urls } from "#src/urls";
 import { useRequestContext } from "hono/jsx-renderer";
 
 //
@@ -35,7 +35,7 @@ export function NotAuthorized() {
             </p>
             <a
               class={button({ type: "tertiary" })}
-              href={urls.auth.logout.$url().pathname}
+              href={hx_urls.auth.logout.$url().pathname}
             >
               Retour
             </a>
