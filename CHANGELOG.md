@@ -1,5 +1,16 @@
 # Changelog
 
+## [2026.1.5](https://github.com/proconnect-gouv/hyyypertool/compare/2026.1.4...2026.1.5) (2026-01-30)
+
+### Changements
+
+- ✨ Ajouter la possibilité de sélectionner les modérations traitées par chargé de modérations
+- 🐛 Correction d'une désynchronisation avec la base de données PCI sur les types de vérifications entre profile et organisation.
+
+### Corrigé
+
+- 🐛 missing extension on changeset files [skip ci] (#1357) (210d6bdc)
+
 ## [2026.1.4](https://github.com/proconnect-gouv/hyyypertool/compare/2026.1.3...2026.1.4) (2026-01-30)
 
 ### Ajouté
