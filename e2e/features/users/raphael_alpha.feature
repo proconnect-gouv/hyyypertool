@@ -53,3 +53,11 @@ Fonctionnalité: Page utilisateur avec MFA
     Alors je vois "Dernière utilisation : 24/06/2023 14:44:44"
     Alors je vois "Nombre d'utilisation : 87"
     Et je réinitialise le contexte
+
+    Sachant que je vais à l'intérieur de l'élément nommé "🪪 FranceConnect"
+    Alors je vois "subfc-sub-raphael-alpha-1234567890abcdef"
+    Alors je vois "prénomRaphael"
+    Alors je vois "nomDubigny"
+    Alors je vois "genremale"
+    Alors je vois "pseudordubigny"
+    Et je réinitialise le contexte

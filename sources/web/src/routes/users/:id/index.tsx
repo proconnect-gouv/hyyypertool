@@ -13,6 +13,7 @@ import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { get_authenticators_by_user_id } from "./get_authenticators_by_user_id.query";
+import { get_franceconnect_by_user_id } from "./get_franceconnect_by_user_id.query";
 import { get_user_by_id } from "./get_user_by_id.query";
 import user_moderations_route from "./moderations";
 import { UserNotFound } from "./not-found";
@@ -35,13 +36,23 @@ export default new Hono<App_Context>()
           identite_pg,
           id,
         );
+        const franceconnect = await get_franceconnect_by_user_id(
+          identite_pg,
+          id,
+        );
 
         set(
           "page_title",
           `Utilisateur ${user.given_name} ${user.family_name} (${user.email})`,
         );
 
-        return render(<UserPage user={user} authenticators={authenticators} />);
+        return render(
+          <UserPage
+            authenticators={authenticators}
+            franceconnect={franceconnect}
+            user={user}
+          />,
+        );
       } catch (error) {
         if (error instanceof NotFoundError) {
           status(404);
