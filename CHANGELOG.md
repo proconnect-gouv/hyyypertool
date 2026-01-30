@@ -1,5 +1,52 @@
 # Changelog
 
+## [2026.1.4](https://github.com/proconnect-gouv/hyyypertool/compare/2026.1.3...2026.1.4) (2026-01-30)
+
+### Ajouté
+
+- ✨ use a fixed list of allowed users (#1307) (454b5ea3)
+
+### Modifié
+
+- ⚡ fix lagging script by removing wild intalls (#1356) (40f9c12a)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps-dev): Bump @happy-dom/global-registrator (#1355) (92400dda)
+- :arrow_upper_right: [patch](deps): Bump @proconnect-gouv/proconnect.identite from 1.2.0 to 1.4.0 (#1352) (13d057d6)
+- :arrow_upper_right: [patch](deps): Bump @proconnect-gouv/proconnect.identite.database (#1351) (dec1064b)
+- :arrow_upper_right: [patch](deps): Bump @preact/signals (#1350) (3c8bcc43)
+- :arrow_upper_right: [patch](deps): Bump actions/checkout (#1345) (c5f6ac50)
+- :arrow_upper_right: [patch](deps): Bump cypress-io/github-action (#1346) (32124861)
+- :arrow_upper_right: [patch](deps): Bump the sentry group with 2 updates (#1347) (d6f3fabd)
+- :arrow_upper_right: [patch](deps-dev): Bump release-it (#1348) (72a7fcdd)
+- :arrow_upper_right: [patch](deps-dev): Bump prettier from 3.8.0 to 3.8.1 (#1349) (8e54991d)
+- :arrow_upper_right: [patch](deps): bump @gouvfr/dsfr (#1312) (90a742e1)
+- :arrow_upper_right: [patch](deps): bump pg from 8.16.3 to 8.17.2 (#1341) (58e0ea68)
+- :arrow_upper_right: [patch](deps-dev): bump @happy-dom/global-registrator (#1343) (09bbcf6d)
+- :arrow_upper_right: [patch](deps-dev): bump prettier from 3.7.4 to 3.8.0 (#1342) (d69e25cf)
+- :arrow_upper_right: [patch](deps): bump @preact/signals-core (#1340) (0050d350)
+- :arrow_upper_right: [patch](deps): bump pg from 8.17.1 to 8.17.2 in /e2e (#1331) (4e1dbd44)
+- :arrow_upper_right: [patch](deps): bump zod from 4.1.12 to 4.3.5 (#1298) (acfc2a53)
+- :arrow_upper_right: [patch](deps-dev): bump @electric-sql/pglite (#1330) (0d7250bf)
+- :arrow_upper_right: [patch](deps): bump the sentry group with 2 updates (#1328) (e66cbc78)
+- :arrow_upper_right: [patch](deps): bump oxc-parser (#1329) (657ffb1e)
+- :arrow_upper_right: [patch](deps): bump preact-render-to-string (#1323) (5769d10f)
+- :arrow_upper_right: [patch](deps): bump oxc-parser (#1325) (22dc247b)
+- :arrow_upper_right: [patch](deps): bump pg from 8.17.0 to 8.17.1 in /e2e (#1326) (d4413de5)
+- :arrow_upper_right: [patch](deps): bump dotenv from 17.2.2 to 17.2.3 (#1324) (270415dc)
+
+### Documentation
+
+- 📝 docs: Update changeset command format in README (7407dcfd)
+- 📝 docs: use a fixed list of allowed users [skip ci] (#1344) (9e3fda11)
+
+### Divers
+
+- dependabot: make prettier happy (#1353) (07823b53)
+- dependabot: exclude @proconnect-gouv/\* from cooldown (15ba838d)
+- chore(deps): bump hono from 4.11.4 to 4.11.7 (#1339) (76f37c74)
+
 ## [2026.1.3](https://github.com/proconnect-gouv/hyyypertool/compare/2026.1.2...2026.1.3) (2026-01-23)
 
 ### Changements
