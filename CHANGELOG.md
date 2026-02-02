@@ -1,5 +1,23 @@
 # Changelog
 
+## [2026.2.0](https://github.com/proconnect-gouv/hyyypertool/compare/2026.1.6...2026.2.0) (2026-02-02)
+
+### Changements
+
+- 🐛 Correction d'un problème d'affichage dans la table des membres lorsque le type de vérification n'est pas reconnu
+
+### Corrigé
+
+- 🐛 use safeParse for verification type in members table (#1362) (d3be3b8e)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): Bump zod from 4.3.5 to 4.3.6 (#1354) (30273f38)
+
+### Documentation
+
+- 📝 add release note for verification type fix (#1363) (792f4f6f)
+
 ## [2026.1.6](https://github.com/proconnect-gouv/hyyypertool/compare/2026.1.5...2026.1.6) (2026-01-30)
 
 ### Changements
