@@ -10,6 +10,9 @@ on:
         required: false
         default: "true"
 
+permissions:
+  contents: write
+
 jobs:
   cleanup-release-branches:
     name: "🌳 Deforestation Job"
@@ -84,7 +87,7 @@ jobs:
           fi
 
       - name: Delete branches
-        if: ${{ inputs.dry_run != 'true' && env.to_delete != '' }}
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run != 'true' && env.to_delete != '' }}
         run: |
           IFS=',' read -r -a delete_branch_array <<< "$to_delete"
           for branch in "${delete_branch_array[@]}"; do
@@ -93,6 +96,6 @@ jobs:
           done
 
       - name: Dry run notice
-        if: ${{ inputs.dry_run == 'true' }}
+        if: ${{ github.event_name == 'schedule' || inputs.dry_run == 'true' }}
         run: |
           echo "::notice::Dry run mode enabled. No branches were deleted."
