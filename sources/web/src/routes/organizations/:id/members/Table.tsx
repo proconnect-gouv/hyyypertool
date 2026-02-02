@@ -236,7 +236,7 @@ async function Row_Actions() {
               form: {
                 verification_type:
                   VerificationTypeSchema.enum
-                    .imported_from_coop_mediation_numerique,
+                    .verified_by_coop_mediation_numerique,
               },
             })}
             hx-swap="none"
