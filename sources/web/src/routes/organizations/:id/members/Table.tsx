@@ -81,9 +81,6 @@ export async function Table({
 
 function Row({ variants }: { variants?: VariantProps<typeof row> }) {
   const { user } = useContext(MemberContext);
-  const verification_type = VerificationTypeSchema.parse(
-    user.verification_type,
-  );
 
   return (
     <tr
@@ -101,7 +98,7 @@ function Row({ variants }: { variants?: VariantProps<typeof row> }) {
             ⚠️
           </span>
         ) : null}
-        {verification_type}
+        <VerificationTypeBadge value={user.verification_type} />
       </td>
       <td class="text-sm whitespace-nowrap">
         <div title="Ajouté le">
@@ -118,6 +115,14 @@ function Row({ variants }: { variants?: VariantProps<typeof row> }) {
       </td>
     </tr>
   );
+}
+
+function VerificationTypeBadge({ value }: { value: string | null }) {
+  const parsed = VerificationTypeSchema.safeParse(value);
+  if (parsed.success) {
+    return <>{parsed.data}</>;
+  }
+  return <span class="text-red-500">{value}</span>;
 }
 
 async function Row_Actions() {
