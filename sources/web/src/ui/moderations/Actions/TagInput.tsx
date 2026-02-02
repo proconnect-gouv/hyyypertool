@@ -15,6 +15,10 @@ const verificationType: Array<[VerificationType, string]> = [
     "Liste des dirigeants RNE",
   ],
   [VerificationTypeSchema.enum.proof_received, "Justificatif transmis"],
+  [
+    VerificationTypeSchema.enum.ordre_professionnel_domain,
+    "Domaine d'ordre professionnel",
+  ],
 ];
 
 export function TagInput() {
