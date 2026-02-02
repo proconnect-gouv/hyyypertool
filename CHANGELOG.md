@@ -1,5 +1,19 @@
 # Changelog
 
+## [2026.2.2](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.1...2026.2.2) (2026-02-02)
+
+### Changements
+
+- ✨ Ajoute du tag Domaine d'ordre professionnel lors de l'acceptation de moderations
+
+### Ajouté
+
+- ✨ add ordre_professionnel_domain verification type on accepted moderation (#1370) (49d87602)
+
+### Modifié
+
+- 💄 format the gherkin files with prettier (#1371) (d3ed789f)
+
 ## [2026.2.1](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.0...2026.2.1) (2026-02-02)
 
 ### Changements
