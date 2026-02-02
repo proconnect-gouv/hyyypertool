@@ -25,7 +25,7 @@ Fonctionnalité: Actions sur les membres d'une organisation
       | 🔄 vérif: domaine email                        | domain                                 |
       | 🔄 vérif: mail officiel                        | official_contact_email                 |
       | 🔄 vérif: no validation means available        | no_validation_means_available          |
-      | 🔄 vérif: verified by coop mediation numerique | imported_from_coop_mediation_numerique |
+      | 🔄 vérif: verified by coop mediation numerique | verified_by_coop_mediation_numerique   |
       | 🚫 non vérifié                                 | domain_not_verified_yet                |
 
   Plan du Scénario: Basculer un membre entre interne et externe
