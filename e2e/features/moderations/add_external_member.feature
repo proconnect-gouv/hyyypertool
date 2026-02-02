@@ -1,4 +1,4 @@
-#language: fr
+# language: fr
 Fonctionnalité: Ajouter un membre externe lors de la modération
 
   Contexte:
@@ -15,7 +15,7 @@ Fonctionnalité: Ajouter un membre externe lors de la modération
   Scénario: Marie est un membre externe de l'organization.
     Quand je clique sur "👥 0 membre connu dans l’organisation"
     Alors je dois voir un tableau nommé "👥 0 membre connu dans l’organisation" et contenant
-      | |
+      |  |
 
     Quand je clique sur "✅ Accepter"
     Et je clique sur "Ajouter Marie à l'organisation EN TANT QU'EXTERNE"

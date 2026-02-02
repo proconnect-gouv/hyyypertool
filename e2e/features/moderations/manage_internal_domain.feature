@@ -1,4 +1,4 @@
-#language: fr
+# language: fr
 Fonctionnalité: Gérer un domaine interne lors de la modération
 
   Contexte:
@@ -16,7 +16,7 @@ Fonctionnalité: Gérer un domaine interne lors de la modération
   Scénario: Domaine interne
     Alors je dois voir un tableau nommé "🌐 1 domaine connu dans l’organisation" et contenant
       | Domain      | Status |
-      | yopmail.com | ❓     |
+      | yopmail.com | ❓      |
 
     Quand je vais à l'intérieur de la rangée nommée "Domaine yopmail.com (null)"
     Quand je clique sur "Menu"
@@ -24,7 +24,7 @@ Fonctionnalité: Gérer un domaine interne lors de la modération
     Et je réinitialise le contexte
     Alors je dois voir un tableau nommé "🌐 1 domaine connu dans l’organisation" et contenant
       | Domain      | Status | Type     |
-      | yopmail.com | ✅     | verified |
+      | yopmail.com | ✅      | verified |
 
     Quand je vais à l'intérieur de la rangée nommée "Domaine yopmail.com (verified)"
     Quand je clique sur "Menu"
@@ -42,4 +42,4 @@ Fonctionnalité: Gérer un domaine interne lors de la modération
     Et je vois "poymail.com"
     Alors je dois voir un tableau nommé "🌐 1 domaine connu dans l’organisation" et contenant
       | Domain      | Status | Type     |
-      | poymail.com | ✅     | verified |
+      | poymail.com | ✅      | verified |

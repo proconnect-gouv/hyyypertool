@@ -1,4 +1,4 @@
-#language: fr
+# language: fr
 Fonctionnalité: Page organisation
 
   Contexte:
@@ -6,8 +6,8 @@ Fonctionnalité: Page organisation
     Quand je navigue sur la page
     Et je vois "Bonjour Hyyypertool !"
     Et je clique sur le bouton "ProConnect"
-    # Et je me connecte en tant que user@yopmail.com sur dev-agentconnect.fr
 
+  # Et je me connecte en tant que user@yopmail.com sur dev-agentconnect.fr
   Scénario:
     Quand je clique sur "Organisations"
     Alors je suis redirigé sur "/organizations"
@@ -26,14 +26,14 @@ Fonctionnalité: Page organisation
     Et je vois "Nature juridique SA nationale à conseil d'administration (Service central d'un ministère)"
     Et je vois "Tranche d effectif 100 à 199 salariés, en 2021 (code : 22) (liste code effectif INSEE)"
 
-  # Scénario: domaine connu dans l'organisation DINUM
+    # Scénario: domaine connu dans l'organisation DINUM
     Alors je dois voir un tableau nommé "🌐 3 domaines connu dans l'organisation" et contenant
-      | Status | Domain                             | Type     |
-      | ✅     | beta.gouv.fr                       | verified |
-      | ✅     | modernisation.gouv.fr              | verified |
-      | ❎     | prestataire.modernisation.gouv.fr  | external |
+      | Status | Domain                            | Type     |
+      | ✅      | beta.gouv.fr                      | verified |
+      | ✅      | modernisation.gouv.fr             | verified |
+      | ❎      | prestataire.modernisation.gouv.fr | external |
 
-  # Scénario: Membres de DINUM
+    # Scénario: Membres de DINUM
     Et je vois "1 membre"
     Quand je clique sur "1 membre"
     Quand je vais à l'intérieur de la rangée nommée "Membre Raphael Dubigny (rdubigny@beta.gouv.fr)"

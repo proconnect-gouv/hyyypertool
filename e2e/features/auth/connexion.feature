@@ -1,4 +1,4 @@
-#language: fr
+# language: fr
 Fonctionnalité: Connexion d'un utilisateur
 
   Contexte:

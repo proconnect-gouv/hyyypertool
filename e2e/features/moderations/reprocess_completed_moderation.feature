@@ -1,5 +1,4 @@
-
-#language: fr
+# language: fr
 Fonctionnalité: Retraiter une modération terminée
 
   Contexte:
@@ -23,4 +22,4 @@ Fonctionnalité: Retraiter une modération terminée
     Alors je ne vois pas "Cette modération a été marqué comme traité"
     Quand je clique sur "👥 0 membre connu dans l’organisation"
     Alors je dois voir un tableau nommé "👥 0 membre connu dans l’organisation" et contenant
-      | |
+      |  |

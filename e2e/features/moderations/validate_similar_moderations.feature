@@ -1,4 +1,4 @@
-#language: fr
+# language: fr
 Fonctionnalité: Validation automatique des modérations similaires
 
   Contexte:

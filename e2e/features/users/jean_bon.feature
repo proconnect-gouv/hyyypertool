@@ -1,4 +1,4 @@
-#language: fr
+# language: fr
 Fonctionnalité: Page utilisateur with moderations
 
   Contexte:
@@ -28,7 +28,7 @@ Fonctionnalité: Page utilisateur with moderations
     Et je vois "Email vérifié envoyé le22/06/2023 16:34:34"
 
     Alors je dois voir un tableau nommé "Liste des modérations de Jean" et contenant
-      | Type	      |
+      | Type         |
       | 🕵️A traiter |
 
     Et je vois "L'utilisateur n'a pas de MFA configurée."
