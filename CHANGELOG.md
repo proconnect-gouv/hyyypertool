@@ -1,5 +1,27 @@
 # Changelog
 
+## [2026.2.1](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.0...2026.2.1) (2026-02-02)
+
+### Changements
+
+- 🐛 Correction de l'action du bouton "🔄 vérif: verified by coop mediation numerique"
+
+Après confirmation, le bouton "🔄 vérif: verified by coop mediation numerique"
+doit bien alterer le champ "verification_type" de la base de données pour y indiquer
+"verified_by_coop_mediation_numerique".
+
+### Corrigé
+
+- 🐛 restore verified_by_coop_mediation_numerique action (#1369) (288f88b1)
+- 🐛 fix deforestation workflow permissions and scheduled run behavior (#1364) (9b9f667c)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): Bump @proconnect-gouv/proconnect.identite from 1.4.0 to 1.5.0 (#1368) (f93b1ec4)
+- :arrow_upper_right: [patch](deps-dev): Bump @happy-dom/global-registrator from 20.3.7 to 20.3.9 (#1366) (ffbc14d9)
+- :arrow_upper_right: [patch](deps): Bump oxc-parser from 0.110.0 to 0.111.0 (#1367) (ff2bf74c)
+- :arrow_upper_right: [patch](deps): Bump @proconnect-gouv/proconnect.identite.database from 1.1.0 to 1.2.0 in /e2e (#1365) (fe6373da)
+
 ## [2026.2.0](https://github.com/proconnect-gouv/hyyypertool/compare/2026.1.6...2026.2.0) (2026-02-02)
 
 ### Changements
