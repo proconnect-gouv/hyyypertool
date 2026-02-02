@@ -6,12 +6,10 @@ Fonctionnalité: Sélectionner un type de vérification lors de l'acceptation
     Et un faux serveur "identite.proconnect.gouv.fr"
     Quand je navigue sur la page
     Et je clique sur le bouton "ProConnect"
-
     Et je dois voir le titre de page "Liste des moderations"
     Alors je vois "Liste des moderations"
     Quand je vais à l'intérieur de la rangée nommée "Modération a traiter de Jean Bon pour 51935970700022"
     Et je clique sur "➡️"
-
     Et je dois voir le titre de page "Modération a traiter de Jean Bon pour 51935970700022"
     Et je réinitialise le contexte
     Et je clique sur "✅ Accepter"
@@ -26,7 +24,6 @@ Fonctionnalité: Sélectionner un type de vérification lors de l'acceptation
     Alors je vois "Cette modération a été marqué comme traitée le"
     Et je vois "Validé par user@yopmail.com"
     Quand je clique sur "Moderations"
-
     Et je dois voir le titre de page "Liste des moderations"
     Alors je vois "Liste des moderations"
     Quand je clique sur "Voir les demandes traitées"
@@ -35,12 +32,13 @@ Fonctionnalité: Sélectionner un type de vérification lors de l'acceptation
     Et je réinitialise le contexte
     Quand je clique sur "👥 1 membre connu dans l’organisation"
     Alors je dois voir un tableau nommé "👥 1 membre connu dans l’organisation" et contenant
-      | Prénom | Nom  | Type               |
-      | Jean   | Bon  | <verification_enum> |
+      | Prénom | Nom | Type                |
+      | Jean   | Bon | <verification_enum> |
 
     Exemples:
-      | type_verification           | verification_enum         |
-      | Mail officiel               | official_contact_email    |
-      | Liste des dirigeants RNA    | in_liste_dirigeants_rna   |
-      | Liste des dirigeants RNE    | in_liste_dirigeants_rne   |
-      | Justificatif transmis       | proof_received            |
+      | type_verification             | verification_enum          |
+      | Mail officiel                 | official_contact_email     |
+      | Liste des dirigeants RNA      | in_liste_dirigeants_rna    |
+      | Liste des dirigeants RNE      | in_liste_dirigeants_rne    |
+      | Justificatif transmis         | proof_received             |
+      | Domaine d'ordre professionnel | ordre_professionnel_domain |
