@@ -1,9 +1,7 @@
 //
 
-import {
-  ModerationTypeSchema,
-  validate_form_schema,
-} from "#src/lib/moderations";
+import { validate_form_schema } from "#src/lib/moderations";
+import { ModerationTypeSchema } from "@~/identite-proconnect/types";
 import { useContext } from "hono/jsx";
 import { context, valid_context } from "./context";
 
@@ -17,6 +15,7 @@ export function SendNotification() {
     },
   } = useContext(context);
   const { $send_notification } = useContext(valid_context);
+  const { data: moderation_type } = ModerationTypeSchema.safeParse(type);
 
   return (
     <div class="fr-checkbox-group">
@@ -26,8 +25,7 @@ export function SendNotification() {
         type="checkbox"
         value="true"
         checked={
-          ModerationTypeSchema.parse(type) !==
-          ModerationTypeSchema.enum.non_verified_domain
+          moderation_type !== ModerationTypeSchema.enum.non_verified_domain
         }
       />
       <label class="fr-label flex-row!" for={$send_notification}>

@@ -1,7 +1,7 @@
 //
 
 import { match } from "ts-pattern";
-import type { ModerationType } from "./Moderation_Type";
+import type { ModerationType } from "./types";
 
 //
 

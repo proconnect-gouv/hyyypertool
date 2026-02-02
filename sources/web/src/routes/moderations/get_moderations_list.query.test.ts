@@ -46,6 +46,7 @@ test("get moderations list with basic search", async () => {
           "organization": {
             "siret": "🦄 siret",
           },
+          "status": "unknown",
           "type": "non_verified_domain",
           "user": {
             "email": "adora.pony@unicorn.xyz",
@@ -80,6 +81,7 @@ test("filters by email search", async () => {
           "organization": {
             "siret": "🦄 siret",
           },
+          "status": "unknown",
           "type": "",
           "user": {
             "email": "adora.pony@unicorn.xyz",
@@ -114,6 +116,7 @@ test("filters by siret search", async () => {
           "organization": {
             "siret": "🦄 siret",
           },
+          "status": "unknown",
           "type": "",
           "user": {
             "email": "adora.pony@unicorn.xyz",
@@ -154,6 +157,7 @@ test("excludes archived moderations by default", async () => {
           "organization": {
             "siret": "🦄 siret",
           },
+          "status": "unknown",
           "type": "",
           "user": {
             "email": "adora.pony@unicorn.xyz",
@@ -192,6 +196,7 @@ test("includes archived moderations when show_archived is true", async () => {
           "organization": {
             "siret": "🦄 siret",
           },
+          "status": "unknown",
           "type": "",
           "user": {
             "email": "adora.pony@unicorn.xyz",
@@ -240,6 +245,7 @@ test("filters by moderated_by search", async () => {
           "organization": {
             "siret": "🦄 siret",
           },
+          "status": "unknown",
           "type": "",
           "user": {
             "email": "adora.pony@unicorn.xyz",
@@ -278,6 +284,7 @@ test("supports pagination", async () => {
           "organization": {
             "siret": "🦄 siret",
           },
+          "status": "unknown",
           "type": "type_1",
           "user": {
             "email": "adora.pony@unicorn.xyz",
@@ -292,6 +299,7 @@ test("supports pagination", async () => {
           "organization": {
             "siret": "🦄 siret",
           },
+          "status": "unknown",
           "type": "type_2",
           "user": {
             "email": "adora.pony@unicorn.xyz",
@@ -320,6 +328,7 @@ test("supports pagination", async () => {
           "organization": {
             "siret": "🦄 siret",
           },
+          "status": "unknown",
           "type": "type_3",
           "user": {
             "email": "adora.pony@unicorn.xyz",
