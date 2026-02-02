@@ -1,4 +1,4 @@
-#language: fr
+# language: fr
 Fonctionnalité: Refuser une modération bloquante
 
   Contexte:

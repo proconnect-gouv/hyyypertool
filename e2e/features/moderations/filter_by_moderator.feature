@@ -1,5 +1,4 @@
-#language: fr
-
+# language: fr
 Fonctionnalité: Filtrer les modérations par modérateur
 
   Contexte:

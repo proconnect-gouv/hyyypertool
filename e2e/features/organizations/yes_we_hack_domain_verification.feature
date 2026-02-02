@@ -1,4 +1,4 @@
-#language: fr
+# language: fr
 Fonctionnalité: Page organisation - domaine à vérifier
 
   Contexte:
@@ -12,7 +12,6 @@ Fonctionnalité: Page organisation - domaine à vérifier
     Alors je suis redirigé sur "/organizations/domains"
     Et je dois voir le titre de page "Liste des domaines à vérifier"
     Et je vois "Liste des domaines à vérifier"
-
 
     Alors je dois voir un tableau nommé "Liste des domaines à vérifier" et contenant
       | Domain        | Siret          |
@@ -29,7 +28,7 @@ Fonctionnalité: Page organisation - domaine à vérifier
 
     Alors je dois voir un tableau nommé "domaine connu dans l'organisation" et contenant
       | Domain        | Status |
-      | yeswehack.com | ❓     |
+      | yeswehack.com | ❓      |
 
     Quand je clique sur "Menu"
     Et je clique sur "✅ Domaine autorisé"
@@ -40,5 +39,5 @@ Fonctionnalité: Page organisation - domaine à vérifier
     Quand je clique sur "Domaines à vérifier"
     Et je clique sur "Rafraichir"
     Alors je dois voir un tableau nommé "Liste des domaines à vérifier" et contenant
-      | Domain        | Siret          |
-      | 9online.fr    | 21880352600019 |
+      | Domain     | Siret          |
+      | 9online.fr | 21880352600019 |

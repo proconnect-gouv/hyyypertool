@@ -1,4 +1,4 @@
-#language: fr
+# language: fr
 Fonctionnalité: Sélectionner un type de vérification lors de l'acceptation
 
   Contexte:

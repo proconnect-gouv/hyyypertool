@@ -1,7 +1,6 @@
-#language: fr
-
 #
 
+# language: fr
 Fonctionnalité: Gérer les demandes de modération en double
 
   Contexte:

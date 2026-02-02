@@ -1,4 +1,4 @@
-#language: fr
+# language: fr
 Fonctionnalité: Actions sur les membres d'une organisation
 
   Contexte:
@@ -20,13 +20,13 @@ Fonctionnalité: Actions sur les membres d'une organisation
     Alors je vois "<verification_resultat>"
 
     Exemples:
-      | action                                         | verification_resultat                  |
-      | 🔄 vérif: liste dirigeants                     | in_liste_dirigeants_rna                |
-      | 🔄 vérif: domaine email                        | domain                                 |
-      | 🔄 vérif: mail officiel                        | official_contact_email                 |
-      | 🔄 vérif: no validation means available        | no_validation_means_available          |
-      | 🔄 vérif: verified by coop mediation numerique | verified_by_coop_mediation_numerique   |
-      | 🚫 non vérifié                                 | domain_not_verified_yet                |
+      | action                                         | verification_resultat                |
+      | 🔄 vérif: liste dirigeants                     | in_liste_dirigeants_rna              |
+      | 🔄 vérif: domaine email                        | domain                               |
+      | 🔄 vérif: mail officiel                        | official_contact_email               |
+      | 🔄 vérif: no validation means available        | no_validation_means_available        |
+      | 🔄 vérif: verified by coop mediation numerique | verified_by_coop_mediation_numerique |
+      | 🚫 non vérifié                                 | domain_not_verified_yet              |
 
   Plan du Scénario: Basculer un membre entre interne et externe
     Et je vois "<etat_initial>"
@@ -36,7 +36,7 @@ Fonctionnalité: Actions sur les membres d'une organisation
 
     Exemples:
       | etat_initial | etat_resultat |
-      | ✅           | ❌            |
+      | ✅            | ❌             |
 
   Scénario: Retirer un membre de l'organisation
     Quand je clique sur "Menu"

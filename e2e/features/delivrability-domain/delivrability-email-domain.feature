@@ -1,4 +1,4 @@
-#language: fr
+# language: fr
 Fonctionnalité: Gestion de la délivrabilité des domaines email
 
   Contexte:
@@ -30,7 +30,7 @@ Fonctionnalité: Gestion de la délivrabilité des domaines email
     Et je vois "test@ch-lehavre.fr"
     Quand je clique sur l'élément nommé "Supprimer test@ch-lehavre.fr"
     Et je confirme la suppression
-    Alors je ne vois pas "test@ch-lehavre.fr" 
+    Alors je ne vois pas "test@ch-lehavre.fr"
 
   Scénario: Vérifier les informations de vérification
     Quand je clique sur "Délivrabilité des domaines"

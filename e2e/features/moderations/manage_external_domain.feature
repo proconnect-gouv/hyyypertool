@@ -1,4 +1,4 @@
-#language: fr
+# language: fr
 Fonctionnalité: Gérer un domaine externe lors de la modération
 
   Contexte:

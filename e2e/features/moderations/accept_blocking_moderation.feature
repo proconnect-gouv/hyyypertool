@@ -1,4 +1,4 @@
-#language: fr
+# language: fr
 Fonctionnalité: Accepter une modération bloquante avec la barre d'outils
 
   Contexte:

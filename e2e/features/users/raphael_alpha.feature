@@ -1,4 +1,4 @@
-#language: fr
+# language: fr
 Fonctionnalité: Page utilisateur avec MFA
 
   Contexte:
@@ -28,8 +28,8 @@ Fonctionnalité: Page utilisateur avec MFA
     Et je vois "Email vérifié envoyé le22/06/2023 16:34:34"
 
     Alors je dois voir un tableau nommé "Liste des modérations de Raphael" et contenant
-      | Type	 |
-      | 🔓Non vérifié    |
+      | Type          |
+      | 🔓Non vérifié |
     Et je réinitialise le contexte
 
     Sachant que je vais à l'intérieur de l'élément nommé "🔓 MFA"
