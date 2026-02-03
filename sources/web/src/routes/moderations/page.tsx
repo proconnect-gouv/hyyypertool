@@ -290,7 +290,7 @@ function Row({ key, moderation }: { key?: string; moderation: Moderation }) {
       style={text_color(new Date(moderation.created_at))}
     >
       <td title={moderation.type}>
-        <StatutCell
+        <StatusCell
           moderation_status={moderation.status}
           moderation_type={moderation.type}
         />
@@ -324,7 +324,7 @@ function Row({ key, moderation }: { key?: string; moderation: Moderation }) {
   );
 }
 
-function StatutCell({
+function StatusCell({
   moderation_status,
   moderation_type,
 }: {
