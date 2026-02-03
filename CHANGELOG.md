@@ -1,5 +1,19 @@
 # Changelog
 
+## [2026.2.3](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.2...2026.2.3) (2026-02-03)
+
+### Changements
+
+- ✨ use moderation status in moderations table
+
+### Ajouté
+
+- ✨ use moderation status in moderations table (#1372) (88991bf1)
+
+### Corrigé
+
+- 🐛 treat unknown moderation status as exotic moderation type (#1373) (8a19f521)
+
 ## [2026.2.2](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.1...2026.2.2) (2026-02-02)
 
 ### Changements
