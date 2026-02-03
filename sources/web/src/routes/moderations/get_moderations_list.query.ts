@@ -64,6 +64,7 @@ export async function get_moderations_list(
         id: schema.moderations.id,
         moderated_at: schema.moderations.moderated_at,
         organization: { siret: schema.organizations.siret },
+        status: schema.moderations.status,
         type: schema.moderations.type,
         user: {
           email: schema.users.email,

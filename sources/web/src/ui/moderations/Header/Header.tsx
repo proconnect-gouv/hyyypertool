@@ -7,6 +7,7 @@ import { callout } from "#src/ui/callout";
 import { notice } from "#src/ui/notice";
 import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
+import { ModerationStatusSchema } from "@~/identite-proconnect/types";
 import { raw } from "hono/html";
 import { createContext, useContext } from "hono/jsx";
 import { tv } from "tailwind-variants";
@@ -84,18 +85,20 @@ Header.Provier = context.Provider;
 function State_Badge() {
   const { moderation } = useContext(context);
   const is_treated = moderation.moderated_at !== null;
-  if (moderation.status === "unknown")
+  const { data: status } = ModerationStatusSchema.safeParse(moderation.status);
+  if (status === undefined || status === "unknown")
     return is_treated ? (
       <p class="fr-badge fr-badge--success">Traité</p>
     ) : (
       <p class="fr-badge fr-badge--new">A traiter</p>
     );
 
-  return match(moderation.status)
+  return match(status)
     .with("accepted", () => <p class="fr-badge fr-badge--success">Accepté</p>)
-    .with("rejected", () => <p class="fr-badge fr-badge--error">Rejeté</p>)
     .with("pending", () => <p class="fr-badge fr-badge--new">A traiter</p>)
-    .otherwise(() => <p class="fr-badge fr-badge--success">Traité</p>);
+    .with("rejected", () => <p class="fr-badge fr-badge--error">Rejeté</p>)
+    .with("reopened", () => <p class="fr-badge fr-badge--warning">Réouvert</p>)
+    .exhaustive();
 }
 
 function Info() {

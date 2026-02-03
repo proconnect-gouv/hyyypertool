@@ -7,13 +7,19 @@ import {
   moderation_type_to_title,
 } from "#src/lib/moderations";
 import { date_to_dom_string, date_to_string } from "#src/time";
+import { badge } from "#src/ui";
 import { Foot } from "#src/ui/hx_table";
 import { row } from "#src/ui/table";
 import { tag } from "#src/ui/tag";
 import { urls } from "#src/urls";
 import type { Pagination } from "@~/core/schema";
+import {
+  ModerationStatusSchema,
+  ModerationTypeSchema,
+} from "@~/identite-proconnect/types";
 import { createContext, useContext } from "hono/jsx";
 import { useRequestContext } from "hono/jsx-renderer";
+import { match } from "ts-pattern";
 import {
   MODERATION_TABLE_ID,
   MODERATION_TABLE_PAGE_ID,
@@ -92,7 +98,7 @@ function Main({ search, nonce }: { search: Search; nonce?: string }) {
     >
       <h1>Liste des moderations</h1>
       <Filter search={search} nonce={nonce} />
-      <ModerationList_Table />
+      <Table />
     </main>
   );
 }
@@ -233,7 +239,7 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
   );
 }
 
-async function ModerationList_Table() {
+async function Table() {
   const { pagination, query_result } = useContext(Moderations_Context);
   const { count, moderations } = query_result;
   return (
@@ -284,8 +290,10 @@ function Row({ key, moderation }: { key?: string; moderation: Moderation }) {
       style={text_color(new Date(moderation.created_at))}
     >
       <td title={moderation.type}>
-        {moderation_type_to_emoji(moderation.type)}
-        {moderation_type_to_title(moderation.type)}
+        <StatutCell
+          moderation_status={moderation.status}
+          moderation_type={moderation.type}
+        />
       </td>
       <td>{date_to_string(new Date(moderation.created_at))}</td>
       <td
@@ -314,6 +322,45 @@ function Row({ key, moderation }: { key?: string; moderation: Moderation }) {
       </td>
     </tr>
   );
+}
+
+function StatutCell({
+  moderation_status,
+  moderation_type,
+}: {
+  moderation_status: string;
+  moderation_type: string;
+}) {
+  const { data: type } = ModerationTypeSchema.safeParse(moderation_type);
+  const { data: status } = ModerationStatusSchema.safeParse(moderation_status);
+  if (type === undefined || status === undefined)
+    return (
+      <>
+        {moderation_type_to_emoji(moderation_type)}
+        {moderation_type_to_title(moderation_type)}
+      </>
+    );
+
+  return match({ status })
+    .with({ status: "accepted" }, () => (
+      <span class={badge({ intent: "success" })}>Accepté</span>
+    ))
+    .with({ status: "pending" }, () => (
+      <span class={badge()}>
+        {moderation_type_to_emoji(type)}
+        {moderation_type_to_title(type)}
+      </span>
+    ))
+    .with({ status: "rejected" }, () => (
+      <span class={badge({ intent: "error" })}>Rejeté</span>
+    ))
+    .with({ status: "reopened" }, () => (
+      <span class={badge({ intent: "warning" })}>Ré-ouvert</span>
+    ))
+    .with({ status: "unknown" }, () => (
+      <span class={badge({ intent: "info" })}>{status}</span>
+    ))
+    .exhaustive();
 }
 
 // \from https://youmightnotneed.com/date-fns#getDayOfYear

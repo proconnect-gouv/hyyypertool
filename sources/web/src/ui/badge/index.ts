@@ -8,10 +8,10 @@ export const badge = tv({
   base: `fr-badge`,
   variants: {
     intent: {
-      error: { base: "fr-badge--error" },
-      info: { base: "fr-badge--info" },
-      success: { base: "fr-badge--success" },
-      warning: { base: "fr-badge--warning" },
+      error: "fr-badge--error",
+      info: "fr-badge--info",
+      success: "fr-badge--success",
+      warning: "fr-badge--warning",
     },
   },
 });
