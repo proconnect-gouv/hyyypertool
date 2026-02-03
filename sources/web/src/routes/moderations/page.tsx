@@ -333,7 +333,7 @@ function StatutCell({
 }) {
   const { data: type } = ModerationTypeSchema.safeParse(moderation_type);
   const { data: status } = ModerationStatusSchema.safeParse(moderation_status);
-  if (type === undefined || status === undefined)
+  if (type === undefined || status === undefined || status === "unknown")
     return (
       <>
         {moderation_type_to_emoji(moderation_type)}
@@ -356,9 +356,6 @@ function StatutCell({
     ))
     .with({ status: "reopened" }, () => (
       <span class={badge({ intent: "warning" })}>Ré-ouvert</span>
-    ))
-    .with({ status: "unknown" }, () => (
-      <span class={badge({ intent: "info" })}>{status}</span>
     ))
     .exhaustive();
 }
