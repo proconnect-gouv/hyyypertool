@@ -29,7 +29,6 @@
     "@proconnect-gouv/proconnect.crisp": "1.0.1",
     "@sentry/core": "10.36.0",
     "@sentry/node": "10.36.0",
-    "@tailwindcss/typography": "^0.5.19",
     "@~/core": "workspace:*",
     "@~/identite-proconnect": "workspace:*",
     "@~/moderations": "workspace:*",
@@ -61,6 +60,8 @@
   },
   "devDependencies": {
     "@happy-dom/global-registrator": "20.3.9",
+    "@tailwindcss/cli": "4.1.18",
+    "@tailwindcss/typography": "0.5.19",
     "@types/lodash.sortby": "4.7.9",
     "@types/nprogress": "0.2.3",
     "@~/config.typescript": "workspace:*",

@@ -100,56 +100,107 @@
     "version": "2.0.0",
     "tasks": [
       {
-        "label": "🔧 build",
-        "command": "bun",
-        "args": ["run", "build"],
+        "label": "🚀 Dev",
+        "command": "bun run dev",
         "type": "shell",
         "options": {
           "cwd": "${workspaceFolder:/}",
-          "env": {
-            "NODE_ENV": "development",
-          },
         },
         "problemMatcher": ["$tsc-watch"],
         "group": "build",
-        "runOptions": {
-          "instanceLimit": 1,
-        },
+        "runOptions": { "instanceLimit": 1 },
       },
       {
-        "label": "1. 🚀 Dev",
-        "dependsOn": ["🚀 WWW Dev Server", "🐋 Docker Up"],
-        "group": "build",
-      },
-      {
-        "label": "🚀 WWW Dev Server",
-        "command": "bun",
-        "args": ["run", "dev"],
+        "label": "🔧 Build",
+        "command": "bun run build",
         "type": "shell",
         "options": {
           "cwd": "${workspaceFolder:/}",
-          "env": {
-            "NODE_ENV": "development",
-          },
         },
         "problemMatcher": ["$tsc-watch"],
         "group": "build",
-        "runOptions": {
-          "instanceLimit": 1,
-        },
+        "runOptions": { "instanceLimit": 1 },
       },
       {
-        "args": ["run", "dev:api"],
-        "command": "bun",
-        "group": "build",
-        "label": "📦 Api Urls Dev",
+        "label": "🧪 Test",
+        "command": "bun run test",
+        "type": "shell",
         "options": {
-          "cwd": "${workspaceFolder:🈸 sources/web/}",
-          "env": { "NODE_ENV": "development" },
+          "cwd": "${workspaceFolder:/}",
+        },
+        "problemMatcher": ["$tsc-watch"],
+        "group": "build",
+        "runOptions": { "instanceLimit": 1 },
+      },
+      {
+        "label": "🧪 Test : Watch",
+        "command": "bun test --watch",
+        "type": "shell",
+        "options": {
+          "cwd": "${workspaceFolder:/}",
         },
         "problemMatcher": ["$tsc-watch"],
         "runOptions": { "instanceLimit": 1 },
+      },
+      {
+        "label": "🧪 Test : Current file",
+        "command": "bun test --watch ${fileDirname}/${fileBasename}",
         "type": "shell",
+        "options": {
+          "cwd": "${workspaceFolder:/}",
+        },
+        "problemMatcher": ["$tsc-watch"],
+        "runOptions": { "instanceLimit": 1 },
+      },
+      {
+        "label": "🧪 Test : Update snapshots",
+        "command": "bun test --update-snapshots",
+        "type": "shell",
+        "options": {
+          "cwd": "${workspaceFolder:/}",
+        },
+        "problemMatcher": ["$tsc-watch"],
+        "runOptions": { "instanceLimit": 1 },
+      },
+      {
+        "label": "🧪 Test : Update snapshots (current file)",
+        "command": "bun test --update-snapshots ${fileDirname}/${fileBasename}",
+        "type": "shell",
+        "options": {
+          "cwd": "${workspaceFolder:/}",
+        },
+        "problemMatcher": ["$tsc-watch"],
+        "runOptions": { "instanceLimit": 1 },
+      },
+      {
+        "label": "🏗️ DB : Migrate",
+        "command": "bun run db:migrate",
+        "type": "shell",
+        "options": {
+          "cwd": "${workspaceFolder:/}",
+        },
+        "problemMatcher": ["$tsc-watch"],
+        "runOptions": { "instanceLimit": 1 },
+      },
+      {
+        "label": "🏗️ DB : Seed",
+        "command": "bun run db:seed",
+        "type": "shell",
+        "options": {
+          "cwd": "${workspaceFolder:/}",
+        },
+        "problemMatcher": ["$tsc-watch"],
+        "runOptions": { "instanceLimit": 1 },
+      },
+      {
+        "label": "🏗️ DB : Studio",
+        "command": "bun run db:studio",
+        "type": "shell",
+        "options": {
+          "cwd": "${workspaceFolder:/}",
+        },
+        "problemMatcher": ["$tsc-watch"],
+        "runOptions": { "instanceLimit": 1 },
       },
       {
         "label": "🐋 Docker Up",
@@ -158,10 +209,7 @@
         "options": {
           "cwd": "${workspaceFolder:/}",
         },
-        "group": "build",
-        "runOptions": {
-          "instanceLimit": 1,
-        },
+        "runOptions": { "instanceLimit": 1 },
       },
       {
         "label": "🐋 Docker Down",
@@ -170,71 +218,12 @@
         "options": {
           "cwd": "${workspaceFolder:/}",
         },
-        "group": "build",
-        "runOptions": {
-          "instanceLimit": 1,
-        },
-      },
-      {
-        "label": "🧪 Run Test",
-        "command": "bun test",
-        "type": "shell",
-        "group": "build",
-        "options": {
-          "cwd": "${workspaceFolder:/}",
-        },
-        "problemMatcher": ["$tsc-watch"],
-        "runOptions": { "instanceLimit": 1 },
-      },
-      {
-        "label": "🧪 Update Test Snapshots",
-        "command": "bun test --update-snapshots",
-        "type": "shell",
-        "group": "build",
-        "options": {
-          "cwd": "${workspaceFolder:/}",
-        },
-        "problemMatcher": ["$tsc-watch"],
-        "runOptions": { "instanceLimit": 1 },
-      },
-      {
-        "label": "🧪 Update Test Snapshots : Current file",
-        "command": "bun test --update-snapshots ${fileDirname}/${fileBasename}",
-        "type": "shell",
-        "group": "build",
-        "options": {
-          "cwd": "${workspaceFolder:/}",
-        },
-        "problemMatcher": ["$tsc-watch"],
-        "runOptions": { "instanceLimit": 1 },
-      },
-      {
-        "label": "🧪 Watch Test",
-        "command": "bun test --watch",
-        "type": "shell",
-        "group": "build",
-        "options": {
-          "cwd": "${workspaceFolder:/}",
-        },
-        "problemMatcher": ["$tsc-watch"],
-        "runOptions": { "instanceLimit": 1 },
-      },
-      {
-        "label": "🧪 Watch Test : Current file",
-        "command": "bun test --watch ${fileDirname}/${fileBasename}",
-        "type": "shell",
-        "group": "build",
-        "options": {
-          "cwd": "${workspaceFolder:/}",
-        },
-        "problemMatcher": ["$tsc-watch"],
         "runOptions": { "instanceLimit": 1 },
       },
       {
         "label": "🚥 Cypress Studio",
         "command": "bun run studio",
         "type": "shell",
-        "group": "build",
         "options": {
           "cwd": "${workspaceFolder:🚥 e2e/}",
         },
@@ -245,54 +234,11 @@
         "label": "🚥 Cypress Run : Current file",
         "command": "bun run test --spec ${fileDirname}/${fileBasename}",
         "type": "shell",
-        "group": "build",
         "options": {
           "cwd": "${workspaceFolder:🚥 e2e/}",
         },
         "problemMatcher": ["$tsc-watch"],
         "runOptions": { "instanceLimit": 1 },
-      },
-      {
-        "label": "🏗️ Database MonComptePro Migrate",
-        "command": "bun",
-        "args": ["run", "database:identite-proconnect:migrator"],
-        "type": "shell",
-        "options": {
-          "cwd": "${workspaceFolder:/}",
-        },
-        "problemMatcher": ["$tsc-watch"],
-        "group": "build",
-        "runOptions": {
-          "instanceLimit": 1,
-        },
-      },
-      {
-        "label": "🏗️ Database MonComptePro Seed",
-        "command": "bun",
-        "args": ["run", "database:identite-proconnect:seed"],
-        "type": "shell",
-        "options": {
-          "cwd": "${workspaceFolder:/}",
-        },
-        "problemMatcher": ["$tsc-watch"],
-        "group": "build",
-        "runOptions": {
-          "instanceLimit": 1,
-        },
-      },
-      {
-        "label": "🏗️ Database MonComptePro Studio",
-        "command": "bun",
-        "args": ["run", "studio:proconnect-identite"],
-        "type": "shell",
-        "options": {
-          "cwd": "${workspaceFolder:/}",
-        },
-        "problemMatcher": ["$tsc-watch"],
-        "group": "build",
-        "runOptions": {
-          "instanceLimit": 1,
-        },
       },
     ],
   },
