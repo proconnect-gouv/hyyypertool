@@ -34,9 +34,6 @@ export interface Values {
 export const context = createContext<Values>(null as any);
 
 //
-export const reject_context = createContext({
-  $modal_message: hyper_ref(),
-});
 export const valid_context = createContext({
   $send_notification: hyper_ref(),
   is_already_internal_member: false,

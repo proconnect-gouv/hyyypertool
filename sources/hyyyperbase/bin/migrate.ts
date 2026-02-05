@@ -10,7 +10,7 @@ import { Client } from "pg";
 
 const connectionString =
   process.env["HYYYPERBASE_DATABASE_URL"] ??
-  "postgresql://postgres:postgres@localhost:5555/postgres";
+  "postgresql://postgres:postgres@localhost:5555/hyyyperbase";
 const client = new Client({ connectionString });
 await client.connect();
 

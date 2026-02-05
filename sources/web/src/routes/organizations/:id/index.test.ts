@@ -5,11 +5,14 @@ import { set_config } from "#src/middleware/config";
 import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import { set_identite_pg } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
-import { hyyyper_pglite, reset } from "@~/hyyyperbase/testing";
+import {
+  hyyyper_pglite,
+  empty_database as hyyyperbase_empty_database,
+} from "@~/hyyyperbase/testing";
 import { insert_moderateur } from "@~/hyyyperbase/testing/users";
 import { create_unicorn_organization } from "@~/identite-proconnect/database/seed/unicorn";
 import {
-  empty_database,
+  empty_database as identite_empty_database,
   migrate,
   pg,
 } from "@~/identite-proconnect/database/testing";
@@ -20,8 +23,8 @@ import app from "./index";
 //
 
 beforeAll(migrate);
-beforeEach(reset);
-beforeEach(empty_database);
+beforeEach(identite_empty_database);
+beforeEach(hyyyperbase_empty_database);
 
 //
 

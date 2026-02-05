@@ -1,7 +1,7 @@
 //
 
 import { schema } from "@~/hyyyperbase";
-import { hyyyper_pglite, reset } from "@~/hyyyperbase/testing";
+import { empty_database, hyyyper_pglite } from "@~/hyyyperbase/testing";
 import {
   insert_admin,
   insert_disabled_user,
@@ -17,7 +17,7 @@ import { set_userinfo } from "./set_userinfo";
 
 //
 
-beforeEach(reset);
+beforeEach(empty_database);
 
 test("should let active database users pass", async () => {
   const admin = await insert_admin(hyyyper_pglite);
