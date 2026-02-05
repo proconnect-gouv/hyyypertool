@@ -11,9 +11,10 @@ import { Toolbar } from "./Toolbar";
 
 type ActionProps = {
   value: Omit<Values, "$accept" | "$decision_form" | "$reject" | "domain">;
+  response_templates: { label: string }[];
 };
 
-export async function Actions({ value }: ActionProps) {
+export async function Actions({ value, response_templates }: ActionProps) {
   const { moderation } = value;
 
   const { user } = moderation;
@@ -36,7 +37,7 @@ export async function Actions({ value }: ActionProps) {
         moderation={moderation}
         domain={domain}
       />
-      <RefusalModal userEmail={user.email} />
+      <RefusalModal userEmail={user.email} response_templates={response_templates} />
     </context.Provider>
   );
 }

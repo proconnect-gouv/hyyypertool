@@ -3,6 +3,7 @@
 import type { HyyyperPgDatabase } from "#src";
 import { PGlite } from "@electric-sql/pglite";
 import { beforeAll } from "bun:test";
+import { sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/pglite";
 import { migrate } from "drizzle-orm/pglite/migrator";
 import * as schema from "../schema";
@@ -19,8 +20,11 @@ export async function setup() {
   await migrate(drizzle(client, { schema }), { migrationsFolder });
 }
 
-export async function reset() {
-  await client.exec(`TRUNCATE TABLE users RESTART IDENTITY CASCADE;`);
+export async function empty_database(pg: HyyyperPgDatabase = hyyyper_pglite) {
+  await pg.transaction(async (tx) => {
+    await tx.execute(sql`TRUNCATE TABLE users RESTART IDENTITY CASCADE;`);
+    await tx.execute(sql`TRUNCATE TABLE response_templates RESTART IDENTITY CASCADE;`);
+  });
 }
 
 //

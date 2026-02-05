@@ -6,12 +6,18 @@ import { Svg } from "#src/ui/icons/components";
 import { urls } from "#src/urls";
 import { useContext } from "hono/jsx";
 import { AUTO_GO_BACK_EVENT } from "../AutoGoBack";
-import { context, reject_context } from "./context";
+import { context } from "./context";
 import { ResponseMessageSelector } from "./ResponseMessageSelector";
 
-export async function RefusalModal({ userEmail }: { userEmail: string }) {
+export async function RefusalModal({
+  userEmail,
+  response_templates,
+}: {
+  userEmail: string;
+  response_templates: { label: string }[];
+}) {
   const { moderation } = useContext(context);
-  const { $modal_message } = useContext(reject_context);
+  const textarea_id = `rejection-message-${moderation.id}`;
 
   return (
     <div
@@ -59,19 +65,19 @@ export async function RefusalModal({ userEmail }: { userEmail: string }) {
           pour l'organisation <b>{moderation.organization.cached_libelle}</b>
         </p>
         <p class="mb-1">Motif de refus :</p>
-        <ResponseMessageSelector $message={$modal_message} />
+        <ResponseMessageSelector
+          moderation_id={moderation.id}
+          response_templates={response_templates}
+        />
         <div class="my-2">
-          <label class={label()} for={$modal_message}>
+          <label class={label()} for={textarea_id}>
             Message
           </label>
           <textarea
             class={input()}
             rows={15}
-            id={$modal_message}
+            id={textarea_id}
             name={reject_form_schema.keyof().enum.message}
-            _={`
-                on change set ${$modal_message} to my value
-              `}
           />
         </div>
         <button class={`${button()} justify-center`} type="submit">

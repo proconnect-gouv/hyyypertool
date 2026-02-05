@@ -146,6 +146,7 @@
         "@types/pg": "8.20.0",
         "@~/config.typescript": "workspace:*",
         "drizzle-kit": "0.31.9",
+        "ts-dedent": "2.2.0",
       },
       "peerDependencies": {
         "drizzle-orm": ">=0.45",

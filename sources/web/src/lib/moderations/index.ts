@@ -5,6 +5,7 @@ export * from "./comment_message";
 export * from "./entities/Moderation";
 export * from "./event";
 export * from "./moderation_type.mapper";
+export * from "./render_template";
 export * from "./schema";
 export * from "./types";
 export * from "./usecase";

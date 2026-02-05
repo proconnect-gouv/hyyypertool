@@ -113,5 +113,6 @@ jobs:
           - moderations/validate_similar_moderations.feature
           - moderations/verify_domain.feature
           - organizations
+          - response-templates
           - team
           - users

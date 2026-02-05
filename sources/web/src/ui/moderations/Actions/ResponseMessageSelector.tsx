@@ -1,36 +1,33 @@
 //
 
 import { reject_form_schema } from "#src/lib/moderations";
-import { select } from "#src/ui/form";
-import { reponse_templates } from "./responses";
 
 //
 
-export function ResponseMessageSelector({ $message }: { $message: string }) {
+export function ResponseMessageSelector({
+  moderation_id,
+  response_templates,
+}: {
+  moderation_id: number;
+  response_templates: { label: string }[];
+}) {
   return (
     <div>
       <input
-        _={`
-        on keydown or change
-          set :key to my value
-          set :option to <option[value="${"${:key}"}"]/> in #responses-type
-          set #${$message}.value to :option@message
-        on keydown[key is 'Enter']
-          halt
-        `}
-        class={select()}
+        name={reject_form_schema.keyof().enum.reason}
+        class="fr-select"
         list="responses-type"
         placeholder="Recherche d'une réponse type"
         autocomplete="off"
-        name={reject_form_schema.keyof().enum.reason}
+        hx-get={`/moderations/${moderation_id}/rejected/message`}
+        hx-trigger="change"
+        hx-include="this"
+        hx-target={`#rejection-message-${moderation_id}`}
+        hx-swap="outerHTML"
       />
       <datalist id="responses-type">
-        {reponse_templates.map(async ({ label, default: template }, index) => (
-          <option
-            key={index}
-            value={label}
-            message={await Promise.resolve(template())}
-          ></option>
+        {response_templates.map(({ label }, index) => (
+          <option key={index} value={label} />
         ))}
       </datalist>
     </div>
