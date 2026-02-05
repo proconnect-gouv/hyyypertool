@@ -52,16 +52,6 @@ async function buildAllClientScripts() {
   notifyReload?.();
 }
 
-async function buildTailwind() {
-  console.log("Building Tailwind CSS...");
-
-  await $`./bin/node_modules/.bin/tailwindcss -i sources/web/src/ui/tailwind.css -o bin/public/built/tailwind.css --config bin/tailwind.config.js`.cwd(
-    PROJECT_ROOT,
-  );
-
-  console.log("✓ Tailwind CSS built\n");
-}
-
 function watchClientScripts() {
   console.log("👀 Watching client scripts for changes...");
 
@@ -96,26 +86,35 @@ function watchClientScripts() {
   console.log(`  Watching ${sourcesWebSrc}/**/*.client.ts`);
 }
 
-function watchTailwind() {
-  console.log("👀 Watching Tailwind CSS...");
-  $`./bin/node_modules/.bin/tailwindcss -i sources/web/src/ui/tailwind.css -o bin/public/built/tailwind.css --config bin/tailwind.config.js --watch`
-    .cwd(PROJECT_ROOT)
-    .quiet();
-}
-
 //
 
 console.log("🚀 Starting development environment...\n");
 
 await buildAllClientScripts();
-await buildTailwind();
 
 watchClientScripts();
-watchTailwind();
+console.log("👀 Watching Tailwind CSS...\n");
+Bun.spawn(
+  [
+    "./bin/node_modules/.bin/tailwindcss",
+    "-i",
+    "sources/web/src/ui/tailwind.css",
+    "-o",
+    "bin/public/built/tailwind.css",
+    "--watch=always",
+  ],
+  {
+    cwd: PROJECT_ROOT,
+    stdout: "inherit",
+    stderr: "inherit",
+  },
+);
 
 console.log("🌐 Starting dev server...\n");
 
 // Wait a bit for the server to start before loading the notifier
 setTimeout(loadReloadNotifier, 2000);
 
-await $.cwd("..")`tsx watch --tsconfig tsconfig.json bin/src/node/index.ts`;
+await $.cwd(
+  "..",
+)`tsx watch --clear-screen=false --tsconfig tsconfig.json bin/src/node/index.ts`;

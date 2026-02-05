@@ -118,7 +118,7 @@
       },
       {
         "label": "1. 🚀 Dev",
-        "dependsOn": ["🚀 WWW Dev Server", "📦 Types Dev", "🐋 Docker Up"],
+        "dependsOn": ["🚀 WWW Dev Server", "🐋 Docker Up"],
         "group": "build",
       },
       {
@@ -137,19 +137,6 @@
         "runOptions": {
           "instanceLimit": 1,
         },
-      },
-      {
-        "args": ["run", "build:tsc", "--watch"],
-        "command": "bun",
-        "group": "build",
-        "label": "📦 Types Dev",
-        "options": {
-          "cwd": "${workspaceFolder:/}",
-          "env": { "NODE_ENV": "development" },
-        },
-        "problemMatcher": ["$tsc-watch"],
-        "runOptions": { "instanceLimit": 1 },
-        "type": "shell",
       },
       {
         "args": ["run", "dev:api"],
