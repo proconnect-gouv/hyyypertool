@@ -4,6 +4,38 @@ Thank you for your interest in contributing! We welcome improvements, bug fixes,
 
 ---
 
+## Development Scripts
+
+All scripts live in `/scripts/` and use Bun shell. npm scripts are entry points.
+
+| Command              | Description                                      |
+| -------------------- | ------------------------------------------------ |
+| `npm run dev`        | Start dev environment (Docker, watchers, server) |
+| `npm run build`      | Production build (client scripts + Tailwind CSS) |
+| `npm run test`       | Run full test suite (format, types, tests)       |
+| `npm run format`     | Check formatting                                 |
+| `npm run format:fix` | Fix formatting                                   |
+| `npm run db:migrate` | Run database migrations                          |
+| `npm run db:seed`    | Migrate + seed database                          |
+| `npm run db:reset`   | Reset database (same as db:seed)                 |
+| `npm run db:studio`  | Open Drizzle Studio                              |
+
+### Script Structure
+
+```
+scripts/
+  build.ts        # Production build
+  dev.ts          # Dev environment
+  test.ts         # Test suite
+  format.ts       # Formatter (--fix flag)
+  db/
+    migrate.ts    # Database migrations
+    seed.ts       # Seed test data
+    studio.ts     # Drizzle Studio
+```
+
+---
+
 ## Branches
 
 ### Main branch
@@ -62,7 +94,7 @@ Thank you for your interest in contributing! We welcome improvements, bug fixes,
 
 - **Single-commit PR**: the default description is usually sufficient.
 - **When needed**, add context, for example:
-  - Database migrations to run: `npm run migrate`
+  - Database migrations to run: `npm run db:migrate`
   - This PR reverts #123.
 
 - Link related Trello cards using the Trello Power-Up.
@@ -611,8 +643,7 @@ Let's migrate `/moderations/:id/processed` feature:
 - [ ] Colocate tests (next to source files)
 - [ ] Update imports in parent router
 - [ ] Delete old files
-- [ ] Run: bun run build:tsc
-- [ ] Run: bun test
+- [ ] Run: npm run test
 - [ ] Git commit
 ```
 

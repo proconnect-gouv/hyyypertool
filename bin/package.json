@@ -8,10 +8,6 @@
     "hyyypertool-bun": "./src/bun/index.ts"
   },
   "scripts": {
-    "build": "bun run ./build.ts",
-    "clean": "rm -rf node_modules/.cache/tsc public/built",
-    "dev": "bun run ./dev.ts",
-    "dev:bun": "bun run --hot src/bun/index.ts",
     "start": "bun run src/bun/index.ts",
     "start:node": "tsx src/node/index.ts",
     "start:bun": "bun run src/bun/index.ts"
@@ -28,8 +24,6 @@
     "tsx": "4.21.0"
   },
   "devDependencies": {
-    "@~/config.bun-plugin-client-scripts": "workspace:*",
-    "@~/config.tailwindcss": "workspace:*",
     "@~/config.typescript": "workspace:*"
   }
 }

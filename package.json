@@ -14,28 +14,16 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "bun run build:bun",
-    "build:bun": "cd bin && bun run build",
-    "database:identite-proconnect:migrator": "bun run database:identite-proconnect:run migration",
-    "database:identite-proconnect:run": "bun run --cwd sources/identite-proconnect",
-    "database:identite-proconnect:seed": "bun run database:identite-proconnect:run seed",
-    "dev": "cd bin && bun run dev",
-    "dev:inspect-brk": "tsx --inspect-brk bin/src/index.ts",
-    "e2e:install": "cd e2e && bun install",
-    "e2e:run": "cd e2e && bun run",
-    "fixtures:load": "bun run database:identite-proconnect:migrator && bun run database:identite-proconnect:seed",
-    "format": "bun x prettier --check .",
-    "format:fix": "bun x prettier --log-level silent --write .",
-    "format:pkg": "bun x sort-package-json ./package.json ./sources/*/package.json ./sources/*/*/package.json ./e2e/package.json",
-    "format:tsconfig": "bun x @monorepo-utils/workspaces-to-typescript-project-references && prettier --log-level silent --write **/tsconfig.json",
-    "postadd": "bun run format:tsconfig",
-    "renovate": "bun x npm-check-updates --packageManager bun --interactive --upgrade --deep",
+    "build": "bun scripts/build.ts",
+    "db:migrate": "bun scripts/db/migrate.ts",
+    "db:reset": "bun scripts/db/seed.ts",
+    "db:seed": "bun scripts/db/seed.ts",
+    "db:studio": "bun scripts/db/studio.ts",
+    "dev": "bun scripts/dev.ts",
+    "format": "bun scripts/format.ts",
+    "format:fix": "bun scripts/format.ts --fix",
     "start": "tsx --tsconfig tsconfig.json bin/src/node/index.ts",
-    "studio:identite-proconnect": "bun run database:identite-proconnect:run studio",
-    "test": "bun run format && bun run test:type-check && bun run test:all",
-    "test:all": "bun test",
-    "test:inspect": "bun test --inspect-wait=localhost:6499/",
-    "test:type-check": "bun x tsc --build"
+    "test": "bun scripts/test.ts"
   },
   "prettier": {
     "plugins": [
@@ -67,6 +55,7 @@
     "zod": "4.3.6"
   },
   "devDependencies": {
+    "@~/config.bun-plugin-client-scripts": "workspace:*",
     "@csmith/release-it-calver-plugin": "2023.12.0",
     "@testing-library/preact": "3.2.4",
     "@types/bun": "1.3.6",
