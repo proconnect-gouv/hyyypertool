@@ -40,6 +40,9 @@ beforeEach(reset);
 test("Main Layout", async () => {
   const admin = await insert_admin(hyyyper_pglite);
   const app = new Hono()
+    .onError((e) => {
+      throw e;
+    })
     .use(
       set_config({
         ASSETS_PATH: "/assets/ASSETS_PATH",
@@ -64,7 +67,7 @@ test("Main Layout", async () => {
       return c.render("✅");
     });
 
-  const res = await app.request("/");
+  const res = await app.request("/", undefined, {});
   expect(res.status).toBe(200);
   expect(await res.text()).toMatchSnapshot();
 });

@@ -20,7 +20,9 @@ export async function setup() {
 }
 
 export async function reset() {
-  await client.exec(`TRUNCATE TABLE users RESTART IDENTITY CASCADE;`);
+  await client.exec(
+    `TRUNCATE TABLE response_templates, users RESTART IDENTITY CASCADE;`,
+  );
 }
 
 //
