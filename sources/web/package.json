@@ -29,6 +29,7 @@
     "@proconnect-gouv/proconnect.crisp": "1.0.1",
     "@sentry/core": "10.36.0",
     "@sentry/node": "10.36.0",
+    "@tailwindcss/typography": "^0.5.19",
     "@~/core": "workspace:*",
     "@~/identite-proconnect": "workspace:*",
     "@~/moderations": "workspace:*",
