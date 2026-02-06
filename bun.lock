@@ -228,7 +228,7 @@
         "youch": "3.3.4",
       },
       "devDependencies": {
-        "@happy-dom/global-registrator": "20.3.9",
+        "@happy-dom/global-registrator": "20.4.0",
         "@types/lodash.sortby": "4.7.9",
         "@types/nprogress": "0.2.3",
         "@~/config.typescript": "workspace:*",
@@ -323,7 +323,7 @@
 
     "@gouvfr/dsfr": ["@gouvfr/dsfr@1.14.3", "", {}, "sha512-UTplClQLp635J4vRHx/rJ7SKEi+bepc1FisvzTS8efQGQ3Gm8LttZf11NJ+4XhEMYLbCf8TBvFFwWBZ9ztRFkg=="],
 
-    "@happy-dom/global-registrator": ["@happy-dom/global-registrator@20.3.9", "", { "dependencies": { "@types/node": ">=20.0.0", "happy-dom": "^20.3.9" } }, "sha512-85JldWOJ084m//JlsTFSyc0SC/mRQ47FazaiiYztNTWpqxT1WTIib60quDyg0pLcQiHZ+4Z+ip/BteJGZukTTg=="],
+    "@happy-dom/global-registrator": ["@happy-dom/global-registrator@20.4.0", "", { "dependencies": { "@types/node": ">=20.0.0", "happy-dom": "^20.4.0" } }, "sha512-MX0CK+FuP+cIx/2Lq7csXL0czMsgppIKW0Sg4SqIbsQBiacoLXVm6MU+J+ZcS+UhS17VF5wClsZhkpWubYspVg=="],
 
     "@hono/node-server": ["@hono/node-server@1.19.9", "", { "peerDependencies": { "hono": "^4" } }, "sha512-vHL6w3ecZsky+8P5MD+eFfaGTyCeOHUIFYMGpQGbrBTSmNNoxv0if69rEZ5giu36weC5saFuznL411gRX7bJDw=="],
 
