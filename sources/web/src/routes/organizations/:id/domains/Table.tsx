@@ -3,8 +3,10 @@
 import { hyper_ref } from "#src/html";
 import { button } from "#src/ui/button";
 import { GoogleSearchButton } from "#src/ui/button/components";
+import { input, input_group, label } from "#src/ui/form";
 import { menu_item } from "#src/ui/menu";
 import { Horizontal_Menu } from "#src/ui/menu/components";
+import { table } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
 import {
@@ -28,25 +30,23 @@ export function Table({
   describedby: string;
 }) {
   return (
-    <div class="fr-table mb-0 *:table!">
-      <table aria-describedby={describedby}>
-        <thead>
-          <tr>
-            <th>Status</th>
-            <th>Domain</th>
-            <th>Type</th>
-            <th>Vérifié le</th>
-            <th>Crée le</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {domains.map((domain) => (
-            <Row key={`${domain.id}`} organization_domain={domain} />
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <table class={table()} aria-describedby={describedby}>
+      <thead>
+        <tr>
+          <th>Status</th>
+          <th>Domain</th>
+          <th>Type</th>
+          <th>Vérifié le</th>
+          <th>Crée le</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {domains.map((domain) => (
+          <Row key={`${domain.id}`} organization_domain={domain} />
+        ))}
+      </tbody>
+    </table>
   );
 }
 
@@ -65,17 +65,20 @@ export async function AddDomain({
 
   return (
     <form {...hx_add_domain_props} hx-swap="none">
-      <div class="fr-input-group">
-        <div class="fr-input-wrap fr-input-wrap--addon">
+      <div class={input_group()}>
+        <label class={label()} for={$describedby}>
+          Ajouter un domain
+        </label>
+        <div class="flex items-stretch">
           <input
             aria-describedby={$describedby}
             id={$describedby}
-            class="fr-input"
+            class={input({ class: "flex-1" })}
             type="text"
             name={add_params.keyof().enum.domain}
             placeholder="Ajouter un domain"
           />
-          <button class="fr-btn" type="submit">
+          <button class={button()} type="submit">
             Ajouter
           </button>
         </div>

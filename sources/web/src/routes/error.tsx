@@ -3,6 +3,7 @@
 import { NotFoundError } from "#src/errors";
 import { is_htmx_request } from "#src/htmx";
 import type { AppContext } from "#src/middleware/context";
+import { button } from "#src/ui/button";
 import consola from "consola";
 import { type Context } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";
@@ -73,7 +74,7 @@ export function Error_Page({ error }: { error: Error }) {
         <img src={img_404} alt="" />
         <h3>Oups, une erreur s'est produite.</h3>
         <pre>{error.message}</pre>
-        <a href="/" class="fr-btn">
+        <a href="/" class={button()}>
           {" "}
           Retour à l’accueil{" "}
         </a>

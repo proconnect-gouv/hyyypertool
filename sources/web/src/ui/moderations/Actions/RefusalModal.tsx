@@ -1,6 +1,8 @@
 import { HtmxEvents, hx_disabled_form_elements } from "#src/htmx";
 import { reject_form_schema } from "#src/lib/moderations";
 import { button } from "#src/ui/button";
+import { input, label } from "#src/ui/form";
+import { IconSubtract } from "#src/ui/icons";
 import { urls } from "#src/urls";
 import { useContext } from "hono/jsx";
 import { AUTO_GO_BACK_EVENT } from "../AutoGoBack";
@@ -33,20 +35,21 @@ export async function RefusalModal({ userEmail }: { userEmail: string }) {
       >
         <div class="mb-1 flex items-center justify-between">
           <input
-            class="fr-input hidden"
+            class="hidden"
             type="text"
             name={reject_form_schema.keyof().enum.subject}
             value={`[ProConnect] Demande pour rejoindre « ${moderation.organization.cached_libelle} »`}
           />
           <p class="mb-0 text-lg font-bold">❌ Refuser</p>
           <button
-            class="fr-btn fr-icon-subtract-line fr-btn--tertiary-no-outline"
+            class={button({ type: "tertiary" })}
             type="button"
             _={`
               on click
                 add .hidden to #refusalModal
             `}
           >
+            <IconSubtract class="inline h-4 w-4" />
             Label bouton
           </button>
         </div>
@@ -60,11 +63,11 @@ export async function RefusalModal({ userEmail }: { userEmail: string }) {
         <p class="mb-1">Motif de refus :</p>
         <ResponseMessageSelector $message={$modal_message} />
         <div class="my-2">
-          <label class="fr-label" for={$modal_message}>
+          <label class={label()} for={$modal_message}>
             Message
           </label>
           <textarea
-            class="fr-input"
+            class={input()}
             rows={15}
             id={$modal_message}
             name={reject_form_schema.keyof().enum.message}

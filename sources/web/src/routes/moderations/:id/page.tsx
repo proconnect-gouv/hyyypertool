@@ -6,6 +6,7 @@ import { CountUserMemberships, SuggestSameUserEmails } from "#src/lib/users";
 import type { GetModerationWithDetailsDto } from "#src/queries/moderations";
 import { type GetOrganizationMemberDto } from "#src/queries/organizations";
 import { button } from "#src/ui/button";
+import { IconArrowGoBack } from "#src/ui/icons";
 import { Actions } from "#src/ui/moderations/Actions";
 import { AutoGoBack } from "#src/ui/moderations/AutoGoBack";
 import { DomainsByOrganization } from "#src/ui/moderations/DomainsByOrganization";
@@ -64,15 +65,15 @@ async function ModerationPageContent() {
   const moderation_id = `moderation-${moderation.id}`;
 
   return (
-    <main class="fr-container my-12">
+    <main class="mx-auto max-w-7xl px-4 my-12">
       <button
         onclick="history.back()"
         class={button({
-          class: "fr-btn--icon-left fr-icon-arrow-go-back-fill",
           type: "tertiary",
           size: "sm",
         })}
       >
+        <IconArrowGoBack class="inline h-4 w-4" />
         retour
       </button>
       <AutoGoBack id="auto_go_back" />

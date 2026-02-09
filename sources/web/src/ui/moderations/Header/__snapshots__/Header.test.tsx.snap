@@ -11,13 +11,19 @@ exports[`render header section 1`] = `
     </time>
   </div>
   <section class="flex items-baseline space-x-5">
-    <h1 class="fr-h2">🕵️ Adora Pony</h1>
-    <div><p class="fr-badge fr-badge--success">Accepté</p></div>
+    <h1 class="text-2xl font-bold">🕵️ Adora Pony</h1>
+    <div>
+      <p
+        class="inline-flex items-center w-fit text-sm leading-6 min-h-6 px-2 font-bold uppercase rounded text-[#18753c] bg-[#b8fec9]"
+      >
+        Accepté
+      </p>
+    </div>
   </section>
-  <div class="fr-notice fr-notice--info">
-    <div class="fr-container">
-      <div class="fr-notice__body">
-        <div class="fr-notice__title">
+  <div class="relative py-4 bg-[#e8edff] text-[#0063cb]">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="relative flex flex-row items-start justify-between">
+        <div class="relative mr-1 font-bold">
           <p class="mb-0">
             <b>Adora Pony</b>
             <span class="text-gray-600">veut rejoindre l&#39;organisation</span>

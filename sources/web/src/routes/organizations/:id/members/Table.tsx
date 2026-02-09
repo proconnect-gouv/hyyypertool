@@ -5,7 +5,7 @@ import type { Pagination } from "#src/schema";
 import { Foot } from "#src/ui/hx_table";
 import { menu_item } from "#src/ui/menu";
 import { Horizontal_Menu } from "#src/ui/menu/components";
-import { row } from "#src/ui/table";
+import { row, table } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
 import { VerificationTypeSchema } from "@~/identite-proconnect/types";
@@ -44,38 +44,36 @@ export async function Table({
   };
 
   return (
-    <div class="fr-table *:table!">
-      <table aria-describedby={describedby}>
-        <thead>
-          <tr>
-            <th>Prénom</th>
-            <th>Nom</th>
-            <th>Interne</th>
-            <th>Email</th>
-            <th>Fonction</th>
-            <th>Type de vérification</th>
-            <th>Dates</th>
-            <th></th>
-          </tr>
-        </thead>
+    <table class={table()} aria-describedby={describedby}>
+      <thead>
+        <tr>
+          <th>Prénom</th>
+          <th>Nom</th>
+          <th>Interne</th>
+          <th>Email</th>
+          <th>Fonction</th>
+          <th>Type de vérification</th>
+          <th>Dates</th>
+          <th></th>
+        </tr>
+      </thead>
 
-        <tbody>
-          {users.map((user) => (
-            <MemberContext.Provider value={{ user, organization_id }}>
-              <Row />
-            </MemberContext.Provider>
-          ))}
-        </tbody>
+      <tbody>
+        {users.map((user) => (
+          <MemberContext.Provider value={{ user, organization_id }}>
+            <Row />
+          </MemberContext.Provider>
+        ))}
+      </tbody>
 
-        <Foot
-          colspan={8}
-          count={count}
-          hx_query_props={hx_member_query_props}
-          id={page_ref}
-          pagination={pagination}
-        />
-      </table>
-    </div>
+      <Foot
+        colspan={8}
+        count={count}
+        hx_query_props={hx_member_query_props}
+        id={page_ref}
+        pagination={pagination}
+      />
+    </table>
   );
 }
 

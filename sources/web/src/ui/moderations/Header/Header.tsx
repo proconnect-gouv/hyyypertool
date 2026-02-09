@@ -2,6 +2,7 @@
 
 import type { GetModerationHeaderOutput } from "#src/lib/moderations";
 import { moderation_type_to_emoji } from "#src/lib/moderations";
+import { badge } from "#src/ui/badge";
 import { button } from "#src/ui/button";
 import { callout } from "#src/ui/callout";
 import { notice } from "#src/ui/notice";
@@ -55,7 +56,7 @@ export async function Header() {
         Créé le <LocalTime date={moderation.created_at} />
       </div>
       <section class="flex items-baseline space-x-5">
-        <h1 className="fr-h2">
+        <h1 className="text-2xl font-bold">
           {moderation_type_to_emoji(moderation.type)}{" "}
           {moderation.user.given_name} {moderation.user.family_name}
         </h1>
@@ -88,16 +89,24 @@ function State_Badge() {
   const { data: status } = ModerationStatusSchema.safeParse(moderation.status);
   if (status === undefined || status === "unknown")
     return is_treated ? (
-      <p class="fr-badge fr-badge--success">Traité</p>
+      <p class={badge({ intent: "success" })}>Traité</p>
     ) : (
-      <p class="fr-badge fr-badge--new">A traiter</p>
+      <p class={badge({ intent: "new" })}>A traiter</p>
     );
 
   return match(status)
-    .with("accepted", () => <p class="fr-badge fr-badge--success">Accepté</p>)
-    .with("pending", () => <p class="fr-badge fr-badge--new">A traiter</p>)
-    .with("rejected", () => <p class="fr-badge fr-badge--error">Rejeté</p>)
-    .with("reopened", () => <p class="fr-badge fr-badge--warning">Réouvert</p>)
+    .with("accepted", () => (
+      <p class={badge({ intent: "success" })}>Accepté</p>
+    ))
+    .with("pending", () => (
+      <p class={badge({ intent: "new" })}>A traiter</p>
+    ))
+    .with("rejected", () => (
+      <p class={badge({ intent: "error" })}>Rejeté</p>
+    ))
+    .with("reopened", () => (
+      <p class={badge({ intent: "warning" })}>Réouvert</p>
+    ))
     .exhaustive();
 }
 

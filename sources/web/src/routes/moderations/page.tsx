@@ -8,6 +8,8 @@ import {
 import type { Pagination } from "#src/schema";
 import { date_to_string } from "#src/time";
 import { badge } from "#src/ui";
+import { button } from "#src/ui/button";
+import { fieldset, input, input_group, label, tags_group } from "#src/ui/form";
 import { Foot } from "#src/ui/hx_table";
 import {
   HideTypeCheckboxIsland,
@@ -18,7 +20,7 @@ import {
   SearchModeratedByIsland,
   SearchSiretIsland,
 } from "#src/ui/moderations/Filter";
-import { row } from "#src/ui/table";
+import { row, table } from "#src/ui/table";
 import { urls } from "#src/urls";
 import {
   ModerationStatusSchema,
@@ -98,7 +100,7 @@ function Main({
   poll_interval: number;
 }) {
   return (
-    <main class="fr-container my-12">
+    <main class="max-w-7xl mx-auto px-4 my-12">
       <h1>Liste des moderations</h1>
       <Filter search={search} nonce={nonce} poll_interval={poll_interval} />
       <Table />
@@ -135,20 +137,20 @@ function Filter({
         sp_names_list={sp_names_list}
       />
       <div class="mt-4 grid grid-cols-2 gap-6">
-        <div class="fr-input-group">
-          <label class="fr-label" for="filter-email">
+        <div class={input_group()}>
+          <label class={label()} for="filter-email">
             Email
           </label>
           <SearchEmailIsland nonce={nonce} placeholder="Recherche par Email" />
         </div>
-        <div class="fr-input-group">
-          <label class="fr-label" for="filter-siret">
+        <div class={input_group()}>
+          <label class={label()} for="filter-siret">
             Siret
           </label>
           <SearchSiretIsland nonce={nonce} placeholder="Recherche par SIRET" />
         </div>
       </div>
-      <ul class="fr-tags-group">
+      <ul class={tags_group()}>
         <li>
           <ProcessedCheckboxIsland nonce={nonce} />
         </li>
@@ -168,18 +170,18 @@ function Filter({
         </li>
       </ul>
 
-      <div class="fr-fieldset__element">
-        <div class="fr-input-group">
-          <label class="fr-label" for="filter-moderated-by">
+      <div class={fieldset().element()}>
+        <div class={input_group()}>
+          <label class={label()} for="filter-moderated-by">
             Filtrer par jours
           </label>
           <SearchDateIsland nonce={nonce} />
         </div>
       </div>
 
-      <div class="fr-fieldset__element">
-        <div class="fr-input-group">
-          <label class="fr-label" for="filter-moderated-by">
+      <div class={fieldset().element()}>
+        <div class={input_group()}>
+          <label class={label()} for="filter-moderated-by">
             Filtrer par modérateur
           </label>
           <SearchModeratedByIsland
@@ -189,8 +191,8 @@ function Filter({
         </div>
       </div>
 
-      <div class="fr-fieldset__element">
-        <a class="fr-btn" href={urls.moderations.$url().pathname}>
+      <div class={fieldset().element()}>
+        <a class={button()} href={urls.moderations.$url().pathname}>
           Réinitialiser la recherche, les filtres et les tris
         </a>
       </div>
@@ -202,7 +204,7 @@ async function Table() {
   const { pagination, query_result } = useContext(Moderations_Context);
   const { count, moderations } = query_result;
   return (
-    <div class="fr-table *:table!" id={MODERATION_TABLE_ID}>
+    <div class={table()} id={MODERATION_TABLE_ID}>
       <table>
         <thead>
           <tr>
