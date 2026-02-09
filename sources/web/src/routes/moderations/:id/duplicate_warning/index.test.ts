@@ -65,8 +65,8 @@ test("GET /moderations/:id/duplicate_warning", async () => {
   expect(format(await response.text(), { parser: "html" })).resolves
     .toMatchInlineSnapshot(`
     "<!DOCTYPE html>
-    <div class="fr-alert fr-alert--warning">
-      <h3 class="fr-alert__title">Attention : demande multiples</h3>
+    <div class="p-4 mb-4 text-sm bg-[#ffe9e6] text-[#b34000]">
+      <h3 class="font-bold mb-1">Attention : demande multiples</h3>
       <p>Il s&#39;agit de la 2e demande pour cette organisation</p>
       <a
         href="http://localhost:6500/#search/adora.pony@unicorn.xyz"
@@ -78,12 +78,20 @@ test("GET /moderations/:id/duplicate_warning", async () => {
       <ul>
         <li>
           <a href="/moderations/1">Moderation#1</a>
-          <p class="fr-badge fr-badge--success">Traité</p>
+          <p
+            class="inline-flex items-center w-fit text-sm leading-6 min-h-6 px-2 font-bold uppercase rounded text-[#18753c] bg-[#b8fec9]"
+          >
+            Traité
+          </p>
           Pas de ticket
         </li>
         <li>
           <a href="/moderations/2">Moderation#2</a>
-          <p class="fr-badge fr-badge--success">Traité</p>
+          <p
+            class="inline-flex items-center w-fit text-sm leading-6 min-h-6 px-2 font-bold uppercase rounded text-[#18753c] bg-[#b8fec9]"
+          >
+            Traité
+          </p>
           Pas de ticket
         </li>
       </ul>
@@ -97,10 +105,12 @@ test("GET /moderations/:id/duplicate_warning", async () => {
         hx-patch="/moderations/2/processed"
         hx-swap="none"
       >
-        <fieldset class="fr-fieldset">
-          <div class="fr-fieldset__element text-right">
+        <fieldset
+          class="relative flex flex-row flex-wrap items-baseline m-0 p-0 border-0"
+        >
+          <div class="flex-[1_1_100%] max-w-full px-2 mb-4 text-right">
             <button
-              class="fr-btn bg-(--error-425-625) hover:bg-(--error-425-625-hover)!"
+              class="inline-flex items-center w-fit font-medium text-base leading-6 min-h-10 px-4 py-2 text-white hover:bg-blue-france-hover bg-error hover:bg-error-hover!"
               type="submit"
             >
               Marquer la modération comme traité

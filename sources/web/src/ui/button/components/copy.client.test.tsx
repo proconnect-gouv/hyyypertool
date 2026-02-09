@@ -67,8 +67,9 @@ test("shows check icon after copying", async () => {
     </CopyButtonClient>,
   );
 
-  const clipboardIcon = container.querySelector(".fr-icon-clipboard-line")!;
-  const checkIcon = container.querySelector(".fr-icon-check-line")!;
+  const svgs = container.querySelectorAll("svg");
+  const clipboardIcon = svgs[0]!; // first SVG is clipboard
+  const checkIcon = svgs[1]!; // second SVG is check
 
   // Initially clipboard icon visible, check icon hidden
   expect(clipboardIcon.classList.contains("hidden")).toBe(false);
@@ -91,8 +92,9 @@ test("reverts icon after 1 second", async () => {
     </CopyButtonClient>,
   );
 
-  const clipboardIcon = container.querySelector(".fr-icon-clipboard-line")!;
-  const checkIcon = container.querySelector(".fr-icon-check-line")!;
+  const svgs = container.querySelectorAll("svg");
+  const clipboardIcon = svgs[0]!;
+  const checkIcon = svgs[1]!;
 
   const button = container.querySelector("button")!;
   button.click();

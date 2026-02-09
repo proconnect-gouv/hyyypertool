@@ -5,6 +5,7 @@ import {
   moderation_type_to_title,
 } from "#src/lib/moderations";
 import { date_to_string } from "#src/time";
+import { table } from "#src/ui/table";
 import { urls } from "#src/urls";
 import type { get_moderations_by_user_id } from "./get_moderations_by_user_id.query";
 
@@ -20,26 +21,24 @@ export function Table({
   moderations: ModerationList;
 }) {
   return (
-    <div class="fr-table *:table!">
-      <table aria-describedby={describedby}>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Type</th>
-            <th>Date de création</th>
-            <th>Modéré le</th>
-            <th>Commentaire</th>
-            <th>Lien</th>
-          </tr>
-        </thead>
+    <table class={table()} aria-describedby={describedby}>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Type</th>
+          <th>Date de création</th>
+          <th>Modéré le</th>
+          <th>Commentaire</th>
+          <th>Lien</th>
+        </tr>
+      </thead>
 
-        <tbody>
-          {moderations.map((moderation) => (
-            <Row key={`${moderation.id}`} moderation={moderation} />
-          ))}
-        </tbody>
-      </table>
-    </div>
+      <tbody>
+        {moderations.map((moderation) => (
+          <Row key={`${moderation.id}`} moderation={moderation} />
+        ))}
+      </tbody>
+    </table>
   );
 }
 

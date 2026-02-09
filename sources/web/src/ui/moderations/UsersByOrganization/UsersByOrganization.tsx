@@ -5,6 +5,7 @@ import { hx_include, hx_trigger_from_body } from "#src/htmx";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import { Loader } from "#src/ui/loader";
 import { formattedPlural } from "#src/ui/plurial";
+import { table } from "#src/ui/table";
 import { urls } from "#src/urls";
 import { match, P } from "ts-pattern";
 
@@ -49,7 +50,7 @@ export async function UsersByOrganization(props: Props) {
 
         <div
           {...hx_get_users_by_organization_props}
-          class="fr-table"
+          class={table()}
           hx-include={hx_include([$page_ref])}
           hx-target="this"
           hx-trigger={[

@@ -6,6 +6,7 @@ import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import type { CountUserMembershipsHandler, User } from "#src/lib/users";
 import { Loader } from "#src/ui/loader";
 import { formattedPlural } from "#src/ui/plurial";
+import { table } from "#src/ui/table";
 import { urls } from "#src/urls";
 
 //
@@ -42,7 +43,7 @@ export async function OrganizationsByUser(props: Props) {
 
         <div
           {...hx_get_organizations_by_user}
-          class="fr-table"
+          class={table()}
           hx-include={hx_include([$page_ref])}
           hx-target="this"
           hx-trigger={[

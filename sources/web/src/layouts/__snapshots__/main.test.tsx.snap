@@ -4,7 +4,6 @@ exports[`Main Layout 1`] = `
 "<!DOCTYPE html>
     <html
       lang="fr"
-      data-fr-scheme="system"
       hx-ext="chunked-transfer, include-vals"
     >
       <head>
@@ -57,16 +56,6 @@ exports[`Main Layout 1`] = `
 
         <!--  -->
 
-        <style>
-              @import "/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/dsfr/dsfr.min.css"
-                layer(dsfr);
-
-              @import "/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/utility/utility.min.css"
-                layer(dsfr-utility);
-            </style>
-
-        <!--  -->
-
         <link
           rel="stylesheet"
           href="/assets/PUBLIC_ASSETS_PATH/public/built/tailwind.css"
@@ -94,7 +83,7 @@ exports[`Main Layout 1`] = `
         </title>
       </head>
       <body class="flex min-h-screen flex-col">
-        <div class="flex flex-1 flex-col"><div class="flex min-h-full grow flex-col"><header role="banner" class="fr-header"><div class="fr-header__body"><div class="fr-container"><div class="fr-header__body-row"><div class="fr-header__brand fr-enlarge-link"><div class="fr-header__brand-top"><div class="fr-header__logo"><p class="fr-logo">République<br/>Française</p></div></div><div class="fr-header__service"><a href="/" title="Accueil "><p class="fr-header__service-title">Hyyypertool</p></a><p class="fr-header__service-tagline">hyyyyyyyypertool</p></div></div><div class="fr-header__tools"><div class="fr-header__tools-links"><ul class="fr-btns-group"><li><a class="fr-btn fr-btn--sm fr-btn--tertiary-no-outline fr-fi-logout-box-r-line fr-btn--icon-left" href="/auth/logout">Lara Croft</a></li></ul></div></div></div></div></div><div class="fr-header__menu fr-modal"><div class="fr-container"><nav class="fr-nav" id="navigation-494" role="navigation" aria-label="Menu principal"><ul class="fr-nav__list"><li class="fr-nav__item"><a aria-current="false" class="fr-nav__link" href="/moderations" target="_self">Moderations</a></li><li class="fr-nav__item"><a aria-current="false" class="fr-nav__link" href="/users" target="_self">Utilisateurs</a></li><li class="fr-nav__item"><a aria-current="false" class="fr-nav__link" href="/organizations" target="_self">Organisations</a></li><li class="fr-nav__item"><a aria-current="false" class="fr-nav__link" href="/organizations/domains" target="_self">Domaines à vérifier</a></li><li class="fr-nav__item"><a aria-current="false" class="fr-nav__link" href="/domains-deliverability" target="_self">Délivrabilité des domaines</a></li></ul></nav></div></div></header><div class="relative flex flex-1 flex-col">✅</div></div><x-notification-island><x-notification-island-root id="test-uuid-1"></x-notification-island-root><script defer="" nonce="nonce" type="module">import { render, h } from "preact";
+        <div class="flex flex-1 flex-col"><div class="flex min-h-full grow flex-col"><header role="banner" class="bg-white shadow-[0_1px_0_0_var(--color-grey-200)]"><div class="py-4"><div class="max-w-7xl mx-auto px-4"><div class="flex items-center justify-between"><div class="flex items-center gap-4"><div class="flex items-center"><div><p class="text-sm leading-5 font-bold uppercase">République<br/>Française</p></div></div><div class="border-l border-grey-200 pl-4"><a href="/" title="Accueil "><p class="font-bold text-base">Hyyypertool</p></a><p class="text-xs text-grey-850">hyyyyyyyypertool</p></div></div><div class="flex items-center"><div><ul class="flex list-none gap-2 p-0 m-0"><li><a class="inline-flex items-center w-fit font-medium hover:bg-blue-france-hover text-sm leading-6 min-h-8 px-3 py-1 bg-transparent text-blue-france shadow-none hover:bg-grey-50!" href="/auth/logout"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="1em" height="1em" class="inline h-4 w-4"><path d="M19 2a1 1 0 0 1 1 1v3h-2V4H6v16h12v-2h2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h14Zm-1 6 5 4-5 4v-3h-7v-2h7V8Z"></path></svg>Lara Croft</a></li></ul></div></div></div></div></div><div><div class="max-w-7xl mx-auto px-4"><nav class="border-t border-grey-200" id="navigation-494" role="navigation" aria-label="Menu principal"><ul class="flex list-none p-0 m-0 gap-0"><li><a aria-current="false" class="inline-flex items-center px-4 py-3 text-sm font-medium text-grey-850 hover:bg-grey-50 aria-[current=true]:shadow-[inset_0_-2px_0_0_var(--color-blue-france)] aria-[current=true]:text-blue-france" href="/moderations" target="_self">Moderations</a></li><li><a aria-current="false" class="inline-flex items-center px-4 py-3 text-sm font-medium text-grey-850 hover:bg-grey-50 aria-[current=true]:shadow-[inset_0_-2px_0_0_var(--color-blue-france)] aria-[current=true]:text-blue-france" href="/users" target="_self">Utilisateurs</a></li><li><a aria-current="false" class="inline-flex items-center px-4 py-3 text-sm font-medium text-grey-850 hover:bg-grey-50 aria-[current=true]:shadow-[inset_0_-2px_0_0_var(--color-blue-france)] aria-[current=true]:text-blue-france" href="/organizations" target="_self">Organisations</a></li><li><a aria-current="false" class="inline-flex items-center px-4 py-3 text-sm font-medium text-grey-850 hover:bg-grey-50 aria-[current=true]:shadow-[inset_0_-2px_0_0_var(--color-blue-france)] aria-[current=true]:text-blue-france" href="/organizations/domains" target="_self">Domaines à vérifier</a></li><li><a aria-current="false" class="inline-flex items-center px-4 py-3 text-sm font-medium text-grey-850 hover:bg-grey-50 aria-[current=true]:shadow-[inset_0_-2px_0_0_var(--color-blue-france)] aria-[current=true]:text-blue-france" href="/domains-deliverability" target="_self">Délivrabilité des domaines</a></li></ul></nav></div></div></header><div class="relative flex flex-1 flex-col">✅</div></div><x-notification-island><x-notification-island-root id="test-uuid-1"></x-notification-island-root><script defer="" nonce="nonce" type="module">import { render, h } from "preact";
 import { NotificationContainer } from "/src/ui/notifications/notifications.client.js";
 document.addEventListener('DOMContentLoaded', () => {
   const props = {};

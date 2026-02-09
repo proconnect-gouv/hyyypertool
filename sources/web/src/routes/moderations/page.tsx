@@ -8,8 +8,10 @@ import {
 } from "#src/lib/moderations";
 import { date_to_dom_string, date_to_string } from "#src/time";
 import { badge } from "#src/ui";
+import { fieldset, input, input_group, label, tags_group } from "#src/ui/form";
 import { Foot } from "#src/ui/hx_table";
-import { row } from "#src/ui/table";
+import { IconEye, IconEyeOff } from "#src/ui/icons";
+import { row, table } from "#src/ui/table";
 import { tag } from "#src/ui/tag";
 import { urls } from "#src/urls";
 import type { Pagination } from "@~/core/schema";
@@ -88,7 +90,7 @@ export function ModerationsPage({
 function Main({ search, nonce }: { search: Search; nonce?: string }) {
   return (
     <main
-      class="fr-container my-12"
+      class="mx-auto max-w-7xl px-4 my-12"
       {...hx_moderations_query_props}
       hx-sync="this:abort"
       hx-trigger={[
@@ -123,8 +125,8 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
       hx-vals={JSON.stringify({ page: 1 } as Pagination)}
     >
       <div className="grid grid-cols-2 gap-6">
-        <div class="fr-input-group">
-          <label class="fr-label" for={page_query_keys.enum.search_email}>
+        <div class={input_group()}>
+          <label class={label()} for={page_query_keys.enum.search_email}>
             Email
           </label>
           <SearchEmailIsland
@@ -135,8 +137,8 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
             initialValue={search.search_email}
           />
         </div>
-        <div class="fr-input-group">
-          <label class="fr-label" for={page_query_keys.enum.search_siret}>
+        <div class={input_group()}>
+          <label class={label()} for={page_query_keys.enum.search_siret}>
             Siret
           </label>
           <SearchSiretIsland
@@ -148,7 +150,7 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
           />
         </div>
       </div>
-      <ul class="fr-tags-group">
+      <ul class={tags_group()}>
         <li>
           <ProcessedCheckboxIsland
             nonce={nonce}
@@ -169,14 +171,8 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
               type="checkbox"
               value={"true"}
             />
-            <span
-              class="fr-icon-eye-line fr-icon--sm peer-checked:hidden"
-              aria-hidden="true"
-            />
-            <span
-              class="fr-icon-eye-off-line fr-icon--sm hidden peer-checked:inline"
-              aria-hidden="true"
-            />
+            <IconEye class="inline h-3.5 w-3.5 peer-checked:hidden" />
+            <IconEyeOff class="hidden h-3.5 w-3.5 peer-checked:inline" />
             {moderation_type_to_title("non_verified_domain")}
           </label>
         </li>
@@ -191,25 +187,19 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
               type="checkbox"
               value={"true"}
             />
-            <span
-              class="fr-icon-eye-line fr-icon--sm peer-checked:hidden"
-              aria-hidden="true"
-            />
-            <span
-              class="fr-icon-eye-off-line fr-icon--sm hidden peer-checked:inline"
-              aria-hidden="true"
-            />
+            <IconEye class="inline h-3.5 w-3.5 peer-checked:hidden" />
+            <IconEyeOff class="hidden h-3.5 w-3.5 peer-checked:inline" />
             {moderation_type_to_title("organization_join_block")}
           </label>
         </li>
       </ul>
-      <div class="fr-fieldset__element">
-        <div class="fr-input-group">
-          <label class="fr-label" for={page_query_keys.enum.day}>
+      <div class={fieldset().element()}>
+        <div class={input_group()}>
+          <label class={label()} for={page_query_keys.enum.day}>
             Filtrer par jours
           </label>
           <input
-            class="fr-input"
+            class={input()}
             id={page_query_keys.enum.day}
             max={date_to_dom_string(new Date())}
             name={page_query_keys.enum.day}
@@ -218,10 +208,10 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
           />
         </div>
       </div>
-      <div class="fr-fieldset__element">
-        <div class="fr-input-group">
+      <div class={fieldset().element()}>
+        <div class={input_group()}>
           <label
-            class="fr-label"
+            class={label()}
             for={page_query_keys.enum.search_moderated_by}
           >
             Filtrer par modérateur
@@ -243,7 +233,7 @@ async function Table() {
   const { pagination, query_result } = useContext(Moderations_Context);
   const { count, moderations } = query_result;
   return (
-    <div class="fr-table *:table!" id={MODERATION_TABLE_ID}>
+    <div class={table()} id={MODERATION_TABLE_ID}>
       <table>
         <thead>
           <tr>

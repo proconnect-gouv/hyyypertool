@@ -5,6 +5,7 @@ import { button } from "#src/ui/button";
 import { CopyButton, GoogleSearchButton } from "#src/ui/button/components";
 import { badge_description_list } from "#src/ui/list";
 import { FrNumberConverter } from "#src/ui/number";
+import { table } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
 import { z_email_domain } from "@~/core/schema";
@@ -44,32 +45,32 @@ export async function UserPage({
   return (
     <main>
       <div class="bg-(--background-alt-blue-france) py-6">
-        <div class="fr-container py-6!">
+        <div class="max-w-7xl mx-auto px-4 py-6!">
           <h1>👨‍💻 A propos de l'utilisateur</h1>
           <div className="grid grid-cols-2 gap-4">
-            <div class="fr-card p-6!">
+            <div class="bg-white shadow-sm border border-grey-200 p-6!">
               <h1 class="text-(--text-action-high-blue-france)">
                 « {user.given_name} {user.family_name} »
               </h1>
               <Fiche user={user} />
             </div>
-            <div class="fr-card p-6!">
+            <div class="bg-white shadow-sm border border-grey-200 p-6!">
               <AccountInfo user={user} />
             </div>
           </div>
         </div>
       </div>
       <hr />
-      <div class="fr-container">
+      <div class="max-w-7xl mx-auto px-4">
         <h1 id={$organizations_describedby}>
           Liste des organisations de {user.given_name}
         </h1>
-        <div class="fr-table max-w-full overflow-x-auto">
+        <div class="max-w-full overflow-x-auto">
           <div
             {...hx_get_user_organizations_props}
             hx-target="this"
             hx-trigger="load"
-            class="fr-table"
+            class={table()}
           ></div>
         </div>
         <hr />
@@ -77,27 +78,27 @@ export async function UserPage({
           Liste des modérations de {user.given_name}
         </h1>
 
-        <div class="fr-table max-w-full overflow-x-auto">
+        <div class="max-w-full overflow-x-auto">
           <div
             {...hx_get_user_moderations_props}
             hx-target="this"
             hx-trigger="load"
-            class="fr-table"
+            class={table()}
           ></div>
         </div>
       </div>
       <div class="bg-(--background-alt-red-marianne) py-6">
-        <div class="fr-container py-6">
+        <div class="max-w-7xl mx-auto px-4 py-6">
           <Actions user={user} />
         </div>
       </div>
       <hr />
-      <div aria-describedby="mfa" class="fr-container py-6">
+      <div aria-describedby="mfa" class="max-w-7xl mx-auto px-4 py-6">
         <h1 id="mfa">🔓 MFA</h1>
         <MFA authenticators={authenticators} user={user} />
       </div>
       <hr />
-      <div aria-describedby="franceconnect" class="fr-container py-6">
+      <div aria-describedby="franceconnect" class="max-w-7xl mx-auto px-4 py-6">
         <h1 id="franceconnect">🪪 FranceConnect</h1>
         <FranceConnectInfo franceconnect={franceconnect} />
       </div>
@@ -122,7 +123,7 @@ async function MFA({
 
   return (
     <div className="grid grid-cols-2 gap-4">
-      <div aria-describedby="totp" class="fr-card p-6!">
+      <div aria-describedby="totp" class="bg-white shadow-sm border border-grey-200 p-6!">
         <h2 class="text-(--text-action-high-blue-france)" id="totp">
           TOTP
         </h2>
@@ -137,7 +138,7 @@ async function MFA({
       {authenticators.map((authenticator) => (
         <div
           aria-describedby={`passkey-${authenticator.credential_id}`}
-          class="fr-card p-6!"
+          class="bg-white shadow-sm border border-grey-200 p-6!"
         >
           <h2
             class="text-(--text-action-high-blue-france)"
@@ -173,7 +174,7 @@ function FranceConnectInfo({
   const { base, dd, dt } = badge_description_list();
 
   return (
-    <div class="fr-card p-6!">
+    <div class="bg-white shadow-sm border border-grey-200 p-6!">
       <dl class={base({ className: "grid-cols-[150px_1fr]" })}>
         <dt class={dt()}>sub</dt>
         <dd class={dd()}>
@@ -294,7 +295,7 @@ function Fiche({ user }: { user: User }) {
       <dd class={dd()}>
         <b> {user.email}</b>
         <CopyButton
-          class="fr-p-O leading-none"
+          class="p-0 leading-none"
           text={user.email}
           title="Copier l'email"
           variant={{ size: "sm", type: "tertiary" }}
@@ -305,7 +306,7 @@ function Fiche({ user }: { user: User }) {
       <dd class={dd()}>
         <b> {domain}</b>
         <CopyButton
-          class="fr-p-O leading-none"
+          class="p-0 leading-none"
           text={domain}
           title="Copier le nom de domaine"
           variant={{ size: "sm", type: "tertiary" }}

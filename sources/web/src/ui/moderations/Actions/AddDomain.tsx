@@ -1,5 +1,6 @@
 import { hyper_ref } from "#src/html";
 import { validate_form_schema } from "#src/lib/moderations";
+import { checkbox_group } from "#src/ui/form";
 import { useContext } from "hono/jsx";
 import { context } from "./context";
 
@@ -7,7 +8,7 @@ export function AddDomain(props: { mailType: string }) {
   const { domain } = useContext(context);
   const id = hyper_ref();
   return (
-    <div class="fr-checkbox-group">
+    <div class={checkbox_group()}>
       <input
         id={id}
         name={validate_form_schema.keyof().enum.add_domain}

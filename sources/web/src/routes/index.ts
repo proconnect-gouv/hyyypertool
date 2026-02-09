@@ -11,7 +11,7 @@ import { set_nonce } from "#src/middleware/nonce";
 import { set_sentry } from "#src/middleware/sentry";
 import consola from "consola";
 import { Hono } from "hono";
-import dev_router from "./__dev__/reload";
+import dev_router from "./__dev__";
 import auth_router from "./auth";
 import domains_deliverability_router from "./domains-deliverability";
 import moderations_router from "./moderations";

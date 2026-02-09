@@ -70,7 +70,7 @@ test("render about section", async () => {
                 const props = {
                   children: "",
                   className:
-                    "fr-btn bg-transparent text-black hover:bg-(--background-default-grey-hover)! fr-btn--sm fr-btn--tertiary ml-2",
+                    "inline-flex items-center w-fit font-medium hover:bg-blue-france-hover text-sm leading-6 min-h-8 px-3 py-1 bg-transparent text-blue-france shadow-[inset_0_0_0_1px_var(--color-grey-200)] hover:bg-grey-50! ml-2",
                   text: "cached_libelle",
                 };
                 render(
@@ -86,7 +86,7 @@ test("render about section", async () => {
           siret
           <a
             href="https://annuaire-entreprises.data.gouv.fr/entreprise/siret"
-            class="fr-btn fr-btn--sm fr-btn--tertiary ml-2"
+            class="inline-flex items-center w-fit font-medium hover:bg-blue-france-hover text-sm leading-6 min-h-8 px-3 py-1 bg-transparent text-blue-france shadow-[inset_0_0_0_1px_var(--color-grey-200)] hover:bg-grey-50! ml-2"
             rel="noopener noreferrer"
             target="_blank"
             >Fiche annuaire</a
@@ -99,7 +99,7 @@ test("render about section", async () => {
                 const props = {
                   children: "",
                   className:
-                    "fr-btn bg-transparent text-black hover:bg-(--background-default-grey-hover)! fr-btn--sm fr-btn--tertiary ml-2",
+                    "inline-flex items-center w-fit font-medium hover:bg-blue-france-hover text-sm leading-6 min-h-8 px-3 py-1 bg-transparent text-blue-france shadow-[inset_0_0_0_1px_var(--color-grey-200)] hover:bg-grey-50! ml-2",
                   text: "siret",
                 };
                 render(

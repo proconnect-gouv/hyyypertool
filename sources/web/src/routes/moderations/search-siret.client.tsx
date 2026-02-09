@@ -20,7 +20,7 @@ export function SearchSiret({
 }: SearchSiretProps) {
   return (
     <input
-      class="fr-input"
+      class="block w-full px-4 py-2 border border-grey-200 text-base focus:border-blue-france focus:outline-none"
       id={id}
       name={name}
       onInput={(e) => (searchSiret.value = e.currentTarget.value)}

@@ -3,8 +3,10 @@
 import { hyper_ref } from "#src/html";
 import { hx_include } from "#src/htmx";
 import { date_to_dom_string } from "#src/time";
+import { button } from "#src/ui/button";
+import { input } from "#src/ui/form";
 import { Foot } from "#src/ui/hx_table";
-import { row } from "#src/ui/table";
+import { row, table } from "#src/ui/table";
 import { Time } from "#src/ui/time";
 import { urls } from "#src/urls";
 import type { Pagination } from "@~/core/schema";
@@ -39,7 +41,7 @@ export default async function Page({
   query_result: QueryResult;
 }) {
   return (
-    <main class="fr-container my-12">
+    <main class="max-w-7xl mx-auto px-4 my-12">
       <h1>Liste des organisations</h1>
       <Filter q={q} />
       <Table pagination={pagination} query_result={query_result} />
@@ -53,19 +55,19 @@ function Filter({ q }: { q?: string | string[] }) {
       {...hx_organizations_query_props}
       hx-trigger={[`keyup changed delay:500ms from:#${$search}`].join(", ")}
     >
-      <div class="fr-search-bar" role="search">
-        <label class="fr-label" for={$search}>
+      <div class="flex items-stretch" role="search">
+        <label class="sr-only" for={$search}>
           Recherche
         </label>
         <input
-          class="fr-input"
+          class={input({ class: "flex-1" })}
           id={$search}
           name={query_schema.keyof().enum.q}
           placeholder="Rechercher par nom ou SIRET"
           value={q}
           type="search"
         />
-        <button class="fr-btn" title="Rechercher">
+        <button class={button()} title="Rechercher">
           Rechercher
         </button>
       </div>
@@ -83,7 +85,7 @@ async function Table({
   const { count, organizations } = query_result;
 
   return (
-    <div class="fr-table *:table!" id={$table}>
+    <div class={table()} id={$table}>
       <table>
         <thead>
           <tr>

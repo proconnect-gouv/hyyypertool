@@ -4,6 +4,7 @@
  */
 
 import { useCallback, useState } from "preact/hooks";
+import { ICON_PATHS } from "#src/ui/icons";
 
 //
 
@@ -55,14 +56,22 @@ export function CopyButtonClient({
       onClick={handleClick}
       {...otherProps}
     >
-      <span
-        class={`fr-icon-clipboard-line ${copied ? "hidden" : ""}`}
+      <svg
+        class={`inline h-4 w-4 ${copied ? "hidden" : ""}`}
         aria-hidden="true"
-      ></span>
-      <span
-        class={`fr-icon-check-line ${!copied ? "hidden" : ""}`}
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d={ICON_PATHS.clipboard} />
+      </svg>
+      <svg
+        class={`inline h-4 w-4 ${!copied ? "hidden" : ""}`}
         aria-hidden="true"
-      ></span>
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d={ICON_PATHS.check} />
+      </svg>
       {children}
     </button>
   );

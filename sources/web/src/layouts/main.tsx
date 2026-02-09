@@ -1,6 +1,9 @@
 //
 
 import type { App_Context } from "#src/middleware/context";
+import { button } from "#src/ui/button";
+import { header, nav } from "#src/ui/header";
+import { IconLogout } from "#src/ui/icons";
 import { NotificationIsland } from "#src/ui/notifications";
 import { urls } from "#src/urls";
 import { z_username } from "@~/core/schema";
@@ -17,22 +20,7 @@ export function Main_Layout({ children }: PropsWithChildren) {
   return (
     <RootLayout>
       <div class="flex min-h-full grow flex-col">
-        <header role="banner" class="fr-header">
-          <div class="fr-header__body">
-            <div class="fr-container">
-              <div class="fr-header__body-row">
-                <Brand />
-                <Tools username={username} />
-              </div>
-            </div>
-          </div>
-
-          <div class="fr-header__menu fr-modal">
-            <div class="fr-container">
-              <Nav />
-            </div>
-          </div>
-        </header>
+        <Header username={username} />
         <div class="relative flex flex-1 flex-col">{children}</div>
       </div>
       <NotificationIsland nonce={nonce} />
@@ -42,38 +30,64 @@ export function Main_Layout({ children }: PropsWithChildren) {
 
 //
 
-function Brand() {
+function Header({ username }: { username?: string }) {
+  const { base, body, body_row, container, menu } = header();
   return (
-    <div class="fr-header__brand fr-enlarge-link">
-      <div class="fr-header__brand-top">
-        <div class="fr-header__logo">
-          <p class="fr-logo">
+    <header role="banner" class={base()}>
+      <div class={body()}>
+        <div class={container()}>
+          <div class={body_row()}>
+            <Brand />
+            <Tools username={username} />
+          </div>
+        </div>
+      </div>
+
+      <div class={menu()}>
+        <div class={container()}>
+          <Nav />
+        </div>
+      </div>
+    </header>
+  );
+}
+
+function Brand() {
+  const { brand, brand_top, logo, service, service_tagline, service_title } =
+    header();
+  return (
+    <div class={brand()}>
+      <div class={brand_top()}>
+        <div>
+          <p class={logo()}>
             République
             <br />
             Française
           </p>
         </div>
       </div>
-      <div class="fr-header__service">
+      <div class={service()}>
         <a href="/" title="Accueil ">
-          <p class="fr-header__service-title">Hyyypertool</p>
+          <p class={service_title()}>Hyyypertool</p>
         </a>
-        <p class="fr-header__service-tagline">hyyyyyyyypertool</p>
+        <p class={service_tagline()}>hyyyyyyyypertool</p>
       </div>
     </div>
   );
 }
 
 function Tools({ username }: { username?: string | undefined }) {
+  const { tools, tools_links } = header();
   return (
-    <div class="fr-header__tools">
-      <div class="fr-header__tools-links">
-        <ul class="fr-btns-group">
+    <div class={tools()}>
+      <div class={tools_links()}>
+        <ul class="flex list-none gap-2 p-0 m-0">
           <li>
             <a
-              class="fr-btn fr-btn--sm fr-btn--tertiary-no-outline fr-fi-logout-box-r-line fr-btn--icon-left"
+              class={button({ size: "sm", type: "tertiary-no-outline" })}
               href={urls.auth.logout.$url().pathname}
             >
+              <IconLogout class="inline h-4 w-4" />
               {username}
             </a>
           </li>
@@ -85,62 +99,63 @@ function Tools({ username }: { username?: string | undefined }) {
 
 function Nav() {
   const { req } = useRequestContext();
+  const { base, list, item, link } = nav();
 
   return (
     <nav
-      class="fr-nav"
+      class={base()}
       id="navigation-494"
       role="navigation"
       aria-label="Menu principal"
     >
-      <ul class="fr-nav__list">
-        <li class="fr-nav__item">
+      <ul class={list()}>
+        <li class={item()}>
           <a
             aria-current={req.routePath.startsWith("/moderations")}
-            class="fr-nav__link"
+            class={link()}
             href={urls.moderations.$url().pathname}
             target="_self"
           >
             Moderations
           </a>
         </li>
-        <li class="fr-nav__item">
+        <li class={item()}>
           <a
             aria-current={req.routePath.startsWith("/users")}
-            class="fr-nav__link"
+            class={link()}
             href={urls.users.$url().pathname}
             target="_self"
           >
             Utilisateurs
           </a>
         </li>
-        <li class="fr-nav__item">
+        <li class={item()}>
           <a
             aria-current={
               req.routePath.startsWith("/organizations") &&
               !req.routePath.startsWith("/organizations/domains")
             }
-            class="fr-nav__link"
+            class={link()}
             href={urls.organizations.$url().pathname}
             target="_self"
           >
             Organisations
           </a>
         </li>
-        <li class="fr-nav__item">
+        <li class={item()}>
           <a
             aria-current={req.routePath.startsWith("/organizations/domains")}
-            class="fr-nav__link"
+            class={link()}
             href={urls.organizations.domains.$url().pathname}
             target="_self"
           >
             Domaines à vérifier
           </a>
         </li>
-        <li class="fr-nav__item">
+        <li class={item()}>
           <a
             aria-current={req.routePath.startsWith("/domains-deliverability")}
-            class="fr-nav__link"
+            class={link()}
             href={urls["domains-deliverability"].$url().pathname}
             target="_self"
           >

@@ -6,7 +6,7 @@ exports[`render investigation section 1`] = `
   <li>
     <a
       href="https://lannuaire.service-public.fr/recherche?where=75015&amp;whoWhat=Mairie"
-      class="fr-btn fr-btn--sm fr-btn--tertiary mr-2 bg-white"
+      class="inline-flex items-center w-fit font-medium hover:bg-blue-france-hover text-sm leading-6 min-h-8 px-3 py-1 text-blue-france shadow-[inset_0_0_0_1px_var(--color-grey-200)] hover:bg-grey-50! mr-2 bg-white"
       rel="noopener noreferrer"
       target="_blank"
       >Chercher la mairie associée</a
@@ -15,7 +15,7 @@ exports[`render investigation section 1`] = `
   <li>
     <a
       href="https://lannuaire.service-public.fr/recherche?whoWhat=&amp;where=75015"
-      class="fr-btn fr-btn--sm fr-btn--tertiary mr-2 bg-white"
+      class="inline-flex items-center w-fit font-medium hover:bg-blue-france-hover text-sm leading-6 min-h-8 px-3 py-1 text-blue-france shadow-[inset_0_0_0_1px_var(--color-grey-200)] hover:bg-grey-50! mr-2 bg-white"
       rel="noopener noreferrer"
       target="_blank"
       >Chercher les services publics associés</a
@@ -24,7 +24,7 @@ exports[`render investigation section 1`] = `
   <li>
     <a
       href="https://www.banatic.interieur.gouv.fr/intercommunalite/200099711"
-      class="fr-btn fr-btn--sm fr-btn--tertiary mr-2 bg-white"
+      class="inline-flex items-center w-fit font-medium hover:bg-blue-france-hover text-sm leading-6 min-h-8 px-3 py-1 text-blue-france shadow-[inset_0_0_0_1px_var(--color-grey-200)] hover:bg-grey-50! mr-2 bg-white"
       rel="noopener noreferrer"
       target="_blank"
       >Chercher via Banatic</a

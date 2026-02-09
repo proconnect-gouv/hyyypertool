@@ -6,6 +6,7 @@
  */
 
 import { computed } from "@preact/signals";
+import { ICON_PATHS } from "#src/ui/icons";
 import {
   searchEmail,
   searchModeratedBy,
@@ -30,7 +31,7 @@ export function ProcessedCheckbox({
   initialChecked = false,
 }: ProcessedCheckboxProps) {
   return (
-    <label class="fr-tag m-1 bg-(--background-action-low-blue-france) has-checked:bg-(--blue-france-sun-113-625) has-checked:text-white">
+    <label class="inline-flex cursor-pointer items-center gap-1 rounded-full border border-grey-200 px-2 py-0.5 text-xs font-medium m-1 bg-(--background-action-low-blue-france) has-checked:bg-(--blue-france-sun-113-625) has-checked:text-white">
       <input
         checked={hasSearchValue.value || initialChecked}
         class="peer"
@@ -40,14 +41,22 @@ export function ProcessedCheckbox({
         type="checkbox"
         value={value}
       />
-      <span
-        class="fr-icon-eye-off-line fr-icon--sm peer-checked:hidden"
+      <svg
+        class="inline h-3.5 w-3.5 peer-checked:hidden"
         aria-hidden="true"
-      />
-      <span
-        class="fr-icon-eye-line fr-icon--sm hidden peer-checked:inline"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d={ICON_PATHS.eye_off} />
+      </svg>
+      <svg
+        class="hidden h-3.5 w-3.5 peer-checked:inline"
         aria-hidden="true"
-      />
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d={ICON_PATHS.eye} />
+      </svg>
       Voir les demandes traitées
     </label>
   );

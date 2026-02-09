@@ -15,7 +15,6 @@ export function RootLayout({ children }: PropsWithChildren) {
   return html`
     <html
       lang="fr"
-      data-fr-scheme="system"
       hx-ext="${[
         config.NODE_ENV === "production" ? "" : "debug",
         "chunked-transfer",
@@ -71,24 +70,6 @@ export function RootLayout({ children }: PropsWithChildren) {
           rel="stylesheet"
           href="${config.ASSETS_PATH}/node_modules/animate.css/source/bouncing_entrances/bounceIn.css"
         />
-
-        <!--  -->
-
-        ${config.NODE_ENV === "production"
-          ? html`<style>
-              @import "${config.ASSETS_PATH}/node_modules/@gouvfr/dsfr/dist/dsfr/dsfr.min.css"
-                layer(dsfr);
-
-              @import "${config.ASSETS_PATH}/node_modules/@gouvfr/dsfr/dist/utility/utility.min.css"
-                layer(dsfr-utility);
-            </style>`
-          : html`<style>
-              @import "${config.ASSETS_PATH}/node_modules/@gouvfr/dsfr/dist/dsfr/dsfr.css"
-                layer(dsfr);
-
-              @import "${config.ASSETS_PATH}/node_modules/@gouvfr/dsfr/dist/utility/utility.css"
-                layer(dsfr-utility);
-            </style>`}
 
         <!--  -->
 

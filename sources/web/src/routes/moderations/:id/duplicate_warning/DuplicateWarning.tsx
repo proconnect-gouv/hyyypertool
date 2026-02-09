@@ -1,8 +1,10 @@
 //
 
 import { HtmxEvents } from "#src/htmx";
+import { badge } from "#src/ui/badge";
 import { button } from "#src/ui/button";
 import { fieldset } from "#src/ui/form";
+import { alert } from "#src/ui/notice";
 import { formattedPlural } from "#src/ui/plurial";
 import { OpenInZammad, SearchInZammad } from "#src/ui/zammad/components";
 import { urls } from "#src/urls";
@@ -70,9 +72,10 @@ async function Alert_Duplicate_User({
 
   if (duplicate_users_count === 0) return raw``;
 
+  const { base, title } = alert({ intent: "warning" });
   return (
-    <div class="fr-alert fr-alert--warning">
-      <h3 class="fr-alert__title">
+    <div class={base()}>
+      <h3 class={title()}>
         Attention :{" "}
         {formattedPlural(duplicate_users_count, {
           one: "un",
@@ -130,9 +133,10 @@ async function Alert_Duplicate_Moderation({
 
   if (moderation_count <= 1) return raw``;
 
+  const { base: alertBase, title: alertTitle } = alert({ intent: "warning" });
   return (
-    <div class="fr-alert fr-alert--warning">
-      <h3 class="fr-alert__title">Attention : demande multiples</h3>
+    <div class={alertBase()}>
+      <h3 class={alertTitle()}>Attention : demande multiples</h3>
       <p>Il s'agit de la {moderation_count}e demande pour cette organisation</p>
       <SearchInZammad search={user.email}>
         Trouver les echanges pour l'email « {user.email} » dans Zammad
@@ -175,12 +179,12 @@ function ModerationStatusIndicator({
   status: ModerationTickets[number]["moderation"]["status"];
 }) {
   const { data: status, error } = MODERATION_STATUS.safeParse(raw_status);
-  if (error) return <p class="fr-badge fr-badge--warning">Inconnu</p>;
+  if (error) return <p class={badge({ intent: "warning" })}>Inconnu</p>;
   return match(status)
-    .with("accepted", () => <p class="fr-badge fr-badge--success">Accepté</p>)
-    .with("rejected", () => <p class="fr-badge fr-badge--error">Rejeté</p>)
-    .with("pending", () => <p class="fr-badge fr-badge--new">A traiter</p>)
-    .otherwise(() => <p class="fr-badge fr-badge--success">Traité</p>);
+    .with("accepted", () => <p class={badge({ intent: "success" })}>Accepté</p>)
+    .with("rejected", () => <p class={badge({ intent: "error" })}>Rejeté</p>)
+    .with("pending", () => <p class={badge({ intent: "new" })}>A traiter</p>)
+    .otherwise(() => <p class={badge({ intent: "success" })}>Traité</p>);
 }
 
 async function MarkModerationAsProcessed({

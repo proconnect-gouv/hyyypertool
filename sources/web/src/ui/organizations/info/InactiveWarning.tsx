@@ -1,5 +1,6 @@
 //
 
+import { alert } from "#src/ui/notice";
 import { type JSX } from "hono/jsx";
 
 //
@@ -15,11 +16,11 @@ export function InactiveWarning(props: Props) {
     return null;
   }
 
+  const { base, title } = alert({ intent: "warning" });
   return (
     <section {...section_props}>
-      <div class="fr-alert fr-alert--warning">
-        <i class="bi bi-exclamation-triangle-fill" />
-        <h3 class="fr-alert__title">
+      <div class={base()}>
+        <h3 class={title()}>
           Attention : cette organisation a cessé son activité.
         </h3>
       </div>

@@ -106,6 +106,13 @@ export function resetNotificationCounter(): void {
 
 //
 
+const VARIANT_STYLES: Record<NotificationVariant, string> = {
+  danger: "bg-[#ffe9e9] text-[#ce0500]",
+  info: "bg-[#e8edff] text-[#0063cb]",
+  success: "bg-[#b8fec9] text-[#18753c]",
+  warning: "bg-[#ffe9e6] text-[#b34000]",
+};
+
 interface NotificationItemProps {
   notification: Notification;
 }
@@ -113,13 +120,6 @@ interface NotificationItemProps {
 function NotificationItem({ notification }: NotificationItemProps) {
   const [isVisible, setIsVisible] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const variantClass =
-    notification.variant === "danger"
-      ? "alert"
-      : notification.variant === "success"
-        ? "info"
-        : notification.variant;
 
   const startDismissTimer = useCallback(() => {
     timeoutRef.current = setTimeout(() => {
@@ -154,7 +154,7 @@ function NotificationItem({ notification }: NotificationItemProps) {
 
   return (
     <div
-      class={`fr-notice pointer-events-auto fr-notice--${variantClass} transition duration-300 ${
+      class={`relative py-4 pointer-events-auto ${VARIANT_STYLES[notification.variant]} transition duration-300 ${
         isVisible ? "translate-y-0 opacity-100" : "-translate-y-8 opacity-0"
       }`}
       id={notification.id}
@@ -162,16 +162,16 @@ function NotificationItem({ notification }: NotificationItemProps) {
       onMouseLeave={startDismissTimer}
       role="alert"
     >
-      <div class="fr-container">
-        <div class="fr-notice__body">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="relative flex flex-row items-start justify-between">
           <p>
-            <span class="fr-notice__title">{notification.title}</span>
+            <span class="relative mr-1 font-bold">{notification.title}</span>
             {notification.message && (
-              <span class="fr-notice__desc">{notification.message}</span>
+              <span class="text-sm">{notification.message}</span>
             )}
           </p>
           <button
-            class="fr-btn--close fr-btn"
+            class="text-sm leading-6 min-h-8 px-3 py-1 ml-auto bg-transparent hover:bg-black/5"
             onClick={close}
             title="Masquer le message"
             type="button"

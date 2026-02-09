@@ -88,10 +88,12 @@ test("notify: displays different variants", async () => {
     expect(container.querySelectorAll("[role='alert']")).toHaveLength(4);
   });
 
-  // Check variant classes (success maps to "info", danger maps to "alert")
-  expect(container.querySelector(".fr-notice--info")).not.toBeNull();
-  expect(container.querySelector(".fr-notice--warning")).not.toBeNull();
-  expect(container.querySelector(".fr-notice--alert")).not.toBeNull();
+  // Check variant background colors are applied
+  const alerts = container.querySelectorAll("[role='alert']");
+  const classes = Array.from(alerts).map((el) => el.className);
+  expect(classes.some((c) => c.includes("bg-[#e8edff]"))).toBe(true); // info
+  expect(classes.some((c) => c.includes("bg-[#ffe9e6]"))).toBe(true); // warning
+  expect(classes.some((c) => c.includes("bg-[#ffe9e9]"))).toBe(true); // danger
 });
 
 test("removeNotification: removes a specific notification", async () => {
@@ -182,9 +184,9 @@ test("notification: displays without message", async () => {
   });
 
   expect(container.textContent).toContain("Title only");
-  // Should not have a description span with content
-  const descSpan = container.querySelector(".fr-notice__desc");
-  expect(descSpan).toBeNull();
+  // Should not render a message span inside the alert paragraph
+  const alertP = container.querySelector("[role='alert'] p")!;
+  expect(alertP.querySelectorAll("span")).toHaveLength(1); // only title span
 });
 
 test("resetNotificationCounter: resets ID counter", async () => {

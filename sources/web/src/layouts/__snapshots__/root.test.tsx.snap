@@ -4,7 +4,6 @@ exports[`development 1`] = `
 "<!DOCTYPE html>
     <html
       lang="fr"
-      data-fr-scheme="system"
       hx-ext="debug, chunked-transfer, include-vals"
     >
       <head>
@@ -54,16 +53,6 @@ exports[`development 1`] = `
           rel="stylesheet"
           href="/assets/ASSETS_PATH/node_modules/animate.css/source/bouncing_entrances/bounceIn.css"
         />
-
-        <!--  -->
-
-        <style>
-              @import "/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/dsfr/dsfr.css"
-                layer(dsfr);
-
-              @import "/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/utility/utility.css"
-                layer(dsfr-utility);
-            </style>
 
         <!--  -->
 
@@ -195,7 +184,6 @@ exports[`production 1`] = `
 "<!DOCTYPE html>
     <html
       lang="fr"
-      data-fr-scheme="system"
       hx-ext="chunked-transfer, include-vals"
     >
       <head>
@@ -245,16 +233,6 @@ exports[`production 1`] = `
           rel="stylesheet"
           href="/assets/ASSETS_PATH/node_modules/animate.css/source/bouncing_entrances/bounceIn.css"
         />
-
-        <!--  -->
-
-        <style>
-              @import "/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/dsfr/dsfr.min.css"
-                layer(dsfr);
-
-              @import "/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/utility/utility.min.css"
-                layer(dsfr-utility);
-            </style>
 
         <!--  -->
 

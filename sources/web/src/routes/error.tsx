@@ -3,6 +3,7 @@
 import config from "#src/config";
 import { NotFoundError } from "#src/errors";
 import type { App_Context } from "#src/middleware/context";
+import { button } from "#src/ui/button";
 import consola from "consola";
 import { type Context } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";
@@ -58,7 +59,7 @@ export function Error_Page({ error }: { error: Error }) {
         <img src={`${config.PUBLIC_ASSETS_PATH}/404.svg`} alt="" />
         <h3>Oups, une erreur s'est produite.</h3>
         <pre>{error.message}</pre>
-        <a href="/" class="fr-btn">
+        <a href="/" class={button()}>
           {" "}
           Retour à l’accueil{" "}
         </a>

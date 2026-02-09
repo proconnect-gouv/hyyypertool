@@ -1,4 +1,5 @@
 import type { Moderation } from "#src/lib/moderations";
+import { button } from "#src/ui/button";
 type ToolbarProps = {
   moderation: Pick<Moderation, "moderated_at">;
 };
@@ -19,7 +20,7 @@ function SeeExchangesButton() {
   return (
     <a
       href="#exchange_moderation"
-      class="fr-btn fr-btn--secondary bg-white"
+      class={button({ type: "secondary", class: "bg-white" })}
       _={`
         on click
           set #exchange_details.open to true
@@ -37,7 +38,7 @@ function ModerationButtonGroup({ moderation }: ToolbarProps) {
   return (
     <>
       <button
-        class="fr-btn fr-mr-2w fr-btn--secondary bg-white"
+        class={button({ type: "secondary", class: "mr-4 bg-white" })}
         _={`
                   on click
                     if #refusalModal.classList.contains('hidden') is false
@@ -55,7 +56,7 @@ function ModerationButtonGroup({ moderation }: ToolbarProps) {
       </button>
 
       <button
-        class="fr-btn fr-mr-2w fr-btn--secondary bg-white"
+        class={button({ type: "secondary", class: "mr-4 bg-white" })}
         _={`
                   on click
                     if #acceptModal.classList.contains('hidden') is false

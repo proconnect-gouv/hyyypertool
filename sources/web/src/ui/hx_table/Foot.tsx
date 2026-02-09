@@ -2,6 +2,7 @@
 
 import { PaginationSchema, type Pagination } from "@~/core/schema";
 import { button } from "../button";
+import { input } from "../form";
 import { FrNumberConverter } from "../number";
 
 //
@@ -43,7 +44,7 @@ export function Foot({
         </th>
         <td colspan={pagination_colspan}>
           <button
-            class={button({ class: "fr-btn--tertiary-no-outline" })}
+            class={button({ type: "tertiary-no-outline" })}
             disabled={page <= 1}
             {...hx_query_props}
             hx-vals={JSON.stringify({ page: page - 1 } as Pagination)}
@@ -53,13 +54,13 @@ export function Foot({
           <input
             {...hx_query_props}
             id={id}
-            class="fr-input inline-block w-auto"
+            class={input({ class: "inline-block w-auto" })}
             name={name ?? PaginationSchema.keyof().enum.page}
             value={page}
           />{" "}
           <span> of {FrNumberConverter.format(last_page)}</span>
           <button
-            class={button({ class: "fr-btn--tertiary-no-outline" })}
+            class={button({ type: "tertiary-no-outline" })}
             disabled={page >= last_page}
             {...hx_query_props}
             hx-vals={JSON.stringify({ page: page + 1 } as Pagination)}

@@ -50,7 +50,7 @@ test("GET /organizations/leaders - happy path with document", async () => {
   expect(await render_html(await response.text())).toMatchInlineSnapshot(
     `
       "<a
-        class="fr-btn fr-btn--sm fr-btn--tertiary bg-white"
+        class="inline-flex items-center w-fit font-medium hover:bg-blue-france-hover text-sm leading-6 min-h-8 px-3 py-1 text-blue-france shadow-[inset_0_0_0_1px_var(--color-grey-200)] hover:bg-grey-50! bg-white"
         href="https://example.com/leaders-doc.pdf"
         rel="noopener noreferrer"
         target="_blank"
@@ -79,7 +79,7 @@ test("GET /organizations/leaders - timeout error shows retry button", async () =
   expect(await render_html(await response.text())).toMatchInlineSnapshot(
     `
       "<button
-        class="fr-btn fr-btn--sm fr-btn--tertiary"
+        class="inline-flex items-center w-fit font-medium hover:bg-blue-france-hover text-sm leading-6 min-h-8 px-3 py-1 bg-transparent text-blue-france shadow-[inset_0_0_0_1px_var(--color-grey-200)] hover:bg-grey-50!"
         hx-get="/organizations/leaders?retry=true&amp;siret=12345678901234"
         hx-swap="outerHTML"
       >
@@ -123,7 +123,7 @@ test("GET /organizations/leaders - retry succeeds with longer timeout", async ()
   expect(response.status).toBe(200);
   expect(await render_html(await response.text())).toMatchInlineSnapshot(`
     "<a
-      class="fr-btn fr-btn--sm fr-btn--tertiary bg-white"
+      class="inline-flex items-center w-fit font-medium hover:bg-blue-france-hover text-sm leading-6 min-h-8 px-3 py-1 text-blue-france shadow-[inset_0_0_0_1px_var(--color-grey-200)] hover:bg-grey-50! bg-white"
       href="https://example.com/retry-success.pdf"
       rel="noopener noreferrer"
       target="_blank"
@@ -150,7 +150,7 @@ test("GET /organizations/leaders - retry fails, button still shown for further r
   expect(response.status).toBe(200);
   expect(await render_html(await response.text())).toMatchInlineSnapshot(`
     "<button
-      class="fr-btn fr-btn--sm fr-btn--tertiary"
+      class="inline-flex items-center w-fit font-medium hover:bg-blue-france-hover text-sm leading-6 min-h-8 px-3 py-1 bg-transparent text-blue-france shadow-[inset_0_0_0_1px_var(--color-grey-200)] hover:bg-grey-50!"
       hx-get="/organizations/leaders?retry=true&amp;siret=12345678901234"
       hx-swap="outerHTML"
     >
