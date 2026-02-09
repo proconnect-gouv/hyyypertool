@@ -3,6 +3,7 @@
  * SIRET Search Input (Client-side Preact Component)
  */
 
+import { SearchBar } from "#src/ui/form/components";
 import { searchSiret } from "./filter-signals.client";
 
 export interface SearchSiretProps extends Record<string, unknown> {
@@ -19,8 +20,7 @@ export function SearchSiret({
   initialValue = "",
 }: SearchSiretProps) {
   return (
-    <input
-      class="block w-full px-4 py-2 border border-grey-200 text-base focus:border-blue-france focus:outline-none"
+    <SearchBar
       id={id}
       name={name}
       onInput={(e) => (searchSiret.value = e.currentTarget.value)}

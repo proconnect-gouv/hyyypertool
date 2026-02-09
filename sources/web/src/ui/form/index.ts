@@ -67,8 +67,8 @@ export const search_bar = tv({
   slots: {
     input: "flex-1 px-4 py-2 border border-grey-200 text-base focus:border-blue-france focus:outline-none",
     button: [
-      "inline-flex items-center",
-      "px-4 py-2",
+      "inline-flex items-center justify-center",
+      "w-10 min-w-10",
       "bg-blue-france text-white",
       "hover:bg-blue-france-hover",
     ].join(" "),

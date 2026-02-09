@@ -6,6 +6,7 @@
  */
 
 import { icon } from "#src/ui/icons";
+import { tag } from "#src/ui/tag";
 import { computed } from "@preact/signals";
 import {
   searchEmail,
@@ -31,7 +32,7 @@ export function ProcessedCheckbox({
   initialChecked = false,
 }: ProcessedCheckboxProps) {
   return (
-    <label class="border-grey-200 m-1 inline-flex cursor-pointer items-center gap-1 rounded-full border bg-(--background-action-low-blue-france) px-2 py-0.5 text-xs font-medium has-checked:bg-(--blue-france-sun-113-625) has-checked:text-white">
+    <label class={tag({ class: "cursor-pointer gap-1 px-2" })}>
       <input
         checked={hasSearchValue.value || initialChecked}
         class="peer"
@@ -57,7 +58,7 @@ export function ProcessedCheckbox({
       >
         <path class={icon({ name: "eye" })} />
       </svg>
-      Voir les demandes traitées
+      <span class="text-xs font-medium">Voir les demandes traitées</span>
     </label>
   );
 }

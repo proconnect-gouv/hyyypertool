@@ -36,7 +36,7 @@ export default async function Page({
 
   return (
     <main>
-      <div class="bg-(--background-alt-blue-france) py-6">
+      <div class="bg-background-alt-blue-france py-6">
         <div class="max-w-7xl mx-auto px-4 py-6">
           <h1>🏛 A propos de l'organisation</h1>
 

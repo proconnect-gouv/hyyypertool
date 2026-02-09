@@ -72,7 +72,7 @@ const message_variants = tv({
     [&_blockquote]:border-r-0
     [&_blockquote]:border-l-4
     [&_blockquote]:border-solid
-    [&_blockquote]:border-l-(--background-contrast-grey-hover)
+    [&_blockquote]:border-l-background-contrast-grey-hover
     [&_blockquote]:p-6
     [&_blockquote_p]:text-base
     [&_blockquote_p]:font-normal
@@ -89,14 +89,14 @@ const message_variants = tv({
       [&_img]:max-w-full
     `,
     caption: `
-      bg-(--background-contrast-grey)
+      bg-background-contrast-grey
       p-8
     `,
   },
   variants: {
     is_family: {
-      true: "mr-2 ml-12 bg-(--background-alt-blue-ecume)",
-      false: "mr-12 ml-2 bg-(--background-alt-grey)",
+      true: "mr-2 ml-12 bg-background-alt-blue-ecume",
+      false: "mr-12 ml-2 bg-background-alt-grey",
     },
   },
 });
