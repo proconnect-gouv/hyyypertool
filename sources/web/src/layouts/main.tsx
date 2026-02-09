@@ -3,7 +3,7 @@
 import type { App_Context } from "#src/middleware/context";
 import { button } from "#src/ui/button";
 import { header, nav } from "#src/ui/header";
-import { IconLogout } from "#src/ui/icons";
+import { Icon } from "#src/ui/icons/components";
 import { NotificationIsland } from "#src/ui/notifications";
 import { urls } from "#src/urls";
 import { z_username } from "@~/core/schema";
@@ -81,13 +81,13 @@ function Tools({ username }: { username?: string | undefined }) {
   return (
     <div class={tools()}>
       <div class={tools_links()}>
-        <ul class="flex list-none gap-2 p-0 m-0">
+        <ul class="m-0 flex list-none gap-2 p-0">
           <li>
             <a
               class={button({ size: "sm", type: "tertiary-no-outline" })}
               href={urls.auth.logout.$url().pathname}
             >
-              <IconLogout class="inline h-4 w-4" />
+              <Icon name="logout" class="inline h-4 w-4" />
               {username}
             </a>
           </li>

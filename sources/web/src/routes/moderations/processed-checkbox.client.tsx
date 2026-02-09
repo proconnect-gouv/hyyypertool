@@ -5,8 +5,8 @@
  * Auto-checks when user types in search email or siret inputs
  */
 
+import { icon } from "#src/ui/icons";
 import { computed } from "@preact/signals";
-import { ICON_PATHS } from "#src/ui/icons";
 import {
   searchEmail,
   searchModeratedBy,
@@ -31,7 +31,7 @@ export function ProcessedCheckbox({
   initialChecked = false,
 }: ProcessedCheckboxProps) {
   return (
-    <label class="inline-flex cursor-pointer items-center gap-1 rounded-full border border-grey-200 px-2 py-0.5 text-xs font-medium m-1 bg-(--background-action-low-blue-france) has-checked:bg-(--blue-france-sun-113-625) has-checked:text-white">
+    <label class="border-grey-200 m-1 inline-flex cursor-pointer items-center gap-1 rounded-full border bg-(--background-action-low-blue-france) px-2 py-0.5 text-xs font-medium has-checked:bg-(--blue-france-sun-113-625) has-checked:text-white">
       <input
         checked={hasSearchValue.value || initialChecked}
         class="peer"
@@ -47,7 +47,7 @@ export function ProcessedCheckbox({
         viewBox="0 0 24 24"
         fill="currentColor"
       >
-        <path d={ICON_PATHS.eye_off} />
+        <path class={icon({ name: "eye-off" })} />
       </svg>
       <svg
         class="hidden h-3.5 w-3.5 peer-checked:inline"
@@ -55,7 +55,7 @@ export function ProcessedCheckbox({
         viewBox="0 0 24 24"
         fill="currentColor"
       >
-        <path d={ICON_PATHS.eye} />
+        <path class={icon({ name: "eye" })} />
       </svg>
       Voir les demandes traitées
     </label>

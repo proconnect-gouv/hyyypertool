@@ -1,6 +1,6 @@
 import { HtmxEvents } from "#src/htmx";
 import { button } from "#src/ui/button";
-import { IconSubtract } from "#src/ui/icons";
+import { Icon } from "#src/ui/icons/components";
 import { urls } from "#src/urls";
 import { AUTO_GO_BACK_EVENT } from "../AutoGoBack";
 import { AddAsMemberExternal } from "./AddAsMemberExternal";
@@ -37,7 +37,7 @@ export async function AcceptModal({
                 add .hidden to #acceptModal
             `}
         >
-          <IconSubtract class="inline h-4 w-4" />
+          <Icon name="subtract" class="inline h-4 w-4" />
           Fermer la modale
         </button>
       </div>

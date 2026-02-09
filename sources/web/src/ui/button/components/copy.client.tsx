@@ -3,8 +3,8 @@
  * Preact CopyButton client-side component
  */
 
+import { icon } from "#src/ui/icons";
 import { useCallback, useState } from "preact/hooks";
-import { ICON_PATHS } from "#src/ui/icons";
 
 //
 
@@ -62,7 +62,7 @@ export function CopyButtonClient({
         viewBox="0 0 24 24"
         fill="currentColor"
       >
-        <path d={ICON_PATHS.clipboard} />
+        <path class={icon({ name: "clipboard" })} />
       </svg>
       <svg
         class={`inline h-4 w-4 ${!copied ? "hidden" : ""}`}
@@ -70,7 +70,7 @@ export function CopyButtonClient({
         viewBox="0 0 24 24"
         fill="currentColor"
       >
-        <path d={ICON_PATHS.check} />
+        <path class={icon({ name: "check" })} />
       </svg>
       {children}
     </button>

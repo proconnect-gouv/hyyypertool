@@ -10,7 +10,7 @@ import { date_to_dom_string, date_to_string } from "#src/time";
 import { badge } from "#src/ui";
 import { fieldset, input, input_group, label, tags_group } from "#src/ui/form";
 import { Foot } from "#src/ui/hx_table";
-import { IconEye, IconEyeOff } from "#src/ui/icons";
+import { Icon } from "#src/ui/icons/components";
 import { row, table } from "#src/ui/table";
 import { tag } from "#src/ui/tag";
 import { urls } from "#src/urls";
@@ -90,7 +90,7 @@ export function ModerationsPage({
 function Main({ search, nonce }: { search: Search; nonce?: string }) {
   return (
     <main
-      class="mx-auto max-w-7xl px-4 my-12"
+      class="mx-auto my-12 max-w-7xl px-4"
       {...hx_moderations_query_props}
       hx-sync="this:abort"
       hx-trigger={[
@@ -171,8 +171,11 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
               type="checkbox"
               value={"true"}
             />
-            <IconEye class="inline h-3.5 w-3.5 peer-checked:hidden" />
-            <IconEyeOff class="hidden h-3.5 w-3.5 peer-checked:inline" />
+            <Icon name="eye" class="inline h-3.5 w-3.5 peer-checked:hidden" />
+            <Icon
+              name="eye-off"
+              class="hidden h-3.5 w-3.5 peer-checked:inline"
+            />
             {moderation_type_to_title("non_verified_domain")}
           </label>
         </li>
@@ -187,8 +190,11 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
               type="checkbox"
               value={"true"}
             />
-            <IconEye class="inline h-3.5 w-3.5 peer-checked:hidden" />
-            <IconEyeOff class="hidden h-3.5 w-3.5 peer-checked:inline" />
+            <Icon name="eye" class="inline h-3.5 w-3.5 peer-checked:hidden" />
+            <Icon
+              name="eye-off"
+              class="hidden h-3.5 w-3.5 peer-checked:inline"
+            />
             {moderation_type_to_title("organization_join_block")}
           </label>
         </li>
@@ -210,10 +216,7 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
       </div>
       <div class={fieldset().element()}>
         <div class={input_group()}>
-          <label
-            class={label()}
-            for={page_query_keys.enum.search_moderated_by}
-          >
+          <label class={label()} for={page_query_keys.enum.search_moderated_by}>
             Filtrer par modérateur
           </label>
           <SearchModeratedByIsland
