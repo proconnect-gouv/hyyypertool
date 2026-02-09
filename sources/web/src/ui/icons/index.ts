@@ -1,11 +1,18 @@
-export {
-  IconArrowGoBack,
-  IconCheck,
-  IconClipboard,
-  IconDelete,
-  IconEye,
-  IconEyeOff,
-  IconLogout,
-  IconSubtract,
-} from "./icons";
-export { ICON_PATHS } from "./paths";
+import { tv, type VariantProps } from "tailwind-variants";
+
+export const icon = tv({
+  variants: {
+    name: {
+      "arrow-go-back": "icon-arrow-go-back",
+      check: "icon-check",
+      clipboard: "icon-clipboard",
+      delete: "icon-delete",
+      eye: "icon-eye",
+      "eye-off": "icon-eye-off",
+      logout: "icon-logout",
+      subtract: "icon-subtract",
+    },
+  },
+});
+
+export type IconVariants = VariantProps<typeof icon>;

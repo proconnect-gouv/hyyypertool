@@ -6,7 +6,7 @@ import { z_username } from "#src/schema";
 import { button } from "#src/ui/button";
 import { badge } from "#src/ui/badge";
 import { header, nav } from "#src/ui/header";
-import { IconLogout } from "#src/ui/icons";
+import { Icon } from "#src/ui/icons/components";
 import { NotificationIsland } from "#src/ui/notifications";
 import { urls } from "#src/urls";
 import { roles } from "@~/hyyyperbase";
@@ -118,10 +118,7 @@ function UserMenu({
             aria-controls={$menu}
             aria-expanded="false"
             aria-haspopup="menu"
-            class={button({
-              class: "fr-icon-account-circle-fill fr-btn--icon-left",
-              type: "tertiary",
-            })}
+            class={button({ type: "tertiary" })}
             title="Mon espace"
             type="button"
           >
@@ -136,34 +133,30 @@ function UserMenu({
             <div class="border-b border-gray-200 px-4 py-3">
               <p class="font-semibold">
                 {username}{" "}
-                <span
-                  class={badge({
-                    intent: role_intent(hyyyper_user.role),
-                    class: "fr-badge--sm",
-                  })}
-                >
+                <span class={badge({ intent: role_intent(hyyyper_user.role) })}>
                   {hyyyper_user.role}
                 </span>
               </p>
               {email ? <p class="text-sm text-gray-600">{email}</p> : undefined}
             </div>
-            <ul class="fr-menu__list">
+            <ul class="m-0 list-none p-0">
               {is_admin ? (
                 <li>
-                  <a class="fr-nav__link" href={urls.admin.team.$url().pathname}>
-                    <span>
-                      <span class="fr-icon-settings-5-line fr-icon--sm" />
-                      Gestion de l'équipe
-                    </span>
+                  <a
+                    class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-50"
+                    href={urls.admin.team.$url().pathname}
+                  >
+                    Gestion de l'équipe
                   </a>
                 </li>
               ) : undefined}
               <li>
-                <a class="fr-nav__link" href={urls.auth.logout.$url().pathname}>
-                  <span>
-                    <IconLogout class="inline h-4 w-4" />
-                    Se deconnecter
-                  </span>
+                <a
+                  class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-50"
+                  href={urls.auth.logout.$url().pathname}
+                >
+                  <Icon name="logout" class="inline h-4 w-4" />
+                  Se deconnecter
                 </a>
               </li>
             </ul>

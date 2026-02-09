@@ -9,7 +9,7 @@ import type { Pagination } from "#src/schema";
 import { date_to_string } from "#src/time";
 import { badge } from "#src/ui";
 import { button } from "#src/ui/button";
-import { fieldset, input, input_group, label, tags_group } from "#src/ui/form";
+import { fieldset, input_group, label, tags_group } from "#src/ui/form";
 import { Foot } from "#src/ui/hx_table";
 import {
   HideTypeCheckboxIsland,

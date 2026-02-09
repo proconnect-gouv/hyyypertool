@@ -1,5 +1,5 @@
 import { LocalTime } from "#src/ui";
-import { IconDelete } from "#src/ui/icons";
+import { Icon } from "#src/ui/icons/components";
 import { table } from "#src/ui/table";
 import { urls } from "#src/urls";
 import { get_email_deliverability_whitelist } from "./get_email_deliverability_whitelist.query";
@@ -65,7 +65,7 @@ async function Row({
           type="button"
           aria-label={`Supprimer ${problematic_email}`}
         >
-          <IconDelete class="inline h-4 w-4" />
+          <Icon name="delete" class="inline h-4 w-4" />
         </button>
       </td>
     </tr>
