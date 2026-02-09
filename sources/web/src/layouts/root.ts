@@ -14,6 +14,7 @@ export function RootLayout({ children }: PropsWithChildren) {
 
   return html`
     <html
+      class="font-marianne"
       lang="fr"
       hx-ext="${[
         config.NODE_ENV === "production" ? "" : "debug",
@@ -215,11 +216,15 @@ export function RootLayout({ children }: PropsWithChildren) {
 
       ${config.NODE_ENV === "development"
         ? html`<script
-            defer
-            nonce="${nonce}"
-            src="${config.PUBLIC_ASSETS_PATH}/routes/__dev__/live-reload.client.js"
-            type="module"
-          ></script>`
+              defer
+              nonce="${nonce}"
+              src="${config.PUBLIC_ASSETS_PATH}/routes/__dev__/live-reload.client.js"
+              type="module"
+            ></script>
+            <script
+              nonce="${nonce}"
+              src="https://unpkg.com/@mcp-b/global@latest/dist/index.iife.js"
+            ></script>`
         : ""}
     </html>
   `;
