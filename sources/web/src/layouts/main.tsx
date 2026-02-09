@@ -5,7 +5,7 @@ import type { AppContext } from "#src/middleware/context";
 import { z_username } from "#src/schema";
 import { button } from "#src/ui/button";
 import { badge } from "#src/ui/badge";
-import { header, nav } from "#src/ui/header";
+import { header, MARIANNE_LOGO_URL, MOTTO_LOGO_URL, nav } from "#src/ui/header";
 import { Icon } from "#src/ui/icons/components";
 import { NotificationIsland } from "#src/ui/notifications";
 import { urls } from "#src/urls";
@@ -79,7 +79,10 @@ function Brand() {
     <div class={brand()}>
       <div class={brand_top()}>
         <div>
-          <p class={logo()}>
+          <p
+            class={logo()}
+            style={`--logo-bg: ${MARIANNE_LOGO_URL}; --motto-bg: ${MOTTO_LOGO_URL}`}
+          >
             République
             <br />
             Française

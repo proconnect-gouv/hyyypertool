@@ -57,7 +57,7 @@ export function CopyButtonClient({
       {...otherProps}
     >
       <svg
-        class={`inline h-4 w-4 ${copied ? "hidden" : ""}`}
+        class={`h-4 w-4 ${children ? "mr-2" : ""} ${copied ? "hidden" : "inline-block"}`}
         aria-hidden="true"
         viewBox="0 0 24 24"
         fill="currentColor"
@@ -65,7 +65,7 @@ export function CopyButtonClient({
         <path class={icon({ name: "clipboard" })} />
       </svg>
       <svg
-        class={`inline h-4 w-4 ${!copied ? "hidden" : ""}`}
+        class={`h-4 w-4 ${children ? "mr-2" : ""} ${!copied ? "hidden" : "inline-block"}`}
         aria-hidden="true"
         viewBox="0 0 24 24"
         fill="currentColor"

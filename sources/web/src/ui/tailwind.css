@@ -1,75 +1,8 @@
 @import "tailwindcss";
-
-/*
- * DSFR design token aliases.
- * These CSS variables are referenced in components via Tailwind's
- * arbitrary value syntax: bg-(--variable-name), text-(--variable-name).
- * Values extracted from @gouvfr/dsfr v1.14.3.
- */
-:root {
-  --blue-france-975-75: #f5f5fe;
-  --blue-france-sun-113-625: #000091;
-  --background-alt-blue-france: #f5f5fe;
-  --background-alt-blue-ecume: #e8edff;
-  --background-alt-grey: #f6f6f6;
-  --background-alt-red-marianne: #ffe9e9;
-  --background-contrast-grey: #eeeeee;
-  --background-default-grey-hover: #eaeaea;
-  --background-action-low-blue-france: #e3e3fd;
-  --background-action-high-green-bourgeon: #68a532;
-  --background-action-high-green-bourgeon-hover: #447a1c;
-  --background-action-high-warning: #d64d00;
-  --background-action-high-warning-hover: #b44000;
-  --text-action-high-blue-france: #000091;
-  --text-active-blue-france: #000091;
-  --text-active-red-marianne: #e1000f;
-  --error-425-625: #c9191e;
-  --error-425-625-hover: #a01a1c;
-  --red-marianne-425-625: #e1000f;
-  --green-emeraude-sun-425-625: #00a95f;
-  --brown-caramel-sun-425-625: #c08c65;
-  --grey-0-1000: #000000;
-  --grey-200-850: #3a3a3a;
-  --ground: 0;
-}
-
-@theme {
-  /* Blues - French government */
-  --color-blue-france: #000091;
-  --color-blue-france-hover: #1212ff;
-  --color-blue-france-975: #f5f5fe;
-  --color-blue-france-925: #e3e3fd;
-  --color-blue-ecume: #e8edff;
-  --color-blue-ecume-975: #f4f6fe;
-
-  /* Greens */
-  --color-green-bourgeon: #68a532;
-  --color-green-bourgeon-hover: #447a1c;
-  --color-green-emeraude: #00a95f;
-
-  /* Reds */
-  --color-red-marianne: #e1000f;
-  --color-error: #c9191e;
-  --color-error-hover: #a01a1c;
-
-  /* Oranges/Warnings */
-  --color-warning: #d64d00;
-  --color-warning-hover: #b44000;
-  --color-brown-caramel: #c08c65;
-
-  /* Greys */
-  --color-grey-1000: #000000;
-  --color-grey-850: #3a3a3a;
-  --color-grey-200: #e5e5e5;
-  --color-grey-50: #f6f6f6;
-  --color-grey-hover: #eaeaea;
-  --color-grey-contrast: #eeeeee;
-  --color-grey-contrast-hover: #d2d2d2;
-}
+@import "./tailwind.dsfr.css";
 
 /*
  * Icon utilities
- * Using CSS path() to keep HTML clean and leverage standard caching.
  */
 
 @utility icon-arrow-go-back {
@@ -109,6 +42,12 @@
 @utility icon-logout {
   d: path(
     "M19 2a1 1 0 0 1 1 1v3h-2V4H6v16h12v-2h2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h14Zm-1 6 5 4-5 4v-3h-7v-2h7V8Z"
+  );
+}
+
+@utility icon-search {
+  d: path(
+    "M11 2a9 9 0 1 0 9 9 9 9 0 0 0-9-9zm0 16a7 7 0 1 1 7-7 7 7 0 0 1-7 7zm11 1.414L17.414 15l-1.414 1.414L20.586 21z"
   );
 }
 

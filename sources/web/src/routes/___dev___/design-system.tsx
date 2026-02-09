@@ -872,17 +872,20 @@ function componentsTailwind() {
           placeholder="name@example.com"
         />
       </div>
-      <div class="flex">
+      <div class="flex items-stretch">
         <label class="sr-only">Search</label>
         <input
-          class="block flex-1 px-4 py-2 border border-grey-200 text-base"
+          class="block flex-1 px-4 py-2 border border-grey-200 text-base focus:border-blue-france focus:outline-none"
           type="search"
           placeholder="Search..."
         />
         <button
-          class="inline-flex items-center font-medium text-base px-4 py-2 bg-blue-france text-white hover:bg-blue-france-hover"
+          class="inline-flex items-center justify-center w-10 min-w-10 bg-blue-france text-white hover:bg-blue-france-hover"
+          title="Search"
         >
-          Search
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M11 2a9 9 0 1 0 9 9 9 9 0 0 0-9-9zm0 16a7 7 0 1 1 7-7 7 7 0 0 1-7 7zm11 1.414L17.414 15l-1.414 1.414L20.586 21z" />
+          </svg>
         </button>
       </div>
     </section>

@@ -1,0 +1,165 @@
+/*
+ * DSFR design tokens and base styles for Tailwind v4.
+ * Values extracted from @gouvfr/dsfr v1.14.3.
+ */
+
+@theme {
+  /* Fonts */
+  --font-sans: "Marianne", arial, sans-serif;
+
+  /* Blues - French government */
+  --color-blue-france: #000091;
+  --color-blue-france-hover: #1212ff;
+  --color-blue-france-975: #f5f5fe;
+  --color-blue-france-925: #e3e3fd;
+  --color-blue-ecume: #e8edff;
+  --color-blue-ecume-975: #f4f6fe;
+
+  /* Greens */
+  --color-green-bourgeon: #68a532;
+  --color-green-bourgeon-hover: #447a1c;
+  --color-green-emeraude: #00a95f;
+
+  /* Reds */
+  --color-red-marianne: #e1000f;
+  --color-error: #c9191e;
+  --color-error-hover: #a01a1c;
+
+  /* Oranges/Warnings */
+  --color-warning: #d64d00;
+  --color-warning-hover: #b44000;
+  --color-brown-caramel: #c08c65;
+
+  /* Greys */
+  --color-grey-1000: #000000;
+  --color-grey-850: #3a3a3a;
+  --color-grey-200: #e5e5e5;
+  --color-grey-50: #f6f6f6;
+  --color-grey-hover: #eaeaea;
+  --color-grey-contrast: #eeeeee;
+  --color-grey-contrast-hover: #d2d2d2;
+
+  /* Semantic Aliases - Mapped to DSFR tokens */
+  --color-blue-france-975-75: #f5f5fe;
+  --color-text-action-high-blue-france: #000091;
+  --color-text-active-blue-france: #000091;
+  --color-text-active-red-marianne: #e1000f;
+  
+  --color-background-alt-blue-france: #f5f5fe;
+  --color-background-alt-blue-ecume: #e8edff;
+  --color-background-alt-grey: #f6f6f6;
+  --color-background-alt-red-marianne: #ffe9e9;
+  --color-background-contrast-grey: #eeeeee;
+  --color-background-contrast-grey-hover: #d2d2d2;
+  --color-background-action-low-blue-france: #e3e3fd;
+
+  /* Spacing constants from DSFR */
+  --spacing-title: 0 0 1.5rem;
+  --spacing-text: 0 0 1.5rem;
+}
+
+@layer base {
+  @font-face {
+    font-family: Marianne;
+    src: url("/public/assets/fonts/Marianne-Light.woff2") format("woff2");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: Marianne;
+    src: url("/public/assets/fonts/Marianne-Light_Italic.woff2") format("woff2");
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: Marianne;
+    src: url("/public/assets/fonts/Marianne-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: Marianne;
+    src: url("/public/assets/fonts/Marianne-Regular_Italic.woff2") format("woff2");
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: Marianne;
+    src: url("/public/assets/fonts/Marianne-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: Marianne;
+    src: url("/public/assets/fonts/Marianne-Medium_Italic.woff2") format("woff2");
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: Marianne;
+    src: url("/public/assets/fonts/Marianne-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: Marianne;
+    src: url("/public/assets/fonts/Marianne-Bold_Italic.woff2") format("woff2");
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+  }
+
+  :root {
+    --ground: 0;
+  }
+
+  html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    color: var(--color-grey-850);
+    background-color: white;
+    margin: 0;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--color-grey-1000);
+    font-weight: 700;
+    margin: var(--spacing-title);
+  }
+
+  h1 {
+    font-size: 2rem;
+    line-height: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  h3 {
+    font-size: 1.375rem;
+    line-height: 1.75rem;
+  }
+
+  h4 {
+    font-size: 1.25rem;
+    line-height: 1.625rem;
+  }
+
+  p {
+    margin: var(--spacing-text);
+  }
+}

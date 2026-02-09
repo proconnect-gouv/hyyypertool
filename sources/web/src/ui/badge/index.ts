@@ -9,6 +9,7 @@ export const badge = tv({
     "inline-flex items-center w-fit",
     "text-sm leading-6 min-h-6 px-2",
     "font-bold uppercase rounded",
+    "bg-grey-contrast text-grey-1000",
   ].join(" "),
   variants: {
     intent: {

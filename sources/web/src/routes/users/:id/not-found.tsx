@@ -10,7 +10,7 @@ import { useRequestContext } from "hono/jsx-renderer";
 export function UserNotFound({ user_id }: { user_id?: number | undefined }) {
   const { env } = useRequestContext<AppEnvContext>();
   return (
-    <main class="flex h-full grow flex-col items-center justify-center bg-(--blue-france-975-75) ">
+    <main class="flex h-full grow flex-col items-center justify-center bg-blue-france-975-75 ">
       <div class="max-w-7xl mx-auto px-4 grid h-full grid-cols-2 items-center gap-6">
         <section>
           <h1>

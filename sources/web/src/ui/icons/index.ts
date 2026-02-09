@@ -10,6 +10,7 @@ export const icon = tv({
       eye: "icon-eye",
       "eye-off": "icon-eye-off",
       logout: "icon-logout",
+      search: "icon-search",
       subtract: "icon-subtract",
     },
   },

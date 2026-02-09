@@ -44,12 +44,12 @@ export async function UserPage({
 
   return (
     <main>
-      <div class="bg-(--background-alt-blue-france) py-6">
+      <div class="bg-background-alt-blue-france py-6">
         <div class="max-w-7xl mx-auto px-4 py-6!">
           <h1>👨‍💻 A propos de l'utilisateur</h1>
           <div className="grid grid-cols-2 gap-4">
             <div class="bg-white shadow-sm border border-grey-200 p-6!">
-              <h1 class="text-(--text-action-high-blue-france)">
+              <h1 class="text-text-action-high-blue-france">
                 « {user.given_name} {user.family_name} »
               </h1>
               <Fiche user={user} />
@@ -87,7 +87,7 @@ export async function UserPage({
           ></div>
         </div>
       </div>
-      <div class="bg-(--background-alt-red-marianne) py-6">
+      <div class="bg-background-alt-red-marianne py-6">
         <div class="max-w-7xl mx-auto px-4 py-6">
           <Actions user={user} />
         </div>
@@ -124,7 +124,7 @@ async function MFA({
   return (
     <div className="grid grid-cols-2 gap-4">
       <div aria-describedby="totp" class="bg-white shadow-sm border border-grey-200 p-6!">
-        <h2 class="text-(--text-action-high-blue-france)" id="totp">
+        <h2 class="text-text-action-high-blue-france" id="totp">
           TOTP
         </h2>
         <p class="mb-1">
@@ -141,7 +141,7 @@ async function MFA({
           class="bg-white shadow-sm border border-grey-200 p-6!"
         >
           <h2
-            class="text-(--text-action-high-blue-france)"
+            class="text-text-action-high-blue-france"
             id={`passkey-${authenticator.credential_id}`}
           >
             Passkey - {authenticator.display_name}
