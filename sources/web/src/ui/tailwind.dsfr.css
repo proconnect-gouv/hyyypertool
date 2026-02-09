@@ -5,6 +5,7 @@
 
 @theme {
   /* Fonts */
+  --font-marianne: "Marianne", arial, sans-serif;
   --font-sans: "Marianne", arial, sans-serif;
 
   /* Blues - French government */
@@ -44,7 +45,7 @@
   --color-text-action-high-blue-france: #000091;
   --color-text-active-blue-france: #000091;
   --color-text-active-red-marianne: #e1000f;
-  
+
   --color-background-alt-blue-france: #f5f5fe;
   --color-background-alt-blue-ecume: #e8edff;
   --color-background-alt-grey: #f6f6f6;
@@ -61,56 +62,58 @@
 @layer base {
   @font-face {
     font-family: Marianne;
-    src: url("/public/assets/fonts/Marianne-Light.woff2") format("woff2");
+    src: url("../assets/fonts/Marianne-Light.woff2") format("woff2");
     font-weight: 300;
     font-style: normal;
     font-display: swap;
   }
   @font-face {
     font-family: Marianne;
-    src: url("/public/assets/fonts/Marianne-Light_Italic.woff2") format("woff2");
+    src: url("../assets/fonts/Marianne-Light_Italic.woff2") format("woff2");
     font-weight: 300;
     font-style: italic;
     font-display: swap;
   }
   @font-face {
     font-family: Marianne;
-    src: url("/public/assets/fonts/Marianne-Regular.woff2") format("woff2");
+    src: url("../assets/fonts/Marianne-Regular.woff2") format("woff2");
     font-weight: 400;
     font-style: normal;
     font-display: swap;
   }
   @font-face {
     font-family: Marianne;
-    src: url("/public/assets/fonts/Marianne-Regular_Italic.woff2") format("woff2");
+    src: url("../assets/fonts/Marianne-Regular_Italic.woff2")
+      format("woff2");
     font-weight: 400;
     font-style: italic;
     font-display: swap;
   }
   @font-face {
     font-family: Marianne;
-    src: url("/public/assets/fonts/Marianne-Medium.woff2") format("woff2");
+    src: url("../assets/fonts/Marianne-Medium.woff2") format("woff2");
     font-weight: 500;
     font-style: normal;
     font-display: swap;
   }
   @font-face {
     font-family: Marianne;
-    src: url("/public/assets/fonts/Marianne-Medium_Italic.woff2") format("woff2");
+    src: url("../assets/fonts/Marianne-Medium_Italic.woff2")
+      format("woff2");
     font-weight: 500;
     font-style: italic;
     font-display: swap;
   }
   @font-face {
     font-family: Marianne;
-    src: url("/public/assets/fonts/Marianne-Bold.woff2") format("woff2");
+    src: url("../assets/fonts/Marianne-Bold.woff2") format("woff2");
     font-weight: 700;
     font-style: normal;
     font-display: swap;
   }
   @font-face {
     font-family: Marianne;
-    src: url("/public/assets/fonts/Marianne-Bold_Italic.woff2") format("woff2");
+    src: url("../assets/fonts/Marianne-Bold_Italic.woff2") format("woff2");
     font-weight: 700;
     font-style: italic;
     font-display: swap;
@@ -126,14 +129,23 @@
   }
 
   body {
-    font-family: var(--font-sans);
-    line-height: 1.5;
-    color: var(--color-grey-850);
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
     background-color: white;
-    margin: 0;
+    color: var(--color-grey-850);
+    font-size: 1rem;
+    line-height: 1.5rem;
+    overflow-wrap: break-word;
+    text-rendering: optimizeLegibility;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     color: var(--color-grey-1000);
     font-weight: 700;
     margin: var(--spacing-title);

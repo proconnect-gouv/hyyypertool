@@ -17,15 +17,15 @@ export const MOTTO_LOGO_URL = `url("data:image/svg+xml;charset=utf8,%3Csvg xmlns
 //
 
 export const header = tv({
-  base: "bg-white shadow-[0_1px_0_0_var(--color-grey-200)]",
+  base: "bg-white drop-shadow-[0_1px_3px_rgba(0,0,18,0.16)]",
   slots: {
-    body: "py-4",
-    body_row: "flex items-center justify-between",
+    body: "",
+    body_row: "flex items-center justify-between py-6",
     brand: "flex items-center gap-4",
     brand_top: "flex items-center",
     container: "max-w-7xl mx-auto px-4",
     logo: [
-      "inline-block align-middle text-[1.05rem] font-bold uppercase tracking-[-0.01em] leading-[1.0317460317em] indent-[-0.1em]",
+      "m-0 inline-block align-middle text-[1.05rem] font-bold uppercase tracking-[-0.01em] leading-[1.0317460317em] indent-[-0.1em]",
       "before:content-[''] before:block",
       "before:w-[2.75rem] before:h-[1rem]",
       "before:mb-[0.3333333333rem]",
@@ -38,25 +38,25 @@ export const header = tv({
       "after:bg-no-repeat",
       "after:[background-image:var(--motto-bg)]",
       "after:[background-size:5.25rem_3.75rem]",
-      "after:[background-position:0_0]",
+      "after:[background-position:0_calc(100%_+_1.875rem)]",
     ].join(" "),
     menu: "",
     service: "border-l border-grey-200 pl-4",
-    service_tagline: "text-xs text-grey-850",
-    service_title: "font-bold text-base",
+    service_tagline: "m-0 text-sm leading-6 text-grey-850",
+    service_title: "m-0 font-bold text-[1.25rem] leading-7",
     tools: "flex items-center",
     tools_links: "",
   },
 });
 
 export const nav = tv({
-  base: "border-t border-grey-200",
+  base: "shadow-[inset_0_1px_0_0_var(--color-grey-200)]",
   slots: {
     list: "flex list-none p-0 m-0 gap-0",
     item: "",
     link: [
       "inline-flex items-center px-4 py-3",
-      "text-sm font-medium text-grey-850",
+      "text-sm text-grey-850",
       "hover:bg-grey-50",
       "aria-[current=true]:shadow-[inset_0_-2px_0_0_var(--color-blue-france)] aria-[current=true]:text-blue-france",
     ].join(" "),
