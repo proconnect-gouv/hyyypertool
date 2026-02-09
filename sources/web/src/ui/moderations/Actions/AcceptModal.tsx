@@ -31,7 +31,7 @@ export async function AcceptModal({
       <div class="mb-4 flex items-center justify-between">
         <p class="mb-0 text-lg font-bold">✅ Accepter</p>
         <button
-          class={button({ type: "tertiary" })}
+          class={button({ icon: "left", type: "tertiary" })}
           _={`
               on click
                 add .hidden to #acceptModal

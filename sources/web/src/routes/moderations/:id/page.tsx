@@ -70,6 +70,7 @@ async function ModerationPageContent() {
       <button
         onclick="history.back()"
         class={button({
+          icon: "left",
           type: "tertiary",
           size: "sm",
         })}

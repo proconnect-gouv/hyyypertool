@@ -52,6 +52,7 @@ export function CopyButtonIsland(props: CopyButtonIslandProps) {
   } = props;
 
   const buttonClass = copy_button_style({
+    icon: children ? "left" : "only",
     ...variant,
     className: String(className || ""),
     intent: "ghost",

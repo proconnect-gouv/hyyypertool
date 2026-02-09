@@ -42,7 +42,7 @@ export async function RefusalModal({ userEmail }: { userEmail: string }) {
           />
           <p class="mb-0 text-lg font-bold">❌ Refuser</p>
           <button
-            class={button({ type: "tertiary" })}
+            class={button({ icon: "left", type: "tertiary" })}
             type="button"
             _={`
               on click

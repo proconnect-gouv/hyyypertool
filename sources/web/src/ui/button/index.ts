@@ -6,7 +6,7 @@ import { tv, type VariantProps } from "tailwind-variants";
 
 export const button = tv({
   base: [
-    "inline-flex items-center w-fit",
+    "inline-flex items-center w-fit gap-2 no-underline",
     "font-medium text-base leading-6",
     "min-h-10 px-4 py-2",
     "bg-blue-france text-white",
@@ -22,7 +22,7 @@ export const button = tv({
     },
     size: {
       lg: "text-lg leading-7 min-h-12 px-6 py-2",
-      sm: "text-sm leading-6 min-h-8 px-3 py-1",
+      sm: "text-sm leading-6 min-h-8 px-3 py-1 gap-1",
     },
     type: {
       tertiary:
@@ -32,6 +32,11 @@ export const button = tv({
       "tertiary-no-outline":
         "bg-transparent text-blue-france shadow-none hover:bg-grey-50",
       close: "text-sm leading-6 min-h-8 px-3 py-1 ml-auto",
+    },
+    icon: {
+      left: "[&>svg:first-child]:-ml-0.5",
+      right: "[&>svg:last-child]:-mr-0.5",
+      only: "justify-center px-2",
     },
   },
 });
