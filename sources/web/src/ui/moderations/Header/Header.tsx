@@ -8,6 +8,7 @@ import { callout } from "#src/ui/callout";
 import { notice } from "#src/ui/notice";
 import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
+import { Icon } from "#src/ui/icons/components";
 import { ModerationStatusSchema } from "@~/identite-proconnect/types";
 import { raw } from "hono/html";
 import { createContext, useContext } from "hono/jsx";
@@ -89,23 +90,35 @@ function State_Badge() {
   const { data: status } = ModerationStatusSchema.safeParse(moderation.status);
   if (status === undefined || status === "unknown")
     return is_treated ? (
-      <p class={badge({ intent: "success" })}>Traité</p>
+      <p class={badge({ icon: "left", intent: "success" })}>
+        <Icon name="check" size={12} />
+        Traité
+      </p>
     ) : (
       <p class={badge({ intent: "new" })}>A traiter</p>
     );
 
   return match(status)
     .with("accepted", () => (
-      <p class={badge({ intent: "success" })}>Accepté</p>
+      <p class={badge({ icon: "left", intent: "success" })}>
+        <Icon name="check" size={12} />
+        Accepté
+      </p>
     ))
     .with("pending", () => (
       <p class={badge({ intent: "new" })}>A traiter</p>
     ))
     .with("rejected", () => (
-      <p class={badge({ intent: "error" })}>Rejeté</p>
+      <p class={badge({ icon: "left", intent: "error" })}>
+        <Icon name="error" size={12} />
+        Rejeté
+      </p>
     ))
     .with("reopened", () => (
-      <p class={badge({ intent: "warning" })}>Réouvert</p>
+      <p class={badge({ icon: "left", intent: "warning" })}>
+        <Icon name="warning" size={12} />
+        Réouvert
+      </p>
     ))
     .exhaustive();
 }

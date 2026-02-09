@@ -50,9 +50,18 @@
   --color-background-alt-blue-ecume: #e8edff;
   --color-background-alt-grey: #f6f6f6;
   --color-background-alt-red-marianne: #ffe9e9;
+  --color-background-alt-green-emeraude: #b8fec9;
+  --color-background-alt-orange-terre-battue: #ffe9e6;
+  --color-background-alt-brown-caramel: #feebd0;
   --color-background-contrast-grey: #eeeeee;
   --color-background-contrast-grey-hover: #d2d2d2;
   --color-background-action-low-blue-france: #e3e3fd;
+
+  --color-text-default-success: #18753c;
+  --color-text-default-info: #0063cb;
+  --color-text-default-warning: #b34000;
+  --color-text-default-error: #ce0500;
+  --color-text-accent-brown-caramel: #695240;
 
   /* Spacing constants from DSFR */
   --spacing-title: 0 0 1.5rem;

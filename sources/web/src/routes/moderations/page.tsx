@@ -305,7 +305,10 @@ function StatusCell({
 
   return match({ status })
     .with({ status: "accepted" }, () => (
-      <span class={badge({ intent: "success" })}>Accepté</span>
+      <span class={badge({ icon: "left", intent: "success" })}>
+        <Icon name="check" size={12} />
+        Accepté
+      </span>
     ))
     .with({ status: "pending" }, () => (
       <span class={badge()}>
@@ -314,10 +317,16 @@ function StatusCell({
       </span>
     ))
     .with({ status: "rejected" }, () => (
-      <span class={badge({ intent: "error" })}>Rejeté</span>
+      <span class={badge({ icon: "left", intent: "error" })}>
+        <Icon name="error" size={12} />
+        Rejeté
+      </span>
     ))
     .with({ status: "reopened" }, () => (
-      <span class={badge({ intent: "warning" })}>Ré-ouvert</span>
+      <span class={badge({ icon: "left", intent: "warning" })}>
+        <Icon name="warning" size={12} />
+        Ré-ouvert
+      </span>
     ))
     .exhaustive();
 }
