@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "cd .. && bun run build && bun run db:migrate",
+    "build": "cd .. && bun run build && bun run database:identite-proconnect:migrator",
     "open": "cypress open -b electron --e2e",
     "start": "cd .. && bun start",
     "studio": "cypress open -b electron --e2e",
