@@ -1,5 +1,32 @@
 # Changelog
 
+## [2026.2.4](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.3...2026.2.4) (2026-02-10)
+
+### Changements
+
+- ✨ Ajout d'un lien de recherche annuaire EHPAD sur la fiche modération
+
+### Modifié
+
+- 🔧 update tailwind config (#1380) (655ba9d1)
+
+### Corrigé
+
+- 🐛 typo in component name (#1374) (0553a4be)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps-dev): Bump @happy-dom/global-registrator (#1377) (cd4ce47c)
+- :arrow_upper_right: [patch](deps): Bump type-fest from 5.4.1 to 5.4.2 (#1378) (62a00972)
+- :arrow_upper_right: [patch](deps): Bump @types/bun from 1.3.6 to 1.3.7 (#1379) (908ae20d)
+- :arrow_upper_right: [patch](deps): Bump cypress-io/github-action (#1375) (f26a8f9f)
+- :arrow_upper_right: [patch](deps): Bump the sentry group with 2 updates (#1376) (dde20550)
+
+### Divers
+
+- feat: add EHPAD link in Investigation actions (#1383) (555c0594)
+- ⏪️ e2e: revert build script to use specific database migrator (#1384) (20a74ede)
+
 ## [2026.2.3](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.2...2026.2.3) (2026-02-03)
 
 ### Changements
