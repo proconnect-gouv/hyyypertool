@@ -1,24 +1,23 @@
-//
-
 import { button } from "#src/ui/button";
 import { urls } from "#src/urls";
 
 import type { JSX } from "hono/jsx";
-
-//
 
 type Props = JSX.IntrinsicElements["section"] & {
   banaticUrl: string;
   organization: { cached_code_postal: string | null; siret: string };
 };
 
-//
+const EHPAD_URL =
+  "https://www.pour-les-personnes-agees.gouv.fr/annuaire-ehpad-et-comparateur-de-prix-et-restes-a-charge";
 
 export async function Investigation(props: Props) {
   const { banaticUrl, organization } = props;
+
   const hx_organizations_leaders_props = urls.organizations.leaders.$hx_get({
     query: { siret: organization.siret },
   });
+
   const button_classes = button({
     class: "mr-2 bg-white",
     size: "sm",
@@ -37,6 +36,7 @@ export async function Investigation(props: Props) {
           Chercher la mairie associée
         </a>
       </li>
+
       <li>
         <a
           href={`https://lannuaire.service-public.fr/recherche?whoWhat=&where=${organization.cached_code_postal}`}
@@ -47,6 +47,7 @@ export async function Investigation(props: Props) {
           Chercher les services publics associés
         </a>
       </li>
+
       <li>
         <a
           href={banaticUrl}
@@ -57,6 +58,18 @@ export async function Investigation(props: Props) {
           Chercher via Banatic
         </a>
       </li>
+
+      <li>
+        <a
+          href={EHPAD_URL}
+          class={button_classes}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Chercher via EHPAD
+        </a>
+      </li>
+
       <li>
         <a class="" {...hx_organizations_leaders_props} hx-trigger="load">
           <i class="text-center">Recherche des dirigeants...</i>

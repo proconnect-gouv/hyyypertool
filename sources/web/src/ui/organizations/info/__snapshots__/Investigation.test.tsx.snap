@@ -32,6 +32,15 @@ exports[`render investigation section 1`] = `
   </li>
   <li>
     <a
+      href="https://www.pour-les-personnes-agees.gouv.fr/annuaire-ehpad-et-comparateur-de-prix-et-restes-a-charge"
+      class="fr-btn fr-btn--sm fr-btn--tertiary mr-2 bg-white"
+      rel="noopener noreferrer"
+      target="_blank"
+      >Chercher via EHPAD</a
+    >
+  </li>
+  <li>
+    <a
       class=""
       hx-get="/organizations/leaders?siret=12345678901234"
       hx-trigger="load"
