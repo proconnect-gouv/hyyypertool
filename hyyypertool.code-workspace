@@ -25,6 +25,10 @@
       "path": "sources/identite-proconnect",
     },
     {
+      "name": "🏗️ sources/hyyyperbase/",
+      "path": "sources/hyyyperbase",
+    },
+    {
       "name": "⚙️ sources/config/",
       "path": "sources/config",
     },
@@ -88,6 +92,7 @@
       "dsfr",
       "gouvfr",
       "happydom",
+      "hyyyper",
       "hyyypertool",
       "identite",
       "moderations",
@@ -255,7 +260,7 @@
       {
         "label": "🏗️ Database MonComptePro Migrate",
         "command": "bun",
-        "args": ["run", "database:identite-proconnect:migrator"],
+        "args": ["run", "db:migrate"],
         "type": "shell",
         "options": {
           "cwd": "${workspaceFolder:/}",

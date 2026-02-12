@@ -3,8 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "cd .. && bun run build && bun run database:identite-proconnect:migrator",
+    "build": "cd .. && bun run build && bun run db:migrate",
+    "migrate": "cd .. && bun db:migrate",
     "open": "cypress open -b electron --e2e",
+    "seed": "cd .. && bun db:seed",
     "start": "cd .. && bun start",
     "studio": "cypress open -b electron --e2e",
     "test": "cypress run -e filterSpecs=true"
@@ -16,8 +18,6 @@
     "@testing-library/cypress": "10.1.0",
     "cypress": "15.10.0",
     "cypress-wait-until": "3.0.2",
-    "drizzle-orm": "0.45.1",
-    "pg": "8.18.0",
     "typescript": "5.9.3"
   },
   "trustedDependencies": [

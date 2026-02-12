@@ -13,15 +13,15 @@
     "sources/identite-proconnect",
     "sources/moderations",
     "sources/organizations",
+    "sources/hyyyperbase",
     "sources/web",
     "packages/*"
   ],
   "scripts": {
     "build": "bun run build:bun",
     "build:bun": "cd bin && bun run build",
-    "database:identite-proconnect:migrator": "bun run database:identite-proconnect:run migration",
-    "database:identite-proconnect:run": "bun run --cwd sources/identite-proconnect",
-    "database:identite-proconnect:seed": "bun run database:identite-proconnect:run seed",
+    "db:migrate": "bun run scripts/migrate.ts",
+    "db:seed": "bun run scripts/seed.ts",
     "dev": "cd bin && bun run dev",
     "dev:inspect-brk": "tsx --inspect-brk bin/src/index.ts",
     "e2e:install": "cd e2e && bun install",
@@ -52,11 +52,11 @@
     "tailwindPreserveWhitespace": true
   },
   "dependencies": {
+    "@~/bin": "workspace:*",
     "@gouvfr/dsfr": "1.14.3",
     "@preact/signals": "2.7.1",
     "@preact/signals-core": "1.13.0",
     "@tsconfig/bun": "1.0.10",
-    "@~/bin": "workspace:*",
     "animate.css": "4.1.1",
     "dotenv": "17.2.4",
     "htmx-ext-include-vals": "2.0.2",
@@ -70,6 +70,8 @@
     "zod": "4.3.6"
   },
   "devDependencies": {
+    "@~/hyyyperbase": "workspace:*",
+    "@~/identite-proconnect": "workspace:*",
     "@csmith/release-it-calver-plugin": "2023.12.0",
     "@testing-library/preact": "3.2.4",
     "@types/bun": "1.3.9",

@@ -2,6 +2,7 @@
 
 import env from "#src/config";
 import { get_zammad_me } from "#src/lib/zammad";
+import { set_hyyyperbase_database } from "#src/middleware/hyyyperbase";
 import { set_identite_pg_database } from "#src/middleware/identite-pg";
 import { to } from "await-to-js";
 import { sql } from "drizzle-orm";
@@ -30,5 +31,17 @@ export default new Hono()
     async ({ text, var: { identite_pg } }) => {
       const [, is_ok] = await to(identite_pg.execute(sql`SELECT 1`));
       return text("[+]drizzle identite connection " + (is_ok ? "OK" : "FAIL"));
+    },
+  )
+  .get(
+    "/drizzle/hyyyperbase",
+    set_hyyyperbase_database({
+      connectionString: env.HYYYPERBASE_DATABASE_URL,
+    }),
+    async ({ text, var: { hyyyper_pg } }) => {
+      const [, is_ok] = await to(hyyyper_pg.execute(sql`SELECT 1`));
+      return text(
+        "[+]drizzle hyyyperbase connection " + (is_ok ? "OK" : "FAIL"),
+      );
     },
   );
