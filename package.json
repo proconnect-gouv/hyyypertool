@@ -62,7 +62,7 @@
     "htmx.org": "2.0.8",
     "hyperscript.org": "0.9.14",
     "nprogress": "0.2.0",
-    "preact": "10.28.2",
+    "preact": "10.28.3",
     "tsx": "4.21.0",
     "zod": "4.3.6"
   },
