@@ -6,6 +6,7 @@ import { set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
 import { set_crisp_client_from_config } from "#src/middleware/crisp";
 import { set_fetch } from "#src/middleware/fetch";
+import { set_hyyyperbase_database } from "#src/middleware/hyyyperbase";
 import { set_identite_pg_database } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
 import { set_sentry } from "#src/middleware/sentry";
@@ -67,6 +68,11 @@ const app = new Hono()
   //
   .use(set_crisp_client_from_config())
   .use(set_identite_pg_database({ connectionString: config.DATABASE_URL }))
+  .use(
+    set_hyyyperbase_database({
+      connectionString: config.HYYYPERBASE_DATABASE_URL,
+    }),
+  )
   //
 
   .route("/moderations", moderations_router)

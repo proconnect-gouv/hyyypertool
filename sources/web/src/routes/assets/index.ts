@@ -1,6 +1,6 @@
 //
 
-import { type AppVariables_Context } from "#src/config";
+import { type AppVariablesContext } from "#src/config";
 import { cache_immutable } from "#src/middleware/cache";
 import { Hono } from "hono";
 import { rewriteAssetRequestPath } from "./rewrite";
@@ -24,7 +24,7 @@ const publicRoot = globalThis.Bun ? "." : "./bin";
 
 //
 
-export default new Hono<AppVariables_Context>()
+export default new Hono<AppVariablesContext>()
   .use("*", cache_immutable)
   .use(
     "/node_modules/*",

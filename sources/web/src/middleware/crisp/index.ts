@@ -1,7 +1,7 @@
 //
 
 import { CrispApi, type CrispApi as CrispApiType } from "#src/lib/crisp";
-import type { ConfigVariables_Context } from "#src/middleware/config";
+import type { ConfigVariablesContext } from "#src/middleware/config";
 import consola, { LogLevels } from "consola";
 import type { Env, MiddlewareHandler } from "hono";
 
@@ -17,7 +17,7 @@ export function set_crisp_client(
 }
 
 export function set_crisp_client_from_config(): MiddlewareHandler<
-  ConfigVariables_Context & CrispClientContext
+  ConfigVariablesContext & CrispClientContext
 > {
   let client: CrispApiType | null = null;
 

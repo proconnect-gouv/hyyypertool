@@ -1,13 +1,13 @@
 //
 
-import type { ConfigVariables_Context } from "#src/middleware/config";
+import type { ConfigVariablesContext } from "#src/middleware/config";
 import { createMiddleware } from "hono/factory";
 import { vip_list_guard } from "./vip_list.guard";
 
 //
 
 export function authorized() {
-  return createMiddleware<ConfigVariables_Context>(
+  return createMiddleware<ConfigVariablesContext>(
     function authorized_middleware(c, next) {
       const {
         var: { config },

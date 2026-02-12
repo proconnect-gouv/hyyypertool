@@ -1,6 +1,6 @@
 //
 
-import type { AppEnv_Context } from "#src/config";
+import type { AppEnvContext } from "#src/config";
 import type { App_Context } from "#src/middleware/context";
 import type { Context } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";
@@ -16,7 +16,7 @@ export function not_found_handler(c: Context) {
 export function NotFound() {
   const {
     var: { config },
-  } = useRequestContext<AppEnv_Context>();
+  } = useRequestContext<AppEnvContext>();
 
   return (
     <main class="flex min-h-full flex-1 items-center bg-(--blue-france-975-75)">

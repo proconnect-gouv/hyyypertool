@@ -61,11 +61,14 @@ export const app_env = z.object({
   CRISP_USER_NICKNAME: z.string().trim(),
   CRISP_WEBSITE_ID: z.string().trim(),
   DATABASE_URL: z
-    .string()
-    .trim()
     .url()
     .default(
       "postgresql://postgres:postgres@localhost:5432/postgres?schema=public",
+    ),
+  HYYYPERBASE_DATABASE_URL: z
+    .url()
+    .default(
+      "postgresql://postgres:postgres@localhost:5555/postgres?schema=public",
     ),
   DEPLOY_ENV: DEPLOY_ENV_SHEMA.default("preview"),
   ENTREPRISE_API_GOUV_TOKEN: z.string().trim(),

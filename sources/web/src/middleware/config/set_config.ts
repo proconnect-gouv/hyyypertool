@@ -1,6 +1,6 @@
 //
 
-import type { App_Config } from "#src/config";
+import type { AppConfig } from "#src/config";
 import { app_env } from "#src/config";
 import type { Env, MiddlewareHandler } from "hono";
 import { env } from "hono/adapter";
@@ -8,11 +8,11 @@ import { env } from "hono/adapter";
 //
 
 export function set_config(
-  value?: Partial<App_Config>,
-): MiddlewareHandler<ConfigVariables_Context> {
+  value?: Partial<AppConfig>,
+): MiddlewareHandler<ConfigVariablesContext> {
   if (value) {
     return async function set_config_middleware({ set }, next) {
-      set("config", value as App_Config);
+      set("config", value as AppConfig);
       await next();
     };
   }
@@ -31,8 +31,8 @@ export function set_config(
 
 //
 
-export interface ConfigVariables_Context extends Env {
+export interface ConfigVariablesContext extends Env {
   Variables: {
-    readonly config: App_Config;
+    readonly config: AppConfig;
   };
 }
