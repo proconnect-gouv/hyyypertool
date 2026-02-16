@@ -51,7 +51,7 @@
   "dependencies": {
     "@gouvfr/dsfr": "1.14.3",
     "@preact/signals": "2.6.1",
-    "@preact/signals-core": "1.12.2",
+    "@preact/signals-core": "1.13.0",
     "@tsconfig/bun": "1.0.10",
     "@~/bin": "workspace:*",
     "animate.css": "4.1.1",
