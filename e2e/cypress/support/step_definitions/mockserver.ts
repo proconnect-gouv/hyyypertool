@@ -19,35 +19,36 @@ Given("un faux serveur {string}", function (server: string) {
 });
 
 Then("une notification mail est envoyée", function () {
-  cy.request(
-    "PUT",
-    new URL("/mockserver/verify", Cypress.env("APP_MONCOMPTEPRO_URL")).href,
-    {
-      httpRequest: {
-        path: "/api/admin/send-moderation-processed-email",
-      },
-      times: {
-        atLeast: 1,
-      },
-    } satisfies MockServerRequestVerificationBody,
-  )
-    .its("status")
-    .should("equal", 202);
+  cy.env(["APP_MONCOMPTEPRO_URL"]).then(({ APP_MONCOMPTEPRO_URL }) => {
+    const url = new URL("/mockserver/verify", APP_MONCOMPTEPRO_URL).href;
+    const body = {
+      httpRequest: { path: "/api/admin/send-moderation-processed-email" },
+      times: { atLeast: 1 },
+    } satisfies MockServerRequestVerificationBody;
+
+    // Retry because the notification is sent asynchronously
+    cy.waitUntil(
+      () =>
+        cy
+          .request({ method: "PUT", url, body, failOnStatusCode: false })
+          .its("status")
+          .then((status) => status === 202),
+      { interval: 500, timeout: 10_000 },
+    );
+  });
 });
 
 Then("une notification mail n'est pas envoyée", () => {
-  cy.request({
-    body: {
-      httpRequest: {
-        path: "/api/admin/send-moderation-processed-email",
-      },
-      times: {
-        atLeast: 1,
-      },
-    },
-    failOnStatusCode: false,
-    method: "PUT",
-    url: new URL("/mockserver/verify", Cypress.env("APP_MONCOMPTEPRO_URL"))
-      .href,
+  cy.env(["APP_MONCOMPTEPRO_URL"]).then(({ APP_MONCOMPTEPRO_URL }) => {
+    cy.request({
+      body: {
+        httpRequest: { path: "/api/admin/send-moderation-processed-email" },
+        times: { atMost: 0 },
+      } satisfies MockServerRequestVerificationBody,
+      method: "PUT",
+      url: new URL("/mockserver/verify", APP_MONCOMPTEPRO_URL).href,
+    })
+      .its("status")
+      .should("equal", 202);
   });
 });

@@ -15,6 +15,7 @@
     "@proconnect-gouv/proconnect.identite.database": "1.2.0",
     "@testing-library/cypress": "10.1.0",
     "cypress": "15.10.0",
+    "cypress-wait-until": "3.0.2",
     "drizzle-orm": "0.45.1",
     "pg": "8.18.0",
     "typescript": "5.9.3"
