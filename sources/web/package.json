@@ -60,7 +60,7 @@
     "youch": "3.3.4"
   },
   "devDependencies": {
-    "@happy-dom/global-registrator": "20.4.0",
+    "@happy-dom/global-registrator": "20.5.3",
     "@types/lodash.sortby": "4.7.9",
     "@types/nprogress": "0.2.3",
     "@~/config.typescript": "workspace:*",
