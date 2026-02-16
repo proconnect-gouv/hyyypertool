@@ -1,35 +1,13 @@
 //
 
-import {
-  forceJoinOrganizationFactory,
-  markDomainAsVerifiedFactory,
-} from "@proconnect-gouv/proconnect.identite/managers/organization";
+import { markDomainAsVerifiedFactory } from "@proconnect-gouv/proconnect.identite/managers/organization";
 import * as EmailDomainRepository from "@proconnect-gouv/proconnect.identite/repositories/email-domain";
 import * as OrganizationRepository from "@proconnect-gouv/proconnect.identite/repositories/organization";
 import * as UserRepository from "@proconnect-gouv/proconnect.identite/repositories/user";
 import type Pg from "pg";
 
 //
-
-export function ForceJoinOrganization(client: Pg.Pool) {
-  return forceJoinOrganizationFactory({
-    findEmailDomainsByOrganizationId:
-      EmailDomainRepository.findEmailDomainsByOrganizationIdFactory({
-        pg: client,
-      }),
-    getById: OrganizationRepository.getByIdFactory({ pg: client }),
-    getUserById: UserRepository.getByIdFactory({ pg: client }),
-    linkUserToOrganization:
-      OrganizationRepository.linkUserToOrganizationFactory({ pg: client }),
-  });
-}
-
-export type ForceJoinOrganizationHandler = ReturnType<
-  typeof ForceJoinOrganization
->;
-
-//
-
+export { EmailDomainRepository, OrganizationRepository };
 export function MarkDomainAsVerified(client: Pg.Pool) {
   return markDomainAsVerifiedFactory({
     addDomain: EmailDomainRepository.addDomainFactory({ pg: client }),

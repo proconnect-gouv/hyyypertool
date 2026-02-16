@@ -7,7 +7,6 @@ import { RemoveUserFromOrganization } from "#src/queries/moderations";
 import { zValidator } from "@hono/zod-validator";
 import { EntitySchema } from "@~/core/schema";
 import { schema } from "@~/identite-proconnect/database";
-import { ForceJoinOrganization } from "@~/identite-proconnect/sdk";
 import { VerificationTypeSchema } from "@~/identite-proconnect/types";
 import { and, eq } from "drizzle-orm";
 import { Hono } from "hono";
@@ -19,31 +18,6 @@ const params_schema = EntitySchema.extend({
 });
 export default new Hono<App_Context>()
   //
-  .post(
-    "/",
-    zValidator(
-      "form",
-      z.object({
-        is_external: z.stringbool(),
-      }),
-    ),
-    zValidator("param", params_schema),
-    async function POST({ text, req, var: { identite_pg_client } }) {
-      const { id: organization_id, user_id } = req.valid("param");
-      const { is_external } = req.valid("form");
-
-      const join_organization = ForceJoinOrganization(identite_pg_client);
-      await join_organization({
-        is_external,
-        organization_id,
-        user_id,
-      });
-
-      return text("OK", 200, {
-        "HX-Trigger": ORGANISATION_EVENTS.enum.MEMBERS_UPDATED,
-      } as HtmxHeader);
-    },
-  )
   .patch(
     "/",
     zValidator("param", params_schema),
