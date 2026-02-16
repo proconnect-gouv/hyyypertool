@@ -42,7 +42,7 @@
     "is-disposable-email-domain": "1.0.7",
     "lodash.sortby": "4.7.0",
     "nprogress": "0.2.0",
-    "openid-client": "6.8.1",
+    "openid-client": "6.8.2",
     "preact": "10.28.3",
     "preact-render-to-string": "6.6.5",
     "rehype-sanitize": "6.0.0",
