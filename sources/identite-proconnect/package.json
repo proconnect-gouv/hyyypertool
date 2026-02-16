@@ -23,7 +23,7 @@
   "dependencies": {
     "@~/core": "workspace:*",
     "@proconnect-gouv/proconnect.core": "1.0.0",
-    "@proconnect-gouv/proconnect.identite": "1.5.0",
+    "@proconnect-gouv/proconnect.identite": "1.6.2",
     "@proconnect-gouv/proconnect.insee": "1.0.1",
     "@proconnect-gouv/proconnect.api_entreprise": "1.1.0",
     "@proconnect-gouv/proconnect.identite.database": "1.2.0",
