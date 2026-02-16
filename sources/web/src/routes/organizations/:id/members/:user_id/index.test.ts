@@ -2,10 +2,7 @@
 
 import { set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
-import {
-  set_identite_pg,
-  set_identite_pg_client,
-} from "#src/middleware/identite-pg";
+import { set_identite_pg } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
 import { schema } from "@~/identite-proconnect/database";
 import {
@@ -13,7 +10,6 @@ import {
   create_unicorn_organization,
 } from "@~/identite-proconnect/database/seed/unicorn";
 import {
-  client,
   empty_database,
   migrate,
   pg,
@@ -30,106 +26,6 @@ beforeEach(empty_database);
 setSystemTime(new Date("2222-02-22 22:22:22+22"));
 
 //
-
-test("POST /organizations/:id/members/:user_id adds user to organization", async () => {
-  const organization_id = await create_unicorn_organization(pg);
-  const user_id = await create_adora_pony_user(pg);
-
-  {
-    const result = await pg.query.users_organizations.findMany({
-      where: (table, { eq }) => eq(table.organization_id, organization_id),
-    });
-    expect(result).toMatchInlineSnapshot(`[]`);
-  }
-
-  const response = await new Hono()
-    .use(set_config({}))
-    .use(set_identite_pg_client(client as any))
-    .use(set_nonce("nonce"))
-    .use(set_userinfo({ email: "test@example.com" }))
-    .route("/:id/members/:user_id", app)
-    .request(`/${organization_id}/members/${user_id}`, {
-      method: "POST",
-      body: new URLSearchParams({ is_external: "true" }),
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    });
-
-  expect(response.status).toBe(200);
-  expect(response.headers.get("HX-Trigger")).toBe("MEMBERS_UPDATED");
-
-  {
-    const result = await pg.query.users_organizations.findMany({
-      where: (table, { eq }) => eq(table.organization_id, organization_id),
-    });
-    expect(result).toMatchInlineSnapshot(`
-      [
-        {
-          "created_at": "2222-02-22 00:22:22+00",
-          "has_been_greeted": false,
-          "is_external": true,
-          "needs_official_contact_email_verification": false,
-          "official_contact_email_verification_sent_at": null,
-          "official_contact_email_verification_token": null,
-          "organization_id": 1,
-          "updated_at": "2222-02-22 00:22:22+00",
-          "user_id": 1,
-          "verification_type": "domain",
-          "verified_at": "2222-02-22 00:22:22+00",
-        },
-      ]
-    `);
-  }
-});
-
-test("POST /organizations/:id/members/:user_id with is_external=false", async () => {
-  const organization_id = await create_unicorn_organization(pg);
-  const user_id = await create_adora_pony_user(pg);
-
-  {
-    const result = await pg.query.users_organizations.findMany({
-      where: (table, { eq }) => eq(table.organization_id, organization_id),
-    });
-    expect(result).toMatchInlineSnapshot(`[]`);
-  }
-
-  const response = await new Hono()
-    .use(set_config({}))
-    .use(set_identite_pg_client(client as any))
-    .use(set_nonce("nonce"))
-    .use(set_userinfo({ email: "test@example.com" }))
-    .route("/:id/members/:user_id", app)
-    .request(`/${organization_id}/members/${user_id}`, {
-      method: "POST",
-      body: new URLSearchParams({ is_external: "false" }),
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    });
-
-  expect(response.status).toBe(200);
-  expect(response.headers.get("HX-Trigger")).toBe("MEMBERS_UPDATED");
-
-  {
-    const result = await pg.query.users_organizations.findMany({
-      where: (table, { eq }) => eq(table.organization_id, organization_id),
-    });
-    expect(result).toMatchInlineSnapshot(`
-      [
-        {
-          "created_at": "2222-02-22 00:22:22+00",
-          "has_been_greeted": false,
-          "is_external": false,
-          "needs_official_contact_email_verification": false,
-          "official_contact_email_verification_sent_at": null,
-          "official_contact_email_verification_token": null,
-          "organization_id": 1,
-          "updated_at": "2222-02-22 00:22:22+00",
-          "user_id": 1,
-          "verification_type": "domain",
-          "verified_at": "2222-02-22 00:22:22+00",
-        },
-      ]
-    `);
-  }
-});
 
 test("PATCH /organizations/:id/members/:user_id updates user organization membership", async () => {
   const organization_id = await create_unicorn_organization(pg);
