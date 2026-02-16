@@ -20,7 +20,7 @@ export default defineConfig({
       require.resolve("@badeball/cypress-cucumber-preprocessor/pretty-reporter"),
     setupNodeEvents,
     specPattern: "**/*.feature",
-    supportFile: false,
+    supportFile: "cypress/support/e2e.ts",
   },
   env: {
     APP_MONCOMPTEPRO_URL: "http://localhost:6300",
