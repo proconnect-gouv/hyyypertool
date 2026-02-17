@@ -37,7 +37,7 @@
     "@~/organizations": "workspace:*",
     "await-to-js": "3.0.0",
     "consola": "3.4.2",
-    "hono": "4.11.7",
+    "hono": "4.11.9",
     "hono-sessions": "0.8.0",
     "hono-slotify": "workspace:*",
     "is-disposable-email-domain": "1.0.7",

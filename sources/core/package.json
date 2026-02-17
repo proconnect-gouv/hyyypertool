@@ -10,7 +10,7 @@
     "./*": "./src/*/index.ts"
   },
   "dependencies": {
-    "hono": "4.11.7",
+    "hono": "4.11.9",
     "ts-pattern": "5.9.0"
   },
   "devDependencies": {

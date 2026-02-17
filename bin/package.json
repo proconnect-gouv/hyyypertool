@@ -26,7 +26,7 @@
     "@~/core": "workspace:*",
     "dotenv-flow": "4.1.0",
     "consola": "3.4.2",
-    "hono": "4.11.7",
+    "hono": "4.11.9",
     "tailwindcss": "4.1.18",
     "tsx": "4.21.0"
   },
