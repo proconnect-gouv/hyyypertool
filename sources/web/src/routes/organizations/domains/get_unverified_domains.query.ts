@@ -17,6 +17,7 @@ import {
   isNull,
   not,
   or,
+  sql,
 } from "drizzle-orm";
 import { readFile } from "fs/promises";
 import { fileURLToPath } from "node:url";
@@ -71,10 +72,10 @@ export async function get_unverified_domains(
     ),
   )!;
 
-  const where_is_free_domain = inArray(
-    schema.email_domains.domain,
-    most_used_free_email_domains.concat(disposable_free_email_domain),
-  );
+  const free_domains_array_literal = `ARRAY[${most_used_free_email_domains
+    .concat(disposable_free_email_domain)
+    .map((d) => `'${d.replace(/'/g, "''")}'`)
+    .join(",")}]`;
 
   //
 
@@ -87,15 +88,27 @@ export async function get_unverified_domains(
       )
     : undefined;
 
-  const where = and(
-    search_where,
-    where_active_organization,
-    where_authorized_email_domains,
-    not(where_unipersonnelle),
-    not(where_is_free_domain),
-  );
-
   return pg.transaction(async function moderation_count(tx) {
+    await tx.execute(
+      sql`CREATE TEMP TABLE _free_domains (domain text PRIMARY KEY) ON COMMIT DROP`,
+    );
+
+    await tx.execute(
+      sql.raw(
+        `INSERT INTO _free_domains (domain) SELECT unnest(${free_domains_array_literal}::text[]) ON CONFLICT DO NOTHING`,
+      ),
+    );
+
+    const where_not_free_domain = sql`NOT EXISTS (SELECT 1 FROM _free_domains fd WHERE fd.domain = ${schema.email_domains.domain})`;
+
+    const where = and(
+      search_where,
+      where_active_organization,
+      where_authorized_email_domains,
+      not(where_unipersonnelle),
+      where_not_free_domain,
+    );
+
     const member_count = tx
       .select({
         count: drizzle_count(schema.users_organizations.user_id).as("count"),
