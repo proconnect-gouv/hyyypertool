@@ -8,11 +8,7 @@ import { z } from "zod";
 
 //
 
-/**
- * @deprecated This dotenv.config() call is deprecated.
- * Environment variables should be loaded at the bin level instead.
- * Use set_config middleware for runtime configuration.
- */
+// Fallback: load .env files if not already loaded by bin/src/node/instrument.ts
 dotenv.config({
   path: [
     `.env.${process.env.NODE_ENV ?? "development"}.local`,
@@ -82,6 +78,8 @@ export const app_env = z.object({
     .default("development"),
   PORT: z.coerce.number().default(3000),
   SENTRY_DNS: z.string().trim().url().optional(),
+  SENTRY_PROFILES_SAMPLE_RATE: z.coerce.number().min(0).max(1).default(1),
+  SENTRY_TRACES_SAMPLE_RATE: z.coerce.number().min(0).max(1).default(1),
   TZ: z.string().trim().optional(),
   VERSION: z.string().default(
     match(DEPLOY_ENV_SHEMA.optional().parse(env["DEPLOY_ENV"]))

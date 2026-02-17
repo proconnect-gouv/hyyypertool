@@ -18,6 +18,13 @@ exports[`Main Layout 1`] = `
 
         <!--  -->
         
+        <meta name="sentry-dsn" content="" />
+        <meta name="sentry-environment" content="" />
+        <meta name="sentry-release" content="__VERSION__" />
+        <meta
+          name="sentry-traces-sample-rate"
+          content=""
+        />
         <!--  -->
 
         <link
@@ -114,6 +121,12 @@ document.addEventListener('DOMContentLoaded', () => {
       </body>
 
       <!--  -->
+
+      <script
+        nonce="nonce"
+        src="/assets/PUBLIC_ASSETS_PATH/public/built/layouts/sentry.client.js"
+        type="module"
+      ></script>
 
       <script
         nonce="nonce"

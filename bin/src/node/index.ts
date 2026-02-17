@@ -1,10 +1,8 @@
 //
 
-import dotenv from "dotenv";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-// Build static files with Bun runtime before app starts
 import { serve } from "@hono/node-server";
 import config from "@~/web/config";
 import app from "@~/web/routes";
@@ -17,17 +15,8 @@ import { showRoutes } from "hono/dev";
 //
 //
 
-// Load environment variables at bin level
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const binRoot = join(__dirname, "..", "..");
-
-dotenv.config({
-  path: [
-    join(binRoot, `.env.${process.env.NODE_ENV ?? "development"}.local`),
-    join(binRoot, ".env.local"),
-    join(binRoot, ".env"),
-  ],
-});
 
 if (!existsSync(join(binRoot, "public/built"))) {
   console.log("Building static files...");
