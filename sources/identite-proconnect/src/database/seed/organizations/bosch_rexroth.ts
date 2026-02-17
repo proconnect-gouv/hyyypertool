@@ -1,5 +1,6 @@
 //
 
+import type { EmailDomainVerificationType } from "#src/types";
 import { schema, type IdentiteProconnectPgDatabase } from "../..";
 
 export async function insert_bosch_rexroth(pg: IdentiteProconnectPgDatabase) {
@@ -18,7 +19,7 @@ export async function insert_bosch_rexroth(pg: IdentiteProconnectPgDatabase) {
       cached_nom_complet: "Bosch rexroth d.s.i.",
       cached_tranche_effectifs: "41",
       created_at: "2024-01-19T22:27:42.009+02:00",
-      siret: "44023386400014 ",
+      siret: "44023386400014",
       updated_at: "2024-02-15T14:45:32.598+02:00",
     })
     .returning({ id: schema.organizations.id });
@@ -26,7 +27,7 @@ export async function insert_bosch_rexroth(pg: IdentiteProconnectPgDatabase) {
   await pg.insert(schema.email_domains).values({
     domain: "fr.bosch.com",
     organization_id,
-    verification_type: "verified",
+    verification_type: "verified" satisfies EmailDomainVerificationType,
     can_be_suggested: true,
     verified_at: "2022-05-11T17:31:44.199+02:00",
     created_at: "2022-04-11T17:31:44.199+02:00",
