@@ -16,9 +16,6 @@
     "start:node": "tsx --import ./src/node/instrument.ts src/node/index.ts",
     "start:bun": "bun run src/bun/index.ts"
   },
-  "trustedDependencies": [
-    "@sentry/profiling-node"
-  ],
   "dependencies": {
     "@hono/node-server": "1.19.9",
     "@sentry/node": "10.38.0",
