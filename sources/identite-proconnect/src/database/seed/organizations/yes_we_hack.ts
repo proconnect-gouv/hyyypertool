@@ -1,5 +1,6 @@
 //
 
+import type { EmailDomainVerificationType } from "#src/types";
 import { schema, type IdentiteProconnectPgDatabase } from "../..";
 
 export async function insert_yes_we_hack(pg: IdentiteProconnectPgDatabase) {
@@ -34,7 +35,7 @@ export async function insert_yes_we_hack(pg: IdentiteProconnectPgDatabase) {
   await pg.insert(schema.email_domains).values({
     organization_id,
     domain: "yeswehack.com",
-    verification_type: null,
+    verification_type: null satisfies EmailDomainVerificationType,
     can_be_suggested: true,
     verified_at: "2024-03-26T05:37:24.197+02:00",
     created_at: "2023-12-19T10:02:33.274+02:00",

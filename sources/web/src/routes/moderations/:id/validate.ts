@@ -1,6 +1,6 @@
 //
 
-import { HTTPError, NotFoundError } from "#src/errors";
+import { HTTPError, NotFoundError, is_unique_violation } from "#src/errors";
 import type { HtmxHeader } from "#src/htmx";
 import {
   MODERATION_EVENTS,
@@ -135,12 +135,23 @@ export default new Hono<App_Context>().patch(
       verification_type ??
       deduce_verification_type_from_organization_domains(email_domains, domain);
 
-    await link_user_to_organization({
-      organization_id,
-      user_id,
-      is_external,
-      verification_type: link_verification_type,
-    });
+    const [link_error] = await to(
+      link_user_to_organization({
+        organization_id,
+        user_id,
+        is_external,
+        verification_type: link_verification_type,
+      }),
+    );
+
+    if (link_error) {
+      if (!is_unique_violation(link_error)) throw link_error;
+
+      await update_user_by_id_in_organization(
+        { organization_id, user_id },
+        { is_external, verification_type: link_verification_type },
+      );
+    }
     //#endregion
 
     //#region ✨ Send notification

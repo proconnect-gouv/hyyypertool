@@ -27,3 +27,7 @@ export class NotFoundError extends Error {
     this.name = "NotFoundError";
   }
 }
+
+export function is_unique_violation(error: unknown): boolean {
+  return error instanceof Error && "code" in error && error.code === "23505";
+}

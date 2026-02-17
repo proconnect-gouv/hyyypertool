@@ -205,6 +205,27 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
     consola.verbose(
       `🌱 INSERT ${marie_bon} wants to join ${bosch_rexroth} again...`,
     );
+
+    await insert_users_organizations(db, {
+      organization_id: yes_we_hack,
+      user_id: raphael.id,
+      verification_type: "domain_not_verified_yet",
+    });
+    consola.verbose(
+      `🌱 INSERT ${raphael.given_name} join yes_we_hack (id: ${yes_we_hack})`,
+    );
+
+    await insert_moderation(db, {
+      created_at: "2011-11-13T12:11:12+02:00",
+      organization_id: yes_we_hack,
+      status: "pending",
+      ticket_id: "session_duplicate_member",
+      type: MODERATION_TYPES.enum.non_verified_domain,
+      user_id: raphael.id,
+    });
+    consola.verbose(
+      `🌱 INSERT ${raphael.given_name} wants to join yes_we_hack (already linked)...`,
+    );
     await insert_moderation(db, {
       comment:
         '1687445474000 moderateur@beta.gouv.fr | Rejeté par moderateur@beta.gouv.fr | Raison : "Domaine non autorisé"',
