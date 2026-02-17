@@ -1,5 +1,39 @@
 # Changelog
 
+## [2026.2.5](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.4...2026.2.5) (2026-02-17)
+
+### Changements
+
+- ♻️ Clarrification du comportement lorsqu'un nouveau membre rejoint une organisation
+- ⚡️🐛 Optimisation du filtrage des domaines gratuits et correction du rafraîchissement du tableau des domaines à vérifier
+
+### Modifié
+
+- ⚡️🐛 [domains] Fix table disappearing on refresh and optimize free domain filtering (#1404) (c02bf61a)
+- ♻️ remove legacy force join organization (#1393) (78c42a51)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): Bump @proconnect-gouv/proconnect.identite (#1403) (c8649e11)
+- :arrow_upper_right: [patch](deps): Bump type-fest from 5.4.2 to 5.4.4 (#1401) (235cc8bc)
+- :arrow_upper_right: [patch](deps): Bump openid-client (#1400) (87d7a892)
+- :arrow_upper_right: [patch](deps): Bump pg from 8.17.2 to 8.18.0 (#1399) (db510eb8)
+- :arrow_upper_right: [patch](deps): Bump @preact/signals (#1395) (cdb27d2f)
+- :arrow_upper_right: [patch](deps-dev): Bump @happy-dom/global-registrator (#1396) (171eb73e)
+- :arrow_upper_right: [patch](deps): Bump dotenv from 17.2.3 to 17.2.4 (#1398) (14104183)
+- :arrow_upper_right: [patch](deps): Bump @preact/signals-core (#1397) (225dfe73)
+- :arrow_upper_right: [patch](deps-dev): Bump drizzle-kit (#1394) (1b583285)
+- :arrow_upper_right: [patch](deps): Bump pg from 8.17.2 to 8.18.0 in /e2e (#1385) (a7e85024)
+- :arrow_upper_right: [patch](deps): Bump cypress in /e2e (#1388) (112bee0e)
+- :arrow_upper_right: [patch](deps): Bump oxc-parser (#1391) (f67b9698)
+- :arrow_upper_right: [patch](deps): Bump @types/bun from 1.3.7 to 1.3.8 (#1389) (a68189a3)
+- :arrow_upper_right: [patch](deps): Bump preact from 10.28.2 to 10.28.3 (#1387) (5013fbc8)
+- :arrow_upper_right: [patch](deps): Bump the sentry group with 2 updates (#1386) (29001121)
+
+### Divers
+
+- 🚥 e2e(mockserver): fix notification verification flakiness (#1392) (b4124b3d)
+
 ## [2026.2.4](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.3...2026.2.4) (2026-02-10)
 
 ### Changements
