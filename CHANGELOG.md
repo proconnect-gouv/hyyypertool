@@ -1,5 +1,15 @@
 # Changelog
 
+## [2026.2.6](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.5...2026.2.6) (2026-02-17)
+
+### Changements
+
+- 🐛 Correction de bug sur la modération des non bloquante
+
+### Corrigé
+
+- 🐛 bug on moderation of already linked members (#1405) (82cdf79c)
+
 ## [2026.2.5](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.4...2026.2.5) (2026-02-17)
 
 ### Changements
