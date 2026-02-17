@@ -35,6 +35,13 @@ export function RootLayout({ children }: PropsWithChildren) {
 
         <!--  -->
         ${raw(sentry_trace_meta_tags ?? "")}
+        <meta name="sentry-dsn" content="${config.SENTRY_DNS ?? ""}" />
+        <meta name="sentry-environment" content="${config.DEPLOY_ENV}" />
+        <meta name="sentry-release" content="${config.VERSION}" />
+        <meta
+          name="sentry-traces-sample-rate"
+          content="${config.SENTRY_TRACES_SAMPLE_RATE}"
+        />
         <!--  -->
 
         <link
@@ -139,6 +146,12 @@ export function RootLayout({ children }: PropsWithChildren) {
       </body>
 
       <!--  -->
+
+      <script
+        nonce="${nonce}"
+        src="${config.PUBLIC_ASSETS_PATH}/layouts/sentry.client.js"
+        type="module"
+      ></script>
 
       <script
         nonce="${nonce}"

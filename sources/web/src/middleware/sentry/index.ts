@@ -1,4 +1,3 @@
-import config from "#src/config";
 import {
   SEMANTIC_ATTRIBUTE_SENTRY_ORIGIN,
   SEMANTIC_ATTRIBUTE_SENTRY_SOURCE,
@@ -6,14 +5,10 @@ import {
   continueTrace,
   getGlobalScope,
   getTraceMetaTags,
-  httpIntegration,
-  init,
-  postgresIntegration,
   setHttpStatus,
   startSpan,
   withScope,
-} from "@sentry/node";
-import consola, { LogLevels } from "consola";
+} from "@sentry/core";
 import type { Env } from "hono";
 import { createMiddleware } from "hono/factory";
 
@@ -29,25 +24,6 @@ export interface SentryVariablesContext extends Env {
 //
 
 export function set_sentry() {
-  init({
-    enabled: config.NODE_ENV === "production",
-    attachStacktrace: true,
-    debug: consola.level > LogLevels.debug,
-    dsn: config.SENTRY_DNS,
-    environment: config.DEPLOY_ENV,
-    initialScope: {
-      tags: {
-        NODE_ENV: config.NODE_ENV,
-        HOST: config.HOST,
-        GIT_SHA: config.GIT_SHA,
-      },
-    },
-    integrations: [postgresIntegration(), httpIntegration()],
-    profilesSampleRate: 1,
-    release: config.VERSION,
-    tracesSampleRate: 1,
-  });
-
   return createMiddleware(async function sentry_middleware(c, next) {
     if (
       c.req.method.toUpperCase() === "OPTIONS" ||
