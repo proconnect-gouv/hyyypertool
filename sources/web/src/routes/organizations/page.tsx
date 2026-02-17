@@ -52,6 +52,7 @@ function Filter({ q }: { q?: string | string[] }) {
     <form
       {...hx_organizations_query_props}
       hx-trigger={[`keyup changed delay:500ms from:#${$search}`].join(", ")}
+      hx-vals={JSON.stringify({ page: 1 })}
     >
       <div class="fr-search-bar" role="search">
         <label class="fr-label" for={$search}>
