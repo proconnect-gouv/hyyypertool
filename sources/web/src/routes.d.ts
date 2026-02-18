@@ -253,23 +253,26 @@ declare const app: import("hono/hono-base").HonoBase<
                       } & {
                         form: {
                           add_member: "AS_INTERNAL" | "AS_EXTERNAL";
-                          verification_type:
+                          add_domain?: string | undefined;
+                          send_notification?: string | undefined;
+                          verification_type?:
                             | "domain"
+                            | "organization_dirigeant"
                             | "code_sent_to_official_contact_email"
                             | "imported_from_coop_mediation_numerique"
                             | "imported_from_inclusion_connect"
                             | "in_liste_dirigeants_rna"
                             | "in_liste_dirigeants_rne"
                             | "official_contact_email"
+                            | "ordre_professionnel_domain"
                             | "proof_received"
+                            | "verified_by_coop_mediation_numerique"
                             | "bypassed"
-                            | "organization_dirigeant"
+                            | "domain_not_verified_yet"
                             | "no_validation_means_available"
                             | "no_verification_means_for_entreprise_unipersonnelle"
                             | "no_verification_means_for_small_association"
-                            | "domain_not_verified_yet";
-                          add_domain?: string | undefined;
-                          send_notification?: string | undefined;
+                            | undefined;
                         };
                       };
                       output: {};
@@ -605,24 +608,6 @@ declare const app: import("hono/hono-base").HonoBase<
                 | (import("hono/types").MergeSchemaPath<
                     {
                       "/": {
-                        $post: {
-                          input: {
-                            form: {
-                              is_external: string;
-                            };
-                          } & {
-                            param: {
-                              id: string;
-                              user_id: string;
-                            };
-                          };
-                          output: "OK";
-                          outputFormat: "text";
-                          status: 200;
-                        };
-                      };
-                    } & {
-                      "/": {
                         $patch: {
                           input: {
                             param: {
@@ -631,21 +616,24 @@ declare const app: import("hono/hono-base").HonoBase<
                             };
                           } & {
                             form: {
-                              verification_type:
+                              verification_type?:
                                 | "domain"
+                                | "organization_dirigeant"
                                 | "code_sent_to_official_contact_email"
                                 | "imported_from_coop_mediation_numerique"
                                 | "imported_from_inclusion_connect"
                                 | "in_liste_dirigeants_rna"
                                 | "in_liste_dirigeants_rne"
                                 | "official_contact_email"
+                                | "ordre_professionnel_domain"
                                 | "proof_received"
+                                | "verified_by_coop_mediation_numerique"
                                 | "bypassed"
-                                | "organization_dirigeant"
+                                | "domain_not_verified_yet"
                                 | "no_validation_means_available"
                                 | "no_verification_means_for_entreprise_unipersonnelle"
                                 | "no_verification_means_for_small_association"
-                                | "domain_not_verified_yet";
+                                | undefined;
                               is_external?: string | undefined;
                             };
                           };
@@ -754,8 +742,8 @@ declare const app: import("hono/hono-base").HonoBase<
                         query: {
                           type:
                             | "external"
-                            | "null"
                             | "verified"
+                            | "null"
                             | "official_contact"
                             | "trackdechets_postal_mail"
                             | "blacklisted"
