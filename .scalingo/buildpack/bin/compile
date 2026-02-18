@@ -76,8 +76,10 @@ fi
 
 #
 
-header "Installing node binary"
-curl -fsSL https://raw.githubusercontent.com/tj/n/master/bin/n | bash -s lts
+NODE_VERSION=$(python3 -c "import json; print(json.load(open('$BUILD_DIR/package.json'))['engines']['node'])")
+
+header "Installing node ${NODE_VERSION} binary"
+curl -fsSL https://raw.githubusercontent.com/tj/n/master/bin/n | bash -s "${NODE_VERSION}"
 
 #
 

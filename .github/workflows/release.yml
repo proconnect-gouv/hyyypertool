@@ -25,6 +25,9 @@ jobs:
         run: |
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+      - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 #v6.2.0
+        with:
+          node-version-file: package.json
       - uses: oven-sh/setup-bun@3d267786b128fe76c2f16a390aa2448b815359f3 # v2
       - run: bun install --frozen-lockfile
       - run: bun --bun run release-it --ci
