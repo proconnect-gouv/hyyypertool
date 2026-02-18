@@ -61,7 +61,7 @@
     "dotenv": "17.2.4",
     "htmx-ext-include-vals": "2.0.2",
     "htmx-ext-sse": "2.2.4",
-    "htmx.ext...chunked-transfer": "2.3.0",
+    "htmx.ext...chunked-transfer": "2.4.0",
     "htmx.org": "2.0.8",
     "hyperscript.org": "0.9.14",
     "nprogress": "0.2.0",
