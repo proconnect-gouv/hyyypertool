@@ -1,6 +1,6 @@
 //
 
-import { EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES } from "#src/types";
+import { EmailDomainVerificationTypes } from "#src/types";
 import { eq } from "drizzle-orm";
 import { schema, type IdentiteProconnectPgDatabase } from "..";
 
@@ -23,7 +23,7 @@ export async function create_unicorn_organization(
   await pg.insert(schema.email_domains).values({
     domain: "unicorn.xyz",
     organization_id,
-    verification_type: EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES.enum.verified,
+    verification_type: EmailDomainVerificationTypes.enum.verified,
   });
 
   return organization_id;

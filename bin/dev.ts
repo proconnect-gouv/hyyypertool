@@ -117,4 +117,4 @@ setTimeout(loadReloadNotifier, 2000);
 
 await $.cwd(
   "..",
-)`tsx watch --clear-screen=false --import ./bin/src/node/instrument.ts --tsconfig tsconfig.json bin/src/node/index.ts`;
+)`tsx watch --clear-screen=false --tsconfig tsconfig.json --import ./bin/src/node/instrument.ts bin/src/node/index.ts`;

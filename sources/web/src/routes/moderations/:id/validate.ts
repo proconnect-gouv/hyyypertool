@@ -23,7 +23,8 @@ import {
   OrganizationRepository,
 } from "@~/identite-proconnect/sdk";
 import {
-  EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES,
+  EmailDomainApprovedVerificationTypes,
+  EmailDomainVerificationTypes,
   LinkTypes,
   type EmailDomain,
 } from "@~/identite-proconnect/types";
@@ -182,8 +183,9 @@ function deduce_verification_type_from_organization_domains(
   return email_domains.some(
     ({ domain, verification_type }) =>
       domain === user_domain &&
-      EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES.safeParse(verification_type)
-        .success,
+      EmailDomainVerificationTypes.extract(
+        EmailDomainApprovedVerificationTypes,
+      ).safeParse(verification_type).success,
   )
     ? LinkTypes.enum.domain
     : LinkTypes.enum.no_validation_means_available;

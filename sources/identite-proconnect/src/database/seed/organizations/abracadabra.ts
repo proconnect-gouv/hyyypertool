@@ -35,7 +35,8 @@ export async function insert_abracadabra(db: IdentiteProconnectPgDatabase) {
     {
       domain: "yopmail.com",
       organization_id: organization.id,
-      verification_type: null satisfies EmailDomainVerificationType,
+      verification_type:
+        "not_verified_yet" satisfies EmailDomainVerificationType,
     },
     // {
     //   domain: "mailslurp.com",

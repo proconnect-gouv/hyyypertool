@@ -17,7 +17,9 @@ type Methods =
 type InputEndpoint = { form?: {}; query?: {}; param?: {} };
 
 type RelaxParams<T> = T extends { param: infer P }
-  ? { param: { [K in keyof P]: P[K] extends string ? string | number : P[K] } }
+  ? Omit<T, "param"> & {
+      param: { [K in keyof P]: P[K] extends string ? string | number : P[K] };
+    }
   : T;
 
 type HtmxSpecifiedAttributes<
