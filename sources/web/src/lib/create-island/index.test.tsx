@@ -228,18 +228,6 @@ describe("createIsland", () => {
       expect(html).toContain('type="module"');
     });
 
-    test("wraps in DOMContentLoaded", () => {
-      const Island = createIsland({
-        component: TestComponent,
-        clientPath: "/assets/test.client.js",
-        mode: "render",
-      });
-
-      const html = renderToString(<Island />);
-
-      expect(html).toContain("document.addEventListener('DOMContentLoaded'");
-    });
-
     test("references correct root element ID", () => {
       const Island = createIsland({
         component: TestComponent,

@@ -66,18 +66,22 @@ test("render about section", async () => {
             <script defer="" nonce="" type="module">
               import { render, h } from "preact";
               import { CopyButtonClient } from "/src/ui/button/components/copy.client.js";
-              document.addEventListener("DOMContentLoaded", () => {
-                const props = {
-                  children: "",
-                  className:
-                    "fr-btn bg-transparent text-black hover:bg-(--background-default-grey-hover)! fr-btn--sm fr-btn--tertiary ml-2",
-                  text: "cached_libelle",
-                };
+              const props = {
+                children: "",
+                className:
+                  "fr-btn bg-transparent text-black hover:bg-(--background-default-grey-hover)! fr-btn--sm fr-btn--tertiary ml-2",
+                text: "cached_libelle",
+              };
+              const __mount = () =>
                 render(
                   h(CopyButtonClient, props),
                   document.getElementById("test-uuid-1"),
                 );
-              });
+              if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", __mount);
+              } else {
+                __mount();
+              }
             </script></x-copy-button-island
           >
         </dd>
@@ -95,18 +99,22 @@ test("render about section", async () => {
             <script defer="" nonce="" type="module">
               import { render, h } from "preact";
               import { CopyButtonClient } from "/src/ui/button/components/copy.client.js";
-              document.addEventListener("DOMContentLoaded", () => {
-                const props = {
-                  children: "",
-                  className:
-                    "fr-btn bg-transparent text-black hover:bg-(--background-default-grey-hover)! fr-btn--sm fr-btn--tertiary ml-2",
-                  text: "siret",
-                };
+              const props = {
+                children: "",
+                className:
+                  "fr-btn bg-transparent text-black hover:bg-(--background-default-grey-hover)! fr-btn--sm fr-btn--tertiary ml-2",
+                text: "siret",
+              };
+              const __mount = () =>
                 render(
                   h(CopyButtonClient, props),
                   document.getElementById("test-uuid-2"),
                 );
-              });
+              if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", __mount);
+              } else {
+                __mount();
+              }
             </script></x-copy-button-island
           >
         </dd>
