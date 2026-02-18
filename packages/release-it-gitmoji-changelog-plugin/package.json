@@ -16,7 +16,7 @@
   "devDependencies": {
     "@~/config.typescript": "workspace:*",
     "@~/release-it-plugin-types": "workspace:*",
-    "@types/bun": "1.3.8",
+    "@types/bun": "1.3.9",
     "release-it": "19.2.4"
   }
 }
