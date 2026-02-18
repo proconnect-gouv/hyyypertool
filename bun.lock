@@ -154,7 +154,7 @@
       "dependencies": {
         "@proconnect-gouv/proconnect.api_entreprise": "1.1.0",
         "@proconnect-gouv/proconnect.core": "1.0.0",
-        "@proconnect-gouv/proconnect.identite": "1.6.2",
+        "@proconnect-gouv/proconnect.identite": "1.7.0",
         "@proconnect-gouv/proconnect.identite.database": "1.2.0",
         "@proconnect-gouv/proconnect.insee": "1.0.1",
         "@~/core": "workspace:*",
@@ -555,7 +555,7 @@
 
     "@proconnect-gouv/proconnect.crisp": ["@proconnect-gouv/proconnect.crisp@1.0.1", "", {}, "sha512-I9TwlyLeBhhNstfmO4brBG1w74JUX5JE/4OTV+UGVF9ThUyPseYLI6UBQH5eK4UfTR0tt57G4tcsDnQ6QZIr7g=="],
 
-    "@proconnect-gouv/proconnect.identite": ["@proconnect-gouv/proconnect.identite@1.6.2", "", { "dependencies": { "leven": "^4.0.0", "openid-client": "^6.6.4", "sql-template-tag": "^5.2.1", "ts-pattern": "^5.7.0", "zod": "^4.3.5" } }, "sha512-VXANEZhCHuqfiMfx70Yht2rup+g0lFMFQkZXrm1gUrDrM5xQTbnjfV8qBF8r4GMn036+X1Lsiqo1fEiKooScAQ=="],
+    "@proconnect-gouv/proconnect.identite": ["@proconnect-gouv/proconnect.identite@1.7.0", "", { "dependencies": { "leven": "^4.0.0", "openid-client": "^6.6.4", "sql-template-tag": "^5.2.1", "ts-pattern": "^5.7.0", "zod": "^4.3.5" } }, "sha512-HyHduhKe7KiKAXE12IV8kQD1D+Ga7eJ/4K4wxR2zURbAAcWBg4oRAYwnuO5jv9s3IgDc87UlDiO4qC7FRwffDQ=="],
 
     "@proconnect-gouv/proconnect.identite.database": ["@proconnect-gouv/proconnect.identite.database@1.2.0", "", { "peerDependencies": { "drizzle-orm": ">=0.44" }, "optionalPeers": ["drizzle-orm"] }, "sha512-srl6ANamLXI+HRfta6mUV2q28lbm1+26jkkRB2w8OT47H5PUOU6AM/B3ef20TV0SPgDLdwx5/NwwRN/sMy2qCw=="],
 
