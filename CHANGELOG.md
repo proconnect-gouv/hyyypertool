@@ -1,5 +1,24 @@
 # Changelog
 
+## [2026.2.7](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.6...2026.2.7) (2026-02-18)
+
+### Changements
+
+- Activation complète de Sentry : tracing, profiling serveur et SDK navigateur pour les Web Vitals, le suivi des assets et le temps de chargement des pages
+- Correction de la pagination lors d'une recherche : la page est désormais réinitialisée à 1 sur les listes domaines, organisations et utilisateurs
+
+### Corrigé
+
+- 🐛 Reset page to 1 on search across paginated lists (#1408) (8033787b)
+
+### Supprimé
+
+- 🔥 Remove unnecessary trustedDependencies for @sentry/profiling-node (#1407) (f689b697)
+
+### Divers
+
+- 📈 [sentry] Early init via --import, add profiling + browser SDK (#1406) (b6411517)
+
 ## [2026.2.6](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.5...2026.2.6) (2026-02-17)
 
 ### Changements
