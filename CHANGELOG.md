@@ -1,5 +1,28 @@
 # Changelog
 
+## [2026.2.8](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.7...2026.2.8) (2026-02-19)
+
+### Changements
+
+- ⬆ Mise à jour de dépendances
+
+- Hyyyyyyypertool utilise @proconnect-gouv/proconnect.identite@1.7.0
+- Hyyyyyyypertool utilise @proconnect-gouv/proconnect.identite.database@1.3.0
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): Bump @proconnect-gouv/proconnect.identite.database from 1.2.0 to 1.3.0 (#1416) (8e74b563)
+- :arrow_upper_right: [patch](deps): Bump htmx.ext...chunked-transfer (#1411) (ae639a08)
+- :arrow_upper_right: [patch](deps-dev): Bump @happy-dom/global-registrator (#1412) (68184ee5)
+- :arrow_upper_right: [patch](deps): Bump cypress-io/github-action (#1415) (f4194695)
+- :arrow_upper_right: [patch](deps): Bump @proconnect-gouv/proconnect.identite from 1.6.2 to 1.7.0 (#1414) (eb01f0cc)
+- :arrow_upper_right: [patch](deps): Bump @types/bun from 1.3.8 to 1.3.9 (#1413) (8010796c)
+- :arrow_upper_right: [patch](deps): Bump hono from 4.11.7 to 4.11.9 (#1402) (dfe9dfd1)
+
+### Divers
+
+- 👮 fix used node version to 24 (#1410) (d139cd61)
+
 ## [2026.2.7](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.6...2026.2.7) (2026-02-18)
 
 ### Changements
