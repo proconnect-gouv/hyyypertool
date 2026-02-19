@@ -15,10 +15,10 @@ Fonctionnalité: Gérer un domaine interne lors de la modération
 
   Scénario: Domaine interne
     Alors je dois voir un tableau nommé "🌐 1 domaine connu dans l’organisation" et contenant
-      | Domain      | Status |
-      | yopmail.com | ❓      |
+      | Domain      | Status | Type             |
+      | yopmail.com | ❓      | not_verified_yet |
 
-    Quand je vais à l'intérieur de la rangée nommée "Domaine yopmail.com (null)"
+    Quand je vais à l'intérieur de la rangée nommée "Domaine yopmail.com (not_verified_yet)"
     Quand je clique sur "Menu"
     Et je clique sur "✅ Domaine autorisé"
     Et je réinitialise le contexte

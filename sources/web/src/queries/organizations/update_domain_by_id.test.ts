@@ -6,7 +6,7 @@ import {
   migrate,
   pg,
 } from "@~/identite-proconnect/database/testing";
-import { EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES } from "@~/identite-proconnect/types";
+import { EmailDomainVerificationTypes } from "@~/identite-proconnect/types";
 import { beforeAll, expect, setSystemTime, test } from "bun:test";
 import { update_domain_by_id } from "./update_domain_by_id";
 //
@@ -40,7 +40,7 @@ test("should update nothing", async () => {
     id: expect.any(Number),
     organization_id: unicorn_organization_id,
     domain: "unicorn.xyz",
-    verification_type: EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES.enum.verified,
+    verification_type: EmailDomainVerificationTypes.enum.verified,
     can_be_suggested: true,
     verified_at: null,
     created_at: "2222-01-01 00:00:00+00",

@@ -7,9 +7,12 @@ import { menu_item } from "#src/ui/menu";
 import { Horizontal_Menu } from "#src/ui/menu/components";
 import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
-import type { EmailDomainVerificationType } from "@~/identite-proconnect/types";
+import {
+  EmailDomainVerificationTypes,
+  type EmailDomainVerificationType,
+} from "@~/identite-proconnect/types";
 import { match } from "ts-pattern";
-import { add_params } from "./context";
+import { add_params, type PatchQuery } from "./context";
 import type { get_organization_domains } from "./get_organization_domains.query";
 //
 
@@ -182,10 +185,10 @@ async function Row_Actions({
 }) {
   const { domain, id, organization, organization_id } = organization_domain;
 
-  const hx_change_type_props = (type: EmailDomainVerificationType) =>
+  const hx_change_type_props = (type: PatchQuery["type"]) =>
     urls.organizations[":id"].domains[":domain_id"].$hx_patch({
       param: { id: organization_id, domain_id: id },
-      query: { type: type ?? "null" },
+      query: { type },
     });
 
   const hx_delete_domain_props = urls.organizations[":id"].domains[
@@ -199,7 +202,9 @@ async function Row_Actions({
       <ul class="list-none p-0">
         <li>
           <button
-            {...await hx_change_type_props("verified")}
+            {...await hx_change_type_props(
+              EmailDomainVerificationTypes.enum.verified,
+            )}
             class={menu_item()}
             hx-swap="none"
             role="menuitem"
@@ -209,7 +214,9 @@ async function Row_Actions({
         </li>
         <li>
           <button
-            {...await hx_change_type_props("external")}
+            {...await hx_change_type_props(
+              EmailDomainVerificationTypes.enum.external,
+            )}
             class={menu_item()}
             hx-swap="none"
             role="menuitem"
@@ -219,7 +226,9 @@ async function Row_Actions({
         </li>
         <li>
           <button
-            {...await hx_change_type_props("refused")}
+            {...await hx_change_type_props(
+              EmailDomainVerificationTypes.enum.refused,
+            )}
             class={menu_item()}
             hx-swap="none"
             role="menuitem"

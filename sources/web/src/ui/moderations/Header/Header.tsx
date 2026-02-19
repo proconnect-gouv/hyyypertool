@@ -44,8 +44,8 @@ export async function Header() {
       id: moderation.id,
     },
     query: {
-      organization_id: moderation.organization.id,
-      user_id: moderation.user.id,
+      organization_id: String(moderation.organization.id),
+      user_id: String(moderation.user.id),
     },
   });
 

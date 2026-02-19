@@ -1,7 +1,4 @@
-import {
-  EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES,
-  EMAIL_DOMAIN_REJECTED_VERIFICATION_TYPES,
-} from "#src/types";
+import { EmailDomainVerificationTypes } from "#src/types";
 import type { IdentiteProconnectPgDatabase } from "../..";
 import { schema } from "../..";
 
@@ -34,17 +31,17 @@ export async function insert_dinum(db: IdentiteProconnectPgDatabase) {
   await db.insert(schema.email_domains).values({
     domain: "beta.gouv.fr",
     organization_id: organization.id,
-    verification_type: EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES.enum.verified,
+    verification_type: EmailDomainVerificationTypes.enum.verified,
   });
   await db.insert(schema.email_domains).values({
     domain: "modernisation.gouv.fr",
     organization_id: organization.id,
-    verification_type: EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES.enum.verified,
+    verification_type: EmailDomainVerificationTypes.enum.verified,
   });
   await db.insert(schema.email_domains).values({
     domain: "prestataire.modernisation.gouv.fr",
     organization_id: organization.id,
-    verification_type: EMAIL_DOMAIN_REJECTED_VERIFICATION_TYPES.enum.external,
+    verification_type: EmailDomainVerificationTypes.enum.external,
   });
   return organization;
 }

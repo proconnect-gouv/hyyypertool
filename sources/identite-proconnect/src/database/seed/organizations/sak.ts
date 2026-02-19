@@ -37,7 +37,8 @@ export async function insert_sak(db: IdentiteProconnectPgDatabase) {
     {
       organization_id: organization.id,
       domain: "ternoiscom.fr",
-      verification_type: null satisfies EmailDomainVerificationType,
+      verification_type:
+        "not_verified_yet" satisfies EmailDomainVerificationType,
       can_be_suggested: true,
       verified_at: null,
       created_at: "1970-01-01T00:00:00+02:00",

@@ -13,7 +13,7 @@ import {
   migrate,
   pg,
 } from "@~/identite-proconnect/database/testing";
-import { EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES } from "@~/identite-proconnect/types";
+import { EmailDomainVerificationTypes } from "@~/identite-proconnect/types";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
 import { get_unverified_domains } from "./get_unverified_domains.query";
 
@@ -31,6 +31,7 @@ test("returns bi.corn then troll.corn organizations", async () => {
   await pg.insert(schema.email_domains).values({
     domain: "troll.corn",
     organization_id: troll_organization_id,
+    verification_type: EmailDomainVerificationTypes.enum.not_verified_yet,
   });
 
   const unicorn_organization_id = await create_unicorn_organization(pg);
@@ -50,6 +51,7 @@ test("returns bi.corn then troll.corn organizations", async () => {
   await pg.insert(schema.email_domains).values({
     domain: "bi.corn",
     organization_id: unicorn_organization_id,
+    verification_type: EmailDomainVerificationTypes.enum.not_verified_yet,
   });
 
   const result = await get_unverified_domains(pg, {});
@@ -87,12 +89,14 @@ test("search for bi.corn organization", async () => {
   await pg.insert(schema.email_domains).values({
     domain: "troll.corn",
     organization_id: troll_organization_id,
+    verification_type: EmailDomainVerificationTypes.enum.not_verified_yet,
   });
 
   const unicorn_organization_id = await create_unicorn_organization(pg);
   await pg.insert(schema.email_domains).values({
     domain: "bi.corn",
     organization_id: unicorn_organization_id,
+    verification_type: EmailDomainVerificationTypes.enum.not_verified_yet,
   });
 
   const result = await get_unverified_domains(pg, {
@@ -122,12 +126,14 @@ test("search for 🦄 libelle organization", async () => {
   await pg.insert(schema.email_domains).values({
     domain: "troll.corn",
     organization_id: troll_organization_id,
+    verification_type: EmailDomainVerificationTypes.enum.not_verified_yet,
   });
 
   const unicorn_organization_id = await create_unicorn_organization(pg);
   await pg.insert(schema.email_domains).values({
     domain: "bi.corn",
     organization_id: unicorn_organization_id,
+    verification_type: EmailDomainVerificationTypes.enum.not_verified_yet,
   });
 
   const result = await get_unverified_domains(pg, {
@@ -157,12 +163,14 @@ test("search for 🦄 siret organization", async () => {
   await pg.insert(schema.email_domains).values({
     domain: "troll.corn",
     organization_id: troll_organization_id,
+    verification_type: EmailDomainVerificationTypes.enum.not_verified_yet,
   });
 
   const unicorn_organization_id = await create_unicorn_organization(pg);
   await pg.insert(schema.email_domains).values({
     domain: "bi.corn",
     organization_id: unicorn_organization_id,
+    verification_type: EmailDomainVerificationTypes.enum.not_verified_yet,
   });
 
   const result = await get_unverified_domains(pg, {
@@ -212,6 +220,7 @@ test.each(
       await pg.insert(schema.email_domains).values({
         domain: categorie_juridique,
         organization_id,
+        verification_type: EmailDomainVerificationTypes.enum.not_verified_yet,
       });
     }
 
@@ -227,7 +236,7 @@ test("returns no organizations verified by Trackdechets", async () => {
     domain: "troll.corn",
     organization_id: troll_organization_id,
     verification_type:
-      EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES.enum.trackdechets_postal_mail,
+      EmailDomainVerificationTypes.enum.trackdechets_postal_mail,
   });
   const result = await get_unverified_domains(pg, {});
   expect(result).toEqual({ count: 0, domains: [] });
@@ -244,6 +253,7 @@ test("returns no free domain organizations", async () => {
   await pg.insert(schema.email_domains).values({
     domain: "gmail.com",
     organization_id: unicorn_organization_id,
+    verification_type: EmailDomainVerificationTypes.enum.not_verified_yet,
   });
 
   const result = await get_unverified_domains(pg, {});

@@ -740,14 +740,7 @@ declare const app: import("hono/hono-base").HonoBase<
                         };
                       } & {
                         query: {
-                          type:
-                            | "external"
-                            | "verified"
-                            | "null"
-                            | "official_contact"
-                            | "trackdechets_postal_mail"
-                            | "blacklisted"
-                            | "refused";
+                          type: "external" | "verified" | "refused";
                         };
                       };
                       output: "OK";

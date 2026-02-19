@@ -199,3 +199,48 @@ test("params accept numbers and convert them to strings", () => {
     "hx-get": "/42",
   });
 });
+
+test("query enum values are type-safe (no param)", () => {
+  const app = new Hono().patch(
+    "/",
+    validator("query", (value) => ({
+      type: value["type"] as "apple" | "pear",
+    })),
+    ({ text }) => text("OK"),
+  );
+
+  // valid value is accepted
+  const attribute = create_urls<typeof app>().index.$hx_patch({
+    query: { type: "apple" },
+  });
+  expect(attribute).toEqual({ "hx-patch": "/?type=apple" });
+
+  // @ts-expect-error - "bread" is not in "apple" | "pear"
+  create_urls<typeof app>().index.$hx_patch({ query: { type: "bread" } });
+
+  // @ts-expect-error - null is not in "apple" | "pear"
+  create_urls<typeof app>().index.$hx_patch({ query: { type: null } });
+});
+
+test("query enum values are type-safe when param is also present", () => {
+  const app = new Hono().patch(
+    "/:slug",
+    validator("query", (value) => ({
+      type: value["type"] as "apple" | "pear",
+    })),
+    ({ text }) => text("OK"),
+  );
+
+  // valid value is accepted
+  const attribute = create_urls<typeof app>()[":slug"].$hx_patch({
+    param: { slug: "foo" },
+    query: { type: "apple" },
+  });
+  expect(attribute).toEqual({ "hx-patch": "/foo?type=apple" });
+
+  create_urls<typeof app>()[":slug"].$hx_patch({
+    param: { slug: "foo" },
+    // @ts-expect-error - "bread" is not in "apple" | "pear"
+    query: { type: "bread" },
+  });
+});

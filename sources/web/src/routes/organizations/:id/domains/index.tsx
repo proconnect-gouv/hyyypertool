@@ -10,24 +10,18 @@ import type { App_Context } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
 import { DescribedBySchema, EntitySchema, IdSchema } from "@~/core/schema";
 import { schema } from "@~/identite-proconnect/database";
-import {
-  EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES,
-  EMAIL_DOMAIN_REJECTED_VERIFICATION_TYPES,
-} from "@~/identite-proconnect/types";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { z } from "zod";
+import { patch_query } from "./context";
 import { get_organization_domains } from "./get_organization_domains.query";
 import { AddDomain, Table } from "./Table";
 
 //
 
 const DomainParams_Schema = z.object({ domain_id: IdSchema });
-const EMAIL_DOMAIN_VERIFICATION_TYPES =
-  EMAIL_DOMAIN_APPROVED_VERIFICATION_TYPES.or(
-    EMAIL_DOMAIN_REJECTED_VERIFICATION_TYPES,
-  );
+
 //
 
 export default new Hono<App_Context>()
@@ -92,14 +86,7 @@ export default new Hono<App_Context>()
   .patch(
     "/:domain_id",
     zValidator("param", EntitySchema.merge(DomainParams_Schema)),
-    zValidator(
-      "query",
-      z.object({
-        type: EMAIL_DOMAIN_VERIFICATION_TYPES.or(
-          z.literal("null").transform(() => null),
-        ),
-      }),
-    ),
+    zValidator("query", patch_query),
     async function PATCH({ text, req, var: { identite_pg } }) {
       const { domain_id } = req.valid("param");
       const { type: verification_type } = req.valid("query");
