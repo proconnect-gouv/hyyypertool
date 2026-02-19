@@ -16,7 +16,7 @@
   },
   "scripts": {
     "introspect": "bun x drizzle introspect:pg",
-    "migration": "bun run bin/migration.ts",
+    "migrate": "bun run bin/migrate.ts",
     "seed": "bun run bin/seed.ts",
     "studio": "drizzle-kit studio"
   },

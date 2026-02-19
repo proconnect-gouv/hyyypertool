@@ -1,12 +1,13 @@
 //
 
 import {
-  Pool,
-  drizzle,
   schema,
   type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
+import { drizzle } from "drizzle-orm/node-postgres";
 import type { Env, MiddlewareHandler } from "hono";
+import type { Pool } from "pg";
+import pg from "pg";
 
 //
 
@@ -33,7 +34,7 @@ export function set_identite_pg_database({
 }: {
   connectionString: string;
 }): MiddlewareHandler<IdentiteProconnect_Pg_Context> {
-  const connection = new Pool({ connectionString: connectionString });
+  const connection = new pg.Pool({ connectionString: connectionString });
 
   return async function set_identite_pg_database_middleware({ set }, next) {
     const identite_pg = drizzle(connection, {

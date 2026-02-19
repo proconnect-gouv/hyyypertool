@@ -22,6 +22,11 @@
     "start:node": "tsx src/node/index.ts"
   },
   "dependencies": {
+    "@~/core": "workspace:*",
+    "@~/hyyyperbase": "workspace:*",
+    "@~/identite-proconnect": "workspace:*",
+    "@~/moderations": "workspace:*",
+    "@~/organizations": "workspace:*",
     "@hono/node-server": "1.19.9",
     "@hono/sentry": "1.2.2",
     "@hono/zod-validator": "0.7.6",
@@ -31,12 +36,9 @@
     "@sentry/core": "10.38.0",
     "@sentry/node": "10.38.0",
     "@tailwindcss/typography": "^0.5.19",
-    "@~/core": "workspace:*",
-    "@~/identite-proconnect": "workspace:*",
-    "@~/moderations": "workspace:*",
-    "@~/organizations": "workspace:*",
     "await-to-js": "3.0.0",
     "consola": "3.4.2",
+    "drizzle-orm": "0.45.1",
     "hono": "4.11.9",
     "hono-sessions": "0.8.1",
     "hono-slotify": "workspace:*",
@@ -44,6 +46,7 @@
     "lodash.sortby": "4.7.0",
     "nprogress": "0.2.0",
     "openid-client": "6.8.2",
+    "pg": "8.18.0",
     "preact": "10.28.3",
     "preact-render-to-string": "6.6.5",
     "rehype-sanitize": "6.0.0",
@@ -61,10 +64,11 @@
     "youch": "3.3.4"
   },
   "devDependencies": {
+    "@~/config.typescript": "workspace:*",
     "@happy-dom/global-registrator": "20.6.1",
     "@types/lodash.sortby": "4.7.9",
     "@types/nprogress": "0.2.3",
-    "@~/config.typescript": "workspace:*",
+    "@types/pg": "8.16.0",
     "prettier": "3.8.1"
   }
 }

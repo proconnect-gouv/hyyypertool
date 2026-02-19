@@ -3,24 +3,15 @@
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
     "outDir": "./node_modules/.cache/tsc",
-    "paths": {
-      "#src/*": ["./src/*/index.ts"]
-    }
+    "paths": { "#src/*": ["./src/*/index.ts"] }
   },
   "extends": "@~/config.typescript/base/tsconfig.json",
   "include": ["src"],
   "references": [
-    {
-      "path": "../core"
-    },
-    {
-      "path": "../identite-proconnect"
-    },
-    {
-      "path": "../organizations"
-    },
-    {
-      "path": "../../packages/hono-slotify"
-    }
+    { "path": "../../packages/hono-slotify" },
+    { "path": "../core" },
+    { "path": "../hyyyperbase" },
+    { "path": "../identite-proconnect" },
+    { "path": "../organizations" }
   ]
 }
