@@ -38,7 +38,7 @@
     "await-to-js": "3.0.0",
     "consola": "3.4.2",
     "hono": "4.11.9",
-    "hono-sessions": "0.8.0",
+    "hono-sessions": "0.8.1",
     "hono-slotify": "workspace:*",
     "is-disposable-email-domain": "1.0.7",
     "lodash.sortby": "4.7.0",
