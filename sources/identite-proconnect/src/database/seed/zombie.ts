@@ -1,5 +1,6 @@
 //
 
+import { EmailDomainVerificationTypes } from "#src/types";
 import { schema, type IdentiteProconnectPgDatabase } from "..";
 
 //
@@ -19,7 +20,7 @@ export async function create_zombie_organization(
   await pg.insert(schema.email_domains).values({
     domain: "zombie.corn",
     organization_id,
-    verification_type: null,
+    verification_type: EmailDomainVerificationTypes.enum.not_verified_yet,
   });
 
   return organization_id;

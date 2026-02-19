@@ -7,6 +7,7 @@ import {
   migrate,
   pg,
 } from "@~/identite-proconnect/database/testing";
+import { EmailDomainVerificationTypes } from "@~/identite-proconnect/types";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
 import { RemoveDomainEmailById } from "./RemoveDomainEmailById";
 
@@ -26,6 +27,7 @@ test("returns no membership", async () => {
     .values({
       domain: "unicorn.xyz",
       organization_id,
+      verification_type: EmailDomainVerificationTypes.enum.not_verified_yet,
     })
     .returning({ domain_id: schema.email_domains.id });
 
