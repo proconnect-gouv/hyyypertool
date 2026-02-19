@@ -259,6 +259,7 @@ declare const app: import("hono/hono-base").HonoBase<
                             | "domain"
                             | "organization_dirigeant"
                             | "code_sent_to_official_contact_email"
+                            | "domain_not_verified_yet"
                             | "imported_from_coop_mediation_numerique"
                             | "imported_from_inclusion_connect"
                             | "in_liste_dirigeants_rna"
@@ -620,6 +621,7 @@ declare const app: import("hono/hono-base").HonoBase<
                                 | "domain"
                                 | "organization_dirigeant"
                                 | "code_sent_to_official_contact_email"
+                                | "domain_not_verified_yet"
                                 | "imported_from_coop_mediation_numerique"
                                 | "imported_from_inclusion_connect"
                                 | "in_liste_dirigeants_rna"
@@ -821,6 +823,32 @@ declare const app: import("hono/hono-base").HonoBase<
         };
       },
       "/domains-deliverability"
+    >
+  | import("hono/types").MergeSchemaPath<
+      {
+        "/": {
+          $get: {
+            input: {};
+            output: {};
+            outputFormat: string;
+            status: import("hono/utils/http-status").StatusCode;
+          };
+        };
+      } & {
+        "/:id": {
+          $get: {
+            input: {
+              param: {
+                id: string;
+              };
+            };
+            output: {};
+            outputFormat: string;
+            status: import("hono/utils/http-status").StatusCode;
+          };
+        };
+      },
+      "/response-templates"
     >,
   "/",
   "*"
