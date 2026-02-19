@@ -151,9 +151,12 @@ function generateIslandScript<P>(
   return `
 import { ${preactMethod}, h } from "preact";
 import { ${exportName} } from "${clientPath}";
-document.addEventListener('DOMContentLoaded', () => {
-  const props = ${serializedProps};
-  ${preactMethod}(h(${exportName}, props), document.getElementById("${rootId}"));
-});
+const props = ${serializedProps};
+const __mount = () => ${preactMethod}(h(${exportName}, props), document.getElementById("${rootId}"));
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", __mount);
+} else {
+  __mount();
+}
 `.trim();
 }
