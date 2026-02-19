@@ -11,6 +11,7 @@ import {
   migrate,
   pg,
 } from "@~/identite-proconnect/database/testing";
+import { EmailDomainVerificationTypes } from "@~/identite-proconnect/types";
 import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
 import { Hono } from "hono";
 import app from "./index";
@@ -29,7 +30,7 @@ test("GET /organizations/:id/domains returns domains for organization", async ()
   await pg.insert(schema.email_domains).values({
     domain: "rainbow.xyz",
     organization_id,
-    verification_type: null,
+    verification_type: EmailDomainVerificationTypes.enum.not_verified_yet,
   });
 
   const response = await new Hono()
@@ -124,7 +125,7 @@ test("DELETE /organizations/:id/domains/:domain_id removes domain", async () => 
     .values({
       domain: "tobedeleted.xyz",
       organization_id,
-      verification_type: null,
+      verification_type: EmailDomainVerificationTypes.enum.not_verified_yet,
     })
     .returning({ id: schema.email_domains.id });
 
@@ -170,7 +171,7 @@ test("PATCH /organizations/:id/domains/:domain_id updates verification type to v
     .values({
       domain: "toverify.xyz",
       organization_id,
-      verification_type: null,
+      verification_type: EmailDomainVerificationTypes.enum.not_verified_yet,
     })
     .returning({ id: schema.email_domains.id });
 
