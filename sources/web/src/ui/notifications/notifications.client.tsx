@@ -36,6 +36,7 @@ import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 type NotificationVariant = "danger" | "info" | "success" | "warning";
 
 interface Notification {
+  detail?: string;
   id: string;
   message?: string;
   title?: string;
@@ -43,6 +44,7 @@ interface Notification {
 }
 
 interface NotificationDetail {
+  detail?: string;
   message?: string;
   title?: string;
   variant?: NotificationVariant;
@@ -62,12 +64,13 @@ const notifications = signal<Notification[]>([]);
  * Add a notification programmatically
  */
 export function notify({
+  detail,
   message,
   title,
   variant = "info",
 }: NotificationDetail): string {
   const id = `notification-${++notificationCounter}`;
-  const notification: Notification = { id, message, title, variant };
+  const notification: Notification = { detail, id, message, title, variant };
 
   // Keep only the most recent notifications
   if (notifications.value.length >= MAX_NOTIFICATIONS) {
@@ -170,6 +173,14 @@ function NotificationItem({ notification }: NotificationItemProps) {
               <span class="fr-notice__desc">{notification.message}</span>
             )}
           </p>
+          {notification.detail && (
+            <details class="mt-2 text-sm opacity-80">
+              <summary class="cursor-pointer">Détails</summary>
+              <pre class="mt-1 max-h-40 overflow-auto whitespace-pre-wrap text-xs">
+                {notification.detail}
+              </pre>
+            </details>
+          )}
           <button
             class="fr-btn--close fr-btn"
             onClick={close}

@@ -10,4 +10,5 @@ export const validate_form_schema = z.object({
   add_member: z.enum(["AS_INTERNAL", "AS_EXTERNAL"]),
   send_notification: z.stringbool().default(false),
   verification_type: VerificationTypeSchema.optional(),
+  foo: z.string(),
 });
