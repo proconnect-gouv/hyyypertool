@@ -65,6 +65,7 @@
     "@types/lodash.sortby": "4.7.9",
     "@types/nprogress": "0.2.3",
     "@~/config.typescript": "workspace:*",
+    "fast-check": "4.5.3",
     "prettier": "3.8.1"
   }
 }
