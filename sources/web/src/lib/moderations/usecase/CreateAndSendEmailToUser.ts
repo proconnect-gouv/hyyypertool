@@ -6,7 +6,7 @@ import { z_username } from "@~/core/schema";
 import type { IdentiteProconnectDatabaseCradle } from "@~/identite-proconnect/database";
 import type {
   RejectedFullMessage,
-  RejectedModeration_Context,
+  RejectedModerationContext,
 } from "../context/rejected";
 import type { RespondToTicketHandler } from "./RespondToTicket";
 
@@ -21,7 +21,7 @@ export function CreateAndSendEmailToUser({
   update_moderation_by_id: UpdateModerationByIdHandler;
 }) {
   return async function create_and_send_email_to_user(
-    context: RejectedModeration_Context,
+    context: RejectedModerationContext,
     { message, reason, subject, to }: RejectedFullMessage,
   ) {
     const { crisp, moderation } = context;

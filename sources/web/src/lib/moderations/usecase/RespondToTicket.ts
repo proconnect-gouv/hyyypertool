@@ -15,14 +15,14 @@ import { to as await_to } from "await-to-js";
 import { match } from "ts-pattern";
 import type {
   RejectedFullMessage,
-  RejectedModeration_Context,
+  RejectedModerationContext,
 } from "../context/rejected";
 
 //
 
 export function RespondToTicket() {
   return async function respond_to_ticket(
-    context: RejectedModeration_Context,
+    context: RejectedModerationContext,
     full_message: RejectedFullMessage,
   ) {
     return match(context.moderation.ticket_id)
@@ -46,7 +46,7 @@ export function RespondToTicket() {
 export type RespondToTicketHandler = ReturnType<typeof RespondToTicket>;
 
 async function respond_in_conversation(
-  { crisp, moderation, userinfo, resolve_delay }: RejectedModeration_Context,
+  { crisp, moderation, userinfo, resolve_delay }: RejectedModerationContext,
   { message }: { message: string },
 ) {
   if (!moderation.ticket_id) throw new NotFoundError("Ticket not found.");
@@ -75,7 +75,7 @@ async function respond_in_conversation(
 }
 
 async function respond_to_zammad_ticket(
-  { moderation, userinfo }: RejectedModeration_Context,
+  { moderation, userinfo }: RejectedModerationContext,
   { message, subject, to }: { message: string; subject: string; to: string },
 ) {
   if (!moderation.ticket_id) throw new NotFoundError("Ticket not found.");

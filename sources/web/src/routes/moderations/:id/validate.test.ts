@@ -20,7 +20,14 @@ import {
   pg,
 } from "@~/identite-proconnect/database/testing";
 import { VerificationTypeSchema } from "@~/identite-proconnect/types";
-import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
+import {
+  beforeAll,
+  beforeEach,
+  expect,
+  setSystemTime,
+  spyOn,
+  test,
+} from "bun:test";
 import { and, eq } from "drizzle-orm";
 import fc from "fast-check";
 import { Hono } from "hono";
@@ -37,19 +44,24 @@ type ValidateFormSchemaType = z.input<typeof validate_form_schema>;
 beforeAll(migrate);
 beforeEach(empty_database);
 
+const fetchSpy = spyOn(globalThis, "fetch").mockImplementation((() =>
+  Promise.resolve(Response.json({ ok: true }))) as unknown as typeof fetch);
+
 //
 
 const cases = fc.sample(
   fc.tuple(
     fc.constantFrom("true", "false"),
     fc.constantFrom("AS_INTERNAL", "AS_EXTERNAL"),
+    fc.constantFrom("true", "false"),
   ),
-  { numRuns: 4 },
+  { numRuns: 8 },
 );
 
 test.each(cases)(
-  "PATCH /moderations/:id/validate marks moderation as validated (add_domain=%s, add_member=%s)",
-  async (add_domain, add_member) => {
+  "PATCH /moderations/:id/validate marks moderation as validated (add_domain=%s, add_member=%s, send_notification=%s)",
+  async (add_domain, add_member, send_notification) => {
+    fetchSpy.mockClear();
     setSystemTime(new Date("2222-11-10T00:00:00.000Z"));
     await create_unicorn_organization(pg);
     await create_adora_pony_user(pg);
@@ -60,12 +72,19 @@ test.each(cases)(
     const body = new URLSearchParams({
       add_domain,
       add_member,
-      send_notification: "false",
+      send_notification,
     } as ValidateFormSchemaType);
 
     setSystemTime(new Date("2222-11-11T00:00:00.000Z"));
     const response = await new Hono()
-      .use(set_config({ ALLOWED_USERS: "admin@example.com" }))
+      .use(
+        set_config({
+          ALLOWED_USERS: "admin@example.com",
+          API_AUTH_URL: "http://crisp.localhost",
+          API_AUTH_USERNAME: "API_AUTH_USERNAME",
+          API_AUTH_PASSWORD: "API_AUTH_PASSWORD",
+        }),
+      )
       .use(set_identite_pg(pg))
       .use(set_identite_pg_client(client as any))
       .use(set_userinfo({ email: "admin@example.com" }))
@@ -112,6 +131,10 @@ test.each(cases)(
       verification_type: "domain",
       verified_at: "2222-11-11 00:00:00+00",
     });
+
+    if (send_notification === "true") {
+      expect(fetchSpy).toHaveBeenCalled();
+    }
   },
 );
 
