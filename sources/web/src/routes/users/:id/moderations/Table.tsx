@@ -29,7 +29,6 @@ export function Table({
             <th>Date de création</th>
             <th>Modéré le</th>
             <th>Commentaire</th>
-            <th>Lien</th>
           </tr>
         </thead>
 
@@ -52,12 +51,24 @@ export function Row({
   key?: string;
   moderation: ModerationList[number];
 }) {
+  const href = urls.moderations[":id"].$url({
+    param: { id: moderation.id },
+  }).pathname;
+
   return (
     <tr
-      aria-label={`Modération ${moderation_type_to_title(moderation.type).toLowerCase()} (ID ${moderation.id})`}
+      class="relative focus-within:outline focus-within:outline-2 focus-within:outline-blue-500 hover:bg-gray-100"
       key={key}
     >
-      <td>{moderation.id}</td>
+      <td>
+        <a
+          class="after:absolute after:inset-0 after:content-[''] focus:outline-none"
+          href={href}
+          aria-label={`Modération ${moderation_type_to_title(moderation.type).toLowerCase()} (ID ${moderation.id})`}
+        >
+          {moderation.id}
+        </a>
+      </td>
       <td>
         <span title={moderation.type}>
           {moderation_type_to_emoji(moderation.type)}
@@ -71,18 +82,6 @@ export function Row({
           : null}
       </td>
       <td>{moderation.comment}</td>
-      <td>
-        <a
-          class="p-3"
-          href={
-            urls.moderations[":id"].$url({
-              param: { id: moderation.id },
-            }).pathname
-          }
-        >
-          ➡️
-        </a>
-      </td>
     </tr>
   );
 }

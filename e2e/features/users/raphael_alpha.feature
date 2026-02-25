@@ -10,9 +10,7 @@ Fonctionnalité: Page utilisateur avec MFA
 
     Et je dois voir le titre de page "Liste des utilisateurs"
     Et je vois "Liste des utilisateurs"
-    Quand je vais à l'intérieur de la rangée nommée "Utilisateur Raphael Dubigny (rdubigny@alpha.gouv.fr)"
-    Et je clique sur "➡️"
-    Et je réinitialise le contexte
+    Quand je clique sur le lien nommé "Utilisateur Raphael Dubigny (rdubigny@alpha.gouv.fr)"
 
     Et je dois voir le titre de page "Utilisateur Raphael Dubigny (rdubigny@alpha.gouv.fr)"
 

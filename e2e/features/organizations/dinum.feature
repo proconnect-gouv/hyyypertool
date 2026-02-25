@@ -13,10 +13,8 @@ Fonctionnalité: Page organisation
     Alors je suis redirigé sur "/organizations"
     Et je dois voir le titre de page "Liste des organisations"
     Et je vois "Liste des organisations"
-    Quand je vais à l'intérieur de la rangée nommée "Organisation DINUM (13002526500013)"
-    Alors je vois "DINUM"
-    Et je clique sur "➡️"
-    Et je réinitialise le contexte
+    Alors je dois voir un lien nommé "Organisation DINUM (13002526500013)"
+    Quand je clique sur le lien nommé "Organisation DINUM (13002526500013)"
     Alors je vois "🏛 A propos de l'organisation"
     Et je vois "« DINUM »"
     Et je vois "Dénomination DINUM"

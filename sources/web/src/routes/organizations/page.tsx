@@ -94,7 +94,6 @@ async function Table({
             <th>Domaines</th>
             <th>Code officiel géographique</th>
             <th>ID</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -121,15 +120,18 @@ function Row({
   key?: string;
   organization: Organization;
 }) {
+  const href = urls.organizations[":id"].$url({
+    param: { id: organization.id },
+  }).pathname;
+
   return (
     <tr
       aria-label={`Organisation ${organization.cached_libelle} (${organization.siret})`}
-      onclick={`window.location = '${
-        urls.organizations[":id"].$url({
-          param: { id: organization.id },
-        }).pathname
-      }'`}
-      class={row({ is_clickable: true })}
+      class={row({
+        is_clickable: true,
+        class:
+          "relative focus-within:outline focus-within:outline-2 focus-within:outline-blue-500",
+      })}
       key={key}
     >
       <td>
@@ -143,8 +145,15 @@ function Row({
         {organization.email_domains.map((domain) => domain.domain).join(", ")}
       </td>
       <td>{organization.cached_code_officiel_geographique}</td>
-      <td>{organization.id}</td>
-      <td class="text-right!">➡️</td>
+      <td>
+        <a
+          class="after:absolute after:inset-0 after:content-[''] focus:outline-none"
+          href={href}
+          aria-label={`Organisation ${organization.cached_libelle} (${organization.siret})`}
+        >
+          {organization.id}
+        </a>
+      </td>
     </tr>
   );
 }

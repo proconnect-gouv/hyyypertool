@@ -7,9 +7,7 @@ Fonctionnalité: Actions sur les membres d'une organisation
     Et je clique sur le bouton "ProConnect"
     Et je clique sur "Organisations"
     Alors je suis redirigé sur "/organizations"
-    Quand je vais à l'intérieur de la rangée nommée "Organisation DINUM (13002526500013)"
-    Et je clique sur "➡️"
-    Et je réinitialise le contexte
+    Quand je clique sur le lien nommé "Organisation DINUM (13002526500013)"
     Quand je clique sur "1 membre"
     Quand je vais à l'intérieur de la rangée nommée "Membre Raphael Dubigny (rdubigny@beta.gouv.fr)"
 

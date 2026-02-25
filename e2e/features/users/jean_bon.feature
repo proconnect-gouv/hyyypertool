@@ -10,9 +10,7 @@ Fonctionnalité: Page utilisateur with moderations
 
     Et je dois voir le titre de page "Liste des utilisateurs"
     Et je vois "Liste des utilisateurs"
-    Quand je vais à l'intérieur de la rangée nommée "Utilisateur Jean Bon (jeanbon@yopmail.com)"
-    Et je clique sur "➡️"
-    Et je réinitialise le contexte
+    Quand je clique sur le lien nommé "Utilisateur Jean Bon (jeanbon@yopmail.com)"
 
     Et je dois voir le titre de page "Utilisateur Jean Bon (jeanbon@yopmail.com)"
 

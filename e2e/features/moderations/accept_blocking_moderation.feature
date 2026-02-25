@@ -9,9 +9,7 @@ Fonctionnalité: Accepter une modération bloquante avec la barre d'outils
 
     Alors je dois voir le titre de page "Liste des moderations"
     Alors je vois "Liste des moderations"
-    Quand je vais à l'intérieur de la rangée nommée "Modération a traiter de Jean Bon pour 13002526500013"
-    Et je clique sur "➡️"
-    Et je réinitialise le contexte
+    Quand je clique sur le lien nommé "Modération a traiter de Jean Bon pour 13002526500013"
 
     Et je dois voir le titre de page "Modération a traiter de Jean Bon pour 13002526500013"
 

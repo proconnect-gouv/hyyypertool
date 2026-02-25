@@ -9,10 +9,7 @@ Fonctionnalité: Validation automatique des modérations similaires
 
     Alors je dois voir le titre de page "Liste des moderations"
     Alors je vois "Liste des moderations"
-    Quand je vais à l'intérieur de la rangée nommée "Modération a traiter de Jean Bon pour 51935970700022"
-    Et je clique sur "➡️"
-    Et je réinitialise le contexte
-
+    Quand je clique sur le lien nommé "Modération a traiter de Jean Bon pour 51935970700022"
     Et je dois voir le titre de page "Modération a traiter de Jean Bon pour 51935970700022"
 
   Plan du Scénario: Validation automatique des modérations similaires avec domaine yopmail.com
@@ -38,10 +35,7 @@ Fonctionnalité: Validation automatique des modérations similaires
 
     Quand je clique sur "Siret"
     Et je tape "51935970700022"
-    Quand je vais à l'intérieur de la rangée nommée "Modération a traiter de Jean Dré pour 51935970700022"
-    Et je clique sur "✅"
-    Et je réinitialise le contexte
-
+    Quand je clique sur le lien nommé "Modération a traiter de Jean Dré pour 51935970700022"
     Alors je dois voir le titre de page "Modération a traiter de Jean Dré pour 51935970700022"
     Alors je vois "Validation automatique - <cause>"
 

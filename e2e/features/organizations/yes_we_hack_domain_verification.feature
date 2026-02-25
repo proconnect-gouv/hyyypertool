@@ -18,10 +18,8 @@ Fonctionnalité: Page organisation - domaine à vérifier
       | 9online.fr    | 21880352600019 |
       | yeswehack.com | 81403721400016 |
 
-    Quand je vais à l'intérieur de la rangée nommée "Domaine non vérifié yeswehack.com pour Yes we hack"
-    Alors je vois "Yes we hack"
-    Et je clique sur "➡️"
-    Et je réinitialise le contexte
+    Alors je dois voir un lien nommé "Domaine non vérifié yeswehack.com pour Yes we hack"
+    Quand je clique sur le lien nommé "Domaine non vérifié yeswehack.com pour Yes we hack"
     Alors je vois "🏛 A propos de l'organisation"
     Et je vois "« Yes we hack »"
     Et je vois "Dénomination Yes we hack"

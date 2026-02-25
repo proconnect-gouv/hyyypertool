@@ -104,7 +104,6 @@ function Table() {
             <th>Siret</th>
             <th>Dénomination</th>
             <th>ID</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -131,22 +130,25 @@ function Row({
   key?: string;
   domains: UnverifiedDomainsDto["domains"][number];
 }) {
+  const href = urls.organizations[":id"].$url({
+    param: { id: organization.id },
+  }).pathname;
+
   return (
     <tr
       aria-label={`Domaine non vérifié ${domainName} pour ${organization.cached_libelle}`}
-      onclick={`window.location = '${
-        urls.organizations[":id"].$url({
-          param: { id: organization.id },
-        }).pathname
-      }'`}
-      class={row({ is_clickable: true })}
+      class={row({
+        is_clickable: true,
+        class:
+          "relative focus-within:outline focus-within:outline-2 focus-within:outline-blue-500",
+      })}
       key={key}
     >
       <td></td>
       <td>
         <span>{domainName}</span>
         <CopyButton
-          class="fr-p-O leading-none"
+          class="fr-p-O relative z-10 leading-none"
           text={domainName}
           title="Copier le nom de domaine"
           variant={{ size: "sm", type: "tertiary" }}
@@ -154,8 +156,15 @@ function Row({
       </td>
       <td>{organization.siret}</td>
       <td>{organization.cached_libelle}</td>
-      <td>{organization.id}</td>
-      <td class="text-right!">➡️</td>
+      <td>
+        <a
+          class="after:absolute after:inset-0 after:content-[''] focus:outline-none"
+          href={href}
+          aria-label={`Domaine non vérifié ${domainName} pour ${organization.cached_libelle}`}
+        >
+          {organization.id}
+        </a>
+      </td>
     </tr>
   );
 }

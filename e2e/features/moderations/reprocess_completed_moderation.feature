@@ -10,10 +10,8 @@ Fonctionnalité: Retraiter une modération terminée
     Et je clique sur "Voir les demandes traitées"
     Et je clique sur "Filtrer par jours"
     Et je tape "2011-11-12"
-    Quand je vais à l'intérieur de la rangée nommée "Modération non vérifié de Marie Bon pour 44023386400014"
-    Et je clique sur "✅"
+    Quand je clique sur le lien nommé "Modération non vérifié de Marie Bon pour 44023386400014"
     Et je dois voir le titre de page "Modération non vérifié de Marie Bon pour 44023386400014"
-    Et je réinitialise le contexte
 
   Scénario: Marie Bon à rejoindre l'organisation Bosch par erreur
     Alors je vois "Cette modération a été marqué comme traité"

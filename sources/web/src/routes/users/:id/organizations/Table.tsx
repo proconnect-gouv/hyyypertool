@@ -51,8 +51,6 @@ export async function Table({
             <th class="break-words">Libellé</th>
             <th class="break-words">Domains</th>
             <th class="max-w-32 break-words">Code géographique officiel</th>
-
-            <th></th>
           </tr>
         </thead>
 
@@ -91,8 +89,14 @@ export function Row({
     siret,
   } = organization;
 
+  const href = urls.organizations[":id"].$url({ param: { id: id } }).pathname;
+
   return (
-    <tr aria-label={`Organisation ${cached_libelle} pour (${siret})`} key={key}>
+    <tr
+      aria-label={`Organisation ${cached_libelle} pour (${siret})`}
+      class="relative focus-within:outline focus-within:outline-2 focus-within:outline-blue-500 hover:bg-gray-100"
+      key={key}
+    >
       <td>
         <Time date={created_at}>
           {date_to_dom_string(new Date(created_at))}
@@ -101,13 +105,13 @@ export function Row({
       <td>{siret}</td>
       <td>{cached_libelle}</td>
       <td>{email_domains.map(({ domain }) => domain).join(", ")}</td>
-      <td>{cached_code_officiel_geographique}</td>
-      <td class="text-right!">
+      <td>
         <a
-          class="p-3"
-          href={urls.organizations[":id"].$url({ param: { id: id } }).pathname}
+          class="after:absolute after:inset-0 after:content-[''] focus:outline-none"
+          href={href}
+          aria-label={`Organisation ${cached_libelle} pour (${siret})`}
         >
-          ➡️
+          {cached_code_officiel_geographique}
         </a>
       </td>
     </tr>

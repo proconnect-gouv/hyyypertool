@@ -10,10 +10,8 @@ Fonctionnalité: Refuser une modération bloquante
     Quand je clique sur "Filtrer par jours"
     Et je tape "2011-11-11"
     Et je retire le focus
-    Quand je vais à l'intérieur de la rangée nommée "Modération a traiter de Jean Bon pour 13002526500013"
-    Et je clique sur "➡️"
+    Quand je clique sur le lien nommé "Modération a traiter de Jean Bon pour 13002526500013"
     Et je dois voir le titre de page "Modération a traiter de Jean Bon pour 13002526500013"
-    Et je réinitialise le contexte
 
   Scénario: Le modérateur le refuse avec la barre d'outils
     Quand je clique sur "❌ Refuser"

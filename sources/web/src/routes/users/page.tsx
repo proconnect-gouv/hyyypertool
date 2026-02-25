@@ -95,7 +95,6 @@ async function Table({
             <th>Dernière connexion</th>
             <th>Email vérifié le</th>
             <th>ID</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -116,15 +115,18 @@ async function Table({
 }
 
 function Row({ key, user }: { key?: string; user: User }) {
+  const href = urls.users[":id"].$url({
+    param: { id: user.id },
+  }).pathname;
+
   return (
     <tr
       aria-label={`Utilisateur ${user.given_name} ${user.family_name} (${user.email})`}
-      onclick={`window.location = '${
-        urls.users[":id"].$url({
-          param: { id: user.id },
-        }).pathname
-      }'`}
-      class={row({ is_clickable: true })}
+      class={row({
+        is_clickable: true,
+        class:
+          "relative focus-within:outline focus-within:outline-2 focus-within:outline-blue-500",
+      })}
       key={key}
     >
       <td>{user.given_name}</td>
@@ -139,8 +141,15 @@ function Row({ key, user }: { key?: string; user: User }) {
       <td>
         <LocalTime date={user.email_verified_at} />
       </td>
-      <td>{user.id}</td>
-      <td class="text-right!">➡️</td>
+      <td>
+        <a
+          class="after:absolute after:inset-0 after:content-[''] focus:outline-none"
+          href={href}
+          aria-label={`Utilisateur ${user.given_name} ${user.family_name} (${user.email})`}
+        >
+          {user.id}
+        </a>
+      </td>
     </tr>
   );
 }

@@ -254,7 +254,6 @@ async function Table() {
             <th>Email</th>
             <th>Organisation cible</th>
             <th>ID</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -276,17 +275,19 @@ async function Table() {
 
 function Row({ key, moderation }: { key?: string; moderation: Moderation }) {
   const { user, organization } = moderation;
+  const href = urls.moderations[":id"].$url({
+    param: { id: moderation.id },
+  }).pathname;
+
   return (
     <tr
       aria-label={`Modération ${moderation_type_to_title(moderation.type).toLowerCase()} de ${user.given_name} ${user.family_name} pour ${organization.siret}`}
       key={key}
-      onclick={`window.location = '${
-        urls.moderations[":id"].$url({
-          param: { id: moderation.id },
-        }).pathname
-      }'`}
-      class={row({ is_clickable: true })}
-      aria-selected="false"
+      class={row({
+        is_clickable: true,
+        class:
+          "relative focus-within:outline focus-within:outline-2 focus-within:outline-blue-500",
+      })}
       style={text_color(new Date(moderation.created_at))}
     >
       <td title={moderation.type}>
@@ -307,18 +308,14 @@ function Row({ key, moderation }: { key?: string; moderation: Moderation }) {
         {user.email}
       </td>
       <td class="break-words">{organization.siret}</td>
-      <td>{moderation.id}</td>
       <td>
-        {moderation.moderated_at ? (
-          <time
-            datetime={moderation.moderated_at}
-            title={moderation.moderated_at}
-          >
-            ✅
-          </time>
-        ) : (
-          "➡️"
-        )}
+        <a
+          class="after:absolute after:inset-0 after:content-[''] focus:outline-none"
+          href={href}
+          aria-label={`Modération ${moderation_type_to_title(moderation.type).toLowerCase()} de ${user.given_name} ${user.family_name} pour ${organization.siret}`}
+        >
+          {moderation.id}
+        </a>
       </td>
     </tr>
   );
