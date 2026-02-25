@@ -228,7 +228,7 @@ describe("createIsland", () => {
       expect(html).toContain('type="module"');
     });
 
-    test("wraps in DOMContentLoaded", () => {
+    test("mounts on DOMContentLoaded and htmx:load", () => {
       const Island = createIsland({
         component: TestComponent,
         clientPath: "/assets/test.client.js",
@@ -237,7 +237,13 @@ describe("createIsland", () => {
 
       const html = renderToString(<Island />);
 
-      expect(html).toContain("document.addEventListener('DOMContentLoaded'");
+      expect(html).toContain(
+        'document.addEventListener("DOMContentLoaded", mount_island)',
+      );
+      expect(html).toContain(
+        'document.addEventListener("htmx:load", mount_island)',
+      );
+      expect(html).toContain("mount_island();");
     });
 
     test("references correct root element ID", () => {

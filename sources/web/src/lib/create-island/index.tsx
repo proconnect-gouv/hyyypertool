@@ -151,9 +151,13 @@ function generateIslandScript<P>(
   return `
 import { ${preactMethod}, h } from "preact";
 import { ${exportName} } from "${clientPath}";
-document.addEventListener('DOMContentLoaded', () => {
-  const props = ${serializedProps};
-  ${preactMethod}(h(${exportName}, props), document.getElementById("${rootId}"));
-});
+const props = ${serializedProps};
+const mount_island = () => {
+  const el = document.getElementById("${rootId}");
+  if (el) ${preactMethod}(h(${exportName}, props), el);
+};
+document.addEventListener("DOMContentLoaded", mount_island);
+document.addEventListener("htmx:load", mount_island);
+mount_island();
 `.trim();
 }
