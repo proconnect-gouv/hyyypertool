@@ -36,6 +36,7 @@ import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 type NotificationVariant = "danger" | "info" | "success" | "warning";
 
 interface Notification {
+  detail?: string;
   id: string;
   message?: string;
   title?: string;
@@ -43,6 +44,7 @@ interface Notification {
 }
 
 interface NotificationDetail {
+  detail?: string;
   message?: string;
   title?: string;
   variant?: NotificationVariant;
@@ -62,12 +64,13 @@ const notifications = signal<Notification[]>([]);
  * Add a notification programmatically
  */
 export function notify({
+  detail,
   message,
   title,
   variant = "info",
 }: NotificationDetail): string {
   const id = `notification-${++notificationCounter}`;
-  const notification: Notification = { id, message, title, variant };
+  const notification: Notification = { detail, id, message, title, variant };
 
   // Keep only the most recent notifications
   if (notifications.value.length >= MAX_NOTIFICATIONS) {
@@ -159,7 +162,6 @@ function NotificationItem({ notification }: NotificationItemProps) {
       }`}
       id={notification.id}
       onMouseEnter={pause}
-      onMouseLeave={startDismissTimer}
       role="alert"
     >
       <div class="fr-container">
@@ -179,6 +181,16 @@ function NotificationItem({ notification }: NotificationItemProps) {
             Masquer le message
           </button>
         </div>
+        {notification.detail && (
+          <div class="fr-notice__body">
+            <details class="mt-2 text-sm opacity-80">
+              <summary class="cursor-pointer">Détails</summary>
+              <pre class="mt-1 overflow-auto text-xs whitespace-pre-wrap">
+                {notification.detail}
+              </pre>
+            </details>
+          </div>
+        )}
       </div>
     </div>
   );

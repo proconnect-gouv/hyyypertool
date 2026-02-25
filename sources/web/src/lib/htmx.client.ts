@@ -11,17 +11,19 @@
  * Dispatch a notification event that the Preact NotificationContainer will handle
  */
 function dispatchNotification({
+  detail,
   variant = "info",
   title,
   message,
 }: {
+  detail?: string;
   variant?: "info" | "success" | "warning" | "danger";
   title?: string;
   message?: string;
 }) {
   window.dispatchEvent(
     new CustomEvent("notify", {
-      detail: { variant, title, message },
+      detail: { detail, variant, title, message },
     }),
   );
 }
@@ -33,9 +35,11 @@ document.body.addEventListener("htmx:responseError", (event) => {
   const customEvent = event as CustomEvent;
   const xhr = customEvent.detail?.xhr as XMLHttpRequest | undefined;
   const status = xhr?.status;
+  const responseText = xhr?.responseText;
 
   let title = "Une erreur est survenue !";
   let message: string | undefined;
+  let detail: string | undefined;
 
   if (status) {
     if (status >= 500) {
@@ -47,7 +51,17 @@ document.body.addEventListener("htmx:responseError", (event) => {
     }
   }
 
+  if (responseText) {
+    try {
+      const parsed = JSON.parse(responseText);
+      detail = parsed.error?.message ?? JSON.stringify(parsed, null, 2);
+    } catch {
+      detail = responseText;
+    }
+  }
+
   dispatchNotification({
+    detail,
     variant: "danger",
     title,
     message,
