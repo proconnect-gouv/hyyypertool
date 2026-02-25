@@ -187,6 +187,40 @@ test("notification: displays without message", async () => {
   expect(descSpan).toBeNull();
 });
 
+test("notify: displays detail in collapsible section", async () => {
+  const { container } = render(<NotificationContainer />);
+
+  notify({
+    detail: "ZodError: Expected string, received number",
+    message: "La requête a échoué (400)",
+    title: "Erreur de requête",
+    variant: "danger",
+  });
+
+  await waitFor(() => {
+    expect(container.querySelector("[role='alert']")).not.toBeNull();
+  });
+
+  const details = container.querySelector("details");
+  expect(details).not.toBeNull();
+  expect(container.textContent).toContain("Détails");
+  expect(container.textContent).toContain(
+    "ZodError: Expected string, received number",
+  );
+});
+
+test("notify: does not render detail section when detail is absent", async () => {
+  const { container } = render(<NotificationContainer />);
+
+  notify({ title: "No detail", variant: "info" });
+
+  await waitFor(() => {
+    expect(container.querySelector("[role='alert']")).not.toBeNull();
+  });
+
+  expect(container.querySelector("details")).toBeNull();
+});
+
 test("resetNotificationCounter: resets ID counter", async () => {
   const { container } = render(<NotificationContainer />);
 
