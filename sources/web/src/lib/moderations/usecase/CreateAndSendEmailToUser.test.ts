@@ -2,7 +2,7 @@
 
 import { NotFoundError } from "#src/errors";
 import { expect, mock, test } from "bun:test";
-import type { RejectedModeration_Context } from "../context/rejected";
+import type { RejectedModerationContext } from "../context/rejected";
 import { CreateAndSendEmailToUser } from "./CreateAndSendEmailToUser";
 
 //
@@ -34,7 +34,7 @@ test("creates conversation and sends email to user with clean dependency injecti
     update_moderation_by_id: mock_update_moderation_by_id,
   });
 
-  const context: RejectedModeration_Context = {
+  const context: RejectedModerationContext = {
     crisp: mock_crisp as any,
     moderation: {
       id: 1,
@@ -114,7 +114,7 @@ test("throws NotFoundError when user is not found", async () => {
     update_moderation_by_id: mock_update_moderation_by_id,
   });
 
-  const context: RejectedModeration_Context = {
+  const context: RejectedModerationContext = {
     crisp: mock_crisp as any,
     moderation: {
       id: 1,

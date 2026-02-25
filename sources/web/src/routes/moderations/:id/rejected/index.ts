@@ -4,7 +4,7 @@ import type { HtmxHeader } from "#src/htmx";
 import {
   MODERATION_EVENTS,
   reject_form_schema,
-  type RejectedModeration_Context,
+  type RejectedModerationContext,
 } from "#src/lib/moderations";
 import { GetModerationWithUser } from "#src/queries/moderations";
 import { zValidator } from "@hono/zod-validator";
@@ -29,7 +29,7 @@ export default new Hono<ContextType>().patch(
 
     const get_moderation_with_user = GetModerationWithUser(identite_pg);
     const moderation = await get_moderation_with_user(moderation_id);
-    const context: RejectedModeration_Context = {
+    const context: RejectedModerationContext = {
       crisp,
       moderation,
       pg: identite_pg,

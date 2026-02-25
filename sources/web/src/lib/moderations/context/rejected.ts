@@ -7,7 +7,7 @@ import type { RejectedMessage } from "../schema/rejected.form";
 
 //
 
-export type RejectedModeration_Context = {
+export type RejectedModerationContext = {
   crisp: CrispApi;
   moderation: GetModerationWithUserDto;
   pg: IdentiteProconnectPgDatabase;

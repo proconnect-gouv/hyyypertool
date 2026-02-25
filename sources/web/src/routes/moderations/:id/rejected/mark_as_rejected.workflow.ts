@@ -1,6 +1,6 @@
 //
 
-import type { RejectedModeration_Context } from "#src/lib/moderations";
+import type { RejectedModerationContext } from "#src/lib/moderations";
 import {
   mark_moderation_as,
   RespondToTicket,
@@ -11,7 +11,7 @@ import { UpdateModerationById } from "#src/queries/moderations";
 //
 
 export async function mark_as_rejected(
-  context: RejectedModeration_Context,
+  context: RejectedModerationContext,
   {
     message,
     reason,
