@@ -8,10 +8,8 @@ Fonctionnalité: Sélectionner un type de vérification lors de l'acceptation
     Et je clique sur le bouton "ProConnect"
     Et je dois voir le titre de page "Liste des moderations"
     Alors je vois "Liste des moderations"
-    Quand je vais à l'intérieur de la rangée nommée "Modération a traiter de Jean Bon pour 51935970700022"
-    Et je clique sur "➡️"
+    Quand je clique sur le lien nommé "Modération a traiter de Jean Bon pour 51935970700022"
     Et je dois voir le titre de page "Modération a traiter de Jean Bon pour 51935970700022"
-    Et je réinitialise le contexte
     Et je clique sur "✅ Accepter"
 
   Plan du Scénario: Sélectionner différents types de vérification
@@ -27,9 +25,7 @@ Fonctionnalité: Sélectionner un type de vérification lors de l'acceptation
     Et je dois voir le titre de page "Liste des moderations"
     Alors je vois "Liste des moderations"
     Quand je clique sur "Voir les demandes traitées"
-    Quand je vais à l'intérieur de la rangée nommée "Modération a traiter de Jean Bon pour 51935970700022"
-    Et je clique sur "✅"
-    Et je réinitialise le contexte
+    Quand je clique sur le lien nommé "Modération a traiter de Jean Bon pour 51935970700022"
     Quand je clique sur "👥 1 membre connu dans l’organisation"
     Alors je dois voir un tableau nommé "👥 1 membre connu dans l’organisation" et contenant
       | Prénom | Nom | Type                |

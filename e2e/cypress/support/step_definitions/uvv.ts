@@ -79,8 +79,8 @@ When("je clique sur le bouton nommé {string}", (text: string) => {
   get_within_context().within(() => cy.contains("button", text).click());
 });
 
-When("je clique sur le lien nommé {string}", (text: string) => {
-  get_within_context().within(() => cy.contains("a", text).click());
+When("je clique sur le lien nommé {string}", (name: string) => {
+  get_within_context().within(() => cy.findByRole("link", { name }).click());
 });
 
 When(
@@ -107,7 +107,30 @@ When("je retire le focus", () => {
   cy.focused().blur();
 });
 
+// Keyboard navigation
+
+When("j'appuie sur {string}", (key: string) => {
+  const keyMap: Record<string, number | string> = {
+    tab: Cypress.Keyboard.Keys.TAB,
+    Enter: Cypress.Keyboard.Keys.ENTER,
+    Escape: Cypress.Keyboard.Keys.ESC,
+  };
+  cy.press(keyMap[key] ?? key);
+});
+
+Then(
+  "l'élément avec le focus clavier doit être le lien nommé {string}",
+  (name: string) => {
+    cy.focused().should("have.attr", "aria-label", name);
+  },
+);
+
 // Assertions
+
+Then("je dois voir un lien nommé {string}", (name: string) => {
+  cy.findByRole("link", { name }).should("be.visible");
+});
+
 Then("je vois {string}", (text: string) => {
   get_within_context().within(() => {
     cy.contains(text, { timeout: 8_000 }).should("be.visible");

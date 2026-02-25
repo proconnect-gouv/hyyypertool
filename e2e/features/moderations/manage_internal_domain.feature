@@ -7,10 +7,8 @@ Fonctionnalité: Gérer un domaine interne lors de la modération
     Quand je navigue sur la page
     Et je clique sur le bouton "ProConnect"
     Alors je vois "Liste des moderations"
-    Quand je vais à l'intérieur de la rangée nommée "Modération a traiter de Jean Bon pour 51935970700022"
-    Et je clique sur "➡️"
+    Quand je clique sur le lien nommé "Modération a traiter de Jean Bon pour 51935970700022"
     Et je dois voir le titre de page "Modération a traiter de Jean Bon pour 51935970700022"
-    Et je réinitialise le contexte
     Et je clique sur "🌐 1 domaine connu dans l’organisation"
 
   Scénario: Domaine interne

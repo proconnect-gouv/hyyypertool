@@ -9,10 +9,8 @@ Fonctionnalité: Ajouter un membre interne lors de la modération
     Alors je vois "Liste des moderations"
 
   Scénario: Marie est un membre interne de l'organization.
-    Quand je vais à l'intérieur de la rangée nommée "Modération non vérifié de Marie Bon pour 57206768400017"
-    Et je clique sur "➡️"
+    Quand je clique sur le lien nommé "Modération non vérifié de Marie Bon pour 57206768400017"
     Et je dois voir le titre de page "Modération non vérifié de Marie Bon pour 57206768400017"
-    Et je réinitialise le contexte
 
     Quand je clique sur "👥 0 membre connu dans l’organisation"
     Alors je dois voir un tableau nommé "👥 0 membre connu dans l’organisation" et contenant
@@ -25,9 +23,7 @@ Fonctionnalité: Ajouter un membre interne lors de la modération
 
     Alors je vois "Liste des moderations"
     Quand je clique sur "Voir les demandes traitées"
-    Quand je vais à l'intérieur de la rangée nommée "Modération non vérifié de Marie Bon pour 57206768400017"
-    Et je clique sur "✅"
-    Et je réinitialise le contexte
+    Quand je clique sur le lien nommé "Modération non vérifié de Marie Bon pour 57206768400017"
 
     Quand je clique sur "👥 1 membre connu dans l’organisation"
     Alors je dois voir un tableau nommé "👥 1 membre connu dans l’organisation" et contenant
@@ -35,9 +31,7 @@ Fonctionnalité: Ajouter un membre interne lors de la modération
       | Marie  | Bon |
 
   Scénario: Raphael est déjà membre de l'organisation mais sa modération peut être validée.
-    Quand je vais à l'intérieur de la rangée nommée "Modération non vérifié de Raphael Dubigny pour 81403721400016"
-    Et je clique sur "➡️"
-    Et je réinitialise le contexte
+    Quand je clique sur le lien nommé "Modération non vérifié de Raphael Dubigny pour 81403721400016"
 
     Quand je clique sur "✅ Accepter"
     Et je clique sur "Ajouter Raphael à l'organisation EN TANT QU'INTERNE"
