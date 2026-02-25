@@ -195,6 +195,12 @@ When("je clique sur l'élément nommé {string}", (ariaLabel: string) => {
   get_within_context().within(() => cy.findByLabelText(ariaLabel).click());
 });
 
+Then("je vois un bouton intitulé {string}", (title: string) => {
+  get_within_context().within(() =>
+    cy.get(`button[title="${title}"]`).should("exist"),
+  );
+});
+
 When("je confirme la suppression", () => {
   cy.on("window:confirm", () => true);
 });
