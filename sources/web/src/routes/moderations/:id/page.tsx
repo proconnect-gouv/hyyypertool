@@ -112,6 +112,7 @@ async function ModerationPageContent() {
           organization={moderation.organization}
           query_domain_count={query_domain_count}
         />
+
         <OrganizationsByUser
           user={moderation.user}
           query_organization_count={CountUserMemberships({ pg: identite_pg })}
