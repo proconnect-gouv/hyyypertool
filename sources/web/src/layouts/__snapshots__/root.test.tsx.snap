@@ -146,7 +146,11 @@ exports[`development 1`] = `
         content="{&quot;defaultSettleDelay&quot;:0,&quot;globalViewTransitions&quot;:true,&quot;historyEnabled&quot;:true,&quot;inlineScriptNonce&quot;:&quot;nonce&quot;}"
       />
 
-      
+      <script
+            defer
+            nonce="nonce"
+            src="/assets/ASSETS_PATH/node_modules/htmx-ext-debug/debug.js"
+          ></script>
 
       <script
         defer
