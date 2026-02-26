@@ -1,7 +1,7 @@
 //
 
 import { hyper_ref } from "#src/html";
-import { hx_include, hx_trigger_from_body } from "#src/htmx";
+import { hx_trigger_from_body } from "#src/htmx";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import { Loader } from "#src/ui/loader";
 import { formattedPlural } from "#src/ui/plurial";
@@ -50,7 +50,6 @@ export async function UsersByOrganization(props: Props) {
         <div
           {...hx_get_users_by_organization_props}
           class="fr-table"
-          hx-include={hx_include([$page_ref])}
           hx-target="this"
           hx-trigger={[
             "load delay:1s",

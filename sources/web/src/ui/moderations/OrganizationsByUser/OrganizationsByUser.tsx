@@ -1,7 +1,7 @@
 //
 
 import { hyper_ref } from "#src/html";
-import { hx_include, hx_trigger_from_body } from "#src/htmx";
+import { hx_trigger_from_body } from "#src/htmx";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import type { CountUserMembershipsHandler, User } from "#src/lib/users";
 import { Loader } from "#src/ui/loader";
@@ -43,7 +43,6 @@ export async function OrganizationsByUser(props: Props) {
         <div
           {...hx_get_organizations_by_user}
           class="fr-table"
-          hx-include={hx_include([$page_ref])}
           hx-target="this"
           hx-trigger={[
             "load",
