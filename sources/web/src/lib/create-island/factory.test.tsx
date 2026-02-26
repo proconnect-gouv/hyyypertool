@@ -4,7 +4,7 @@
 
 import { describe, expect, test } from "bun:test";
 import { renderToString } from "hono/jsx/dom/server";
-import { createIsland } from "./index";
+import { createIsland } from "./factory";
 
 // Mock Preact components for testing
 function TestComponent({

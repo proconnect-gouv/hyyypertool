@@ -2,9 +2,7 @@ import { HtmxEvents } from "#src/htmx";
 import { button } from "#src/ui/button";
 import { urls } from "#src/urls";
 import { AUTO_GO_BACK_EVENT } from "../AutoGoBack";
-import { AddAsMemberExternal } from "./AddAsMemberExternal";
-import { AddAsMemberInternal } from "./AddAsMemberInternal";
-import { AddDomain } from "./AddDomain";
+import { MemberAndDomainPickerIsland } from "./MemberAndDomainPickerIsland";
 import { SendNotification } from "./SendNotification";
 import { TagInput } from "./TagInput";
 import { type Values } from "./context";
@@ -12,9 +10,11 @@ import { type Values } from "./context";
 export async function AcceptModal({
   userEmail,
   moderation,
+  domain,
 }: {
   userEmail: string;
   moderation: Values["moderation"];
+  domain: string;
 }) {
   const hx_path_validate_moderation = urls.moderations[
     ":id"
@@ -58,18 +58,10 @@ export async function AcceptModal({
               trigger ${AUTO_GO_BACK_EVENT}(type: 'success', message: 'Modération accepté !') on #auto_go_back
           `}
       >
-        <div class="mb-5">
-          <AddAsMemberInternal />
-        </div>
-        <div class="mb-5" id="domainInternalSection">
-          <AddDomain mailType="interne" />
-        </div>
-        <div class="mb-5">
-          <AddAsMemberExternal />
-        </div>
-        <div class="mb-5 hidden" id="domainExternalSection">
-          <AddDomain mailType="externe" />
-        </div>
+        <MemberAndDomainPickerIsland
+          domain={domain}
+          given_name={moderation.user.given_name ?? ""}
+        />
         <div class="mb-5">
           <TagInput />
         </div>

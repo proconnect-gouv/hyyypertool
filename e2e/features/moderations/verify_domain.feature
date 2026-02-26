@@ -15,7 +15,7 @@ Fonctionnalité: Vérifier un domaine lors de la modération
     Alors je dois voir un tableau nommé "🌐 0 domaine connu dans l’organisation" et contenant
       |  |
     Quand je clique sur "✅ Accepter"
-    Quand je clique sur "J’autorise le domaine fr.bosch.com en interne à l'organisation"
+    Quand je clique sur "J'autorise le domaine fr.bosch.com en interne à l'organisation"
     Quand je clique sur "Terminer"
 
     Alors une notification mail n'est pas envoyée

@@ -15,7 +15,7 @@ export function AddDomain(props: { mailType: string }) {
         value="true"
       />
       <label for={id}>
-        J’autorise le domaine <b class="mx-1">{domain}</b> en {props.mailType} à
+        J'autorise le domaine <b class="mx-1">{domain}</b> en {props.mailType} à
         l'organisation
       </label>
     </div>

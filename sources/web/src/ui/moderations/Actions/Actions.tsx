@@ -31,7 +31,11 @@ export async function Actions({ value }: ActionProps) {
       }}
     >
       <Toolbar moderation={moderation} />
-      <AcceptModal userEmail={user.email} moderation={moderation} />
+      <AcceptModal
+        userEmail={user.email}
+        moderation={moderation}
+        domain={domain}
+      />
       <RefusalModal userEmail={user.email} />
     </context.Provider>
   );

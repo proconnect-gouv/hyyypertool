@@ -43,7 +43,7 @@ Fonctionnalité: Ajouter un membre externe lors de la modération
 
     Soit je vais à l'intérieur du dialogue nommé "la modale de validation"
     Quand je clique sur "Ajouter Marie à l'organisation EN TANT QU'EXTERNE"
-    Et je clique sur "J’autorise le domaine fr.bosch.com en externe à l'organisation"
+    Et je clique sur "J'autorise le domaine fr.bosch.com en externe à l'organisation"
     Et je clique sur "Notifier marie.bon@fr.bosch.com du traitement de la modération."
     Et je clique sur "Terminer"
     Et je réinitialise le contexte
