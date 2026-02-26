@@ -1,5 +1,36 @@
 # Changelog
 
+## [2026.2.10](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.9...2026.2.10) (2026-02-26)
+
+### Changements
+
+- 🐛 Correction des erreurs htmx liées aux extensions
+
+Suppression de l'extension `chunked-transfer` qui provoquait des `SyntaxError`
+en production lors du swap de réponses HTML contenant des scripts d'îlots Preact
+tronqués. Correction de l'ordre de chargement du script `htmx-ext-debug` pour
+éviter les erreurs « htmx is not defined » dans les tests Cypress.
+
+- 🐛 Correction du chargement du script de débogage htmx
+
+Le script htmx-ext-debug étaitIncorrectement chargé en préproduction
+lorsque la variable d'environnement DEPLOY_ENV était définie à "preview".
+Le correctif utilise maintenant NODE_ENV pour charger le script uniquement
+en dehors de l'environnement de production.
+
+### Corrigé
+
+- 🐛 fix(htmx): load debug script in non-production environments (#1430) (e13f88fe)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): Bump the tailwindcss group with 2 updates (#1423) (44333275)
+
+### Divers
+
+- fix(htmx): remove hx-include for non-existent DOM elements (#1431) (423d4907)
+- Revise security policy and add reporting guidelines (4d32fd42)
+
 ## [2026.2.9](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.8...2026.2.9) (2026-02-26)
 
 ### Changements
