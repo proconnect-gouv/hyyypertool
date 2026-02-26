@@ -105,6 +105,7 @@ jobs:
           - moderations/manage_external_domain.feature
           - moderations/manage_internal_domain.feature
           - moderations/moderation_list.feature
+          - moderations/moderation_detail.feature
           - moderations/reject_blocking_moderation.feature
           - moderations/reprocess_completed_moderation.feature
           - moderations/select_verification_type.feature
