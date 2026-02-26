@@ -5,7 +5,7 @@ exports[`development 1`] = `
     <html
       lang="fr"
       data-fr-scheme="system"
-      hx-ext="debug, chunked-transfer, include-vals"
+      hx-ext="debug, include-vals"
     >
       <head>
         <meta charset="utf-8" />
@@ -147,7 +147,6 @@ exports[`development 1`] = `
       />
 
       <script
-            defer
             nonce="nonce"
             src="/assets/ASSETS_PATH/node_modules/htmx-ext-debug/debug.js"
           ></script>
@@ -162,12 +161,6 @@ exports[`development 1`] = `
         defer
         nonce="nonce"
         src="/assets/ASSETS_PATH/node_modules/htmx-ext-sse/dist/sse.js"
-        type="module"
-      ></script>
-      <script
-        defer
-        nonce="nonce"
-        src="/assets/ASSETS_PATH/node_modules/htmx.ext...chunked-transfer/dist/index.js"
         type="module"
       ></script>
 
@@ -213,7 +206,7 @@ exports[`production 1`] = `
     <html
       lang="fr"
       data-fr-scheme="system"
-      hx-ext="chunked-transfer, include-vals"
+      hx-ext="include-vals"
     >
       <head>
         <meta charset="utf-8" />
@@ -366,12 +359,6 @@ exports[`production 1`] = `
         defer
         nonce="nonce"
         src="/assets/ASSETS_PATH/node_modules/htmx-ext-sse/dist/sse.js"
-        type="module"
-      ></script>
-      <script
-        defer
-        nonce="nonce"
-        src="/assets/ASSETS_PATH/node_modules/htmx.ext...chunked-transfer/dist/index.js"
         type="module"
       ></script>
 

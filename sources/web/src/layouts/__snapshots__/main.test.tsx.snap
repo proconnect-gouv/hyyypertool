@@ -5,7 +5,7 @@ exports[`Main Layout 1`] = `
     <html
       lang="fr"
       data-fr-scheme="system"
-      hx-ext="chunked-transfer, include-vals"
+      hx-ext="include-vals"
     >
       <head>
         <meta charset="utf-8" />
@@ -167,12 +167,6 @@ mount_island();</script></x-notification-island></div>
         defer
         nonce="nonce"
         src="/assets/ASSETS_PATH/node_modules/htmx-ext-sse/dist/sse.js"
-        type="module"
-      ></script>
-      <script
-        defer
-        nonce="nonce"
-        src="/assets/ASSETS_PATH/node_modules/htmx.ext...chunked-transfer/dist/index.js"
         type="module"
       ></script>
 

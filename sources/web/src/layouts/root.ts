@@ -18,7 +18,6 @@ export function RootLayout({ children }: PropsWithChildren) {
       data-fr-scheme="system"
       hx-ext="${[
         config.NODE_ENV === "production" ? "" : "debug",
-        "chunked-transfer",
         "include-vals",
       ]
         .filter(Boolean)
@@ -189,7 +188,6 @@ export function RootLayout({ children }: PropsWithChildren) {
       ${config.NODE_ENV === "production"
         ? ""
         : html`<script
-            defer
             nonce="${nonce}"
             src="${config.ASSETS_PATH}/node_modules/htmx-ext-debug/debug.js"
           ></script>`}
@@ -204,12 +202,6 @@ export function RootLayout({ children }: PropsWithChildren) {
         defer
         nonce="${nonce}"
         src="${config.ASSETS_PATH}/node_modules/htmx-ext-sse/dist/sse.js"
-        type="module"
-      ></script>
-      <script
-        defer
-        nonce="${nonce}"
-        src="${config.ASSETS_PATH}/node_modules/htmx.ext...chunked-transfer/dist/index.js"
         type="module"
       ></script>
 

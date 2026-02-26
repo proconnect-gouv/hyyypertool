@@ -21,11 +21,11 @@ export default defineConfig({
     setupNodeEvents,
     specPattern: "**/*.feature",
     supportFile: "cypress/support/e2e.ts",
+    video: true,
   },
   env: {
     APP_MONCOMPTEPRO_URL: "http://localhost:6300",
   },
-  video: true,
 });
 
 //
