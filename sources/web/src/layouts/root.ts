@@ -186,13 +186,13 @@ export function RootLayout({ children }: PropsWithChildren) {
         })}"
       />
 
-      ${config.DEPLOY_ENV === "preview"
-        ? html`<script
+      ${config.NODE_ENV === "production"
+        ? ""
+        : html`<script
             defer
             nonce="${nonce}"
             src="${config.ASSETS_PATH}/node_modules/htmx-ext-debug/debug.js"
-          ></script>`
-        : ""}
+          ></script>`}
 
       <script
         defer
