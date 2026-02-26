@@ -1,5 +1,32 @@
 # Changelog
 
+## [2026.2.9](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.8...2026.2.9) (2026-02-26)
+
+### Changements
+
+- ✨ Ajout des détails d'erreur dans les notifications
+- ♿ Amélioration de l'accessibilité des tableaux avec des ancres et navigation clavier
+
+### Ajouté
+
+- ✨ Mount islands on htmx:load for HTMX content swaps (#1427) (574bb1cd)
+- ✨ Add error details to notifications with collapsible section (#1428) (0a536072)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): Bump the sentry group with 4 updates (#1422) (68a8a3a5)
+- :arrow_upper_right: [patch](deps): Bump dotenv from 17.2.4 to 17.3.1 (#1424) (b0f86177)
+- :arrow_upper_right: [patch](deps-dev): Bump @happy-dom/global-registrator (#1425) (48bc988c)
+- :arrow_upper_right: [patch](deps): Bump tailwind-merge (#1426) (1ee323fb)
+- :arrow_upper_right: [patch](deps): Bump hono-sessions (#1417) (9abc23f4)
+
+### Divers
+
+- ♿ Improve table accessibility with proper anchor links and keyboard navigation (#1429) (0ee49ade)
+- 🧪 add e2e test for external member validation with notification and domain (#1420) (4c0df07f)
+- use fast-check to cover more posibilities (#1419) (caf4f834)
+- Bump hono from 4.11.9 to 4.11.10 in /bin (#1418) (9c100e43)
+
 ## [2026.2.8](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.7...2026.2.8) (2026-02-19)
 
 ### Changements
