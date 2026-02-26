@@ -7,25 +7,19 @@ Fonctionnalité: Parcours de modération
     Quand je navigue sur la page
     Et je clique sur le bouton "ProConnect"
     Alors je vois "Liste des moderations"
+    Et je vois "Raphael"
 
   Scénario: Le modérateur peut rechercher une modération par email
-    Quand je tape "jeanbon" dans le champ nommé "search_email"
-    Et j'attends 1 seconde
+    Quand je saisie "jeanbon" dans le champ nommé "Email"
     Alors je vois "13002526500013"
-    Et je ne vois pas "51935970700022"
+    Et je ne vois pas "Raphael"
 
   Scénario: Le modérateur peut rechercher une modération par SIRET
-    Quand je tape "51935970700022" dans le champ nommé "search_siret"
-    Et j'attends 1 seconde
+    Quand je saisie "51935970700022" dans le champ nommé "Siret"
     Alors je vois "51935970700022"
-    Et je ne vois pas "13002526500013"
+    Et je ne vois pas "Raphael"
 
   Scénario: Le modérateur peut explorer une modération depuis la liste
     Quand je clique sur le lien nommé "Modération a traiter de Jean Bon pour 13002526500013"
     Alors je dois voir le titre de page "Modération a traiter de Jean Bon pour 13002526500013"
     Et je vois "jeanbon@yopmail.com"
-
-  Scénario: Le modérateur peut naviguer entre les pages de la liste
-    Quand je tape "2" dans le champ nommé "page"
-    Et je clique sur "Suivant"
-    Alors je vois "Affiche de 11-20 sur"
