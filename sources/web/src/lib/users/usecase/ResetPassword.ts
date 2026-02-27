@@ -8,7 +8,7 @@ import {
 } from "@~/identite-proconnect/database";
 import { to as await_to } from "await-to-js";
 import { eq } from "drizzle-orm";
-import { ResetPassword_Message } from "../templates";
+import { ResetPasswordMessage } from "../templates";
 import { GetUserInfo } from "./GetUserInfo";
 //
 
@@ -52,7 +52,7 @@ export function ResetPassword({
     };
 
     await crisp.send_message({
-      content: ResetPassword_Message(),
+      content: ResetPasswordMessage(),
       session_id,
       user,
     });

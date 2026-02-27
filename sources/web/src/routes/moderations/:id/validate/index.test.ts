@@ -1,12 +1,13 @@
 //
 
-import type { validate_form_schema } from "#src/lib/moderations";
 import { set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
+import { set_crisp_client } from "#src/middleware/crisp";
 import {
   set_identite_pg,
   set_identite_pg_client,
 } from "#src/middleware/identite-pg";
+import { cartesian } from "#src/testing";
 import { schema } from "@~/identite-proconnect/database";
 import {
   create_adora_pony_moderation,
@@ -24,20 +25,15 @@ import {
   beforeAll,
   beforeEach,
   expect,
+  mock,
   setSystemTime,
   spyOn,
   test,
 } from "bun:test";
 import { and, eq } from "drizzle-orm";
-import fc from "fast-check";
 import { Hono } from "hono";
 import assert from "node:assert/strict";
-import type z from "zod";
-import app from "./validate";
-
-//
-
-type ValidateFormSchemaType = z.input<typeof validate_form_schema>;
+import app from "./index";
 
 //
 
@@ -49,18 +45,15 @@ const fetchSpy = spyOn(globalThis, "fetch").mockImplementation((() =>
 
 //
 
-const cases = fc.sample(
-  fc.tuple(
-    fc.constantFrom("true", "false"),
-    fc.constantFrom("AS_INTERNAL", "AS_EXTERNAL"),
-    fc.constantFrom("true", "false"),
-  ),
-  { numRuns: 8 },
-);
+const cases = cartesian({
+  add_domain: ["true", "false", undefined] as const,
+  add_member: ["AS_INTERNAL", "AS_EXTERNAL"] as const,
+  send_notification: ["true", "false", undefined] as const,
+});
 
 test.each(cases)(
-  "PATCH /moderations/:id/validate marks moderation as validated (add_domain=%s, add_member=%s, send_notification=%s)",
-  async (add_domain, add_member, send_notification) => {
+  "PATCH /moderations/:id/validate marks moderation as validated (%p)",
+  async ({ add_domain, add_member, send_notification }) => {
     fetchSpy.mockClear();
     setSystemTime(new Date("2222-11-10T00:00:00.000Z"));
     await create_unicorn_organization(pg);
@@ -69,11 +62,19 @@ test.each(cases)(
       type: "💼",
     });
 
-    const body = new URLSearchParams({
-      add_domain,
-      add_member,
-      send_notification,
-    } as ValidateFormSchemaType);
+    const body = new URLSearchParams();
+    if (add_domain !== undefined) body.append("add_domain", add_domain);
+    body.append("add_member", add_member);
+    if (send_notification !== undefined)
+      body.append("send_notification", send_notification);
+
+    const mock_crisp = {
+      create_conversation: mock().mockResolvedValue({
+        session_id: "test-session",
+      }),
+      send_message: mock().mockResolvedValue(undefined),
+      mark_conversation_as_resolved: mock().mockResolvedValue(undefined),
+    };
 
     setSystemTime(new Date("2222-11-11T00:00:00.000Z"));
     const response = await new Hono()
@@ -87,13 +88,15 @@ test.each(cases)(
       )
       .use(set_identite_pg(pg))
       .use(set_identite_pg_client(client as any))
+      .use(set_crisp_client(mock_crisp as any))
       .use(set_userinfo({ email: "admin@example.com" }))
       .route("/:id/validate", app)
       .request(`/${moderation_id}/validate`, {
         method: "PATCH",
         body,
+        headers: { "hx-request": "true" },
       });
-
+    if (!response.ok) await expect(response.json()).resolves.toBeUndefined();
     expect(response.status).toBe(200);
 
     const moderation = await pg.query.moderations.findFirst({
@@ -133,7 +136,7 @@ test.each(cases)(
     });
 
     if (send_notification === "true") {
-      expect(fetchSpy).toHaveBeenCalled();
+      expect(mock_crisp.send_message).toHaveBeenCalled();
     }
   },
 );
@@ -155,10 +158,19 @@ test("PATCH /moderations/:id/validate succeeds when user is already linked to or
     updated_at: new Date().toISOString(),
   });
 
+  const mock_crisp = {
+    create_conversation: mock().mockResolvedValue({
+      session_id: "test-session",
+    }),
+    send_message: mock().mockResolvedValue(undefined),
+    mark_conversation_as_resolved: mock().mockResolvedValue(undefined),
+  };
+
   const response = await new Hono()
     .use(set_config({ ALLOWED_USERS: "admin@example.com" }))
     .use(set_identite_pg(pg))
     .use(set_identite_pg_client(client as any))
+    .use(set_crisp_client(mock_crisp as any))
     .use(set_userinfo({ email: "admin@example.com" }))
     .route("/:id/validate", app)
     .request(`/${moderation_id}/validate`, {

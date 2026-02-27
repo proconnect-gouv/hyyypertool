@@ -3,7 +3,6 @@ Fonctionnalité: Parcours d'une modération
 
   Contexte:
     Soit une base de données nourrie au grain
-    Et un faux serveur "identite.proconnect.gouv.fr"
     Quand je navigue sur la page
     Et je clique sur le bouton "ProConnect"
     Et je clique sur le lien nommé "Modération a traiter de Jean Bon pour 13002526500013"

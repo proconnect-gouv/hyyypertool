@@ -8,7 +8,7 @@ import {
 } from "@~/identite-proconnect/database";
 import { to as await_to } from "await-to-js";
 import { eq } from "drizzle-orm";
-import { ResetMFA_Message } from "../templates";
+import { ResetMFAMessage } from "../templates";
 import { GetUserInfo } from "./GetUserInfo";
 
 //
@@ -19,8 +19,8 @@ export function ResetMFA({
   resolve_delay,
 }: IdentiteProconnectDatabaseCradle &
   CrispApiCradle & { resolve_delay: number }) {
-  type ResetMFA_Input = { moderator: { email: string }; user_id: number };
-  return async function reset_mfa({ moderator, user_id }: ResetMFA_Input) {
+  type ResetMFAInput = { moderator: { email: string }; user_id: number };
+  return async function reset_mfa({ moderator, user_id }: ResetMFAInput) {
     await pg
       .delete(schema.authenticators)
       .where(eq(schema.authenticators.user_id, user_id));
@@ -55,7 +55,7 @@ export function ResetMFA({
     };
 
     await crisp.send_message({
-      content: ResetMFA_Message(),
+      content: ResetMFAMessage(),
       session_id,
       user,
     });
