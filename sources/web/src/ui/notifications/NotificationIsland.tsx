@@ -12,7 +12,7 @@
  * ```
  */
 
-import { createIsland } from "../../lib/create-island";
+import { createIsland } from "#src/lib/create-island";
 import { NotificationContainer } from "./notifications.client";
 
 //

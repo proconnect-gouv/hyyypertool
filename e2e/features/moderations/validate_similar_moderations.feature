@@ -18,7 +18,7 @@ Fonctionnalité: Validation automatique des modérations similaires
 
     Soit je vais à l'intérieur du dialogue nommé "la modale de validation"
     Quand je clique sur "<add_member>"
-    Quand je clique sur "J’autorise le domaine <add_domain>"
+    Quand je clique sur "J'autorise le domaine <add_domain>"
     Quand je clique sur "Terminer"
     Et je réinitialise le contexte
     Quand je clique sur "Annuler"

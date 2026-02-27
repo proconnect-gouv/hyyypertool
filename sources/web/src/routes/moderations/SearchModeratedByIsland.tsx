@@ -4,7 +4,7 @@
  * Renders a moderated by search input that auto-enables processed requests when typing
  */
 
-import { createIsland } from "../../lib/create-island";
+import { createIsland } from "#src/lib/create-island";
 import {
   SearchModeratedBy,
   type SearchModeratedByProps,

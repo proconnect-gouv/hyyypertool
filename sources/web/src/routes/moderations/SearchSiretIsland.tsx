@@ -4,7 +4,7 @@
  * Renders a SIRET search input that auto-enables processed requests when typing
  */
 
-import { createIsland } from "../../lib/create-island";
+import { createIsland } from "#src/lib/create-island";
 import { SearchSiret, type SearchSiretProps } from "./search-siret.client";
 
 //

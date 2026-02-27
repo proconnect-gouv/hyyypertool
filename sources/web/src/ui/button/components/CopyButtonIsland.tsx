@@ -4,11 +4,11 @@
  * Renders a Preact-powered copy button that hydrates on the client
  */
 
+import { createIsland } from "#src/lib/create-island";
 import type { JSX, PropsWithChildren } from "hono/jsx";
 import type { VariantProps } from "tailwind-variants";
 import { tv } from "tailwind-variants";
 import { button } from "..";
-import { createIsland } from "../../../lib/create-island";
 import { CopyButtonClient } from "./copy.client";
 
 //

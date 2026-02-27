@@ -4,7 +4,7 @@
  * Renders a checkbox that auto-checks when search inputs have content
  */
 
-import { createIsland } from "../../lib/create-island";
+import { createIsland } from "#src/lib/create-island";
 import {
   ProcessedCheckbox,
   type ProcessedCheckboxProps,
