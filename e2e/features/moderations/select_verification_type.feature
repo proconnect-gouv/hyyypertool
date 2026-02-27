@@ -26,8 +26,8 @@ Fonctionnalité: Sélectionner un type de vérification lors de l'acceptation
     Alors je vois "Liste des moderations"
     Quand je clique sur "Voir les demandes traitées"
     Quand je clique sur le lien nommé "Modération a traiter de Jean Bon pour 51935970700022"
-    Quand je clique sur "👥 1 membre connu dans l’organisation"
-    Alors je dois voir un tableau nommé "👥 1 membre connu dans l’organisation" et contenant
+    Quand je clique sur "👥 3 membres connus dans l’organisation"
+    Alors je dois voir un tableau nommé "👥 3 membres connus dans l’organisation" et contenant
       | Prénom | Nom | Type                |
       | Jean   | Bon | <verification_enum> |
 

@@ -16,6 +16,7 @@ import { insert_dengi } from "./organizations/dengi";
 import { insert_dinum } from "./organizations/dinum";
 import { insert_sak } from "./organizations/sak";
 import { insert_yes_we_hack } from "./organizations/yes_we_hack";
+import { create_adora_pony_user, create_pink_diamond_user } from "./unicorn";
 import { insert_jeanbon } from "./users/jeanbon";
 import { insert_jeandre } from "./users/jeandre";
 import { insert_mariebon } from "./users/mariebon";
@@ -68,6 +69,10 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
     consola.verbose(`🌱 INSERT organization ${aldp.cached_nom_complet}`);
     const abracadabra = await insert_abracadabra(db);
     consola.verbose(`🌱 INSERT organization ${abracadabra.cached_nom_complet}`);
+    const adora_pony_id = await create_adora_pony_user(db);
+    consola.verbose(`🌱 INSERT user Adora Pony`);
+    const pink_diamond_id = await create_pink_diamond_user(db);
+    consola.verbose(`🌱 INSERT user Pink Diamond`);
     const dengi = await insert_dengi(db);
     consola.verbose(`🌱 INSERT organization ${dengi.cached_nom_complet}`);
     const bosch_france = await insert_bosch_france(db);
@@ -101,6 +106,20 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
       verification_type: "domain_not_verified_yet",
     });
     consola.verbose(`🌱 INSERT ${marie_bon} join ${bosch_rexroth}`);
+
+    await insert_users_organizations(db, {
+      organization_id: abracadabra.id,
+      user_id: adora_pony_id,
+      verification_type: "domain_not_verified_yet",
+    });
+    consola.verbose(`🌱 INSERT Adora join ${abracadabra.cached_libelle}`);
+
+    await insert_users_organizations(db, {
+      organization_id: abracadabra.id,
+      user_id: pink_diamond_id,
+      verification_type: "no_validation_means_available",
+    });
+    consola.verbose(`🌱 INSERT Pink join ${abracadabra.cached_libelle}`);
 
     //
 

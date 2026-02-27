@@ -39,3 +39,20 @@ Fonctionnalité: Gérer un domaine interne lors de la modération
     Alors je dois voir un tableau nommé "🌐 1 domaine connu dans l’organisation" et contenant
       | Domain      | Status | Type     |
       | poymail.com | ✅      | verified |
+
+  Scénario: Ajout d’un domaine vérifié met à jour automatiquement les liens faibles des membres
+    # Verify that members with weak verification types are shown
+    Alors je dois voir un tableau nommé "👥 2 membres connus dans l’organisation" et contenant
+      | Prénom | Nom      | Email               | Type de vérification     |
+      | Adora  | Pony     | adora.pony@unicorn.xyz | domain_not_verified_yet |
+      | Pink   | Diamond  | pink.diamond@unicorn.xyz | no_validation_means_available |
+
+    # Add a verified domain - this should automatically update weak member links
+    Et je saisie le mot "unicorn.xyz{enter}" dans la boîte à texte nommée "Ajouter un domain"
+    Et je réinitialise le contexte
+
+    # Verify that the members table has been updated (rerendered) with new verification types
+    Alors je dois voir un tableau nommé "👥 2 membres connus dans l’organisation" et contenant
+      | Prénom | Nom      | Email               | Type de vérification |
+      | Adora  | Pony     | adora.pony@unicorn.xyz | domain         |
+      | Pink   | Diamond  | pink.diamond@unicorn.xyz | domain         |
