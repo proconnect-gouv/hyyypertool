@@ -1,5 +1,25 @@
 # Changelog
 
+## [2026.2.12](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.11...2026.2.12) (2026-02-27)
+
+### Changements
+
+- 🐛 Correction du doublon add_domain dans le formulaire de validation
+
+Remplacement des composants serveur (radio + checkbox) par un island Preact dans la modale d'acceptation de modération. Cela corrige un bug où deux champs `add_domain` étaient envoyés simultanément, provoquant une erreur de validation Zod.
+
+- 💄 Simplifie les filtres de modération
+
+Supprime les icônes visuelles (œil/œil barré) des cases à cocher des filtres de la page de modération pour simplifier l'interface utilisateur.
+
+### Ajouté
+
+- ✨ Refactor member and domain picker into unified island component (#1432) (ab1cb165)
+
+### Modifié
+
+- 💄 simplify moderations filter (#1434) (0a5eecf9)
+
 ## [2026.2.11](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.10...2026.2.11) (2026-02-27)
 
 ### Changements
