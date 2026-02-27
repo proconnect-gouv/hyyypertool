@@ -147,6 +147,16 @@ function Nav() {
             Délivrabilité des domaines
           </a>
         </li>
+        <li class="fr-nav__item">
+          <a
+            aria-current={req.routePath.startsWith("/response-templates")}
+            class="fr-nav__link"
+            href={urls["response-templates"].$url().pathname}
+            target="_self"
+          >
+            Templates de réponse
+          </a>
+        </li>
       </ul>
     </nav>
   );
