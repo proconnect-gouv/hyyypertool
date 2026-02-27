@@ -1,5 +1,17 @@
 # Changelog
 
+## [2026.2.11](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.10...2026.2.11) (2026-02-27)
+
+### Changements
+
+- 🐛 Correction de la vérification de domaine pour les membres existants
+
+Correction de l'ajout de domaines vérifiés afin que les types de vérification des membres existants soient correctement mis à jour via le mécanisme d'assignation par domaine.
+
+### Ajouté
+
+- ✨ Automate domain verification when adding authorized domains (#1433) (7cdbdb91)
+
 ## [2026.2.10](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.9...2026.2.10) (2026-02-26)
 
 ### Changements
