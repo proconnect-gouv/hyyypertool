@@ -11,6 +11,7 @@ import {
 import { zValidator } from "@hono/zod-validator";
 import { EntitySchema } from "@~/core/schema";
 import type { IdentiteProconnectPgDatabase } from "@~/identite-proconnect/database";
+import { ModerationStatusSchema } from "@~/identite-proconnect/types";
 import { Hono } from "hono";
 
 //
@@ -40,8 +41,9 @@ async function mark_as_reprocessed(
 
   await update_moderation_by_id(id, {
     comment,
-    moderated_by: null,
     moderated_at: null,
+    moderated_by: null,
+    status: ModerationStatusSchema.enum.reopened,
   });
 }
 

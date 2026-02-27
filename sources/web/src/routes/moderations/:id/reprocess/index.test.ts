@@ -13,7 +13,7 @@ import {
   migrate,
   pg,
 } from "@~/identite-proconnect/database/testing";
-import { beforeAll, beforeEach, expect, test } from "bun:test";
+import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
 import { Hono } from "hono";
 import app from "./index";
 
@@ -25,6 +25,8 @@ beforeEach(empty_database);
 //
 
 test("PATCH /moderations/:id/reprocess resets moderation to pending", async () => {
+  setSystemTime(new Date("2222-01-01T00:00:00.000Z"));
+
   await create_unicorn_organization(pg);
   await create_adora_pony_user(pg);
   const moderation_id = await create_adora_pony_moderation(pg, {
@@ -33,6 +35,7 @@ test("PATCH /moderations/:id/reprocess resets moderation to pending", async () =
     moderated_by: "previous@moderator.com",
   });
 
+  setSystemTime(new Date("2222-01-02T00:00:00.000Z"));
   const response = await new Hono()
     .use(set_config({ ALLOWED_USERS: "admin@example.com" }))
     .use(set_identite_pg(pg))
@@ -46,6 +49,18 @@ test("PATCH /moderations/:id/reprocess resets moderation to pending", async () =
     where: (table, { eq }) => eq(table.id, moderation_id),
   });
 
-  expect(moderation?.moderated_at).toBeNull();
-  expect(moderation?.moderated_by).toBeNull();
+  expect(moderation).toMatchInlineSnapshot(`
+    {
+      "comment": "7952428800000 admin@example.com | Réouverte par admin@example.com",
+      "created_at": "2222-01-01 00:00:00+00",
+      "id": 1,
+      "moderated_at": null,
+      "moderated_by": null,
+      "organization_id": 1,
+      "status": "reopened",
+      "ticket_id": null,
+      "type": "💼",
+      "user_id": 1,
+    }
+  `);
 });
