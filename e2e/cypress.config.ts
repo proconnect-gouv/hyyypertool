@@ -14,6 +14,7 @@ import { insert_database } from "../sources/identite-proconnect/src/database/see
 //
 
 export default defineConfig({
+  allowCypressEnv: false,
   e2e: {
     baseUrl: "http://localhost:3000",
     reporter:
