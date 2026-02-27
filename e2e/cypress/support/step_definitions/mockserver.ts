@@ -5,6 +5,7 @@ import { Given, Then } from "@badeball/cypress-cucumber-preprocessor";
 // from https://app.swaggerhub.com/apis/jamesdbloom/mock-server-openapi/5.15.x#/Verification
 type MockServerRequestVerificationBody = {
   httpRequest: {
+    method?: string;
     path: string;
   };
   times?: {
@@ -19,10 +20,13 @@ Given("un faux serveur {string}", function (server: string) {
 });
 
 Then("une notification mail est envoyée", function () {
-  cy.env(["APP_MONCOMPTEPRO_URL"]).then(({ APP_MONCOMPTEPRO_URL }) => {
-    const url = new URL("/mockserver/verify", APP_MONCOMPTEPRO_URL).href;
+  cy.env(["API_CRISP_CHAT_URL"]).then(({ API_CRISP_CHAT_URL }) => {
+    const url = new URL("/mockserver/verify", API_CRISP_CHAT_URL).href;
     const body = {
-      httpRequest: { path: "/api/admin/send-moderation-processed-email" },
+      httpRequest: {
+        method: "POST",
+        path: "/v1/website/.*/conversation/.*/message",
+      },
       times: { atLeast: 1 },
     } satisfies MockServerRequestVerificationBody;
 
@@ -33,20 +37,23 @@ Then("une notification mail est envoyée", function () {
           .request({ method: "PUT", url, body, failOnStatusCode: false })
           .its("status")
           .then((status) => status === 202),
-      { interval: 500, timeout: 10_000 },
+      { interval: 500, timeout: 5_000 },
     );
   });
 });
 
 Then("une notification mail n'est pas envoyée", () => {
-  cy.env(["APP_MONCOMPTEPRO_URL"]).then(({ APP_MONCOMPTEPRO_URL }) => {
+  cy.env(["API_CRISP_CHAT_URL"]).then(({ API_CRISP_CHAT_URL }) => {
     cy.request({
       body: {
-        httpRequest: { path: "/api/admin/send-moderation-processed-email" },
+        httpRequest: {
+          method: "POST",
+          path: "/v1/website/.*/conversation/.*/message",
+        },
         times: { atMost: 0 },
       } satisfies MockServerRequestVerificationBody,
       method: "PUT",
-      url: new URL("/mockserver/verify", APP_MONCOMPTEPRO_URL).href,
+      url: new URL("/mockserver/verify", API_CRISP_CHAT_URL).href,
     })
       .its("status")
       .should("equal", 202);

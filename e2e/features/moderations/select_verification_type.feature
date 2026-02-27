@@ -3,7 +3,6 @@ Fonctionnalité: Sélectionner un type de vérification lors de l'acceptation
 
   Contexte:
     Soit une base de données nourrie au grain
-    Et un faux serveur "identite.proconnect.gouv.fr"
     Quand je navigue sur la page
     Et je clique sur le bouton "ProConnect"
     Et je dois voir le titre de page "Liste des moderations"

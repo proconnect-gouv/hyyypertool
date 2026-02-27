@@ -3,6 +3,7 @@
 import type { validate_form_schema } from "#src/lib/moderations";
 import { set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
+import { set_crisp_client } from "#src/middleware/crisp";
 import {
   set_identite_pg,
   set_identite_pg_client,
@@ -24,6 +25,7 @@ import {
   beforeAll,
   beforeEach,
   expect,
+  mock,
   setSystemTime,
   spyOn,
   test,
@@ -33,7 +35,7 @@ import fc from "fast-check";
 import { Hono } from "hono";
 import assert from "node:assert/strict";
 import type z from "zod";
-import app from "./validate";
+import app from "./index";
 
 //
 
@@ -75,6 +77,12 @@ test.each(cases)(
       send_notification,
     } as ValidateFormSchemaType);
 
+    const mock_crisp = {
+      create_conversation: mock().mockResolvedValue({ session_id: "test-session" }),
+      send_message: mock().mockResolvedValue(undefined),
+      mark_conversation_as_resolved: mock().mockResolvedValue(undefined),
+    };
+
     setSystemTime(new Date("2222-11-11T00:00:00.000Z"));
     const response = await new Hono()
       .use(
@@ -87,6 +95,7 @@ test.each(cases)(
       )
       .use(set_identite_pg(pg))
       .use(set_identite_pg_client(client as any))
+      .use(set_crisp_client(mock_crisp as any))
       .use(set_userinfo({ email: "admin@example.com" }))
       .route("/:id/validate", app)
       .request(`/${moderation_id}/validate`, {
@@ -133,7 +142,7 @@ test.each(cases)(
     });
 
     if (send_notification === "true") {
-      expect(fetchSpy).toHaveBeenCalled();
+      expect(mock_crisp.send_message).toHaveBeenCalled();
     }
   },
 );
@@ -155,10 +164,17 @@ test("PATCH /moderations/:id/validate succeeds when user is already linked to or
     updated_at: new Date().toISOString(),
   });
 
+  const mock_crisp = {
+    create_conversation: mock().mockResolvedValue({ session_id: "test-session" }),
+    send_message: mock().mockResolvedValue(undefined),
+    mark_conversation_as_resolved: mock().mockResolvedValue(undefined),
+  };
+
   const response = await new Hono()
     .use(set_config({ ALLOWED_USERS: "admin@example.com" }))
     .use(set_identite_pg(pg))
     .use(set_identite_pg_client(client as any))
+    .use(set_crisp_client(mock_crisp as any))
     .use(set_userinfo({ email: "admin@example.com" }))
     .route("/:id/validate", app)
     .request(`/${moderation_id}/validate`, {

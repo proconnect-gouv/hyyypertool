@@ -5,6 +5,7 @@ import type { HtmxHeader } from "#src/htmx";
 import {
   MODERATION_EVENTS,
   ValidateSimilarModerations,
+  send_crisp_notification,
   validate_form_schema,
 } from "#src/lib/moderations";
 import {
@@ -12,11 +13,13 @@ import {
   GetFicheOrganizationById,
 } from "#src/lib/organizations/usecase";
 import type { App_Context } from "#src/middleware/context";
-import { GetModerationWithUser } from "#src/queries/moderations";
+import {
+  GetModerationWithUser,
+  UpdateModerationById,
+} from "#src/queries/moderations";
 import { UpdateUserByIdInOrganization } from "#src/queries/users";
 import { zValidator } from "@hono/zod-validator";
 import { EntitySchema, z_email_domain } from "@~/core/schema";
-import { SendModerationProcessedEmail } from "@~/identite-proconnect/api";
 import {
   EmailDomainRepository,
   MarkDomainAsVerified,
@@ -28,11 +31,12 @@ import {
   LinkTypes,
   type EmailDomain,
 } from "@~/identite-proconnect/types";
+import { build_moderation_update } from "@~/moderations/build_moderation_update";
 import { to } from "await-to-js";
 import consola from "consola";
 import { Hono } from "hono";
+import { dedent } from "ts-dedent";
 import { P, match } from "ts-pattern";
-import { mark_as_validated } from "./mark_as_validated";
 
 //
 
@@ -48,7 +52,7 @@ export default new Hono<App_Context>().patch(
     text,
     req,
     notFound,
-    var: { config, identite_pg_client, identite_pg, userinfo, sentry },
+    var: { config, crisp, identite_pg_client, identite_pg, userinfo, sentry },
   }) {
     const { id } = req.valid("param");
     const { add_domain, add_member, send_notification, verification_type } =
@@ -69,6 +73,9 @@ export default new Hono<App_Context>().patch(
       });
     const validate_similar_moderations =
       ValidateSimilarModerations(identite_pg);
+    const find_organization_by_id = GetFicheOrganizationById({
+      pg: identite_pg,
+    });
     const find_email_domains_by_organization_id =
       EmailDomainRepository.findEmailDomainsByOrganizationIdFactory({
         pg: identite_pg_client,
@@ -157,17 +164,51 @@ export default new Hono<App_Context>().patch(
 
     //#region ✨ Send notification
     if (send_notification) {
-      const send_moderation_processed_email = SendModerationProcessedEmail({
-        baseUrl: config.API_AUTH_URL,
-        username: config.API_AUTH_USERNAME,
-        password: config.API_AUTH_PASSWORD,
+      const { cached_libelle, siret } =
+        await find_organization_by_id(organization_id);
+
+      const session_id =
+        moderation.ticket_id ??
+        (
+          await crisp.create_conversation({
+            email: moderation.user.email,
+            subject: `[ProConnect] Demande pour rejoindre ${cached_libelle || siret}`,
+            nickname: moderation.user.email,
+          })
+        ).session_id;
+
+      await send_crisp_notification(crisp, {
+        ticket_id: session_id,
+        email: moderation.user.email,
+        subject: "Modération",
+        nickname: moderation.user.email,
+        content: ModerationProcessedMessage({
+          baseurl: config.API_AUTH_URL,
+          email: moderation.user.email,
+          libelle: cached_libelle || siret,
+        }),
+        sender: {
+          nickname: userinfo.email,
+        },
       });
-      await send_moderation_processed_email({ organization_id, user_id });
+
+      await new Promise((resolve) =>
+        setTimeout(resolve, config.CRISP_RESOLVE_DELAY),
+      );
+
+      await crisp.mark_conversation_as_resolved({ session_id });
     }
     //#endregion
 
     //#region ✨ Mark moderation as validated
-    await mark_as_validated(identite_pg, moderation, userinfo);
+    const update = build_moderation_update({
+      comment: moderation.comment,
+      userinfo,
+      reason: "[ProConnect] ✨ Modération validée",
+      type: "VALIDATED",
+    });
+    const update_moderation_by_id = UpdateModerationById({ pg: identite_pg });
+    await update_moderation_by_id(moderation.id, update);
     //#endregion
 
     return text("OK", 200, {
@@ -189,4 +230,27 @@ function deduce_verification_type_from_organization_domains(
   )
     ? LinkTypes.enum.domain
     : LinkTypes.enum.no_validation_means_available;
+}
+
+export function ModerationProcessedMessage({
+  baseurl,
+  libelle,
+  email,
+}: {
+  baseurl: string;
+  libelle: string;
+  email: string;
+}) {
+  return dedent`
+    Bonjour,
+
+    Le rattachement de votre compte ProConnect (${email}) à l'organisation « ${libelle} » a été validée sur ${baseurl}.
+
+    Vous pouvez à présent vous connecter sur le service en ligne souhaité.
+
+    Nous restons à votre disposition pour toute information complémentaire.
+
+    Excellente journée,
+    L'équipe ProConnect.
+  `;
 }

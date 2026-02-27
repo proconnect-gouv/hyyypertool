@@ -5,7 +5,8 @@ import {
   type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
 import { and, eq, ilike, isNull } from "drizzle-orm";
-import { mark_moderation_as } from "./mark_moderation_as";
+import { build_moderation_update } from "@~/moderations/build_moderation_update";
+import { UpdateModerationById } from "#src/queries/moderations";
 
 //
 
@@ -50,17 +51,16 @@ export function ValidateSimilarModerations(pg: IdentiteProconnectPgDatabase) {
 
     // Atomic batch validation using transaction and Promise.all
     return pg.transaction(async (tx) => {
+      const update_moderation_by_id = UpdateModerationById({ pg: tx });
       const validation_promises = matching_moderations.map(
         async (moderation) => {
-          await mark_moderation_as(
-            {
-              moderation: { comment: moderation.comment, id: moderation.id },
-              pg: tx,
-              reason,
-              userinfo,
-            },
-            "VALIDATED",
-          );
+          const update = build_moderation_update({
+            comment: moderation.comment,
+            userinfo,
+            reason,
+            type: "VALIDATED",
+          });
+          await update_moderation_by_id(moderation.id, update);
           return moderation.id;
         },
       );

@@ -1,7 +1,8 @@
 //
 
 import type { HtmxHeader } from "#src/htmx";
-import { append_comment, MODERATION_EVENTS } from "#src/lib/moderations";
+import { MODERATION_EVENTS } from "#src/lib/moderations";
+import { append_comment } from "@~/moderations/comment_message";
 import type { App_Context } from "#src/middleware/context";
 import {
   GetModerationById,

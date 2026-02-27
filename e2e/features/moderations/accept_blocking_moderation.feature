@@ -3,7 +3,7 @@ Fonctionnalité: Accepter une modération bloquante avec la barre d'outils
 
   Contexte:
     Soit une base de données nourrie au grain
-    Et un faux serveur "identite.proconnect.gouv.fr"
+    Et un faux serveur "api.crisp.chat"
     Quand je navigue sur la page
     Et je clique sur le bouton "ProConnect"
 
