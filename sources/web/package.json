@@ -45,7 +45,7 @@
     "nprogress": "0.2.0",
     "openid-client": "6.8.2",
     "preact": "10.28.4",
-    "preact-render-to-string": "6.6.5",
+    "preact-render-to-string": "6.6.6",
     "rehype-sanitize": "6.0.0",
     "rehype-stringify": "10.0.1",
     "remark-parse": "11.0.0",
