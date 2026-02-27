@@ -1,5 +1,25 @@
 # Changelog
 
+## [2026.2.13](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.12...2026.2.13) (2026-02-27)
+
+### Changements
+
+- 🐛 Correction du retraitement des modérations
+
+Lors du retraitement d'une modération, le statut passe désormais à "reopened" au lieu de rester inchangé. Cela permet de mieux suivre les modérations qui ont été rouvertes pour retraitement.
+
+### Corrigé
+
+- 🐛 moderations: set status to reopened when reprocessing (#1440) (3ee50623)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): Bump preact-render-to-string (#1437) (937be5cf)
+- :arrow_upper_right: [patch](deps): Bump @proconnect-gouv/proconnect.api_entreprise (#1435) (db4329ff)
+- :arrow_upper_right: [patch](deps): Bump tailwind-merge (#1436) (cebefd14)
+- :arrow_upper_right: [patch](deps-dev): Bump @happy-dom/global-registrator (#1438) (2d8c4866)
+- :arrow_upper_right: [patch](deps): Bump preact from 10.28.3 to 10.28.4 (#1439) (7a806c58)
+
 ## [2026.2.12](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.11...2026.2.12) (2026-02-27)
 
 ### Changements
