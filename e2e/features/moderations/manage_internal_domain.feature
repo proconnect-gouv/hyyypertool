@@ -32,9 +32,7 @@ Fonctionnalité: Gérer un domaine interne lors de la modération
       | Domain      | Status | Type    |
       | yopmail.com | 🚫     | refused |
     Et je réinitialise le contexte
-
-    Quand je clique sur "Ajouter un domain"
-    Et je tape "poymail.com{enter}"
+    Et je saisie le mot "poymail.com{enter}" dans la boîte à texte nommée "Ajouter un domain"
 
     # TODO(douglasduteil): We should update the title when adding a domain
     Et je vois "poymail.com"

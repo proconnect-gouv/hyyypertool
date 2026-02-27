@@ -1,15 +1,19 @@
 //
 
+import { BadRequestError } from "#src/errors";
 import type { HtmxHeader } from "#src/htmx";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import {
-  AddAuthorizedDomain,
+  AddVerifiedDomain,
+  GetFicheOrganizationById,
   RemoveDomainEmailById,
 } from "#src/lib/organizations/usecase";
 import type { App_Context } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
 import { DescribedBySchema, EntitySchema, IdSchema } from "@~/core/schema";
 import { schema } from "@~/identite-proconnect/database";
+import { MarkDomainAsVerified } from "@~/identite-proconnect/sdk";
+import { EmailDomainVerificationTypes } from "@~/identite-proconnect/types";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
@@ -52,18 +56,35 @@ export default new Hono<App_Context>()
     "/",
     zValidator("param", EntitySchema),
     zValidator("form", z.object({ domain: z.string().min(1) })),
-    async function PUT({ text, req, var: { identite_pg } }) {
+    async function PUT({
+      text,
+      req,
+      var: { identite_pg, identite_pg_client },
+    }) {
       const { id: organization_id } = req.valid("param");
       const { domain } = req.valid("form");
 
-      const add_authorized_domain = AddAuthorizedDomain({
-        pg: identite_pg,
+      if (domain.includes("@"))
+        throw new BadRequestError(
+          "Domain should not contain the '@' character",
+        );
+
+      const add_verified_domain = AddVerifiedDomain({
+        get_organization_by_id: GetFicheOrganizationById({ pg: identite_pg }),
+        mark_domain_as_verified: MarkDomainAsVerified(identite_pg_client),
       });
 
-      await add_authorized_domain(organization_id, domain);
+      await add_verified_domain({
+        domain,
+        domain_verification_type: EmailDomainVerificationTypes.enum.verified,
+        organization_id,
+      });
 
       return text("OK", 200, {
-        "HX-Trigger": ORGANISATION_EVENTS.enum.DOMAIN_UPDATED,
+        "HX-Trigger": [
+          ORGANISATION_EVENTS.enum.DOMAIN_UPDATED,
+          ORGANISATION_EVENTS.enum.MEMBERS_UPDATED,
+        ].join(", "),
       } as HtmxHeader);
     },
   )

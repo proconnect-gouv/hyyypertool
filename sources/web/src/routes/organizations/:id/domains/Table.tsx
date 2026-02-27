@@ -28,7 +28,7 @@ export function Table({
   describedby: string;
 }) {
   return (
-    <div class="fr-table *:table!">
+    <div class="fr-table mb-0 *:table!">
       <table aria-describedby={describedby}>
         <thead>
           <tr>
@@ -66,9 +66,6 @@ export async function AddDomain({
   return (
     <form {...hx_add_domain_props} hx-swap="none">
       <div class="fr-input-group">
-        <label class="fr-label" for={$describedby}>
-          Ajouter un domain
-        </label>
         <div class="fr-input-wrap fr-input-wrap--addon">
           <input
             aria-describedby={$describedby}
@@ -76,6 +73,7 @@ export async function AddDomain({
             class="fr-input"
             type="text"
             name={add_params.keyof().enum.domain}
+            placeholder="Ajouter un domain"
           />
           <button class="fr-btn" type="submit">
             Ajouter
