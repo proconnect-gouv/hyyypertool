@@ -1,5 +1,20 @@
 # Changelog
 
+## [2026.3.1](https://github.com/proconnect-gouv/hyyypertool/compare/2026.3.0...2026.3.1) (2026-03-02)
+
+### Changements
+
+- 🐛 Restauration de l'identité opérateur Crisp dans les notifications de modération
+
+Les messages envoyés via Crisp lors de la validation ou du rejet d'une modération incluent désormais l'identité complète de l'opérateur (avec `user_id`), permettant une attribution correcte dans l'interface Crisp.
+
+- 🐛 Retour des prefix devant les filtres qui caches des infos
+
+### Corrigé
+
+- 🐛 restore Crisp moderator identity on notifications (#1444) (27a020ff)
+- 🐛 revert to visible hide prefix on filters (#1443) (4df1b087)
+
 ## [2026.3.0](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.13...2026.3.0) (2026-03-02)
 
 ### Changements
