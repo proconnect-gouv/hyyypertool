@@ -1,5 +1,23 @@
 # Changelog
 
+## [2026.3.0](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.13...2026.3.0) (2026-03-02)
+
+### Changements
+
+- ♻️ Envoie de notification de modération traitée a travers Crisp
+
+La notification de modération traitée est envoyée dans la conversation de Crisp existante.
+
+Commit [439ec12](https://github.com/proconnect-gouv/hyyypertool/commit/439ec12b81cc6b60703f703af49b17b05a62d47d)
+
+### Corrigé
+
+- 🐛 update the moderation ticket if created at processed (#1442) (af6c9dbe)
+
+### Divers
+
+- refactor(moderations): send moderation done through crisp (#1441) (439ec12b)
+
 ## [2026.2.13](https://github.com/proconnect-gouv/hyyypertool/compare/2026.2.12...2026.2.13) (2026-02-27)
 
 ### Changements
