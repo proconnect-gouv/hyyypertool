@@ -111,7 +111,7 @@ test.each(cases)(
       moderated_by: " <admin@example.com>",
       organization_id: 1,
       status: "accepted",
-      ticket_id: null,
+      ticket_id: send_notification === "true" ? "test-session" : null,
       type: "💼",
       user_id: 1,
     });

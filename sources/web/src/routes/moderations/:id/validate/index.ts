@@ -80,7 +80,7 @@ export default new Hono<App_Context>().patch(
       EmailDomainRepository.findEmailDomainsByOrganizationIdFactory({
         pg: identite_pg_client,
       });
-
+    const update_moderation_by_id = UpdateModerationById({ pg: identite_pg });
     //#endregion
 
     const [moderation_error, moderation] = await to(
@@ -177,6 +177,12 @@ export default new Hono<App_Context>().patch(
           })
         ).session_id;
 
+      if (!moderation.ticket_id) {
+        await update_moderation_by_id(moderation.id, {
+          ticket_id: session_id,
+        });
+      }
+
       await send_crisp_notification(crisp, {
         ticket_id: session_id,
         email: moderation.user.email,
@@ -207,7 +213,6 @@ export default new Hono<App_Context>().patch(
       reason: "[ProConnect] ✨ Modération validée",
       type: "VALIDATED",
     });
-    const update_moderation_by_id = UpdateModerationById({ pg: identite_pg });
     await update_moderation_by_id(moderation.id, update);
     //#endregion
 
