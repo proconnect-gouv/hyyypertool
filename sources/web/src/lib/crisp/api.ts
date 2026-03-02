@@ -109,7 +109,7 @@ export function GetUserInfo(config: Config) {
 
     return {
       user_id: operator.details.user_id,
-      nickname: `${operator.details.first_name} ${operator.details.last_name}`,
+      nickname: `${operator.details.first_name} ${operator.details.last_name[0]}.`,
     } as User;
   };
 }

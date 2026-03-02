@@ -27,7 +27,6 @@ import {
   expect,
   mock,
   setSystemTime,
-  spyOn,
   test,
 } from "bun:test";
 import { and, eq } from "drizzle-orm";
@@ -40,9 +39,6 @@ import app from "./index";
 beforeAll(migrate);
 beforeEach(empty_database);
 
-const fetchSpy = spyOn(globalThis, "fetch").mockImplementation((() =>
-  Promise.resolve(Response.json({ ok: true }))) as unknown as typeof fetch);
-
 //
 
 const cases = cartesian({
@@ -54,7 +50,6 @@ const cases = cartesian({
 test.each(cases)(
   "PATCH /moderations/:id/validate marks moderation as validated (%p)",
   async ({ add_domain, add_member, send_notification }) => {
-    fetchSpy.mockClear();
     setSystemTime(new Date("2222-11-10T00:00:00.000Z"));
     await create_unicorn_organization(pg);
     await create_adora_pony_user(pg);
@@ -71,6 +66,10 @@ test.each(cases)(
     const mock_crisp = {
       create_conversation: mock().mockResolvedValue({
         session_id: "test-session",
+      }),
+      get_user: mock().mockResolvedValue({
+        user_id: "operator-123",
+        nickname: "Anaïs T.",
       }),
       send_message: mock().mockResolvedValue(undefined),
       mark_conversation_as_resolved: mock().mockResolvedValue(undefined),
@@ -136,7 +135,17 @@ test.each(cases)(
     });
 
     if (send_notification === "true") {
-      expect(mock_crisp.send_message).toHaveBeenCalled();
+      expect(mock_crisp.get_user).toHaveBeenCalledWith({
+        email: "admin@example.com",
+      });
+      expect(mock_crisp.send_message).toHaveBeenCalledWith({
+        session_id: "test-session",
+        content: expect.stringContaining("a été validée"),
+        user: { user_id: "operator-123", nickname: "Anaïs T." },
+      });
+      expect(mock_crisp.mark_conversation_as_resolved).toHaveBeenCalledWith({
+        session_id: "test-session",
+      });
     }
   },
 );
