@@ -51,6 +51,34 @@
   },
   {
     "httpRequest": {
+      "method": "GET",
+      "path": "/api/v1/tickets/{ticket_id}",
+      "pathParameters": {
+        "ticket_id": ["[0-9]+"]
+      }
+    },
+    "httpResponse": {
+      "body": {
+        "assets": {}
+      }
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "PUT",
+      "path": "/api/v1/tickets/{ticket_id}",
+      "pathParameters": {
+        "ticket_id": ["[0-9]+"]
+      }
+    },
+    "httpResponse": {
+      "body": {
+        "assets": {}
+      }
+    }
+  },
+  {
+    "httpRequest": {
       "path": "/readyz"
     },
     "httpResponse": {

@@ -4,7 +4,7 @@ import { dedent } from "ts-dedent";
 
 //
 
-export function ResetMFA_Message() {
+export function ResetMFAMessage() {
   return dedent`
     Bonjour,
 
@@ -17,7 +17,7 @@ export function ResetMFA_Message() {
   `;
 }
 
-export function ResetPassword_Message() {
+export function ResetPasswordMessage() {
   return dedent`
     Bonjour,
 

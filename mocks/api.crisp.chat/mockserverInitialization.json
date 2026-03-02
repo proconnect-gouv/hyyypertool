@@ -64,6 +64,19 @@
   },
   {
     "httpRequest": {
+      "method": "PATCH",
+      "path": "/v1/website/{website_id}/conversation/{session_id}/state",
+      "pathParameters": {
+        "session_id": ["[A-Z0-9\\-\\_]+"],
+        "website_id": ["[A-Z0-9\\-\\_]+"]
+      }
+    },
+    "httpResponse": {
+      "body": {}
+    }
+  },
+  {
+    "httpRequest": {
       "method": "GET",
       "path": "/v1/website/{website_id}/operators/list",
       "pathParameters": {

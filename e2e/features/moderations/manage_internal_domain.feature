@@ -3,7 +3,6 @@ Fonctionnalité: Gérer un domaine interne lors de la modération
 
   Contexte:
     Soit une base de données nourrie au grain
-    Et un faux serveur "identite.proconnect.gouv.fr"
     Quand je navigue sur la page
     Et je clique sur le bouton "ProConnect"
     Alors je vois "Liste des moderations"

@@ -24,7 +24,7 @@ export default defineConfig({
     video: true,
   },
   env: {
-    APP_MONCOMPTEPRO_URL: "http://localhost:6300",
+    API_CRISP_CHAT_URL: "http://localhost:6400",
   },
 });
 
