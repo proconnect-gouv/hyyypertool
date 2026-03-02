@@ -168,7 +168,7 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
               type="checkbox"
               value={"true"}
             />
-            {moderation_type_to_title("non_verified_domain")}
+            Cacher les {moderation_type_to_title("non_verified_domain")}
           </label>
         </li>
         <li>
@@ -181,7 +181,7 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
               type="checkbox"
               value={"true"}
             />
-            {moderation_type_to_title("organization_join_block")}
+            Cacher les {moderation_type_to_title("organization_join_block")}
           </label>
         </li>
       </ul>
