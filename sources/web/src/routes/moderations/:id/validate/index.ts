@@ -167,36 +167,27 @@ export default new Hono<App_Context>().patch(
       const { cached_libelle, siret } =
         await find_organization_by_id(organization_id);
 
-      const session_id =
-        moderation.ticket_id ??
-        (
-          await crisp.create_conversation({
-            email: moderation.user.email,
-            subject: `[ProConnect] Demande pour rejoindre ${cached_libelle || siret}`,
-            nickname: moderation.user.email,
-          })
-        ).session_id;
+      const [, operator] = await to(crisp.get_user({ email: userinfo.email }));
+      const sender = operator ?? { nickname: userinfo.email };
 
-      if (!moderation.ticket_id) {
-        await update_moderation_by_id(moderation.id, {
-          ticket_id: session_id,
-        });
-      }
-
-      await send_crisp_notification(crisp, {
-        ticket_id: session_id,
+      const { session_id } = await send_crisp_notification(crisp, {
+        ticket_id: moderation.ticket_id ?? undefined,
         email: moderation.user.email,
-        subject: "Modération",
+        subject: `[ProConnect] Demande pour rejoindre ${cached_libelle || siret}`,
         nickname: moderation.user.email,
         content: ModerationProcessedMessage({
           baseurl: config.API_AUTH_URL,
           email: moderation.user.email,
           libelle: cached_libelle || siret,
         }),
-        sender: {
-          nickname: userinfo.email,
-        },
+        sender,
       });
+
+      if (!moderation.ticket_id) {
+        await update_moderation_by_id(moderation.id, {
+          ticket_id: session_id,
+        });
+      }
 
       await new Promise((resolve) =>
         setTimeout(resolve, config.CRISP_RESOLVE_DELAY),

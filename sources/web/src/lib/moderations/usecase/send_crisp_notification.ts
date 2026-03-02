@@ -1,6 +1,7 @@
 //
 
 import type { CrispApi } from "#src/lib/crisp";
+import type { User } from "@proconnect-gouv/proconnect.crisp/types";
 
 //
 
@@ -12,7 +13,7 @@ export async function send_crisp_notification(
     subject: string;
     nickname: string;
     content: string;
-    sender: { nickname: string; email?: string };
+    sender: Partial<User>;
   },
 ): Promise<{ session_id: string }> {
   const session_id =
