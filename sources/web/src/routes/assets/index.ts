@@ -4,7 +4,6 @@ import { type AppVariables_Context } from "#src/config";
 import { cache_immutable } from "#src/middleware/cache";
 import { Hono } from "hono";
 import { rewriteAssetRequestPath } from "./rewrite";
-import zammad_attachment_router from "./zammad";
 
 //
 
@@ -64,5 +63,4 @@ export default new Hono<AppVariables_Context>()
     return text(`export default ${JSON.stringify({ VERSION })}`, 200, {
       "content-type": "text/javascript",
     });
-  })
-  .route("/zammad", zammad_attachment_router);
+  });

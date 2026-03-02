@@ -43,7 +43,6 @@ test("GET /moderations/:id/duplicate_warning", async () => {
     .use(
       set_config({
         ALLOWED_USERS: "good@captain.yargs",
-        ZAMMAD_URL: "http://localhost:6500",
         HOST: "http://localhost:6500",
       }),
     )
@@ -68,23 +67,14 @@ test("GET /moderations/:id/duplicate_warning", async () => {
     <div class="fr-alert fr-alert--warning">
       <h3 class="fr-alert__title">Attention : demande multiples</h3>
       <p>Il s&#39;agit de la 2e demande pour cette organisation</p>
-      <a
-        href="http://localhost:6500/#search/adora.pony@unicorn.xyz"
-        rel="noopener noreferrer"
-        target="_blank"
-        >Trouver les echanges pour l&#39;email « adora.pony@unicorn.xyz » dans
-        Zammad</a
-      >
       <ul>
         <li>
           <a href="/moderations/1">Moderation#1</a>
           <p class="fr-badge fr-badge--success">Traité</p>
-          Pas de ticket
         </li>
         <li>
           <a href="/moderations/2">Moderation#2</a>
           <p class="fr-badge fr-badge--success">Traité</p>
-          Pas de ticket
         </li>
       </ul>
       <form

@@ -15,5 +15,5 @@ Fonctionnalité: Gérer les demandes de modération en double
     Alors je vois "Richard Bon veut rejoindre l'organisation « Dengi - Leclerc »"
     Et je vois "Attention : demande multiples"
     Et je vois "Il s'agit de la 2e demande pour cette organisation"
-    Et je vois "Moderation#5 Accepté Pas de ticket"
-    Et je vois "Moderation#6 A traiter Pas de ticket"
+    Et je vois "Moderation#5 Accepté"
+    Et je vois "Moderation#6 A traiter"

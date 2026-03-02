@@ -86,9 +86,6 @@ export const app_env = z.object({
       .with(DEPLOY_ENV_SHEMA.enum.production, () => version)
       .otherwise(() => GIT_SHA_SHEMA.parse(env["GIT_SHA"]) ?? version),
   ),
-  ZAMMAD_MODERATION_TAG: z.string().trim().default("moderation"),
-  ZAMMAD_TOKEN: z.string().trim(),
-  ZAMMAD_URL: z.string().trim().url(),
 });
 
 export default app_env.parse(env);

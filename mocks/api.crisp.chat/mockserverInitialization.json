@@ -37,6 +37,22 @@
   },
   {
     "httpRequest": {
+      "method": "POST",
+      "path": "/v1/website/{website_id}/conversation",
+      "pathParameters": {
+        "website_id": ["[A-Z0-9\\-\\_]+"]
+      }
+    },
+    "httpResponse": {
+      "body": {
+        "data": {
+          "session_id": "session_123456789"
+        }
+      }
+    }
+  },
+  {
+    "httpRequest": {
       "method": "GET",
       "path": "/v1/website/{website_id}/conversation/{session_id}/messages",
       "pathParameters": {
@@ -60,6 +76,19 @@
           }
         ]
       }
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "PATCH",
+      "path": "/v1/website/{website_id}/conversation/{session_id}/meta",
+      "pathParameters": {
+        "session_id": ["[A-Z0-9\\-\\_]+"],
+        "website_id": ["[A-Z0-9\\-\\_]+"]
+      }
+    },
+    "httpResponse": {
+      "body": {}
     }
   },
   {
