@@ -178,7 +178,9 @@ Then(
               const rowData: string[] = [];
 
               $cells.each((_cellIndex, cell) => {
-                const cellText = Cypress.$(cell).text().trim();
+                const $cell = Cypress.$(cell).clone();
+                $cell.find("script").remove();
+                const cellText = $cell.text().trim();
                 rowData.push(cellText);
               });
 
@@ -195,9 +197,9 @@ Then(
                   return expectedRow.every((expectedCell) => {
                     if (!expectedCell.trim()) return true; // Skip empty expected cells
 
-                    // Check if any cell in this row contains the expected content
-                    return actualRow.some((actualCell) =>
-                      actualCell.includes(expectedCell.trim()),
+                    // Check if any cell in this row exactly matches the expected content
+                    return actualRow.some(
+                      (actualCell) => actualCell === expectedCell.trim(),
                     );
                   });
                 });

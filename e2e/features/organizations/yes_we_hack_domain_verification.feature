@@ -28,11 +28,23 @@ Fonctionnalité: Page organisation - domaine à vérifier
       | Domain        | Status |
       | yeswehack.com | ❓      |
 
+    Quand je clique sur "👥 2 membres enregistrés"
+    Alors je dois voir un tableau nommé "👥 2 membres enregistrés" et contenant
+      | Prénom  | Nom     | Type de vérification    |
+      | Jean    | Dupont  | domain_not_verified_yet |
+      | Raphael | Dubigny | domain_not_verified_yet |
+
     Quand je clique sur "Menu"
     Et je clique sur "✅ Domaine autorisé"
     Alors je vois "yeswehack.com"
     Et je vois "✅"
     Et je réinitialise le contexte
+
+    Quand je clique sur "👥 2 membres enregistrés"
+    Alors je dois voir un tableau nommé "👥 2 membres enregistrés" et contenant
+      | Prénom  | Nom     | Type de vérification    |
+      | Jean    | Dupont  | domain                  |
+      | Raphael | Dubigny | domain_not_verified_yet |
 
     Quand je clique sur "Domaines à vérifier"
     Et je clique sur "Rafraichir"

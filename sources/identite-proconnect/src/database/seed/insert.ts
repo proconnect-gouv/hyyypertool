@@ -18,6 +18,7 @@ import { insert_sak } from "./organizations/sak";
 import { insert_yes_we_hack } from "./organizations/yes_we_hack";
 import { insert_jeanbon } from "./users/jeanbon";
 import { insert_jeandre } from "./users/jeandre";
+import { insert_jeanyeshack } from "./users/jeanyeshack";
 import { insert_mariebon } from "./users/mariebon";
 import { insert_pierrebon } from "./users/pierrebon";
 import { insert_raphael } from "./users/raphael";
@@ -35,6 +36,10 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
     const raphael_alpha = await insert_raphael_alpha(db);
     consola.verbose(
       `🌱 INSERT user ${raphael_alpha.given_name} ${raphael_alpha.family_name}`,
+    );
+    const jean_yeshack = await insert_jeanyeshack(db);
+    consola.verbose(
+      `🌱 INSERT user ${jean_yeshack.given_name} ${jean_yeshack.family_name}`,
     );
     const jean_bon = await insert_jeanbon(db);
     consola.verbose(
@@ -213,6 +218,15 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
     });
     consola.verbose(
       `🌱 INSERT ${raphael.given_name} join yes_we_hack (id: ${yes_we_hack})`,
+    );
+
+    await insert_users_organizations(db, {
+      organization_id: yes_we_hack,
+      user_id: jean_yeshack.id,
+      verification_type: "domain_not_verified_yet",
+    });
+    consola.verbose(
+      `🌱 INSERT ${jean_yeshack.given_name} join yes_we_hack (id: ${yes_we_hack})`,
     );
 
     await insert_moderation(db, {
