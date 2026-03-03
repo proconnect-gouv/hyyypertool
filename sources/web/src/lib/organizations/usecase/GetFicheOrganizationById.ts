@@ -20,6 +20,7 @@ export function GetFicheOrganizationById({
         cached_libelle_activite_principale: true,
         cached_libelle_categorie_juridique: true,
         cached_libelle_tranche_effectif: true,
+        cached_tranche_effectifs_unite_legale: true,
         cached_libelle: true,
         cached_nom_complet: true,
         cached_tranche_effectifs: true,

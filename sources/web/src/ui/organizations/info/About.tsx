@@ -82,7 +82,7 @@ export function About(props: Props) {
           {organization.cached_categorie_juridique})
         </dd>
 
-        <dt>Tranche d effectif </dt>
+        <dt>Tranche d'effectif </dt>
         <dd>
           {organization.cached_libelle_tranche_effectif} (code :{" "}
           {organization.cached_tranche_effectifs}){" "}
@@ -98,6 +98,8 @@ export function About(props: Props) {
             )
           </span>
         </dd>
+        <dt>Tranche d'effectif de l'unité légale</dt>
+        <dd>{organization.cached_tranche_effectifs_unite_legale}</dd>
       </dl>
       <details class="my-6">
         <summary>Détails de l'organisation</summary>

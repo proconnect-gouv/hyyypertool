@@ -17,6 +17,7 @@ export async function insert_abracadabra(db: IdentiteProconnectPgDatabase) {
       cached_libelle: "Abracadabra",
       cached_nom_complet: "Abracadabra (ABRACADABRA)",
       cached_tranche_effectifs: "11",
+      cached_tranche_effectifs_unite_legale: "11",
       created_at: "2022-08-08T17:43:15.501+02:00",
       organization_info_fetched_at: "2022-08-08T17:43:15.501+02:00",
       siret: "51935970700022",
