@@ -1,5 +1,17 @@
 # Changelog
 
+## [2026.3.2](https://github.com/proconnect-gouv/hyyypertool/compare/2026.3.1...2026.3.2) (2026-03-03)
+
+### Changements
+
+- 🐛 Mise à jour des membres liés lors du changement de type de vérification d'un domaine
+
+Le PATCH d'un domaine utilise désormais `MarkDomainAsVerified` pour mettre à jour les liens `users_organizations` des membres dont l'email correspond au domaine vérifié. Auparavant, seul le champ `verification_type` du domaine était modifié sans impact sur les membres.
+
+### Corrigé
+
+- 🐛 linked member updated when patching email domain (#1446) (b604e84c)
+
 ## [2026.3.1](https://github.com/proconnect-gouv/hyyypertool/compare/2026.3.0...2026.3.1) (2026-03-02)
 
 ### Changements
