@@ -153,13 +153,6 @@
         "drizzle-kit": "0.31.9",
       },
     },
-    "sources/organizations": {
-      "name": "@~/organizations",
-      "version": "1.0.0",
-      "devDependencies": {
-        "@~/config.typescript": "workspace:*",
-      },
-    },
     "sources/web": {
       "name": "@~/web",
       "version": "1.0.0",
@@ -174,7 +167,6 @@
         "@sentry/node": "10.39.0",
         "@tailwindcss/typography": "^0.5.19",
         "@~/identite-proconnect": "workspace:*",
-        "@~/organizations": "workspace:*",
         "await-to-js": "3.0.0",
         "consola": "3.4.2",
         "hono": "4.12.2",
@@ -687,8 +679,6 @@
     "@~/config.typescript": ["@~/config.typescript@workspace:sources/config/typescript"],
 
     "@~/identite-proconnect": ["@~/identite-proconnect@workspace:sources/identite-proconnect"],
-
-    "@~/organizations": ["@~/organizations@workspace:sources/organizations"],
 
     "@~/release-it-changeset-plugin": ["@~/release-it-changeset-plugin@workspace:packages/release-it-changeset-plugin"],
 

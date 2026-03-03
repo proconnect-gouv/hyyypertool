@@ -10,7 +10,6 @@
     "bin",
     "sources/config/*",
     "sources/identite-proconnect",
-    "sources/organizations",
     "sources/web",
     "packages/*"
   ],

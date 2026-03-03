@@ -505,18 +505,15 @@ Tests live **next to source files**, not in separate `/tests/` tree:
 
 ### When to Extract to Domain Packages
 
-Extract complex business logic to domain packages (`@~/organizations`) when:
+Extract complex business logic to domain packages when:
 
 - Logic is genuinely reusable across 3+ features
 - Pure business rules need to be tested in isolation
 - Domain concepts are complex enough to deserve their own package
 
 ```typescript
-// Domain package: sources/organizations/src/rules/eligibility.rules.ts
-export function can_join_organization(...) { ... }
-
-// Feature uses domain logic:
-import { can_join_organization } from "@~/organizations/rules/eligibility.rules";
+// Feature uses business rules directly from feature folder:
+import { can_join_organization } from "./eligibility.rules";
 ```
 
 ### When to Use Context Access
@@ -537,7 +534,6 @@ import { OrganizationsRepo } from "#src/shared/db/organizations.repo";
 
 1. **Is it pure business logic?**
    - Simple: Feature folder with `.rules.ts` suffix
-   - Complex/reusable: Extract to domain package `@~/organizations/rules/`
 
 2. **Is it data transformation?**
    - Colocate mapper with feature: `insee-to-org.mapper.ts`

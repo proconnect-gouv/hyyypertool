@@ -14,9 +14,6 @@
       "path": "../identite-proconnect"
     },
     {
-      "path": "../organizations"
-    },
-    {
       "path": "../../packages/hono-slotify"
     }
   ]
