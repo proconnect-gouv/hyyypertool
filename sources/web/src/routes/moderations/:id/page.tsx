@@ -100,7 +100,7 @@ async function ModerationPageContent() {
           user={moderation.user}
           organization={moderation.organization}
         />
-        <About_Organization organization={organization_fiche} />
+        <About_Organization organization={organization_fiche} withLink />
         <Investigation_Organization
           banaticUrl={banaticUrl}
           organization={moderation.organization}

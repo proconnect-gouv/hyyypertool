@@ -14,27 +14,37 @@ import { InactiveWarning } from "./InactiveWarning";
 type Props = JSX.IntrinsicElements["section"] & {
   organization: Awaited<ReturnType<GetFicheOrganizationByIdHandler>>;
   nonce?: string;
+  withLink?: boolean;
 };
 
 export function About(props: Props) {
-  const { organization, nonce = "", ...section_props } = props;
+  const {
+    organization,
+    nonce = "",
+    withLink = false,
+    ...section_props
+  } = props;
 
   return (
     <section class="mt-6" {...section_props}>
       <h3>
-        <a
-          class="bg-none"
-          target="_blank"
-          href={
-            urls.organizations[":id"].$url({
-              param: {
-                id: organization.id,
-              },
-            }).pathname
-          }
-        >
-          🏛 Organisation
-        </a>
+        {withLink ? (
+          <a
+            class="bg-none"
+            target="_blank"
+            href={
+              urls.organizations[":id"].$url({
+                param: {
+                  id: organization.id,
+                },
+              }).pathname
+            }
+          >
+            🏛 Organisation
+          </a>
+        ) : (
+          "🏛 Organisation"
+        )}
       </h3>
       <InactiveWarning organization={organization} />
       <dl class={description_list()}>
