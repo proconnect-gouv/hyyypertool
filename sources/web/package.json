@@ -31,7 +31,6 @@
     "@sentry/core": "10.39.0",
     "@sentry/node": "10.39.0",
     "@tailwindcss/typography": "^0.5.19",
-    "@~/core": "workspace:*",
     "@~/identite-proconnect": "workspace:*",
     "@~/moderations": "workspace:*",
     "@~/organizations": "workspace:*",

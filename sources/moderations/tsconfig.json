@@ -3,9 +3,5 @@
   "compilerOptions": {
     "outDir": "./node_modules/.cache/tsc"
   },
-  "references": [
-    {
-      "path": "../core"
-    }
-  ]
+  "references": []
 }
