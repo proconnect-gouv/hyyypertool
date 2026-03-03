@@ -1,7 +1,7 @@
 //
 
 import type { CrispApiCradle } from "#src/lib/crisp";
-import { z_username } from "@~/core/schema";
+import { z_username } from "#src/schema";
 import {
   schema,
   type IdentiteProconnectDatabaseCradle,

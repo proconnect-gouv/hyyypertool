@@ -1,6 +1,6 @@
 //
 
-import { z_username } from "@~/core/schema";
+import { z_username } from "#src/schema";
 import {
   append_comment,
   comment_type_to_status,

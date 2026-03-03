@@ -1,6 +1,6 @@
 //
 
-import { EntitySchema, PaginationSchema, SearchSchema } from "@~/core/schema";
+import { EntitySchema, PaginationSchema, SearchSchema } from "#src/schema";
 
 //
 

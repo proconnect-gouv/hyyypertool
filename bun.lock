@@ -153,17 +153,6 @@
         "drizzle-kit": "0.31.9",
       },
     },
-    "sources/moderations": {
-      "name": "@~/moderations",
-      "version": "1.0.0",
-      "dependencies": {
-        "ts-pattern": "^5.9.0",
-        "zod": "^4.3.6",
-      },
-      "devDependencies": {
-        "@~/config.typescript": "workspace:*",
-      },
-    },
     "sources/organizations": {
       "name": "@~/organizations",
       "version": "1.0.0",
@@ -185,7 +174,6 @@
         "@sentry/node": "10.39.0",
         "@tailwindcss/typography": "^0.5.19",
         "@~/identite-proconnect": "workspace:*",
-        "@~/moderations": "workspace:*",
         "@~/organizations": "workspace:*",
         "await-to-js": "3.0.0",
         "consola": "3.4.2",
@@ -699,8 +687,6 @@
     "@~/config.typescript": ["@~/config.typescript@workspace:sources/config/typescript"],
 
     "@~/identite-proconnect": ["@~/identite-proconnect@workspace:sources/identite-proconnect"],
-
-    "@~/moderations": ["@~/moderations@workspace:sources/moderations"],
 
     "@~/organizations": ["@~/organizations@workspace:sources/organizations"],
 

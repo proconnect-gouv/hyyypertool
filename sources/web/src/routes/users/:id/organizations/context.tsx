@@ -4,7 +4,7 @@ import {
   DescribedBySchema,
   EntitySchema,
   PaginationSchema,
-} from "@~/core/schema";
+} from "#src/schema";
 import { z } from "zod";
 
 //

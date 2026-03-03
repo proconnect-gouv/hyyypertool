@@ -2,7 +2,7 @@
 
 import { get_zammad_attachment } from "#src/lib/zammad";
 import { zValidator } from "@hono/zod-validator";
-import { IdSchema } from "@~/core/schema";
+import { IdSchema } from "#src/schema";
 import { Hono } from "hono";
 import { P, match } from "ts-pattern";
 import { z } from "zod";

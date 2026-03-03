@@ -32,7 +32,6 @@
     "@sentry/node": "10.39.0",
     "@tailwindcss/typography": "^0.5.19",
     "@~/identite-proconnect": "workspace:*",
-    "@~/moderations": "workspace:*",
     "@~/organizations": "workspace:*",
     "await-to-js": "3.0.0",
     "consola": "3.4.2",

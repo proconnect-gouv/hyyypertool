@@ -505,7 +505,7 @@ Tests live **next to source files**, not in separate `/tests/` tree:
 
 ### When to Extract to Domain Packages
 
-Extract complex business logic to domain packages (`@~/organizations`, `@~/moderations`) when:
+Extract complex business logic to domain packages (`@~/organizations`) when:
 
 - Logic is genuinely reusable across 3+ features
 - Pure business rules need to be tested in isolation

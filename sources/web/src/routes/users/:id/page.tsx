@@ -7,7 +7,7 @@ import { badge_description_list } from "#src/ui/list";
 import { FrNumberConverter } from "#src/ui/number";
 import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
-import { z_email_domain } from "@~/core/schema";
+import { z_email_domain } from "#src/schema";
 import type { get_authenticators_by_user_id } from "./get_authenticators_by_user_id.query";
 import type { get_franceconnect_by_user_id } from "./get_franceconnect_by_user_id.query";
 import type { get_user_by_id } from "./get_user_by_id.query";

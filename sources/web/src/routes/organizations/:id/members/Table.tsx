@@ -7,7 +7,7 @@ import { Horizontal_Menu } from "#src/ui/menu/components";
 import { row } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
-import type { Pagination } from "@~/core/schema";
+import type { Pagination } from "#src/schema";
 import { VerificationTypeSchema } from "@~/identite-proconnect/types";
 import { useContext } from "hono/jsx";
 import type { VariantProps } from "tailwind-variants";

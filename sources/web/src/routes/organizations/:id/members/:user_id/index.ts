@@ -5,7 +5,7 @@ import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import type { App_Context } from "#src/middleware/context";
 import { RemoveUserFromOrganization } from "#src/queries/moderations";
 import { zValidator } from "@hono/zod-validator";
-import { EntitySchema } from "@~/core/schema";
+import { EntitySchema } from "#src/schema";
 import { schema } from "@~/identite-proconnect/database";
 import { VerificationTypeSchema } from "@~/identite-proconnect/types";
 import { and, eq } from "drizzle-orm";

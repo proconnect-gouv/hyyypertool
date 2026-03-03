@@ -1,18 +1,17 @@
 //
 
 import type { HtmxHeader } from "#src/htmx";
-import { MODERATION_EVENTS } from "#src/lib/moderations";
+import { MODERATION_EVENTS, append_comment } from "#src/lib/moderations";
 import type { App_Context } from "#src/middleware/context";
 import {
   GetModerationById,
   RemoveUserFromOrganization,
   UpdateModerationById,
 } from "#src/queries/moderations";
+import { EntitySchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
-import { EntitySchema } from "@~/core/schema";
 import type { IdentiteProconnectPgDatabase } from "@~/identite-proconnect/database";
 import { ModerationStatusSchema } from "@~/identite-proconnect/types";
-import { append_comment } from "@~/moderations/comment_message";
 import { Hono } from "hono";
 
 //

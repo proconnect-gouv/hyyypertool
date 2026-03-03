@@ -7,7 +7,7 @@ import { ResetMFA, ResetPassword } from "#src/lib/users";
 import type { App_Context } from "#src/middleware/context";
 import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
-import { EntitySchema } from "@~/core/schema";
+import { EntitySchema } from "#src/schema";
 import { schema } from "@~/identite-proconnect/database";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";

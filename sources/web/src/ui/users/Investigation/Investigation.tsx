@@ -3,7 +3,7 @@
 import type { User } from "#src/lib/users";
 import { button } from "#src/ui/button";
 import { GoogleSearchButton } from "#src/ui/button/components";
-import { z_email_domain } from "@~/core/schema";
+import { z_email_domain } from "#src/schema";
 
 //
 

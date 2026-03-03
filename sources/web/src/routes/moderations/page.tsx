@@ -12,7 +12,7 @@ import { Foot } from "#src/ui/hx_table";
 import { row } from "#src/ui/table";
 import { tag } from "#src/ui/tag";
 import { urls } from "#src/urls";
-import type { Pagination } from "@~/core/schema";
+import type { Pagination } from "#src/schema";
 import {
   ModerationStatusSchema,
   ModerationTypeSchema,

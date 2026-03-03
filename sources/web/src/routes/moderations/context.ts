@@ -1,6 +1,6 @@
 //
 
-import { PaginationSchema } from "@~/core/schema";
+import { PaginationSchema } from "#src/schema";
 import { z } from "zod";
 
 //

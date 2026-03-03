@@ -3,7 +3,7 @@
 import type { App_Context } from "#src/middleware/context";
 import { NotificationIsland } from "#src/ui/notifications";
 import { urls } from "#src/urls";
-import { z_username } from "@~/core/schema";
+import { z_username } from "#src/schema";
 import type { PropsWithChildren } from "hono/jsx";
 import { useRequestContext } from "hono/jsx-renderer";
 import { RootLayout } from "./root";

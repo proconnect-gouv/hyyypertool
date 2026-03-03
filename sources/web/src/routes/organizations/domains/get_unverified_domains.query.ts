@@ -1,7 +1,7 @@
 //
 
 import { mostUsedFreeEmailDomains as most_used_free_email_domains } from "@proconnect-gouv/proconnect.core/data";
-import type { Pagination } from "@~/core/schema";
+import type { Pagination } from "#src/schema";
 import {
   schema,
   type IdentiteProconnectPgDatabase,

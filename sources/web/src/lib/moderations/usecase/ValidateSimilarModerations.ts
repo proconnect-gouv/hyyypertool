@@ -1,11 +1,11 @@
 //
 
+import { build_moderation_update } from "#src/lib/moderations";
 import { UpdateModerationById } from "#src/queries/moderations";
 import {
   schema,
   type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
-import { build_moderation_update } from "@~/moderations/build_moderation_update";
 import { and, eq, ilike, isNull } from "drizzle-orm";
 
 //

@@ -6,7 +6,7 @@ import {
   DescribedBySchema,
   EntitySchema,
   PaginationSchema,
-} from "@~/core/schema";
+} from "#src/schema";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { match } from "ts-pattern";

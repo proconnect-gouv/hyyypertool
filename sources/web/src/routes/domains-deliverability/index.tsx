@@ -5,7 +5,7 @@ import { Main_Layout } from "#src/layouts";
 import { authorized } from "#src/middleware/auth";
 import type { App_Context } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
-import { z_username } from "@~/core/schema";
+import { z_username } from "#src/schema";
 import { schema } from "@~/identite-proconnect/database";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";

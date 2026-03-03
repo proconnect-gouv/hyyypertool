@@ -11,7 +11,7 @@ import type { App_Context } from "#src/middleware/context";
 import { Crisp } from "#src/ui/moderations/Crisp";
 import { FindCorrespondingEmail } from "#src/ui/moderations/FindCorrespondingEmail";
 import { zValidator } from "@hono/zod-validator";
-import { DescribedBySchema, EntitySchema } from "@~/core/schema";
+import { DescribedBySchema, EntitySchema } from "#src/schema";
 import { to } from "await-to-js";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
