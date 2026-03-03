@@ -51,6 +51,7 @@ test("get a moderation with full organization and user details", async () => {
         "cached_libelle_tranche_effectif": null,
         "cached_nom_complet": null,
         "cached_tranche_effectifs": null,
+        "cached_tranche_effectifs_unite_legale": null,
         "created_at": "1970-01-01T00:00:00+00:00",
         "id": 1,
         "siret": "🦄 siret",
