@@ -77,8 +77,7 @@ async function MembersInTheOrganization({
   organization: Organisation;
   members_count: number;
 }) {
-  const $describedby = hyper_ref();
-  const $members_describedby = hyper_ref();
+  const $members_describedby = hyper_ref("members");
   const $page_ref = hyper_ref();
 
   const hx_get_members_query_props = urls.organizations[":id"].members.$hx_get({
@@ -90,7 +89,7 @@ async function MembersInTheOrganization({
     <section>
       <details open={false}>
         <summary>
-          <h3 class="inline-block" id={$describedby}>
+          <h3 class="inline-block" id={$members_describedby}>
             👥 {FrNumberConverter.format(members_count)}{" "}
             {formattedPlural(members_count, {
               one: "membre enregistré",

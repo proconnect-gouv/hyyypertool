@@ -1,6 +1,6 @@
 //
 
-import { BadRequestError } from "#src/errors";
+import { BadRequestError, NotFoundError } from "#src/errors";
 import type { HtmxHeader } from "#src/htmx";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import {
@@ -11,10 +11,8 @@ import {
 import type { App_Context } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
 import { DescribedBySchema, EntitySchema, IdSchema } from "@~/core/schema";
-import { schema } from "@~/identite-proconnect/database";
 import { MarkDomainAsVerified } from "@~/identite-proconnect/sdk";
 import { EmailDomainVerificationTypes } from "@~/identite-proconnect/types";
-import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { z } from "zod";
@@ -108,22 +106,33 @@ export default new Hono<App_Context>()
     "/:domain_id",
     zValidator("param", EntitySchema.merge(DomainParams_Schema)),
     zValidator("query", patch_query),
-    async function PATCH({ text, req, var: { identite_pg } }) {
+    async function PATCH({
+      text,
+      req,
+      var: { identite_pg, identite_pg_client },
+    }) {
       const { domain_id } = req.valid("param");
       const { type: verification_type } = req.valid("query");
+      const mark_domain_as_verified = MarkDomainAsVerified(identite_pg_client);
 
-      await identite_pg
-        .update(schema.email_domains)
-        .set({
-          verification_type,
-          verified_at:
-            verification_type === "verified" ? new Date().toISOString() : null,
-          updated_at: new Date().toISOString(),
-        })
-        .where(eq(schema.email_domains.id, domain_id));
+      const email_domain = await identite_pg.query.email_domains.findFirst({
+        columns: { domain: true, organization_id: true },
+        where: (fields, { eq }) => eq(fields.id, domain_id),
+      });
+      if (!email_domain) throw new NotFoundError("Domain not found");
+      const { domain, organization_id } = email_domain;
+
+      await mark_domain_as_verified({
+        domain: domain,
+        domain_verification_type: verification_type,
+        organization_id,
+      });
 
       return text("OK", 200, {
-        "HX-Trigger": ORGANISATION_EVENTS.enum.DOMAIN_UPDATED,
+        "HX-Trigger": [
+          ORGANISATION_EVENTS.enum.DOMAIN_UPDATED,
+          ORGANISATION_EVENTS.enum.MEMBERS_UPDATED,
+        ].join(", "),
       } as HtmxHeader);
     },
   );

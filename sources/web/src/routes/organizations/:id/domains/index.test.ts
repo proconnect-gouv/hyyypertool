@@ -237,11 +237,31 @@ test("DELETE /organizations/:id/domains/:domain_id removes domain", async () => 
 
 test("PATCH /organizations/:id/domains/:domain_id updates verification type to verified", async () => {
   const organization_id = await create_unicorn_organization(pg);
+  const adora_pony_user_id = await create_adora_pony_user(pg);
+  const pink_diamond_user_id = await create_pink_diamond_user(pg);
+  const red_diamond_user_id = await create_red_diamond_user(pg);
 
+  await pg.insert(schema.users_organizations).values({
+    organization_id,
+    user_id: adora_pony_user_id,
+    verification_type: LinkTypes.enum.domain_not_verified_yet,
+  });
+  await pg.insert(schema.users_organizations).values({
+    organization_id,
+    user_id: pink_diamond_user_id,
+    verification_type: LinkTypes.enum.no_validation_means_available,
+  });
+  await pg.insert(schema.users_organizations).values({
+    organization_id,
+    user_id: red_diamond_user_id,
+    verification_type: LinkTypes.enum.proof_received,
+  });
+
+  // Insert an unverified domain matching the seed users' email domain
   const [{ id: domain_id } = { id: NaN }] = await pg
     .insert(schema.email_domains)
     .values({
-      domain: "toverify.xyz",
+      domain: "unicorn.xyz",
       organization_id,
       verification_type: EmailDomainVerificationTypes.enum.not_verified_yet,
     })
@@ -250,6 +270,7 @@ test("PATCH /organizations/:id/domains/:domain_id updates verification type to v
   const response = await new Hono()
     .use(set_config({}))
     .use(set_identite_pg(pg))
+    .use(set_identite_pg_client(client as any))
     .use(set_nonce("nonce"))
     .use(set_userinfo({ email: "test@example.com" }))
     .route("/:id/domains", app)
@@ -258,7 +279,9 @@ test("PATCH /organizations/:id/domains/:domain_id updates verification type to v
     });
 
   expect(response.status).toBe(200);
-  expect(response.headers.get("HX-Trigger")).toBe("DOMAIN_UPDATED");
+  expect(response.headers.get("HX-Trigger")).toBe(
+    "DOMAIN_UPDATED, MEMBERS_UPDATED",
+  );
 
   {
     const result = await pg.query.email_domains.findMany({
@@ -269,21 +292,59 @@ test("PATCH /organizations/:id/domains/:domain_id updates verification type to v
         {
           "can_be_suggested": true,
           "created_at": "2222-01-01 00:00:00+00",
-          "domain": "toverify.xyz",
-          "id": 2,
+          "domain": "unicorn.xyz",
+          "id": 3,
           "organization_id": 1,
           "updated_at": "2222-01-01 00:00:00+00",
           "verification_type": "verified",
           "verified_at": "2222-01-01 00:00:00+00",
         },
+      ]
+    `);
+  }
+  {
+    const result = await pg.query.users_organizations.findMany({
+      where: (table, { eq }) => eq(table.organization_id, organization_id),
+    });
+    expect(result).toMatchInlineSnapshot(`
+      [
         {
-          "can_be_suggested": true,
-          "created_at": "2222-01-01 00:00:00+00",
-          "domain": "unicorn.xyz",
-          "id": 1,
+          "created_at": "1970-01-01 00:00:00+00",
+          "has_been_greeted": false,
+          "is_external": false,
+          "needs_official_contact_email_verification": false,
+          "official_contact_email_verification_sent_at": null,
+          "official_contact_email_verification_token": null,
           "organization_id": 1,
           "updated_at": "2222-01-01 00:00:00+00",
-          "verification_type": "verified",
+          "user_id": 1,
+          "verification_type": "domain",
+          "verified_at": null,
+        },
+        {
+          "created_at": "1970-01-01 00:00:00+00",
+          "has_been_greeted": false,
+          "is_external": false,
+          "needs_official_contact_email_verification": false,
+          "official_contact_email_verification_sent_at": null,
+          "official_contact_email_verification_token": null,
+          "organization_id": 1,
+          "updated_at": "2222-01-01 00:00:00+00",
+          "user_id": 2,
+          "verification_type": "domain",
+          "verified_at": null,
+        },
+        {
+          "created_at": "1970-01-01 00:00:00+00",
+          "has_been_greeted": false,
+          "is_external": false,
+          "needs_official_contact_email_verification": false,
+          "official_contact_email_verification_sent_at": null,
+          "official_contact_email_verification_token": null,
+          "organization_id": 1,
+          "updated_at": "1970-01-01 00:00:00+00",
+          "user_id": 3,
+          "verification_type": "proof_received",
           "verified_at": null,
         },
       ]
