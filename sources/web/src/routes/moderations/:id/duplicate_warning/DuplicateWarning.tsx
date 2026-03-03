@@ -4,7 +4,6 @@ import { HtmxEvents } from "#src/htmx";
 import { button } from "#src/ui/button";
 import { fieldset } from "#src/ui/form";
 import { formattedPlural } from "#src/ui/plurial";
-import { OpenInZammad, SearchInZammad } from "#src/ui/zammad/components";
 import { urls } from "#src/urls";
 import { MODERATION_STATUS } from "@~/identite-proconnect/types";
 import { raw } from "hono/html";
@@ -12,56 +11,45 @@ import { match } from "ts-pattern";
 import type { find_duplicate_users } from "./find_duplicate_users.query";
 import type { get_duplicate_moderations } from "./get_duplicate_moderations.query";
 import type { get_moderation } from "./get_moderation.query";
-import type { get_moderation_tickets } from "./get_moderation_tickets.query";
-import type { get_user_by_id } from "./get_user_by_id.query";
 
 //
-
-type User = Awaited<ReturnType<typeof get_user_by_id>>;
 
 type DuplicateUsers = Awaited<ReturnType<typeof find_duplicate_users>>;
 
 type Moderation = Awaited<ReturnType<typeof get_moderation>>;
-type ModerationTickets = Awaited<ReturnType<typeof get_moderation_tickets>>;
 type DuplicateModerations = Awaited<
   ReturnType<typeof get_duplicate_moderations>
 >;
 type DuplicateWarningProps = {
   moderation_id: number;
   moderations: DuplicateModerations;
-  user: User;
   duplicate_users: DuplicateUsers;
   moderation: Moderation;
-  moderation_tickets: ModerationTickets;
 };
 
 //
 
 export async function DuplicateWarning({
   moderations,
-  user,
   duplicate_users,
   moderation,
-  moderation_tickets,
   moderation_id,
 }: DuplicateWarningProps) {
   return (
     <>
-      <Alert_Duplicate_Moderation
+      <AlertDuplicateModeration
         moderations={moderations}
-        user={user}
-        moderation_tickets={moderation_tickets}
         moderation_id={moderation_id}
         moderation={moderation}
       />
-      <Alert_Duplicate_User duplicate_users={duplicate_users} />
+      <AlertDuplicateUser duplicate_users={duplicate_users} />
     </>
   );
 }
 
 //
 
-async function Alert_Duplicate_User({
+async function AlertDuplicateUser({
   duplicate_users,
 }: {
   duplicate_users: DuplicateUsers;
@@ -113,16 +101,12 @@ async function Alert_Duplicate_User({
   );
 }
 
-async function Alert_Duplicate_Moderation({
+async function AlertDuplicateModeration({
   moderations,
-  user,
-  moderation_tickets,
   moderation_id,
   moderation,
 }: {
   moderations: DuplicateModerations;
-  user: User;
-  moderation_tickets: ModerationTickets;
   moderation_id: number;
   moderation: Moderation;
 }) {
@@ -134,11 +118,8 @@ async function Alert_Duplicate_Moderation({
     <div class="fr-alert fr-alert--warning">
       <h3 class="fr-alert__title">Attention : demande multiples</h3>
       <p>Il s'agit de la {moderation_count}e demande pour cette organisation</p>
-      <SearchInZammad search={user.email}>
-        Trouver les echanges pour l'email « {user.email} » dans Zammad
-      </SearchInZammad>
       <ul>
-        {moderation_tickets.map(({ moderation, zammad_ticket }) => (
+        {moderations.map((moderation) => (
           <li key={moderation.id.toString()}>
             <a
               href={
@@ -149,14 +130,7 @@ async function Alert_Duplicate_Moderation({
             >
               Moderation#{moderation.id}
             </a>{" "}
-            <ModerationStatusIndicator status={moderation.status} />{" "}
-            {moderation.ticket_id && zammad_ticket ? (
-              <OpenInZammad ticket_id={Number(moderation.ticket_id)}>
-                Ouvrir Ticket#{moderation.ticket_id} dans Zammad
-              </OpenInZammad>
-            ) : (
-              "Pas de ticket"
-            )}
+            <ModerationStatusIndicator status={moderation.status} />
           </li>
         ))}
       </ul>
@@ -172,7 +146,7 @@ async function Alert_Duplicate_Moderation({
 function ModerationStatusIndicator({
   status: raw_status,
 }: {
-  status: ModerationTickets[number]["moderation"]["status"];
+  status: DuplicateModerations[number]["status"];
 }) {
   const { data: status, error } = MODERATION_STATUS.safeParse(raw_status);
   if (error) return <p class="fr-badge fr-badge--warning">Inconnu</p>;

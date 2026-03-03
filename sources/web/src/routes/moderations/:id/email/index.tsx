@@ -2,11 +2,7 @@
 
 import { NotFoundError } from "#src/errors";
 import { get_crisp_mail } from "#src/lib/crisp";
-import {
-  GetCripsFromSessionId,
-  GetZammadFromTicketId,
-} from "#src/lib/moderations";
-import { get_zammad_mail } from "#src/lib/zammad";
+import { GetCripsFromSessionId } from "#src/lib/moderations";
 import type { App_Context } from "#src/middleware/context";
 import { DescribedBySchema, EntitySchema } from "#src/schema";
 import { Crisp } from "#src/ui/moderations/Crisp";
@@ -15,8 +11,6 @@ import { zValidator } from "@hono/zod-validator";
 import { to } from "await-to-js";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
-import { match, P } from "ts-pattern";
-import Zammad from "./Zammad";
 import { find_moderation_for_email } from "./find_moderation_for_email.query";
 
 //
@@ -47,48 +41,28 @@ export default new Hono<App_Context>().get(
       debug: false,
     };
 
-    const [[, zammad], [, crisp]] = await Promise.all([
-      to(
-        GetZammadFromTicketId({ fetch_zammad_mail: get_zammad_mail })({
-          ticket_id,
-          limit: MAX_ARTICLE_COUNT,
-        }),
-      ),
-      to(
-        GetCripsFromSessionId({
-          crisp_config,
-          fetch_crisp_mail: get_crisp_mail,
-        })({
-          session_id: ticket_id,
-          limit: MAX_ARTICLE_COUNT,
-        }),
-      ),
-    ]);
+    const [, crisp] = await to(
+      GetCripsFromSessionId({
+        crisp_config,
+        fetch_crisp_mail: get_crisp_mail,
+      })({
+        session_id: ticket_id,
+        limit: MAX_ARTICLE_COUNT,
+      }),
+    );
 
     if (!moderation) throw new NotFoundError("Moderation not found");
 
+    if (crisp) {
+      return render(
+        <Crisp.Provider value={{ crisp_config, limit: 3, crisp }}>
+          <Crisp />
+        </Crisp.Provider>,
+      );
+    }
+
     return render(
-      match({ crisp, zammad })
-        .with({ crisp: P.nonNullable }, (value) => (
-          <Crisp.Provider
-            value={{ crisp_config, limit: 3, crisp: value.crisp }}
-          >
-            <Crisp />
-          </Crisp.Provider>
-        ))
-        .with({ zammad: P.nonNullable }, (value) => (
-          <Zammad
-            describedby={describedby}
-            zammad={value.zammad}
-            max_article_count={MAX_ARTICLE_COUNT}
-          />
-        ))
-        .otherwise(() => (
-          <FindCorrespondingEmail
-            email={moderation.user.email}
-            website_id={crisp_config.website_id}
-          />
-        )),
+      <FindCorrespondingEmail website_id={crisp_config.website_id} />,
     );
   },
 );

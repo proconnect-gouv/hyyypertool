@@ -25,44 +25,25 @@ declare const app: import("hono/hono-base").HonoBase<
       };
     })
   | import("hono/types").MergeSchemaPath<
-      | ({
-          "/bundle/config.js": {
-            $get: {
-              input: {};
-              output: `export default ${string}`;
-              outputFormat: "text";
-              status: 200;
-            };
+      {
+        "/bundle/config.js": {
+          $get: {
+            input: {};
+            output: `export default ${string}`;
+            outputFormat: "text";
+            status: 200;
           };
-        } & {
-          "/bundle/env.js": {
-            $get: {
-              input: {};
-              output: `export default ${string}`;
-              outputFormat: "text";
-              status: 200;
-            };
+        };
+      } & {
+        "/bundle/env.js": {
+          $get: {
+            input: {};
+            output: `export default ${string}`;
+            outputFormat: "text";
+            status: 200;
           };
-        })
-      | import("hono/types").MergeSchemaPath<
-          {
-            "/attachment/:ticket_id/:article_id/:attachment_id": {
-              $get: {
-                input: {
-                  param: {
-                    article_id: string;
-                    attachment_id: string;
-                    ticket_id: string;
-                  };
-                };
-                output: {};
-                outputFormat: string;
-                status: import("hono/utils/http-status").StatusCode;
-              };
-            };
-          },
-          "/zammad"
-        >,
+        };
+      },
       `/assets/${string}`
     >
   | import("hono/types").MergeSchemaPath<
@@ -71,15 +52,6 @@ declare const app: import("hono/hono-base").HonoBase<
           $get: {
             input: {};
             output: "readyz check passed";
-            outputFormat: "text";
-            status: import("hono/utils/http-status").ContentfulStatusCode;
-          };
-        };
-      } & {
-        "/zammad": {
-          $get: {
-            input: {};
-            output: string;
             outputFormat: "text";
             status: import("hono/utils/http-status").ContentfulStatusCode;
           };

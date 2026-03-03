@@ -1,6 +1,5 @@
 //
 
-import { NotFoundError } from "#src/errors";
 import type { HtmxHeader } from "#src/htmx";
 import { is_crisp_ticket } from "#src/lib/crisp";
 import {
@@ -9,14 +8,6 @@ import {
   reject_form_schema,
   send_crisp_notification,
 } from "#src/lib/moderations";
-import {
-  ARTICLE_TYPE,
-  get_full_ticket,
-  GROUP_MONCOMPTEPRO,
-  GROUP_MONCOMPTEPRO_SENDER_ID,
-  is_zammad_ticket,
-  send_zammad_response,
-} from "#src/lib/zammad";
 import {
   GetModerationWithUser,
   UpdateModerationById,
@@ -52,7 +43,7 @@ export default new Hono<ContextType>().patch(
     const [, operator] = await to(crisp.get_user({ email: userinfo.email }));
     const sender = operator ?? { nickname: username };
 
-    if (!moderation.ticket_id) {
+    if (!moderation.ticket_id || !is_crisp_ticket(moderation.ticket_id)) {
       const { session_id } = await send_crisp_notification(crisp, {
         email: recipient,
         subject,
@@ -70,7 +61,7 @@ export default new Hono<ContextType>().patch(
       );
 
       await crisp.mark_conversation_as_resolved({ session_id });
-    } else if (is_crisp_ticket(moderation.ticket_id)) {
+    } else {
       await send_crisp_notification(crisp, {
         ticket_id: String(moderation.ticket_id),
         email: recipient,
@@ -87,34 +78,6 @@ export default new Hono<ContextType>().patch(
       await crisp.mark_conversation_as_resolved({
         session_id: String(moderation.ticket_id),
       });
-    } else if (is_zammad_ticket(moderation.ticket_id)) {
-      const ticket_id_num = Number(moderation.ticket_id);
-      const result = await get_full_ticket({ ticket_id: ticket_id_num });
-
-      const user = Object.values(result.assets.User || {}).find((user) => {
-        return user.email === userinfo.email;
-      });
-
-      const zammad_body = body.replace(/\n/g, "<br />");
-
-      await send_zammad_response(ticket_id_num, {
-        article: {
-          body: zammad_body,
-          content_type: "text/html",
-          sender_id: GROUP_MONCOMPTEPRO_SENDER_ID,
-          subject,
-          subtype: "reply",
-          to: recipient,
-          type_id: ARTICLE_TYPE.enum.EMAIL,
-        },
-        group: GROUP_MONCOMPTEPRO,
-        owner_id: user?.id,
-        state: "closed",
-      });
-    } else {
-      throw new NotFoundError(
-        `Unknown provider for moderation "${moderation.id}"`,
-      );
     }
 
     const update = build_moderation_update({
