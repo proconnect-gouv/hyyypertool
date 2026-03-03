@@ -1,6 +1,6 @@
 //
 
-import { PaginationSchema, SearchSchema } from "@~/core/schema";
+import { PaginationSchema, SearchSchema } from "#src/schema";
 
 //
 

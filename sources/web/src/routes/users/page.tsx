@@ -2,11 +2,11 @@
 
 import { hyper_ref } from "#src/html";
 import { hx_include } from "#src/htmx";
+import type { Pagination } from "#src/schema";
 import { Foot } from "#src/ui/hx_table";
 import { row } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
-import type { Pagination } from "@~/core/schema";
 import { query_schema } from "./context";
 import type { get_users_list } from "./get_users_list.query";
 

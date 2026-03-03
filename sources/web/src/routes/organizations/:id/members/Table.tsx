@@ -1,13 +1,13 @@
 //
 
 import { hx_include } from "#src/htmx";
+import type { Pagination } from "#src/schema";
 import { Foot } from "#src/ui/hx_table";
 import { menu_item } from "#src/ui/menu";
 import { Horizontal_Menu } from "#src/ui/menu/components";
 import { row } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
-import type { Pagination } from "@~/core/schema";
 import { VerificationTypeSchema } from "@~/identite-proconnect/types";
 import { useContext } from "hono/jsx";
 import type { VariantProps } from "tailwind-variants";

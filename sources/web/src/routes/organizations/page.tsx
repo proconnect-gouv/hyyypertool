@@ -2,12 +2,12 @@
 
 import { hyper_ref } from "#src/html";
 import { hx_include } from "#src/htmx";
+import type { Pagination } from "#src/schema";
 import { date_to_dom_string } from "#src/time";
 import { Foot } from "#src/ui/hx_table";
 import { row } from "#src/ui/table";
 import { Time } from "#src/ui/time";
 import { urls } from "#src/urls";
-import type { Pagination } from "@~/core/schema";
 import { query_schema } from "./context";
 import type { get_organizations_list } from "./get_organizations_list.query";
 

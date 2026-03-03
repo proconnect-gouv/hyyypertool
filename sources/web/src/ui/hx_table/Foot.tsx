@@ -1,6 +1,6 @@
 //
 
-import { PaginationSchema, type Pagination } from "@~/core/schema";
+import { PaginationSchema, type Pagination } from "#src/schema";
 import { button } from "../button";
 import { FrNumberConverter } from "../number";
 

@@ -4,6 +4,7 @@ import { NotFoundError } from "#src/errors";
 import type { HtmxHeader } from "#src/htmx";
 import { is_crisp_ticket } from "#src/lib/crisp";
 import {
+  build_moderation_update,
   MODERATION_EVENTS,
   reject_form_schema,
   send_crisp_notification,
@@ -20,9 +21,8 @@ import {
   GetModerationWithUser,
   UpdateModerationById,
 } from "#src/queries/moderations";
+import { EntitySchema, z_username } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
-import { EntitySchema, z_username } from "@~/core/schema";
-import { build_moderation_update } from "@~/moderations/build_moderation_update";
 import { to } from "await-to-js";
 import { Hono } from "hono";
 import type { ContextType } from "../procedures_context";

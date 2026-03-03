@@ -5,6 +5,7 @@ import type { HtmxHeader } from "#src/htmx";
 import {
   MODERATION_EVENTS,
   ValidateSimilarModerations,
+  build_moderation_update,
   send_crisp_notification,
   validate_form_schema,
 } from "#src/lib/moderations";
@@ -18,8 +19,8 @@ import {
   UpdateModerationById,
 } from "#src/queries/moderations";
 import { UpdateUserByIdInOrganization } from "#src/queries/users";
+import { EntitySchema, z_email_domain } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
-import { EntitySchema, z_email_domain } from "@~/core/schema";
 import {
   EmailDomainRepository,
   MarkDomainAsVerified,
@@ -31,7 +32,6 @@ import {
   LinkTypes,
   type EmailDomain,
 } from "@~/identite-proconnect/types";
-import { build_moderation_update } from "@~/moderations/build_moderation_update";
 import { to } from "await-to-js";
 import consola from "consola";
 import { Hono } from "hono";

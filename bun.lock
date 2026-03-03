@@ -48,7 +48,6 @@
         "@sentry/profiling-node": "10.39.0",
         "@tailwindcss/cli": "4.2.0",
         "@tailwindcss/typography": "0.5.19",
-        "@~/core": "workspace:*",
         "@~/web": "workspace:*",
         "consola": "3.4.2",
         "dotenv-flow": "4.1.0",
@@ -133,20 +132,6 @@
         "hono": "4.12.2",
       },
     },
-    "sources/core": {
-      "name": "@~/core",
-      "version": "0.0.0",
-      "dependencies": {
-        "hono": "4.12.2",
-        "ts-pattern": "5.9.0",
-      },
-      "devDependencies": {
-        "@~/config.typescript": "workspace:*",
-      },
-      "peerDependencies": {
-        "zod": "^4.0.0",
-      },
-    },
     "sources/identite-proconnect": {
       "name": "@~/identite-proconnect",
       "version": "1.0.0",
@@ -156,7 +141,6 @@
         "@proconnect-gouv/proconnect.identite": "1.7.0",
         "@proconnect-gouv/proconnect.identite.database": "1.3.0",
         "@proconnect-gouv/proconnect.insee": "1.0.1",
-        "@~/core": "workspace:*",
         "consola": "3.4.2",
         "drizzle-orm": "0.45.1",
         "hono": "4.12.2",
@@ -167,25 +151,6 @@
         "@types/pg": "8.16.0",
         "@~/config.typescript": "workspace:*",
         "drizzle-kit": "0.31.9",
-      },
-    },
-    "sources/moderations": {
-      "name": "@~/moderations",
-      "version": "1.0.0",
-      "dependencies": {
-        "@~/core": "workspace:*",
-        "ts-pattern": "^5.9.0",
-        "zod": "^4.3.6",
-      },
-      "devDependencies": {
-        "@~/config.typescript": "workspace:*",
-      },
-    },
-    "sources/organizations": {
-      "name": "@~/organizations",
-      "version": "1.0.0",
-      "devDependencies": {
-        "@~/config.typescript": "workspace:*",
       },
     },
     "sources/web": {
@@ -201,10 +166,7 @@
         "@sentry/core": "10.39.0",
         "@sentry/node": "10.39.0",
         "@tailwindcss/typography": "^0.5.19",
-        "@~/core": "workspace:*",
         "@~/identite-proconnect": "workspace:*",
-        "@~/moderations": "workspace:*",
-        "@~/organizations": "workspace:*",
         "await-to-js": "3.0.0",
         "consola": "3.4.2",
         "hono": "4.12.2",
@@ -716,13 +678,7 @@
 
     "@~/config.typescript": ["@~/config.typescript@workspace:sources/config/typescript"],
 
-    "@~/core": ["@~/core@workspace:sources/core"],
-
     "@~/identite-proconnect": ["@~/identite-proconnect@workspace:sources/identite-proconnect"],
-
-    "@~/moderations": ["@~/moderations@workspace:sources/moderations"],
-
-    "@~/organizations": ["@~/organizations@workspace:sources/organizations"],
 
     "@~/release-it-changeset-plugin": ["@~/release-it-changeset-plugin@workspace:packages/release-it-changeset-plugin"],
 

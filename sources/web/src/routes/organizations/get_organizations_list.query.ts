@@ -1,6 +1,6 @@
 //
 
-import type { Pagination } from "@~/core/schema";
+import type { Pagination } from "#src/schema";
 import {
   schema,
   type IdentiteProconnectPgDatabase,

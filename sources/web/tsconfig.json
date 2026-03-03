@@ -11,13 +11,7 @@
   "include": ["src"],
   "references": [
     {
-      "path": "../core"
-    },
-    {
       "path": "../identite-proconnect"
-    },
-    {
-      "path": "../organizations"
     },
     {
       "path": "../../packages/hono-slotify"

@@ -1,12 +1,8 @@
 //
 
 import type { App_Context } from "#src/middleware/context";
+import { DescribedBySchema, EntitySchema, PaginationSchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
-import {
-  DescribedBySchema,
-  EntitySchema,
-  PaginationSchema,
-} from "@~/core/schema";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { match } from "ts-pattern";

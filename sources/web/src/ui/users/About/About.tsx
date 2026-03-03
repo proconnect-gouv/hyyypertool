@@ -1,11 +1,11 @@
 //
 
 import type { GetUserInfoOutput } from "#src/lib/users";
+import { z_email_domain } from "#src/schema";
 import { button } from "#src/ui/button";
 import { CopyButton } from "#src/ui/button/components";
 import { description_list } from "#src/ui/list";
 import { urls } from "#src/urls";
-import { z_email_domain } from "@~/core/schema";
 
 //
 

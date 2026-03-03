@@ -1,7 +1,7 @@
 //
 
 import { hyper_ref } from "#src/html";
-import { z_email_domain } from "@~/core/schema";
+import { z_email_domain } from "#src/schema";
 import { AcceptModal } from "./AcceptModal";
 import { context, type Values } from "./context";
 import { RefusalModal } from "./RefusalModal";

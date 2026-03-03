@@ -5,20 +5,8 @@
       "path": ".",
     },
     {
-      "name": "🈸 sources/core/",
-      "path": "sources/core",
-    },
-    {
       "name": "🈸 sources/web/",
       "path": "sources/web",
-    },
-    {
-      "name": "📦 sources/moderations/",
-      "path": "sources/moderations",
-    },
-    {
-      "name": "📦 sources/organizations/",
-      "path": "sources/organizations",
     },
     {
       "name": "🏗️ sources/identite-proconnect/",

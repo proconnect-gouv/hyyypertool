@@ -9,8 +9,8 @@ import {
   RemoveDomainEmailById,
 } from "#src/lib/organizations/usecase";
 import type { App_Context } from "#src/middleware/context";
+import { DescribedBySchema, EntitySchema, IdSchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
-import { DescribedBySchema, EntitySchema, IdSchema } from "@~/core/schema";
 import { MarkDomainAsVerified } from "@~/identite-proconnect/sdk";
 import { EmailDomainVerificationTypes } from "@~/identite-proconnect/types";
 import { Hono } from "hono";

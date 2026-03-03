@@ -6,13 +6,13 @@ import {
   moderation_type_to_emoji,
   moderation_type_to_title,
 } from "#src/lib/moderations";
+import type { Pagination } from "#src/schema";
 import { date_to_dom_string, date_to_string } from "#src/time";
 import { badge } from "#src/ui";
 import { Foot } from "#src/ui/hx_table";
 import { row } from "#src/ui/table";
 import { tag } from "#src/ui/tag";
 import { urls } from "#src/urls";
-import type { Pagination } from "@~/core/schema";
 import {
   ModerationStatusSchema,
   ModerationTypeSchema,

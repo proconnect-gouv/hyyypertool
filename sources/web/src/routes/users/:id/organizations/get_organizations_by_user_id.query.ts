@@ -1,6 +1,6 @@
 //
 
-import type { Pagination } from "@~/core/schema";
+import type { Pagination } from "#src/schema";
 import type { IdentiteProconnectPgDatabase } from "@~/identite-proconnect/database";
 import { schema } from "@~/identite-proconnect/database";
 import { EmailDomainVerificationTypes } from "@~/identite-proconnect/types";

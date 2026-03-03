@@ -7,8 +7,8 @@ import {
   GetDomainCount,
   GetOrganizationMembersCount,
 } from "#src/queries/organizations";
+import { EntitySchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
-import { EntitySchema } from "@~/core/schema";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import organization_domains_router from "./domains";

@@ -9,10 +9,7 @@
   "workspaces": [
     "bin",
     "sources/config/*",
-    "sources/core",
     "sources/identite-proconnect",
-    "sources/moderations",
-    "sources/organizations",
     "sources/web",
     "packages/*"
   ],
