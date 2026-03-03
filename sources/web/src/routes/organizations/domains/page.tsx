@@ -1,8 +1,8 @@
+import type { Pagination } from "#src/schema";
 import { CopyButton } from "#src/ui/button/components";
 import { Foot } from "#src/ui/hx_table";
 import { row } from "#src/ui/table";
 import { urls } from "#src/urls";
-import type { Pagination } from "#src/schema";
 import { createContext, useContext } from "hono/jsx";
 import type { get_unverified_domains } from "./get_unverified_domains.query";
 import { query_schema } from "./index";

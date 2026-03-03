@@ -12,17 +12,6 @@ services:
     ports:
       - 6400:1080
 
-  identite.proconnect.gouv.fr:
-    image: mockserver/mockserver:5.15.0
-    command: -proxyRemoteHost identite.proconnect.gouv.fr -proxyRemotePort 443
-    environment:
-      MOCKSERVER_LOG_LEVEL: DEBUG
-      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/mockserverInitialization.json
-    volumes:
-      - ./identite.proconnect.gouv.fr/mockserverInitialization.json:/config/mockserverInitialization.json
-    ports:
-      - 6300:1080
-
   auth.agentconnect.gouv.fr:
     image: mockserver/mockserver:5.15.0
     command: -proxyRemoteHost fca.integ01.dev-agentconnect.fr -proxyRemotePort 443

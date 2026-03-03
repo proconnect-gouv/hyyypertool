@@ -9,14 +9,6 @@
       "path": "sources/web",
     },
     {
-      "name": "📦 sources/moderations/",
-      "path": "sources/moderations",
-    },
-    {
-      "name": "📦 sources/organizations/",
-      "path": "sources/organizations",
-    },
-    {
       "name": "🏗️ sources/identite-proconnect/",
       "path": "sources/identite-proconnect",
     },

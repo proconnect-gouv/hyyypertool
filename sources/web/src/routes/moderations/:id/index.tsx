@@ -11,8 +11,8 @@ import {
   GetOrganizationMember,
   GetOrganizationMembersCount,
 } from "#src/queries/organizations";
-import { zValidator } from "@hono/zod-validator";
 import { EntitySchema, z_email_domain } from "#src/schema";
+import { zValidator } from "@hono/zod-validator";
 import { to } from "await-to-js";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";

@@ -113,7 +113,7 @@ export type UseCaseNameOutput = Awaited<ReturnType<UseCaseNameHandler>>;
 ```typescript
 //
 
-import { NotFoundError } from "@~/core/error";
+import { NotFoundError } from "#src/errors";
 import type { IdentiteProconnectDatabaseCradle } from "@~/identite-proconnect/database";
 import { to } from "await-to-js";
 
@@ -316,130 +316,122 @@ async function set_variables_middleware(
 
 ## File Naming Grammar
 
-Our codebase uses file suffixes to indicate both **purity** (pure/impure) and **purpose** of code. This makes it easy to understand what a file does and how to test it at a glance.
+Our codebase uses file suffixes to indicate the **purpose** of code. This makes it easy to understand what a file does at a glance.
 
-### File Suffixes
+### File Suffixes That Actually Exist
 
-| Suffix           | Pure/Impure | Contains                        | Example                         | Testing Strategy                       |
-| ---------------- | ----------- | ------------------------------- | ------------------------------- | -------------------------------------- |
-| `.rules.ts`      | Pure        | Business decision logic         | `eligibility.rules.ts`          | Unit tests, colocated, <10ms, no mocks |
-| `.validation.ts` | Pure        | Input validation                | `join-input.validation.ts`      | Unit tests, colocated, no I/O          |
-| `.mapper.ts`     | Pure\*      | Data transformation             | `insee-to-org.mapper.ts`        | Unit tests, colocated                  |
-| `.workflow.ts`   | Impure      | Orchestration (Read→Decide→Act) | `join-organization.workflow.ts` | Integration tests, real DB, ~800ms     |
-| `.router.ts`     | Impure      | HTTP routes (Hono)              | `join.router.ts`                | Route tests, HTTP + DB                 |
-| `index.ts`       | Impure      | Router entry point              | `index.ts`                      | -                                      |
-| `.query.ts`      | Impure      | SQL query builder               | `get-org-with-members.query.ts` | Integration tests, real DB             |
+| Suffix                       | Contains                | Example                              | Testing Strategy           |
+| ---------------------------- | ----------------------- | ------------------------------------ | -------------------------- |
+| `index.ts` / `index.tsx`     | Route handler (Hono)    | `routes/users/:id/index.tsx`         | Route tests, HTTP + DB     |
+| `.query.ts`                  | SQL query (Drizzle)     | `get_moderations_list.query.ts`      | Integration tests, real DB |
+| `.client.ts` / `.client.tsx` | Preact island (browser) | `search-email.client.tsx`            | DOM tests                  |
+| `.mapper.ts`                 | Data transformation     | `moderation_type.mapper.ts`          | Unit tests, colocated      |
+| `.test.ts`                   | Test file               | `get_moderations_list.query.test.ts` | Colocated with source      |
 
-\*Mappers are pure but colocated with their feature for locality.
+**Note**: `.rules.ts`, `.workflow.ts`, `.validation.ts`, `.router.ts` are NOT currently used in the codebase. Avoid creating them.
 
-### Examples
+### Real Examples
 
-**Pure business logic** (`.rules.ts`):
+**Route handler** (`index.tsx`):
 
 ```typescript
-// sources/web/src/routes/organizations/join/eligibility.rules.ts
-export function can_join_organization(user: User, org: Organization): boolean {
-  if (org.is_closed) return false;
-  if (user.email_domain !== org.domain) return false;
-  return true;
-}
+// sources/web/src/routes/users/:id/index.tsx
+import { Hono } from "hono";
+import { GetUserById } from "#src/queries/users";
+import { GetUserInfo } from "#src/lib/users/usecase";
 
-// Test colocated: eligibility.rules.test.ts
-test("cannot join closed organization", () => {
-  expect(can_join_organization(user, { is_closed: true })).toBe(false);
-});
+export const users_id = new Hono<Variables>()
+  .get("/", async (c) => {
+    const id = c.req.param("id");
+    const identite_pg = c.var.identite_pg;
+
+    const get_user_by_id = GetUserById({ columns: { ... } });
+    const user = await get_user_by_id(identite_pg, Number(id));
+
+    const get_user_info = GetUserInfo({ pg: identite_pg });
+    const info = await get_user_info(Number(id));
+
+    return c.render(<UserPage user={user} info={info} />);
+  });
 ```
 
-**Pure validation** (`.validation.ts`):
+**Colocated query** (`.query.ts`):
 
 ```typescript
-// sources/web/src/routes/organizations/join/join-input.validation.ts
-import { z } from "zod";
+// sources/web/src/routes/moderations/get_moderations_list.query.ts
+import { eq, like, desc } from "drizzle-orm";
+import { schema } from "@~/identite-proconnect/database";
 
-export const join_input_schema = z.object({
-  organization_id: z.number().positive(),
-  as_external: z.boolean().default(false),
-});
+export async function get_moderations_list(
+  pg: IdentiteProconnectPgDatabase,
+  { pagination, search }: { pagination: Pagination; search?: string },
+) {
+  const conditions = search ? like(schema.moderations.email, `%${search}%`) : undefined;
+  const moderations = await pg
+    .select({ ... })
+    .from(schema.moderations)
+    .where(conditions)
+    .orderBy(desc(schema.moderations.createdAt))
+    .limit(pagination.limit)
+    .offset(pagination.offset);
+
+  return moderations;
+}
+```
+
+**Preact Island** (`.client.tsx`):
+
+```typescript
+// sources/web/src/routes/moderations/search-email.client.tsx
+/* @jsxImportSource preact */
+import { signal } from "@preact/signals";
+
+const searchEmail = signal("");
+
+export function SearchEmail() {
+  return (
+    <input
+      value={searchEmail}
+      onInput={(e) => {
+        searchEmail.value = e.currentTarget.value;
+        // Trigger HTMX search
+        htmx.ajax("GET", "/moderations", {
+          target: "#moderations-table",
+          swap: "innerHTML",
+        });
+      }}
+      placeholder="Rechercher par email..."
+    />
+  );
+}
 ```
 
 **Pure mapper** (`.mapper.ts`):
 
 ```typescript
-// sources/web/src/routes/organizations/join/insee-to-org.mapper.ts
-export function map_insee_to_organization(
-  insee_data: INSEEResponse,
-): Organization {
-  return {
-    siret: insee_data.etablissement.siret,
-    name: insee_data.etablissement.uniteLegale.denominationUniteLegale,
-    // ... pure transformation
+// sources/web/src/lib/moderations/moderation_type.mapper.ts
+export type ModerationType =
+  | "create_organization"
+  | "join_organization"
+  | "add_external_member";
+
+export function moderation_type_to_label(type: ModerationType): string {
+  const labels: Record<ModerationType, string> = {
+    create_organization: "Création d'organisation",
+    join_organization: "Demande d'adhésion",
+    add_external_member: "Membre externe",
   };
+  return labels[type];
 }
-```
-
-**Impure workflow** (`.workflow.ts`):
-
-```typescript
-// sources/web/src/routes/organizations/join/join-organization.workflow.ts
-export async function join_organization(
-  pg: Database,
-  { user_id, organization_id, as_external }: JoinParams,
-) {
-  // 1. Fetch data (impure)
-  const user = await pg.query.users.findFirst({ where: eq(users.id, user_id) });
-  const org = await pg.query.organizations.findFirst({
-    where: eq(organizations.id, organization_id),
-  });
-
-  // 2. Business decision (pure - call .rules.ts)
-  if (!can_join_organization(user, org)) {
-    throw new ValidationError("Cannot join organization");
-  }
-
-  // 3. Save (impure)
-  await pg
-    .insert(members)
-    .values({ user_id, organization_id, is_external: as_external });
-}
-
-// Test: join-organization.workflow.test.ts (integration test with real DB)
-```
-
-**HTTP routes** (`.router.ts`):
-
-```typescript
-// sources/web/src/routes/organizations/join/join.router.ts
-import { Hono } from "hono";
-import { join_organization } from "./join-organization.workflow";
-
-export const join_router = new Hono().post("/", async (c) => {
-  const { user_id, organization_id } = await c.req.json();
-  await join_organization(c.var.identite_pg, { user_id, organization_id });
-  return c.json({ success: true });
-});
-```
-
-**Router entry point** (`index.ts`):
-
-```typescript
-// sources/web/src/routes/organizations/join/index.ts
-import { join_router } from "./join.router";
-export default join_router;
-
-// Parent router imports this:
-// import join_router from "./join";
-// app.route("/join", join_router);
 ```
 
 ### When to Use Each Suffix
 
-- Use `.rules.ts` when: Writing business logic that returns boolean/decision with no I/O
-- Use `.validation.ts` when: Validating input shape with Zod schemas
-- Use `.mapper.ts` when: Transforming external API data to domain types
-- Use `.workflow.ts` when: Orchestrating multiple steps (fetch → decide → save)
-- Use `.router.ts` when: Defining HTTP endpoints (GET, POST, PATCH, DELETE)
-- Use `.query.ts` when: Building complex SQL queries with Drizzle
-- Use `index.ts` when: Exporting a Hono router as the feature entry point
+- Use `index.ts` / `index.tsx` when: Exporting a Hono router as the feature entry point
+- Use `.query.ts` when: Writing SQL queries with Drizzle (prefer colocated with route)
+- Use `.client.tsx` when: Creating Preact components that run in the browser
+- Use `.mapper.ts` when: Transforming data between formats (pure function)
+- Use `.test.ts` when: Writing tests (colocate next to source file)
 
 ---
 
@@ -503,18 +495,25 @@ Tests live **next to source files**, not in separate `/tests/` tree:
 
 **Exception**: E2E tests stay in `/e2e/` directory (cross-feature user journeys).
 
-### When to Extract to Domain Packages
+### Where Code Lives
 
-Extract complex business logic to domain packages when:
+**Default**: Keep everything flat in the route feature folder. If it's not shared, it stays with the route.
 
-- Logic is genuinely reusable across 3+ features
-- Pure business rules need to be tested in isolation
-- Domain concepts are complex enough to deserve their own package
+- **Route handler**: `index.ts` with `new Hono()` - loads data, renders page
+- **Feature query**: Colocated `.query.ts` file - direct async function
+- **Client interaction**: Colocated `.client.tsx` file - Preact island
+
+**When shared across 3+ routes**: Move to `#src/lib/{domain}/` or `#src/queries/{domain}/` (legacy pattern).
 
 ```typescript
-// Feature uses business rules directly from feature folder:
-import { can_join_organization } from "./eligibility.rules";
+// Default: flat in the route
+import { get_moderations_list } from "./get_moderations_list.query";
+
+// Shared across routes: lib barrel
+import { build_moderation_update } from "#src/lib/moderations";
 ```
+
+**Legacy patterns**: `sources/web/src/queries/{domain}/` and `sources/web/src/lib/{domain}/usecase/` contain shared query factories and usecases from the original architecture. New feature-specific queries should prefer colocated `.query.ts` files flat in the route folder.
 
 ### When to Use Context Access
 
@@ -532,92 +531,24 @@ import { OrganizationsRepo } from "#src/shared/db/organizations.repo";
 
 ### Decision Tree: "Where Does This Code Go?"
 
-1. **Is it pure business logic?**
-   - Simple: Feature folder with `.rules.ts` suffix
+1. **Is it a route?**
+   - Use `index.ts` with `new Hono()` - loads data, renders page
 
-2. **Is it data transformation?**
-   - Colocate mapper with feature: `insee-to-org.mapper.ts`
+2. **Is it a feature-specific query?**
+   - Colocate `.query.ts` file in route folder
 
-3. **Is it orchestration?**
-   - Feature folder with `.workflow.ts` suffix
+3. **Is it a client interaction?**
+   - Use `.client.tsx` Preact island
 
-4. **Is it HTTP routing?**
-   - Feature folder with `.router.ts` + `index.ts` entry point
+4. **Is it data transformation?**
+   - Use `.mapper.ts` - colocated with feature
 
-5. **Is it UI component?**
+5. **Is it shared logic across 3+ routes?**
+   - Move to `#src/lib/{domain}/` or `#src/queries/{domain}/`
+
+6. **Is it a UI component?**
    - Shared: `#src/ui/button` (via barrel)
    - Feature-specific: `/feature/ComponentName.tsx`
-
-6. **Is it database query?**
-   - Colocate with feature: `get-org-details.query.ts`
-
----
-
-## Migrating to Feature-First Structure
-
-We're gradually migrating to feature-first organization using the **strangler fig pattern** (not big-bang reorg).
-
-### Migration Strategy
-
-- **Opportunistic**: Migrate features when you touch them, not all at once
-- **Timeline**: 6-12 months for natural evolution
-- **No breaking changes**: Old code keeps working during migration
-- **Start small**: Begin with simple features (health checks, simple CRUD)
-
-### Step-by-Step Migration Example
-
-Let's migrate `/moderations/:id/processed` feature:
-
-**Before** (Phase 2A structure):
-
-```
-/:id/
-├── processed.ts           # Handler + logic mixed
-├── processed.test.ts      # Test
-└── mark_as_processed.ts   # Thin wrapper
-```
-
-**After** (Phase 4 feature-first):
-
-```
-/:id/processed/
-├── index.ts                    # Router entry (exports Hono router)
-├── processed.router.ts         # HTTP routes only
-├── mark-as-processed.workflow.ts  # Orchestration extracted
-└── workflow.test.ts            # Integration test (renamed, moved)
-```
-
-**Migration steps**:
-
-1. **Create feature folder**: `mkdir /:id/processed/`
-2. **Extract HTTP layer**: Move route definition → `processed.router.ts`
-3. **Extract orchestration**: Move business logic → `mark-as-processed.workflow.ts`
-4. **Create entry point**: Add `index.ts` that exports the router
-5. **Move tests**: Rename and move → `workflow.test.ts`
-6. **Update imports**: Fix references in parent router
-7. **Delete old files**: Remove `processed.ts`, `mark_as_processed.ts`
-8. **Run tests**: Verify all tests pass
-
-**Checklist** (copy when migrating):
-
-```
-- [ ] Create feature folder
-- [ ] Apply file suffixes (.router.ts, .workflow.ts, etc.)
-- [ ] Extract pure logic to .rules.ts (if any)
-- [ ] Colocate tests (next to source files)
-- [ ] Update imports in parent router
-- [ ] Delete old files
-- [ ] Run: bun run build:tsc
-- [ ] Run: bun test
-- [ ] Git commit
-```
-
-### Tips for Migration
-
-- **Keep it simple**: Don't over-engineer. If a feature is 2 files, that's fine.
-- **File suffixes are optional initially**: Focus on folder structure first
-- **Tests can migrate gradually**: Colocate new tests, leave old ones temporarily
-- **Ask for help**: Open an issue or ask in Tchap if unsure about structure
 
 ---
 

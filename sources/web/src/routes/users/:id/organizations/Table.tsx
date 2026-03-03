@@ -1,12 +1,12 @@
 //
 
 import { hx_include } from "#src/htmx";
+import type { Pagination } from "#src/schema";
 import { date_to_dom_string } from "#src/time";
 import { Foot } from "#src/ui/hx_table";
 import { notice } from "#src/ui/notice";
 import { Time } from "#src/ui/time";
 import { urls } from "#src/urls";
-import type { Pagination } from "#src/schema";
 import type { get_organizations_by_user_id } from "./get_organizations_by_user_id.query";
 
 //

@@ -1,10 +1,6 @@
 //
 
-import {
-  DescribedBySchema,
-  EntitySchema,
-  PaginationSchema,
-} from "#src/schema";
+import { DescribedBySchema, EntitySchema, PaginationSchema } from "#src/schema";
 import { z } from "zod";
 
 //

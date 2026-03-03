@@ -3,9 +3,9 @@
 import { hx_include } from "#src/htmx";
 import { Main_Layout } from "#src/layouts";
 import type { App_Context } from "#src/middleware/context";
+import { PaginationSchema, SearchSchema } from "#src/schema";
 import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
-import { PaginationSchema, SearchSchema } from "#src/schema";
 import consola from "consola";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
