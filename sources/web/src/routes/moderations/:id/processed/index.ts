@@ -6,7 +6,7 @@ import {
   build_moderation_update,
 } from "#src/lib/moderations";
 import type { UserInfoVariablesContext } from "#src/middleware/auth";
-import type { IdentiteProconnect_Pg_Context } from "#src/middleware/identite-pg";
+import type { IdentiteProconnectPgContext } from "#src/middleware/identite-pg";
 import {
   GetModerationWithUser,
   UpdateModerationById,
@@ -38,7 +38,7 @@ async function mark_as_processed(
 //
 
 export default new Hono<
-  IdentiteProconnect_Pg_Context & UserInfoVariablesContext
+  IdentiteProconnectPgContext & UserInfoVariablesContext
 >().patch(
   "/",
   zValidator("param", EntitySchema),

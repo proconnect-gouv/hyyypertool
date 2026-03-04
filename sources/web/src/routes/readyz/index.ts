@@ -1,7 +1,7 @@
 //
 
-import type { AppEnvContext } from "#src/config";
-import type { IdentiteProconnect_Pg_Context } from "#src/middleware/identite-pg";
+import env from "#src/config";
+import { set_hyyyperbase_database } from "#src/middleware/hyyyperbase";
 import { set_identite_pg_database } from "#src/middleware/identite-pg";
 import { to } from "await-to-js";
 import { sql } from "drizzle-orm";
@@ -9,21 +9,28 @@ import { Hono } from "hono";
 
 //
 
-export default new Hono<AppEnvContext & IdentiteProconnect_Pg_Context>()
+export default new Hono()
   .get("/", ({ text }) => text(`readyz check passed`))
   .get("/sentry", () => {
     throw new Error("Sentry Check " + new Date().toISOString());
   })
   .get(
     "/drizzle/identite",
-    async (c, next) => {
-      const mw = set_identite_pg_database({
-        connectionString: c.env.DATABASE_URL,
-      });
-      return mw(c as any, next);
-    },
+    set_identite_pg_database({ connectionString: env.DATABASE_URL }),
     async ({ text, var: { identite_pg } }) => {
       const [, is_ok] = await to(identite_pg.execute(sql`SELECT 1`));
       return text("[+]drizzle identite connection " + (is_ok ? "OK" : "FAIL"));
+    },
+  )
+  .get(
+    "/drizzle/hyyyperbase",
+    set_hyyyperbase_database({
+      connectionString: env.HYYYPERBASE_DATABASE_URL,
+    }),
+    async ({ text, var: { hyyyper_pg } }) => {
+      const [, is_ok] = await to(hyyyper_pg.execute(sql`SELECT 1`));
+      return text(
+        "[+]drizzle hyyyyperbase connection " + (is_ok ? "OK" : "FAIL"),
+      );
     },
   );

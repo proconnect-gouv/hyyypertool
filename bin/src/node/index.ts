@@ -24,6 +24,11 @@ if (!existsSync(join(binRoot, "public/built"))) {
   console.log("✓ Static files built successfully");
 }
 
+execSync("bun run migrate", {
+  stdio: "inherit",
+  cwd: join(binRoot, "../sources/hyyyperbase"),
+});
+
 //
 //
 //

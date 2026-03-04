@@ -1,6 +1,6 @@
 //
 
-import { set_fetch, type FetchVariables_Context } from "#src/middleware/fetch";
+import { set_fetch } from "#src/middleware/fetch";
 import { render_html } from "#src/ui/testing";
 import {
   empty_database,
@@ -74,7 +74,7 @@ test("GET /organizations/leaders - timeout error shows retry button", async () =
 
   const mockFetch = mock(() => Promise.reject(timeoutError));
 
-  const response = await new Hono<FetchVariables_Context>()
+  const response = await new Hono()
     .use(set_fetch(mockFetch))
     .route("/", app)
     .request("/?siret=12345678901234", undefined, {
@@ -123,7 +123,7 @@ test("GET /organizations/leaders - retry succeeds with longer timeout", async ()
     ),
   );
 
-  const response = await new Hono<FetchVariables_Context>()
+  const response = await new Hono()
     .use(set_fetch(mockFetch))
     .route("/", app)
     .request("/?siret=12345678901234&retry=true", undefined, {
@@ -154,7 +154,7 @@ test("GET /organizations/leaders - retry fails, button still shown for further r
 
   const mockFetch = mock(() => Promise.reject(timeoutError));
 
-  const response = await new Hono<FetchVariables_Context>()
+  const response = await new Hono()
     .use(set_fetch(mockFetch))
     .route("/", app)
     .request("/?siret=12345678901234&retry=true", undefined, {

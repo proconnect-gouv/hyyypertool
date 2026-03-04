@@ -3,11 +3,11 @@ declare const app: import("hono/hono-base").HonoBase<
   {
     Bindings: AppEnv;
   } & import("../middleware/nonce/set_nonce").NonceVariablesContext &
-    import("#src/middleware/fetch").FetchVariables_Context &
-    import("#src/config").AppEnvContext &
+    import("#src/middleware/config").ConfigVariablesContext &
+    import("#src/middleware/fetch").FetchVariablesContext &
     import("#src/middleware/auth").UserInfoVariablesContext &
     import("#src/middleware/crisp").CrispClientContext &
-    import("#src/middleware/identite-pg").IdentiteProconnect_Pg_Context,
+    import("#src/middleware/identite-pg").IdentiteProconnectPgContext,
   | ({
       "/healthz": {
         $get: {

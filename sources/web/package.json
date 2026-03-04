@@ -31,9 +31,11 @@
     "@sentry/core": "10.40.0",
     "@sentry/node": "10.40.0",
     "@tailwindcss/typography": "^0.5.19",
+    "@~/hyyyperbase": "workspace:*",
     "@~/identite-proconnect": "workspace:*",
     "await-to-js": "3.0.0",
     "consola": "3.4.2",
+    "drizzle-orm": "0.45.1",
     "hono": "4.12.5",
     "hono-sessions": "0.8.1",
     "hono-slotify": "workspace:*",
@@ -41,6 +43,7 @@
     "lodash.sortby": "4.7.0",
     "nprogress": "0.2.0",
     "openid-client": "6.8.2",
+    "pg": "8.18.0",
     "preact": "10.28.4",
     "preact-render-to-string": "6.6.6",
     "rehype-sanitize": "6.0.0",
@@ -59,9 +62,10 @@
   },
   "devDependencies": {
     "@happy-dom/global-registrator": "20.6.3",
+    "@~/config.typescript": "workspace:*",
     "@types/lodash.sortby": "4.7.9",
     "@types/nprogress": "0.2.3",
-    "@~/config.typescript": "workspace:*",
+    "@types/pg": "8.16.0",
     "prettier": "3.8.1"
   }
 }
