@@ -11,8 +11,14 @@
         "@testing-library/cypress": "10.1.0",
         "cypress": "15.11.0",
         "cypress-wait-until": "3.0.2",
+<<<<<<< HEAD
         "drizzle-orm": "0.45.1",
         "pg": "8.19.0",
+||||||| parent of 499627bc (feat(hyperbase): the hyper data layer (#867))
+        "drizzle-orm": "0.45.1",
+        "pg": "8.18.0",
+=======
+>>>>>>> 499627bc (feat(hyperbase): the hyper data layer (#867))
         "typescript": "5.9.3",
       },
     },

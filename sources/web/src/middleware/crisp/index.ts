@@ -1,11 +1,9 @@
 //
 
-import type { AppEnvContext } from "#src/config";
 import { CrispApi, type CrispApi as CrispApiType } from "#src/lib/crisp";
+import type { ConfigVariablesContext } from "#src/middleware/config";
 import consola, { LogLevels } from "consola";
 import type { Env, MiddlewareHandler } from "hono";
-
-//
 
 export function set_crisp_client(
   client: CrispApiType,
@@ -17,19 +15,22 @@ export function set_crisp_client(
 }
 
 export function set_crisp_client_from_config(): MiddlewareHandler<
-  AppEnvContext & CrispClientContext
+  ConfigVariablesContext & CrispClientContext
 > {
   let client: CrispApiType | null = null;
 
   return async function set_crisp_client_from_config_middleware(c, next) {
     if (!client) {
+      const {
+        var: { config },
+      } = c;
       client = CrispApi({
-        base_url: c.env.CRISP_BASE_URL,
-        identifier: c.env.CRISP_IDENTIFIER,
-        key: c.env.CRISP_KEY,
-        plugin_urn: c.env.CRISP_PLUGIN_URN,
-        user_nickname: c.env.CRISP_USER_NICKNAME,
-        website_id: c.env.CRISP_WEBSITE_ID,
+        base_url: config.CRISP_BASE_URL,
+        identifier: config.CRISP_IDENTIFIER,
+        key: config.CRISP_KEY,
+        plugin_urn: config.CRISP_PLUGIN_URN,
+        user_nickname: config.CRISP_USER_NICKNAME,
+        website_id: config.CRISP_WEBSITE_ID,
         debug: consola.level >= LogLevels.debug,
       });
     }
@@ -37,8 +38,6 @@ export function set_crisp_client_from_config(): MiddlewareHandler<
     await next();
   };
 }
-
-//
 
 export interface CrispClientContext extends Env {
   Variables: {

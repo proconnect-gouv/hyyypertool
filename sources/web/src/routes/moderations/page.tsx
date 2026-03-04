@@ -104,7 +104,9 @@ function Main({ search, nonce }: { search: Search; nonce?: string }) {
 }
 
 function Filter({ search, nonce }: { search: Search; nonce?: string }) {
-  const { env: config } = useRequestContext<AppEnvContext>();
+  const {
+    var: { config },
+  } = useRequestContext<AppEnvContext>();
 
   return (
     <form

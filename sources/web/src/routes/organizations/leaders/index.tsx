@@ -1,7 +1,6 @@
 //
 
-import type { AppEnvContext } from "#src/config";
-import type { FetchVariables_Context } from "#src/middleware/fetch";
+import type { FetchVariablesContext } from "#src/middleware/fetch";
 import { button } from "#src/ui/button";
 import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
@@ -12,9 +11,7 @@ import lodash_sortby from "lodash.sortby";
 import { match, P } from "ts-pattern";
 import { z } from "zod";
 
-//
-
-export default new Hono<FetchVariables_Context & AppEnvContext>().get(
+export default new Hono<FetchVariablesContext>().get(
   "/",
   zValidator(
     "query",

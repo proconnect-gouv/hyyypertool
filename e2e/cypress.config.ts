@@ -3,13 +3,10 @@
 import { addCucumberPreprocessorPlugin } from "@badeball/cypress-cucumber-preprocessor";
 import { createEsbuildPlugin } from "@badeball/cypress-cucumber-preprocessor/esbuild";
 import createBundler from "@bahmutov/cypress-esbuild-preprocessor";
-import * as schema from "@proconnect-gouv/proconnect.identite.database/drizzle";
+import { execSync } from "child_process";
 import { defineConfig } from "cypress";
-import { drizzle } from "drizzle-orm/node-postgres";
 import { env } from "node:process";
-import pg from "pg";
-import { delete_database } from "../sources/identite-proconnect/src/database/seed/delete.js";
-import { insert_database } from "../sources/identite-proconnect/src/database/seed/insert.js";
+import { resolve } from "path";
 
 //
 
@@ -53,19 +50,19 @@ async function setupNodeEvents(
 //
 
 async function seed() {
-  const client = new pg.Client({
-    connectionString:
-      env.DATABASE_URL ??
-      "postgresql://postgres:postgres@localhost:5432/postgres",
-  });
-  await client.connect();
+  const rootDir = resolve(__dirname, "..");
 
-  const db = drizzle(client, { schema });
-
-  await delete_database(db);
-  await insert_database(db);
-
-  await client.end();
+  try {
+    // Run the root-level db:seed script
+    execSync("bun run db:seed", {
+      cwd: rootDir,
+      stdio: "inherit",
+      env: { ...process.env, ...env },
+    });
+  } catch (e) {
+    console.error("Seeding failed:", e);
+    throw e;
+  }
 
   return null;
 }

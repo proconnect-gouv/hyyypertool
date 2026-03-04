@@ -6,7 +6,7 @@ import { secureHeaders } from "hono/secure-headers";
 
 //
 
-export interface Csp_Context extends Env {
+export interface CspContext extends Env {
   Variables: {
     nonce: string;
   };
@@ -15,7 +15,7 @@ export interface Csp_Context extends Env {
 // Refused to execute inline script because it violates the following
 // Content Security Policy directive: "script-src-elem 'self'".
 // Either the 'unsafe-inline' keyword, a hash ('sha256-ZtVO4euNrRnx0KrqoCatLuOIaHv1Z7zi++KgINh8SqM='), or a nonce ('nonce-...') is required to enable inline execution.
-export const csp_headers = createMiddleware<Csp_Context>(
+export const csp_headers = createMiddleware<CspContext>(
   function csp_headers_middleware(context, next) {
     const nonce = crypto.getRandomValues(new Uint8Array(16)).join("");
 

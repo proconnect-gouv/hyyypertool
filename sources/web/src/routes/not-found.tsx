@@ -15,7 +15,7 @@ export function not_found_handler(c: Context) {
 
 export function NotFound() {
   const {
-    env: { PUBLIC_ASSETS_PATH },
+    var: { config },
   } = useRequestContext<AppEnvContext>();
 
   return (
@@ -36,7 +36,7 @@ export function NotFound() {
           </a>
         </section>
         <figure>
-          <img src={`${PUBLIC_ASSETS_PATH}/404.svg`} alt="" />
+          <img src={`${config.PUBLIC_ASSETS_PATH}/404.svg`} alt="" />
         </figure>
       </div>
     </main>

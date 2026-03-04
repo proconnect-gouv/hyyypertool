@@ -1,18 +1,19 @@
 //
 
 import {
-  Pool,
-  drizzle,
   schema,
   type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
+import { drizzle } from "drizzle-orm/node-postgres";
 import type { Env, MiddlewareHandler } from "hono";
+import type { Pool } from "pg";
+import pg from "pg";
 
 //
 
 export function set_identite_pg(
   client: IdentiteProconnectPgDatabase,
-): MiddlewareHandler<IdentiteProconnect_Pg_Context> {
+): MiddlewareHandler<IdentiteProconnectPgContext> {
   return async function set_identite_pg_middleware({ set }, next) {
     set("identite_pg", client);
     await next();
@@ -21,7 +22,7 @@ export function set_identite_pg(
 
 export function set_identite_pg_client(
   client: InstanceType<typeof Pool>,
-): MiddlewareHandler<IdentiteProconnect_Pg_Client_Context> {
+): MiddlewareHandler<IdentiteProconnectPgClientContext> {
   return async function set_identite_pg_client_middleware({ set }, next) {
     set("identite_pg_client", client);
     await next();
@@ -32,8 +33,8 @@ export function set_identite_pg_database({
   connectionString,
 }: {
   connectionString: string;
-}): MiddlewareHandler<IdentiteProconnect_Pg_Context> {
-  const connection = new Pool({ connectionString: connectionString });
+}): MiddlewareHandler<IdentiteProconnectPgContext> {
+  const connection = new pg.Pool({ connectionString: connectionString });
 
   return async function set_identite_pg_database_middleware({ set }, next) {
     const identite_pg = drizzle(connection, {
@@ -50,14 +51,14 @@ export function set_identite_pg_database({
 
 //
 
-export interface IdentiteProconnect_Pg_Context extends Env {
+export interface IdentiteProconnectPgContext extends Env {
   Variables: {
     identite_pg_client: InstanceType<typeof Pool>;
     identite_pg: IdentiteProconnectPgDatabase;
   };
 }
 
-export interface IdentiteProconnect_Pg_Client_Context extends Env {
+export interface IdentiteProconnectPgClientContext extends Env {
   Variables: {
     identite_pg_client: InstanceType<typeof Pool>;
     identite_pg: IdentiteProconnectPgDatabase;
