@@ -121,17 +121,7 @@ test("render about section", async () => {
         <dt>Nature juridique</dt>
         <dd>cached_libelle_categorie_juridique (cached_categorie_juridique)</dd>
         <dt>Tranche d&#39;effectif</dt>
-        <dd>
-          cached_libelle_tranche_effectif (code : cached_tranche_effectifs)
-          <span class="text-nowrap"
-            >(<a
-              href="https://www.sirene.fr/sirene/public/variable/tefen"
-              rel="noopener noreferrer"
-              target="_blank"
-              >liste code effectif INSEE</a
-            >)</span
-          >
-        </dd>
+        <dd>cached_libelle_tranche_effectif (code : cached_tranche_effectifs)</dd>
         <dt>Tranche d&#39;effectif de l&#39;unité légale</dt>
         <dd>cached_tranche_effectifs_unite_legale</dd>
       </dl>

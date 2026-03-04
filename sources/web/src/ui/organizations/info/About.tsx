@@ -86,17 +86,6 @@ export function About(props: Props) {
         <dd>
           {organization.cached_libelle_tranche_effectif} (code :{" "}
           {organization.cached_tranche_effectifs}){" "}
-          <span class="text-nowrap">
-            (
-            <a
-              href="https://www.sirene.fr/sirene/public/variable/tefen"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              liste code effectif INSEE
-            </a>
-            )
-          </span>
         </dd>
         <dt>Tranche d'effectif de l'unité légale</dt>
         <dd>{organization.cached_tranche_effectifs_unite_legale}</dd>

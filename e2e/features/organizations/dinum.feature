@@ -22,7 +22,7 @@ Fonctionnalité: Page organisation
     Et je vois "NAF/APE 84.11Z - Administration publique générale"
     Et je vois "Adresse 20 avenue de segur, 75007 Paris"
     Et je vois "Nature juridique SA nationale à conseil d'administration (Service central d'un ministère)"
-    Et je vois "Tranche d'effectif 100 à 199 salariés, en 2021 (code : 22) (liste code effectif INSEE)"
+    Et je vois "Tranche d'effectif 100 à 199 salariés, en 2021 (code : 22)"
 
     # Scénario: domaine connu dans l'organisation DINUM
     Alors je dois voir un tableau nommé "🌐 3 domaines connu dans l'organisation" et contenant
