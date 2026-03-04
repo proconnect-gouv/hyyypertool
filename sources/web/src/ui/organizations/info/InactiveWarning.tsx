@@ -17,7 +17,7 @@ export function InactiveWarning(props: Props) {
 
   return (
     <section {...section_props}>
-      <div class="fr-alert fr-alert--warning">
+      <div class="fr-alert fr-alert--warning fr-mb-2w">
         <i class="bi bi-exclamation-triangle-fill" />
         <h3 class="fr-alert__title">
           Attention : cette organisation a cessé son activité.

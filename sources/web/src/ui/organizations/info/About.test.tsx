@@ -40,6 +40,8 @@ test("render about section", async () => {
           cached_libelle_categorie_juridique:
             "cached_libelle_categorie_juridique",
           cached_libelle_tranche_effectif: "cached_libelle_tranche_effectif",
+          cached_tranche_effectifs_unite_legale:
+            "cached_tranche_effectifs_unite_legale",
           cached_libelle: "cached_libelle",
           cached_enseigne: "cached_enseigne",
           cached_tranche_effectifs: "cached_tranche_effectifs",
@@ -118,7 +120,7 @@ test("render about section", async () => {
         <dd>cached_adresse</dd>
         <dt>Nature juridique</dt>
         <dd>cached_libelle_categorie_juridique (cached_categorie_juridique)</dd>
-        <dt>Tranche d effectif</dt>
+        <dt>Tranche d&#39;effectif</dt>
         <dd>
           cached_libelle_tranche_effectif (code : cached_tranche_effectifs)
           <span class="text-nowrap"
@@ -130,6 +132,8 @@ test("render about section", async () => {
             >)</span
           >
         </dd>
+        <dt>Tranche d&#39;effectif de l&#39;unité légale</dt>
+        <dd>cached_tranche_effectifs_unite_legale</dd>
       </dl>
       <details class="my-6">
         <summary>Détails de l&#39;organisation</summary>

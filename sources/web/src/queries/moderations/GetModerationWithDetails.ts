@@ -27,6 +27,7 @@ export function GetModerationWithDetails(pg: IdentiteProconnectPgDatabase) {
             cached_libelle: true,
             cached_nom_complet: true,
             cached_tranche_effectifs: true,
+            cached_tranche_effectifs_unite_legale: true,
             created_at: true,
             id: true,
             siret: true,
