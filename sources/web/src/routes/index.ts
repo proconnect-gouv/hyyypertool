@@ -38,10 +38,10 @@ const app = new Hono()
   .use(contextStorage())
   // TODO: Re-enable compression when Bun supports CompressionStream
   // .use(compress())
-  .use(set_sentry())
-  .use(set_nonce())
   .use(set_config())
   .use(set_fetch())
+  .use(set_nonce())
+  .use(set_sentry())
 
   .get("/healthz", ({ text }) => text(`healthz check passed`))
   .get("/livez", ({ text }) => text(`livez check passed`))

@@ -58,9 +58,6 @@ export const users = pgTable(
     pgPolicy("admin_all", {
       /* full access for admin role */
     }),
-    pgPolicy("god_all", {
-      /* full access for god role */
-    }),
     pgPolicy("moderator_select", {
       /* can read active (non-disabled) users */
     }),
@@ -106,7 +103,6 @@ test("admin can see all users", async () => {
 | Function               | Role      | Email                   |
 | :--------------------- | :-------- | :---------------------- |
 | `insert_admin`         | admin     | admin@omega.gouv.com    |
-| `insert_god`           | god       | god@yopmail.com         |
 | `insert_moderateur`    | moderator | moderateur@beta.gouv.fr |
 | `insert_jeanbon`       | visitor   | jeanbon@yopmail.com     |
 | `insert_disabled_user` | visitor   | disabled@yopmail.com    |

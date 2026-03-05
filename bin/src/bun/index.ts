@@ -30,7 +30,15 @@ consola.log("# Hyyypertool 🚀 [Bun Runtime]", new Date());
 consola.log(Array.from({ length: 42 }).fill("=").join(""));
 consola.log("");
 
-const { ALLOWED_USERS, NODE_ENV, DEPLOY_ENV, VERSION, GIT_SHA, TZ } = config;
+const {
+  ADMIN_EMAILS,
+  ALLOWED_USERS,
+  NODE_ENV,
+  DEPLOY_ENV,
+  VERSION,
+  GIT_SHA,
+  TZ,
+} = config;
 consola.log("");
 consola.log("");
 consola.log("┌─── ENV");
@@ -43,6 +51,11 @@ consola.log("");
 consola.log("┌─── ALLOWED_USERS");
 if (consola.level >= LogLevels.log) {
   console.table(ALLOWED_USERS.split(","));
+}
+
+consola.log("┌─── ADMIN_EMAILS");
+if (consola.level >= LogLevels.log) {
+  console.table(ADMIN_EMAILS.split(","));
 }
 
 if (consola.level >= LogLevels.debug) {

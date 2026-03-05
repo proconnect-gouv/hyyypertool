@@ -2,6 +2,7 @@
 
 import { sql } from "drizzle-orm";
 import {
+  integer,
   pgPolicy,
   pgTable,
   serial,
@@ -20,6 +21,7 @@ export const users = pgTable(
     id: serial("id").primaryKey(),
     role: text("role").default("visitor").notNull(),
     updated_at: timestamp("updated_at").defaultNow().notNull(),
+    updated_by: integer("updated_by"),
   },
   (table) => [
     pgPolicy("admin_all", {

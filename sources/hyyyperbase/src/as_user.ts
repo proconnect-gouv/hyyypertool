@@ -13,6 +13,16 @@ import type * as schema from "./schema";
 type Db = PgDatabase<PgQueryResultHKT, typeof schema>;
 type Tx = PgTransaction<PgQueryResultHKT, typeof schema, any>;
 
+export async function as_god<T>(
+  db: Db,
+  fn: (tx: Tx) => T,
+): Promise<Awaited<T>> {
+  return db.transaction(async (tx) => {
+    await tx.execute(sql`SELECT set_config('app.role', 'god', true)`);
+    return fn(tx);
+  }) as Promise<Awaited<T>>;
+}
+
 export async function as_user<T>(
   db: Db,
   user: { id: number; role: string },

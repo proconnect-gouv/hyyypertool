@@ -8,6 +8,7 @@ const ASSETS_PATH = `/assets/${env.VERSION}` as const;
 const PUBLIC_ASSETS_PATH = `/assets/${env.VERSION}/public/built` as const;
 
 export default { ...env, ASSETS_PATH, PUBLIC_ASSETS_PATH };
+export { admin_email_list, ADMIN_EMAILS } from "./admin_emails";
 export { app_env };
 
 export interface AppConfig extends AppEnv {

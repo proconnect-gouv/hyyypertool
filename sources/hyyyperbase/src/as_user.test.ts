@@ -30,6 +30,7 @@ describe("pglite", () => {
           "id": 1,
           "role": "admin",
           "updated_at": 2023-06-22T14:34:34.000Z,
+          "updated_by": null,
         },
         {
           "created_at": 2018-07-13T15:35:15.000Z,
@@ -38,6 +39,7 @@ describe("pglite", () => {
           "id": 2,
           "role": "visitor",
           "updated_at": 2023-06-22T14:34:34.000Z,
+          "updated_by": null,
         },
       ]
     `);
@@ -60,6 +62,7 @@ describe("pglite", () => {
           "id": 2,
           "role": "visitor",
           "updated_at": 2023-06-22T14:34:34.000Z,
+          "updated_by": null,
         },
       ]
     `);
@@ -74,6 +77,7 @@ describe("pglite", () => {
         email: "pierre@moderator.gouv.fr",
         role: "moderator",
         updated_at: new Date("2222-11-11T00:00:00.000Z"),
+        updated_by: admin.id,
       }),
     );
 
@@ -89,6 +93,7 @@ describe("pglite", () => {
           "id": 1,
           "role": "admin",
           "updated_at": 2023-06-22T14:34:34.000Z,
+          "updated_by": null,
         },
         {
           "created_at": 2222-11-11T00:00:00.000Z,
@@ -97,6 +102,7 @@ describe("pglite", () => {
           "id": 2,
           "role": "moderator",
           "updated_at": 2222-11-11T00:00:00.000Z,
+          "updated_by": 1,
         },
       ]
     `);
@@ -122,6 +128,7 @@ describe("pglite", () => {
           "id": 1,
           "role": "admin",
           "updated_at": 2023-06-22T14:34:34.000Z,
+          "updated_by": null,
         },
       ]
     `);
@@ -146,6 +153,7 @@ describe("pglite", () => {
           "id": 1,
           "role": "admin",
           "updated_at": 2023-06-22T14:34:34.000Z,
+          "updated_by": null,
         },
       ]
     `);
@@ -175,6 +183,7 @@ describe.skipIf(!pg.url)("node-postgres", () => {
           "id": 1,
           "role": "admin",
           "updated_at": 2023-06-22T14:34:34.000Z,
+          "updated_by": null,
         },
         {
           "created_at": 2018-07-13T15:35:15.000Z,
@@ -183,6 +192,7 @@ describe.skipIf(!pg.url)("node-postgres", () => {
           "id": 2,
           "role": "visitor",
           "updated_at": 2023-06-22T14:34:34.000Z,
+          "updated_by": null,
         },
       ]
     `);
@@ -205,6 +215,7 @@ describe.skipIf(!pg.url)("node-postgres", () => {
           "id": 1,
           "role": "visitor",
           "updated_at": 2023-06-22T14:34:34.000Z,
+          "updated_by": null,
         },
       ]
     `);
@@ -219,6 +230,7 @@ describe.skipIf(!pg.url)("node-postgres", () => {
         email: "pierre@moderator.gouv.fr",
         role: "moderator",
         updated_at: new Date("2222-11-11T00:00:00.000Z"),
+        updated_by: admin.id,
       }),
     );
 
@@ -234,6 +246,7 @@ describe.skipIf(!pg.url)("node-postgres", () => {
           "id": 1,
           "role": "admin",
           "updated_at": 2023-06-22T14:34:34.000Z,
+          "updated_by": null,
         },
         {
           "created_at": 2222-11-11T00:00:00.000Z,
@@ -242,6 +255,7 @@ describe.skipIf(!pg.url)("node-postgres", () => {
           "id": 2,
           "role": "moderator",
           "updated_at": 2222-11-11T00:00:00.000Z,
+          "updated_by": 1,
         },
       ]
     `);
@@ -267,6 +281,7 @@ describe.skipIf(!pg.url)("node-postgres", () => {
           "id": 1,
           "role": "admin",
           "updated_at": 2023-06-22T14:34:34.000Z,
+          "updated_by": null,
         },
       ]
     `);
@@ -291,6 +306,7 @@ describe.skipIf(!pg.url)("node-postgres", () => {
           "id": 1,
           "role": "admin",
           "updated_at": 2023-06-22T14:34:34.000Z,
+          "updated_by": null,
         },
       ]
     `);

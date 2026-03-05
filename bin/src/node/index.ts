@@ -41,7 +41,15 @@ consola.log("");
 
 const config = app_env.parse(process.env);
 
-const { ALLOWED_USERS, NODE_ENV, DEPLOY_ENV, VERSION, GIT_SHA, TZ } = config;
+const {
+  ADMIN_EMAILS,
+  ALLOWED_USERS,
+  DEPLOY_ENV,
+  GIT_SHA,
+  NODE_ENV,
+  TZ,
+  VERSION,
+} = config;
 consola.log("");
 consola.log("");
 consola.log("┌─── ENV");
@@ -54,6 +62,11 @@ consola.log("");
 consola.log("┌─── ALLOWED_USERS");
 if (consola.level >= LogLevels.log) {
   console.table(ALLOWED_USERS.split(","));
+}
+
+consola.log("┌─── ADMIN_EMAILS");
+if (consola.level >= LogLevels.log) {
+  console.table(ADMIN_EMAILS.split(","));
 }
 
 if (consola.level >= LogLevels.debug) {

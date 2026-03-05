@@ -3,12 +3,10 @@
 import { schema } from "#src";
 import {
   insert_admin,
-  insert_god,
   insert_jeanbon,
   insert_moderateur,
 } from "#src/testing/users";
 import consola, { LogLevels } from "consola";
-import { sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
 import pg from "pg";
 
@@ -27,17 +25,11 @@ const db = drizzle(client, {
 });
 
 // Wipe
-await db.execute(sql`SELECT set_config('app.role', 'god', true)`);
 const deleted = await db.delete(schema.users).returning();
 consola.verbose(`🚮 DELETE ${deleted.length} users`);
 
 // Seed
-for (const insert of [
-  insert_admin,
-  insert_god,
-  insert_jeanbon,
-  insert_moderateur,
-]) {
+for (const insert of [insert_admin, insert_jeanbon, insert_moderateur]) {
   const user = await insert(db);
   consola.verbose(`🌱 INSERT user ${user.email} (${user.role})`);
 }

@@ -32,6 +32,7 @@ export const app_env = z.object({
     .string()
     .trim()
     .default("ES256"),
+  ADMIN_EMAILS: z.string().trim().default(""),
   ALLOWED_USERS: z.string().trim().default(""),
   API_AUTH_PASSWORD: z.string().trim(),
   API_AUTH_URL: z.string().trim().url(),

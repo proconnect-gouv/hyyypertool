@@ -9,7 +9,7 @@ import {
   insert_jeanbon,
   insert_moderateur,
 } from "#src/testing/users";
-import { beforeEach, describe, expect, test } from "bun:test";
+import { beforeEach, describe, expect, setSystemTime, test } from "bun:test";
 import { eq } from "drizzle-orm";
 
 //
@@ -31,6 +31,7 @@ describe("visitor", () => {
           "id": 1,
           "role": "visitor",
           "updated_at": 2023-06-22T14:34:34.000Z,
+          "updated_by": null,
         },
       ]
     `);
@@ -54,6 +55,7 @@ describe("visitor", () => {
           "id": 1,
           "role": "visitor",
           "updated_at": 2023-06-22T14:34:34.000Z,
+          "updated_by": null,
         },
       ]
     `);
@@ -109,6 +111,7 @@ describe("moderator", () => {
           "id": 2,
           "role": "visitor",
           "updated_at": 2023-06-22T14:34:34.000Z,
+          "updated_by": null,
         },
       ]
     `);
@@ -137,6 +140,7 @@ describe("moderator", () => {
           "id": 1,
           "role": "moderator",
           "updated_at": 2023-06-22T14:34:34.000Z,
+          "updated_by": null,
         },
       ]
     `);
@@ -159,6 +163,7 @@ describe("admin", () => {
           "id": 2,
           "role": "visitor",
           "updated_at": 2023-06-22T14:34:34.000Z,
+          "updated_by": null,
         },
       ]
     `);
@@ -167,10 +172,12 @@ describe("admin", () => {
   test("can update others", async () => {
     const admin = await insert_admin(hyyyper_pglite);
     const visitor = await insert_jeanbon(hyyyper_pglite);
+
+    setSystemTime(new Date("2023-01-01T00:00:00+00:00"));
     const result = await as_user(hyyyper_pglite, admin, (tx) =>
       tx
         .update(schema.users)
-        .set({ role: "banned" })
+        .set({ disabled_at: new Date(), updated_by: admin.id })
         .where(eq(schema.users.id, visitor.id))
         .returning(),
     );
@@ -178,11 +185,12 @@ describe("admin", () => {
       [
         {
           "created_at": 2018-07-13T15:35:15.000Z,
-          "disabled_at": null,
+          "disabled_at": 2023-01-01T00:00:00.000Z,
           "email": "jeanbon@yopmail.com",
           "id": 2,
-          "role": "banned",
+          "role": "visitor",
           "updated_at": 2023-06-22T14:34:34.000Z,
+          "updated_by": 1,
         },
       ]
     `);
@@ -196,6 +204,7 @@ describe("admin", () => {
         email: "pierre@moderator.gouv.fr",
         role: "moderator",
         updated_at: new Date("2024-01-15T10:00:00+00:00"),
+        updated_by: admin.id,
       }),
     );
     const result = await as_user(hyyyper_pglite, admin, (tx) =>
@@ -213,6 +222,7 @@ describe("admin", () => {
           "id": 2,
           "role": "moderator",
           "updated_at": 2024-01-15T10:00:00.000Z,
+          "updated_by": 1,
         },
       ]
     `);
@@ -247,6 +257,7 @@ describe("admin", () => {
           "id": 1,
           "role": "admin",
           "updated_at": 2023-06-22T14:34:34.000Z,
+          "updated_by": null,
         },
       ]
     `);

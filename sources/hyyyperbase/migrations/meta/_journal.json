@@ -8,6 +8,13 @@
       "when": 1770811363819,
       "tag": "0000_aberrant_namorita",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1772641132623,
+      "tag": "0001_wealthy_deathstrike",
+      "breakpoints": true
     }
   ]
 }
