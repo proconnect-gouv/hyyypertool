@@ -1,7 +1,10 @@
+import { type AppEnv } from "#src/config";
 declare const app: import("hono/hono-base").HonoBase<
-  import("../middleware/nonce/set_nonce").NonceVariablesContext &
-    import("#src/middleware/config").ConfigVariables_Context &
+  {
+    Bindings: AppEnv;
+  } & import("../middleware/nonce/set_nonce").NonceVariablesContext &
     import("#src/middleware/fetch").FetchVariables_Context &
+    import("#src/config").AppEnvContext &
     import("#src/middleware/auth").UserInfoVariablesContext &
     import("#src/middleware/crisp").CrispClientContext &
     import("#src/middleware/identite-pg").IdentiteProconnect_Pg_Context,

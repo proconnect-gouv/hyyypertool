@@ -1,9 +1,8 @@
 //
 
-import config from "#src/config";
+import { app_env, type AppEnv } from "#src/config";
 import { RootLayout } from "#src/layouts";
 import { set_userinfo } from "#src/middleware/auth";
-import { set_config } from "#src/middleware/config";
 import { set_crisp_client_from_config } from "#src/middleware/crisp";
 import { set_fetch } from "#src/middleware/fetch";
 import { set_identite_pg_database } from "#src/middleware/identite-pg";
@@ -32,20 +31,23 @@ import readyz_router from "./readyz";
 
 //
 
-const app = new Hono()
+const { ASSETS_PATH, DATABASE_URL } = app_env.parse(process.env);
+
+//
+
+const app = new Hono<{ Bindings: AppEnv }>()
   .use(logger(consola.info))
   .use(contextStorage())
   // TODO: Re-enable compression when Bun supports CompressionStream
   // .use(compress())
   .use(set_sentry())
   .use(set_nonce())
-  .use(set_config())
   .use(set_fetch())
 
   .get("/healthz", ({ text }) => text(`healthz check passed`))
   .get("/livez", ({ text }) => text(`livez check passed`))
 
-  .route(config.ASSETS_PATH, asserts_router)
+  .route(ASSETS_PATH, asserts_router)
   .route("/readyz", readyz_router)
 
   //
@@ -66,7 +68,7 @@ const app = new Hono()
   .route("/auth", auth_router)
   //
   .use(set_crisp_client_from_config())
-  .use(set_identite_pg_database({ connectionString: config.DATABASE_URL }))
+  .use(set_identite_pg_database({ connectionString: DATABASE_URL }))
   //
 
   .route("/moderations", moderations_router)

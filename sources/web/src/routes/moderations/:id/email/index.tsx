@@ -24,7 +24,7 @@ export default new Hono<App_Context>().get(
   jsxRenderer(),
   zValidator("param", EntitySchema),
   zValidator("query", DescribedBySchema),
-  async function GET({ render, req, var: { identite_pg, config } }) {
+  async function GET({ render, req, env: config, var: { identite_pg } }) {
     const { id } = req.valid("param");
     const { describedby } = req.valid("query");
 

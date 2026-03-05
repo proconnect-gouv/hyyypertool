@@ -1,7 +1,8 @@
 //
 
-import config from "#src/config";
+import type { AppEnvContext } from "#src/config";
 import { urls } from "#src/urls";
+import { useRequestContext } from "hono/jsx-renderer";
 
 //
 
@@ -10,6 +11,7 @@ export function ModerationNotFound({
 }: {
   moderation_id?: number | undefined;
 }) {
+  const { env } = useRequestContext<AppEnvContext>();
   return (
     <main class="flex h-full grow flex-col items-center justify-center bg-(--blue-france-975-75) ">
       <div class="fr-container grid h-full grid-cols-2 items-center gap-6">
@@ -28,7 +30,7 @@ export function ModerationNotFound({
           </a>
         </section>
         <figure>
-          <img src={`${config.PUBLIC_ASSETS_PATH}/404.svg`} alt="" />
+          <img src={`${env.PUBLIC_ASSETS_PATH}/404.svg`} alt="" />
         </figure>
       </div>
     </main>

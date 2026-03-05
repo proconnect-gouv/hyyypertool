@@ -23,7 +23,10 @@ test("GET /login/callback", async () => {
   const res = await new Hono()
     .use(hyyyyyypertool_session)
     .route("/", app)
-    .request("/login/callback?code=code&iss=iss&state=state");
+    .request("/login/callback?code=code&iss=iss&state=state", undefined, {
+      AGENTCONNECT_OIDC_ISSUER: "https://agentconnect.example.com",
+      COOKIE_ENCRYPTION_KEY: "test-key-32-chars-long-for-test!!",
+    });
 
   expect(res.status).toBe(403);
   expect(await res.text()).toMatchInlineSnapshot(

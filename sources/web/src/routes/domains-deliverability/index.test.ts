@@ -34,12 +34,11 @@ test("GET /email delivrability", async () => {
   ]);
 
   const response = await new Hono()
-    .use(set_config({ ALLOWED_USERS: "test@example.com" }))
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
     .use(set_userinfo({ email: "test@example.com" }))
     .route("/", app)
-    .request("/");
+    .request("/", undefined, { ALLOWED_USERS: "test@example.com" });
 
   expect(response.status).toBe(200);
   const html = await response.text();

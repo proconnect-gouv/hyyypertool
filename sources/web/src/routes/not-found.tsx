@@ -1,6 +1,6 @@
 //
 
-import type { AppEnv_Context } from "#src/config";
+import type { AppEnvContext } from "#src/config";
 import type { App_Context } from "#src/middleware/context";
 import type { Context } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";
@@ -15,8 +15,8 @@ export function not_found_handler(c: Context) {
 
 export function NotFound() {
   const {
-    var: { config },
-  } = useRequestContext<AppEnv_Context>();
+    env: { PUBLIC_ASSETS_PATH },
+  } = useRequestContext<AppEnvContext>();
 
   return (
     <main class="flex min-h-full flex-1 items-center bg-(--blue-france-975-75)">
@@ -32,11 +32,11 @@ export function NotFound() {
           </p>
           <a href="/" class="fr-btn">
             {" "}
-            Retour à l’accueil{" "}
+            Retour à l'accueil{" "}
           </a>
         </section>
         <figure>
-          <img src={`${config.PUBLIC_ASSETS_PATH}/404.svg`} alt="" />
+          <img src={`${PUBLIC_ASSETS_PATH}/404.svg`} alt="" />
         </figure>
       </div>
     </main>

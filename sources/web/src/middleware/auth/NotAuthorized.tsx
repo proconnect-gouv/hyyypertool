@@ -1,6 +1,6 @@
 //
 
-import type { AppEnv_Context } from "#src/config";
+import type { AppEnvContext } from "#src/config";
 import { button } from "#src/ui/button";
 import { urls } from "#src/urls";
 import { useRequestContext } from "hono/jsx-renderer";
@@ -10,7 +10,7 @@ import { useRequestContext } from "hono/jsx-renderer";
 export function NotAuthorized() {
   const {
     var: { nonce },
-  } = useRequestContext<AppEnv_Context>();
+  } = useRequestContext<AppEnvContext>();
 
   return (
     <main class="flex h-full grow flex-col items-center justify-center">

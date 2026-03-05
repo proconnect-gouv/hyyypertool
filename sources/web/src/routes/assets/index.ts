@@ -1,6 +1,6 @@
 //
 
-import { type AppVariables_Context } from "#src/config";
+import { type AppVariablesContext } from "#src/config";
 import { cache_immutable } from "#src/middleware/cache";
 import { Hono } from "hono";
 import { rewriteAssetRequestPath } from "./rewrite";
@@ -24,7 +24,7 @@ const publicRoot = globalThis.Bun ? "." : "./bin";
 
 //
 
-export default new Hono<AppVariables_Context>()
+export default new Hono<AppVariablesContext>()
   .use("*", cache_immutable)
   .use(
     "/node_modules/*",
@@ -48,18 +48,19 @@ export default new Hono<AppVariables_Context>()
       rewriteRequestPath: (requestPath) => requestPath.replace(/^\/src/, ""),
     }),
   )
-  .get("/bundle/config.js", async ({ text, var: { config } }) => {
-    const { ASSETS_PATH, PUBLIC_ASSETS_PATH, VERSION } = config;
-    return text(
-      `export default ${JSON.stringify({ ASSETS_PATH, PUBLIC_ASSETS_PATH, VERSION })}`,
-      200,
-      {
-        "content-type": "text/javascript",
-      },
-    );
-  })
-  .get("/bundle/env.js", async ({ text, var: { config } }) => {
-    const { VERSION } = config;
+  .get(
+    "/bundle/config.js",
+    async ({ text, env: { ASSETS_PATH, PUBLIC_ASSETS_PATH, VERSION } }) => {
+      return text(
+        `export default ${JSON.stringify({ ASSETS_PATH, PUBLIC_ASSETS_PATH, VERSION })}`,
+        200,
+        {
+          "content-type": "text/javascript",
+        },
+      );
+    },
+  )
+  .get("/bundle/env.js", async ({ text, env: { VERSION } }) => {
     return text(`export default ${JSON.stringify({ VERSION })}`, 200, {
       "content-type": "text/javascript",
     });

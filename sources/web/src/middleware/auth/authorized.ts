@@ -1,19 +1,19 @@
 //
 
-import type { ConfigVariables_Context } from "#src/middleware/config";
+import type { AppEnvContext } from "#src/config";
 import { createMiddleware } from "hono/factory";
 import { vip_list_guard } from "./vip_list.guard";
 
 //
 
 export function authorized() {
-  return createMiddleware<ConfigVariables_Context>(
+  return createMiddleware<AppEnvContext>(
     function authorized_middleware(c, next) {
       const {
-        var: { config },
+        env: { ALLOWED_USERS },
       } = c;
       const middleware = vip_list_guard({
-        vip_list: config.ALLOWED_USERS.split(","),
+        vip_list: ALLOWED_USERS.split(","),
       });
       return middleware(c as any, next);
     },

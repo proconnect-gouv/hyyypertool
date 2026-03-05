@@ -27,7 +27,8 @@ export default new Hono<ContextType>().patch(
   async function PATCH({
     text,
     req,
-    var: { identite_pg, userinfo, crisp, config },
+    env: config,
+    var: { identite_pg, userinfo, crisp },
   }) {
     const { id: moderation_id } = req.valid("param");
     const { message: text_body, reason, subject } = req.valid("form");

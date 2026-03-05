@@ -1,6 +1,5 @@
 //
 
-import env from "#src/config";
 import { AuthError } from "#src/errors";
 import type { AgentConnectUserInfo } from "#src/middleware/auth";
 import type { App_Context } from "#src/middleware/context";
@@ -49,7 +48,7 @@ export default new Hono<Oidc_Context & App_Context>()
     const state = randomState();
     const nonce = randomNonce();
 
-    const redirect_uri = get_redirect_uri(req.url);
+    const redirect_uri = get_redirect_uri(req.url, c.env.HOST);
 
     session.set("state", state);
     session.set("nonce", nonce);
@@ -70,16 +69,16 @@ export default new Hono<Oidc_Context & App_Context>()
       }),
       nonce,
       redirect_uri,
-      scope: env.AGENTCONNECT_OIDC_SCOPE,
+      scope: c.env.AGENTCONNECT_OIDC_SCOPE,
       state,
     });
 
     return redirect(redirectUrl);
   })
-  .get(`/fake/login/callback`, ({ notFound, redirect, var: { session } }) => {
-    if (env.NODE_ENV !== "development") return notFound();
+  .get(`/fake/login/callback`, (c) => {
+    if (c.env.NODE_ENV !== "development") return c.notFound();
 
-    session.set("userinfo", {
+    c.var.session.set("userinfo", {
       sub: "f52c691e7cc33e3116172d1115eee5e6016f0036095e9a514c86d741f364e88f",
       uid: "1",
       given_name: "Jean",
@@ -94,9 +93,9 @@ export default new Hono<Oidc_Context & App_Context>()
       iat: 1707821804,
       iss: "https://fca.integ01.dev-agentconnect.fr/api/v2",
     });
-    session.set("idtoken", "");
+    c.var.session.set("idtoken", "");
 
-    return redirect(urls.moderations.$url().pathname);
+    return c.redirect(urls.moderations.$url().pathname);
   })
   .get(
     `/login/callback`,
@@ -115,7 +114,7 @@ export default new Hono<Oidc_Context & App_Context>()
       const query = req.valid("query");
       const config = get("oidc_config");
 
-      const redirect_uri = new URL(get_redirect_uri(req.url));
+      const redirect_uri = new URL(get_redirect_uri(req.url, c.env.HOST));
       redirect_uri.search = new URLSearchParams(query).toString();
 
       const tokens = await authorizationCodeGrant(config, redirect_uri, {
@@ -146,10 +145,19 @@ export default new Hono<Oidc_Context & App_Context>()
       return redirect(urls.moderations.$url().pathname);
     },
   )
-  .get("/logout", ({ redirect, req, set, var: { oidc_config, session } }) => {
+  .get("/logout", (c) => {
+    const {
+      redirect,
+      req,
+      set,
+      var: { oidc_config, session },
+    } = c;
     const id_token_hint = session.get("idtoken");
 
-    const post_logout_redirect_uri = get_logout_redirect_uri(req.url);
+    const post_logout_redirect_uri = get_logout_redirect_uri(
+      req.url,
+      c.env.HOST,
+    );
 
     const logoutUrl = buildEndSessionUrl(oidc_config, {
       id_token_hint,
@@ -164,14 +172,12 @@ export default new Hono<Oidc_Context & App_Context>()
 
 //
 
-function get_redirect_uri(url: string) {
+function get_redirect_uri(url: string, host?: string) {
   const _url = new URL(url);
-  const redirect_uri = `${env.HOST ? env.HOST : _url.origin}${urls.auth.login.callback.$url().pathname}`;
-  return redirect_uri;
+  return `${host ? host : _url.origin}${urls.auth.login.callback.$url().pathname}`;
 }
 
-function get_logout_redirect_uri(url: string) {
+function get_logout_redirect_uri(url: string, host?: string) {
   const _url = new URL(url);
-  const redirect_uri = `${env.HOST ? env.HOST : _url.origin}`;
-  return redirect_uri;
+  return `${host ? host : _url.origin}`;
 }
