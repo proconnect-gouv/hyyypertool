@@ -25,7 +25,7 @@
         "@csmith/release-it-calver-plugin": "2023.12.0",
         "@testing-library/preact": "3.2.4",
         "@types/bun": "1.3.9",
-        "hono": "4.12.2",
+        "hono": "4.12.5",
         "htmx-ext-debug": "2.0.2",
         "prettier": "3.8.1",
         "prettier-plugin-gherkin": "3.1.3",
@@ -43,7 +43,7 @@
         "hyyypertool-bun": "./src/bun/index.ts",
       },
       "dependencies": {
-        "@hono/node-server": "1.19.9",
+        "@hono/node-server": "1.19.10",
         "@sentry/node": "10.40.0",
         "@sentry/profiling-node": "10.40.0",
         "@tailwindcss/cli": "4.2.1",
@@ -51,7 +51,7 @@
         "@~/web": "workspace:*",
         "consola": "3.4.2",
         "dotenv-flow": "4.1.0",
-        "hono": "4.12.2",
+        "hono": "4.12.5",
         "tailwindcss": "4.2.1",
         "tsx": "4.21.0",
       },
@@ -65,7 +65,7 @@
       "name": "hono-slotify",
       "version": "1.0.0",
       "dependencies": {
-        "hono": "4.12.2",
+        "hono": "4.12.5",
       },
       "devDependencies": {
         "@types/bun": "1.3.9",
@@ -129,7 +129,7 @@
         "@tsconfig/bun": "1.0.10",
         "@tsconfig/strictest": "2.0.8",
         "@types/bun": "1.3.9",
-        "hono": "4.12.2",
+        "hono": "4.12.5",
       },
     },
     "sources/identite-proconnect": {
@@ -143,7 +143,7 @@
         "@proconnect-gouv/proconnect.insee": "1.0.1",
         "consola": "3.4.2",
         "drizzle-orm": "0.45.1",
-        "hono": "4.12.2",
+        "hono": "4.12.5",
         "pg": "8.19.0",
       },
       "devDependencies": {
@@ -169,7 +169,7 @@
         "@~/identite-proconnect": "workspace:*",
         "await-to-js": "3.0.0",
         "consola": "3.4.2",
-        "hono": "4.12.2",
+        "hono": "4.12.5",
         "hono-sessions": "0.8.1",
         "hono-slotify": "workspace:*",
         "is-disposable-email-domain": "1.0.7",
@@ -288,7 +288,7 @@
 
     "@happy-dom/global-registrator": ["@happy-dom/global-registrator@20.6.3", "", { "dependencies": { "@types/node": ">=20.0.0", "happy-dom": "^20.6.3" } }, "sha512-CRuv8C6HqTd8BBA8pezx/tDtZQPjlr6oXxn3GshXoC6flVUnrCfe1MscDsqQNsRtQGt4lXT6agRTvDIxj+dvwg=="],
 
-    "@hono/node-server": ["@hono/node-server@1.19.9", "", { "peerDependencies": { "hono": "^4" } }, "sha512-vHL6w3ecZsky+8P5MD+eFfaGTyCeOHUIFYMGpQGbrBTSmNNoxv0if69rEZ5giu36weC5saFuznL411gRX7bJDw=="],
+    "@hono/node-server": ["@hono/node-server@1.19.10", "", { "peerDependencies": { "hono": "^4" } }, "sha512-hZ7nOssGqRgyV3FVVQdfi+U4q02uB23bpnYpdvNXkYTRRyWx84b7yf1ans+dnJ/7h41sGL3CeQTfO+ZGxuO+Iw=="],
 
     "@hono/sentry": ["@hono/sentry@1.2.2", "", { "dependencies": { "toucan-js": "^4.0.0" }, "peerDependencies": { "hono": ">=3.*" } }, "sha512-027grZBrRGDPor8mRd+QOBcSpUlF07YrTp/WFDXZhbvWZ+1LrZdERUqcdg1gBGDUTanHhd9ucblpNNN6+V1bxg=="],
 
@@ -970,7 +970,7 @@
 
     "he": ["he@1.2.0", "", { "bin": { "he": "bin/he" } }, "sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw=="],
 
-    "hono": ["hono@4.12.2", "", {}, "sha512-gJnaDHXKDayjt8ue0n8Gs0A007yKXj4Xzb8+cNjZeYsSzzwKc0Lr+OZgYwVfB0pHfUs17EPoLvrOsEaJ9mj+Tg=="],
+    "hono": ["hono@4.12.5", "", {}, "sha512-3qq+FUBtlTHhtYxbxheZgY8NIFnkkC/MR8u5TTsr7YZ3wixryQ3cCwn3iZbg8p8B88iDBBAYSfZDS75t8MN7Vg=="],
 
     "hono-sessions": ["hono-sessions@0.8.1", "", { "dependencies": { "iron-webcrypto": "^1.2.1", "ohash": "^2" }, "peerDependencies": { "hono": "^4.0.0" } }, "sha512-YLSKuIP13yhXTQe2x3sCc1JWsqt1Z3WZB2DWE+oX+YpOsC3lv8uCHnCoNHcY9DPyflDw4XQJN+MFVvcp5QwWdw=="],
 
@@ -1609,6 +1609,8 @@
     "@tailwindcss/oxide-wasm32-wasi/@tybys/wasm-util": ["@tybys/wasm-util@0.10.1", "", { "dependencies": { "tslib": "^2.4.0" }, "bundled": true }, "sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg=="],
 
     "@tailwindcss/oxide-wasm32-wasi/tslib": ["tslib@2.8.1", "", { "bundled": true }, "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w=="],
+
+    "@~/web/@hono/node-server": ["@hono/node-server@1.19.9", "", { "peerDependencies": { "hono": "^4" } }, "sha512-vHL6w3ecZsky+8P5MD+eFfaGTyCeOHUIFYMGpQGbrBTSmNNoxv0if69rEZ5giu36weC5saFuznL411gRX7bJDw=="],
 
     "anymatch/picomatch": ["picomatch@2.3.1", "", {}, "sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA=="],
 
