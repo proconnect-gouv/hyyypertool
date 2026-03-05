@@ -17,7 +17,7 @@
     "cypress": "15.10.0",
     "cypress-wait-until": "3.0.2",
     "drizzle-orm": "0.45.1",
-    "pg": "8.18.0",
+    "pg": "8.19.0",
     "typescript": "5.9.3"
   },
   "trustedDependencies": [
