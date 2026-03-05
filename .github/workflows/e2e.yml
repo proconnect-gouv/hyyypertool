@@ -28,7 +28,7 @@ jobs:
           node-version-file: package.json
 
       - name: Set up Docker Compose
-        uses: docker/setup-compose-action@364cc21a5de5b1ee4a7f5f9d3fa374ce0ccde746 # v1.2.0
+        uses: docker/setup-compose-action@112d3e30db3bf437d207fea57f22510569d1ab97 # v2.0.0
 
       - name: Create mocked services
         run: docker compose up --build --detach
