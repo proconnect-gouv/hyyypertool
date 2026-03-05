@@ -51,12 +51,7 @@ test("render about section", async () => {
       />,
     ),
   ).toMatchInlineSnapshot(`
-    "<section class="mt-6" id="about_section">
-      <h3>
-        <a class="bg-none" target="_blank" href="/organizations/42"
-          >🏛 Organisation</a
-        >
-      </h3>
+    "<section id="about_section">
       <dl
         class="grid grid-cols-[222px_1fr] gap-x-3 ps-0 [&amp;_dd]:p-0 [&amp;_dd]:py-1 [&amp;_dd]:font-semibold [&amp;_dt]:border-0 [&amp;_dt]:border-r [&amp;_dt]:border-solid [&amp;_dt]:border-gray-300 [&amp;_dt]:p-0 [&amp;_dt]:py-1 [&amp;_dt]:uppercase"
       >

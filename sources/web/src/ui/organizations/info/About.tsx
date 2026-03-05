@@ -5,7 +5,6 @@ import { button } from "#src/ui/button";
 import { CopyButton } from "#src/ui/button/components";
 import { description_list } from "#src/ui/list";
 import { LocalTime } from "#src/ui/time";
-import { urls } from "#src/urls";
 import { type JSX } from "hono/jsx";
 import { InactiveWarning } from "./InactiveWarning";
 
@@ -20,22 +19,7 @@ export function About(props: Props) {
   const { organization, nonce = "", ...section_props } = props;
 
   return (
-    <section class="mt-6" {...section_props}>
-      <h3>
-        <a
-          class="bg-none"
-          target="_blank"
-          href={
-            urls.organizations[":id"].$url({
-              param: {
-                id: organization.id,
-              },
-            }).pathname
-          }
-        >
-          🏛 Organisation
-        </a>
-      </h3>
+    <section {...section_props}>
       <InactiveWarning organization={organization} />
       <dl class={description_list()}>
         <dt>Dénomination </dt>

@@ -20,6 +20,7 @@ export async function Fiche({
         <h1 class="text-(--text-action-high-blue-france)">
           « {organization.cached_libelle} »
         </h1>
+        <h2 class="fr-h3">🏛 Organisation</h2>
         <About organization={organization} />
       </div>
       <div class="fr-card p-6!">

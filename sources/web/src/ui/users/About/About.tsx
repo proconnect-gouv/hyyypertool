@@ -22,7 +22,7 @@ export function About({ user, organization, nonce = "" }: AboutProps) {
 
   return (
     <section>
-      <h3>
+      <h2 class="fr-h3">
         <a
           class="bg-none"
           target="_blank"
@@ -30,7 +30,7 @@ export function About({ user, organization, nonce = "" }: AboutProps) {
         >
           👨‍💻 Profile
         </a>
-      </h3>
+      </h2>
       <dl class={description_list()}>
         <dt>Email </dt>
         <dd>
