@@ -4,7 +4,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { serve } from "@hono/node-server";
-import config from "@~/web/config";
+import { app_env } from "@~/web/config";
 import app from "@~/web/routes";
 import { execSync } from "child_process";
 import { LogLevels, consola } from "consola";
@@ -33,6 +33,8 @@ consola.log("");
 consola.log("# Hyyypertool 🚀", new Date());
 consola.log(Array.from({ length: 42 }).fill("=").join(""));
 consola.log("");
+
+const config = app_env.parse(process.env);
 
 const { ALLOWED_USERS, NODE_ENV, DEPLOY_ENV, VERSION, GIT_SHA, TZ } = config;
 consola.log("");
@@ -66,6 +68,6 @@ if (consola.level >= LogLevels.debug) {
 //
 
 serve({
-  fetch: app.fetch,
+  fetch: (req) => app.fetch(req, config),
   port: config.PORT,
 });

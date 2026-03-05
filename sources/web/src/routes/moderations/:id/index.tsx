@@ -38,7 +38,8 @@ export default new Hono<App_Context>()
       req,
       set,
       status,
-      var: { identite_pg, config },
+      env: config,
+      var: { identite_pg },
     }) {
       const { id } = req.valid("param");
 

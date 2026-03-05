@@ -1,26 +1,17 @@
 //
 
-import config from "@~/web/config";
+import { app_env } from "@~/web/config";
 import app from "@~/web/routes";
 import { LogLevels, consola } from "consola";
-import dotenv from "dotenv";
+import dotenvFlow from "dotenv-flow";
 import { showRoutes } from "hono/dev";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
 import { parseArgs } from "util";
 
 //
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const binRoot = join(__dirname, "..");
+dotenvFlow.config({ default_node_env: "development" });
 
-dotenv.config({
-  path: [
-    join(binRoot, `.env.${process.env.NODE_ENV ?? "development"}.local`),
-    join(binRoot, ".env.local"),
-    join(binRoot, ".env"),
-  ],
-});
+const config = app_env.parse(process.env);
 
 const { values } = parseArgs({
   options: {
@@ -31,7 +22,7 @@ const { values } = parseArgs({
   allowPositionals: true,
 });
 
-const port = values.p || config.PORT;
+const port = Number(values.p) || config.PORT;
 
 consola.log("");
 consola.log("");
@@ -69,6 +60,6 @@ if (consola.level >= LogLevels.debug) {
 //
 
 export default {
-  fetch: app.fetch,
+  fetch: (req: Request) => app.fetch(req, config),
   port,
 };

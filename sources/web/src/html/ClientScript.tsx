@@ -1,6 +1,7 @@
 //
 
-import config from "#src/config";
+import type { AppEnvContext } from "#src/config";
+import { useRequestContext } from "hono/jsx-renderer";
 
 //
 
@@ -18,9 +19,10 @@ export function ClientScript({
   src,
   type = "module",
 }: ClientScriptProps) {
+  const { env } = useRequestContext<AppEnvContext>();
   const builtSrc = src
     .replace(/\.ts$/, ".js")
-    .replace(/^\/src\//, `${config.PUBLIC_ASSETS_PATH}/`);
+    .replace(/^\/src\//, `${env.PUBLIC_ASSETS_PATH}/`);
 
   return <script async={async} defer={defer} src={builtSrc} type={type} />;
 }

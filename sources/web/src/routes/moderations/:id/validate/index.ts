@@ -52,7 +52,8 @@ export default new Hono<App_Context>().patch(
     text,
     req,
     notFound,
-    var: { config, crisp, identite_pg_client, identite_pg, userinfo, sentry },
+    env: config,
+    var: { crisp, identite_pg_client, identite_pg, userinfo, sentry },
   }) {
     const { id } = req.valid("param");
     const { add_domain, add_member, send_notification, verification_type } =

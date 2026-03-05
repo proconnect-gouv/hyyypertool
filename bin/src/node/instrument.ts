@@ -2,13 +2,14 @@
 
 import * as Sentry from "@sentry/node";
 import { nodeProfilingIntegration } from "@sentry/profiling-node";
+import { app_env } from "@~/web/config";
 import dotenvFlow from "dotenv-flow";
 
 //
 
 dotenvFlow.config({ default_node_env: "development" });
 
-const config = (await import("@~/web/config")).default;
+const config = app_env.parse(process.env);
 
 Sentry.init({
   enabled: config.NODE_ENV === "production",

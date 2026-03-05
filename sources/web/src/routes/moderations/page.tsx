@@ -1,6 +1,6 @@
 //
 
-import type { AppEnv_Context } from "#src/config";
+import type { AppEnvContext } from "#src/config";
 import { hx_include } from "#src/htmx";
 import {
   moderation_type_to_emoji,
@@ -104,9 +104,7 @@ function Main({ search, nonce }: { search: Search; nonce?: string }) {
 }
 
 function Filter({ search, nonce }: { search: Search; nonce?: string }) {
-  const {
-    var: { config },
-  } = useRequestContext<AppEnv_Context>();
+  const { env: config } = useRequestContext<AppEnvContext>();
 
   return (
     <form

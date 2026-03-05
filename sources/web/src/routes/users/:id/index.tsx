@@ -104,7 +104,8 @@ export default new Hono<App_Context>()
     async function reset_password({
       text,
       req,
-      var: { config, crisp, identite_pg, userinfo },
+      env: config,
+      var: { crisp, identite_pg, userinfo },
     }) {
       const { id: user_id } = req.valid("param");
 
@@ -124,7 +125,8 @@ export default new Hono<App_Context>()
     async function reset_mfa({
       text,
       req,
-      var: { config, crisp, identite_pg, userinfo },
+      env: config,
+      var: { crisp, identite_pg, userinfo },
     }) {
       const { id: user_id } = req.valid("param");
 

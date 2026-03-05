@@ -1,6 +1,6 @@
 //
 
-import env from "#src/config";
+import type { AppEnvContext } from "#src/config";
 import type { FetchVariables_Context } from "#src/middleware/fetch";
 import { button } from "#src/ui/button";
 import { urls } from "#src/urls";
@@ -14,7 +14,7 @@ import { z } from "zod";
 
 //
 
-export default new Hono<FetchVariables_Context>().get(
+export default new Hono<FetchVariables_Context & AppEnvContext>().get(
   "/",
   zValidator(
     "query",
@@ -23,14 +23,14 @@ export default new Hono<FetchVariables_Context>().get(
       retry: z.string().optional(),
     }),
   ),
-  async function GET({ html, req, var: { fetch } }) {
+  async function GET({ html, req, env, var: { fetch } }) {
     const { siret, retry } = req.valid("query");
     const useRetry = retry === "true";
     const hx_organizations_leaders_props = urls.organizations.leaders.$hx_get({
       query: { retry: "true", siret },
     });
 
-    const doc = await load_leaders({ siret, fetch, useRetry });
+    const doc = await load_leaders({ siret, fetch, useRetry, env });
 
     return match(doc)
       .with(P.instanceOf(Error), () =>
@@ -76,10 +76,16 @@ async function load_leaders({
   siret,
   fetch,
   useRetry = false,
+  env,
 }: {
   siret: string;
   fetch: typeof globalThis.fetch;
   useRetry?: boolean;
+  env: {
+    ENTREPRISE_API_GOUV_URL: string;
+    ENTREPRISE_API_GOUV_TOKEN: string;
+    HTTP_CLIENT_TIMEOUT: number;
+  };
 }) {
   const siren = siret.substring(0, 9);
   const query_params = new URLSearchParams({

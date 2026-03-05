@@ -44,7 +44,11 @@ test("GET /organizations/leaders - happy path with document", async () => {
   const response = await new Hono()
     .use(set_fetch(mockFetch))
     .route("/", app)
-    .request("/?siret=12345678901234");
+    .request("/?siret=12345678901234", undefined, {
+      ENTREPRISE_API_GOUV_URL: "https://api.entreprise.example.com",
+      ENTREPRISE_API_GOUV_TOKEN: "test-token",
+      HTTP_CLIENT_TIMEOUT: 5000,
+    });
 
   expect(response.status).toBe(200);
   expect(await render_html(await response.text())).toMatchInlineSnapshot(
@@ -73,7 +77,11 @@ test("GET /organizations/leaders - timeout error shows retry button", async () =
   const response = await new Hono<FetchVariables_Context>()
     .use(set_fetch(mockFetch))
     .route("/", app)
-    .request("/?siret=12345678901234");
+    .request("/?siret=12345678901234", undefined, {
+      ENTREPRISE_API_GOUV_URL: "https://api.entreprise.example.com",
+      ENTREPRISE_API_GOUV_TOKEN: "test-token",
+      HTTP_CLIENT_TIMEOUT: 5000,
+    });
 
   expect(response.status).toBe(200);
   expect(await render_html(await response.text())).toMatchInlineSnapshot(
@@ -118,7 +126,11 @@ test("GET /organizations/leaders - retry succeeds with longer timeout", async ()
   const response = await new Hono<FetchVariables_Context>()
     .use(set_fetch(mockFetch))
     .route("/", app)
-    .request("/?siret=12345678901234&retry=true");
+    .request("/?siret=12345678901234&retry=true", undefined, {
+      ENTREPRISE_API_GOUV_URL: "https://api.entreprise.example.com",
+      ENTREPRISE_API_GOUV_TOKEN: "test-token",
+      HTTP_CLIENT_TIMEOUT: 5000,
+    });
 
   expect(response.status).toBe(200);
   expect(await render_html(await response.text())).toMatchInlineSnapshot(`
@@ -145,7 +157,11 @@ test("GET /organizations/leaders - retry fails, button still shown for further r
   const response = await new Hono<FetchVariables_Context>()
     .use(set_fetch(mockFetch))
     .route("/", app)
-    .request("/?siret=12345678901234&retry=true");
+    .request("/?siret=12345678901234&retry=true", undefined, {
+      ENTREPRISE_API_GOUV_URL: "https://api.entreprise.example.com",
+      ENTREPRISE_API_GOUV_TOKEN: "test-token",
+      HTTP_CLIENT_TIMEOUT: 5000,
+    });
 
   expect(response.status).toBe(200);
   expect(await render_html(await response.text())).toMatchInlineSnapshot(`

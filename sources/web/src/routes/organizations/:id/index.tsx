@@ -23,7 +23,13 @@ export default new Hono<App_Context>()
   .get(
     "/",
     zValidator("param", EntitySchema),
-    async function GET({ render, req, set, var: { config, identite_pg } }) {
+    async function GET({
+      render,
+      req,
+      set,
+      env: config,
+      var: { identite_pg },
+    }) {
       const { id } = req.valid("param");
 
       const organization = await get_organization_by_id(identite_pg, id);

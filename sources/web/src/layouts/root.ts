@@ -9,7 +9,8 @@ import { useRequestContext } from "hono/jsx-renderer";
 
 export function RootLayout({ children }: PropsWithChildren) {
   const {
-    var: { config, nonce, sentry_trace_meta_tags, page_title },
+    env: config,
+    var: { nonce, sentry_trace_meta_tags, page_title },
   } = useRequestContext<App_Context>();
 
   return html`
