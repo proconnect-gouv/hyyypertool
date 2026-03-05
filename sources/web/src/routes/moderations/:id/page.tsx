@@ -100,6 +100,21 @@ async function ModerationPageContent() {
           user={moderation.user}
           organization={moderation.organization}
         />
+        <h2 class="fr-h3 fr-mt-6w">
+          <a
+            class="bg-none"
+            target="_blank"
+            href={
+              urls.organizations[":id"].$url({
+                param: {
+                  id: organization_fiche.id,
+                },
+              }).pathname
+            }
+          >
+            🏛 Organisation
+          </a>
+        </h2>
         <About_Organization organization={organization_fiche} />
         <Investigation_Organization
           banaticUrl={banaticUrl}
