@@ -10,7 +10,7 @@ import pg from "pg";
 
 const client = new pg.Client({
   connectionString:
-    process.env["DATABASE_URL"] ??
+    process.env["PROCONNECT_IDENTITE_DATABASE_URL"] ??
     "postgresql://postgres:postgres@localhost:5432/postgres",
 });
 await client.connect();

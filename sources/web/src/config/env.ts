@@ -26,7 +26,7 @@ export const app_env = z
       .string()
       .trim()
       .default("ES256"),
-    AGENTCONNECT_OIDC_ISSUER: z.string().trim().url(),
+    AGENTCONNECT_OIDC_ISSUER: z.url().trim(),
     AGENTCONNECT_OIDC_SCOPE: z
       .string()
       .trim()
@@ -38,7 +38,7 @@ export const app_env = z
       .default("ES256"),
     ALLOWED_USERS: z.string().trim().default(""),
     API_AUTH_PASSWORD: z.string().trim(),
-    API_AUTH_URL: z.string().trim().url(),
+    API_AUTH_URL: z.url().trim(),
     API_AUTH_USERNAME: z.string().trim(),
     COOKIE_ENCRYPTION_KEY: z
       .string()
@@ -51,31 +51,29 @@ export const app_env = z
     CRISP_RESOLVE_DELAY: z.coerce.number().default(2000),
     CRISP_USER_NICKNAME: z.string().trim(),
     CRISP_WEBSITE_ID: z.string().trim(),
-    DATABASE_URL: z
-      .string()
-      .trim()
-      .url()
-      .default(
-        "postgresql://postgres:postgres@localhost:5432/postgres?schema=public",
-      ),
+    DEPLOY_ENV: DEPLOY_ENV_SHEMA.default("preview"),
+    ENTREPRISE_API_GOUV_TOKEN: z.string().trim(),
+    ENTREPRISE_API_GOUV_URL: z.url().trim(),
+    GIT_SHA: GIT_SHA_SHEMA,
+    HOST: z.url().trim().optional(),
+    HTTP_CLIENT_TIMEOUT: z.coerce.number().default(3_000),
     HYYYPERBASE_DATABASE_URL: z
-      .string()
-      .trim()
       .url()
+      .trim()
       .default(
         "postgresql://postgres:postgres@localhost:5555/postgres?schema=public",
       ),
-    DEPLOY_ENV: DEPLOY_ENV_SHEMA.default("preview"),
-    ENTREPRISE_API_GOUV_TOKEN: z.string().trim(),
-    ENTREPRISE_API_GOUV_URL: z.string().trim().url(),
-    GIT_SHA: GIT_SHA_SHEMA,
-    HOST: z.string().trim().url().optional(),
-    HTTP_CLIENT_TIMEOUT: z.coerce.number().default(3_000),
     NODE_ENV: z
       .enum(["development", "production", "test"])
       .default("development"),
     PORT: z.coerce.number().default(3000),
-    SENTRY_DNS: z.string().trim().url().optional(),
+    PROCONNECT_IDENTITE_DATABASE_URL: z
+      .url()
+      .trim()
+      .default(
+        "postgresql://postgres:postgres@localhost:5432/postgres?schema=public",
+      ),
+    SENTRY_DNS: z.url().trim().optional(),
     SENTRY_PROFILES_SAMPLE_RATE: z.coerce.number().min(0).max(1).default(1),
     SENTRY_TRACES_SAMPLE_RATE: z.coerce.number().min(0).max(1).default(1),
     TZ: z.string().trim().optional(),

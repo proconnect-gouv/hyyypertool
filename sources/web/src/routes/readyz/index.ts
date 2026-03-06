@@ -22,12 +22,10 @@ export default new Hono<
   })
   .get(
     "/drizzle/identite",
-    async (c, next) => {
-      const mw = set_identite_pg_database({
-        connectionString: c.env.DATABASE_URL,
-      });
-      return mw(c as any, next);
-    },
+    async (c, next) =>
+      set_identite_pg_database({
+        connectionString: c.env.PROCONNECT_IDENTITE_DATABASE_URL,
+      })(c as any, next),
     async ({ text, var: { identite_pg } }) => {
       const [, is_ok] = await to(identite_pg.execute(sql`SELECT 1`));
       return text("[+]drizzle identite connection " + (is_ok ? "OK" : "FAIL"));
@@ -35,12 +33,11 @@ export default new Hono<
   )
   .get(
     "/drizzle/hyyyperbase",
-    async (c, next) => {
-      const mw = set_hyyyper_pg(
-        drizzle(c.env.HYYYPERBASE_DATABASE_URL, { schema }),
-      );
-      return mw(c as any, next);
-    },
+    async (c, next) =>
+      set_hyyyper_pg(drizzle(c.env.HYYYPERBASE_DATABASE_URL, { schema }))(
+        c as any,
+        next,
+      ),
     async ({ text, var: { hyyyper_pg } }) => {
       const [, is_ok] = await to(hyyyper_pg.execute(sql`SELECT 1`));
       return text(
