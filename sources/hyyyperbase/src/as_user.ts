@@ -28,3 +28,14 @@ export async function as_user<T>(
     return fn(tx);
   }) as Promise<Awaited<T>>;
 }
+
+export async function as_god<T>(
+  db: Db,
+  fn: (tx: Tx) => T,
+): Promise<Awaited<T>> {
+  return db.transaction(async (tx) => {
+    await tx.execute(sql`SELECT set_config('app.role', 'god', true)`);
+
+    return fn(tx);
+  }) as Promise<Awaited<T>>;
+}

@@ -31,7 +31,9 @@ export function authorized() {
       const allowed_users = c.env.ALLOWED_USERS ?? "";
       const is_allowed =
         is_in_allowed_users(allowed_users, userinfo.email) ||
-        (await is_active_user(c.var.hyyyper_pg, userinfo.email));
+        (await is_active_user(c.var.hyyyper_pg, userinfo.email).catch(
+          () => false,
+        ));
 
       if (!is_allowed) {
         c.status(401);

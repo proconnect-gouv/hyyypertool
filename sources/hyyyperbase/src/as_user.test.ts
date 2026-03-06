@@ -1,6 +1,6 @@
 //
 
-import { as_user } from "#src";
+import { as_god, as_user } from "#src";
 import * as schema from "#src/schema";
 import { hyyyper_pglite, reset } from "#src/testing";
 import * as pg from "#src/testing/pg";
@@ -149,6 +149,32 @@ describe("pglite", () => {
         },
       ]
     `);
+  });
+
+  test("as_god can see all users", async () => {
+    await insert_admin(hyyyper_pglite);
+    await insert_jeanbon(hyyyper_pglite);
+
+    const result = await as_god(hyyyper_pglite, (tx) =>
+      tx.select().from(schema.users),
+    );
+
+    expect(result).toHaveLength(2);
+  });
+
+  test("as_god can delete users", async () => {
+    const admin = await insert_admin(hyyyper_pglite);
+    await insert_jeanbon(hyyyper_pglite);
+
+    await as_god(hyyyper_pglite, (tx) =>
+      tx.delete(schema.users).where(eq(schema.users.id, admin.id)),
+    );
+
+    const result = await as_god(hyyyper_pglite, (tx) =>
+      tx.select().from(schema.users),
+    );
+    expect(result).toHaveLength(1);
+    expect(result[0]!.email).toBe("jeanbon@yopmail.com");
   });
 });
 

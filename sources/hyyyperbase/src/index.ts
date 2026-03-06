@@ -6,7 +6,7 @@ import * as schema from "./schema";
 
 //
 
-export { as_user } from "./as_user";
+export { as_god, as_user } from "./as_user";
 export { schema };
 
 //
