@@ -2,7 +2,7 @@
 
 import type { HtmxHeader } from "#src/htmx";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
-import type { App_Context } from "#src/middleware/context";
+import type { AppContext } from "#src/middleware/context";
 import { RemoveUserFromOrganization } from "#src/queries/moderations";
 import { EntitySchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
@@ -16,7 +16,7 @@ import { z } from "zod";
 const params_schema = EntitySchema.extend({
   user_id: z.string().pipe(z.coerce.number()),
 });
-export default new Hono<App_Context>()
+export default new Hono<AppContext>()
   //
   .patch(
     "/",

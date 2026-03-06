@@ -4,7 +4,7 @@ Fonctionnalité: Navigation au clavier dans la liste des modérations
   Contexte:
     Soit une base de données nourrie au grain
     Quand je navigue sur la page
-    Et je clique sur le bouton "ProConnect"
+    Et je me connecte en tant que "moderateur@beta.gouv.fr"
     Alors je vois "Liste des moderations"
 
   Scénario: Naviguer au clavier depuis le filtre modérateur jusqu'aux rangées du tableau

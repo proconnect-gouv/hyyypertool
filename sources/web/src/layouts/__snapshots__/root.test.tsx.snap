@@ -194,7 +194,7 @@ exports[`development 1`] = `
       <script
             defer
             nonce="nonce"
-            src="/assets/PUBLIC_ASSETS_PATH/public/built/routes/__dev__/live-reload.client.js"
+            src="/assets/PUBLIC_ASSETS_PATH/public/built/routes/___dev___/live-reload.client.js"
             type="module"
           ></script>
     </html>

@@ -2,7 +2,7 @@
 
 import { NotFoundError } from "#src/errors";
 import { is_htmx_request } from "#src/htmx";
-import type { App_Context } from "#src/middleware/context";
+import type { AppContext } from "#src/middleware/context";
 import consola from "consola";
 import { type Context } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";
@@ -20,7 +20,7 @@ export function error_handler(error: Error, c: Context) {
     req,
     status,
     var: { sentry },
-  } = c as Context<App_Context>;
+  } = c as Context<AppContext>;
 
   return (
     match(error)
@@ -55,7 +55,7 @@ export function error_handler(error: Error, c: Context) {
 export function Error_Page({ error }: { error: Error }) {
   const {
     env: { PUBLIC_ASSETS_PATH },
-  } = useRequestContext<App_Context>();
+  } = useRequestContext<AppContext>();
   const img_404 = `${PUBLIC_ASSETS_PATH}/404.svg`;
   return (
     <main class="flex h-full grow flex-col items-center justify-center">

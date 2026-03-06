@@ -2,7 +2,7 @@
 
 import { hx_include } from "#src/htmx";
 import { Main_Layout } from "#src/layouts";
-import type { App_Context } from "#src/middleware/context";
+import type { AppContext } from "#src/middleware/context";
 import { PaginationSchema, SearchSchema } from "#src/schema";
 import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
@@ -32,7 +32,7 @@ const hx_domains_query_props = {
 
 //
 
-export default new Hono<App_Context>().use("/", jsxRenderer(Main_Layout)).get(
+export default new Hono<AppContext>().use("/", jsxRenderer(Main_Layout)).get(
   "/",
   zValidator("query", query_schema, function hook(result, { redirect }) {
     if (result.success) return undefined;

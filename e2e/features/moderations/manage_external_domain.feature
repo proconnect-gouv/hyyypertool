@@ -4,7 +4,7 @@ Fonctionnalité: Gérer un domaine externe lors de la modération
   Contexte:
     Soit une base de données nourrie au grain
     Quand je navigue sur la page
-    Et je clique sur le bouton "ProConnect"
+    Et je me connecte en tant que "moderateur@beta.gouv.fr"
     Alors je vois "Liste des moderations"
     Quand je clique sur le lien nommé "Modération a traiter de Jean Bon pour 51935970700022"
     Et je dois voir le titre de page "Modération a traiter de Jean Bon pour 51935970700022"

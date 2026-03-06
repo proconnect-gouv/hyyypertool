@@ -10,7 +10,7 @@ export async function insert_admin(db: HyyyperPgDatabase) {
     .insert(schema.users)
     .values({
       created_at: new Date("2018-07-13T17:35:15+02:00"),
-      email: "admin@omega.gouv.com",
+      email: "admin@omega.gouv.fr",
       role: roles.enum.admin,
       updated_at: new Date("2023-06-22T16:34:34+02:00"),
     })

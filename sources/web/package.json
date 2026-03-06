@@ -40,6 +40,7 @@
     "hono-sessions": "0.8.1",
     "hono-slotify": "workspace:*",
     "is-disposable-email-domain": "1.0.7",
+    "jose": "6.2.1",
     "lodash.sortby": "4.7.0",
     "nprogress": "0.2.0",
     "openid-client": "6.8.2",

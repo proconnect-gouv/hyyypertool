@@ -2,7 +2,7 @@
 
 import { Main_Layout } from "#src/layouts";
 import { GetBanaticUrl } from "#src/lib/organizations/usecase";
-import type { App_Context } from "#src/middleware/context";
+import type { AppContext } from "#src/middleware/context";
 import {
   GetDomainCount,
   GetOrganizationMembersCount,
@@ -18,7 +18,7 @@ import Organization_Page from "./page";
 
 //
 
-export default new Hono<App_Context>()
+export default new Hono<AppContext>()
   .use("/", jsxRenderer(Main_Layout))
   .get(
     "/",

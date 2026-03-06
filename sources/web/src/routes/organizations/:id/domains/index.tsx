@@ -8,7 +8,7 @@ import {
   GetFicheOrganizationById,
   RemoveDomainEmailById,
 } from "#src/lib/organizations/usecase";
-import type { App_Context } from "#src/middleware/context";
+import type { AppContext } from "#src/middleware/context";
 import { DescribedBySchema, EntitySchema, IdSchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
 import { MarkDomainAsVerified } from "@~/identite-proconnect/sdk";
@@ -26,7 +26,7 @@ const DomainParams_Schema = z.object({ domain_id: IdSchema });
 
 //
 
-export default new Hono<App_Context>()
+export default new Hono<AppContext>()
   .get(
     "/",
     jsxRenderer(),

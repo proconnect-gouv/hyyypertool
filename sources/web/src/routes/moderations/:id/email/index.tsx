@@ -3,7 +3,7 @@
 import { NotFoundError } from "#src/errors";
 import { get_crisp_mail } from "#src/lib/crisp";
 import { GetCripsFromSessionId } from "#src/lib/moderations";
-import type { App_Context } from "#src/middleware/context";
+import type { AppContext } from "#src/middleware/context";
 import { DescribedBySchema, EntitySchema } from "#src/schema";
 import { Crisp } from "#src/ui/moderations/Crisp";
 import { FindCorrespondingEmail } from "#src/ui/moderations/FindCorrespondingEmail";
@@ -19,7 +19,7 @@ const MAX_ARTICLE_COUNT = 3;
 
 //
 
-export default new Hono<App_Context>().get(
+export default new Hono<AppContext>().get(
   "/",
   jsxRenderer(),
   zValidator("param", EntitySchema),

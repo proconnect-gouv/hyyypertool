@@ -13,7 +13,8 @@ import { schema } from "@~/hyyyperbase";
 import consola from "consola";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Hono } from "hono";
-import dev_router from "./__dev__/reload";
+import dev_router from "./___dev___";
+import admin_router from "./admin";
 import auth_router from "./auth";
 import domains_deliverability_router from "./domains-deliverability";
 import moderations_router from "./moderations";
@@ -60,10 +61,6 @@ const app = new Hono<{ Bindings: AppEnv }>()
 
   //
 
-  .route("/__dev__", dev_router)
-
-  //
-
   .route("/proxy", proxy_router)
 
   //
@@ -73,6 +70,7 @@ const app = new Hono<{ Bindings: AppEnv }>()
   .use(set_userinfo())
   //
   .route("/", welcome_router)
+  .route("/___dev___", dev_router)
   .route("/auth", auth_router)
   //
   .use(set_crisp_client_from_config())
@@ -92,6 +90,8 @@ const app = new Hono<{ Bindings: AppEnv }>()
   //
 
   .route("/moderations", moderations_router)
+
+  .route("/admin", admin_router)
 
   .route("/users", users_router)
 

@@ -6,7 +6,7 @@ Fonctionnalité: Gérer les demandes de modération en double
   Contexte:
     Soit une base de données nourrie au grain
     Quand je navigue sur la page
-    Et je clique sur le bouton "ProConnect"
+    Et je me connecte en tant que "moderateur@beta.gouv.fr"
     Alors je vois "Liste des moderations"
     Quand je clique sur le lien nommé "Modération a traiter de Richard Bon pour 38514019900014"
     Et je dois voir le titre de page "Modération a traiter de Richard Bon pour 38514019900014"

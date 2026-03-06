@@ -11,7 +11,7 @@ function connect() {
     eventSource.close();
   }
 
-  eventSource = new EventSource("/__dev__/reload");
+  eventSource = new EventSource("/___dev___/reload");
 
   eventSource.onmessage = (event) => {
     if (event.data === "reload" && !isReloading) {
@@ -29,7 +29,7 @@ function connect() {
 
     // Quick check: is the server actually down?
     try {
-      const response = await fetch("/__dev__/reload", { method: "HEAD" });
+      const response = await fetch("/___dev___/reload", { method: "HEAD" });
       if (response.ok) {
         // Server is up, just reconnect (likely HTMX navigation interrupted SSE)
         console.log("[live-reload] Reconnecting...");
@@ -48,7 +48,7 @@ function connect() {
     const maxAttempts = 30;
     while (attempts < maxAttempts) {
       try {
-        const response = await fetch("/__dev__/reload", { method: "HEAD" });
+        const response = await fetch("/___dev___/reload", { method: "HEAD" });
         if (response.ok || response.type === "opaque") {
           console.log("[live-reload] Server ready, reloading...");
           window.location.reload();

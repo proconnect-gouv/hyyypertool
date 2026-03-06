@@ -4,7 +4,7 @@ Fonctionnalité: Parcours de modération
   Contexte:
     Soit une base de données nourrie au grain
     Quand je navigue sur la page
-    Et je clique sur le bouton "ProConnect"
+    Et je me connecte en tant que "moderateur@beta.gouv.fr"
     Alors je vois "Liste des moderations"
     Et je vois "Raphael"
 

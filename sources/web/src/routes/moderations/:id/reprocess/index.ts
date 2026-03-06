@@ -2,7 +2,7 @@
 
 import type { HtmxHeader } from "#src/htmx";
 import { MODERATION_EVENTS, append_comment } from "#src/lib/moderations";
-import type { App_Context } from "#src/middleware/context";
+import type { AppContext } from "#src/middleware/context";
 import {
   GetModerationById,
   RemoveUserFromOrganization,
@@ -49,7 +49,7 @@ async function mark_as_reprocessed(
 
 //
 
-export default new Hono<App_Context>().patch(
+export default new Hono<AppContext>().patch(
   "/",
   zValidator("param", EntitySchema),
   async ({ text, req, var: { identite_pg, userinfo } }) => {

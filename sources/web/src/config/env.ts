@@ -57,6 +57,7 @@ export const app_env = z
     GIT_SHA: GIT_SHA_SHEMA,
     HOST: z.url().trim().optional(),
     HTTP_CLIENT_TIMEOUT: z.coerce.number().default(3_000),
+    HYYYPERBASE_ADMIN: z.email().trim().optional(),
     HYYYPERBASE_DATABASE_URL: z
       .url()
       .trim()

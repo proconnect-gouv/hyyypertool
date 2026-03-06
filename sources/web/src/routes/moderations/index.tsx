@@ -2,7 +2,7 @@
 
 import { Main_Layout } from "#src/layouts";
 import { authorized } from "#src/middleware/auth";
-import type { App_Context } from "#src/middleware/context";
+import type { AppContext } from "#src/middleware/context";
 import { PaginationSchema } from "#src/schema";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
@@ -14,7 +14,7 @@ import { get_moderators_list } from "./get_moderators_list.query";
 import { ModerationsPage } from "./page";
 
 //
-export default new Hono<App_Context>()
+export default new Hono<AppContext>()
   .use(authorized())
 
   .route("/:id", moderation_router)

@@ -5,7 +5,7 @@ Fonctionnalité: Page organisation - domaine à vérifier
     Soit une base de données nourrie au grain
     Quand je navigue sur la page
     Et je vois "Bonjour Hyyypertool !"
-    Et je clique sur le bouton "ProConnect"
+    Et je me connecte en tant que "jeanbon@yopmail.com"
 
   Scénario:
     Quand je clique sur "Domaines à vérifier"

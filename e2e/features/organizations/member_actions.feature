@@ -4,7 +4,7 @@ Fonctionnalité: Actions sur les membres d'une organisation
   Contexte:
     Soit une base de données nourrie au grain
     Quand je navigue sur la page
-    Et je clique sur le bouton "ProConnect"
+    Et je me connecte en tant que "jeanbon@yopmail.com"
     Et je clique sur "Organisations"
     Alors je suis redirigé sur "/organizations"
     Quand je clique sur le lien nommé "Organisation DINUM (13002526500013)"

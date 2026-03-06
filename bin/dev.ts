@@ -16,11 +16,12 @@ const PROJECT_ROOT = join(import.meta.dir, "..");
 const OUTDIR = join(PROJECT_ROOT, "bin/public/built");
 
 // Dynamic import to trigger live reload
-// The notifyReload function is exported from the web app's __dev__ route
+// The notifyReload function is exported from the web app's ___dev___ route
 let notifyReload: (() => void) | undefined;
 async function loadReloadNotifier() {
   try {
-    const module = await import("../sources/web/src/routes/__dev__/reload.tsx");
+    const module =
+      await import("../sources/web/src/routes/___dev___/reload.tsx");
     notifyReload = module.notifyReload;
     console.log("[live-reload] Notifier loaded");
   } catch (error) {

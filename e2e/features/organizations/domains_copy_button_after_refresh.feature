@@ -4,7 +4,7 @@ Fonctionnalité: Les boutons copier persistent après un rafraichissement HTMX
   Contexte:
     Soit une base de données nourrie au grain
     Quand je navigue sur la page
-    Et je clique sur le bouton "ProConnect"
+    Et je me connecte en tant que "jeanbon@yopmail.com"
     Alors je vois "Liste des moderations"
 
   Scénario: Les boutons copier sont toujours visibles après un clic sur Rafraichir

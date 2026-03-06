@@ -56,6 +56,10 @@ if (consola.level >= LogLevels.log) {
   console.table(ALLOWED_USERS.split(","));
 }
 
+consola.log("");
+consola.log("┌─── HYYYPERBASE_ADMIN");
+consola.log(`    ${config.HYYYPERBASE_ADMIN}`);
+
 if (consola.level >= LogLevels.debug) {
   consola.debug("");
   consola.debug("");
