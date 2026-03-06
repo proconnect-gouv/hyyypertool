@@ -5,7 +5,7 @@ import { Client } from "pg";
 
 export const connection = new Client({
   connectionString:
-    process.env["DATABASE_URL"] ??
+    process.env["PROCONNECT_IDENTITE_DATABASE_URL"] ??
     "postgresql://postgres:postgres@localhost:5432/postgres",
 });
 await connection.connect();

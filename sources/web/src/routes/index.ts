@@ -34,8 +34,12 @@ import readyz_router from "./readyz";
 
 //
 
-const { ASSETS_PATH, DATABASE_URL, HYYYPERBASE_DATABASE_URL, DEPLOY_ENV } =
-  app_env.parse(process.env);
+const {
+  ASSETS_PATH,
+  DEPLOY_ENV,
+  HYYYPERBASE_DATABASE_URL,
+  PROCONNECT_IDENTITE_DATABASE_URL,
+} = app_env.parse(process.env);
 
 //
 
@@ -72,7 +76,11 @@ const app = new Hono<{ Bindings: AppEnv }>()
   .route("/auth", auth_router)
   //
   .use(set_crisp_client_from_config())
-  .use(set_identite_pg_database({ connectionString: DATABASE_URL }))
+  .use(
+    set_identite_pg_database({
+      connectionString: PROCONNECT_IDENTITE_DATABASE_URL,
+    }),
+  )
   .use(
     set_hyyyper_pg(
       drizzle(HYYYPERBASE_DATABASE_URL, {
