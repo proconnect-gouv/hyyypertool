@@ -6,12 +6,11 @@ import * as schema from "./schema";
 
 //
 
-export { as_god, as_user } from "./as_user";
 export { schema };
 
 //
 
-export const roles = z.enum(["admin", "god", "moderator", "visitor"]);
+export const roles = z.enum(["admin", "moderator", "visitor"]);
 export type HyyyperPgDatabase = PgDatabase<PgQueryResultHKT, typeof schema>;
 export type HyyyperbaseDatabaseCradle = {
   hyyyper_pg: HyyyperPgDatabase;

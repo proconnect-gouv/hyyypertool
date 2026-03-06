@@ -1,24 +1,13 @@
 # hyyyperbase
 
-PostgreSQL Row-Level Security (RLS) with Drizzle ORM for ProConnect.
+PostgreSQL database layer with Drizzle ORM for ProConnect.
 
 ## Usage
 
 ```typescript
-import { as_user, schema } from "@~/hyyyperbase";
+import { schema } from "@~/hyyyperbase";
 
-// Queries run inside a transaction with RLS session variables set
-const result = await as_user(db, { id: 42, role: "visitor" }, (tx) =>
-  tx.select().from(schema.users),
-);
-```
-
-`as_god` bypasses RLS for privileged operations (seeding, migrations):
-
-```typescript
-import { as_god } from "@~/hyyyperbase";
-
-await as_god(db, (tx) => tx.delete(schema.users).returning());
+const users = await db.select().from(schema.users);
 ```
 
 ## Roles
@@ -29,7 +18,7 @@ await as_god(db, (tx) => tx.delete(schema.users).returning());
 | `moderator` | Read-only on non-disabled users |
 | `visitor`   | Read/update own row only        |
 
-`god` is not a user role — it's an internal RLS policy for privileged operations via `as_god`.
+Access control is enforced at the application layer via ProConnect OIDC, encrypted sessions, and the `authorized()` middleware — not at the database level. See ADR discussion for rationale.
 
 ## Migrations
 

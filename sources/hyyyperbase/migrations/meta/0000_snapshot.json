@@ -1,5 +1,5 @@
 {
-  "id": "86d52a70-10b8-44b4-82a7-c0e7eb32887d",
+  "id": "b2b19068-9f56-4d96-88f2-4fc37293e8e6",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -8,16 +8,29 @@
       "name": "users",
       "schema": "",
       "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "disabled_at": {
+          "name": "disabled_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
         },
         "email": {
           "name": "email",
           "type": "text",
           "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
           "notNull": true
         },
         "role": {
@@ -27,25 +40,18 @@
           "notNull": true,
           "default": "'visitor'"
         },
-        "disabled_at": {
-          "name": "disabled_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
         "updated_at": {
           "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "updated_by": {
+          "name": "updated_by",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
@@ -58,53 +64,7 @@
           "columns": ["email"]
         }
       },
-      "policies": {
-        "admin_all": {
-          "name": "admin_all",
-          "as": "PERMISSIVE",
-          "for": "ALL",
-          "to": ["public"],
-          "using": "current_setting('app.role', true) = 'admin'",
-          "withCheck": "current_setting('app.role', true) = 'admin'"
-        },
-        "god_all": {
-          "name": "god_all",
-          "as": "PERMISSIVE",
-          "for": "ALL",
-          "to": ["public"],
-          "using": "current_setting('app.role', true) = 'god'",
-          "withCheck": "current_setting('app.role', true) = 'god'"
-        },
-        "self_select": {
-          "name": "self_select",
-          "as": "PERMISSIVE",
-          "for": "SELECT",
-          "to": ["public"],
-          "using": "NULLIF(current_setting('app.user_id', true), '')::int = \"users\".\"id\""
-        },
-        "self_update": {
-          "name": "self_update",
-          "as": "PERMISSIVE",
-          "for": "UPDATE",
-          "to": ["public"],
-          "using": "NULLIF(current_setting('app.user_id', true), '')::int = \"users\".\"id\"",
-          "withCheck": "NULLIF(current_setting('app.user_id', true), '')::int = \"users\".\"id\""
-        },
-        "moderator_select": {
-          "name": "moderator_select",
-          "as": "PERMISSIVE",
-          "for": "SELECT",
-          "to": ["public"],
-          "using": "current_setting('app.role', true) = 'moderator' AND \"users\".\"disabled_at\" IS NULL"
-        },
-        "no_self_delete": {
-          "name": "no_self_delete",
-          "as": "RESTRICTIVE",
-          "for": "DELETE",
-          "to": ["public"],
-          "using": "NULLIF(current_setting('app.user_id', true), '') IS NULL OR NULLIF(current_setting('app.user_id', true), '')::int != \"users\".\"id\""
-        }
-      },
+      "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
     }
