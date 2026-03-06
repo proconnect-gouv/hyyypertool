@@ -8,7 +8,6 @@ import {
   insert_moderateur,
 } from "#src/testing/users";
 import consola, { LogLevels } from "consola";
-import { sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
 import pg from "pg";
 

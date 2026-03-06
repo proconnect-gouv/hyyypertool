@@ -1,8 +1,8 @@
 //
 
 import type { AppEnvContext } from "#src/config";
-import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import type { HyyyperbasePgContext } from "#src/middleware/hyyyperbase";
+import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import type { IdentiteProconnectPgContext } from "#src/middleware/identite-pg";
 import { set_identite_pg_database } from "#src/middleware/identite-pg";
 import { schema } from "@~/hyyyperbase";
