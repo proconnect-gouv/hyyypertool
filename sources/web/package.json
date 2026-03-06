@@ -43,7 +43,7 @@
     "lodash.sortby": "4.7.0",
     "nprogress": "0.2.0",
     "openid-client": "6.8.2",
-    "pg": "8.18.0",
+    "pg": "8.19.0",
     "preact": "10.28.4",
     "preact-render-to-string": "6.6.6",
     "rehype-sanitize": "6.0.0",

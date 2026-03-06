@@ -22,10 +22,11 @@ export default new Hono<App_Context>()
     "/",
     jsxRenderer(Main_Layout),
     async function GET({
+      env,
       render,
       req,
       set,
-      var: { config, identite_pg, nonce },
+      var: { identite_pg, nonce },
     }) {
       const query = req.query();
 
@@ -55,7 +56,7 @@ export default new Hono<App_Context>()
         get_moderators_list(identite_pg),
       ]);
 
-      const allowed_users_env = (config.ALLOWED_USERS ?? "")
+      const allowed_users_env = (env.ALLOWED_USERS ?? "")
         .split(",")
         .map((e) => e.trim())
         .filter(Boolean);

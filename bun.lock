@@ -25,6 +25,8 @@
         "@csmith/release-it-calver-plugin": "2023.12.0",
         "@testing-library/preact": "3.2.4",
         "@types/bun": "1.3.9",
+        "@~/hyyyperbase": "workspace:*",
+        "@~/identite-proconnect": "workspace:*",
         "hono": "4.12.5",
         "htmx-ext-debug": "2.0.2",
         "prettier": "3.8.1",
@@ -132,6 +134,24 @@
         "hono": "4.12.5",
       },
     },
+    "sources/hyyyperbase": {
+      "name": "@~/hyyyperbase",
+      "version": "1.0.0",
+      "dependencies": {
+        "consola": "3.4.2",
+        "zod": "4.3.6",
+      },
+      "devDependencies": {
+        "@electric-sql/pglite": "0.3.15",
+        "@types/pg": "8.16.0",
+        "@~/config.typescript": "workspace:*",
+        "drizzle-kit": "0.31.9",
+      },
+      "peerDependencies": {
+        "drizzle-orm": ">=0.45",
+        "pg": ">=8",
+      },
+    },
     "sources/identite-proconnect": {
       "name": "@~/identite-proconnect",
       "version": "1.0.0",
@@ -166,9 +186,11 @@
         "@sentry/core": "10.40.0",
         "@sentry/node": "10.40.0",
         "@tailwindcss/typography": "^0.5.19",
+        "@~/hyyyperbase": "workspace:*",
         "@~/identite-proconnect": "workspace:*",
         "await-to-js": "3.0.0",
         "consola": "3.4.2",
+        "drizzle-orm": "0.45.1",
         "hono": "4.12.5",
         "hono-sessions": "0.8.1",
         "hono-slotify": "workspace:*",
@@ -176,6 +198,7 @@
         "lodash.sortby": "4.7.0",
         "nprogress": "0.2.0",
         "openid-client": "6.8.2",
+        "pg": "8.19.0",
         "preact": "10.28.4",
         "preact-render-to-string": "6.6.6",
         "rehype-sanitize": "6.0.0",
@@ -196,6 +219,7 @@
         "@happy-dom/global-registrator": "20.6.3",
         "@types/lodash.sortby": "4.7.9",
         "@types/nprogress": "0.2.3",
+        "@types/pg": "8.16.0",
         "@~/config.typescript": "workspace:*",
         "prettier": "3.8.1",
       },
@@ -675,6 +699,8 @@
     "@~/config.tailwindcss": ["@~/config.tailwindcss@workspace:sources/config/tailwindcss"],
 
     "@~/config.typescript": ["@~/config.typescript@workspace:sources/config/typescript"],
+
+    "@~/hyyyperbase": ["@~/hyyyperbase@workspace:sources/hyyyperbase"],
 
     "@~/identite-proconnect": ["@~/identite-proconnect@workspace:sources/identite-proconnect"],
 
