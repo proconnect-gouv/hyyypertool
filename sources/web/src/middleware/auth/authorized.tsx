@@ -2,7 +2,7 @@
 
 import type { AppEnvContext } from "#src/config";
 import { is_htmx_request, type HtmxHeader } from "#src/htmx";
-import { as_god, type HyyyperPgDatabase } from "@~/hyyyperbase";
+import type { HyyyperPgDatabase } from "@~/hyyyperbase";
 import { createMiddleware } from "hono/factory";
 import type { HyyyperbasePgContext } from "../hyyyperbase";
 import { NotAuthorized } from "./NotAuthorized";
@@ -59,12 +59,10 @@ async function is_active_user(
   db: HyyyperPgDatabase,
   email: string,
 ): Promise<boolean> {
-  const user = await as_god(db, (tx) =>
-    tx.query.users.findFirst({
-      where: (users, { eq, isNull, and }) =>
-        and(eq(users.email, email), isNull(users.disabled_at)),
-      columns: { id: true },
-    }),
-  );
+  const user = await db.query.users.findFirst({
+    where: (users, { eq, isNull, and }) =>
+      and(eq(users.email, email), isNull(users.disabled_at)),
+    columns: { id: true },
+  });
   return !!user;
 }

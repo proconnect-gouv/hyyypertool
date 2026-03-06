@@ -1,9 +1,8 @@
 //
 
-import { as_god, schema } from "#src";
+import { schema } from "#src";
 import {
   insert_admin,
-  insert_god,
   insert_jeanbon,
   insert_moderateur,
 } from "#src/testing/users";
@@ -26,16 +25,11 @@ const db = drizzle(client, {
 });
 
 // Wipe
-const deleted = await as_god(db, (tx) => tx.delete(schema.users).returning());
+const deleted = await db.delete(schema.users).returning();
 consola.verbose(`🚮 DELETE ${deleted.length} users`);
 
 // Seed
-for (const insert of [
-  insert_admin,
-  insert_god,
-  insert_jeanbon,
-  insert_moderateur,
-]) {
+for (const insert of [insert_admin, insert_jeanbon, insert_moderateur]) {
   const user = await insert(db);
   consola.verbose(`🌱 INSERT user ${user.email} (${user.role})`);
 }
