@@ -1,29 +1,16 @@
 //
 
-import { schema, type HyyyperPgDatabase } from "@~/hyyyperbase";
-import { drizzle } from "drizzle-orm/node-postgres";
+import { type HyyyperPgDatabase } from "@~/hyyyperbase";
 import type { Env, MiddlewareHandler } from "hono";
 import type { Pool } from "pg";
-import pg from "pg";
 
 //
 
-export function set_hyyyperbase_database({
-  connectionString,
-}: {
-  connectionString: string;
-}): MiddlewareHandler<HyyyperbasePgContext> {
-  const connection = new pg.Pool({ connectionString });
-
-  return async function set_hyyyperbase_database_middleware({ set }, next) {
-    const hyyyper_pg = drizzle(connection, {
-      schema,
-      logger: process.env["DEPLOY_ENV"] === "preview",
-    });
-
+export function set_hyyyper_pg(
+  hyyyper_pg: HyyyperPgDatabase,
+): MiddlewareHandler<HyyyperbasePgContext> {
+  return async function set_hyyyper_pg_middleware({ set }, next) {
     set("hyyyper_pg", hyyyper_pg);
-    set("hyyyper_pg_client", connection);
-
     await next();
   };
 }

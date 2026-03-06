@@ -6,11 +6,13 @@ import { set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
 import { set_crisp_client_from_config } from "#src/middleware/crisp";
 import { set_fetch } from "#src/middleware/fetch";
-import { set_hyyyperbase_database } from "#src/middleware/hyyyperbase";
+import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import { set_identite_pg_database } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
 import { set_sentry } from "#src/middleware/sentry";
+import { schema } from "@~/hyyyperbase";
 import consola from "consola";
+import { drizzle } from "drizzle-orm/node-postgres";
 import { Hono } from "hono";
 import dev_router from "./__dev__/reload";
 import auth_router from "./auth";
@@ -69,9 +71,12 @@ const app = new Hono()
   .use(set_crisp_client_from_config())
   .use(set_identite_pg_database({ connectionString: config.DATABASE_URL }))
   .use(
-    set_hyyyperbase_database({
-      connectionString: config.HYYYPERBASE_DATABASE_URL,
-    }),
+    set_hyyyper_pg(
+      drizzle(config.HYYYPERBASE_DATABASE_URL, {
+        schema,
+        logger: config.DEPLOY_ENV === "preview",
+      }),
+    ),
   )
   //
 
