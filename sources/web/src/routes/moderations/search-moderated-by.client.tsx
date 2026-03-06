@@ -9,14 +9,14 @@ export interface SearchModeratedByProps extends Record<string, unknown> {
   id: string;
   name: string;
   initialValue?: string;
-  allowedUsers: string[];
+  moderations_list: string[];
 }
 
 export function SearchModeratedBy({
   id,
   name,
   initialValue = "",
-  allowedUsers,
+  moderations_list,
 }: SearchModeratedByProps) {
   return (
     <select
@@ -27,7 +27,7 @@ export function SearchModeratedBy({
       value={searchModeratedBy.value || initialValue}
     >
       <option value="">Tous les modérateurs</option>
-      {allowedUsers.map((user) => (
+      {moderations_list.map((user) => (
         <option key={user} value={user}>
           {user}
         </option>

@@ -10,6 +10,7 @@ import { match, P } from "ts-pattern";
 import moderation_router from "./:id/index";
 import { search_schema } from "./context";
 import { get_moderations_list } from "./get_moderations_list.query";
+import { get_moderators_list } from "./get_moderators_list.query";
 import { ModerationsPage } from "./page";
 
 //
@@ -20,7 +21,12 @@ export default new Hono<App_Context>()
   .get(
     "/",
     jsxRenderer(Main_Layout),
-    async function GET({ render, req, set, var: { identite_pg, nonce } }) {
+    async function GET({
+      render,
+      req,
+      set,
+      var: { config, identite_pg, nonce },
+    }) {
       const query = req.query();
 
       const search = match(search_schema.parse(query))
@@ -41,14 +47,26 @@ export default new Hono<App_Context>()
         .with({ success: true }, ({ data }) => data)
         .otherwise(() => PaginationSchema.parse({}));
 
-      const query_moderations_list = await get_moderations_list(identite_pg, {
-        pagination: { ...pagination, page: pagination.page - 1 },
-        search,
-      });
+      const [query_moderations_list, db_moderators] = await Promise.all([
+        get_moderations_list(identite_pg, {
+          pagination: { ...pagination, page: pagination.page - 1 },
+          search,
+        }),
+        get_moderators_list(identite_pg),
+      ]);
+
+      const allowed_users_env = (config.ALLOWED_USERS ?? "")
+        .split(",")
+        .map((e) => e.trim())
+        .filter(Boolean);
+      const moderations_list = [
+        ...new Set([...allowed_users_env, ...db_moderators]),
+      ].sort();
 
       set("page_title", "Liste des moderations");
       return render(
         <ModerationsPage
+          moderations_list={moderations_list}
           pagination={pagination}
           search={search}
           query_result={query_moderations_list}

@@ -1,6 +1,5 @@
 //
 
-import type { AppEnvContext } from "#src/config";
 import { hx_include } from "#src/htmx";
 import {
   moderation_type_to_emoji,
@@ -18,7 +17,6 @@ import {
   ModerationTypeSchema,
 } from "@~/identite-proconnect/types";
 import { createContext, useContext } from "hono/jsx";
-import { useRequestContext } from "hono/jsx-renderer";
 import { match } from "ts-pattern";
 import {
   MODERATION_TABLE_ID,
@@ -56,16 +54,19 @@ const hx_moderations_query_props = {
   "hx-target": `#${MODERATION_TABLE_ID}`,
 };
 const Moderations_Context = createContext({
+  moderations_list: [] as string[],
   query_result: {} as QueryResult,
   pagination: {} as Pagination,
 });
 
 export function ModerationsPage({
+  moderations_list,
   pagination,
   search,
   query_result,
   nonce,
 }: {
+  moderations_list: string[];
   pagination: Pagination;
   search: Search;
   query_result: QueryResult;
@@ -74,6 +75,7 @@ export function ModerationsPage({
   return (
     <Moderations_Context.Provider
       value={{
+        moderations_list,
         pagination,
         query_result,
       }}
@@ -104,10 +106,7 @@ function Main({ search, nonce }: { search: Search; nonce?: string }) {
 }
 
 function Filter({ search, nonce }: { search: Search; nonce?: string }) {
-  const {
-    var: { config },
-  } = useRequestContext<AppEnvContext>();
-
+  const { moderations_list } = useContext(Moderations_Context);
   return (
     <form
       {...hx_moderations_query_props}
@@ -213,7 +212,7 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
             name={page_query_keys.enum.search_moderated_by}
             nonce={nonce}
             initialValue={search.search_moderated_by}
-            allowedUsers={config.ALLOWED_USERS.split(",").filter(Boolean)}
+            moderations_list={moderations_list}
           />
         </div>
       </div>
