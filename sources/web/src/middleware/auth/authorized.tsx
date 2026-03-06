@@ -2,7 +2,6 @@
 
 import type { AppEnvContext } from "#src/config";
 import { is_htmx_request, type HtmxHeader } from "#src/htmx";
-import type { ConfigVariablesContext } from "#src/middleware/config";
 import { as_god, type HyyyperPgDatabase } from "@~/hyyyperbase";
 import { createMiddleware } from "hono/factory";
 import type { HyyyperbasePgContext } from "../hyyyperbase";
@@ -12,7 +11,6 @@ import type { UserInfoVariablesContext } from "./set_userinfo";
 //
 
 type AuthorizedContext = AppEnvContext &
-  ConfigVariablesContext &
   HyyyperbasePgContext &
   UserInfoVariablesContext;
 

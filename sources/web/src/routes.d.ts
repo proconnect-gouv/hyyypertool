@@ -3,7 +3,6 @@ declare const app: import("hono/hono-base").HonoBase<
   {
     Bindings: AppEnv;
   } & import("../middleware/nonce/set_nonce").NonceVariablesContext &
-    import("#src/middleware/config").ConfigVariablesContext &
     import("#src/middleware/fetch").FetchVariablesContext &
     import("#src/middleware/auth").UserInfoVariablesContext &
     import("#src/middleware/crisp").CrispClientContext &
