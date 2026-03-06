@@ -1,6 +1,6 @@
 //
 
-import { sql } from "drizzle-orm";
+import { sql, type ExtractTablesWithRelations } from "drizzle-orm";
 import type {
   PgDatabase,
   PgQueryResultHKT,
@@ -10,8 +10,9 @@ import type * as schema from "./schema";
 
 //
 
-type Db = PgDatabase<PgQueryResultHKT, typeof schema>;
-type Tx = PgTransaction<PgQueryResultHKT, typeof schema, any>;
+type Schema = ExtractTablesWithRelations<typeof schema>;
+type Db = PgDatabase<PgQueryResultHKT, typeof schema, Schema>;
+type Tx = PgTransaction<PgQueryResultHKT, typeof schema, Schema>;
 
 export async function as_user<T>(
   db: Db,

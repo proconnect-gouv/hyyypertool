@@ -1,6 +1,6 @@
 //
 
-import { schema } from "#src";
+import { as_god, schema } from "#src";
 import {
   insert_admin,
   insert_god,
@@ -27,8 +27,7 @@ const db = drizzle(client, {
 });
 
 // Wipe
-await db.execute(sql`SELECT set_config('app.role', 'god', true)`);
-const deleted = await db.delete(schema.users).returning();
+const deleted = await as_god(db, (tx) => tx.delete(schema.users).returning());
 consola.verbose(`🚮 DELETE ${deleted.length} users`);
 
 // Seed
