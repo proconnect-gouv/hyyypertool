@@ -8,6 +8,13 @@
       "when": 1772813378109,
       "tag": "0000_lethal_maggott",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1773155944400,
+      "tag": "0001_abandoned_apocalypse",
+      "breakpoints": true
     }
   ]
 }
