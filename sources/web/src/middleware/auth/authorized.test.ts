@@ -292,7 +292,11 @@ test("should populate hyyyper_user after sub-based lookup", async () => {
 
   expect(res.status).toBe(200);
   const body = JSON.parse(await res.text());
-  expect(body).toEqual({ id: admin.id, role: "admin", email: "admin@omega.gouv.fr" });
+  expect(body).toEqual({
+    id: admin.id,
+    role: "admin",
+    email: "admin@omega.gouv.fr",
+  });
 });
 
 test("should not backfill sub if already set", async () => {
