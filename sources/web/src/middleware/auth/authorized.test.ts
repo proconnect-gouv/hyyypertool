@@ -213,6 +213,88 @@ test("should sync email when user found by sub with different email", async () =
   expect(updated!.email).toBe("new-email@omega.gouv.fr");
 });
 
+test("should reject disabled user looked up by sub", async () => {
+  await insert_disabled_user(hyyyper_pglite);
+
+  const app = new Hono().get(
+    "/",
+    jsxRenderer(),
+    set_hyyyper_pg(hyyyper_pglite),
+    set_nonce("nonce"),
+    set_userinfo({ sub: "oidc-sub-disabled", email: "disabled@yopmail.com" }),
+    authorized(),
+    async ({ text }) => text("✅"),
+  );
+
+  const res = await app.request("/", undefined, { ALLOWED_USERS: "" });
+
+  expect(res.status).toBe(401);
+  expect(await res.text()).toContain("Accès Non Autorisé");
+});
+
+test("should not backfill sub when email-found user already has a different sub", async () => {
+  const admin = await insert_admin(hyyyper_pglite);
+
+  const app = new Hono().get(
+    "/",
+    jsxRenderer(),
+    set_hyyyper_pg(hyyyper_pglite),
+    set_nonce("nonce"),
+    set_userinfo({ sub: "different-sub", email: "admin@omega.gouv.fr" }),
+    authorized(),
+    async ({ text }) => text("✅"),
+  );
+
+  const res = await app.request("/", undefined, { ALLOWED_USERS: "" });
+
+  expect(res.status).toBe(200);
+
+  const updated = await hyyyper_pglite.query.users.findFirst({
+    where: (users, { eq }) => eq(users.id, admin.id),
+    columns: { sub: true },
+  });
+  expect(updated!.sub).toBe("oidc-sub-admin");
+});
+
+test("should set hyyyper_user to undefined for ALLOWED_USERS-only access", async () => {
+  const app = new Hono().get(
+    "/",
+    jsxRenderer(),
+    set_hyyyper_pg(hyyyper_pglite),
+    set_nonce("nonce"),
+    set_userinfo({ email: "good@captain.yargs" }),
+    authorized(),
+    async (c) => c.text(JSON.stringify(c.var.hyyyper_user ?? null)),
+  );
+
+  const res = await app.request("/", undefined, {
+    ALLOWED_USERS: "good@captain.yargs",
+  });
+
+  expect(res.status).toBe(200);
+  expect(await res.text()).toBe("null");
+});
+
+test("should populate hyyyper_user after sub-based lookup", async () => {
+  const admin = await insert_admin(hyyyper_pglite);
+
+  const app = new Hono().get(
+    "/",
+    jsxRenderer(),
+    set_hyyyper_pg(hyyyper_pglite),
+    set_nonce("nonce"),
+    set_userinfo({ sub: "oidc-sub-admin", email: admin.email }),
+    authorized(),
+    async (c) => c.text(JSON.stringify(c.var.hyyyper_user)),
+  );
+
+  const res = await app.request("/", undefined, { ALLOWED_USERS: "" });
+
+  expect(res.status).toBe(200);
+  const body = JSON.parse(await res.text());
+  expect(body).toEqual({ id: admin.id, role: "admin", email: "admin@omega.gouv.fr" });
+});
+
 test("should not backfill sub if already set", async () => {
   const admin = await insert_admin(hyyyper_pglite);
 
