@@ -67,10 +67,9 @@ export function authorized() {
 
       // 2. Migration path: lookup by email, backfill sub
       if (!db_user) {
-        db_user = await find_active_user(
-          c.var.hyyyper_pg,
-          email,
-        ).catch(() => undefined);
+        db_user = await find_active_user(c.var.hyyyper_pg, email).catch(
+          () => undefined,
+        );
         if (db_user && sub) {
           await backfill_sub(c.var.hyyyper_pg, db_user.id, sub);
         }

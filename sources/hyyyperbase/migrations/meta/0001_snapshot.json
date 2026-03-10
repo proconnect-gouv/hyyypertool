@@ -67,16 +67,12 @@
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         },
         "users_sub_unique": {
           "name": "users_sub_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "sub"
-          ]
+          "columns": ["sub"]
         }
       },
       "policies": {},
