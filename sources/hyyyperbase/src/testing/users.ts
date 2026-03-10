@@ -12,6 +12,7 @@ export async function insert_admin(db: HyyyperPgDatabase) {
       created_at: new Date("2018-07-13T17:35:15+02:00"),
       email: "admin@omega.gouv.fr",
       role: roles.enum.admin,
+      sub: "oidc-sub-admin",
       updated_at: new Date("2023-06-22T16:34:34+02:00"),
     })
     .returning();
@@ -26,6 +27,7 @@ export async function insert_disabled_user(db: HyyyperPgDatabase) {
       disabled_at: new Date("2023-01-01T00:00:00+00:00"),
       email: "disabled@yopmail.com",
       role: roles.enum.visitor,
+      sub: "oidc-sub-disabled",
       updated_at: new Date("2023-06-22T16:34:34+02:00"),
     })
     .returning();
@@ -39,6 +41,7 @@ export async function insert_jeanbon(db: HyyyperPgDatabase) {
       created_at: new Date("2018-07-13T17:35:15+02:00"),
       email: "jeanbon@yopmail.com",
       role: roles.enum.visitor,
+      sub: "oidc-sub-jeanbon",
       updated_at: new Date("2023-06-22T16:34:34+02:00"),
     })
     .returning();
@@ -52,6 +55,7 @@ export async function insert_moderateur(db: HyyyperPgDatabase) {
       created_at: new Date("2018-07-17T17:35:15+02:00"),
       email: "moderateur@beta.gouv.fr",
       role: roles.enum.moderator,
+      sub: "oidc-sub-moderateur",
       updated_at: new Date("2023-06-22T16:34:34+02:00"),
     })
     .returning();
