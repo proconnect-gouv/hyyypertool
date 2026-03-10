@@ -1,5 +1,69 @@
 # Changelog
 
+## [2026.3.3](https://github.com/proconnect-gouv/hyyypertool/compare/2026.3.2...2026.3.3) (2026-03-10)
+
+### Changements
+
+- ✨ Sépare le titre du composant `<About>`
+
+En séparant le titre du composant cela permet de mieux gérer si l'on intégre un lien ou non vers le détail des informations. Cela provoquait un bug car sur la page d'information de l'organisation, le titre renvoyait vers le même lien que celui qu'on consultait.
+
+J'en ai profité pour remplacer les `<h3>` par des `<h2>` dans un souci de cohérence HTML (cela permet d'améliorer l'accessibilité).
+
+- ♻️ Suppression de l'intégration Zammad
+
+Zammad n'est plus utilisé par l'équipe. Suppression de l'ensemble du code lié à Zammad : client API, composants UI, routes (assets, health check), variables d'environnement et logique de ticket dans le flux de rejet des modérations. Les anciennes modérations avec un ticket Zammad sont désormais traitées comme sans ticket, et une nouvelle conversation Crisp est créée à la place.
+
+### Ajouté
+
+- ✨ Add team management feature with role-based access control (#1477) (9f1a429d)
+- ✨ (hyyyyperbase) add as_god to bypass authorization in tests (42e6cf83)
+- ✨ (moderations) populate moderator filter from DB + env (bd2e89ce)
+- ✨ Separates title from component (#1473) (fbbd4696)
+- ✨ Add tranche_effectifs_unite_legale to organization component (#1449) (5ac84269)
+
+### Modifié
+
+- 🔧 rename DATABASE_URL to PROCONNECT_IDENTITE_DATABASE_URL (#1476) (16eecdef)
+- ♻️ (config) restore origin/main env bindings pattern (29a834d8)
+- ♻️ (middleware) simplify set_hyyyper_pg to accept pre-created drizzle (13a58ca8)
+- ♻️ refactor(config): reorganize configuration and middleware structure (#1474) (ae3003b6)
+
+### Supprimé
+
+- 🔥 Delete .eslintrc (#1478) (5787e70d)
+- 🔥 (hyyyperbase) drop Row-Level Security (#1475) (ae2c1a88)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): Bump oven-sh/setup-bun (#1456) (80aa7117)
+- :arrow_upper_right: [patch](deps): Bump cypress-io/github-action (#1455) (99788388)
+- :arrow_upper_right: [patch](deps): Bump docker/setup-compose-action (#1454) (96ae9676)
+- :arrow_upper_right: [patch](deps): Bump actions/upload-artifact (#1453) (fcc98937)
+- :arrow_upper_right: [patch](deps): Bump actions/setup-node (#1452) (ba108ed8)
+- :arrow_upper_right: [patch](deps): Bump the tailwindcss group with 2 updates (#1462) (c9bb58df)
+- :arrow_upper_right: [patch](deps): Bump @preact/signals (#1464) (439d08a5)
+- :arrow_upper_right: [patch](deps): Bump pg from 8.18.0 to 8.19.0 (#1463) (5df6f746)
+
+### Divers
+
+- chore: make typescript happy (b72c8208)
+- chore: make typescript happy (cf6b6599)
+- chore: make prettier happy (01be9714)
+- 🛂 (auth) dual authorization via env ALLOWED_USERS + hyyyperbase users (8d222fb1)
+- 🩹 (hyyyperbase) trim README, use as_god in seed, fix Tx type (939fac21)
+- feat(hyperbase): the hyper data layer (#867) (8bc39f50)
+- ↗️ [patch](deps): Bump @badeball/cypress-cucumber-preprocessor from 24.0.0 to 24.0.1 in /e2e (#1457) (d078c5c6)
+- ↗️ [patch](deps): Bump cypress from 15.10.0 to 15.11.0 in /e2e (#1459) (23fc4927)
+- ⚰️ Delete dead url sirene.fr (#1450) (0757e56e)
+- Bump @hono/node-server from 1.19.9 to 1.19.10 in /sources/web (#1471) (301aeb86)
+- Bump hono from 4.12.2 to 4.12.5 (#1469) (49e08f32)
+- ↗️ [patch](deps): Bump the sentry group with 4 updates (#1461) (163fb66a)
+- ↗️ [patch](deps): Bump pg from 8.18.0 to 8.19.0 in /e2e (#1460) (db710af3)
+- ↗️ [patch](deps): Bump @proconnect-gouv/proconnect.identite.database from 1.2.0 to 1.3.0 in /e2e (#1458) (8a26f0ff)
+- 🚮 remove zammad integration (#1445) (f6184bdd)
+- 🚮 officialy remove @~/core (#1447) (0468ae93)
+
 ## [2026.3.2](https://github.com/proconnect-gouv/hyyypertool/compare/2026.3.1...2026.3.2) (2026-03-03)
 
 ### Changements
