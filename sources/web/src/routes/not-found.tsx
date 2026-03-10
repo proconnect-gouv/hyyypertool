@@ -1,12 +1,12 @@
 //
 
 import type { AppEnvContext } from "#src/config";
-import type { App_Context } from "#src/middleware/context";
+import type { AppContext } from "#src/middleware/context";
 import type { Context } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";
 
 export function not_found_handler(c: Context) {
-  const { render, status } = c as Context<App_Context>;
+  const { render, status } = c as Context<AppContext>;
   status(404);
   return render(<NotFound />);
 }

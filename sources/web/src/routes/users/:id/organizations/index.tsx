@@ -1,6 +1,6 @@
 //
 
-import type { App_Context } from "#src/middleware/context";
+import type { AppContext } from "#src/middleware/context";
 import { PaginationSchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
@@ -12,7 +12,7 @@ import { Table } from "./Table";
 
 //
 
-export default new Hono<App_Context>().get(
+export default new Hono<AppContext>().get(
   "/",
   jsxRenderer(),
   zValidator("param", ParamSchema),

@@ -4,7 +4,7 @@ Fonctionnalité: Sélectionner un type de vérification lors de l'acceptation
   Contexte:
     Soit une base de données nourrie au grain
     Quand je navigue sur la page
-    Et je clique sur le bouton "ProConnect"
+    Et je me connecte en tant que "moderateur@beta.gouv.fr"
     Et je dois voir le titre de page "Liste des moderations"
     Alors je vois "Liste des moderations"
     Quand je clique sur le lien nommé "Modération a traiter de Jean Bon pour 51935970700022"
@@ -19,7 +19,7 @@ Fonctionnalité: Sélectionner un type de vérification lors de l'acceptation
     Et je réinitialise le contexte
     Quand je clique sur "Annuler"
     Alors je vois "Cette modération a été marqué comme traitée le"
-    Et je vois "Validé par user@yopmail.com"
+    Et je vois "Validé par moderateur@beta.gouv.fr"
     Quand je clique sur "Moderations"
     Et je dois voir le titre de page "Liste des moderations"
     Alors je vois "Liste des moderations"

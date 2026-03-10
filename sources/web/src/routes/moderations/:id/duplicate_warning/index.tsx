@@ -1,6 +1,6 @@
 //
 
-import type { App_Context } from "#src/middleware/context";
+import type { AppContext } from "#src/middleware/context";
 import { EntitySchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
@@ -23,7 +23,7 @@ const ParamSchema = EntitySchema;
 
 //
 
-export default new Hono<App_Context>().get(
+export default new Hono<AppContext>().get(
   "/",
   jsxRenderer(),
   zValidator("param", ParamSchema),

@@ -13,7 +13,7 @@ import {
   AddVerifiedDomain,
   GetFicheOrganizationById,
 } from "#src/lib/organizations/usecase";
-import type { App_Context } from "#src/middleware/context";
+import type { AppContext } from "#src/middleware/context";
 import {
   GetModerationWithUser,
   UpdateModerationById,
@@ -44,7 +44,7 @@ const param_schema = EntitySchema;
 const form_schema = validate_form_schema;
 //
 
-export default new Hono<App_Context>().patch(
+export default new Hono<AppContext>().patch(
   "/",
   zValidator("param", param_schema),
   zValidator("form", form_schema),

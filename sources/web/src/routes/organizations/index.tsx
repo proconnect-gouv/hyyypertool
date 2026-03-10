@@ -2,7 +2,7 @@
 
 import { Main_Layout } from "#src/layouts";
 import { authorized } from "#src/middleware/auth";
-import type { App_Context } from "#src/middleware/context";
+import type { AppContext } from "#src/middleware/context";
 import { PaginationSchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
@@ -17,7 +17,7 @@ import Page from "./page";
 
 //
 
-export default new Hono<App_Context>()
+export default new Hono<AppContext>()
   .use(authorized())
   //
   .route("/leaders", leaders_router)

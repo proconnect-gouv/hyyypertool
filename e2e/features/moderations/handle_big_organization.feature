@@ -6,7 +6,7 @@ Fonctionnalité: Gérer une modération pour une grande organisation
   Contexte:
     Soit une base de données nourrie au grain
     Quand je navigue sur la page
-    Et je clique sur le bouton "ProConnect"
+    Et je me connecte en tant que "moderateur@beta.gouv.fr"
     Alors je vois "Liste des moderations"
     Quand je clique sur le lien nommé "Modération big organisation de Pierre Bon pour 81797266400038"
     Et je dois voir le titre de page "Modération big organisation de Pierre Bon pour 81797266400038"

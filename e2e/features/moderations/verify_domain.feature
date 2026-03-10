@@ -5,7 +5,7 @@ Fonctionnalité: Vérifier un domaine lors de la modération
     Soit une base de données nourrie au grain
     Et un faux serveur "api.crisp.chat"
     Quand je navigue sur la page
-    Et je clique sur le bouton "ProConnect"
+    Et je me connecte en tant que "moderateur@beta.gouv.fr"
     Alors je vois "Liste des moderations"
     Quand je clique sur le lien nommé "Modération non vérifié de Marie Bon pour 57206768400017"
     Et je dois voir le titre de page "Modération non vérifié de Marie Bon pour 57206768400017"

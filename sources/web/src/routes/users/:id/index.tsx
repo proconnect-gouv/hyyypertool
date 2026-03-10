@@ -4,7 +4,7 @@ import { NotFoundError } from "#src/errors";
 import type { HtmxHeader } from "#src/htmx";
 import { Main_Layout } from "#src/layouts";
 import { ResetMFA, ResetPassword } from "#src/lib/users";
-import type { App_Context } from "#src/middleware/context";
+import type { AppContext } from "#src/middleware/context";
 import { EntitySchema } from "#src/schema";
 import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
@@ -22,7 +22,7 @@ import { UserPage } from "./page";
 
 //
 
-export default new Hono<App_Context>()
+export default new Hono<AppContext>()
   .get(
     "/",
     jsxRenderer(Main_Layout),

@@ -3,7 +3,7 @@
 // Only active in development mode
 //
 
-import type { App_Context } from "#src/middleware/context";
+import type { AppContext } from "#src/middleware/context";
 import consola from "consola";
 import { Hono } from "hono";
 import { streamSSE } from "hono/streaming";
@@ -29,7 +29,7 @@ export function notifyReload() {
   }
 }
 
-export default new Hono<App_Context>().get("/reload", (c) => {
+export default new Hono<AppContext>().get("/reload", (c) => {
   return streamSSE(c, async (stream) => {
     const client = {
       write: async (message: string) => {

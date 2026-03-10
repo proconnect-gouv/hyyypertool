@@ -4,7 +4,7 @@ import { NotFoundError } from "#src/errors";
 import { Main_Layout } from "#src/layouts";
 import { moderation_type_to_title } from "#src/lib/moderations";
 import { GetBanaticUrl } from "#src/lib/organizations/usecase";
-import type { App_Context } from "#src/middleware/context";
+import type { AppContext } from "#src/middleware/context";
 import { GetModerationWithDetails } from "#src/queries/moderations";
 import {
   GetDomainCount,
@@ -28,7 +28,7 @@ import moderation_validate_router from "./validate";
 
 //
 
-export default new Hono<App_Context>()
+export default new Hono<AppContext>()
   .get(
     "/",
     jsxRenderer(Main_Layout),

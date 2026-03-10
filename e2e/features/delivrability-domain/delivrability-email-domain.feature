@@ -5,7 +5,7 @@ Fonctionnalité: Gestion de la délivrabilité des domaines email
     Soit une base de données nourrie au grain
     Quand je navigue sur la page
     Et je vois "Bonjour Hyyypertool !"
-    Et je clique sur le bouton "ProConnect"
+    Et je me connecte en tant que "jeanbon@yopmail.com"
 
   Scénario: Afficher la liste des domaines en whitelist
     Quand je clique sur "Délivrabilité des domaines"

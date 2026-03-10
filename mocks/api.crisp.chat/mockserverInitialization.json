@@ -122,6 +122,14 @@
               "lastname": "User",
               "user_id": "123456789"
             }
+          },
+          {
+            "details": {
+              "email": "moderateur@beta.gouv.fr",
+              "firstname": "Maude",
+              "lastname": "Rateur",
+              "user_id": "135792468"
+            }
           }
         ]
       }

@@ -4,9 +4,11 @@ declare const app: import("hono/hono-base").HonoBase<
     Bindings: AppEnv;
   } & import("../middleware/nonce/set_nonce").NonceVariablesContext &
     import("#src/middleware/fetch").FetchVariablesContext &
+    import("#src/config").AppEnvContext &
     import("#src/middleware/auth").UserInfoVariablesContext &
     import("#src/middleware/crisp").CrispClientContext &
-    import("#src/middleware/identite-pg").IdentiteProconnectPgContext,
+    import("#src/middleware/identite-pg").IdentiteProconnectPgContext &
+    import("#src/middleware/hyyyperbase").HyyyperbasePgContext,
   | ({
       "/healthz": {
         $get: {
@@ -67,21 +69,17 @@ declare const app: import("hono/hono-base").HonoBase<
             status: import("hono/utils/http-status").ContentfulStatusCode;
           };
         };
-      },
-      "/readyz"
-    >
-  | import("hono/types").MergeSchemaPath<
-      {
-        "/reload": {
+      } & {
+        "/drizzle/hyyyperbase": {
           $get: {
             input: {};
-            output: {};
-            outputFormat: string;
-            status: import("hono/utils/http-status").StatusCode;
+            output: string;
+            outputFormat: "text";
+            status: import("hono/utils/http-status").ContentfulStatusCode;
           };
         };
       },
-      "/__dev__"
+      "/readyz"
     >
   | import("hono/types").MergeSchemaPath<
       {
@@ -110,6 +108,128 @@ declare const app: import("hono/hono-base").HonoBase<
       "/"
     >
   | import("hono/types").MergeSchemaPath<
+      | import("hono/types").BlankSchema
+      | import("hono/types").MergeSchemaPath<
+          {
+            "/reload": {
+              $get: {
+                input: {};
+                output: {};
+                outputFormat: string;
+                status: import("hono/utils/http-status").StatusCode;
+              };
+            };
+          },
+          "/"
+        >
+      | import("hono/types").MergeSchemaPath<
+          {
+            "/jwks": {
+              $get: {
+                input: {};
+                output: {
+                  keys: {
+                    alg: string;
+                    use: string;
+                    crv?: string | undefined;
+                    d?: string | undefined;
+                    dp?: string | undefined;
+                    dq?: string | undefined;
+                    e?: string | undefined;
+                    k?: string | undefined;
+                    n?: string | undefined;
+                    p?: string | undefined;
+                    q?: string | undefined;
+                    qi?: string | undefined;
+                    x?: string | undefined;
+                    y?: string | undefined;
+                    pub?: string | undefined;
+                    priv?: string | undefined;
+                    kty?: string | undefined;
+                    key_ops?: string[] | undefined;
+                    ext?: boolean | undefined;
+                    x5c?: string[] | undefined;
+                    x5t?: string | undefined;
+                    "x5t#S256"?: string | undefined;
+                    x5u?: string | undefined;
+                    kid?: string | undefined;
+                  }[];
+                };
+                outputFormat: "json";
+                status: import("hono/utils/http-status").ContentfulStatusCode;
+              };
+            };
+          } & {
+            "/authorize": {
+              $get: {
+                input: {
+                  query: {
+                    client_id: string;
+                    nonce: string;
+                    redirect_uri: string;
+                    state: string;
+                  };
+                };
+                output: undefined;
+                outputFormat: "redirect";
+                status: 302;
+              };
+            };
+          } & {
+            "/interaction/:code/login": {
+              $get: {
+                input: {
+                  param: {
+                    code: string;
+                  };
+                };
+                output: {};
+                outputFormat: string;
+                status: import("hono/utils/http-status").StatusCode;
+              };
+            };
+          } & {
+            "/interaction/:code/login": {
+              $post: {
+                input: {
+                  param: {
+                    code: string;
+                  };
+                };
+                output: {};
+                outputFormat: string;
+                status: import("hono/utils/http-status").StatusCode;
+              };
+            };
+          } & {
+            "/token": {
+              $post:
+                | {
+                    input: {};
+                    output: {
+                      error: string;
+                    };
+                    outputFormat: "json";
+                    status: 400;
+                  }
+                | {
+                    input: {};
+                    output: {
+                      access_token: string;
+                      token_type: string;
+                      expires_in: number;
+                      id_token: string;
+                    };
+                    outputFormat: "json";
+                    status: import("hono/utils/http-status").ContentfulStatusCode;
+                  };
+            };
+          },
+          "/auth.agentconnect.gouv.fr/api/v2"
+        >,
+      "/___dev___"
+    >
+  | import("hono/types").MergeSchemaPath<
       {
         "/login": {
           $post: {
@@ -117,15 +237,6 @@ declare const app: import("hono/hono-base").HonoBase<
             output: undefined;
             outputFormat: "redirect";
             status: 302;
-          };
-        };
-      } & {
-        "/fake/login/callback": {
-          $get: {
-            input: {};
-            output: {};
-            outputFormat: string;
-            status: import("hono/utils/http-status").StatusCode;
           };
         };
       } & {
@@ -327,6 +438,125 @@ declare const app: import("hono/hono-base").HonoBase<
         };
       },
       "/moderations"
+    >
+  | import("hono/types").MergeSchemaPath<
+      | import("hono/types").BlankSchema
+      | import("hono/types").MergeSchemaPath<
+          {
+            "/": {
+              $get:
+                | {
+                    input: {
+                      query: {
+                        page?: string | string[] | undefined;
+                        page_size?: string | string[] | undefined;
+                        q?: string | undefined;
+                      };
+                    };
+                    output: {};
+                    outputFormat: string;
+                    status: import("hono/utils/http-status").StatusCode;
+                  }
+                | {
+                    input: {
+                      query: {
+                        page?: string | string[] | undefined;
+                        page_size?: string | string[] | undefined;
+                        q?: string | undefined;
+                      };
+                    };
+                    output: undefined;
+                    outputFormat: "redirect";
+                    status: import("hono/utils/http-status").RedirectStatusCode;
+                  };
+            };
+          } & {
+            "/": {
+              $post: {
+                input: {
+                  form: {
+                    email: string;
+                    role: string;
+                  };
+                };
+                output: "OK";
+                outputFormat: "text";
+                status: 200;
+              };
+            };
+          } & {
+            "/:id": {
+              $patch:
+                | {
+                    input: {
+                      param: {
+                        id: string;
+                      };
+                    } & {
+                      form: {
+                        role: string;
+                      };
+                    };
+                    output: "OK";
+                    outputFormat: "text";
+                    status: 200;
+                  }
+                | {
+                    input: {
+                      param: {
+                        id: string;
+                      };
+                    } & {
+                      form: {
+                        role: string;
+                      };
+                    };
+                    output: "Forbidden: cannot modify your own role";
+                    outputFormat: "text";
+                    status: 403;
+                  };
+            };
+          } & {
+            "/:id/disable": {
+              $patch:
+                | {
+                    input: {
+                      param: {
+                        id: string;
+                      };
+                    };
+                    output: "OK";
+                    outputFormat: "text";
+                    status: 200;
+                  }
+                | {
+                    input: {
+                      param: {
+                        id: string;
+                      };
+                    };
+                    output: "Forbidden: cannot disable yourself";
+                    outputFormat: "text";
+                    status: 403;
+                  };
+            };
+          } & {
+            "/:id/enable": {
+              $patch: {
+                input: {
+                  param: {
+                    id: string;
+                  };
+                };
+                output: "OK";
+                outputFormat: "text";
+                status: 200;
+              };
+            };
+          },
+          "/team"
+        >,
+      "/admin"
     >
   | import("hono/types").MergeSchemaPath<
       (
@@ -714,7 +944,7 @@ declare const app: import("hono/hono-base").HonoBase<
                         };
                       } & {
                         query: {
-                          type: "external" | "verified" | "refused";
+                          type: "verified" | "external" | "refused";
                         };
                       };
                       output: "OK";

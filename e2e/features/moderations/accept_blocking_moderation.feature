@@ -5,7 +5,7 @@ Fonctionnalité: Accepter une modération bloquante avec la barre d'outils
     Soit une base de données nourrie au grain
     Et un faux serveur "api.crisp.chat"
     Quand je navigue sur la page
-    Et je clique sur le bouton "ProConnect"
+    Et je me connecte en tant que "moderateur@beta.gouv.fr"
 
     Alors je dois voir le titre de page "Liste des moderations"
     Alors je vois "Liste des moderations"
@@ -24,7 +24,7 @@ Fonctionnalité: Accepter une modération bloquante avec la barre d'outils
 
     Et je vois "Modération acceptée"
     Et je vois "Cette modération a été marqué comme traitée le"
-    Et je vois "Validé par user@yopmail.com"
+    Et je vois "Validé par moderateur@beta.gouv.fr"
 
     Quand je clique sur "Moderations"
     Alors je vois "Liste des moderations"

@@ -22,4 +22,13 @@ const db = drizzle(client, {
 
 await migrate(db);
 
+const admin_email = process.env["HYYYPERBASE_ADMIN"];
+if (admin_email) {
+  await db
+    .insert(schema.users)
+    .values({ email: admin_email, role: "admin" })
+    .onConflictDoNothing({ target: schema.users.email });
+  consola.info(`👑 Ensured admin user: ${admin_email}`);
+}
+
 await client.end();

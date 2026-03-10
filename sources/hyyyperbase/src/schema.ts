@@ -10,6 +10,7 @@ export const users = pgTable("users", {
   email: text("email").notNull().unique(),
   id: serial("id").primaryKey(),
   role: text("role").default("visitor").notNull(),
+  sub: text("sub").unique(),
   updated_at: timestamp("updated_at").defaultNow().notNull(),
   updated_by: integer(),
 });

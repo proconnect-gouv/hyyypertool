@@ -4,7 +4,7 @@ Fonctionnalité: Parcours d'une modération
   Contexte:
     Soit une base de données nourrie au grain
     Quand je navigue sur la page
-    Et je clique sur le bouton "ProConnect"
+    Et je me connecte en tant que "moderateur@beta.gouv.fr"
     Et je clique sur le lien nommé "Modération a traiter de Jean Bon pour 13002526500013"
 
   Scénario: Le modérateur peut voir les détails de l'utilisateur

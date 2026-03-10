@@ -1,6 +1,6 @@
 //
 
-import type { App_Context } from "#src/middleware/context";
+import type { AppContext } from "#src/middleware/context";
 import { html, raw } from "hono/html";
 import type { PropsWithChildren } from "hono/jsx";
 import { useRequestContext } from "hono/jsx-renderer";
@@ -11,7 +11,7 @@ export function RootLayout({ children }: PropsWithChildren) {
   const {
     env: config,
     var: { nonce, sentry_trace_meta_tags, page_title },
-  } = useRequestContext<App_Context>();
+  } = useRequestContext<AppContext>();
 
   return html`
     <html
@@ -242,7 +242,7 @@ export function RootLayout({ children }: PropsWithChildren) {
         ? html`<script
             defer
             nonce="${nonce}"
-            src="${config.PUBLIC_ASSETS_PATH}/routes/__dev__/live-reload.client.js"
+            src="${config.PUBLIC_ASSETS_PATH}/routes/___dev___/live-reload.client.js"
             type="module"
           ></script>`
         : ""}

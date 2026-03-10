@@ -1,6 +1,6 @@
 //
 
-import type { App_Context } from "#src/middleware/context";
+import type { AppContext } from "#src/middleware/context";
 import { DescribedBySchema, EntitySchema, PaginationSchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
@@ -13,7 +13,7 @@ import { get_users_by_organization } from "./get_users_by_organization.query";
 
 //
 
-export default new Hono<App_Context>()
+export default new Hono<AppContext>()
   //
   .route("/:user_id", organization_member_router)
   //

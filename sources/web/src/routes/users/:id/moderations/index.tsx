@@ -1,6 +1,6 @@
 //
 
-import type { App_Context } from "#src/middleware/context";
+import type { AppContext } from "#src/middleware/context";
 import { DescribedBySchema, EntitySchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
@@ -10,7 +10,7 @@ import { Table } from "./Table";
 
 //
 
-export default new Hono<App_Context>()
+export default new Hono<AppContext>()
   .use("/", jsxRenderer())
   .get(
     "/",

@@ -1,7 +1,11 @@
 //
 
 import type { AppVariablesContext } from "#src/config";
-import type { UserInfoVariablesContext } from "../auth";
+import type {
+  HyyyperUserContext,
+  PartialHyyyperUserContext,
+  UserInfoVariablesContext,
+} from "../auth";
 import type { CrispClientContext } from "../crisp";
 import type { CspContext } from "../csp";
 import type { FetchVariablesContext } from "../fetch";
@@ -13,13 +17,16 @@ import type { SessionContext } from "../session";
 
 //
 
-export type App_Context = AppVariablesContext &
+export type AppContext = AppVariablesContext &
   CrispClientContext &
   CspContext &
   FetchVariablesContext &
   HyyyperbasePgContext &
+  PartialHyyyperUserContext &
   IdentiteProconnectPgContext &
   NonceVariablesContext &
   SentryVariablesContext &
   SessionContext &
   UserInfoVariablesContext;
+
+export type AdminAppContext = AppContext & HyyyperUserContext;

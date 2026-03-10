@@ -4,7 +4,7 @@ Fonctionnalité: Retraiter une modération terminée
   Contexte:
     Soit une base de données nourrie au grain
     Quand je navigue sur la page
-    Et je clique sur le bouton "ProConnect"
+    Et je me connecte en tant que "moderateur@beta.gouv.fr"
     Alors je vois "Liste des moderations"
     Et je clique sur "Voir les demandes traitées"
     Et je clique sur "Filtrer par jours"

@@ -5,7 +5,7 @@ Fonctionnalité: Ajouter un membre interne lors de la modération
     Soit une base de données nourrie au grain
     Et un faux serveur "api.crisp.chat"
     Quand je navigue sur la page
-    Et je clique sur le bouton "ProConnect"
+    Et je me connecte en tant que "moderateur@beta.gouv.fr"
     Alors je vois "Liste des moderations"
 
   Scénario: Marie est un membre interne de l'organization.

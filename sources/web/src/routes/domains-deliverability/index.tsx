@@ -3,7 +3,7 @@
 import type { HtmxHeader } from "#src/htmx";
 import { Main_Layout } from "#src/layouts";
 import { authorized } from "#src/middleware/auth";
-import type { App_Context } from "#src/middleware/context";
+import type { AppContext } from "#src/middleware/context";
 import { z_username } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
 import { schema } from "@~/identite-proconnect/database";
@@ -21,7 +21,7 @@ const WhitelistParams_Schema = z.object({
 });
 
 //
-export default new Hono<App_Context>()
+export default new Hono<AppContext>()
   .use(authorized())
   .get(
     "/",

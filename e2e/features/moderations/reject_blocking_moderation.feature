@@ -5,7 +5,7 @@ Fonctionnalité: Refuser une modération bloquante
     Soit une base de données nourrie au grain
     Et un faux serveur "api.crisp.chat"
     Quand je navigue sur la page
-    Et je clique sur le bouton "ProConnect"
+    Et je me connecte en tant que "moderateur@beta.gouv.fr"
     Alors je vois "Liste des moderations"
     Quand je clique sur "Filtrer par jours"
     Et je tape "2011-11-11"
