@@ -59,7 +59,7 @@
     "tsx": "4.21.0",
     "type-fest": "5.4.4",
     "unified": "11.0.5",
-    "youch": "3.3.4"
+    "youch": "4.1.0"
   },
   "devDependencies": {
     "@happy-dom/global-registrator": "20.6.3",
