@@ -236,7 +236,7 @@ test("should reject disabled user looked up by sub", async () => {
   expect(await res.text()).toContain("Accès Non Autorisé");
 });
 
-test("should not overwrite existing sub via backfill", async () => {
+test("should reject when different sub tries email fallback on already-bound user", async () => {
   const admin = await insert_admin(hyyyper_pglite);
 
   const app = new Hono()
@@ -255,13 +255,15 @@ test("should not overwrite existing sub via backfill", async () => {
 
   const res = await app.request("/");
 
-  expect(res.status).toBe(200);
+  // find_active_user requires sub IS NULL, so already-bound user is not matched
+  expect(res.status).toBe(401);
+  expect(await res.text()).toContain("Accès Non Autorisé");
 
   const updated = await hyyyper_pglite.query.users.findFirst({
     where: (users, { eq }) => eq(users.id, admin.id),
     columns: { sub: true },
   });
-  // backfill_sub uses WHERE sub IS NULL, so existing sub is preserved
+  // existing sub is preserved
   expect(updated!.sub).toBe("oidc-sub-admin");
 });
 
