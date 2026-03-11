@@ -1,9 +1,12 @@
 //
 
-import { set_userinfo } from "#src/middleware/auth";
+import { authorized, set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
+import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import { set_identite_pg } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
+import { hyyyper_pglite, reset } from "@~/hyyyperbase/testing";
+import { insert_moderateur } from "@~/hyyyperbase/testing/users";
 import {
   create_adora_pony_moderation,
   create_adora_pony_user,
@@ -21,12 +24,14 @@ import app from "./index";
 //
 
 beforeAll(migrate);
+beforeEach(reset);
 beforeEach(empty_database);
 setSystemTime(new Date("2222-01-01T00:00:00.000Z"));
 
 //
 
 test("GET /moderations/:id renders moderation page with user and organization data", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
   const user_id = await create_adora_pony_user(pg);
   const organization_id = await create_unicorn_organization(pg);
   const moderation_id = await create_adora_pony_moderation(pg, {
@@ -36,9 +41,11 @@ test("GET /moderations/:id renders moderation page with user and organization da
 
   const response = await new Hono()
     .use(set_config({ HTTP_CLIENT_TIMEOUT: 5000 }))
+    .use(set_hyyyper_pg(hyyyper_pglite))
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
-    .use(set_userinfo({ email: "adora.pony@unicorn.xyz" }))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
     .route("/:id", app)
     .request(`/${moderation_id}`);
 
@@ -54,11 +61,15 @@ test("GET /moderations/:id renders moderation page with user and organization da
 });
 
 test("GET /moderations/:id returns 404 for non-existent moderation", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
+
   const response = await new Hono()
     .use(set_config({ HTTP_CLIENT_TIMEOUT: 5000 }))
+    .use(set_hyyyper_pg(hyyyper_pglite))
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
-    .use(set_userinfo({ email: "adora.pony@unicorn.xyz" }))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
     .route("/:id", app)
     .request("/999999");
 
