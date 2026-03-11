@@ -27,15 +27,11 @@ export function Main_Layout({ children }: PropsWithChildren) {
             <div class="fr-container">
               <div class="fr-header__body-row">
                 <Brand />
-                {hyyyper_user ? (
-                  <UserMenu
-                    username={username}
-                    email={userinfo?.email}
-                    hyyyper_user={hyyyper_user}
-                  />
-                ) : (
-                  <LogoutButton username={username} />
-                )}
+                <UserMenu
+                  username={username}
+                  email={userinfo?.email}
+                  hyyyper_user={hyyyper_user}
+                />
               </div>
             </div>
           </div>
@@ -54,25 +50,6 @@ export function Main_Layout({ children }: PropsWithChildren) {
 }
 
 //
-function LogoutButton({ username }: { username: string }) {
-  return (
-    <div class="fr-header__tools">
-      <div class="fr-header__tools-links">
-        <ul class="fr-btns-group">
-          <li>
-            <a
-              class="fr-btn fr-btn--sm fr-btn--tertiary-no-outline fr-fi-logout-box-r-line fr-btn--icon-left"
-              href={urls.auth.logout.$url().pathname}
-            >
-              {username}
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  );
-}
-
 function Brand() {
   return (
     <div class="fr-header__brand fr-enlarge-link">

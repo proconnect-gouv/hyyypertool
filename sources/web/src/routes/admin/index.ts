@@ -13,7 +13,7 @@ export default new Hono<AdminAppContext>()
   .use(authorized())
   .use(async function admin_guard(c, next) {
     const hyyyper_user = c.var.hyyyper_user;
-    if (!hyyyper_user || hyyyper_user.role !== roles.enum.admin) {
+    if (hyyyper_user.role !== roles.enum.admin) {
       if (is_htmx_request(c.req.raw)) {
         return c.text("Forbidden", 403, {
           "HX-Location": "/",

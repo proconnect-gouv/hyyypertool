@@ -19,96 +19,87 @@ import { set_userinfo } from "./set_userinfo";
 
 beforeEach(reset);
 
-test("should let good captains pass via ALLOWED_USERS", async () => {
-  const app = new Hono().get(
-    "/",
-    jsxRenderer(),
-    set_hyyyper_pg(hyyyper_pglite),
-    set_nonce("nonce"),
-    set_userinfo({ email: "good@captain.yargs" }),
-    authorized(),
-    async ({ text }) => text("✅"),
-  );
-
-  const res = await app.request("/", undefined, {
-    ALLOWED_USERS: "good@captain.yargs",
-  });
-
-  expect(res.status).toBe(200);
-  expect(await res.text()).toBe("✅");
-});
-
 test("should let active database users pass", async () => {
   const admin = await insert_admin(hyyyper_pglite);
 
-  const app = new Hono().get(
-    "/",
-    jsxRenderer(),
-    set_hyyyper_pg(hyyyper_pglite),
-    set_nonce("nonce"),
-    set_userinfo({ email: admin.email }),
-    authorized(),
-    async ({ text }) => text("✅"),
-  );
+  const app = new Hono()
+    .onError((e) => {
+      throw e;
+    })
+    .get(
+      "/",
+      jsxRenderer(),
+      set_hyyyper_pg(hyyyper_pglite),
+      set_nonce("nonce"),
+      set_userinfo({ email: admin.email, sub: admin.sub! }),
+      authorized(),
+      async ({ text }) => text("✅"),
+    );
 
-  const res = await app.request("/", undefined, { ALLOWED_USERS: "" });
+  const res = await app.request("/");
 
-  expect(res.status).toBe(200);
   expect(await res.text()).toBe("✅");
+  expect(res.status).toBe(200);
 });
 
 test("should stop disabled database users", async () => {
   await insert_disabled_user(hyyyper_pglite);
 
-  const app = new Hono().get(
-    "/",
-    jsxRenderer(),
-    set_hyyyper_pg(hyyyper_pglite),
-    set_nonce("nonce"),
-    set_userinfo({ email: "disabled@yopmail.com" }),
-    authorized(),
-    async ({ text }) => text("✅"),
-  );
+  const app = new Hono()
+    .onError((e) => {
+      throw e;
+    })
+    .get(
+      "/",
+      jsxRenderer(),
+      set_hyyyper_pg(hyyyper_pglite),
+      set_nonce("nonce"),
+      set_userinfo({ email: "disabled@yopmail.com", sub: "oidc-sub-disabled" }),
+      authorized(),
+      async ({ text }) => text("✅"),
+    );
 
-  const res = await app.request("/", undefined, { ALLOWED_USERS: "" });
+  const res = await app.request("/");
 
   expect(res.status).toBe(401);
   expect(await res.text()).toContain("Accès Non Autorisé");
 });
 
 test("should stop any anonymous user", async () => {
-  const app = new Hono().get(
-    "/",
-    jsxRenderer(),
-    set_nonce("nonce"),
-    authorized(),
-    async ({ text }) => text("✅"),
-  );
+  const app = new Hono()
+    .onError((e) => {
+      throw e;
+    })
+    .get(
+      "/",
+      jsxRenderer(),
+      set_nonce("nonce"),
+      authorized(),
+      async ({ text }) => text("✅"),
+    );
 
-  const res = await app.request("/", undefined, {
-    ALLOWED_USERS: "good@captain.yargs",
-  });
+  const res = await app.request("/");
 
   expect(res.status).toBe(302);
   expect(await res.text()).toBe("");
 });
 
 test("should redirect hx-request", async () => {
-  const app = new Hono().get(
-    "/",
-    jsxRenderer(),
-    set_nonce("nonce"),
-    authorized(),
-    async ({ text }) => text("✅"),
-  );
+  const app = new Hono()
+    .onError((e) => {
+      throw e;
+    })
+    .get(
+      "/",
+      jsxRenderer(),
+      set_nonce("nonce"),
+      authorized(),
+      async ({ text }) => text("✅"),
+    );
 
-  const res = await app.request(
-    "/",
-    {
-      headers: new Headers({ "hx-request": "true" }),
-    },
-    { ALLOWED_USERS: "good@captain.yargs" },
-  );
+  const res = await app.request("/", {
+    headers: new Headers({ "hx-request": "true" }),
+  });
 
   expect(res.status).toBe(401);
   expect(await res.text()).toBe("Unauthorized");
@@ -118,20 +109,22 @@ test("should redirect hx-request", async () => {
   });
 });
 
-test("should stop pirates (not in ALLOWED_USERS, not in db)", async () => {
-  const app = new Hono().get(
-    "/",
-    jsxRenderer(),
-    set_hyyyper_pg(hyyyper_pglite),
-    set_nonce("nonce"),
-    set_userinfo({ email: "verybad@pirate.yargs" }),
-    authorized(),
-    async ({ text }) => text("✅"),
-  );
+test("should stop unknown users (not in db)", async () => {
+  const app = new Hono()
+    .onError((e) => {
+      throw e;
+    })
+    .get(
+      "/",
+      jsxRenderer(),
+      set_hyyyper_pg(hyyyper_pglite),
+      set_nonce("nonce"),
+      set_userinfo({ email: "verybad@pirate.yargs", sub: "pirate-sub" }),
+      authorized(),
+      async ({ text }) => text("✅"),
+    );
 
-  const res = await app.request("/", undefined, {
-    ALLOWED_USERS: "good@captain.yargs",
-  });
+  const res = await app.request("/");
 
   expect(res.status).toBe(401);
   expect(await res.text()).toContain("Accès Non Autorisé");
@@ -144,17 +137,21 @@ test("should stop pirates (not in ALLOWED_USERS, not in db)", async () => {
 test("should find user by sub", async () => {
   const admin = await insert_admin(hyyyper_pglite);
 
-  const app = new Hono().get(
-    "/",
-    jsxRenderer(),
-    set_hyyyper_pg(hyyyper_pglite),
-    set_nonce("nonce"),
-    set_userinfo({ sub: "oidc-sub-admin", email: admin.email }),
-    authorized(),
-    async ({ text }) => text("✅"),
-  );
+  const app = new Hono()
+    .onError((e) => {
+      throw e;
+    })
+    .get(
+      "/",
+      jsxRenderer(),
+      set_hyyyper_pg(hyyyper_pglite),
+      set_nonce("nonce"),
+      set_userinfo({ sub: "oidc-sub-admin", email: admin.email }),
+      authorized(),
+      async ({ text }) => text("✅"),
+    );
 
-  const res = await app.request("/", undefined, { ALLOWED_USERS: "" });
+  const res = await app.request("/");
 
   expect(res.status).toBe(200);
   expect(await res.text()).toBe("✅");
@@ -168,17 +165,21 @@ test("should backfill sub when user found by email", async () => {
     .set({ sub: null })
     .where(eq(schema.users.id, admin.id));
 
-  const app = new Hono().get(
-    "/",
-    jsxRenderer(),
-    set_hyyyper_pg(hyyyper_pglite),
-    set_nonce("nonce"),
-    set_userinfo({ sub: "new-oidc-sub", email: admin.email }),
-    authorized(),
-    async ({ text }) => text("✅"),
-  );
+  const app = new Hono()
+    .onError((e) => {
+      throw e;
+    })
+    .get(
+      "/",
+      jsxRenderer(),
+      set_hyyyper_pg(hyyyper_pglite),
+      set_nonce("nonce"),
+      set_userinfo({ sub: "new-oidc-sub", email: admin.email }),
+      authorized(),
+      async ({ text }) => text("✅"),
+    );
 
-  const res = await app.request("/", undefined, { ALLOWED_USERS: "" });
+  const res = await app.request("/");
 
   expect(res.status).toBe(200);
 
@@ -189,63 +190,70 @@ test("should backfill sub when user found by email", async () => {
   expect(updated!.sub).toBe("new-oidc-sub");
 });
 
-test("should sync email when user found by sub with different email", async () => {
-  const admin = await insert_admin(hyyyper_pglite);
+test("should reject when sub matches but email differs", async () => {
+  await insert_admin(hyyyper_pglite);
 
-  const app = new Hono().get(
-    "/",
-    jsxRenderer(),
-    set_hyyyper_pg(hyyyper_pglite),
-    set_nonce("nonce"),
-    set_userinfo({ sub: "oidc-sub-admin", email: "new-email@omega.gouv.fr" }),
-    authorized(),
-    async ({ text }) => text("✅"),
-  );
+  const app = new Hono()
+    .onError((e) => {
+      throw e;
+    })
+    .get(
+      "/",
+      jsxRenderer(),
+      set_hyyyper_pg(hyyyper_pglite),
+      set_nonce("nonce"),
+      set_userinfo({ sub: "oidc-sub-admin", email: "new-email@omega.gouv.fr" }),
+      authorized(),
+      async ({ text }) => text("✅"),
+    );
 
-  const res = await app.request("/", undefined, { ALLOWED_USERS: "" });
-
-  expect(res.status).toBe(200);
-
-  const updated = await hyyyper_pglite.query.users.findFirst({
-    where: (users, { eq }) => eq(users.id, admin.id),
-    columns: { email: true },
-  });
-  expect(updated!.email).toBe("new-email@omega.gouv.fr");
-});
-
-test("should reject disabled user looked up by sub", async () => {
-  await insert_disabled_user(hyyyper_pglite);
-
-  const app = new Hono().get(
-    "/",
-    jsxRenderer(),
-    set_hyyyper_pg(hyyyper_pglite),
-    set_nonce("nonce"),
-    set_userinfo({ sub: "oidc-sub-disabled", email: "disabled@yopmail.com" }),
-    authorized(),
-    async ({ text }) => text("✅"),
-  );
-
-  const res = await app.request("/", undefined, { ALLOWED_USERS: "" });
+  const res = await app.request("/");
 
   expect(res.status).toBe(401);
   expect(await res.text()).toContain("Accès Non Autorisé");
 });
 
-test("should not backfill sub when email-found user already has a different sub", async () => {
+test("should reject disabled user looked up by sub", async () => {
+  await insert_disabled_user(hyyyper_pglite);
+
+  const app = new Hono()
+    .onError((e) => {
+      throw e;
+    })
+    .get(
+      "/",
+      jsxRenderer(),
+      set_hyyyper_pg(hyyyper_pglite),
+      set_nonce("nonce"),
+      set_userinfo({ sub: "oidc-sub-disabled", email: "disabled@yopmail.com" }),
+      authorized(),
+      async ({ text }) => text("✅"),
+    );
+
+  const res = await app.request("/");
+
+  expect(res.status).toBe(401);
+  expect(await res.text()).toContain("Accès Non Autorisé");
+});
+
+test("should not overwrite existing sub via backfill", async () => {
   const admin = await insert_admin(hyyyper_pglite);
 
-  const app = new Hono().get(
-    "/",
-    jsxRenderer(),
-    set_hyyyper_pg(hyyyper_pglite),
-    set_nonce("nonce"),
-    set_userinfo({ sub: "different-sub", email: "admin@omega.gouv.fr" }),
-    authorized(),
-    async ({ text }) => text("✅"),
-  );
+  const app = new Hono()
+    .onError((e) => {
+      throw e;
+    })
+    .get(
+      "/",
+      jsxRenderer(),
+      set_hyyyper_pg(hyyyper_pglite),
+      set_nonce("nonce"),
+      set_userinfo({ sub: "different-sub", email: "admin@omega.gouv.fr" }),
+      authorized(),
+      async ({ text }) => text("✅"),
+    );
 
-  const res = await app.request("/", undefined, { ALLOWED_USERS: "" });
+  const res = await app.request("/");
 
   expect(res.status).toBe(200);
 
@@ -253,42 +261,49 @@ test("should not backfill sub when email-found user already has a different sub"
     where: (users, { eq }) => eq(users.id, admin.id),
     columns: { sub: true },
   });
+  // backfill_sub uses WHERE sub IS NULL, so existing sub is preserved
   expect(updated!.sub).toBe("oidc-sub-admin");
 });
 
-test("should set hyyyper_user to undefined for ALLOWED_USERS-only access", async () => {
-  const app = new Hono().get(
-    "/",
-    jsxRenderer(),
-    set_hyyyper_pg(hyyyper_pglite),
-    set_nonce("nonce"),
-    set_userinfo({ email: "good@captain.yargs" }),
-    authorized(),
-    async (c) => c.text(JSON.stringify(c.var.hyyyper_user ?? null)),
-  );
+test("should reject valid OIDC session with no DB record", async () => {
+  const app = new Hono()
+    .onError((e) => {
+      throw e;
+    })
+    .get(
+      "/",
+      jsxRenderer(),
+      set_hyyyper_pg(hyyyper_pglite),
+      set_nonce("nonce"),
+      set_userinfo({ email: "unknown@example.com", sub: "some-sub" }),
+      authorized(),
+      async ({ text }) => text("✅"),
+    );
 
-  const res = await app.request("/", undefined, {
-    ALLOWED_USERS: "good@captain.yargs",
-  });
+  const res = await app.request("/");
 
-  expect(res.status).toBe(200);
-  expect(await res.text()).toBe("null");
+  expect(res.status).toBe(401);
+  expect(await res.text()).toContain("Accès Non Autorisé");
 });
 
 test("should populate hyyyper_user after sub-based lookup", async () => {
   const admin = await insert_admin(hyyyper_pglite);
 
-  const app = new Hono().get(
-    "/",
-    jsxRenderer(),
-    set_hyyyper_pg(hyyyper_pglite),
-    set_nonce("nonce"),
-    set_userinfo({ sub: "oidc-sub-admin", email: admin.email }),
-    authorized(),
-    async (c) => c.text(JSON.stringify(c.var.hyyyper_user)),
-  );
+  const app = new Hono()
+    .onError((e) => {
+      throw e;
+    })
+    .get(
+      "/",
+      jsxRenderer(),
+      set_hyyyper_pg(hyyyper_pglite),
+      set_nonce("nonce"),
+      set_userinfo({ sub: "oidc-sub-admin", email: admin.email }),
+      authorized(),
+      async (c) => c.text(JSON.stringify(c.var.hyyyper_user)),
+    );
 
-  const res = await app.request("/", undefined, { ALLOWED_USERS: "" });
+  const res = await app.request("/");
 
   expect(res.status).toBe(200);
   const body = JSON.parse(await res.text());
@@ -302,17 +317,21 @@ test("should populate hyyyper_user after sub-based lookup", async () => {
 test("should not backfill sub if already set", async () => {
   const admin = await insert_admin(hyyyper_pglite);
 
-  const app = new Hono().get(
-    "/",
-    jsxRenderer(),
-    set_hyyyper_pg(hyyyper_pglite),
-    set_nonce("nonce"),
-    set_userinfo({ sub: "oidc-sub-admin", email: admin.email }),
-    authorized(),
-    async ({ text }) => text("✅"),
-  );
+  const app = new Hono()
+    .onError((e) => {
+      throw e;
+    })
+    .get(
+      "/",
+      jsxRenderer(),
+      set_hyyyper_pg(hyyyper_pglite),
+      set_nonce("nonce"),
+      set_userinfo({ sub: "oidc-sub-admin", email: admin.email }),
+      authorized(),
+      async ({ text }) => text("✅"),
+    );
 
-  const res = await app.request("/", undefined, { ALLOWED_USERS: "" });
+  const res = await app.request("/");
 
   expect(res.status).toBe(200);
 
