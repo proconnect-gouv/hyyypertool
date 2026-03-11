@@ -12,24 +12,28 @@ import { z } from "zod";
 const profiles = [
   {
     email: "admin@omega.gouv.fr",
+    sub: "oidc-sub-admin",
     role: "admin",
     given_name: "Admin",
     usual_name: "Omega",
   },
   {
     email: "moderateur@beta.gouv.fr",
+    sub: "oidc-sub-moderateur",
     role: "moderator",
     given_name: "Modérateur",
     usual_name: "Beta",
   },
   {
     email: "jeanbon@yopmail.com",
+    sub: "oidc-sub-jeanbon",
     role: "visitor",
     given_name: "Jean",
     usual_name: "Bon",
   },
   {
     email: "unknown@example.com",
+    sub: "oidc-sub-unknown",
     role: "none",
     given_name: "Inconnu",
     usual_name: "Exemple",
@@ -125,7 +129,7 @@ export default new Hono<AppContext>()
     if (!profile) return c.notFound();
 
     selected_userinfo = {
-      sub: `testing_${profile.email}`,
+      sub: profile.sub,
       given_name: profile.given_name,
       usual_name: profile.usual_name,
       email: profile.email,
