@@ -95,7 +95,7 @@ async function find_active_user(
 ): Promise<HyyyperUser | undefined> {
   const user = await db.query.users.findFirst({
     where: (users, { eq, isNull, and }) =>
-      and(eq(users.email, email), isNull(users.disabled_at)),
+      and(eq(users.email, email), isNull(users.disabled_at), isNull(users.sub)),
     columns: { id: true, role: true, email: true },
   });
   return user as HyyyperUser | undefined;
