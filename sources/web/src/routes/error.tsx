@@ -7,7 +7,7 @@ import consola from "consola";
 import { type Context } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";
 import { P, match } from "ts-pattern";
-import Youch from "youch";
+import { Youch } from "youch";
 
 //
 
@@ -40,8 +40,18 @@ export function error_handler(error: Error, c: Context) {
 
         return match(config)
           .with({ NODE_ENV: "development" }, async () => {
-            const youch = new Youch(error, req.raw);
-            return html(await youch.toHTML());
+            const youch = new Youch();
+            const youchHTML = await youch.toHTML(error, {
+              request: {
+                url: req.raw.url,
+                method: req.raw.method,
+                headers: Object.fromEntries(req.raw.headers as any),
+              },
+            });
+            const liveReloadScript = `<script defer type="module" src="${config.PUBLIC_ASSETS_PATH}/routes/___dev___/live-reload.client.js"></script>`;
+            return html(
+              youchHTML.replace("</body>", `${liveReloadScript}</body>`),
+            );
           })
           .otherwise(async () => {
             return render(<Error_Page error={error} />);
