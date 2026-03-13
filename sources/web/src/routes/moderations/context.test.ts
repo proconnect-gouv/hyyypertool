@@ -16,6 +16,7 @@ test("SearchSchema > empty object", () => {
     search_email: "",
     search_moderated_by: "",
     search_siret: "",
+    exclude_sp_names: [],
   });
 });
 
@@ -30,5 +31,6 @@ test("SearchSchema > day 2011-01-11", () => {
     search_email: "",
     search_moderated_by: "",
     search_siret: "",
+    exclude_sp_names: [],
   });
 });

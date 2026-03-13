@@ -112,6 +112,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
     await insert_moderation(db, {
       created_at: "2011-11-11T12:11:11+02:00",
       organization_id: dinum.id,
+      sp_name: "Annuaire des entreprises",
       type: MODERATION_TYPES.enum.organization_join_block,
       user_id: jean_bon.id,
       ticket_id: "115793",
@@ -124,6 +125,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
     await insert_moderation(db, {
       created_at: "2011-11-11T01:02:59+02:00",
       organization_id: abracadabra.id,
+      sp_name: "data.gouv.fr",
       status: "pending",
       ticket_id: "session_456",
       type: MODERATION_TYPES.enum.organization_join_block,
@@ -136,6 +138,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
     await insert_moderation(db, {
       created_at: "2011-11-11T01:03:15+02:00",
       organization_id: abracadabra.id,
+      sp_name: "Tchap",
       status: "pending",
       ticket_id: "session_789",
       type: MODERATION_TYPES.enum.organization_join_block,
@@ -147,6 +150,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
 
     await insert_moderation(db, {
       organization_id: aldp.id,
+      sp_name: "DORA",
       type: "big_organization_join",
       user_id: pierre_bon.id,
     });
@@ -161,6 +165,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
       moderated_at: "2023-06-22T16:34:34+02:00",
       moderated_by: "moderateur@beta.gouv.fr",
       organization_id: dengi.id,
+      sp_name: "Resana",
       status: "accepted",
       ticket_id: "session_789",
       type: MODERATION_TYPES.enum.organization_join_block,
@@ -172,6 +177,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
 
     await insert_moderation(db, {
       organization_id: dengi.id,
+      sp_name: "Resana",
       status: "pending",
       ticket_id: "session_321",
       type: MODERATION_TYPES.enum.organization_join_block,
@@ -183,6 +189,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
 
     await insert_moderation(db, {
       organization_id: bosch_france,
+      sp_name: "RDV Service Public",
       status: "pending",
       ticket_id: "session_654",
       type: MODERATION_TYPES.enum.non_verified_domain,
@@ -202,6 +209,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
       moderated_at: "2023-06-22T16:34:34+02:00",
       moderated_by: "moderateur@beta.gouv.fr",
       organization_id: bosch_rexroth,
+      sp_name: "Portail RSE",
       status: "accepted",
       ticket_id: "session_987",
       type: MODERATION_TYPES.enum.non_verified_domain,
@@ -245,6 +253,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
         '1687445474000 moderateur@beta.gouv.fr | Rejeté par moderateur@beta.gouv.fr | Raison : "Domaine non autorisé"',
       moderated_at: "2023-06-22T16:34:34+02:00",
       organization_id: dinum.id,
+      sp_name: "MonAideCyber",
       status: "rejected",
       ticket_id: "session_111",
       type: MODERATION_TYPES.enum.non_verified_domain,

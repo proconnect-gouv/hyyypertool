@@ -19,6 +19,10 @@ export const search_schema = z.object({
   search_email: z.string().default(""),
   search_moderated_by: z.string().default(""),
   search_siret: z.string().default(""),
+  exclude_sp_names: z
+    .string()
+    .default("")
+    .transform((v) => (v ? v.split(",") : [])),
   processed_requests: z
     .string()
     .default("false")

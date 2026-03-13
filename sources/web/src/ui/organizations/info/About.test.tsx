@@ -69,9 +69,14 @@ test("render about section", async () => {
                   "fr-btn bg-transparent text-black hover:bg-(--background-default-grey-hover)! fr-btn--sm fr-btn--tertiary ml-2",
                 text: "cached_libelle",
               };
+              let mounted = false;
               const mount_island = () => {
+                if (mounted) return;
                 const el = document.getElementById("test-uuid-1");
-                if (el) render(h(CopyButtonClient, props), el);
+                if (el) {
+                  render(h(CopyButtonClient, props), el);
+                  mounted = true;
+                }
               };
               document.addEventListener("DOMContentLoaded", mount_island);
               document.addEventListener("htmx:load", mount_island);
@@ -99,9 +104,14 @@ test("render about section", async () => {
                   "fr-btn bg-transparent text-black hover:bg-(--background-default-grey-hover)! fr-btn--sm fr-btn--tertiary ml-2",
                 text: "siret",
               };
+              let mounted = false;
               const mount_island = () => {
+                if (mounted) return;
                 const el = document.getElementById("test-uuid-2");
-                if (el) render(h(CopyButtonClient, props), el);
+                if (el) {
+                  render(h(CopyButtonClient, props), el);
+                  mounted = true;
+                }
               };
               document.addEventListener("DOMContentLoaded", mount_island);
               document.addEventListener("htmx:load", mount_island);

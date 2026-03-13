@@ -16,6 +16,7 @@ test("render header section", async () => {
             moderated_at: null,
             moderated_by: null,
             organization: { cached_libelle: "🦄 libelle", id: 43 },
+            sp_name: null,
             status: "accepted",
             type: "organization_join_block",
             user: {

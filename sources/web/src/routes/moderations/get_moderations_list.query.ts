@@ -11,8 +11,11 @@ import {
   count as drizzle_count,
   eq,
   ilike,
+  inArray,
+  isNotNull,
   isNull,
   not,
+  or,
   sql,
 } from "drizzle-orm";
 import type { Search } from "./context";
@@ -34,6 +37,7 @@ export async function get_moderations_list(
     day: created_at,
     search_email: email,
     search_moderated_by: moderated_by,
+    exclude_sp_names,
     hide_join_organization,
     hide_non_verified_domain,
     processed_requests: show_archived,
@@ -45,6 +49,24 @@ export async function get_moderations_list(
     ilike(schema.users.email, `%${email ?? ""}%`),
     moderated_by
       ? ilike(schema.moderations.moderated_by, `%${moderated_by}%`)
+      : undefined,
+    exclude_sp_names?.length
+      ? and(
+          exclude_sp_names.includes("")
+            ? isNotNull(schema.moderations.sp_name)
+            : undefined,
+          exclude_sp_names.filter(Boolean).length
+            ? or(
+                isNull(schema.moderations.sp_name),
+                not(
+                  inArray(
+                    schema.moderations.sp_name,
+                    exclude_sp_names.filter(Boolean),
+                  ),
+                ),
+              )
+            : undefined,
+        )
       : undefined,
     show_archived ? undefined : isNull(schema.moderations.moderated_at),
     hide_non_verified_domain
@@ -64,6 +86,7 @@ export async function get_moderations_list(
         id: schema.moderations.id,
         moderated_at: schema.moderations.moderated_at,
         organization: { siret: schema.organizations.siret },
+        sp_name: schema.moderations.sp_name,
         status: schema.moderations.status,
         type: schema.moderations.type,
         user: {

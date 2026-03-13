@@ -11,6 +11,7 @@ import moderation_router from "./:id/index";
 import { search_schema } from "./context";
 import { get_moderations_list } from "./get_moderations_list.query";
 import { get_moderators_list } from "./get_moderators_list.query";
+import { get_sp_names_list } from "./get_sp_names_list.query";
 import { ModerationsPage } from "./page";
 
 //
@@ -42,13 +43,15 @@ export default new Hono<AppContext>()
         .with({ success: true }, ({ data }) => data)
         .otherwise(() => PaginationSchema.parse({}));
 
-      const [query_moderations_list, db_moderators] = await Promise.all([
-        get_moderations_list(identite_pg, {
-          pagination: { ...pagination, page: pagination.page - 1 },
-          search,
-        }),
-        get_moderators_list(identite_pg),
-      ]);
+      const [query_moderations_list, db_moderators, sp_names_list] =
+        await Promise.all([
+          get_moderations_list(identite_pg, {
+            pagination: { ...pagination, page: pagination.page - 1 },
+            search,
+          }),
+          get_moderators_list(identite_pg),
+          get_sp_names_list(identite_pg),
+        ]);
 
       const allowed_users_env = (env.ALLOWED_USERS ?? "")
         .split(",")
@@ -64,6 +67,7 @@ export default new Hono<AppContext>()
           moderations_list={moderations_list}
           pagination={pagination}
           search={search}
+          sp_names_list={sp_names_list}
           query_result={query_moderations_list}
           nonce={nonce}
         />,

@@ -137,6 +137,15 @@ Then("je vois {string}", (text: string) => {
   });
 });
 
+Then(
+  "je dois voir un élément ayant pour aria-label {string}",
+  (text: string) => {
+    get_within_context().within(() => {
+      cy.findByLabelText(text).should("be.visible");
+    });
+  },
+);
+
 Then("je dois voir le texte {string}", (text: string) => {
   get_within_context().within(() => cy.contains(text).should("be.visible"));
 });
@@ -144,6 +153,15 @@ Then("je dois voir le texte {string}", (text: string) => {
 Then("je ne vois pas {string}", (text: string) => {
   get_within_context().within(() => cy.contains(text).should("not.exist"));
 });
+
+Then(
+  "je ne dois pas voir un élément ayant pour aria-label {string}",
+  (text: string) => {
+    get_within_context().within(() => {
+      cy.findByLabelText(text).should("not.exist");
+    });
+  },
+);
 
 Then("je suis redirigé vers {string}", (path: string) => {
   cy.url().should("contain", path);
