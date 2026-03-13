@@ -10,7 +10,12 @@ import { eq } from "drizzle-orm";
 
 export type ModerationUpdate = Pick<
   typeof schema.moderations.$inferInsert,
-  "comment" | "moderated_by" | "moderated_at" | "ticket_id" | "status"
+  | "comment"
+  | "moderated_at"
+  | "moderated_by"
+  | "sp_name"
+  | "status"
+  | "ticket_id"
 >;
 
 export function UpdateModerationById({ pg }: IdentiteProconnectDatabaseCradle) {
