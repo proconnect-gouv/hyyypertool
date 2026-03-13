@@ -45,7 +45,7 @@
         "hyyypertool-bun": "./src/bun/index.ts",
       },
       "dependencies": {
-        "@hono/node-server": "1.19.10",
+        "@hono/node-server": "1.19.11",
         "@sentry/node": "10.42.0",
         "@sentry/profiling-node": "10.42.0",
         "@tailwindcss/cli": "4.2.1",
@@ -177,7 +177,7 @@
       "name": "@~/web",
       "version": "1.0.0",
       "dependencies": {
-        "@hono/node-server": "1.19.10",
+        "@hono/node-server": "1.19.11",
         "@hono/sentry": "1.2.2",
         "@hono/zod-validator": "0.7.6",
         "@proconnect-gouv/proconnect.core": "1.0.0",
@@ -313,7 +313,7 @@
 
     "@happy-dom/global-registrator": ["@happy-dom/global-registrator@20.6.3", "", { "dependencies": { "@types/node": ">=20.0.0", "happy-dom": "^20.6.3" } }, "sha512-CRuv8C6HqTd8BBA8pezx/tDtZQPjlr6oXxn3GshXoC6flVUnrCfe1MscDsqQNsRtQGt4lXT6agRTvDIxj+dvwg=="],
 
-    "@hono/node-server": ["@hono/node-server@1.19.10", "", { "peerDependencies": { "hono": "^4" } }, "sha512-hZ7nOssGqRgyV3FVVQdfi+U4q02uB23bpnYpdvNXkYTRRyWx84b7yf1ans+dnJ/7h41sGL3CeQTfO+ZGxuO+Iw=="],
+    "@hono/node-server": ["@hono/node-server@1.19.11", "", { "peerDependencies": { "hono": "^4" } }, "sha512-dr8/3zEaB+p0D2n/IUrlPF1HZm586qgJNXK1a9fhg/PzdtkK7Ksd5l312tJX2yBuALqDYBlG20QEbayqPyxn+g=="],
 
     "@hono/sentry": ["@hono/sentry@1.2.2", "", { "dependencies": { "toucan-js": "^4.0.0" }, "peerDependencies": { "hono": ">=3.*" } }, "sha512-027grZBrRGDPor8mRd+QOBcSpUlF07YrTp/WFDXZhbvWZ+1LrZdERUqcdg1gBGDUTanHhd9ucblpNNN6+V1bxg=="],
 
