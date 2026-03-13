@@ -1,9 +1,11 @@
 //
 
 import { set_userinfo } from "#src/middleware/auth";
-import { set_config } from "#src/middleware/config";
+import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import { set_identite_pg } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
+import { hyyyper_pglite, reset } from "@~/hyyyperbase/testing";
+import { insert_moderateur } from "@~/hyyyperbase/testing/users";
 import {
   empty_database,
   migrate,
@@ -16,23 +18,32 @@ import app from "./index";
 //
 
 beforeAll(migrate);
+beforeEach(reset);
 beforeEach(empty_database);
 
 //
 
 test("GET /users", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
+
   const response = await new Hono()
-    .use(set_config({ ALLOWED_USERS: "good@captain.yargs" }))
+    .onError((e) => {
+      throw e;
+    })
+    .use(set_hyyyper_pg(hyyyper_pglite))
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
-    .use(set_userinfo({ email: "good@captain.yargs" }))
+    .use(
+      set_userinfo({
+        email: moderator.email,
+        sub: moderator.sub!,
+      }),
+    )
     .route("/", app)
     .onError((error) => {
       throw error;
     })
-    .request("/");
-
-  if (response.status >= 400) throw await response.text();
+    .request("/", undefined, {});
 
   expect(response.status).toBe(200);
 });

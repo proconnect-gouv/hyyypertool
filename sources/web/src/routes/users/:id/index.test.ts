@@ -1,10 +1,13 @@
 //
 
-import { set_userinfo } from "#src/middleware/auth";
+import { authorized, set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
 import { set_crisp_client } from "#src/middleware/crisp";
+import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import { set_identite_pg } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
+import { hyyyper_pglite, reset } from "@~/hyyyperbase/testing";
+import { insert_moderateur } from "@~/hyyyperbase/testing/users";
 import { schema } from "@~/identite-proconnect/database";
 import { create_adora_pony_user } from "@~/identite-proconnect/database/seed/unicorn";
 import {
@@ -27,17 +30,21 @@ import app from "./index";
 //
 
 beforeAll(migrate);
+beforeEach(reset);
 beforeEach(empty_database);
 setSystemTime(new Date("2222-01-01T00:00:00.000Z"));
 
 test("GET /users/:id returns user details", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
   const user_id = await create_adora_pony_user(pg);
 
   const response = await new Hono()
     .use(set_config({}))
+    .use(set_hyyyper_pg(hyyyper_pglite))
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
-    .use(set_userinfo({ email: "test@example.com" }))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
     .route("/:id", app)
     .request(`/${user_id}`);
 

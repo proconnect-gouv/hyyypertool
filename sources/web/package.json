@@ -22,14 +22,14 @@
     "start:node": "tsx src/node/index.ts"
   },
   "dependencies": {
-    "@hono/node-server": "1.19.10",
+    "@hono/node-server": "1.19.11",
     "@hono/sentry": "1.2.2",
     "@hono/zod-validator": "0.7.6",
     "@proconnect-gouv/proconnect.core": "1.0.0",
     "@proconnect-gouv/proconnect.crisp": "1.0.1",
-    "@sentry/browser": "10.40.0",
-    "@sentry/core": "10.40.0",
-    "@sentry/node": "10.40.0",
+    "@sentry/browser": "10.42.0",
+    "@sentry/core": "10.42.0",
+    "@sentry/node": "10.42.0",
     "@tailwindcss/typography": "^0.5.19",
     "@~/hyyyperbase": "workspace:*",
     "@~/identite-proconnect": "workspace:*",
@@ -44,7 +44,7 @@
     "lodash.sortby": "4.7.0",
     "nprogress": "0.2.0",
     "openid-client": "6.8.2",
-    "pg": "8.19.0",
+    "pg": "8.20.0",
     "preact": "10.28.4",
     "preact-render-to-string": "6.6.6",
     "rehype-sanitize": "6.0.0",
@@ -66,7 +66,7 @@
     "@~/config.typescript": "workspace:*",
     "@types/lodash.sortby": "4.7.9",
     "@types/nprogress": "0.2.3",
-    "@types/pg": "8.16.0",
+    "@types/pg": "8.18.0",
     "prettier": "3.8.1"
   }
 }

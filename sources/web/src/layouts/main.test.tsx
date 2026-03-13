@@ -1,9 +1,11 @@
 //
 
+import { authorized, set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
+import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import { set_nonce } from "#src/middleware/nonce";
-
-import { set_userinfo } from "#src/middleware/auth";
+import { hyyyper_pglite, reset } from "@~/hyyyperbase/testing";
+import { insert_admin } from "@~/hyyyperbase/testing/users";
 import {
   beforeAll,
   beforeEach,
@@ -33,8 +35,10 @@ beforeAll(() => {
 beforeEach(() => {
   uuidCounter = 0;
 });
+beforeEach(reset);
 
 test("Main Layout", async () => {
+  const admin = await insert_admin(hyyyper_pglite);
   const app = new Hono()
     .use(
       set_config({
@@ -44,8 +48,17 @@ test("Main Layout", async () => {
         VERSION: "__VERSION__",
       }),
     )
-    .use(set_userinfo({ given_name: "Lara", usual_name: "Croft" }))
+    .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(
+      set_userinfo({
+        given_name: "Lara",
+        usual_name: "Croft",
+        email: admin.email,
+        sub: admin.sub!,
+      }),
+    )
     .use(set_nonce("nonce"))
+    .use(authorized())
     .use(jsxRenderer(Main_Layout))
     .get("/", (c) => {
       return c.render("✅");

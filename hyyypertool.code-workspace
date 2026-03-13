@@ -263,7 +263,7 @@
       {
         "label": "🏗️ Database MonComptePro Seed",
         "command": "bun",
-        "args": ["run", "database:identite-proconnect:seed"],
+        "args": ["run", "db:seed"],
         "type": "shell",
         "options": {
           "cwd": "${workspaceFolder:/}",

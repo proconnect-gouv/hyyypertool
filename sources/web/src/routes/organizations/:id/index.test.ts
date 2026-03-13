@@ -1,9 +1,12 @@
 //
 
-import { set_userinfo } from "#src/middleware/auth";
+import { authorized, set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
+import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import { set_identite_pg } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
+import { hyyyper_pglite, reset } from "@~/hyyyperbase/testing";
+import { insert_moderateur } from "@~/hyyyperbase/testing/users";
 import { create_unicorn_organization } from "@~/identite-proconnect/database/seed/unicorn";
 import {
   empty_database,
@@ -17,23 +20,26 @@ import app from "./index";
 //
 
 beforeAll(migrate);
+beforeEach(reset);
 beforeEach(empty_database);
 
 //
 
 test("GET /organizations/:id returns organization details", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
   const organization_id = await create_unicorn_organization(pg);
 
   const response = await new Hono()
     .use(
       set_config({
-        ALLOWED_USERS: "test@example.com",
         HTTP_CLIENT_TIMEOUT: 5000,
       }),
     )
+    .use(set_hyyyper_pg(hyyyper_pglite))
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
-    .use(set_userinfo({ email: "test@example.com" }))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
     .route("/:id", app)
     .request(`/${organization_id}`);
 
