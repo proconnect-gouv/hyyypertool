@@ -57,6 +57,7 @@ test("PATCH /moderations/:id/reprocess resets moderation to pending", async () =
       "moderated_at": null,
       "moderated_by": null,
       "organization_id": 1,
+      "sp_name": null,
       "status": "reopened",
       "ticket_id": null,
       "type": "💼",

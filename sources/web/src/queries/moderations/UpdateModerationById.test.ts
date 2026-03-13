@@ -43,16 +43,19 @@ test("update a moderation", async () => {
     await pg.query.moderations.findFirst({
       where: (table, { eq }) => eq(table.id, moderation_id),
     }),
-  ).toEqual({
-    comment: "Adora is a good pony",
-    created_at: "2222-01-01 00:00:00+00",
-    id: expect.any(Number),
-    moderated_at: "2222-01-02 00:00:00+00",
-    moderated_by: "Captain Midnight",
-    organization_id,
-    status: "accepted",
-    ticket_id: null,
-    type: "",
-    user_id,
-  });
+  ).toMatchInlineSnapshot(`
+    {
+      "comment": "Adora is a good pony",
+      "created_at": "2222-01-01 00:00:00+00",
+      "id": 1,
+      "moderated_at": "2222-01-02 00:00:00+00",
+      "moderated_by": "Captain Midnight",
+      "organization_id": 1,
+      "sp_name": null,
+      "status": "accepted",
+      "ticket_id": null,
+      "type": "",
+      "user_id": 1,
+    }
+  `);
 });

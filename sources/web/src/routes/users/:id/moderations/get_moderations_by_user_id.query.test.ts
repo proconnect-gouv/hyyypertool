@@ -34,18 +34,21 @@ test("get adora's moderations", async () => {
 
   const moderations = await get_moderations_by_user_id(pg, adora_pony_user_id);
 
-  expect(moderations).toEqual([
-    {
-      comment: null,
-      created_at: "2222-01-01 00:00:00+00",
-      id: moderation_id,
-      moderated_at: null,
-      moderated_by: null,
-      organization_id,
-      ticket_id: null,
-      type: "🦷",
-      user_id: adora_pony_user_id,
-      status: "pending",
-    },
-  ]);
+  expect(moderations).toMatchInlineSnapshot(`
+    [
+      {
+        "comment": null,
+        "created_at": "2222-01-01 00:00:00+00",
+        "id": 1,
+        "moderated_at": null,
+        "moderated_by": null,
+        "organization_id": 1,
+        "sp_name": null,
+        "status": "pending",
+        "ticket_id": null,
+        "type": "🦷",
+        "user_id": 1,
+      },
+    ]
+  `);
 });
