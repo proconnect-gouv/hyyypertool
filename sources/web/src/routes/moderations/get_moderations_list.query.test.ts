@@ -132,7 +132,7 @@ test("filters by siret search", async () => {
   `);
 });
 
-test("excludes archived moderations by default", async () => {
+test("shows all moderations when no status filter", async () => {
   await create_unicorn_organization(pg);
   await create_adora_pony_user(pg);
 
@@ -151,12 +151,28 @@ test("excludes archived moderations by default", async () => {
 
   expect(result).toMatchInlineSnapshot(`
     {
-      "count": 1,
+      "count": 2,
       "moderations": [
         {
           "created_at": "2222-01-01 00:00:00+00",
           "id": 2,
           "moderated_at": null,
+          "organization": {
+            "siret": "🦄 siret",
+          },
+          "sp_name": null,
+          "status": "unknown",
+          "type": "",
+          "user": {
+            "email": "adora.pony@unicorn.xyz",
+            "family_name": "Pony",
+            "given_name": "Adora",
+          },
+        },
+        {
+          "created_at": "2222-01-01 00:00:00+00",
+          "id": 1,
+          "moderated_at": "2222-01-01 00:00:00+00",
           "organization": {
             "siret": "🦄 siret",
           },
@@ -285,14 +301,14 @@ test("supports pagination", async () => {
       "moderations": [
         {
           "created_at": "2222-01-01 00:00:00+00",
-          "id": 1,
+          "id": 3,
           "moderated_at": null,
           "organization": {
             "siret": "🦄 siret",
           },
           "sp_name": null,
           "status": "unknown",
-          "type": "type_1",
+          "type": "type_3",
           "user": {
             "email": "adora.pony@unicorn.xyz",
             "family_name": "Pony",
@@ -331,14 +347,14 @@ test("supports pagination", async () => {
       "moderations": [
         {
           "created_at": "2222-01-01 00:00:00+00",
-          "id": 3,
+          "id": 1,
           "moderated_at": null,
           "organization": {
             "siret": "🦄 siret",
           },
           "sp_name": null,
           "status": "unknown",
-          "type": "type_3",
+          "type": "type_1",
           "user": {
             "email": "adora.pony@unicorn.xyz",
             "family_name": "Pony",

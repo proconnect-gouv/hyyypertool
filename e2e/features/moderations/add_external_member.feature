@@ -16,13 +16,15 @@ Fonctionnalité: Ajouter un membre externe lors de la modération
       |  |
 
     Quand je clique sur "✅ Accepter"
+    Soit je vais à l'intérieur du dialogue nommé "la modale de validation"
     Et je clique sur "Ajouter Marie à l'organisation EN TANT QU'EXTERNE"
     Et je clique sur "Terminer"
+    Et je réinitialise le contexte
 
     Alors une notification mail n'est pas envoyée
 
     Alors je vois "Liste des moderations"
-    Quand je clique sur "Voir les demandes traitées"
+    Et je saisie le mot "{selectAll}is:processed{enter}" dans la boîte à texte nommée "Filtrer les modérations…"
     Quand je clique sur le lien nommé "Modération non vérifié de Marie Bon pour 57206768400017"
 
     Quand je clique sur "👥 1 membre connu dans l’organisation"
@@ -51,7 +53,7 @@ Fonctionnalité: Ajouter un membre externe lors de la modération
     Alors une notification mail est envoyée
 
     Alors je vois "Liste des moderations"
-    Quand je clique sur "Voir les demandes traitées"
+    Et je saisie le mot "{selectAll}is:processed{enter}" dans la boîte à texte nommée "Filtrer les modérations…"
     Quand je clique sur le lien nommé "Modération non vérifié de Marie Bon pour 57206768400017"
 
     Quand je clique sur "👥 1 membre connu dans l’organisation"

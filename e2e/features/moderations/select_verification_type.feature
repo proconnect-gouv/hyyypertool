@@ -23,7 +23,7 @@ Fonctionnalité: Sélectionner un type de vérification lors de l'acceptation
     Quand je clique sur "Moderations"
     Et je dois voir le titre de page "Liste des moderations"
     Alors je vois "Liste des moderations"
-    Quand je clique sur "Voir les demandes traitées"
+    Et je saisie le mot "{selectAll}is:processed{enter}" dans la boîte à texte nommée "Filtrer les modérations…"
     Quand je clique sur le lien nommé "Modération a traiter de Jean Bon pour 51935970700022"
     Quand je clique sur "👥 1 membre connu dans l’organisation"
     Alors je dois voir un tableau nommé "👥 1 membre connu dans l’organisation" et contenant

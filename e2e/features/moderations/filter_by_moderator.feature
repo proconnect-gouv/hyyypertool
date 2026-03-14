@@ -7,8 +7,7 @@ Fonctionnalité: Filtrer les modérations par modérateur
     Et je me connecte en tant que "moderateur@beta.gouv.fr"
     Alors je vois "Liste des moderations"
 
-  Scénario: Filtrer par modérateur auto-coche les demandes traitées et filtre la table
-    Alors je vois "Filtrer par modérateur"
+  Scénario: Filtrer par modérateur affiche les modérations traitées par ce modérateur
     Et je ne vois pas "44023386400014"
-    Quand je sélectionne "moderateur@beta.gouv.fr" dans la liste déroulante nommée "Filtrer par modérateur"
+    Quand je saisie le mot "{selectAll}by:moderateur@beta.gouv.fr{enter}" dans la boîte à texte nommée "Filtrer les modérations…"
     Alors je vois "44023386400014"

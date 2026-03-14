@@ -15,13 +15,15 @@ Fonctionnalité: Vérifier un domaine lors de la modération
     Alors je dois voir un tableau nommé "🌐 0 domaine connu dans l’organisation" et contenant
       |  |
     Quand je clique sur "✅ Accepter"
+    Soit je vais à l'intérieur du dialogue nommé "la modale de validation"
     Quand je clique sur "J'autorise le domaine fr.bosch.com en interne à l'organisation"
     Quand je clique sur "Terminer"
+    Et je réinitialise le contexte
 
     Alors une notification mail n'est pas envoyée
 
     Alors je vois "Liste des moderations"
-    Quand je clique sur "Voir les demandes traitées"
+    Et je saisie le mot "{selectAll}is:processed{enter}" dans la boîte à texte nommée "Filtrer les modérations…"
     Quand je clique sur le lien nommé "Modération non vérifié de Marie Bon pour 57206768400017"
 
     Quand je clique sur "🌐 1 domaine connu dans l’organisation"

@@ -26,13 +26,8 @@ beforeAll(migrate);
 beforeEach(reset);
 beforeEach(empty_database);
 
-test("GET /moderations returns moderations list page", async () => {
-  const moderator = await insert_moderateur(hyyyper_pglite);
-  await create_unicorn_organization(pg);
-  await create_adora_pony_user(pg);
-  const moderation_id = await create_adora_pony_moderation(pg, { type: "💼" });
-
-  const response = await new Hono()
+function create_test_app(moderator: { email: string; sub: string | null }) {
+  return new Hono()
     .onError((e) => {
       throw e;
     })
@@ -45,13 +40,138 @@ test("GET /moderations returns moderations list page", async () => {
         sub: moderator.sub!,
       }),
     )
-    .route("/", app)
-    .request("/", undefined, {});
+    .route("/", app);
+}
 
-  expect(response.status).toBe(200);
+test("GET /moderations returns moderations list page", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+  const moderation_id = await create_adora_pony_moderation(pg, { type: "💼" });
+
+  const response = await create_test_app(moderator).request("/", undefined, {});
+
   const html = await response.text();
   expect(html).toContain("Liste des moderations");
   expect(html).toContain("adora.pony@unicorn.xyz");
   expect(html).toContain("Modération ⁉️ 💼 de Adora Pony pour 🦄 siret");
   expect(html).toContain(`/moderations/${moderation_id}`);
+  expect(response.status).toBe(200);
+});
+
+test("GET /moderations?q= (empty query) lists all moderations", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+  const pending_id = await create_adora_pony_moderation(pg, { type: "💼" });
+  const processed_id = await create_adora_pony_moderation(pg, {
+    type: "💼",
+    moderated_at: "2222-01-01T00:00:00.000Z",
+  });
+
+  const response = await create_test_app(moderator).request(
+    "/?q=",
+    undefined,
+    {},
+  );
+
+  const html = await response.text();
+  expect(html).toContain(`/moderations/${pending_id}`);
+  expect(html).toContain(`/moderations/${processed_id}`);
+  expect(response.status).toBe(200);
+});
+
+test("GET /moderations?q=is:processed shows only processed moderations", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+  const pending_id = await create_adora_pony_moderation(pg, { type: "💼" });
+  const processed_id = await create_adora_pony_moderation(pg, {
+    type: "💼",
+    moderated_at: "2222-01-01T00:00:00.000Z",
+  });
+
+  const response = await create_test_app(moderator).request(
+    "/?q=is:processed",
+    undefined,
+    {},
+  );
+
+  const html = await response.text();
+  expect(html).toContain(`/moderations/${processed_id}`);
+  expect(html).not.toContain(`/moderations/${pending_id}`);
+  expect(response.status).toBe(200);
+});
+
+test("GET /moderations?q=email:adora filters by email", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+  const moderation_id = await create_adora_pony_moderation(pg, { type: "💼" });
+
+  const response = await create_test_app(moderator).request(
+    "/?q=email:adora",
+    undefined,
+    {},
+  );
+
+  const html = await response.text();
+  expect(html).toContain(`/moderations/${moderation_id}`);
+  expect(response.status).toBe(200);
+});
+
+test("GET /moderations?q=-email:adora excludes emails containing 'adora'", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+  const moderation_id = await create_adora_pony_moderation(pg, { type: "💼" });
+
+  const response = await create_test_app(moderator).request(
+    "/?q=-email:adora",
+    undefined,
+    {},
+  );
+
+  const html = await response.text();
+  expect(html).not.toContain(`/moderations/${moderation_id}`);
+  expect(response.status).toBe(200);
+});
+
+test("GET /moderations?q=email:nonexistent returns no moderations", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+  const moderation_id = await create_adora_pony_moderation(pg, { type: "💼" });
+
+  const response = await create_test_app(moderator).request(
+    "/?q=email:nonexistent",
+    undefined,
+    {},
+  );
+
+  const html = await response.text();
+  expect(html).not.toContain(`/moderations/${moderation_id}`);
+  expect(response.status).toBe(200);
+});
+
+test("GET /moderations?q=is:pending shows only pending moderations", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+  const pending_id = await create_adora_pony_moderation(pg, { type: "💼" });
+  const processed_id = await create_adora_pony_moderation(pg, {
+    type: "💼",
+    moderated_at: "2222-01-01T00:00:00.000Z",
+  });
+
+  const response = await create_test_app(moderator).request(
+    "/?q=is:pending",
+    undefined,
+    {},
+  );
+
+  const html = await response.text();
+  expect(html).toContain(`/moderations/${pending_id}`);
+  expect(html).not.toContain(`/moderations/${processed_id}`);
+  expect(response.status).toBe(200);
 });
