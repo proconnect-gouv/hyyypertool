@@ -46,6 +46,7 @@ test("get moderations list with basic search", async () => {
           "organization": {
             "siret": "🦄 siret",
           },
+          "sp_name": null,
           "status": "unknown",
           "type": "non_verified_domain",
           "user": {
@@ -81,6 +82,7 @@ test("filters by email search", async () => {
           "organization": {
             "siret": "🦄 siret",
           },
+          "sp_name": null,
           "status": "unknown",
           "type": "",
           "user": {
@@ -116,6 +118,7 @@ test("filters by siret search", async () => {
           "organization": {
             "siret": "🦄 siret",
           },
+          "sp_name": null,
           "status": "unknown",
           "type": "",
           "user": {
@@ -157,6 +160,7 @@ test("excludes archived moderations by default", async () => {
           "organization": {
             "siret": "🦄 siret",
           },
+          "sp_name": null,
           "status": "unknown",
           "type": "",
           "user": {
@@ -196,6 +200,7 @@ test("includes archived moderations when show_archived is true", async () => {
           "organization": {
             "siret": "🦄 siret",
           },
+          "sp_name": null,
           "status": "unknown",
           "type": "",
           "user": {
@@ -245,6 +250,7 @@ test("filters by moderated_by search", async () => {
           "organization": {
             "siret": "🦄 siret",
           },
+          "sp_name": null,
           "status": "unknown",
           "type": "",
           "user": {
@@ -284,6 +290,7 @@ test("supports pagination", async () => {
           "organization": {
             "siret": "🦄 siret",
           },
+          "sp_name": null,
           "status": "unknown",
           "type": "type_1",
           "user": {
@@ -299,6 +306,7 @@ test("supports pagination", async () => {
           "organization": {
             "siret": "🦄 siret",
           },
+          "sp_name": null,
           "status": "unknown",
           "type": "type_2",
           "user": {
@@ -328,6 +336,7 @@ test("supports pagination", async () => {
           "organization": {
             "siret": "🦄 siret",
           },
+          "sp_name": null,
           "status": "unknown",
           "type": "type_3",
           "user": {

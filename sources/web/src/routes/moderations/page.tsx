@@ -24,6 +24,7 @@ import {
   query_schema,
   type Search,
 } from "./context";
+import { ExcludeSpNamesIsland } from "./ExcludeSpNamesIsland";
 import type { get_moderations_list } from "./get_moderations_list.query";
 import { ProcessedCheckboxIsland } from "./ProcessedCheckboxIsland";
 import { SearchEmailIsland } from "./SearchEmailIsland";
@@ -48,6 +49,7 @@ const hx_moderations_query_props = {
     page_query_keys.enum.search_email,
     page_query_keys.enum.search_moderated_by,
     page_query_keys.enum.search_siret,
+    page_query_keys.enum.exclude_sp_names,
   ]),
   "hx-replace-url": true,
   "hx-select": `#${MODERATION_TABLE_ID} > table`,
@@ -55,6 +57,7 @@ const hx_moderations_query_props = {
 };
 const Moderations_Context = createContext({
   moderations_list: [] as string[],
+  sp_names_list: [] as string[],
   query_result: {} as QueryResult,
   pagination: {} as Pagination,
 });
@@ -63,12 +66,14 @@ export function ModerationsPage({
   moderations_list,
   pagination,
   search,
+  sp_names_list,
   query_result,
   nonce,
 }: {
   moderations_list: string[];
   pagination: Pagination;
   search: Search;
+  sp_names_list: string[];
   query_result: QueryResult;
   nonce?: string;
 }) {
@@ -76,6 +81,7 @@ export function ModerationsPage({
     <Moderations_Context.Provider
       value={{
         moderations_list,
+        sp_names_list,
         pagination,
         query_result,
       }}
@@ -106,7 +112,7 @@ function Main({ search, nonce }: { search: Search; nonce?: string }) {
 }
 
 function Filter({ search, nonce }: { search: Search; nonce?: string }) {
-  const { moderations_list } = useContext(Moderations_Context);
+  const { moderations_list, sp_names_list } = useContext(Moderations_Context);
   return (
     <form
       {...hx_moderations_query_props}
@@ -118,6 +124,7 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
         `keyup changed delay:500ms from:#${page_query_keys.enum.search_email}`,
         `change from:#${page_query_keys.enum.search_moderated_by}`,
         `keyup changed delay:500ms from:#${page_query_keys.enum.search_siret}`,
+        `change from:#${page_query_keys.enum.exclude_sp_names}`,
       ].join(", ")}
       hx-vals={JSON.stringify({ page: 1 } as Pagination)}
     >
@@ -216,6 +223,20 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
           />
         </div>
       </div>
+      <div class="fr-fieldset__element">
+        <div class="fr-input-group">
+          <label class="fr-label" for={page_query_keys.enum.exclude_sp_names}>
+            Exclure des fournisseurs de service
+          </label>
+          <ExcludeSpNamesIsland
+            id={page_query_keys.enum.exclude_sp_names}
+            name={page_query_keys.enum.exclude_sp_names}
+            nonce={nonce}
+            sp_names_list={sp_names_list}
+            initialValue={search.exclude_sp_names.join(",")}
+          />
+        </div>
+      </div>
     </form>
   );
 }
@@ -234,6 +255,7 @@ async function Table() {
             <th>Prénom</th>
             <th>Email</th>
             <th>Organisation cible</th>
+            <th>Service</th>
             <th>ID</th>
           </tr>
         </thead>
@@ -262,7 +284,6 @@ function Row({ key, moderation }: { key?: string; moderation: Moderation }) {
 
   return (
     <tr
-      aria-label={`Modération ${moderation_type_to_title(moderation.type).toLowerCase()} de ${user.given_name} ${user.family_name} pour ${organization.siret}`}
       key={key}
       class={row({
         is_clickable: true,
@@ -289,6 +310,7 @@ function Row({ key, moderation }: { key?: string; moderation: Moderation }) {
         {user.email}
       </td>
       <td class="break-words">{organization.siret}</td>
+      <td class="break-words">{moderation.sp_name}</td>
       <td>
         <a
           class="after:absolute after:inset-0 after:content-[''] focus:outline-none"
