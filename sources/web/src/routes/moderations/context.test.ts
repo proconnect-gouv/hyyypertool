@@ -25,7 +25,9 @@ test("SearchSchema > empty object (default q=is:pending)", () => {
 });
 
 test("SearchSchema > q with date", () => {
-  const { q: search } = search_schema.parse({ q: "is:pending date:2011-01-11" });
+  const { q: search } = search_schema.parse({
+    q: "is:pending date:2011-01-11",
+  });
 
   expect(search).toEqual({
     day: new Date("2011-01-11"),

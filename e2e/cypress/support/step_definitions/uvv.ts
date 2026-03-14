@@ -90,6 +90,12 @@ When(
   },
 );
 
+When("je clique sur la boîte à texte nommée {string}", (name: string) => {
+  get_within_context().within(() =>
+    cy.get(`input[placeholder="${name}"]`).click(),
+  );
+});
+
 When(
   "je saisie le mot {string} dans la boîte à texte nommée {string}",
   (text: string, name: string) => {
