@@ -66,6 +66,7 @@ export default new Hono<AppContext>()
         <ModerationsPage
           moderations_list={moderations_list}
           pagination={pagination}
+          poll_interval={env.POLL_INTERVAL}
           search={search}
           sp_names_list={sp_names_list}
           query_result={query_moderations_list}

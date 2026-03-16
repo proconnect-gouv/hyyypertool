@@ -65,6 +65,7 @@ const Moderations_Context = createContext({
 export function ModerationsPage({
   moderations_list,
   pagination,
+  poll_interval,
   search,
   sp_names_list,
   query_result,
@@ -72,6 +73,7 @@ export function ModerationsPage({
 }: {
   moderations_list: string[];
   pagination: Pagination;
+  poll_interval: number;
   search: Search;
   sp_names_list: string[];
   query_result: QueryResult;
@@ -86,21 +88,29 @@ export function ModerationsPage({
         query_result,
       }}
     >
-      <Main search={search} nonce={nonce} />
+      <Main search={search} nonce={nonce} poll_interval={poll_interval} />
     </Moderations_Context.Provider>
   );
 }
 
 //
 
-function Main({ search, nonce }: { search: Search; nonce?: string }) {
+function Main({
+  search,
+  nonce,
+  poll_interval,
+}: {
+  search: Search;
+  nonce?: string;
+  poll_interval: number;
+}) {
   return (
     <main
       class="fr-container my-12"
       {...hx_moderations_query_props}
       hx-sync="this:abort"
       hx-trigger={[
-        `every 33s [document.visibilityState === 'visible'] throttle:1s`,
+        `every ${poll_interval}s [document.visibilityState === 'visible'] throttle:1s`,
         `visibilitychange[document.visibilityState === 'visible'] from:document throttle:1s`,
       ].join(", ")}
     >
