@@ -1,0 +1,16 @@
+import { createIsland } from "#src/lib/create-island";
+import {
+  ProcessedCheckbox,
+  type ProcessedCheckboxProps,
+} from "./processed-checkbox.client";
+
+//
+
+export const ProcessedCheckboxIsland = createIsland<ProcessedCheckboxProps>({
+  component: ProcessedCheckbox,
+  clientPath: "/src/ui/moderations/Filter/processed-checkbox.client.js",
+  mode: "hydrate",
+  exportName: "ProcessedCheckbox",
+  tagName: "x-processed-checkbox-island",
+  rootTagName: "x-processed-checkbox-root",
+});

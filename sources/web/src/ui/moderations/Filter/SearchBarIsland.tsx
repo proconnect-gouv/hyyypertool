@@ -11,7 +11,7 @@ import { SearchBar } from "./search-bar.client";
 
 export const SearchBarIsland = createIsland({
   component: SearchBar,
-  clientPath: "/src/routes/moderations/search-bar.client.js",
+  clientPath: "/src/ui/moderations/Filter/search-bar.client.js",
   mode: "hydrate",
   exportName: "SearchBar",
   tagName: "x-search-bar-island",

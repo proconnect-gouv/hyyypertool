@@ -9,6 +9,15 @@ import type { Pagination } from "#src/schema";
 import { date_to_string } from "#src/time";
 import { badge } from "#src/ui";
 import { Foot } from "#src/ui/hx_table";
+import {
+  HideTypeCheckboxIsland,
+  ProcessedCheckboxIsland,
+  SearchBarIsland,
+  SearchDateIsland,
+  SearchEmailIsland,
+  SearchModeratedByIsland,
+  SearchSiretIsland,
+} from "#src/ui/moderations/Filter";
 import { row } from "#src/ui/table";
 import { urls } from "#src/urls";
 import {
@@ -24,17 +33,18 @@ import {
 } from "./context";
 import type { get_moderations_list } from "./get_moderations_list.query";
 import { serialize_q } from "./parse_q";
-import { SearchBarIsland } from "./SearchBarIsland";
 
 //
 
 type QueryResult = Awaited<ReturnType<typeof get_moderations_list>>;
 type Moderation = QueryResult["moderations"][number];
 
-const hx_moderations_query_props = {
+// Base HTMX props shared by poll (main) and user actions (form).
+// Only the form gets hx-replace-url — the poll must NOT update the URL
+// because it can race with user actions and clobber the URL with a stale q.
+const hx_moderations_base_props = {
   ...urls.moderations.$hx_get(),
   "hx-include": hx_include([MODERATION_TABLE_PAGE_ID, "q"]),
-  "hx-replace-url": true,
   "hx-select": `#${MODERATION_TABLE_ID} > table`,
   "hx-target": `#${MODERATION_TABLE_ID}`,
 };
@@ -88,30 +98,35 @@ function Main({
   poll_interval: number;
 }) {
   return (
-    <main
-      class="fr-container my-12"
-      {...hx_moderations_query_props}
-      hx-sync="this:abort"
-      hx-trigger={[
-        `every ${poll_interval}s [document.visibilityState === 'visible'] throttle:1s`,
-        `visibilitychange[document.visibilityState === 'visible'] from:document throttle:1s`,
-        `popstate from:window throttle:1s`,
-      ].join(", ")}
-    >
+    <main class="fr-container my-12">
       <h1>Liste des moderations</h1>
-      <Filter search={search} nonce={nonce} />
+      <Filter search={search} nonce={nonce} poll_interval={poll_interval} />
       <Table />
     </main>
   );
 }
 
-function Filter({ search, nonce }: { search: Search; nonce?: string }) {
+function Filter({
+  search,
+  nonce,
+  poll_interval,
+}: {
+  search: Search;
+  nonce?: string;
+  poll_interval: number;
+}) {
   const { moderators_list, sp_names_list } = useContext(Moderations_Context);
   return (
     <form
-      {...hx_moderations_query_props}
-      hx-trigger="change from:#q"
-      hx-vals={JSON.stringify({ page: 1 } as Pagination)}
+      {...hx_moderations_base_props}
+      hx-replace-url="true"
+      hx-sync="this:abort"
+      hx-trigger={[
+        "change from:#q",
+        `every ${poll_interval}s [document.visibilityState === 'visible'] throttle:1s`,
+        `visibilitychange[document.visibilityState === 'visible'] from:document throttle:1s`,
+        `popstate from:window throttle:1s`,
+      ].join(", ")}
     >
       <SearchBarIsland
         nonce={nonce}
@@ -119,6 +134,66 @@ function Filter({ search, nonce }: { search: Search; nonce?: string }) {
         moderators_list={moderators_list}
         sp_names_list={sp_names_list}
       />
+      <div class="mt-4 grid grid-cols-2 gap-6">
+        <div class="fr-input-group">
+          <label class="fr-label" for="filter-email">
+            Email
+          </label>
+          <SearchEmailIsland nonce={nonce} placeholder="Recherche par Email" />
+        </div>
+        <div class="fr-input-group">
+          <label class="fr-label" for="filter-siret">
+            Siret
+          </label>
+          <SearchSiretIsland nonce={nonce} placeholder="Recherche par SIRET" />
+        </div>
+      </div>
+      <ul class="fr-tags-group">
+        <li>
+          <ProcessedCheckboxIsland nonce={nonce} />
+        </li>
+        <li>
+          <HideTypeCheckboxIsland
+            nonce={nonce}
+            qualifier="non_verified_domain"
+            label={`Cacher les ${moderation_type_to_emoji("non_verified_domain")}${moderation_type_to_title("non_verified_domain")}`}
+          />
+        </li>
+        <li>
+          <HideTypeCheckboxIsland
+            nonce={nonce}
+            qualifier="organization_join_block"
+            label={`Cacher les ${moderation_type_to_emoji("organization_join_block")}${moderation_type_to_title("organization_join_block")}`}
+          />
+        </li>
+      </ul>
+
+      <div class="fr-fieldset__element">
+        <div class="fr-input-group">
+          <label class="fr-label" for="filter-moderated-by">
+            Filtrer par jours
+          </label>
+          <SearchDateIsland nonce={nonce} />
+        </div>
+      </div>
+
+      <div class="fr-fieldset__element">
+        <div class="fr-input-group">
+          <label class="fr-label" for="filter-moderated-by">
+            Filtrer par modérateur
+          </label>
+          <SearchModeratedByIsland
+            nonce={nonce}
+            moderators_list={moderators_list}
+          />
+        </div>
+      </div>
+
+      <div class="fr-fieldset__element">
+        <a class="fr-btn" href={urls.moderations.$url().pathname}>
+          Réinitialiser la recherche, les filtres et les tris
+        </a>
+      </div>
     </form>
   );
 }
@@ -148,7 +223,10 @@ async function Table() {
         </tbody>
         <Foot
           count={count}
-          hx_query_props={hx_moderations_query_props}
+          hx_query_props={{
+            ...hx_moderations_base_props,
+            "hx-replace-url": true,
+          }}
           id={MODERATION_TABLE_PAGE_ID}
           name="page"
           pagination={pagination}

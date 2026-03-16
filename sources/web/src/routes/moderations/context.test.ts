@@ -5,13 +5,13 @@ import { search_schema } from "./context";
 
 //
 
-test("SearchSchema > empty object (default q=is:pending)", () => {
+test("SearchSchema > empty object (default q=is:pending -type:non_verified_domain)", () => {
   const { q: search } = search_schema.parse({});
 
   expect(search).toEqual({
     day: undefined,
     hide_join_organization: false,
-    hide_non_verified_domain: false,
+    hide_non_verified_domain: true,
     processed_requests: false,
     search_email: "",
     search_moderated_by: "",

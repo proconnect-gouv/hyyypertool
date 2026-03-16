@@ -64,8 +64,8 @@ function Filter({ q }: { q?: string | string[] }) {
           id={$search}
           name={query_schema.keyof().enum.q}
           placeholder="Recherche"
-          value={q}
           type="search"
+          value={q}
         />
         <button class="fr-btn" title="Rechercher">
           Rechercher

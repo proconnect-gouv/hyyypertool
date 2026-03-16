@@ -12,7 +12,10 @@ export const MODERATION_TABLE_ID = "moderation_table";
 export const MODERATION_TABLE_PAGE_ID = "moderation_table_page";
 
 export const search_schema = z.object({
-  q: z.string().default("is:pending").transform(parse_q),
+  q: z
+    .string()
+    .default("is:pending -type:non_verified_domain")
+    .transform(parse_q),
 });
 
 export const query_schema = search_schema.extend(PaginationSchema.shape);

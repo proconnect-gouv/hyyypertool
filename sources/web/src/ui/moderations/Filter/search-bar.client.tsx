@@ -1,7 +1,8 @@
 /* @jsxImportSource preact */
 
-import { signal } from "@preact/signals";
+import { effect, signal } from "@preact/signals";
 import { useEffect, useRef } from "preact/hooks";
+import { flush_change, schedule_change, text } from "./q-signal.client";
 
 //
 
@@ -23,7 +24,6 @@ const NO_SERVICE_LABEL = "(sans service)";
 
 //
 
-const text = signal("");
 const dropdown_open = signal(false);
 const selected_index = signal(0);
 
@@ -41,55 +41,55 @@ function replace_last_token(value: string, replacement: string): string {
 //
 
 const CATEGORIES: Suggestion[] = [
-  {
-    label: "Filtrer par statut",
-    hint: "is:",
-    insert: "is:",
-    is_category: true,
-  },
-  {
-    label: "Filtrer par email",
-    hint: "email:",
-    insert: "email:",
-    is_category: true,
-  },
-  {
-    label: "Filtrer par SIRET",
-    hint: "siret:",
-    insert: "siret:",
-    is_category: true,
-  },
-  {
-    label: "Filtrer par date",
-    hint: "date:",
-    insert: "date:",
-    is_category: true,
-  },
-  { label: "Modéré par", hint: "by:", insert: "by:", is_category: true },
-  {
-    label: "Exclure un type",
-    hint: "-type:",
-    insert: "-type:",
-    is_category: true,
-  },
-  {
-    label: "Exclure un service",
-    hint: "-service:",
-    insert: "-service:",
-    is_category: true,
-  },
-  { label: "Demandes en attente", hint: "", insert: "is:pending" },
-  { label: "Demandes traitées", hint: "", insert: "is:processed" },
-  {
-    label: "Cacher les Non vérifié",
-    hint: "",
-    insert: "-type:non_verified_domain",
-  },
-  {
-    label: "Cacher les A traiter",
-    hint: "",
-    insert: "-type:organization_join_block",
-  },
+  // {
+  //   label: "Filtrer par statut",
+  //   hint: "is:",
+  //   insert: "is:",
+  //   is_category: true,
+  // },
+  // {
+  //   label: "Filtrer par email",
+  //   hint: "email:",
+  //   insert: "email:",
+  //   is_category: true,
+  // },
+  // {
+  //   label: "Filtrer par SIRET",
+  //   hint: "siret:",
+  //   insert: "siret:",
+  //   is_category: true,
+  // },
+  // {
+  //   label: "Filtrer par date",
+  //   hint: "date:",
+  //   insert: "date:",
+  //   is_category: true,
+  // },
+  // { label: "Modéré par", hint: "by:", insert: "by:", is_category: true },
+  // {
+  //   label: "Exclure un type",
+  //   hint: "-type:",
+  //   insert: "-type:",
+  //   is_category: true,
+  // },
+  // {
+  //   label: "Exclure un service",
+  //   hint: "-service:",
+  //   insert: "-service:",
+  //   is_category: true,
+  // },
+  // { label: "Demandes en attente", hint: "", insert: "is:pending" },
+  // { label: "Demandes traitées", hint: "", insert: "is:processed" },
+  // {
+  //   label: "Cacher les Non vérifié",
+  //   hint: "",
+  //   insert: "-type:non_verified_domain",
+  // },
+  // {
+  //   label: "Cacher les A traiter",
+  //   hint: "",
+  //   insert: "-type:organization_join_block",
+  // },
 ];
 
 function get_suggestions(
@@ -180,21 +180,17 @@ export function SearchBar({
   sp_names_list,
 }: SearchBarProps) {
   const input_ref = useRef<HTMLInputElement>(null);
-  const debounce_ref = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     text.value = initialQ;
+
+    // Sync text signal → #q DOM value imperatively.
+    // Runs synchronously on every signal change, so the DOM value
+    // is always up-to-date before HTMX reads it via hx-include.
+    return effect(() => {
+      if (input_ref.current) input_ref.current.value = text.value;
+    });
   }, []);
-
-  const dispatch_change = () => {
-    if (!input_ref.current) return;
-    input_ref.current.dispatchEvent(new Event("change", { bubbles: true }));
-  };
-
-  const schedule_change = () => {
-    if (debounce_ref.current) clearTimeout(debounce_ref.current);
-    debounce_ref.current = setTimeout(dispatch_change, 400);
-  };
 
   const last_token = get_last_token(text.value);
   const suggestions = get_suggestions(
@@ -209,10 +205,8 @@ export function SearchBar({
     input_ref.current?.focus();
 
     if (suggestion.is_category) {
-      // Keep dropdown open to show values
       dropdown_open.value = true;
     } else {
-      // Complete value — add trailing space and trigger search
       text.value = text.value + " ";
       dropdown_open.value = false;
       schedule_change();
@@ -246,67 +240,72 @@ export function SearchBar({
         accept_suggestion(suggestions[selected_index.value]!);
       } else {
         dropdown_open.value = false;
-        if (debounce_ref.current) clearTimeout(debounce_ref.current);
-        dispatch_change();
+        flush_change();
       }
       return;
     }
   };
 
   return (
-    <div class="relative">
-      <input
-        ref={input_ref}
-        type="text"
-        id="q"
-        name="q"
-        class="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
-        placeholder="Filtrer les modérations…"
-        value={text.value}
-        onInput={(e) => {
-          text.value = (e.target as HTMLInputElement).value;
-          dropdown_open.value = true;
-          selected_index.value = 0;
-          schedule_change();
-        }}
-        onFocus={() => {
-          dropdown_open.value = true;
-          selected_index.value = 0;
-        }}
-        onBlur={() => {
-          setTimeout(() => (dropdown_open.value = false), 200);
-        }}
-        onKeyDown={on_keydown}
-      />
+    <div class="fr-input-group">
+      <label class="fr-label" for="filter-email">
+        Hyyyper Filter
+      </label>
+      <div class="relative">
+        <input
+          autocomplete="off"
+          class="fr-input w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+          id="q"
+          name="q"
+          placeholder="Filtrer les modérations…"
+          ref={input_ref}
+          type="search"
+          value={text.value}
+          onInput={(e) => {
+            text.value = (e.target as HTMLInputElement).value;
+            dropdown_open.value = true;
+            selected_index.value = 0;
+            schedule_change();
+          }}
+          onFocus={() => {
+            dropdown_open.value = true;
+            selected_index.value = 0;
+          }}
+          onBlur={() => {
+            setTimeout(() => (dropdown_open.value = false), 200);
+          }}
+          onKeyDown={on_keydown}
+        />
 
-      {dropdown_open.value && suggestions.length > 0 && (
-        <ul
-          class="absolute top-full left-0 z-10 mt-1 max-h-80 w-full overflow-y-auto rounded border border-gray-300 bg-white py-1 shadow-lg"
-          role="listbox"
-        >
-          {suggestions.map((suggestion, i) => (
-            <li
-              key={suggestion.insert}
-              role="option"
-              aria-selected={i === selected_index.value}
-              class={`flex cursor-pointer items-center justify-between px-3 py-1.5 text-sm ${
-                i === selected_index.value
-                  ? "bg-blue-50 text-blue-900"
-                  : "hover:bg-gray-50"
-              }`}
-              onMouseDown={(e) => {
-                e.preventDefault();
-                accept_suggestion(suggestion);
-              }}
-            >
-              <span>{suggestion.label}</span>
-              {suggestion.hint && (
-                <span class="text-xs text-gray-400">{suggestion.hint}</span>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
+        {dropdown_open.value && suggestions.length > 0 && (
+          <ul
+            class="absolute top-full left-0 z-10 mt-1 max-h-80 w-full overflow-y-auto rounded border border-gray-300 bg-white py-1 shadow-lg"
+            role="listbox"
+          >
+            {suggestions.map((suggestion, i) => (
+              <li
+                key={suggestion.insert}
+                role="option"
+                aria-selected={i === selected_index.value}
+                class={`flex cursor-pointer items-center justify-between px-3 py-1.5 text-sm ${
+                  i === selected_index.value
+                    ? "bg-blue-50 text-blue-900"
+                    : "hover:bg-gray-50"
+                }`}
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  accept_suggestion(suggestion);
+                }}
+              >
+                <span>{suggestion.label}</span>
+                {suggestion.hint && (
+                  <span class="text-xs text-gray-400">{suggestion.hint}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }
