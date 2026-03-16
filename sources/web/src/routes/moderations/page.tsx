@@ -112,6 +112,7 @@ function Main({
       hx-trigger={[
         `every ${poll_interval}s [document.visibilityState === 'visible'] throttle:1s`,
         `visibilitychange[document.visibilityState === 'visible'] from:document throttle:1s`,
+        `popstate from:window throttle:1s`,
       ].join(", ")}
     >
       <h1>Liste des moderations</h1>

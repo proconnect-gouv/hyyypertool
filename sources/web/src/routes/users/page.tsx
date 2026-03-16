@@ -20,6 +20,7 @@ const hx_users_list_query_props = {
   "hx-replace-url": true,
   "hx-select": `#${$table} > table`,
   "hx-target": `#${$table}`,
+  "hx-trigger": "popstate from:window throttle:1s",
 };
 
 //

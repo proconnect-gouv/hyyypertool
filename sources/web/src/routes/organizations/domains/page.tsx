@@ -45,6 +45,7 @@ function Main() {
       hx-trigger={[
         `every ${context.poll_interval}s [document.visibilityState === 'visible']`,
         `visibilitychange[document.visibilityState === 'visible'] from:document`,
+        `popstate from:window throttle:1s`,
       ].join(", ")}
     >
       <h1 id={$describedby}>Liste des domaines à vérifier</h1>
