@@ -16,6 +16,7 @@ interface PageContext {
   $search: string;
   $table: string;
   hx_domains_query_props: Record<string, any>;
+  poll_interval: number;
   query: { q?: string | string[] };
   pagination: Pagination;
   count: number;
@@ -42,7 +43,7 @@ function Main() {
       {...hx_domains_query_props}
       hx-sync="this"
       hx-trigger={[
-        `every 22s [document.visibilityState === 'visible']`,
+        `every ${context.poll_interval}s [document.visibilityState === 'visible']`,
         `visibilitychange[document.visibilityState === 'visible'] from:document`,
       ].join(", ")}
     >

@@ -39,7 +39,7 @@ export default new Hono<AppContext>().use("/", jsxRenderer(Main_Layout)).get(
     consola.error(result.error);
     return redirect(urls.organizations.domains.$url().pathname);
   }),
-  async function GET({ render, set, req, var: { identite_pg } }) {
+  async function GET({ env, render, set, req, var: { identite_pg } }) {
     set("page_title", "Liste des domaines à vérifier");
 
     const { q } = req.valid("query");
@@ -58,6 +58,7 @@ export default new Hono<AppContext>().use("/", jsxRenderer(Main_Layout)).get(
         $search={domains_attrs.ids.search}
         $table={domains_attrs.ids.table}
         hx_domains_query_props={hx_domains_query_props}
+        poll_interval={env.POLL_INTERVAL}
         query={req.valid("query")}
         pagination={pagination}
         count={count}
