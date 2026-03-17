@@ -6,7 +6,7 @@ Fonctionnalité: Parcours de modération
     Quand je navigue sur la page
     Et je me connecte en tant que "moderateur@beta.gouv.fr"
     Alors je vois "Liste des moderations"
-    Et je vois "Raphael"
+    Et je vois "Richard"
 
   Scénario: Le modérateur peut rechercher une modération par email
     Quand je saisie le mot "{selectAll}is:pending email:jeanbon{enter}" dans la boîte à texte nommée "Filtrer les modérations…"
