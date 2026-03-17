@@ -7,6 +7,7 @@ Fonctionnalité: Ajouter un membre interne lors de la modération
     Quand je navigue sur la page
     Et je me connecte en tant que "moderateur@beta.gouv.fr"
     Alors je vois "Liste des moderations"
+    Quand je clique sur "Cacher les 🔓Non vérifié"
 
   Scénario: Marie est un membre interne de l'organization.
     Quand je clique sur le lien nommé "Modération non vérifié de Marie Bon pour 57206768400017"
@@ -16,13 +17,15 @@ Fonctionnalité: Ajouter un membre interne lors de la modération
     Alors je dois voir un tableau nommé "👥 0 membre connu dans l’organisation" et contenant
       |  |
     Quand je clique sur "✅ Accepter"
+    Soit je vais à l'intérieur du dialogue nommé "la modale de validation"
     Et je clique sur "Ajouter Marie à l'organisation EN TANT QU'INTERNE"
     Quand je clique sur "Terminer"
+    Et je réinitialise le contexte
 
     Alors une notification mail n'est pas envoyée
 
     Alors je vois "Liste des moderations"
-    Quand je clique sur "Voir les demandes traitées"
+    Et je saisie le mot "{selectAll}is:processed{enter}" dans la boîte à texte nommée "Filtrer les modérations…"
     Quand je clique sur le lien nommé "Modération non vérifié de Marie Bon pour 57206768400017"
 
     Quand je clique sur "👥 1 membre connu dans l’organisation"
@@ -34,7 +37,9 @@ Fonctionnalité: Ajouter un membre interne lors de la modération
     Quand je clique sur le lien nommé "Modération non vérifié de Raphael Dubigny pour 81403721400016"
 
     Quand je clique sur "✅ Accepter"
+    Soit je vais à l'intérieur du dialogue nommé "la modale de validation"
     Et je clique sur "Ajouter Raphael à l'organisation EN TANT QU'INTERNE"
     Quand je clique sur "Terminer"
+    Et je réinitialise le contexte
 
     Alors je vois "Liste des moderations"

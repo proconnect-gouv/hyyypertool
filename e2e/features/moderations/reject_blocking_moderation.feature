@@ -7,9 +7,7 @@ Fonctionnalité: Refuser une modération bloquante
     Quand je navigue sur la page
     Et je me connecte en tant que "moderateur@beta.gouv.fr"
     Alors je vois "Liste des moderations"
-    Quand je clique sur "Filtrer par jours"
-    Et je tape "2011-11-11"
-    Et je retire le focus
+    Quand je saisie le mot "{selectAll}is:pending date:2011-11-11{enter}" dans la boîte à texte nommée "Filtrer les modérations…"
     Quand je clique sur le lien nommé "Modération a traiter de Jean Bon pour 13002526500013"
     Et je dois voir le titre de page "Modération a traiter de Jean Bon pour 13002526500013"
 

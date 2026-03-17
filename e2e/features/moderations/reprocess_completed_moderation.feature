@@ -6,9 +6,7 @@ Fonctionnalité: Retraiter une modération terminée
     Quand je navigue sur la page
     Et je me connecte en tant que "moderateur@beta.gouv.fr"
     Alors je vois "Liste des moderations"
-    Et je clique sur "Voir les demandes traitées"
-    Et je clique sur "Filtrer par jours"
-    Et je tape "2011-11-12"
+    Et je saisie le mot "{selectAll}is:processed date:2011-11-12{enter}" dans la boîte à texte nommée "Filtrer les modérations…"
     Quand je clique sur le lien nommé "Modération non vérifié de Marie Bon pour 44023386400014"
     Et je dois voir le titre de page "Modération non vérifié de Marie Bon pour 44023386400014"
 

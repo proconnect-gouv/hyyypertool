@@ -2,42 +2,20 @@
 
 import { PaginationSchema } from "#src/schema";
 import { z } from "zod";
+import { parse_q } from "./parse_q";
 
 //
+
+export type { Search } from "./parse_q";
 
 export const MODERATION_TABLE_ID = "moderation_table";
 export const MODERATION_TABLE_PAGE_ID = "moderation_table_page";
 
 export const search_schema = z.object({
-  day: z
+  q: z
     .string()
-    .default("")
-    .transform((v) => {
-      if (v === "") return undefined;
-      return new Date(v);
-    }),
-  search_email: z.string().default(""),
-  search_moderated_by: z.string().default(""),
-  search_siret: z.string().default(""),
-  exclude_sp_names: z
-    .string()
-    .default("")
-    .transform((v) => (v ? v.split(",") : [])),
-  processed_requests: z
-    .string()
-    .default("false")
-    .transform((v) => v === "true"),
-  hide_non_verified_domain: z
-    .string()
-    .default("false")
-    .transform((v) => v === "true"),
-  hide_join_organization: z
-    .string()
-    .default("false")
-    .transform((v) => v === "true"),
+    .default("is:pending -type:non_verified_domain")
+    .transform(parse_q),
 });
-export type Search = z.infer<typeof search_schema>;
 
-export const query_schema = search_schema
-  .extend(PaginationSchema.shape)
-  .partial();
+export const query_schema = search_schema.extend(PaginationSchema.shape);

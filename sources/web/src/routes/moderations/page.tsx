@@ -6,11 +6,19 @@ import {
   moderation_type_to_title,
 } from "#src/lib/moderations";
 import type { Pagination } from "#src/schema";
-import { date_to_dom_string, date_to_string } from "#src/time";
+import { date_to_string } from "#src/time";
 import { badge } from "#src/ui";
 import { Foot } from "#src/ui/hx_table";
+import {
+  HideTypeCheckboxIsland,
+  ProcessedCheckboxIsland,
+  SearchBarIsland,
+  SearchDateIsland,
+  SearchEmailIsland,
+  SearchModeratedByIsland,
+  SearchSiretIsland,
+} from "#src/ui/moderations/Filter";
 import { row } from "#src/ui/table";
-import { tag } from "#src/ui/tag";
 import { urls } from "#src/urls";
 import {
   ModerationStatusSchema,
@@ -21,49 +29,34 @@ import { match } from "ts-pattern";
 import {
   MODERATION_TABLE_ID,
   MODERATION_TABLE_PAGE_ID,
-  query_schema,
   type Search,
 } from "./context";
-import { ExcludeSpNamesIsland } from "./ExcludeSpNamesIsland";
 import type { get_moderations_list } from "./get_moderations_list.query";
-import { ProcessedCheckboxIsland } from "./ProcessedCheckboxIsland";
-import { SearchEmailIsland } from "./SearchEmailIsland";
-import { SearchModeratedByIsland } from "./SearchModeratedByIsland";
-import { SearchSiretIsland } from "./SearchSiretIsland";
+import { serialize_q } from "./parse_q";
 
 //
 
 type QueryResult = Awaited<ReturnType<typeof get_moderations_list>>;
 type Moderation = QueryResult["moderations"][number];
 
-const page_query_keys = query_schema.keyof();
-
-const hx_moderations_query_props = {
+// Base HTMX props shared by poll (main) and user actions (form).
+// Only the form gets hx-replace-url — the poll must NOT update the URL
+// because it can race with user actions and clobber the URL with a stale q.
+const hx_moderations_base_props = {
   ...urls.moderations.$hx_get(),
-  "hx-include": hx_include([
-    MODERATION_TABLE_PAGE_ID,
-    page_query_keys.enum.day,
-    page_query_keys.enum.hide_join_organization,
-    page_query_keys.enum.hide_non_verified_domain,
-    page_query_keys.enum.processed_requests,
-    page_query_keys.enum.search_email,
-    page_query_keys.enum.search_moderated_by,
-    page_query_keys.enum.search_siret,
-    page_query_keys.enum.exclude_sp_names,
-  ]),
-  "hx-replace-url": true,
+  "hx-include": hx_include([MODERATION_TABLE_PAGE_ID, "q"]),
   "hx-select": `#${MODERATION_TABLE_ID} > table`,
   "hx-target": `#${MODERATION_TABLE_ID}`,
 };
 const Moderations_Context = createContext({
-  moderations_list: [] as string[],
+  moderators_list: [] as string[],
   sp_names_list: [] as string[],
   query_result: {} as QueryResult,
   pagination: {} as Pagination,
 });
 
 export function ModerationsPage({
-  moderations_list,
+  moderators_list,
   pagination,
   poll_interval,
   search,
@@ -71,7 +64,7 @@ export function ModerationsPage({
   query_result,
   nonce,
 }: {
-  moderations_list: string[];
+  moderators_list: string[];
   pagination: Pagination;
   poll_interval: number;
   search: Search;
@@ -82,7 +75,7 @@ export function ModerationsPage({
   return (
     <Moderations_Context.Provider
       value={{
-        moderations_list,
+        moderators_list,
         sp_names_list,
         pagination,
         query_result,
@@ -105,148 +98,101 @@ function Main({
   poll_interval: number;
 }) {
   return (
-    <main
-      class="fr-container my-12"
-      {...hx_moderations_query_props}
-      hx-sync="this:abort"
-      hx-trigger={[
-        `every ${poll_interval}s [document.visibilityState === 'visible'] throttle:1s`,
-        `visibilitychange[document.visibilityState === 'visible'] from:document throttle:1s`,
-        `popstate from:window throttle:1s`,
-      ].join(", ")}
-    >
+    <main class="fr-container my-12">
       <h1>Liste des moderations</h1>
-      <Filter search={search} nonce={nonce} />
+      <Filter search={search} nonce={nonce} poll_interval={poll_interval} />
       <Table />
     </main>
   );
 }
 
-function Filter({ search, nonce }: { search: Search; nonce?: string }) {
-  const { moderations_list, sp_names_list } = useContext(Moderations_Context);
+function Filter({
+  search,
+  nonce,
+  poll_interval,
+}: {
+  search: Search;
+  nonce?: string;
+  poll_interval: number;
+}) {
+  const { moderators_list, sp_names_list } = useContext(Moderations_Context);
   return (
     <form
-      {...hx_moderations_query_props}
+      {...hx_moderations_base_props}
+      hx-replace-url="true"
+      hx-sync="this:abort"
       hx-trigger={[
-        `input from:#${page_query_keys.enum.day}`,
-        `input from:#${page_query_keys.enum.hide_join_organization}`,
-        `input from:#${page_query_keys.enum.hide_non_verified_domain}`,
-        `input from:#${page_query_keys.enum.processed_requests}`,
-        `keyup changed delay:500ms from:#${page_query_keys.enum.search_email}`,
-        `change from:#${page_query_keys.enum.search_moderated_by}`,
-        `keyup changed delay:500ms from:#${page_query_keys.enum.search_siret}`,
-        `change from:#${page_query_keys.enum.exclude_sp_names}`,
+        "change from:#q",
+        `every ${poll_interval}s [document.visibilityState === 'visible'] throttle:1s`,
+        `visibilitychange[document.visibilityState === 'visible'] from:document throttle:1s`,
+        `popstate from:window throttle:1s`,
       ].join(", ")}
-      hx-vals={JSON.stringify({ page: 1 } as Pagination)}
     >
-      <div className="grid grid-cols-2 gap-6">
+      <SearchBarIsland
+        nonce={nonce}
+        initialQ={serialize_q(search)}
+        moderators_list={moderators_list}
+        sp_names_list={sp_names_list}
+      />
+      <div class="mt-4 grid grid-cols-2 gap-6">
         <div class="fr-input-group">
-          <label class="fr-label" for={page_query_keys.enum.search_email}>
+          <label class="fr-label" for="filter-email">
             Email
           </label>
-          <SearchEmailIsland
-            id={page_query_keys.enum.search_email}
-            name={page_query_keys.enum.search_email}
-            nonce={nonce}
-            placeholder="Recherche par Email"
-            initialValue={search.search_email}
-          />
+          <SearchEmailIsland nonce={nonce} placeholder="Recherche par Email" />
         </div>
         <div class="fr-input-group">
-          <label class="fr-label" for={page_query_keys.enum.search_siret}>
+          <label class="fr-label" for="filter-siret">
             Siret
           </label>
-          <SearchSiretIsland
-            id={page_query_keys.enum.search_siret}
-            name={page_query_keys.enum.search_siret}
-            nonce={nonce}
-            placeholder="Recherche par SIRET"
-            initialValue={search.search_siret}
-          />
+          <SearchSiretIsland nonce={nonce} placeholder="Recherche par SIRET" />
         </div>
       </div>
       <ul class="fr-tags-group">
         <li>
-          <ProcessedCheckboxIsland
+          <ProcessedCheckboxIsland nonce={nonce} />
+        </li>
+        <li>
+          <HideTypeCheckboxIsland
             nonce={nonce}
-            id={page_query_keys.enum.processed_requests}
-            name={page_query_keys.enum.processed_requests}
-            value="true"
-            initialChecked={search.processed_requests}
+            qualifier="non_verified_domain"
+            label={`Cacher les ${moderation_type_to_emoji("non_verified_domain")}${moderation_type_to_title("non_verified_domain")}`}
           />
         </li>
         <li>
-          <label class={tag()}>
-            <input
-              checked={search.hide_non_verified_domain}
-              hidden
-              id={page_query_keys.enum.hide_non_verified_domain}
-              name={page_query_keys.enum.hide_non_verified_domain}
-              type="checkbox"
-              value={"true"}
-            />
-            Cacher les {moderation_type_to_title("non_verified_domain")}
-          </label>
-        </li>
-        <li>
-          <label class={tag()}>
-            <input
-              checked={search.hide_join_organization}
-              hidden
-              id={page_query_keys.enum.hide_join_organization}
-              name={page_query_keys.enum.hide_join_organization}
-              type="checkbox"
-              value={"true"}
-            />
-            Cacher les {moderation_type_to_title("organization_join_block")}
-          </label>
+          <HideTypeCheckboxIsland
+            nonce={nonce}
+            qualifier="organization_join_block"
+            label={`Cacher les ${moderation_type_to_emoji("organization_join_block")}${moderation_type_to_title("organization_join_block")}`}
+          />
         </li>
       </ul>
+
       <div class="fr-fieldset__element">
         <div class="fr-input-group">
-          <label class="fr-label" for={page_query_keys.enum.day}>
+          <label class="fr-label" for="filter-moderated-by">
             Filtrer par jours
           </label>
-          <input
-            class="fr-input"
-            id={page_query_keys.enum.day}
-            max={date_to_dom_string(new Date())}
-            name={page_query_keys.enum.day}
-            type="date"
-            value={date_to_dom_string(search.day)}
-          />
+          <SearchDateIsland nonce={nonce} />
         </div>
       </div>
+
       <div class="fr-fieldset__element">
         <div class="fr-input-group">
-          <label
-            class="fr-label"
-            for={page_query_keys.enum.search_moderated_by}
-          >
+          <label class="fr-label" for="filter-moderated-by">
             Filtrer par modérateur
           </label>
           <SearchModeratedByIsland
-            id={page_query_keys.enum.search_moderated_by}
-            name={page_query_keys.enum.search_moderated_by}
             nonce={nonce}
-            initialValue={search.search_moderated_by}
-            moderations_list={moderations_list}
+            moderators_list={moderators_list}
           />
         </div>
       </div>
+
       <div class="fr-fieldset__element">
-        <div class="fr-input-group">
-          <label class="fr-label" for={page_query_keys.enum.exclude_sp_names}>
-            Exclure des fournisseurs de service
-          </label>
-          <ExcludeSpNamesIsland
-            id={page_query_keys.enum.exclude_sp_names}
-            name={page_query_keys.enum.exclude_sp_names}
-            nonce={nonce}
-            sp_names_list={sp_names_list}
-            initialValue={search.exclude_sp_names.join(",")}
-          />
-        </div>
+        <a class="fr-btn" href={urls.moderations.$url().pathname}>
+          Réinitialiser la recherche, les filtres et les tris
+        </a>
       </div>
     </form>
   );
@@ -277,9 +223,12 @@ async function Table() {
         </tbody>
         <Foot
           count={count}
-          hx_query_props={hx_moderations_query_props}
+          hx_query_props={{
+            ...hx_moderations_base_props,
+            "hx-replace-url": true,
+          }}
           id={MODERATION_TABLE_PAGE_ID}
-          name={page_query_keys.enum.page}
+          name="page"
           pagination={pagination}
         />
       </table>

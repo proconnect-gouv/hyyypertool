@@ -9,21 +9,11 @@ Fonctionnalité: Filtrer les modérations par fournisseur de service
 
   Scénario: Exclure un fournisseur de service masque les modérations associées
     Alors je dois voir un élément ayant pour aria-label "Modération a traiter de Jean Bon pour 13002526500013"
-    Quand je clique sur le bouton "Fournisseur de service"
-    Et je clique sur l'élément nommé "Exclure Annuaire des entreprises"
-    Quand je clique sur le bouton "Fournisseur de service"
+    Quand je saisie le mot "{selectAll}is:pending -service:\"Annuaire des entreprises\"{enter}" dans la boîte à texte nommée "Filtrer les modérations…"
     Alors je ne dois pas voir un élément ayant pour aria-label "Modération a traiter de Jean Bon pour 13002526500013"
 
   Scénario: Retirer un filtre réaffiche les modérations exclues
-    Quand je clique sur le bouton "Fournisseur de service"
-    Et je clique sur l'élément nommé "Exclure Annuaire des entreprises"
-    Quand je clique sur le bouton "Fournisseur de service"
+    Quand je saisie le mot "{selectAll}is:pending -service:\"Annuaire des entreprises\"{enter}" dans la boîte à texte nommée "Filtrer les modérations…"
     Alors je ne dois pas voir un élément ayant pour aria-label "Modération a traiter de Jean Bon pour 13002526500013"
-    Quand je clique sur l'élément nommé "Retirer Annuaire des entreprises"
+    Quand je saisie le mot "{selectAll}is:pending{enter}" dans la boîte à texte nommée "Filtrer les modérations…"
     Alors je dois voir un élément ayant pour aria-label "Modération a traiter de Jean Bon pour 13002526500013"
-
-  Scénario: Exclure les modérations sans fournisseur de service
-    Quand je clique sur le bouton "Fournisseur de service"
-    Et je clique sur l'élément nommé "Exclure Sans service"
-    Quand je clique sur le bouton "Fournisseur de service"
-    Alors je vois "Annuaire des entreprises"

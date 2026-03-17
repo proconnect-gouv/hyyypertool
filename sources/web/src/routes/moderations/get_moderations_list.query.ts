@@ -37,11 +37,15 @@ export async function get_moderations_list(
     day: created_at,
     search_email: email,
     search_moderated_by: moderated_by,
+    exclude_email,
+    exclude_moderated_by,
+    exclude_siret,
     exclude_sp_names,
     hide_join_organization,
     hide_non_verified_domain,
     processed_requests: show_archived,
     search_siret: siret,
+    search_text,
   } = search;
 
   const where = and(
@@ -49,6 +53,23 @@ export async function get_moderations_list(
     ilike(schema.users.email, `%${email ?? ""}%`),
     moderated_by
       ? ilike(schema.moderations.moderated_by, `%${moderated_by}%`)
+      : undefined,
+    exclude_email
+      ? not(ilike(schema.users.email, `%${exclude_email}%`))
+      : undefined,
+    exclude_siret
+      ? not(ilike(schema.organizations.siret, `%${exclude_siret}%`))
+      : undefined,
+    exclude_moderated_by
+      ? not(ilike(schema.moderations.moderated_by, `%${exclude_moderated_by}%`))
+      : undefined,
+    search_text
+      ? or(
+          ilike(schema.users.email, `%${search_text}%`),
+          ilike(schema.organizations.siret, `%${search_text}%`),
+          ilike(schema.users.family_name, `%${search_text}%`),
+          ilike(schema.users.given_name, `%${search_text}%`),
+        )
       : undefined,
     exclude_sp_names?.length
       ? and(
@@ -68,7 +89,11 @@ export async function get_moderations_list(
             : undefined,
         )
       : undefined,
-    show_archived ? undefined : isNull(schema.moderations.moderated_at),
+    show_archived === true
+      ? isNotNull(schema.moderations.moderated_at)
+      : show_archived === false
+        ? isNull(schema.moderations.moderated_at)
+        : undefined,
     hide_non_verified_domain
       ? not(eq(schema.moderations.type, "non_verified_domain"))
       : undefined,

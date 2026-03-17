@@ -27,13 +27,12 @@ Fonctionnalité: Validation automatique des modérations similaires
 
     Quand je clique sur "Moderations"
     Alors je dois voir le titre de page "Liste des moderations"
-    Et je clique sur "Voir les demandes traitées"
+    Et je saisie le mot "{selectAll}is:processed{enter}" dans la boîte à texte nommée "Filtrer les modérations…"
 
     Et je ne vois pas "Jean Bon"
     Et je ne vois pas "Jean Dré"
 
-    Quand je clique sur "Siret"
-    Et je tape "51935970700022"
+    Et je saisie le mot "{selectAll}is:processed siret:51935970700022{enter}" dans la boîte à texte nommée "Filtrer les modérations…"
     Quand je clique sur le lien nommé "Modération a traiter de Jean Dré pour 51935970700022"
     Alors je dois voir le titre de page "Modération a traiter de Jean Dré pour 51935970700022"
     Alors je vois "Validation automatique - <cause>"

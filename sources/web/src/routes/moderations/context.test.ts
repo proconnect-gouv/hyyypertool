@@ -5,23 +5,29 @@ import { search_schema } from "./context";
 
 //
 
-test("SearchSchema > empty object", () => {
-  const search = search_schema.parse({});
+test("SearchSchema > empty object (default q=is:pending -type:non_verified_domain)", () => {
+  const { q: search } = search_schema.parse({});
 
   expect(search).toEqual({
     day: undefined,
     hide_join_organization: false,
-    hide_non_verified_domain: false,
+    hide_non_verified_domain: true,
     processed_requests: false,
     search_email: "",
     search_moderated_by: "",
     search_siret: "",
+    exclude_email: "",
+    exclude_moderated_by: "",
+    exclude_siret: "",
     exclude_sp_names: [],
+    search_text: "",
   });
 });
 
-test("SearchSchema > day 2011-01-11", () => {
-  const search = search_schema.parse({ day: "2011-01-11" });
+test("SearchSchema > q with date", () => {
+  const { q: search } = search_schema.parse({
+    q: "is:pending date:2011-01-11",
+  });
 
   expect(search).toEqual({
     day: new Date("2011-01-11"),
@@ -31,6 +37,10 @@ test("SearchSchema > day 2011-01-11", () => {
     search_email: "",
     search_moderated_by: "",
     search_siret: "",
+    exclude_email: "",
+    exclude_moderated_by: "",
+    exclude_siret: "",
     exclude_sp_names: [],
+    search_text: "",
   });
 });
