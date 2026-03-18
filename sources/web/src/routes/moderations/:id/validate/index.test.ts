@@ -107,7 +107,7 @@ test.each(cases)(
       created_at: "2222-11-10 00:00:00+00",
       id: 1,
       moderated_at: "2222-11-11 00:00:00+00",
-      moderated_by: " <admin@example.com>",
+      moderated_by: "admin@example.com",
       organization_id: 1,
       sp_name: null,
       status: "accepted",

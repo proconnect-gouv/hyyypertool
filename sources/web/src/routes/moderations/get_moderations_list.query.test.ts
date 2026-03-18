@@ -280,6 +280,69 @@ test("filters by moderated_by search", async () => {
   `);
 });
 
+test("excludes moderations by service name", async () => {
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+
+  await create_adora_pony_moderation(pg, { type: "", sp_name: "App1" });
+  await create_adora_pony_moderation(pg, { type: "", sp_name: "App2" });
+  await create_adora_pony_moderation(pg, { type: "", sp_name: null });
+
+  const result = await get_moderations_list(pg, {
+    search: { exclude_sp_names: ["App1"] },
+  });
+
+  expect(result.count).toBe(2);
+  expect(result.moderations.map((m) => m.sp_name)).toEqual([null, "App2"]);
+});
+
+test("excludes multiple services by name", async () => {
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+
+  await create_adora_pony_moderation(pg, { type: "", sp_name: "App1" });
+  await create_adora_pony_moderation(pg, { type: "", sp_name: "App2" });
+  await create_adora_pony_moderation(pg, { type: "", sp_name: "App3" });
+
+  const result = await get_moderations_list(pg, {
+    search: { exclude_sp_names: ["App1", "App2"] },
+  });
+
+  expect(result.count).toBe(1);
+  expect(result.moderations.at(0)?.sp_name).toBe("App3");
+});
+
+test("excludes moderations without a service name", async () => {
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+
+  await create_adora_pony_moderation(pg, { type: "", sp_name: "App1" });
+  await create_adora_pony_moderation(pg, { type: "", sp_name: null });
+
+  const result = await get_moderations_list(pg, {
+    search: { exclude_sp_names: [""] },
+  });
+
+  expect(result.count).toBe(1);
+  expect(result.moderations.at(0)?.sp_name).toBe("App1");
+});
+
+test("excludes both named services and null service names", async () => {
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+
+  await create_adora_pony_moderation(pg, { type: "", sp_name: "App1" });
+  await create_adora_pony_moderation(pg, { type: "", sp_name: "App2" });
+  await create_adora_pony_moderation(pg, { type: "", sp_name: null });
+
+  const result = await get_moderations_list(pg, {
+    search: { exclude_sp_names: ["", "App1"] },
+  });
+
+  expect(result.count).toBe(1);
+  expect(result.moderations.at(0)?.sp_name).toBe("App2");
+});
+
 test("supports pagination", async () => {
   await create_unicorn_organization(pg);
   await create_adora_pony_user(pg);

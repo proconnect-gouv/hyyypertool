@@ -9,6 +9,8 @@ import {
 
 export const text = signal("");
 export const parsed = computed(() => parse_q(text.value));
+export const submitted = signal("");
+export const dirty = computed(() => text.value !== submitted.value);
 
 //
 
@@ -25,6 +27,10 @@ export function dispatch_change() {
   ) as HTMLInputElement | null;
   if (page_el) page_el.value = "1";
   el.dispatchEvent(new Event("change", { bubbles: true }));
+}
+
+export function settle() {
+  submitted.value = text.value;
 }
 
 export function schedule_change() {

@@ -130,7 +130,7 @@ function Filter({
     >
       <SearchBarIsland
         nonce={nonce}
-        initialQ={serialize_q(search)}
+        initial_q={serialize_q(search)}
         moderators_list={moderators_list}
         sp_names_list={sp_names_list}
       />

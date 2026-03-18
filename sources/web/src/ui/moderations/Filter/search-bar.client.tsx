@@ -2,219 +2,116 @@
 
 import { effect, signal } from "@preact/signals";
 import { useEffect, useRef } from "preact/hooks";
-import { flush_change, schedule_change, text } from "./q-signal.client";
+import {
+  dirty,
+  flush_change,
+  settle,
+  submitted,
+  text,
+} from "./q-signal.client";
+import {
+  type Suggestion,
+  get_suggestions,
+  get_token_at_cursor,
+  replace_token_at_cursor,
+} from "./search-bar";
 
 //
 
 export interface SearchBarProps extends Record<string, unknown> {
-  initialQ: string;
+  initial_q: string;
   moderators_list: string[];
   sp_names_list: string[];
 }
-
-interface Suggestion {
-  label: string;
-  hint?: string;
-  insert: string;
-  /** If true, selecting this just inserts the qualifier prefix and keeps the dropdown open */
-  is_category?: boolean;
-}
-
-const NO_SERVICE_LABEL = "(sans service)";
 
 //
 
 const dropdown_open = signal(false);
 const selected_index = signal(0);
-
-function get_last_token(value: string): string {
-  const parts = value.split(" ");
-  return parts[parts.length - 1] ?? "";
-}
-
-function replace_last_token(value: string, replacement: string): string {
-  const parts = value.split(" ");
-  parts[parts.length - 1] = replacement;
-  return parts.join(" ");
-}
-
-//
-
-const CATEGORIES: Suggestion[] = [
-  // {
-  //   label: "Filtrer par statut",
-  //   hint: "is:",
-  //   insert: "is:",
-  //   is_category: true,
-  // },
-  // {
-  //   label: "Filtrer par email",
-  //   hint: "email:",
-  //   insert: "email:",
-  //   is_category: true,
-  // },
-  // {
-  //   label: "Filtrer par SIRET",
-  //   hint: "siret:",
-  //   insert: "siret:",
-  //   is_category: true,
-  // },
-  // {
-  //   label: "Filtrer par date",
-  //   hint: "date:",
-  //   insert: "date:",
-  //   is_category: true,
-  // },
-  // { label: "Modéré par", hint: "by:", insert: "by:", is_category: true },
-  // {
-  //   label: "Exclure un type",
-  //   hint: "-type:",
-  //   insert: "-type:",
-  //   is_category: true,
-  // },
-  // {
-  //   label: "Exclure un service",
-  //   hint: "-service:",
-  //   insert: "-service:",
-  //   is_category: true,
-  // },
-  // { label: "Demandes en attente", hint: "", insert: "is:pending" },
-  // { label: "Demandes traitées", hint: "", insert: "is:processed" },
-  // {
-  //   label: "Cacher les Non vérifié",
-  //   hint: "",
-  //   insert: "-type:non_verified_domain",
-  // },
-  // {
-  //   label: "Cacher les A traiter",
-  //   hint: "",
-  //   insert: "-type:organization_join_block",
-  // },
-];
-
-function get_suggestions(
-  last_token: string,
-  moderators_list: string[],
-  sp_names_list: string[],
-): Suggestion[] {
-  if (!last_token) return CATEGORIES;
-
-  const qual_match = /^(-?\w+):(.*)$/.exec(last_token);
-  if (qual_match) {
-    const qualifier = qual_match[1]! + ":";
-    const partial = qual_match[2]!.toLowerCase();
-    return get_value_suggestions(
-      qualifier,
-      partial,
-      moderators_list,
-      sp_names_list,
-    );
-  }
-
-  // Fuzzy match on category labels and hints
-  const lower = last_token.toLowerCase();
-  return CATEGORIES.filter(
-    (c) =>
-      c.label.toLowerCase().includes(lower) ||
-      c.hint?.toLowerCase().includes(lower) ||
-      c.insert.toLowerCase().includes(lower),
-  );
-}
-
-function get_value_suggestions(
-  qualifier: string,
-  partial: string,
-  moderators_list: string[],
-  sp_names_list: string[],
-): Suggestion[] {
-  switch (qualifier) {
-    case "is:":
-      return [
-        { label: "En attente", hint: "pending", insert: "is:pending" },
-        { label: "Traitées", hint: "processed", insert: "is:processed" },
-      ].filter(
-        (s) =>
-          s.hint!.includes(partial) || s.label.toLowerCase().includes(partial),
-      );
-
-    case "-type:":
-      return [
-        {
-          label: "Non vérifié",
-          hint: "non_verified_domain",
-          insert: "-type:non_verified_domain",
-        },
-        {
-          label: "A traiter",
-          hint: "organization_join_block",
-          insert: "-type:organization_join_block",
-        },
-      ].filter(
-        (s) =>
-          s.hint!.includes(partial) || s.label.toLowerCase().includes(partial),
-      );
-
-    case "by:":
-      return moderators_list
-        .filter((m) => m.toLowerCase().includes(partial))
-        .map((m) => ({ label: m, insert: `by:${m}` }));
-
-    case "-service:":
-      return sp_names_list
-        .filter((s) => (s || NO_SERVICE_LABEL).toLowerCase().includes(partial))
-        .map((s) => ({
-          label: s || NO_SERVICE_LABEL,
-          insert: `-service:${s || '""'}`,
-        }));
-
-    default:
-      return [];
-  }
-}
+const cursor_position = signal(0);
 
 //
 
 export function SearchBar({
-  initialQ,
+  initial_q,
   moderators_list,
   sp_names_list,
 }: SearchBarProps) {
   const input_ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    text.value = initialQ;
+    text.value = initial_q;
+    submitted.value = initial_q;
 
     // Sync text signal → #q DOM value imperatively.
     // Runs synchronously on every signal change, so the DOM value
     // is always up-to-date before HTMX reads it via hx-include.
-    return effect(() => {
+    const dispose = effect(() => {
       if (input_ref.current) input_ref.current.value = text.value;
     });
+
+    // Reset dirty state only after HTMX response settles.
+    document.addEventListener("htmx:afterSettle", settle);
+
+    return () => {
+      dispose();
+      document.removeEventListener("htmx:afterSettle", settle);
+    };
   }, []);
 
-  const last_token = get_last_token(text.value);
+  const current_token = get_token_at_cursor(
+    text.value,
+    cursor_position.value,
+  ).text;
   const suggestions = get_suggestions(
-    last_token,
+    current_token,
     moderators_list,
     sp_names_list,
   );
 
   const accept_suggestion = (suggestion: Suggestion) => {
-    text.value = replace_last_token(text.value, suggestion.insert);
+    const { text: new_text, cursor: new_cursor } = replace_token_at_cursor(
+      text.value,
+      cursor_position.value,
+      suggestion.insert,
+    );
+    text.value = new_text;
     selected_index.value = 0;
-    input_ref.current?.focus();
 
     if (suggestion.is_category) {
+      cursor_position.value = new_cursor;
       dropdown_open.value = true;
     } else {
-      text.value = text.value + " ";
+      // Add a trailing space after the inserted token
+      const with_space =
+        new_text.slice(0, new_cursor) +
+        (new_text[new_cursor] === " " ? "" : " ") +
+        new_text.slice(new_cursor);
+      text.value = with_space;
+      cursor_position.value = new_cursor + 1;
       dropdown_open.value = false;
-      schedule_change();
     }
+
+    // Restore focus and set cursor position
+    requestAnimationFrame(() => {
+      if (input_ref.current) {
+        input_ref.current.focus();
+        input_ref.current.setSelectionRange(
+          cursor_position.value,
+          cursor_position.value,
+        );
+      }
+    });
+  };
+
+  const submit = () => {
+    dropdown_open.value = false;
+    flush_change();
   };
 
   const on_keydown = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
+      e.preventDefault();
       dropdown_open.value = false;
       return;
     }
@@ -237,10 +134,11 @@ export function SearchBar({
     if (e.key === "Enter") {
       e.preventDefault();
       if (dropdown_open.value && suggestions.length > 0) {
-        accept_suggestion(suggestions[selected_index.value]!);
+        const suggestion = suggestions[selected_index.value]!;
+        accept_suggestion(suggestion);
+        if (!suggestion.is_category) submit();
       } else {
-        dropdown_open.value = false;
-        flush_change();
+        submit();
       }
       return;
     }
@@ -248,13 +146,13 @@ export function SearchBar({
 
   return (
     <div class="fr-input-group">
-      <label class="fr-label" for="filter-email">
+      <label class="fr-label" for="q">
         Hyyyper Filter
       </label>
-      <div class="relative">
+      <div class="relative flex">
         <input
           autocomplete="off"
-          class="fr-input w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+          class="fr-input w-full rounded-r-none border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
           id="q"
           name="q"
           placeholder="Filtrer les modérations…"
@@ -262,10 +160,17 @@ export function SearchBar({
           type="search"
           value={text.value}
           onInput={(e) => {
-            text.value = (e.target as HTMLInputElement).value;
+            const el = e.target as HTMLInputElement;
+            text.value = el.value;
+            cursor_position.value = el.selectionStart ?? el.value.length;
             dropdown_open.value = true;
             selected_index.value = 0;
-            schedule_change();
+          }}
+          onClick={(e) => {
+            const el = e.target as HTMLInputElement;
+            cursor_position.value = el.selectionStart ?? el.value.length;
+            dropdown_open.value = true;
+            selected_index.value = 0;
           }}
           onFocus={() => {
             dropdown_open.value = true;
@@ -275,7 +180,16 @@ export function SearchBar({
             setTimeout(() => (dropdown_open.value = false), 200);
           }}
           onKeyDown={on_keydown}
+          spellcheck={false}
         />
+        <button
+          class={`fr-btn rounded-l-none ${dirty.value ? "" : "fr-btn--secondary"}`}
+          type="button"
+          title="Rechercher"
+          onClick={submit}
+        >
+          Rechercher
+        </button>
 
         {dropdown_open.value && suggestions.length > 0 && (
           <ul
