@@ -45,7 +45,7 @@ describe("parsed", () => {
     expect(parsed.value.search_email).toBe("");
     expect(parsed.value.search_siret).toBe("");
     expect(parsed.value.processed_requests).toBeUndefined();
-    expect(parsed.value.hide_non_verified_domain).toBe(false);
+    expect(parsed.value.exclude_types).toEqual([]);
   });
 
   test("recomputes when text changes", () => {

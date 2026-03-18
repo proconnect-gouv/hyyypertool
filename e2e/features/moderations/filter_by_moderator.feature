@@ -11,3 +11,8 @@ Fonctionnalité: Filtrer les modérations par modérateur
     Et je ne vois pas "44023386400014"
     Quand je saisie le mot "{selectAll}by:moderateur@beta.gouv.fr{enter}" dans la boîte à texte nommée "Filtrer les modérations…"
     Alors je vois "44023386400014"
+
+  Scénario: Filtrer par un autre modérateur affiche ses modérations
+    Et je ne dois pas voir un élément ayant pour aria-label "Modération non vérifié de Raphael Dubigny pour 13002526500013"
+    Quand je saisie le mot "{selectAll}by:admin@beta.gouv.fr{enter}" dans la boîte à texte nommée "Filtrer les modérations…"
+    Alors je dois voir un élément ayant pour aria-label "Modération non vérifié de Raphael Dubigny pour 13002526500013"

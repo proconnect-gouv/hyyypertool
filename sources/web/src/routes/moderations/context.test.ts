@@ -10,8 +10,7 @@ test("SearchSchema > empty object (default q=is:pending -type:non_verified_domai
 
   expect(search).toEqual({
     day: undefined,
-    hide_join_organization: false,
-    hide_non_verified_domain: true,
+    exclude_day: undefined,
     processed_requests: false,
     search_email: "",
     search_moderated_by: "",
@@ -20,7 +19,10 @@ test("SearchSchema > empty object (default q=is:pending -type:non_verified_domai
     exclude_moderated_by: "",
     exclude_siret: "",
     exclude_sp_names: [],
+    exclude_types: ["non_verified_domain"],
     search_text: "",
+    search_type: "",
+    sp_names: [],
   });
 });
 
@@ -31,8 +33,7 @@ test("SearchSchema > q with date", () => {
 
   expect(search).toEqual({
     day: new Date("2011-01-11"),
-    hide_join_organization: false,
-    hide_non_verified_domain: false,
+    exclude_day: undefined,
     processed_requests: false,
     search_email: "",
     search_moderated_by: "",
@@ -41,6 +42,9 @@ test("SearchSchema > q with date", () => {
     exclude_moderated_by: "",
     exclude_siret: "",
     exclude_sp_names: [],
+    exclude_types: [],
     search_text: "",
+    search_type: "",
+    sp_names: [],
   });
 });

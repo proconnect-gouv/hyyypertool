@@ -252,6 +252,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
       comment:
         '1687445474000 moderateur@beta.gouv.fr | Rejeté par moderateur@beta.gouv.fr | Raison : "Domaine non autorisé"',
       moderated_at: "2023-06-22T16:34:34+02:00",
+      moderated_by: "admin@beta.gouv.fr",
       organization_id: dinum.id,
       sp_name: "MonAideCyber",
       status: "rejected",

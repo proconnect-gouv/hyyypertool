@@ -1,6 +1,5 @@
 //
 
-import { z_username } from "#src/schema";
 import {
   append_comment,
   comment_type_to_status,
@@ -16,12 +15,11 @@ export function build_moderation_update({
   type,
 }: {
   comment: string | null;
-  userinfo: { email: string; given_name: string; usual_name: string };
+  userinfo: { email: string };
   reason: string;
   type: CommentMeta["type"];
 }) {
-  const username = z_username.parse(userinfo);
-  const moderated_by = `${username} <${userinfo.email}>`;
+  const moderated_by = userinfo.email;
 
   return {
     comment: append_comment(comment, {

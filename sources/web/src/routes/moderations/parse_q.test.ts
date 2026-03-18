@@ -38,12 +38,12 @@ describe("parse_q", () => {
 
   test("parses -type:non_verified_domain", () => {
     const result = parse_q("-type:non_verified_domain");
-    expect(result.hide_non_verified_domain).toBe(true);
+    expect(result.exclude_types).toContain("non_verified_domain");
   });
 
   test("parses -type:organization_join_block", () => {
     const result = parse_q("-type:organization_join_block");
-    expect(result.hide_join_organization).toBe(true);
+    expect(result.exclude_types).toContain("organization_join_block");
   });
 
   test("parses multiple -service tokens", () => {
@@ -90,7 +90,7 @@ describe("parse_q", () => {
     );
     expect(result.processed_requests).toBe(false);
     expect(result.search_email).toBe("foo@bar.com");
-    expect(result.hide_non_verified_domain).toBe(true);
+    expect(result.exclude_types).toContain("non_verified_domain");
     expect(result.exclude_sp_names).toEqual(["App1", "App2"]);
     expect(result.day).toEqual(new Date("2026-03-14"));
     expect(result.search_moderated_by).toBe("admin@gov.fr");
@@ -105,6 +105,22 @@ describe("parse_q", () => {
   test("handles empty string for exclude_sp_names (sans service)", () => {
     const result = parse_q('-service:""');
     expect(result.exclude_sp_names).toEqual([""]);
+  });
+
+  test("parses -is:pending as processed_requests true", () => {
+    const result = parse_q("-is:pending");
+    expect(result.processed_requests).toBe(true);
+  });
+
+  test("parses -is:processed as processed_requests false", () => {
+    const result = parse_q("-is:processed");
+    expect(result.processed_requests).toBe(false);
+  });
+
+  test("parses -date qualifier as exclude_day", () => {
+    const result = parse_q("-date:2026-03-14");
+    expect(result.exclude_day).toEqual(new Date("2026-03-14"));
+    expect(result.day).toBeUndefined();
   });
 });
 
@@ -159,9 +175,7 @@ describe("roundtrip", () => {
     expect(reparsed.processed_requests).toBe(search.processed_requests);
     expect(reparsed.search_email).toBe(search.search_email);
     expect(reparsed.search_siret).toBe(search.search_siret);
-    expect(reparsed.hide_non_verified_domain).toBe(
-      search.hide_non_verified_domain,
-    );
+    expect(reparsed.exclude_types).toEqual(search.exclude_types);
     expect(reparsed.exclude_sp_names).toEqual(search.exclude_sp_names);
   });
 

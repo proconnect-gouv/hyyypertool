@@ -8,10 +8,7 @@ export interface HideTypeCheckboxProps extends Record<string, unknown> {
 }
 
 export function HideTypeCheckbox({ qualifier, label }: HideTypeCheckboxProps) {
-  const is_checked =
-    qualifier === "non_verified_domain"
-      ? parsed.value.hide_non_verified_domain
-      : parsed.value.hide_join_organization;
+  const is_checked = parsed.value.exclude_types.includes(qualifier);
 
   return (
     <label class="fr-tag m-1 bg-(--background-action-low-blue-france) has-checked:bg-(--blue-france-sun-113-625) has-checked:text-white">
@@ -21,10 +18,11 @@ export function HideTypeCheckbox({ qualifier, label }: HideTypeCheckboxProps) {
         type="checkbox"
         onChange={(e) => {
           update_q((s) => {
-            if (qualifier === "non_verified_domain") {
-              s.hide_non_verified_domain = e.currentTarget.checked;
+            if (e.currentTarget.checked) {
+              if (!s.exclude_types.includes(qualifier))
+                s.exclude_types.push(qualifier);
             } else {
-              s.hide_join_organization = e.currentTarget.checked;
+              s.exclude_types = s.exclude_types.filter((t) => t !== qualifier);
             }
           }, true);
         }}

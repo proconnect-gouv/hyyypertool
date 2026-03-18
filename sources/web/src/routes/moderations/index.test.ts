@@ -154,6 +154,29 @@ test("GET /moderations?q=email:nonexistent returns no moderations", async () => 
   expect(response.status).toBe(200);
 });
 
+test("GET /moderations?q=type:non_verified_domain shows only that type", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+  const nvd_id = await create_adora_pony_moderation(pg, {
+    type: "non_verified_domain",
+  });
+  const ojb_id = await create_adora_pony_moderation(pg, {
+    type: "organization_join_block",
+  });
+
+  const response = await create_test_app(moderator).request(
+    "/?q=type:non_verified_domain",
+    undefined,
+    {},
+  );
+
+  const html = await response.text();
+  expect(html).toContain(`/moderations/${nvd_id}`);
+  expect(html).not.toContain(`/moderations/${ojb_id}`);
+  expect(response.status).toBe(200);
+});
+
 test("GET /moderations?q=is:pending shows only pending moderations", async () => {
   const moderator = await insert_moderateur(hyyyper_pglite);
   await create_unicorn_organization(pg);
