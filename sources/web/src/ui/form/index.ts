@@ -1,6 +1,7 @@
 //
 
 import { tv } from "tailwind-variants";
+import { button } from "../button";
 
 //
 
@@ -20,10 +21,10 @@ import { tv } from "tailwind-variants";
  * ```
  */
 export const fieldset = tv({
-  base: "relative flex flex-row flex-wrap items-baseline m-0 p-0 border-0",
+  base: "relative m-0 flex flex-row flex-wrap items-baseline border-0 p-0",
   slots: {
-    legend: "w-full pb-4 text-base leading-6 font-normal",
-    element: "flex-[1_1_100%] max-w-full px-2 mb-4",
+    legend: "text-grey-850 w-full pb-4 text-base leading-6 font-bold",
+    element: "mb-4 max-w-full flex-[1_1_100%] px-2",
   },
   variants: {
     inline: {
@@ -34,20 +35,73 @@ export const fieldset = tv({
   },
 });
 
+// Mirrors DSFR fr-input:
+//   - grey background (--background-contrast-grey)
+//   - bottom-only box-shadow instead of a full border (inset 0 -2px)
+//   - top corners rounded only (rounded-t = 0.25rem 0.25rem 0 0)
+//   - italic placeholder in mention-grey (#666)
+//   - intent variants for error/valid states (fr-input-group--error / --valid)
 export const input = tv({
-  base: "block w-full px-4 py-2 border border-grey-200 text-base focus:border-blue-france focus:outline-none",
+  base: `
+    text-grey-850
+    bg-background-contrast-grey
+    hover:bg-background-contrast-grey-hover
+    focus:outline-blue-france
+    disabled:text-grey-425
+    placeholder:text-grey-625
+    block
+    w-full
+    rounded-t
+    px-4
+    py-2
+    text-base
+    leading-6
+    shadow-[inset_0_-2px_0_0_var(--color-grey-950)]
+    placeholder:italic
+    focus:outline-2
+    focus:outline-offset-2
+    disabled:shadow-[inset_0_-2px_0_0_var(--color-grey-425)]
+  `,
+  variants: {
+    intent: {
+      error: "shadow-[inset_0_-2px_0_0_var(--color-error)]",
+      valid: "shadow-[inset_0_-2px_0_0_var(--color-green-bourgeon)]",
+    },
+  },
 });
 
 export const label = tv({
-  base: "block text-sm font-medium mb-1",
+  base: "text-grey-850 mb-2 block text-base leading-6 font-normal",
+  variants: {
+    intent: {
+      error: "text-text-default-error",
+      valid: "text-text-default-success",
+    },
+  },
 });
 
 export const input_group = tv({
-  base: "mb-4",
+  base: `
+    relative mb-4
+    before:pointer-events-none before:absolute before:inset-y-0 before:-right-3 before:-left-3
+    before:bg-[size:2px_100%] before:bg-[position:0_0] before:bg-no-repeat
+  `,
+  variants: {
+    intent: {
+      error: `
+        before:bg-[linear-gradient(0deg,var(--color-error),var(--color-error))]
+        before:content-['']
+      `,
+      valid: `
+        before:bg-[linear-gradient(0deg,var(--color-green-bourgeon),var(--color-green-bourgeon))]
+        before:content-['']
+      `,
+    },
+  },
 });
 
 export const tags_group = tv({
-  base: "flex flex-wrap list-none p-0 m-0",
+  base: "m-0 flex list-none flex-wrap p-0",
 });
 
 export const radio_group = tv({
@@ -58,19 +112,24 @@ export const checkbox_group = tv({
   base: "flex items-center gap-2",
 });
 
+// Extends input — inherits all base styles and variants.
+// Adds: appearance-none, right padding for the chevron, and the SVG
+// arrow via --select-arrow CSS variable (defined in tailwind.dsfr.css).
 export const select = tv({
-  base: "block w-full px-4 py-2 border border-grey-200 text-base bg-white focus:border-blue-france focus:outline-none",
+  extend: input,
+
+  base: `
+    appearance-none
+    bg-[image:var(--select-arrow)]
+    bg-[size:1rem_1rem]
+    bg-[position:calc(100%-1rem)_50%] bg-no-repeat pr-10
+  `,
 });
 
 export const search_bar = tv({
   base: "flex items-stretch",
   slots: {
-    input: "flex-1 px-4 py-2 border border-grey-200 text-base focus:border-blue-france focus:outline-none",
-    button: [
-      "inline-flex items-center justify-center",
-      "w-10 min-w-10",
-      "bg-blue-france text-white",
-      "hover:bg-blue-france-hover",
-    ].join(" "),
+    input: input(),
+    button: button(),
   },
 });

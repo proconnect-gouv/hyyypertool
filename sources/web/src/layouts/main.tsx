@@ -6,7 +6,7 @@ import { z_username } from "#src/schema";
 import { badge } from "#src/ui/badge";
 import { button } from "#src/ui/button";
 import { header, MARIANNE_LOGO_URL, MOTTO_LOGO_URL, nav } from "#src/ui/header";
-import { Icon } from "#src/ui/icons/components";
+import { Svg } from "#src/ui/icons/components";
 import { NotificationIsland } from "#src/ui/notifications";
 import { urls } from "#src/urls";
 import { roles } from "@~/hyyyperbase";
@@ -28,7 +28,7 @@ export function Main_Layout({ children }: PropsWithChildren) {
         email={userinfo?.email}
         hyyyper_user={hyyyper_user}
       />
-      <div class="container mx-auto">{children}</div>
+      {children}
       <NotificationIsland nonce={nonce} />
     </RootLayout>
   );
@@ -156,7 +156,7 @@ function UserMenu({
                   class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-50"
                   href={urls.auth.logout.$url().pathname}
                 >
-                  <Icon name="logout" class="inline h-4 w-4" />
+                  <Svg name="logout" />
                   Se deconnecter
                 </a>
               </li>

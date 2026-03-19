@@ -11,6 +11,7 @@ import { badge } from "#src/ui";
 import { button } from "#src/ui/button";
 import { fieldset, input_group, label, tags_group } from "#src/ui/form";
 import { Foot } from "#src/ui/hx_table";
+import { Svg } from "#src/ui/icons/components";
 import {
   HideTypeCheckboxIsland,
   ProcessedCheckboxIsland,
@@ -100,7 +101,7 @@ function Main({
   poll_interval: number;
 }) {
   return (
-    <main class="mx-auto my-12 max-w-7xl px-4">
+    <main class="container mx-auto my-12 max-w-7xl px-4">
       <h1>Liste des moderations</h1>
       <Filter search={search} nonce={nonce} poll_interval={poll_interval} />
       <Table />
@@ -204,8 +205,8 @@ async function Table() {
   const { pagination, query_result } = useContext(Moderations_Context);
   const { count, moderations } = query_result;
   return (
-    <div class={table()} id={MODERATION_TABLE_ID}>
-      <table>
+    <div id={MODERATION_TABLE_ID}>
+      <table class={table()}>
         <thead>
           <tr>
             <th>Statut</th>
@@ -307,7 +308,7 @@ function StatusCell({
   return match({ status })
     .with({ status: "accepted" }, () => (
       <span class={badge({ icon: "left", intent: "success" })}>
-        <Icon name="check" size={12} />
+        <Svg name="check" />
         Accepté
       </span>
     ))
@@ -319,13 +320,13 @@ function StatusCell({
     ))
     .with({ status: "rejected" }, () => (
       <span class={badge({ icon: "left", intent: "error" })}>
-        <Icon name="error" size={12} />
+        <Svg name="error" />
         Rejeté
       </span>
     ))
     .with({ status: "reopened" }, () => (
       <span class={badge({ icon: "left", intent: "warning" })}>
-        <Icon name="warning" size={12} />
+        <Svg name="warning" />
         Ré-ouvert
       </span>
     ))

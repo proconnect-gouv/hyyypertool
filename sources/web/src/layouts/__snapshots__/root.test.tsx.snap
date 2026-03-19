@@ -3,6 +3,7 @@
 exports[`development 1`] = `
 "<!DOCTYPE html>
     <html
+      class="font-marianne"
       lang="fr"
       hx-ext="debug, include-vals"
     >
@@ -28,21 +29,21 @@ exports[`development 1`] = `
 
         <link
           rel="apple-touch-icon"
-          href="/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/favicon/apple-touch-icon.png"
+          href="/assets/ASSETS_PATH/public/assets/favicon/apple-touch-icon.png"
         />
         <link
           rel="icon"
-          href="/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/favicon/favicon.svg"
+          href="/assets/ASSETS_PATH/public/assets/favicon/favicon.svg"
           type="image/svg+xml"
         />
         <link
           rel="shortcut icon"
-          href="/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/favicon/favicon.ico"
+          href="/assets/ASSETS_PATH/public/assets/favicon/favicon.ico"
           type="image/x-icon"
         />
         <link
           rel="manifest"
-          href="/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/favicon/manifest.webmanifest"
+          href="/assets/ASSETS_PATH/public/assets/favicon/manifest.webmanifest"
           crossorigin="use-credentials"
         />
 
@@ -193,6 +194,7 @@ exports[`development 1`] = `
 exports[`production 1`] = `
 "<!DOCTYPE html>
     <html
+      class="font-marianne"
       lang="fr"
       hx-ext="include-vals"
     >
@@ -218,21 +220,21 @@ exports[`production 1`] = `
 
         <link
           rel="apple-touch-icon"
-          href="/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/favicon/apple-touch-icon.png"
+          href="/assets/ASSETS_PATH/public/assets/favicon/apple-touch-icon.png"
         />
         <link
           rel="icon"
-          href="/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/favicon/favicon.svg"
+          href="/assets/ASSETS_PATH/public/assets/favicon/favicon.svg"
           type="image/svg+xml"
         />
         <link
           rel="shortcut icon"
-          href="/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/favicon/favicon.ico"
+          href="/assets/ASSETS_PATH/public/assets/favicon/favicon.ico"
           type="image/x-icon"
         />
         <link
           rel="manifest"
-          href="/assets/ASSETS_PATH/node_modules/@gouvfr/dsfr/dist/favicon/manifest.webmanifest"
+          href="/assets/ASSETS_PATH/public/assets/favicon/manifest.webmanifest"
           crossorigin="use-credentials"
         />
 

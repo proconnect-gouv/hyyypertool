@@ -37,14 +37,14 @@ export default async function Page({
   return (
     <main>
       <div class="bg-background-alt-blue-france py-6">
-        <div class="max-w-7xl mx-auto px-4 py-6">
+        <div class="mx-auto max-w-7xl px-4 py-6">
           <h1>🏛 A propos de l'organisation</h1>
 
           <Fiche organization={organization} banaticUrl={banaticUrl} />
         </div>
       </div>
-      <hr />
-      <div class="max-w-7xl mx-auto px-4">
+      <hr class="border-none py-3" />
+      <div class="mx-auto max-w-7xl p-3">
         <h3 id={$domains_describedby}>
           🌐 {FrNumberConverter.format(domains_count)}{" "}
           {formattedPlural(domains_count, {
@@ -60,7 +60,7 @@ export default async function Page({
             ...hx_trigger_from_body([ORGANISATION_EVENTS.enum.DOMAIN_UPDATED]),
           ]}
         ></div>
-        <hr />
+        <hr class="border-none py-3" />
         <br />
         <MembersInTheOrganization
           organization={organization}

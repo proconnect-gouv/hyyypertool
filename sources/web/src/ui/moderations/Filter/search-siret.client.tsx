@@ -1,5 +1,6 @@
 /* @jsxImportSource preact */
 
+import { input } from "#src/ui/form";
 import { parsed, update_q } from "./q-signal.client";
 
 export interface SearchSiretProps extends Record<string, unknown> {
@@ -11,7 +12,7 @@ export function SearchSiret({
 }: SearchSiretProps) {
   return (
     <input
-      class="fr-input"
+      class={input()}
       placeholder={placeholder}
       type="text"
       value={parsed.value.search_siret}

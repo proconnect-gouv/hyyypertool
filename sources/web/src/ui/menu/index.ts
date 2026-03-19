@@ -6,6 +6,7 @@ import { tv } from "tailwind-variants";
 
 export const menu_item = tv({
   base: `
+    hover:bg-grey-50
     block
     w-full
     px-4

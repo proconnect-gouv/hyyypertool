@@ -6,17 +6,17 @@ import { CountUserMemberships, SuggestSameUserEmails } from "#src/lib/users";
 import type { GetModerationWithDetailsDto } from "#src/queries/moderations";
 import { type GetOrganizationMemberDto } from "#src/queries/organizations";
 import { button } from "#src/ui/button";
-import { Icon } from "#src/ui/icons/components";
 import { Actions } from "#src/ui/moderations/Actions";
 
+import { Svg } from "#src/ui/icons/components";
 import { AutoGoBack } from "#src/ui/moderations/AutoGoBack";
 import { DomainsByOrganization } from "#src/ui/moderations/DomainsByOrganization";
 import { Header } from "#src/ui/moderations/Header";
 import { OrganizationsByUser } from "#src/ui/moderations/OrganizationsByUser";
 import { UsersByOrganization } from "#src/ui/moderations/UsersByOrganization";
 import {
-  About as About_Organization,
-  Investigation as Investigation_Organization,
+  About as AboutOrganization,
+  Investigation as InvestigationOrganization,
 } from "#src/ui/organizations/info";
 import { About as About_User } from "#src/ui/users/About";
 import { Investigation as Investigation_User } from "#src/ui/users/Investigation";
@@ -66,7 +66,7 @@ async function ModerationPageContent() {
   const moderation_id = `moderation-${moderation.id}`;
 
   return (
-    <main class="mx-auto my-12 max-w-7xl px-4">
+    <main class="container mx-auto my-12 max-w-7xl px-4">
       <button
         onclick="history.back()"
         class={button({
@@ -75,12 +75,14 @@ async function ModerationPageContent() {
           size: "sm",
         })}
       >
-        <Icon name="arrow-go-back" class="inline h-4 w-4" />
+        <Svg name="arrow-go-back" />
         retour
       </button>
+
       <AutoGoBack id="auto_go_back" />
 
-      <hr class="bg-none pb-5" />
+      <hr class="border-none py-3" />
+
       <section
         hx-disinherit="*"
         {...urls.moderations[":id"].$hx_get({
@@ -96,14 +98,17 @@ async function ModerationPageContent() {
           <Header />
         </Header.Provier>
 
-        <hr class="bg-none pb-5" />
+        <hr class="border-none py-3" />
 
         <About_User user={moderation.user} organization={organization_fiche} />
         <Investigation_User
           user={moderation.user}
           organization={moderation.organization}
         />
-        <h2 class="fr-h3 fr-mt-6w">
+
+        <hr class="border-none py-3" />
+
+        <h2>
           <a
             class="bg-none"
             target="_blank"
@@ -118,13 +123,14 @@ async function ModerationPageContent() {
             🏛 Organisation
           </a>
         </h2>
-        <About_Organization organization={organization_fiche} />
-        <Investigation_Organization
+        <AboutOrganization organization={organization_fiche} />
+
+        <InvestigationOrganization
           banaticUrl={banaticUrl}
           organization={moderation.organization}
         />
 
-        <hr class="bg-none" />
+        <hr class="border-none py-3" />
 
         <DomainsByOrganization
           organization={moderation.organization}
@@ -141,7 +147,7 @@ async function ModerationPageContent() {
           query_members_count={query_organization_members_count}
         />
 
-        <hr class="bg-none" />
+        <hr class="border-none py-3" />
 
         <Actions
           value={{
@@ -158,11 +164,11 @@ async function ModerationPageContent() {
           }}
         />
 
-        <hr class="bg-none" />
+        <hr class="border-none py-3" />
 
         <hr />
 
-        <hr class="bg-none" />
+        <hr class="border-none py-3" />
 
         <ModerationExchanges moderation={moderation} />
       </section>

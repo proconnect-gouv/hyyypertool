@@ -4,7 +4,7 @@ import { hx_include } from "#src/htmx";
 import type { Pagination } from "#src/schema";
 import { Foot } from "#src/ui/hx_table";
 import { menu_item } from "#src/ui/menu";
-import { Horizontal_Menu } from "#src/ui/menu/components";
+import { HorizontalMenu } from "#src/ui/menu/components";
 import { row, table } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
@@ -108,8 +108,8 @@ function Row({ variants }: { variants?: VariantProps<typeof row> }) {
           </div>
         )}
       </td>
-      <td>
-        <Row_Actions />
+      <td class="space-x-2 text-end">
+        <RowActions />
       </td>
     </tr>
   );
@@ -123,13 +123,13 @@ function VerificationTypeBadge({ value }: { value: string | null }) {
   return <span class="text-red-500">{value}</span>;
 }
 
-async function Row_Actions() {
+async function RowActions() {
   const { user, organization_id } = useContext(MemberContext);
   const { id: user_id, is_external, verification_type } = user;
 
   return (
-    <Horizontal_Menu>
-      <ul class="list-none p-0">
+    <HorizontalMenu>
+      <ul class=" [&_li+li]:border-t-grey-200 list-none p-0 [&_li+li]:border-t">
         <li>
           <a
             class={menu_item({ override: "[href]" })}
@@ -282,6 +282,6 @@ async function Row_Actions() {
           </button>
         </li>
       </ul>
-    </Horizontal_Menu>
+    </HorizontalMenu>
   );
 }

@@ -4,7 +4,7 @@ import { HtmxEvents } from "#src/htmx";
 import { badge } from "#src/ui/badge";
 import { button } from "#src/ui/button";
 import { fieldset } from "#src/ui/form";
-import { Icon } from "#src/ui/icons/components";
+import { Svg } from "#src/ui/icons/components";
 import { alert } from "#src/ui/notice";
 import { formattedPlural } from "#src/ui/plurial";
 import { urls } from "#src/urls";
@@ -157,29 +157,27 @@ function ModerationStatusIndicator({
   if (error)
     return (
       <p class={badge({ icon: "left", intent: "warning" })}>
-        <Icon name="warning" size={12} />
+        <Svg name="warning" />
         Inconnu
       </p>
     );
   return match(status)
     .with("accepted", () => (
       <p class={badge({ icon: "left", intent: "success" })}>
-        <Icon name="check" size={12} />
+        <Svg name="check" />
         Accepté
       </p>
     ))
     .with("rejected", () => (
       <p class={badge({ icon: "left", intent: "error" })}>
-        <Icon name="error" size={12} />
+        <Svg name="error" />
         Rejeté
       </p>
     ))
-    .with("pending", () => (
-      <p class={badge({ intent: "new" })}>A traiter</p>
-    ))
+    .with("pending", () => <p class={badge({ intent: "new" })}>A traiter</p>)
     .otherwise(() => (
       <p class={badge({ icon: "left", intent: "success" })}>
-        <Icon name="check" size={12} />
+        <Svg name="check" />
         Traité
       </p>
     ));

@@ -66,7 +66,7 @@ test("render about section", async () => {
               const props = {
                 children: "",
                 className:
-                  "inline-flex items-center w-fit font-medium hover:bg-blue-france-hover text-sm leading-6 min-h-8 px-3 py-1 bg-transparent text-blue-france shadow-[inset_0_0_0_1px_var(--color-grey-200)] hover:bg-grey-50! ml-2",
+                  "inline-flex w-fit items-center font-medium no-underline min-h-8 gap-1 py-1 text-sm leading-6 text-blue-france hover:bg-grey-50 bg-transparent shadow-[inset_0_0_0_1px_var(--color-grey-200)] justify-center px-2 ml-2",
                 text: "cached_libelle",
               };
               let mounted = false;
@@ -89,7 +89,7 @@ test("render about section", async () => {
           siret
           <a
             href="https://annuaire-entreprises.data.gouv.fr/entreprise/siret"
-            class="inline-flex items-center w-fit font-medium hover:bg-blue-france-hover text-sm leading-6 min-h-8 px-3 py-1 bg-transparent text-blue-france shadow-[inset_0_0_0_1px_var(--color-grey-200)] hover:bg-grey-50! ml-2"
+            class="inline-flex w-fit items-center font-medium no-underline min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france hover:bg-grey-50 bg-transparent shadow-[inset_0_0_0_1px_var(--color-grey-200)] ml-2"
             rel="noopener noreferrer"
             target="_blank"
             >Fiche annuaire</a
@@ -101,7 +101,7 @@ test("render about section", async () => {
               const props = {
                 children: "",
                 className:
-                  "inline-flex items-center w-fit font-medium hover:bg-blue-france-hover text-sm leading-6 min-h-8 px-3 py-1 bg-transparent text-blue-france shadow-[inset_0_0_0_1px_var(--color-grey-200)] hover:bg-grey-50! ml-2",
+                  "inline-flex w-fit items-center font-medium no-underline min-h-8 gap-1 py-1 text-sm leading-6 text-blue-france hover:bg-grey-50 bg-transparent shadow-[inset_0_0_0_1px_var(--color-grey-200)] justify-center px-2 ml-2",
                 text: "siret",
               };
               let mounted = false;

@@ -2,7 +2,7 @@ import { HtmxEvents, hx_disabled_form_elements } from "#src/htmx";
 import { reject_form_schema } from "#src/lib/moderations";
 import { button } from "#src/ui/button";
 import { input, label } from "#src/ui/form";
-import { Icon } from "#src/ui/icons/components";
+import { icon } from "#src/ui/icons";
 import { urls } from "#src/urls";
 import { useContext } from "hono/jsx";
 import { AUTO_GO_BACK_EVENT } from "../AutoGoBack";
@@ -49,7 +49,7 @@ export async function RefusalModal({ userEmail }: { userEmail: string }) {
                 add .hidden to #refusalModal
             `}
           >
-            <Icon name="subtract" class="inline h-4 w-4" />
+            <svg viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em" aria-hidden="true" class="inline h-4 w-4"><path class={icon({ name: "subtract" })} /></svg>
             Label bouton
           </button>
         </div>

@@ -14,7 +14,7 @@ import { jsxRenderer } from "hono/jsx-renderer";
 import organization_domains_router from "./domains";
 import { get_organization_by_id } from "./get_organization_by_id.query";
 import organization_members_router from "./members";
-import Organization_Page from "./page";
+import OrganizationPage from "./page";
 
 //
 
@@ -48,7 +48,7 @@ export default new Hono<AppContext>()
         `Organisation ${organization.cached_libelle} (${organization.siret})`,
       );
       return render(
-        <Organization_Page
+        <OrganizationPage
           banaticUrl={banaticUrl}
           organization={organization}
           domains_count={domains_count}

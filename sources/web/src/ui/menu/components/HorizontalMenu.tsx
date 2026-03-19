@@ -7,7 +7,7 @@ import { Trigger } from "./Trigger";
 
 //
 
-export function Horizontal_Menu({
+export function HorizontalMenu({
   children,
   ...menu_props
 }: PropsWithChildren<MenuProps>) {

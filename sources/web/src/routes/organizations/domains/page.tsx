@@ -99,8 +99,8 @@ function Table() {
   } = context;
 
   return (
-    <div class={table()} id={$table}>
-      <table aria-describedby={$describedby}>
+    <div id={$table}>
+      <table aria-describedby={$describedby} class={table()}>
         <thead>
           <tr>
             <th></th>

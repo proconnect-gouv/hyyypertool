@@ -5,7 +5,7 @@ import { button } from "#src/ui/button";
 import { GoogleSearchButton } from "#src/ui/button/components";
 import { input, input_group, label } from "#src/ui/form";
 import { menu_item } from "#src/ui/menu";
-import { Horizontal_Menu } from "#src/ui/menu/components";
+import { HorizontalMenu } from "#src/ui/menu/components";
 import { table } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
@@ -199,8 +199,8 @@ async function Row_Actions({
   });
 
   return (
-    <Horizontal_Menu>
-      <ul class="list-none p-0">
+    <HorizontalMenu>
+      <ul class=" [&_li+li]:border-t-grey-200 list-none p-0 [&_li+li]:border-t">
         <li>
           <button
             {...await hx_change_type_props(
@@ -249,6 +249,6 @@ async function Row_Actions({
           </button>
         </li>
       </ul>
-    </Horizontal_Menu>
+    </HorizontalMenu>
   );
 }

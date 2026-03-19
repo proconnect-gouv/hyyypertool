@@ -14,9 +14,17 @@ exports[`render header section 1`] = `
     <h1 class="text-2xl font-bold">🕵️ Adora Pony</h1>
     <div>
       <p
-        class="inline-flex items-center w-fit text-sm leading-6 min-h-6 px-2 font-bold uppercase rounded text-[#18753c] bg-[#b8fec9]"
+        class="inline-flex items-center w-fit gap-1 text-xs leading-4 min-h-6 px-2 py-1 font-bold uppercase rounded-sm text-text-default-success bg-background-alt-green-emeraude [&amp;&gt;svg:first-child]:-ml-0.5"
       >
-        Accepté
+        <svg
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          width="1em"
+          height="1em"
+          aria-hidden="true"
+        >
+          <path class="icon-check"></path></svg
+        >Accepté
       </p>
     </div>
   </section>
@@ -35,12 +43,12 @@ exports[`render header section 1`] = `
       </div>
     </div>
   </div>
-  <hr class="bg-none" />
+  <hr class="border-none py-3" />
   <details>
     <summary>Commentaires</summary>
     <ul class="ml-4"></ul>
   </details>
-  <hr class="bg-none" />
+  <hr class="border-none py-3" />
   <div
     hx-get="/moderations/42/duplicate_warning?organization_id=43&amp;user_id=44"
     hx-trigger="load"

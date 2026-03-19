@@ -71,20 +71,34 @@ test("GET /moderations/:id/duplicate_warning", async () => {
         <li>
           <a href="/moderations/1">Moderation#1</a>
           <p
-            class="inline-flex items-center w-fit text-sm leading-6 min-h-6 px-2 font-bold uppercase rounded text-[#18753c] bg-[#b8fec9]"
+            class="inline-flex items-center w-fit gap-1 text-xs leading-4 min-h-6 px-2 py-1 font-bold uppercase rounded-sm text-text-default-success bg-background-alt-green-emeraude [&amp;&gt;svg:first-child]:-ml-0.5"
           >
-            Traité
+            <svg
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              width="1em"
+              height="1em"
+              aria-hidden="true"
+            >
+              <path class="icon-check"></path></svg
+            >Traité
           </p>
-          Pas de ticket
         </li>
         <li>
           <a href="/moderations/2">Moderation#2</a>
           <p
-            class="inline-flex items-center w-fit text-sm leading-6 min-h-6 px-2 font-bold uppercase rounded text-[#18753c] bg-[#b8fec9]"
+            class="inline-flex items-center w-fit gap-1 text-xs leading-4 min-h-6 px-2 py-1 font-bold uppercase rounded-sm text-text-default-success bg-background-alt-green-emeraude [&amp;&gt;svg:first-child]:-ml-0.5"
           >
-            Traité
+            <svg
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              width="1em"
+              height="1em"
+              aria-hidden="true"
+            >
+              <path class="icon-check"></path></svg
+            >Traité
           </p>
-          Pas de ticket
         </li>
       </ul>
       <form
@@ -98,11 +112,11 @@ test("GET /moderations/:id/duplicate_warning", async () => {
         hx-swap="none"
       >
         <fieldset
-          class="relative flex flex-row flex-wrap items-baseline m-0 p-0 border-0"
+          class="relative m-0 flex flex-row flex-wrap items-baseline border-0 p-0"
         >
-          <div class="flex-[1_1_100%] max-w-full px-2 mb-4 text-right">
+          <div class="mb-4 max-w-full flex-[1_1_100%] px-2 text-right">
             <button
-              class="inline-flex items-center w-fit font-medium text-base leading-6 min-h-10 px-4 py-2 text-white hover:bg-blue-france-hover bg-error hover:bg-error-hover!"
+              class="inline-flex min-h-10 w-fit items-center gap-2 px-4 py-2 text-base leading-6 font-medium text-white no-underline bg-error hover:bg-error-hover"
               type="submit"
             >
               Marquer la modération comme traité

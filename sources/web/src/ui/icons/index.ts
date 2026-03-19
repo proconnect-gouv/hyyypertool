@@ -8,8 +8,6 @@ export const icon = tv({
       clipboard: "icon-clipboard",
       delete: "icon-delete",
       error: "icon-error",
-      eye: "icon-eye",
-      "eye-off": "icon-eye-off",
       info: "icon-info",
       logout: "icon-logout",
       search: "icon-search",

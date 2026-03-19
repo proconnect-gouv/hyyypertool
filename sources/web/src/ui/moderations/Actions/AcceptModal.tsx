@@ -1,6 +1,6 @@
 import { HtmxEvents } from "#src/htmx";
 import { button } from "#src/ui/button";
-import { Icon } from "#src/ui/icons/components";
+import { icon } from "#src/ui/icons";
 import { urls } from "#src/urls";
 import { AUTO_GO_BACK_EVENT } from "../AutoGoBack";
 import { MemberAndDomainPickerIsland } from "./MemberAndDomainPickerIsland";
@@ -37,7 +37,7 @@ export async function AcceptModal({
                 add .hidden to #acceptModal
             `}
         >
-          <Icon name="subtract" class="inline h-4 w-4" />
+          <svg viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em" aria-hidden="true" class="inline h-4 w-4"><path class={icon({ name: "subtract" })} /></svg>
           Fermer la modale
         </button>
       </div>

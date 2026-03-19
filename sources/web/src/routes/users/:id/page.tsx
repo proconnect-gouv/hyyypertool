@@ -45,23 +45,25 @@ export async function UserPage({
   return (
     <main>
       <div class="bg-background-alt-blue-france py-6">
-        <div class="max-w-7xl mx-auto px-4 py-6!">
+        <div class="mx-auto max-w-7xl px-4 py-6">
           <h1>👨‍💻 A propos de l'utilisateur</h1>
           <div className="grid grid-cols-2 gap-4">
-            <div class="bg-white shadow-sm border border-grey-200 p-6!">
+            <div class="border-grey-200 p-6shadow-sm border bg-white">
               <h1 class="text-text-action-high-blue-france">
                 « {user.given_name} {user.family_name} »
               </h1>
               <Fiche user={user} />
             </div>
-            <div class="bg-white shadow-sm border border-grey-200 p-6!">
+            <div class="border-grey-200 p-6shadow-sm border bg-white">
               <AccountInfo user={user} />
             </div>
           </div>
         </div>
       </div>
-      <hr />
-      <div class="max-w-7xl mx-auto px-4">
+
+      <hr class="border-none py-3" />
+
+      <div class="mx-auto max-w-7xl px-4">
         <h1 id={$organizations_describedby}>
           Liste des organisations de {user.given_name}
         </h1>
@@ -73,7 +75,9 @@ export async function UserPage({
             class={table()}
           ></div>
         </div>
-        <hr />
+
+        <hr class="border-none py-3" />
+
         <h1 id={$moderations_describedby}>
           Liste des modérations de {user.given_name}
         </h1>
@@ -88,17 +92,21 @@ export async function UserPage({
         </div>
       </div>
       <div class="bg-background-alt-red-marianne py-6">
-        <div class="max-w-7xl mx-auto px-4 py-6">
+        <div class="mx-auto max-w-7xl px-4 py-6">
           <Actions user={user} />
         </div>
       </div>
-      <hr />
-      <div aria-describedby="mfa" class="max-w-7xl mx-auto px-4 py-6">
+
+      <hr class="border-none py-3" />
+
+      <div aria-describedby="mfa" class="mx-auto max-w-7xl px-4 py-6">
         <h1 id="mfa">🔓 MFA</h1>
         <MFA authenticators={authenticators} user={user} />
       </div>
-      <hr />
-      <div aria-describedby="franceconnect" class="max-w-7xl mx-auto px-4 py-6">
+
+      <hr class="py-3" />
+
+      <div aria-describedby="franceconnect" class="mx-auto max-w-7xl px-4 py-6">
         <h1 id="franceconnect">🪪 FranceConnect</h1>
         <FranceConnectInfo franceconnect={franceconnect} />
       </div>
@@ -123,7 +131,10 @@ async function MFA({
 
   return (
     <div className="grid grid-cols-2 gap-4">
-      <div aria-describedby="totp" class="bg-white shadow-sm border border-grey-200 p-6!">
+      <div
+        aria-describedby="totp"
+        class="border-grey-200 p-6shadow-sm border bg-white"
+      >
         <h2 class="text-text-action-high-blue-france" id="totp">
           TOTP
         </h2>
@@ -138,7 +149,7 @@ async function MFA({
       {authenticators.map((authenticator) => (
         <div
           aria-describedby={`passkey-${authenticator.credential_id}`}
-          class="bg-white shadow-sm border border-grey-200 p-6!"
+          class="border-grey-200 p-6shadow-sm border bg-white"
         >
           <h2
             class="text-text-action-high-blue-france"
@@ -174,7 +185,7 @@ function FranceConnectInfo({
   const { base, dd, dt } = badge_description_list();
 
   return (
-    <div class="bg-white shadow-sm border border-grey-200 p-6!">
+    <div class="border-grey-200 p-6shadow-sm border bg-white">
       <dl class={base({ className: "grid-cols-[150px_1fr]" })}>
         <dt class={dt()}>sub</dt>
         <dd class={dd()}>

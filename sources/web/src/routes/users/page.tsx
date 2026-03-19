@@ -40,7 +40,7 @@ export default async function Page({
   query_result: QueryResult;
 }) {
   return (
-    <main class="mx-auto my-12 max-w-7xl px-4">
+    <main class="container mx-auto my-12 max-w-7xl px-4">
       <h1>Liste des utilisateurs</h1>
       <Filter q={q} />
       <Table pagination={pagination} query_result={queryResult} />
@@ -87,8 +87,8 @@ async function Table({
   const { count, users } = queryResult;
 
   return (
-    <div class={table()} id={$table}>
-      <table>
+    <div id={$table}>
+      <table class={table()}>
         <thead>
           <tr>
             <th>Prénom</th>
