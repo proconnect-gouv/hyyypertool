@@ -5,7 +5,15 @@
 import { badge } from "#src/ui/badge";
 import { button } from "#src/ui/button";
 import { callout } from "#src/ui/callout";
-import { fieldset, input, input_group, label, select } from "#src/ui/form";
+import {
+  checkbox_group,
+  fieldset,
+  input,
+  input_group,
+  label,
+  radio_group,
+  select,
+} from "#src/ui/form";
 import { Svg } from "#src/ui/icons/components";
 import { alert, notice } from "#src/ui/notice";
 import { table } from "#src/ui/table";
@@ -53,7 +61,10 @@ export function componentsTailwind() {
           <p class={badge({ icon: "left", intent: "warning" })}>
             <Svg name="warning" /> Warning
           </p>
-          <p class={badge({ intent: "new" })}>New</p>
+          <p class={badge({ icon: "left", intent: "new" })}>
+            <Svg name="new" />
+            New
+          </p>
         </div>
       </section>
 
@@ -273,6 +284,71 @@ export function componentsTailwind() {
         </div>
       </section>
 
+      {/* Radio & Checkbox */}
+      <section>
+        <h2>Radio &amp; Checkbox</h2>
+        <fieldset
+          class={fieldset().base()}
+          id="tw-radio-form"
+          aria-labelledby="tw-radio-form-legend tw-radio-form-messages"
+        >
+          <legend class={fieldset({ regular: true }).legend()} id="tw-radio-form-legend">
+            Légende pour l'ensemble des éléments
+          </legend>
+          <div class={fieldset().element()}>
+            <div class={radio_group().base()}>
+              <input class={input()} type="radio" id="tw-radio-1" name="tw-radios" />
+              <label class={radio_group().label()} for="tw-radio-1">Radio 1</label>
+            </div>
+          </div>
+          <div class={fieldset().element()}>
+            <div class={radio_group().base()}>
+              <input class={input()} type="radio" id="tw-radio-2" name="tw-radios" />
+              <label class={radio_group().label()} for="tw-radio-2">Radio 2</label>
+            </div>
+          </div>
+          <div class={fieldset().element()}>
+            <div class={radio_group().base()}>
+              <input class={input()} type="radio" id="tw-radio-3" name="tw-radios" />
+              <label class={radio_group().label()} for="tw-radio-3">Radio 3</label>
+            </div>
+          </div>
+          <div id="tw-radio-form-messages" aria-live="polite" />
+        </fieldset>
+        <fieldset
+          class={fieldset().base()}
+          id="tw-checkbox-form"
+          aria-labelledby="tw-checkbox-form-legend tw-checkbox-form-messages"
+          style="margin-top: 1rem"
+        >
+          <legend class={fieldset({ regular: true }).legend()} id="tw-checkbox-form-legend">
+            Légende pour l'ensemble des éléments
+          </legend>
+          <div class={fieldset().element()}>
+            <div class={checkbox_group().base()}>
+              <input class={input()} name="checkbox1" id="tw-checkbox-1" type="checkbox" aria-describedby="tw-checkbox-1-messages" />
+              <label class={checkbox_group().label()} for="tw-checkbox-1">Checkbox 1</label>
+              <div id="tw-checkbox-1-messages" aria-live="polite" />
+            </div>
+          </div>
+          <div class={fieldset().element()}>
+            <div class={checkbox_group().base()}>
+              <input class={input()} name="checkbox2" id="tw-checkbox-2" type="checkbox" aria-describedby="tw-checkbox-2-messages" />
+              <label class={checkbox_group().label()} for="tw-checkbox-2">Checkbox 2</label>
+              <div id="tw-checkbox-2-messages" aria-live="polite" />
+            </div>
+          </div>
+          <div class={fieldset().element()}>
+            <div class={checkbox_group().base()}>
+              <input class={input()} name="checkbox3" id="tw-checkbox-3" type="checkbox" aria-describedby="tw-checkbox-3-messages" />
+              <label class={checkbox_group().label()} for="tw-checkbox-3">Checkbox 3</label>
+              <div id="tw-checkbox-3-messages" aria-live="polite" />
+            </div>
+          </div>
+          <div id="tw-checkbox-form-messages" aria-live="polite" />
+        </fieldset>
+      </section>
+
       {/* Form inputs */}
       <section>
         <h2>Form Inputs</h2>
@@ -313,7 +389,7 @@ export function componentsTailwind() {
             type="text"
             placeholder="Invalide"
           />
-          <p class="text-text-default-error mt-1 flex items-center gap-1 text-sm">
+          <p class="text-label-error mt-1 flex items-center gap-1 text-sm">
             <Svg name="error" /> Ce champ est requis.
           </p>
         </div>
@@ -327,7 +403,7 @@ export function componentsTailwind() {
             type="text"
             value="Alice"
           />
-          <p class="text-text-default-success mt-1 flex items-center gap-1 text-sm">
+          <p class="text-label-success mt-1 flex items-center gap-1 text-sm">
             <Svg name="check" /> Valeur correcte.
           </p>
         </div>

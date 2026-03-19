@@ -174,7 +174,11 @@ function ModerationStatusIndicator({
         Rejeté
       </p>
     ))
-    .with("pending", () => <p class={badge({ intent: "new" })}>A traiter</p>)
+    .with("pending", () => (
+      <p class={badge({ intent: "new" })}>
+        <Svg name="new" /> A traiter
+      </p>
+    ))
     .otherwise(() => (
       <p class={badge({ icon: "left", intent: "success" })}>
         <Svg name="check" />

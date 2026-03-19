@@ -2,7 +2,7 @@ import { HtmxEvents, hx_disabled_form_elements } from "#src/htmx";
 import { reject_form_schema } from "#src/lib/moderations";
 import { button } from "#src/ui/button";
 import { input, label } from "#src/ui/form";
-import { icon } from "#src/ui/icons";
+import { Svg } from "#src/ui/icons/components";
 import { urls } from "#src/urls";
 import { useContext } from "hono/jsx";
 import { AUTO_GO_BACK_EVENT } from "../AutoGoBack";
@@ -15,7 +15,7 @@ export async function RefusalModal({ userEmail }: { userEmail: string }) {
 
   return (
     <div
-      class="fixed right-0 bottom-14 z-751 m-2 hidden w-4/6 justify-self-end border-solid border-text-action-high-blue-france bg-blue-france-975-75 px-4 py-2"
+      class="border-blue-france bg-blue-france-975 fixed right-0 bottom-14 z-751 m-2 hidden w-4/6 justify-self-end border-solid px-4 py-2"
       id="refusalModal"
       aria-label="la modale de refus"
     >
@@ -49,13 +49,13 @@ export async function RefusalModal({ userEmail }: { userEmail: string }) {
                 add .hidden to #refusalModal
             `}
           >
-            <svg viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em" aria-hidden="true" class="inline h-4 w-4"><path class={icon({ name: "subtract" })} /></svg>
-            Label bouton
+            <Svg name="subtract" />
+            <span class="sr-only">Fermer la modale</span>
           </button>
         </div>
         <p class="mb-1">
           A propos de{" "}
-          <span class="font-bold text-[--text-action-high-blue-france]">
+          <span class="font-bold text-blue-france">
             {userEmail}{" "}
           </span>
           pour l'organisation <b>{moderation.organization.cached_libelle}</b>

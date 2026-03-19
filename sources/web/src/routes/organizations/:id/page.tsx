@@ -36,15 +36,15 @@ export default async function Page({
 
   return (
     <main>
-      <div class="bg-background-alt-blue-france py-6">
-        <div class="mx-auto max-w-7xl px-4 py-6">
+      <div class="bg-blue-france-975 py-6">
+        <div class="container mx-auto px-4 py-6">
           <h1>🏛 A propos de l'organisation</h1>
 
           <Fiche organization={organization} banaticUrl={banaticUrl} />
         </div>
       </div>
       <hr class="border-none py-3" />
-      <div class="mx-auto max-w-7xl p-3">
+      <div class="container mx-auto p-3">
         <h3 id={$domains_describedby}>
           🌐 {FrNumberConverter.format(domains_count)}{" "}
           {formattedPlural(domains_count, {

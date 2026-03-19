@@ -47,9 +47,9 @@ export async function Table({
       <thead>
         <tr>
           <th>Date de création</th>
-          <th class="break-words">Siret</th>
-          <th class="break-words">Libellé</th>
-          <th class="break-words">Domains</th>
+          <th class="warp-break-word">Siret</th>
+          <th class="warp-break-word">Libellé</th>
+          <th class="warp-break-word">Domains</th>
           <th class="max-w-32 break-words">Code géographique officiel</th>
 
           <th></th>

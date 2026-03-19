@@ -23,7 +23,7 @@ export const header = tv({
     body_row: "flex items-center justify-between py-6",
     brand: "flex items-center gap-4",
     brand_top: "flex items-center",
-    container: "mx-auto max-w-7xl px-4",
+    container: "container mx-auto px-4",
     logo: [
       "m-0 inline-block indent-[-0.1em] align-middle text-[1.05rem] leading-[1.0317460317em] font-bold tracking-[-0.01em] uppercase",
       "before:block before:content-['']",

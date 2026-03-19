@@ -1,6 +1,6 @@
 import { HtmxEvents } from "#src/htmx";
 import { button } from "#src/ui/button";
-import { icon } from "#src/ui/icons";
+import { Svg } from "#src/ui/icons/components";
 import { urls } from "#src/urls";
 import { AUTO_GO_BACK_EVENT } from "../AutoGoBack";
 import { MemberAndDomainPickerIsland } from "./MemberAndDomainPickerIsland";
@@ -24,7 +24,7 @@ export async function AcceptModal({
   });
   return (
     <div
-      class="fixed right-0 bottom-14 z-[calc(var(--ground)_+_777)] m-2 hidden justify-self-end border-solid border-text-action-high-blue-france bg-blue-france-975-75 px-4 py-2"
+      class="border-blue-france bg-blue-france-975 fixed right-0 bottom-14 z-[calc(var(--ground)_+_777)] m-2 hidden justify-self-end border-solid px-4 py-2"
       id="acceptModal"
       aria-label="la modale de validation"
     >
@@ -37,13 +37,13 @@ export async function AcceptModal({
                 add .hidden to #acceptModal
             `}
         >
-          <svg viewBox="0 0 24 24" fill="currentColor" width="1em" height="1em" aria-hidden="true" class="inline h-4 w-4"><path class={icon({ name: "subtract" })} /></svg>
-          Fermer la modale
+          <Svg name="subtract" />
+          <span class="sr-only">Fermer la modale</span>
         </button>
       </div>
       <p>
         A propos de{" "}
-        <span class="font-bold text-text-action-high-blue-france">
+        <span class="text-blue-france font-bold">
           {userEmail}{" "}
         </span>
         pour l'organisation <b>{moderation.organization.cached_libelle}</b>, je

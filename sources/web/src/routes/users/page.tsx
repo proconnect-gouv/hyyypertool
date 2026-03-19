@@ -40,7 +40,7 @@ export default async function Page({
   query_result: QueryResult;
 }) {
   return (
-    <main class="container mx-auto my-12 max-w-7xl px-4">
+    <main class="container mx-auto my-12 px-4">
       <h1>Liste des utilisateurs</h1>
       <Filter q={q} />
       <Table pagination={pagination} query_result={queryResult} />
@@ -106,6 +106,7 @@ async function Table({
           ))}
         </tbody>
         <Foot
+          colspan={7}
           count={count}
           hx_query_props={hx_users_list_query_props}
           id={$table}

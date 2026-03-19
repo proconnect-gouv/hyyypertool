@@ -10,6 +10,7 @@ export const icon = tv({
       error: "icon-error",
       info: "icon-info",
       logout: "icon-logout",
+      new: "icon-new",
       search: "icon-search",
       subtract: "icon-subtract",
       warning: "icon-warning",

@@ -259,6 +259,62 @@ export function componentsDsfr() {
       </div>
     </section>
 
+    <!-- Radio & Checkbox -->
+    <section>
+      <h2>Radio &amp; Checkbox</h2>
+      <fieldset class="fr-fieldset" id="dsfr-radio-form" aria-labelledby="dsfr-radio-form-legend dsfr-radio-form-messages">
+        <legend class="fr-fieldset__legend--regular fr-fieldset__legend" id="dsfr-radio-form-legend">
+          Légende pour l'ensemble des éléments
+        </legend>
+        <div class="fr-fieldset__element">
+          <div class="fr-radio-group">
+            <input type="radio" id="dsfr-radio-1" name="dsfr-radios" />
+            <label class="fr-label" for="dsfr-radio-1">Radio 1</label>
+          </div>
+        </div>
+        <div class="fr-fieldset__element">
+          <div class="fr-radio-group">
+            <input type="radio" id="dsfr-radio-2" name="dsfr-radios" />
+            <label class="fr-label" for="dsfr-radio-2">Radio 2</label>
+          </div>
+        </div>
+        <div class="fr-fieldset__element">
+          <div class="fr-radio-group">
+            <input type="radio" id="dsfr-radio-3" name="dsfr-radios" />
+            <label class="fr-label" for="dsfr-radio-3">Radio 3</label>
+          </div>
+        </div>
+        <div class="fr-messages-group" id="dsfr-radio-form-messages" aria-live="polite"></div>
+      </fieldset>
+      <fieldset class="fr-fieldset" id="dsfr-checkbox-form" aria-labelledby="dsfr-checkbox-form-legend dsfr-checkbox-form-messages" style="margin-top: 1rem">
+        <legend class="fr-fieldset__legend--regular fr-fieldset__legend" id="dsfr-checkbox-form-legend">
+          Légende pour l'ensemble des éléments
+        </legend>
+        <div class="fr-fieldset__element">
+          <div class="fr-checkbox-group">
+            <input name="checkbox1" id="dsfr-checkbox-1" type="checkbox" aria-describedby="dsfr-checkbox-1-messages" />
+            <label class="fr-label" for="dsfr-checkbox-1">Checkbox 1</label>
+            <div class="fr-messages-group" id="dsfr-checkbox-1-messages" aria-live="polite"></div>
+          </div>
+        </div>
+        <div class="fr-fieldset__element">
+          <div class="fr-checkbox-group">
+            <input name="checkbox2" id="dsfr-checkbox-2" type="checkbox" aria-describedby="dsfr-checkbox-2-messages" />
+            <label class="fr-label" for="dsfr-checkbox-2">Checkbox 2</label>
+            <div class="fr-messages-group" id="dsfr-checkbox-2-messages" aria-live="polite"></div>
+          </div>
+        </div>
+        <div class="fr-fieldset__element">
+          <div class="fr-checkbox-group">
+            <input name="checkbox3" id="dsfr-checkbox-3" type="checkbox" aria-describedby="dsfr-checkbox-3-messages" />
+            <label class="fr-label" for="dsfr-checkbox-3">Checkbox 3</label>
+            <div class="fr-messages-group" id="dsfr-checkbox-3-messages" aria-live="polite"></div>
+          </div>
+        </div>
+        <div class="fr-messages-group" id="dsfr-checkbox-form-messages" aria-live="polite"></div>
+      </fieldset>
+    </section>
+
     <!-- Form inputs -->
     <section>
       <h2>Form Inputs</h2>

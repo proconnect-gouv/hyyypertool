@@ -17,7 +17,7 @@ export async function Fiche({
   return (
     <section class="grid grid-cols-3 gap-4">
       <div class="border-grey-200 col-span-2 border bg-white p-6 shadow-sm">
-        <h1 class="text-text-action-high-blue-france">
+        <h1 class="text-blue-france">
           « {organization.cached_libelle} »
         </h1>
         <About organization={organization} />

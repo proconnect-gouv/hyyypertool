@@ -44,7 +44,7 @@ export default function Page({
   query_result: QueryResult;
 }) {
   return (
-    <main class="container mx-auto my-12 max-w-7xl px-4">
+    <main class="container mx-auto my-12 px-4">
       <h1>Gestion de l'equipe</h1>
       <AddMember />
       <Filter q={q} />

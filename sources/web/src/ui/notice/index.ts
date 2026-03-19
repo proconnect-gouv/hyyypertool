@@ -20,32 +20,34 @@ import { tv } from "tailwind-variants";
  * ```
  */
 export const notice = tv({
-  base: "relative py-4 bg-grey-contrast text-grey-850",
+  base: "bg-grey-contrast text-grey-850 relative py-4",
   slots: {
     body: "relative flex flex-row items-start justify-between",
-    container: "max-w-7xl mx-auto px-4",
+    container: "px-4",
     title: "relative mr-1 font-bold",
   },
   variants: {
     type: {
-      info: "bg-[#e8edff] text-[#0063cb]",
-      warning: "bg-[#ffe9e6] text-[#b34000]",
-      alert: "bg-[#ffe9e9] text-[#ce0500]",
+      info: "text-label-info bg-[#e8edff]",
+      warning:
+        "bg-alt-orange-terre-battue text-label-warning",
+      alert: "bg-alt-red-marianne text-label-error",
     },
   },
 });
 
 export const alert = tv({
-  base: "p-4 mb-4 text-sm",
+  base: "mb-4 p-4 text-sm",
   slots: {
-    title: "font-bold mb-1",
+    title: "mb-1 font-bold",
   },
   variants: {
     intent: {
-      warning: "bg-[#ffe9e6] text-[#b34000]",
-      error: "bg-[#ffe9e9] text-[#ce0500]",
-      info: "bg-[#e8edff] text-[#0063cb]",
-      success: "bg-[#b8fec9] text-[#18753c]",
+      warning:
+        "bg-alt-orange-terre-battue text-label-warning",
+      error: "bg-alt-red-marianne text-label-error",
+      info: "text-label-info bg-[#e8edff]",
+      success: "bg-alt-green-emeraude text-label-success",
     },
   },
 });

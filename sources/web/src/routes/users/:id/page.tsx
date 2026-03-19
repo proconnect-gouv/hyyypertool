@@ -44,12 +44,12 @@ export async function UserPage({
 
   return (
     <main>
-      <div class="bg-background-alt-blue-france py-6">
-        <div class="mx-auto max-w-7xl px-4 py-6">
+      <div class="bg-blue-france-975 py-6">
+        <div class="container mx-auto px-4 py-6">
           <h1>👨‍💻 A propos de l'utilisateur</h1>
           <div className="grid grid-cols-2 gap-4">
             <div class="border-grey-200 p-6shadow-sm border bg-white">
-              <h1 class="text-text-action-high-blue-france">
+              <h1 class="text-blue-france">
                 « {user.given_name} {user.family_name} »
               </h1>
               <Fiche user={user} />
@@ -63,7 +63,7 @@ export async function UserPage({
 
       <hr class="border-none py-3" />
 
-      <div class="mx-auto max-w-7xl px-4">
+      <div class="container mx-auto px-4">
         <h1 id={$organizations_describedby}>
           Liste des organisations de {user.given_name}
         </h1>
@@ -91,22 +91,22 @@ export async function UserPage({
           ></div>
         </div>
       </div>
-      <div class="bg-background-alt-red-marianne py-6">
-        <div class="mx-auto max-w-7xl px-4 py-6">
+      <div class="bg-alt-red-marianne py-6">
+        <div class="container mx-auto px-4 py-6">
           <Actions user={user} />
         </div>
       </div>
 
       <hr class="border-none py-3" />
 
-      <div aria-describedby="mfa" class="mx-auto max-w-7xl px-4 py-6">
+      <div aria-describedby="mfa" class="container mx-auto px-4 py-6">
         <h1 id="mfa">🔓 MFA</h1>
         <MFA authenticators={authenticators} user={user} />
       </div>
 
       <hr class="py-3" />
 
-      <div aria-describedby="franceconnect" class="mx-auto max-w-7xl px-4 py-6">
+      <div aria-describedby="franceconnect" class="container mx-auto px-4 py-6">
         <h1 id="franceconnect">🪪 FranceConnect</h1>
         <FranceConnectInfo franceconnect={franceconnect} />
       </div>
@@ -135,7 +135,7 @@ async function MFA({
         aria-describedby="totp"
         class="border-grey-200 p-6shadow-sm border bg-white"
       >
-        <h2 class="text-text-action-high-blue-france" id="totp">
+        <h2 class="text-blue-france" id="totp">
           TOTP
         </h2>
         <p class="mb-1">
@@ -152,7 +152,7 @@ async function MFA({
           class="border-grey-200 p-6shadow-sm border bg-white"
         >
           <h2
-            class="text-text-action-high-blue-france"
+            class="text-blue-france"
             id={`passkey-${authenticator.credential_id}`}
           >
             Passkey - {authenticator.display_name}

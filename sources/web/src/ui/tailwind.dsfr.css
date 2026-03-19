@@ -44,27 +44,16 @@
   --color-grey-contrast-hover: #d2d2d2;
 
   /* Semantic Aliases - Mapped to DSFR tokens */
-  --color-blue-france-975-75: #f5f5fe;
-  --color-text-action-high-blue-france: #000091;
-  --color-text-active-blue-france: #000091;
-  --color-text-active-red-marianne: #e1000f;
+  --color-alt-red-marianne: #ffe9e9;
+  --color-alt-green-emeraude: #b8fec9;
+  --color-alt-orange-terre-battue: #ffe9e6;
+  --color-alt-brown-caramel: #feebd0;
 
-  --color-background-alt-blue-france: #f5f5fe;
-  --color-background-alt-blue-ecume: #e8edff;
-  --color-background-alt-grey: #f6f6f6;
-  --color-background-alt-red-marianne: #ffe9e9;
-  --color-background-alt-green-emeraude: #b8fec9;
-  --color-background-alt-orange-terre-battue: #ffe9e6;
-  --color-background-alt-brown-caramel: #feebd0;
-  --color-background-contrast-grey: #eeeeee;
-  --color-background-contrast-grey-hover: #d2d2d2;
-  --color-background-action-low-blue-france: #e3e3fd;
-
-  --color-text-default-success: #18753c;
-  --color-text-default-info: #0063cb;
-  --color-text-default-warning: #b34000;
-  --color-text-default-error: #ce0500;
-  --color-text-accent-brown-caramel: #695240;
+  --color-label-success: #18753c;
+  --color-label-info: #0063cb;
+  --color-label-warning: #b34000;
+  --color-label-error: #ce0500;
+  --color-accent-brown-caramel: #695240;
 
   /* Spacing constants from DSFR */
   --spacing-title: 0 0 1.5rem;
@@ -135,6 +124,8 @@
     --ground: 0;
     /* Select chevron arrow (matches DSFR fr-select SVG) */
     --select-arrow: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23161616' d='M12 13.1l5-4.9 1.4 1.4L12 15.9 5.6 9.5l1.4-1.4L12 13.1z'/%3E%3C/svg%3E");
+    /* Checkbox checkmark (white tick on blue background, matches DSFR) */
+    --checkbox-checkmark: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23f5f5fe' d='M10 15.17l9.2-9.2 1.4 1.42L10 18l-6.36-6.36 1.4-1.42z'/%3E%3C/svg%3E");
   }
 
   html {
@@ -250,6 +241,11 @@
   d: path(
     "M11 2a9 9 0 1 0 9 9 9 9 0 0 0-9-9zm0 16a7 7 0 1 1 7-7 7 7 0 0 1-7 7zm11 1.414L17.414 15l-1.414 1.414L20.586 21z"
   );
+}
+
+@utility icon-new {
+  /* Flashlight fill — from DSFR dist/icons/weather/flashlight-fill.svg */
+  d: path("M13 10h7l-9 13v-9H4l9-13v9Z");
 }
 
 @utility icon-subtract {

@@ -64,14 +64,14 @@ test("GET /moderations/:id/duplicate_warning", async () => {
   expect(format(await response.text(), { parser: "html" })).resolves
     .toMatchInlineSnapshot(`
     "<!DOCTYPE html>
-    <div class="p-4 mb-4 text-sm bg-[#ffe9e6] text-[#b34000]">
-      <h3 class="font-bold mb-1">Attention : demande multiples</h3>
+    <div class="mb-4 p-4 text-sm bg-alt-orange-terre-battue text-label-warning">
+      <h3 class="mb-1 font-bold">Attention : demande multiples</h3>
       <p>Il s&#39;agit de la 2e demande pour cette organisation</p>
       <ul>
         <li>
           <a href="/moderations/1">Moderation#1</a>
           <p
-            class="inline-flex items-center w-fit gap-1 text-xs leading-4 min-h-6 px-2 py-1 font-bold uppercase rounded-sm text-text-default-success bg-background-alt-green-emeraude [&amp;&gt;svg:first-child]:-ml-0.5"
+            class="inline-flex items-center w-fit gap-1 text-xs leading-4 min-h-6 px-2 py-1 font-bold uppercase rounded-sm text-label-success bg-alt-green-emeraude [&amp;&gt;svg:first-child]:-ml-0.5"
           >
             <svg
               viewBox="0 0 24 24"
@@ -87,7 +87,7 @@ test("GET /moderations/:id/duplicate_warning", async () => {
         <li>
           <a href="/moderations/2">Moderation#2</a>
           <p
-            class="inline-flex items-center w-fit gap-1 text-xs leading-4 min-h-6 px-2 py-1 font-bold uppercase rounded-sm text-text-default-success bg-background-alt-green-emeraude [&amp;&gt;svg:first-child]:-ml-0.5"
+            class="inline-flex items-center w-fit gap-1 text-xs leading-4 min-h-6 px-2 py-1 font-bold uppercase rounded-sm text-label-success bg-alt-green-emeraude [&amp;&gt;svg:first-child]:-ml-0.5"
           >
             <svg
               viewBox="0 0 24 24"

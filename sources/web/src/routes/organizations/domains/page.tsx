@@ -41,7 +41,7 @@ function Main() {
 
   return (
     <main
-      class="mx-auto my-12 max-w-7xl px-4"
+      class="container mx-auto my-12 px-4"
       {...hx_domains_query_props}
       hx-sync="this"
       hx-trigger={[

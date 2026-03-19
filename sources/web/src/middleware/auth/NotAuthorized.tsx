@@ -14,13 +14,13 @@ export function NotAuthorized() {
 
   return (
     <main class="flex h-full grow flex-col items-center justify-center">
-      <div class="mx-auto max-w-7xl px-4">
+      <div class="container mx-auto px-4">
         <div class="flex flex-wrap items-center justify-center gap-8">
           <div class="w-full md:w-1/2">
             <h1 class="text-3xl font-bold">Accès Non Autorisé</h1>
             <p class="text-xl">
               Le service{" "}
-              <span class="break-words">
+              <span class="warp-break-word">
                 H
                 {Array.from({ length: Math.max(3, nonce.length) })
                   .fill("y")

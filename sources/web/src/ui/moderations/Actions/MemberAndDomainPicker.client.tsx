@@ -1,6 +1,7 @@
 /* @jsxImportSource preact */
 
 import { useCallback, useState } from "preact/hooks";
+import { checkbox_group, input, radio_group } from "#src/ui/form";
 
 //
 
@@ -27,8 +28,9 @@ export function MemberAndDomainPicker({
 
   const domain_checkbox = (
     <div class="mb-5">
-      <div class="fr-checkbox-group">
+      <div class={checkbox_group().base()}>
         <input
+          class={input()}
           id="add_domain_checkbox"
           name="add_domain"
           type="checkbox"
@@ -36,7 +38,7 @@ export function MemberAndDomainPicker({
           checked={add_domain}
           onChange={() => set_add_domain((v) => !v)}
         />
-        <label for="add_domain_checkbox">
+        <label class={checkbox_group().label()} for="add_domain_checkbox">
           J'autorise le domaine <b class="mx-1">{domain}</b> en {mail_type} à
           l'organisation
         </label>
@@ -47,8 +49,9 @@ export function MemberAndDomainPicker({
   return (
     <>
       <div class="mb-5">
-        <div class="fr-radio-group">
+        <div class={radio_group().base()}>
           <input
+            class={input()}
             id="add_member_internal"
             name="add_member"
             required
@@ -57,7 +60,7 @@ export function MemberAndDomainPicker({
             checked={is_internal}
             onChange={() => handle_member_change(true)}
           />
-          <label class="fr-label flex-row!" for="add_member_internal">
+          <label class={radio_group().label()} for="add_member_internal">
             Ajouter <b class="mx-1">{given_name}</b> à l'organisation EN TANT
             QU'INTERNE
           </label>
@@ -67,8 +70,9 @@ export function MemberAndDomainPicker({
       {is_internal && domain_checkbox}
 
       <div class="mb-5">
-        <div class="fr-radio-group">
+        <div class={radio_group().base()}>
           <input
+            class={input()}
             id="add_member_external"
             name="add_member"
             required
@@ -77,7 +81,7 @@ export function MemberAndDomainPicker({
             checked={!is_internal}
             onChange={() => handle_member_change(false)}
           />
-          <label class="fr-label flex-row!" for="add_member_external">
+          <label class={radio_group().label()} for="add_member_external">
             Ajouter <b class="mx-1">{given_name}</b> à l'organisation EN TANT
             QU'EXTERNE
           </label>

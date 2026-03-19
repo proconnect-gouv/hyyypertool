@@ -269,12 +269,12 @@ function Row({ key, moderation }: { key?: string; moderation: Moderation }) {
       >
         {user.family_name}
       </td>
-      <td class="break-words">{user.given_name}</td>
+      <td class="warp-break-word">{user.given_name}</td>
       <td class="max-w-48 overflow-hidden text-ellipsis" title={user.email}>
         {user.email}
       </td>
-      <td class="break-words">{organization.siret}</td>
-      <td class="break-words">{moderation.sp_name}</td>
+      <td class="warp-break-word">{organization.siret}</td>
+      <td class="warp-break-word">{moderation.sp_name}</td>
       <td>
         <a
           class="after:absolute after:inset-0 after:content-[''] focus:outline-none"
@@ -300,6 +300,7 @@ function StatusCell({
   if (type === undefined || status === undefined || status === "unknown")
     return (
       <>
+        <Svg name="new" />
         {moderation_type_to_emoji(moderation_type)}
         {moderation_type_to_title(moderation_type)}
       </>
@@ -314,6 +315,7 @@ function StatusCell({
     ))
     .with({ status: "pending" }, () => (
       <span class={badge()}>
+        <Svg name="new" />
         {moderation_type_to_emoji(type)}
         {moderation_type_to_title(type)}
       </span>
