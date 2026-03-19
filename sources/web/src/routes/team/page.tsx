@@ -104,7 +104,7 @@ function AddMember() {
 }
 
 function Filter({ q }: { q?: string | string[] }) {
-  const { base, input: searchInput, button: searchButton } = search_bar();
+  const { base, input: searchInput } = search_bar();
   return (
     <form
       {...hx_team_list_query_props}
