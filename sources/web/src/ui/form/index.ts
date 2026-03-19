@@ -54,6 +54,15 @@ export const input = tv({
     focus:outline-blue-france
     disabled:text-grey-425
     placeholder:text-grey-625
+    [[type=radio]]:border-blue-france
+    [[type=radio]]:checked:bg-blue-france
+    [[type=radio]]:checked:hover:bg-blue-france
+    [[type=radio]]:focus:outline-blue-france
+    [[type=checkbox]]:border-blue-france
+    [[type=checkbox]]:checked:bg-blue-france
+    [[type=checkbox]]:checked:hover:bg-blue-france
+    [[type=checkbox]]:checked:border-blue-france
+    [[type=checkbox]]:focus:outline-blue-france
     block
     w-full
     rounded-t
@@ -66,44 +75,35 @@ export const input = tv({
     focus:outline-2
     focus:outline-offset-2
     disabled:shadow-[inset_0_-2px_0_0_var(--color-grey-425)]
-    [[type=radio]]:appearance-none
-    [[type=radio]]:size-6
-    [[type=radio]]:shrink-0
-    [[type=radio]]:cursor-pointer
-    [[type=radio]]:rounded-full
-    [[type=radio]]:border-[1.5px]
-    [[type=radio]]:border-blue-france
-    [[type=radio]]:bg-transparent
-    [[type=radio]]:p-0
-    [[type=radio]]:shadow-none
-    [[type=radio]]:hover:bg-transparent
-    [[type=radio]]:checked:bg-blue-france
-    [[type=radio]]:checked:hover:bg-blue-france
-    [[type=radio]]:checked:shadow-[inset_0_0_0_3px_white]
-    [[type=radio]]:focus:outline-blue-france
-    [[type=radio]]:focus:outline-2
-    [[type=radio]]:focus:outline-offset-2
-    [[type=checkbox]]:appearance-none
     [[type=checkbox]]:size-6
     [[type=checkbox]]:shrink-0
     [[type=checkbox]]:cursor-pointer
+    [[type=checkbox]]:appearance-none
     [[type=checkbox]]:rounded
     [[type=checkbox]]:border-[1.5px]
-    [[type=checkbox]]:border-blue-france
     [[type=checkbox]]:bg-transparent
     [[type=checkbox]]:p-0
     [[type=checkbox]]:shadow-none
-    [[type=checkbox]]:hover:bg-transparent
-    [[type=checkbox]]:checked:bg-blue-france
-    [[type=checkbox]]:checked:hover:bg-blue-france
-    [[type=checkbox]]:checked:border-blue-france
     [[type=checkbox]]:checked:bg-[image:var(--checkbox-checkmark)]
     [[type=checkbox]]:checked:bg-[size:1.25rem]
     [[type=checkbox]]:checked:bg-center
     [[type=checkbox]]:checked:bg-no-repeat
-    [[type=checkbox]]:focus:outline-blue-france
+    [[type=checkbox]]:hover:bg-transparent
     [[type=checkbox]]:focus:outline-2
     [[type=checkbox]]:focus:outline-offset-2
+    [[type=radio]]:size-6
+    [[type=radio]]:shrink-0
+    [[type=radio]]:cursor-pointer
+    [[type=radio]]:appearance-none
+    [[type=radio]]:rounded-full
+    [[type=radio]]:border-[1.5px]
+    [[type=radio]]:bg-transparent
+    [[type=radio]]:p-0
+    [[type=radio]]:shadow-none
+    [[type=radio]]:checked:shadow-[inset_0_0_0_3px_white]
+    [[type=radio]]:hover:bg-transparent
+    [[type=radio]]:focus:outline-2
+    [[type=radio]]:focus:outline-offset-2
   `,
   variants: {
     intent: {

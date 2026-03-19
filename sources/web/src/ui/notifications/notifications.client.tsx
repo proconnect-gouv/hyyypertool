@@ -157,14 +157,14 @@ function NotificationItem({ notification }: NotificationItemProps) {
 
   return (
     <div
-      class={`relative py-4 pointer-events-auto ${VARIANT_STYLES[notification.variant]} transition duration-300 ${
+      class={`pointer-events-auto relative py-4 ${VARIANT_STYLES[notification.variant]} transition duration-300 ${
         isVisible ? "translate-y-0 opacity-100" : "-translate-y-8 opacity-0"
       }`}
       id={notification.id}
       onMouseEnter={pause}
       role="alert"
     >
-      <div class="max-w-7xl mx-auto px-4">
+      <div class="mx-auto max-w-7xl px-4">
         <div class="relative flex flex-row items-start justify-between">
           <p>
             <span class="relative mr-1 font-bold">{notification.title}</span>
@@ -173,7 +173,7 @@ function NotificationItem({ notification }: NotificationItemProps) {
             )}
           </p>
           <button
-            class="text-sm leading-6 min-h-8 px-3 py-1 ml-auto bg-transparent hover:bg-black/5"
+            class="ml-auto min-h-8 bg-transparent px-3 py-1 text-sm leading-6 hover:bg-black/5"
             onClick={close}
             title="Masquer le message"
             type="button"

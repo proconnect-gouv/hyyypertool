@@ -5,11 +5,18 @@ import { tv } from "tailwind-variants";
 //
 
 export const tag = tv({
-  base: [
-    "inline-flex items-center",
-    "text-sm leading-6 min-h-8 px-3 py-1 rounded-full",
-    "m-1",
-    "bg-blue-france-925",
-    "has-checked:bg-blue-france has-checked:text-white",
-  ].join(" "),
+  base: `
+    bg-blue-france-925
+    has-checked:bg-blue-france
+    m-1
+    inline-flex
+    min-h-8
+    items-center
+    rounded-full
+    px-3
+    py-1
+    text-sm
+    leading-6
+    has-checked:text-white
+  `,
 });

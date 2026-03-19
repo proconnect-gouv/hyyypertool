@@ -21,9 +21,9 @@ import { tv } from "tailwind-variants";
  * ```
  */
 export const callout = tv({
-  base: "relative p-6 mb-6 border-l-4 border-l-grey-200 bg-grey-contrast",
+  base: "border-l-grey-200 bg-grey-contrast relative mb-6 border-l-4 p-6",
   slots: {
-    title: "font-bold text-xl leading-7 mb-2",
+    title: "mb-2 text-xl leading-7 font-bold",
     text: "text-lg leading-7",
   },
   variants: {

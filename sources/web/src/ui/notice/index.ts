@@ -28,9 +28,8 @@ export const notice = tv({
   },
   variants: {
     type: {
-      info: "text-label-info bg-[#e8edff]",
-      warning:
-        "bg-alt-orange-terre-battue text-label-warning",
+      info: "text-label-info bg-blue-ecume",
+      warning: "bg-alt-orange-terre-battue text-label-warning",
       alert: "bg-alt-red-marianne text-label-error",
     },
   },
@@ -43,10 +42,9 @@ export const alert = tv({
   },
   variants: {
     intent: {
-      warning:
-        "bg-alt-orange-terre-battue text-label-warning",
+      warning: "bg-alt-orange-terre-battue text-label-warning",
       error: "bg-alt-red-marianne text-label-error",
-      info: "text-label-info bg-[#e8edff]",
+      info: "text-label-info bg-blue-ecume",
       success: "bg-alt-green-emeraude text-label-success",
     },
   },

@@ -1,9 +1,9 @@
 /* @jsxImportSource preact */
 
-import { effect, signal } from "@preact/signals";
-import { useEffect, useRef } from "preact/hooks";
 import { button } from "#src/ui/button";
 import { input, input_group, label } from "#src/ui/form";
+import { effect, signal } from "@preact/signals";
+import { useEffect, useRef } from "preact/hooks";
 import {
   dirty,
   flush_change,
@@ -185,7 +185,10 @@ export function SearchBar({
           spellcheck={false}
         />
         <button
-          class={button({ type: dirty.value ? undefined : "secondary", class: "rounded-l-none" })}
+          class={button({
+            type: dirty.value ? undefined : "secondary",
+            class: "rounded-l-none",
+          })}
           type="button"
           title="Rechercher"
           onClick={submit}

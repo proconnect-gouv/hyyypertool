@@ -5,12 +5,22 @@ import { tv, type VariantProps } from "tailwind-variants";
 //
 
 export const badge = tv({
-  base: [
-    "inline-flex items-center w-fit gap-1",
-    "text-xs leading-4 min-h-6 px-2 py-1",
-    "font-bold uppercase rounded-sm",
-    "bg-grey-contrast text-grey-1000",
-  ].join(" "),
+  base: `
+    bg-grey-contrast
+    text-grey-1000
+    inline-flex
+    min-h-6
+    w-fit
+    items-center
+    gap-1
+    rounded-sm
+    px-2
+    py-1
+    text-xs
+    leading-4
+    font-bold
+    uppercase
+    `,
   variants: {
     intent: {
       error: "text-label-error bg-alt-red-marianne",
@@ -20,7 +30,7 @@ export const badge = tv({
       warning: "text-label-warning bg-alt-orange-terre-battue",
     },
     size: {
-      sm: "text-[0.625rem] leading-3 min-h-5 px-1.5 py-0.5 gap-0.5",
+      sm: "min-h-5 gap-0.5 px-1.5 py-0.5 text-[0.625rem] leading-3",
     },
     icon: {
       left: "[&>svg:first-child]:-ml-0.5",

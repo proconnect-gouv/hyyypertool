@@ -106,19 +106,15 @@ Bun.spawn(
 
 //
 
-const watcher = watch(
-  OUTDIR,
-  { recursive: true },
-  (event, filename) => {
-    if (!filename) return;
-    console.log(
-      `\n[${new Date().toLocaleTimeString()}] ♻️ Detected ${event}: ${filename}`,
-    );
-    fetch("http://localhost:3000/___dev___/reload", { method: "POST" }).catch(
-      () => {},
-    );
-  },
-);
+const watcher = watch(OUTDIR, { recursive: true }, (event, filename) => {
+  if (!filename) return;
+  console.log(
+    `\n[${new Date().toLocaleTimeString()}] ♻️ Detected ${event}: ${filename}`,
+  );
+  fetch("http://localhost:3000/___dev___/reload", { method: "POST" }).catch(
+    () => {},
+  );
+});
 
 process.once("SIGINT", () => watcher.close());
 

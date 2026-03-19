@@ -292,25 +292,49 @@ export function componentsTailwind() {
           id="tw-radio-form"
           aria-labelledby="tw-radio-form-legend tw-radio-form-messages"
         >
-          <legend class={fieldset({ regular: true }).legend()} id="tw-radio-form-legend">
+          <legend
+            class={fieldset({ regular: true }).legend()}
+            id="tw-radio-form-legend"
+          >
             Légende pour l'ensemble des éléments
           </legend>
           <div class={fieldset().element()}>
             <div class={radio_group().base()}>
-              <input class={input()} type="radio" id="tw-radio-1" name="tw-radios" />
-              <label class={radio_group().label()} for="tw-radio-1">Radio 1</label>
+              <input
+                class={input()}
+                type="radio"
+                id="tw-radio-1"
+                name="tw-radios"
+              />
+              <label class={radio_group().label()} for="tw-radio-1">
+                Radio 1
+              </label>
             </div>
           </div>
           <div class={fieldset().element()}>
             <div class={radio_group().base()}>
-              <input class={input()} type="radio" id="tw-radio-2" name="tw-radios" />
-              <label class={radio_group().label()} for="tw-radio-2">Radio 2</label>
+              <input
+                class={input()}
+                type="radio"
+                id="tw-radio-2"
+                name="tw-radios"
+              />
+              <label class={radio_group().label()} for="tw-radio-2">
+                Radio 2
+              </label>
             </div>
           </div>
           <div class={fieldset().element()}>
             <div class={radio_group().base()}>
-              <input class={input()} type="radio" id="tw-radio-3" name="tw-radios" />
-              <label class={radio_group().label()} for="tw-radio-3">Radio 3</label>
+              <input
+                class={input()}
+                type="radio"
+                id="tw-radio-3"
+                name="tw-radios"
+              />
+              <label class={radio_group().label()} for="tw-radio-3">
+                Radio 3
+              </label>
             </div>
           </div>
           <div id="tw-radio-form-messages" aria-live="polite" />
@@ -321,27 +345,54 @@ export function componentsTailwind() {
           aria-labelledby="tw-checkbox-form-legend tw-checkbox-form-messages"
           style="margin-top: 1rem"
         >
-          <legend class={fieldset({ regular: true }).legend()} id="tw-checkbox-form-legend">
+          <legend
+            class={fieldset({ regular: true }).legend()}
+            id="tw-checkbox-form-legend"
+          >
             Légende pour l'ensemble des éléments
           </legend>
           <div class={fieldset().element()}>
             <div class={checkbox_group().base()}>
-              <input class={input()} name="checkbox1" id="tw-checkbox-1" type="checkbox" aria-describedby="tw-checkbox-1-messages" />
-              <label class={checkbox_group().label()} for="tw-checkbox-1">Checkbox 1</label>
+              <input
+                class={input()}
+                name="checkbox1"
+                id="tw-checkbox-1"
+                type="checkbox"
+                aria-describedby="tw-checkbox-1-messages"
+              />
+              <label class={checkbox_group().label()} for="tw-checkbox-1">
+                Checkbox 1
+              </label>
               <div id="tw-checkbox-1-messages" aria-live="polite" />
             </div>
           </div>
           <div class={fieldset().element()}>
             <div class={checkbox_group().base()}>
-              <input class={input()} name="checkbox2" id="tw-checkbox-2" type="checkbox" aria-describedby="tw-checkbox-2-messages" />
-              <label class={checkbox_group().label()} for="tw-checkbox-2">Checkbox 2</label>
+              <input
+                class={input()}
+                name="checkbox2"
+                id="tw-checkbox-2"
+                type="checkbox"
+                aria-describedby="tw-checkbox-2-messages"
+              />
+              <label class={checkbox_group().label()} for="tw-checkbox-2">
+                Checkbox 2
+              </label>
               <div id="tw-checkbox-2-messages" aria-live="polite" />
             </div>
           </div>
           <div class={fieldset().element()}>
             <div class={checkbox_group().base()}>
-              <input class={input()} name="checkbox3" id="tw-checkbox-3" type="checkbox" aria-describedby="tw-checkbox-3-messages" />
-              <label class={checkbox_group().label()} for="tw-checkbox-3">Checkbox 3</label>
+              <input
+                class={input()}
+                name="checkbox3"
+                id="tw-checkbox-3"
+                type="checkbox"
+                aria-describedby="tw-checkbox-3-messages"
+              />
+              <label class={checkbox_group().label()} for="tw-checkbox-3">
+                Checkbox 3
+              </label>
               <div id="tw-checkbox-3-messages" aria-live="polite" />
             </div>
           </div>

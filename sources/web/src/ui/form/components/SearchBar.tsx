@@ -17,7 +17,11 @@ export function SearchBar(props: {
   const { base, input: input_slot, button: button_slot } = search_bar();
   return (
     <div class={base()}>
-      {props.label && <label class="sr-only" for={props.id}>{props.label}</label>}
+      {props.label && (
+        <label class="sr-only" for={props.id}>
+          {props.label}
+        </label>
+      )}
       <input
         class={input_slot()}
         id={props.id}

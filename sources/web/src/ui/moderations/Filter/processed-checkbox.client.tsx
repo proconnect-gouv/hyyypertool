@@ -11,7 +11,7 @@ export function ProcessedCheckbox({}: ProcessedCheckboxProps) {
     parsed.value.processed_requests === undefined || has_search;
 
   return (
-    <label class="fr-tag m-1 bg-blue-france-925 has-checked:bg-(--blue-france-sun-113-625) has-checked:text-white">
+    <label class="fr-tag bg-blue-france-925 m-1 has-checked:bg-(--blue-france-sun-113-625) has-checked:text-white">
       <input
         checked={is_checked}
         hidden

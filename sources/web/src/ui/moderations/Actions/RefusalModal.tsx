@@ -55,9 +55,7 @@ export async function RefusalModal({ userEmail }: { userEmail: string }) {
         </div>
         <p class="mb-1">
           A propos de{" "}
-          <span class="font-bold text-blue-france">
-            {userEmail}{" "}
-          </span>
+          <span class="text-blue-france font-bold">{userEmail} </span>
           pour l'organisation <b>{moderation.organization.cached_libelle}</b>
         </p>
         <p class="mb-1">Motif de refus :</p>

@@ -16,6 +16,37 @@ export const MOTTO_LOGO_URL = `url("data:image/svg+xml;charset=utf8,%3Csvg xmlns
 
 //
 
+const header_logo = tv({
+  base: `
+    m-0
+    inline-block
+    indent-[-0.1em]
+    align-middle
+    text-[1.05rem]
+    leading-[1.0317460317em]
+    font-bold
+    tracking-[-0.01em]
+    uppercase
+    before:mb-[0.3333333333rem]
+    before:block
+    before:h-4
+    before:w-11
+    before:[background-image:var(--logo-bg),linear-gradient(90deg,#000091,#000091_50%,#e1000f_0,#e1000f),linear-gradient(90deg,#000,#000)]
+    before:bg-size-[2.75rem_1.125rem,2.75rem_1rem,0]
+    before:bg-no-repeat
+    before:content-['']
+    before:[bg-position:0_-0.0625rem,0_0,0_0]
+    after:block
+    after:min-w-10.5
+    after:bg-no-repeat
+    after:pt-[2.2083333333rem]
+    after:content-['']
+    after:[bg-image:var(--motto-bg)]
+    after:[bg-position:0_calc(100%+1.875rem)]
+    after:[bg-size:5.25rem_3.75rem]
+`,
+});
+
 export const header = tv({
   base: "bg-white drop-shadow-[0_1px_3px_rgba(0,0,18,0.16)]",
   slots: {
@@ -24,22 +55,7 @@ export const header = tv({
     brand: "flex items-center gap-4",
     brand_top: "flex items-center",
     container: "container mx-auto px-4",
-    logo: [
-      "m-0 inline-block indent-[-0.1em] align-middle text-[1.05rem] leading-[1.0317460317em] font-bold tracking-[-0.01em] uppercase",
-      "before:block before:content-['']",
-      "before:h-[1rem] before:w-[2.75rem]",
-      "before:mb-[0.3333333333rem]",
-      "before:bg-no-repeat",
-      "before:[background-image:var(--logo-bg),_linear-gradient(90deg,_#000091,_#000091_50%,_#e1000f_0,_#e1000f),_linear-gradient(90deg,_#000,_#000)]",
-      "before:[background-size:2.75rem_1.125rem,_2.75rem_1rem,_0]",
-      "before:[background-position:0_-0.0625rem,_0_0,_0_0]",
-      "after:block after:content-['']",
-      "after:min-w-[2.625rem] after:pt-[2.2083333333rem]",
-      "after:bg-no-repeat",
-      "after:[background-image:var(--motto-bg)]",
-      "after:[background-size:5.25rem_3.75rem]",
-      "after:[background-position:0_calc(100%_+_1.875rem)]",
-    ].join(" "),
+    logo: header_logo(),
     menu: "",
     service: "border-grey-200 border-l pl-4",
     service_tagline: "text-grey-850 m-0 text-sm leading-6",
@@ -54,11 +70,16 @@ export const nav = tv({
   slots: {
     list: "m-0 flex list-none gap-0 p-0",
     item: "",
-    link: [
-      "inline-flex items-center px-4 py-3",
-      "text-grey-850 text-sm",
-      "hover:bg-grey-50",
-      "aria-[current=true]:text-blue-france aria-[current=true]:shadow-[inset_0_-2px_0_0_var(--color-blue-france)]",
-    ].join(" "),
+    link: `
+      text-grey-850
+      hover:bg-grey-50
+      aria-current:text-blue-france
+      inline-flex
+      items-center
+      px-4
+      py-3
+      text-sm
+      aria-current:shadow-[inset_0_-2px_0_0_var(--color-blue-france)]
+    `,
   },
 });
