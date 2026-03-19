@@ -41,7 +41,7 @@ function Main() {
 
   return (
     <main
-      class="max-w-7xl mx-auto px-4 my-12"
+      class="mx-auto my-12 max-w-7xl px-4"
       {...hx_domains_query_props}
       hx-sync="this"
       hx-trigger={[
@@ -116,6 +116,7 @@ function Table() {
           ))}
         </tbody>
         <Foot
+          colspan={5}
           count={count}
           hx_query_props={hx_domains_query_props}
           id={$table}

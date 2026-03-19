@@ -15,14 +15,8 @@ import { join } from "path";
 const PROJECT_ROOT = join(import.meta.dir, "..");
 const OUTDIR = join(PROJECT_ROOT, "bin/public/built");
 
-// Dynamic import to trigger live reload
-// The notifyReload function is exported from the web app's ___dev___ route
-let notifyReload: (() => void) | undefined;
 async function loadReloadNotifier() {
   try {
-    const module =
-      await import("../sources/web/src/routes/___dev___/reload.tsx");
-    notifyReload = module.notifyReload;
     console.log("[live-reload] Notifier loaded");
   } catch (error) {
     console.warn("[live-reload] Could not load notifier:", error);
@@ -50,7 +44,6 @@ async function buildAllClientScripts() {
   });
 
   console.log("");
-  notifyReload?.();
 }
 
 function watchClientScripts() {
@@ -110,6 +103,26 @@ Bun.spawn(
     stderr: "inherit",
   },
 );
+
+//
+
+const watcher = watch(
+  OUTDIR,
+  { recursive: true },
+  (event, filename) => {
+    if (!filename) return;
+    console.log(
+      `\n[${new Date().toLocaleTimeString()}] ♻️ Detected ${event}: ${filename}`,
+    );
+    fetch("http://localhost:3000/___dev___/reload", { method: "POST" }).catch(
+      () => {},
+    );
+  },
+);
+
+process.once("SIGINT", () => watcher.close());
+
+//
 
 console.log("🌐 Starting dev server...\n");
 

@@ -100,7 +100,7 @@ function Main({
   poll_interval: number;
 }) {
   return (
-    <main class="max-w-7xl mx-auto px-4 my-12">
+    <main class="mx-auto my-12 max-w-7xl px-4">
       <h1>Liste des moderations</h1>
       <Filter search={search} nonce={nonce} poll_interval={poll_interval} />
       <Table />
@@ -224,6 +224,7 @@ async function Table() {
           ))}
         </tbody>
         <Foot
+          colspan={8}
           count={count}
           hx_query_props={{
             ...hx_moderations_base_props,

@@ -3,8 +3,8 @@
 import type { HyyyperUser } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { z_username } from "#src/schema";
-import { button } from "#src/ui/button";
 import { badge } from "#src/ui/badge";
+import { button } from "#src/ui/button";
 import { header, MARIANNE_LOGO_URL, MOTTO_LOGO_URL, nav } from "#src/ui/header";
 import { Icon } from "#src/ui/icons/components";
 import { NotificationIsland } from "#src/ui/notifications";
@@ -23,14 +23,12 @@ export function Main_Layout({ children }: PropsWithChildren) {
   const username = z_username.parse(userinfo);
   return (
     <RootLayout>
-      <div class="flex min-h-full grow flex-col">
-        <Header
-          username={username}
-          email={userinfo?.email}
-          hyyyper_user={hyyyper_user}
-        />
-        <div class="relative flex flex-1 flex-col">{children}</div>
-      </div>
+      <Header
+        username={username}
+        email={userinfo?.email}
+        hyyyper_user={hyyyper_user}
+      />
+      <div class="container mx-auto">{children}</div>
       <NotificationIsland nonce={nonce} />
     </RootLayout>
   );

@@ -8,8 +8,6 @@ import reload_router from "./reload";
 
 //
 
-export { notifyReload } from "./reload";
-
 export default new Hono<AppContext>()
   .use("*", async (c, next) => {
     if (c.env.NODE_ENV !== "development") return c.notFound();
