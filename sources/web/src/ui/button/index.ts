@@ -20,6 +20,9 @@ export const button = tv({
     font-medium
     text-white
     no-underline
+    disabled:cursor-not-allowed
+    disabled:bg-grey-200
+    disabled:text-grey-425
   `,
   variants: {
     intent: {

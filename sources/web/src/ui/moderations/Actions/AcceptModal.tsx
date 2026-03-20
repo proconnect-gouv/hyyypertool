@@ -1,4 +1,4 @@
-import { HtmxEvents } from "#src/htmx";
+import { HtmxEvents, hx_disabled_form_elements } from "#src/htmx";
 import { button } from "#src/ui/button";
 import { Svg } from "#src/ui/icons/components";
 import { urls } from "#src/urls";
@@ -48,6 +48,7 @@ export async function AcceptModal({
       </p>
       <form
         {...hx_path_validate_moderation}
+        {...hx_disabled_form_elements}
         hx-swap="none"
         _={`
             on submit
