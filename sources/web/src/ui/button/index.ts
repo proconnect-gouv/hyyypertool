@@ -8,6 +8,8 @@ export const button = tv({
   base: `
     bg-blue-france
     hover:bg-blue-france-hover
+    disabled:bg-grey-200
+    disabled:text-grey-425
     inline-flex
     min-h-10
     w-fit
@@ -21,8 +23,6 @@ export const button = tv({
     text-white
     no-underline
     disabled:cursor-not-allowed
-    disabled:bg-grey-200
-    disabled:text-grey-425
   `,
   variants: {
     intent: {

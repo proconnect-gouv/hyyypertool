@@ -17,12 +17,18 @@ export async function AddDomain() {
         <div class="flex items-stretch">
           <input
             aria-describedby={$describedby}
-            id={$describedby}
+            autocomplete="off"
             class={input({ class: "flex-1" })}
-            type="email"
+            data-1p-ignore
+            data-bwignore
+            data-form-type="other"
+            data-lpignore="true"
+            id={$describedby}
+            name="problematic_email"
             placeholder="exemple@domaine.com"
             required
-            name="problematic_email"
+            spellcheck={false}
+            type="email"
           />
           <button class={button()} type="submit">
             Ajouter

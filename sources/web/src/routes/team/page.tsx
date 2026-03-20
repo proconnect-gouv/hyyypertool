@@ -73,11 +73,17 @@ function AddMember() {
             Email
           </label>
           <input
+            autocomplete="email"
             class={input()}
+            data-1p-ignore
+            data-bwignore
+            data-form-type="other"
+            data-lpignore="true"
             id="new-email"
             name="email"
             placeholder="email@example.gouv.fr"
             required
+            spellcheck={false}
             type="email"
           />
         </div>

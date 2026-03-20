@@ -54,7 +54,7 @@ test("GET /organizations/leaders - happy path with document", async () => {
   expect(await render_html(await response.text())).toMatchInlineSnapshot(
     `
       "<a
-        class="inline-flex w-fit items-center font-medium no-underline min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france hover:bg-grey-50 shadow-[inset_0_0_0_1px_var(--color-grey-200)] bg-white"
+        class="disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france hover:bg-grey-50 shadow-[inset_0_0_0_1px_var(--color-grey-200)] bg-white"
         href="https://example.com/leaders-doc.pdf"
         rel="noopener noreferrer"
         target="_blank"
@@ -87,7 +87,7 @@ test("GET /organizations/leaders - timeout error shows retry button", async () =
   expect(await render_html(await response.text())).toMatchInlineSnapshot(
     `
       "<button
-        class="inline-flex w-fit items-center font-medium no-underline min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france hover:bg-grey-50 bg-transparent shadow-[inset_0_0_0_1px_var(--color-grey-200)]"
+        class="disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france hover:bg-grey-50 bg-transparent shadow-[inset_0_0_0_1px_var(--color-grey-200)]"
         hx-get="/organizations/leaders?retry=true&amp;siret=12345678901234"
         hx-swap="outerHTML"
       >
@@ -135,7 +135,7 @@ test("GET /organizations/leaders - retry succeeds with longer timeout", async ()
   expect(response.status).toBe(200);
   expect(await render_html(await response.text())).toMatchInlineSnapshot(`
     "<a
-      class="inline-flex w-fit items-center font-medium no-underline min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france hover:bg-grey-50 shadow-[inset_0_0_0_1px_var(--color-grey-200)] bg-white"
+      class="disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france hover:bg-grey-50 shadow-[inset_0_0_0_1px_var(--color-grey-200)] bg-white"
       href="https://example.com/retry-success.pdf"
       rel="noopener noreferrer"
       target="_blank"
@@ -166,7 +166,7 @@ test("GET /organizations/leaders - retry fails, button still shown for further r
   expect(response.status).toBe(200);
   expect(await render_html(await response.text())).toMatchInlineSnapshot(`
     "<button
-      class="inline-flex w-fit items-center font-medium no-underline min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france hover:bg-grey-50 bg-transparent shadow-[inset_0_0_0_1px_var(--color-grey-200)]"
+      class="disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france hover:bg-grey-50 bg-transparent shadow-[inset_0_0_0_1px_var(--color-grey-200)]"
       hx-get="/organizations/leaders?retry=true&amp;siret=12345678901234"
       hx-swap="outerHTML"
     >
