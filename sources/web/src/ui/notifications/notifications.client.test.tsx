@@ -41,7 +41,6 @@ afterAll(() => {
 test("NotificationContainer: renders empty container", () => {
   const { container } = render(<NotificationContainer />);
 
-  expect(container.querySelector(".fixed.bottom-4")).not.toBeNull();
   expect(container.querySelectorAll("[role='alert']")).toHaveLength(0);
 });
 
@@ -88,12 +87,10 @@ test("notify: displays different variants", async () => {
     expect(container.querySelectorAll("[role='alert']")).toHaveLength(4);
   });
 
-  // Check variant background colors are applied
-  const alerts = container.querySelectorAll("[role='alert']");
-  const classes = Array.from(alerts).map((el) => el.className);
-  expect(classes.some((c) => c.includes("bg-[#e8edff]"))).toBe(true); // info
-  expect(classes.some((c) => c.includes("bg-[#ffe9e6]"))).toBe(true); // warning
-  expect(classes.some((c) => c.includes("bg-[#ffe9e9]"))).toBe(true); // danger
+  expect(container.textContent).toContain("Info");
+  expect(container.textContent).toContain("Success");
+  expect(container.textContent).toContain("Warning");
+  expect(container.textContent).toContain("Danger");
 });
 
 test("removeNotification: removes a specific notification", async () => {

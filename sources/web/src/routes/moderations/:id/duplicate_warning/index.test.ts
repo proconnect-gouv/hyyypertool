@@ -64,14 +64,18 @@ test("GET /moderations/:id/duplicate_warning", async () => {
   expect(format(await response.text(), { parser: "html" })).resolves
     .toMatchInlineSnapshot(`
     "<!DOCTYPE html>
-    <div class="mb-4 p-4 text-sm bg-alt-orange-terre-battue text-label-warning">
-      <h3 class="mb-1 font-bold">Attention : demande multiples</h3>
+    <div
+      class="border-grey-200 relative mb-4 border border-l-[2.5rem] py-4 pr-9 pl-4 text-sm before:absolute before:top-4 before:-left-8 before:size-6 before:bg-white before:mask-size-[100%_100%] before:content-[&#39;&#39;] border-l-warning bg-alt-orange-terre-battue text-label-warning before:[mask-image:var(--alert-icon-warning)]"
+    >
+      <h3 class="mb-1 text-lg leading-6 font-bold">
+        Attention : demande multiples
+      </h3>
       <p>Il s&#39;agit de la 2e demande pour cette organisation</p>
       <ul>
         <li>
           <a href="/moderations/1">Moderation#1</a>
           <p
-            class="inline-flex items-center w-fit gap-1 text-xs leading-4 min-h-6 px-2 py-1 font-bold uppercase rounded-sm text-label-success bg-alt-green-emeraude [&amp;&gt;svg:first-child]:-ml-0.5"
+            class="inline-flex min-h-6 w-fit items-center gap-1 rounded-sm px-2 py-1 text-xs leading-4 font-bold uppercase text-label-success bg-alt-green-emeraude [&amp;&gt;svg:first-child]:-ml-0.5"
           >
             <svg
               viewBox="0 0 24 24"
@@ -87,7 +91,7 @@ test("GET /moderations/:id/duplicate_warning", async () => {
         <li>
           <a href="/moderations/2">Moderation#2</a>
           <p
-            class="inline-flex items-center w-fit gap-1 text-xs leading-4 min-h-6 px-2 py-1 font-bold uppercase rounded-sm text-label-success bg-alt-green-emeraude [&amp;&gt;svg:first-child]:-ml-0.5"
+            class="inline-flex min-h-6 w-fit items-center gap-1 rounded-sm px-2 py-1 text-xs leading-4 font-bold uppercase text-label-success bg-alt-green-emeraude [&amp;&gt;svg:first-child]:-ml-0.5"
           >
             <svg
               viewBox="0 0 24 24"

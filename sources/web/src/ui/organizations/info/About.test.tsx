@@ -66,7 +66,7 @@ test("render about section", async () => {
               const props = {
                 children: "",
                 className:
-                  "inline-flex w-fit items-center font-medium no-underline min-h-8 gap-1 py-1 text-sm leading-6 text-blue-france hover:bg-grey-50 bg-transparent shadow-[inset_0_0_0_1px_var(--color-grey-200)] justify-center px-2 ml-2",
+                  "inline-flex w-fit items-center font-medium no-underline min-h-8 gap-1 text-sm leading-6 text-blue-france hover:bg-grey-50 bg-transparent shadow-[inset_0_0_0_1px_var(--color-grey-200)] aspect-square justify-center p-0 ml-2",
                 text: "cached_libelle",
               };
               let mounted = false;
@@ -101,7 +101,7 @@ test("render about section", async () => {
               const props = {
                 children: "",
                 className:
-                  "inline-flex w-fit items-center font-medium no-underline min-h-8 gap-1 py-1 text-sm leading-6 text-blue-france hover:bg-grey-50 bg-transparent shadow-[inset_0_0_0_1px_var(--color-grey-200)] justify-center px-2 ml-2",
+                  "inline-flex w-fit items-center font-medium no-underline min-h-8 gap-1 text-sm leading-6 text-blue-france hover:bg-grey-50 bg-transparent shadow-[inset_0_0_0_1px_var(--color-grey-200)] aspect-square justify-center p-0 ml-2",
                 text: "siret",
               };
               let mounted = false;

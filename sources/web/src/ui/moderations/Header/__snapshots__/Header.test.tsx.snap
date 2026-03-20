@@ -14,7 +14,7 @@ exports[`render header section 1`] = `
     <h1 class="text-2xl font-bold">🕵️ Adora Pony</h1>
     <div>
       <p
-        class="inline-flex items-center w-fit gap-1 text-xs leading-4 min-h-6 px-2 py-1 font-bold uppercase rounded-sm text-label-success bg-alt-green-emeraude [&amp;&gt;svg:first-child]:-ml-0.5"
+        class="inline-flex min-h-6 w-fit items-center gap-1 rounded-sm px-2 py-1 text-xs leading-4 font-bold uppercase text-label-success bg-alt-green-emeraude [&amp;&gt;svg:first-child]:-ml-0.5"
       >
         <svg
           viewBox="0 0 24 24"
@@ -28,7 +28,7 @@ exports[`render header section 1`] = `
       </p>
     </div>
   </section>
-  <div class="relative py-4 text-label-info bg-[#e8edff]">
+  <div class="relative py-4 bg-blue-ecume text-label-info">
     <div class="px-4">
       <div class="relative flex flex-row items-start justify-between">
         <div class="relative mr-1 font-bold">
