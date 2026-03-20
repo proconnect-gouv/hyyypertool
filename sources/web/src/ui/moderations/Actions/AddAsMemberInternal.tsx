@@ -13,7 +13,7 @@ export function AddAsMemberInternal() {
   } = useContext(context);
   const id = hyper_ref();
   return (
-    <div class={radio_group()}>
+    <div class={radio_group().base()}>
       <input
         id={id}
         name={validate_form_schema.keyof().enum.add_member}
