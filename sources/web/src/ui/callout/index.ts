@@ -21,18 +21,18 @@ import { tv } from "tailwind-variants";
  * ```
  */
 export const callout = tv({
-  base: "fr-callout",
+  base: "border-l-grey-200 bg-grey-contrast relative mb-6 border-l-4 p-6",
   slots: {
-    title: "fr-callout__title",
-    text: "fr-callout__text",
+    title: "mb-2 text-xl leading-7 font-bold",
+    text: "text-lg leading-7",
   },
   variants: {
     intent: {
       success: {
-        base: "fr-callout--green-emeraude fr-icon-information-line",
+        base: "border-l-green-emeraude bg-[#c3fad5]",
       },
       warning: {
-        base: "fr-callout--brown-caramel",
+        base: "border-l-brown-caramel bg-[#f7ebe5]",
       },
     },
   },

@@ -5,6 +5,7 @@ import { hx_include, hx_trigger_from_body } from "#src/htmx";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import { FrNumberConverter } from "#src/ui/number";
 import { formattedPlural } from "#src/ui/plurial";
+import { table } from "#src/ui/table";
 import { urls } from "#src/urls";
 import { Fiche } from "./Fiche";
 import type { get_organization_by_id } from "./get_organization_by_id.query";
@@ -35,15 +36,15 @@ export default async function Page({
 
   return (
     <main>
-      <div class="bg-(--background-alt-blue-france) py-6">
-        <div class="fr-container py-6">
+      <div class="bg-blue-france-975 py-6">
+        <div class="container mx-auto px-4 py-6">
           <h1>🏛 A propos de l'organisation</h1>
 
           <Fiche organization={organization} banaticUrl={banaticUrl} />
         </div>
       </div>
-      <hr />
-      <div class="fr-container">
+      <hr class="border-none py-3" />
+      <div class="container mx-auto p-3">
         <h3 id={$domains_describedby}>
           🌐 {FrNumberConverter.format(domains_count)}{" "}
           {formattedPlural(domains_count, {
@@ -59,7 +60,7 @@ export default async function Page({
             ...hx_trigger_from_body([ORGANISATION_EVENTS.enum.DOMAIN_UPDATED]),
           ]}
         ></div>
-        <hr />
+        <hr class="border-none py-3" />
         <br />
         <MembersInTheOrganization
           organization={organization}
@@ -101,7 +102,7 @@ async function MembersInTheOrganization({
 
         <div
           {...hx_get_members_query_props}
-          class="fr-table"
+          class={table()}
           hx-include={hx_include([$page_ref])}
           hx-target="this"
           hx-trigger={[

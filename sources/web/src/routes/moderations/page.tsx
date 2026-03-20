@@ -8,7 +8,10 @@ import {
 import type { Pagination } from "#src/schema";
 import { date_to_string } from "#src/time";
 import { badge } from "#src/ui";
+import { button } from "#src/ui/button";
+import { fieldset, input_group, label, tags_group } from "#src/ui/form";
 import { Foot } from "#src/ui/hx_table";
+import { Svg } from "#src/ui/icons/components";
 import {
   HideTypeCheckboxIsland,
   ProcessedCheckboxIsland,
@@ -18,7 +21,7 @@ import {
   SearchModeratedByIsland,
   SearchSiretIsland,
 } from "#src/ui/moderations/Filter";
-import { row } from "#src/ui/table";
+import { row, table } from "#src/ui/table";
 import { urls } from "#src/urls";
 import {
   ModerationStatusSchema,
@@ -98,7 +101,7 @@ function Main({
   poll_interval: number;
 }) {
   return (
-    <main class="fr-container my-12">
+    <main class="container mx-auto my-12 px-4">
       <h1>Liste des moderations</h1>
       <Filter search={search} nonce={nonce} poll_interval={poll_interval} />
       <Table />
@@ -135,20 +138,20 @@ function Filter({
         sp_names_list={sp_names_list}
       />
       <div class="mt-4 grid grid-cols-2 gap-6">
-        <div class="fr-input-group">
-          <label class="fr-label" for="filter-email">
+        <div class={input_group()}>
+          <label class={label()} for="filter-email">
             Email
           </label>
           <SearchEmailIsland nonce={nonce} placeholder="Recherche par Email" />
         </div>
-        <div class="fr-input-group">
-          <label class="fr-label" for="filter-siret">
+        <div class={input_group()}>
+          <label class={label()} for="filter-siret">
             Siret
           </label>
           <SearchSiretIsland nonce={nonce} placeholder="Recherche par SIRET" />
         </div>
       </div>
-      <ul class="fr-tags-group">
+      <ul class={tags_group()}>
         <li>
           <ProcessedCheckboxIsland nonce={nonce} />
         </li>
@@ -168,18 +171,18 @@ function Filter({
         </li>
       </ul>
 
-      <div class="fr-fieldset__element">
-        <div class="fr-input-group">
-          <label class="fr-label" for="filter-moderated-by">
+      <div class={fieldset().element()}>
+        <div class={input_group()}>
+          <label class={label()} for="filter-moderated-by">
             Filtrer par jours
           </label>
           <SearchDateIsland nonce={nonce} />
         </div>
       </div>
 
-      <div class="fr-fieldset__element">
-        <div class="fr-input-group">
-          <label class="fr-label" for="filter-moderated-by">
+      <div class={fieldset().element()}>
+        <div class={input_group()}>
+          <label class={label()} for="filter-moderated-by">
             Filtrer par modérateur
           </label>
           <SearchModeratedByIsland
@@ -189,8 +192,8 @@ function Filter({
         </div>
       </div>
 
-      <div class="fr-fieldset__element">
-        <a class="fr-btn" href={urls.moderations.$url().pathname}>
+      <div class={fieldset().element()}>
+        <a class={button()} href={urls.moderations.$url().pathname}>
           Réinitialiser la recherche, les filtres et les tris
         </a>
       </div>
@@ -202,8 +205,8 @@ async function Table() {
   const { pagination, query_result } = useContext(Moderations_Context);
   const { count, moderations } = query_result;
   return (
-    <div class="fr-table *:table!" id={MODERATION_TABLE_ID}>
-      <table>
+    <div id={MODERATION_TABLE_ID}>
+      <table class={table()}>
         <thead>
           <tr>
             <th>Statut</th>
@@ -222,6 +225,7 @@ async function Table() {
           ))}
         </tbody>
         <Foot
+          colspan={8}
           count={count}
           hx_query_props={{
             ...hx_moderations_base_props,
@@ -265,12 +269,12 @@ function Row({ key, moderation }: { key?: string; moderation: Moderation }) {
       >
         {user.family_name}
       </td>
-      <td class="break-words">{user.given_name}</td>
+      <td class="warp-break-word">{user.given_name}</td>
       <td class="max-w-48 overflow-hidden text-ellipsis" title={user.email}>
         {user.email}
       </td>
-      <td class="break-words">{organization.siret}</td>
-      <td class="break-words">{moderation.sp_name}</td>
+      <td class="warp-break-word">{organization.siret}</td>
+      <td class="warp-break-word">{moderation.sp_name}</td>
       <td>
         <a
           class="after:absolute after:inset-0 after:content-[''] focus:outline-none"
@@ -295,15 +299,18 @@ function StatusCell({
   const { data: status } = ModerationStatusSchema.safeParse(moderation_status);
   if (type === undefined || status === undefined || status === "unknown")
     return (
-      <>
+      <span class="wrap-break-word">
         {moderation_type_to_emoji(moderation_type)}
         {moderation_type_to_title(moderation_type)}
-      </>
+      </span>
     );
 
   return match({ status })
     .with({ status: "accepted" }, () => (
-      <span class={badge({ intent: "success" })}>Accepté</span>
+      <span class={badge({ icon: "left", intent: "success" })}>
+        <Svg name="check" />
+        Accepté
+      </span>
     ))
     .with({ status: "pending" }, () => (
       <span class={badge()}>
@@ -312,10 +319,16 @@ function StatusCell({
       </span>
     ))
     .with({ status: "rejected" }, () => (
-      <span class={badge({ intent: "error" })}>Rejeté</span>
+      <span class={badge({ icon: "left", intent: "error" })}>
+        <Svg name="error" />
+        Rejeté
+      </span>
     ))
     .with({ status: "reopened" }, () => (
-      <span class={badge({ intent: "warning" })}>Ré-ouvert</span>
+      <span class={badge({ icon: "left", intent: "warning" })}>
+        <Svg name="warning" />
+        Ré-ouvert
+      </span>
     ))
     .exhaustive();
 }

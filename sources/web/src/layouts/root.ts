@@ -15,8 +15,8 @@ export function RootLayout({ children }: PropsWithChildren) {
 
   return html`
     <html
+      class="font-marianne"
       lang="fr"
-      data-fr-scheme="system"
       hx-ext="${[
         config.NODE_ENV === "production" ? "" : "debug",
         "include-vals",
@@ -46,21 +46,21 @@ export function RootLayout({ children }: PropsWithChildren) {
 
         <link
           rel="apple-touch-icon"
-          href="${config.ASSETS_PATH}/node_modules/@gouvfr/dsfr/dist/favicon/apple-touch-icon.png"
+          href="${config.ASSETS_PATH}/public/assets/favicon/apple-touch-icon.png"
         />
         <link
           rel="icon"
-          href="${config.ASSETS_PATH}/node_modules/@gouvfr/dsfr/dist/favicon/favicon.svg"
+          href="${config.ASSETS_PATH}/public/assets/favicon/favicon.svg"
           type="image/svg+xml"
         />
         <link
           rel="shortcut icon"
-          href="${config.ASSETS_PATH}/node_modules/@gouvfr/dsfr/dist/favicon/favicon.ico"
+          href="${config.ASSETS_PATH}/public/assets/favicon/favicon.ico"
           type="image/x-icon"
         />
         <link
           rel="manifest"
-          href="${config.ASSETS_PATH}/node_modules/@gouvfr/dsfr/dist/favicon/manifest.webmanifest"
+          href="${config.ASSETS_PATH}/public/assets/favicon/manifest.webmanifest"
           crossorigin="use-credentials"
         />
 
@@ -78,24 +78,6 @@ export function RootLayout({ children }: PropsWithChildren) {
           rel="stylesheet"
           href="${config.ASSETS_PATH}/node_modules/animate.css/source/bouncing_entrances/bounceIn.css"
         />
-
-        <!--  -->
-
-        ${config.NODE_ENV === "production"
-          ? html`<style>
-              @import "${config.ASSETS_PATH}/node_modules/@gouvfr/dsfr/dist/dsfr/dsfr.min.css"
-                layer(dsfr);
-
-              @import "${config.ASSETS_PATH}/node_modules/@gouvfr/dsfr/dist/utility/utility.min.css"
-                layer(dsfr-utility);
-            </style>`
-          : html`<style>
-              @import "${config.ASSETS_PATH}/node_modules/@gouvfr/dsfr/dist/dsfr/dsfr.css"
-                layer(dsfr);
-
-              @import "${config.ASSETS_PATH}/node_modules/@gouvfr/dsfr/dist/utility/utility.css"
-                layer(dsfr-utility);
-            </style>`}
 
         <!--  -->
 

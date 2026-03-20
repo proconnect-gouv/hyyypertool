@@ -1,5 +1,6 @@
 /* @jsxImportSource preact */
 
+import { tag } from "#src/ui/tag";
 import { parsed, update_q } from "./q-signal.client";
 
 export interface HideTypeCheckboxProps extends Record<string, unknown> {
@@ -11,7 +12,7 @@ export function HideTypeCheckbox({ qualifier, label }: HideTypeCheckboxProps) {
   const is_checked = parsed.value.exclude_types.includes(qualifier);
 
   return (
-    <label class="fr-tag m-1 bg-(--background-action-low-blue-france) has-checked:bg-(--blue-france-sun-113-625) has-checked:text-white">
+    <label class={tag({ class: "m-1" })}>
       <input
         checked={is_checked}
         hidden

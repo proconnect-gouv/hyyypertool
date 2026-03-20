@@ -3,6 +3,7 @@
  * Preact CopyButton client-side component
  */
 
+import { icon } from "#src/ui/icons";
 import { useCallback, useState } from "preact/hooks";
 
 //
@@ -55,14 +56,22 @@ export function CopyButtonClient({
       onClick={handleClick}
       {...otherProps}
     >
-      <span
-        class={`fr-icon-clipboard-line ${copied ? "hidden" : ""}`}
+      <svg
+        class={`h-4 w-4 ${copied ? "hidden" : ""}`}
         aria-hidden="true"
-      ></span>
-      <span
-        class={`fr-icon-check-line ${!copied ? "hidden" : ""}`}
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path class={icon({ name: "clipboard" })} />
+      </svg>
+      <svg
+        class={`h-4 w-4 ${!copied ? "hidden" : ""}`}
         aria-hidden="true"
-      ></span>
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path class={icon({ name: "check" })} />
+      </svg>
       {children}
     </button>
   );

@@ -1,5 +1,7 @@
 /* @jsxImportSource preact */
 
+import { button } from "#src/ui/button";
+import { input, input_group, label } from "#src/ui/form";
 import { effect, signal } from "@preact/signals";
 import { useEffect, useRef } from "preact/hooks";
 import {
@@ -145,14 +147,14 @@ export function SearchBar({
   };
 
   return (
-    <div class="fr-input-group">
-      <label class="fr-label" for="q">
+    <div class={input_group()}>
+      <label class={label()} for="q">
         Hyyyper Filter
       </label>
       <div class="relative flex">
         <input
           autocomplete="off"
-          class="fr-input w-full rounded-r-none border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+          class={input({ class: "rounded-r-none" })}
           id="q"
           name="q"
           placeholder="Filtrer les modérations…"
@@ -160,14 +162,16 @@ export function SearchBar({
           type="search"
           value={text.value}
           onInput={(e) => {
-            const el = e.target as HTMLInputElement;
+            const el = e.target;
+            if (!(el && el instanceof HTMLInputElement)) return;
             text.value = el.value;
             cursor_position.value = el.selectionStart ?? el.value.length;
             dropdown_open.value = true;
             selected_index.value = 0;
           }}
           onClick={(e) => {
-            const el = e.target as HTMLInputElement;
+            const el = e.target;
+            if (!(el && el instanceof HTMLInputElement)) return;
             cursor_position.value = el.selectionStart ?? el.value.length;
             dropdown_open.value = true;
             selected_index.value = 0;
@@ -183,7 +187,14 @@ export function SearchBar({
           spellcheck={false}
         />
         <button
-          class={`fr-btn rounded-l-none ${dirty.value ? "" : "fr-btn--secondary"}`}
+          class={button({
+            type: dirty.value ? undefined : "secondary",
+            class: `
+              rounded-l-none
+              transition-[background-color,box-shadow,color]
+              delay-1000
+              `,
+          })}
           type="button"
           title="Rechercher"
           onClick={submit}

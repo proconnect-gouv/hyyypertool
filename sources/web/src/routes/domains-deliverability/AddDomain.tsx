@@ -1,4 +1,6 @@
 import { hyper_ref } from "#src/html";
+import { button } from "#src/ui/button";
+import { input, input_group, label } from "#src/ui/form";
 import { urls } from "#src/urls";
 
 export async function AddDomain() {
@@ -8,21 +10,27 @@ export async function AddDomain() {
 
   return (
     <form {...hx_add_props} hx-swap="none">
-      <div class="fr-input-group">
-        <label class="fr-label" for={$describedby}>
+      <div class={input_group()}>
+        <label class={label()} for={$describedby}>
           Ajouter un email problématique
         </label>
-        <div class="fr-input-wrap fr-input-wrap--addon">
+        <div class="flex items-stretch">
           <input
             aria-describedby={$describedby}
+            autocomplete="off"
+            class={input({ class: "flex-1" })}
+            data-1p-ignore
+            data-bwignore
+            data-form-type="other"
+            data-lpignore="true"
             id={$describedby}
-            class="fr-input"
-            type="email"
+            name="problematic_email"
             placeholder="exemple@domaine.com"
             required
-            name="problematic_email"
+            spellcheck={false}
+            type="email"
           />
-          <button class="fr-btn" type="submit">
+          <button class={button()} type="submit">
             Ajouter
           </button>
         </div>

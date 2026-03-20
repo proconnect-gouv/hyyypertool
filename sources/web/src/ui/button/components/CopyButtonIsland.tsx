@@ -23,7 +23,7 @@ type CopyButtonIslandProps = PropsWithChildren<{
   Omit<JSX.IntrinsicElements["button"], "class" | "children">;
 
 const copy_button_style = tv({
-  base: "text-(--text-action-high-blue-france)",
+  base: "text-blue-france",
   extend: button,
 });
 
@@ -52,6 +52,7 @@ export function CopyButtonIsland(props: CopyButtonIslandProps) {
   } = props;
 
   const buttonClass = copy_button_style({
+    icon: children ? "left" : "only",
     ...variant,
     className: String(className || ""),
     intent: "ghost",

@@ -25,9 +25,7 @@ export function Popover({
       tabindex={-1}
       {...other_props}
     >
-      <div class="py-1" role="none">
-        {children}
-      </div>
+      <div role="none">{children}</div>
     </div>
   );
 }
@@ -47,7 +45,7 @@ const styles = tv({
     divide-gray-100
     rounded-md
     bg-white
-    shadow
+    shadow-[0_2px_6px_rgba(0,0,18,.16)]
     `,
   variants: {},
 });

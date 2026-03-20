@@ -8,9 +8,10 @@ exports[`render inactive warning 1`] = `
 exports[`render nothing 1`] = `
 "<!DOCTYPE html>
 <section>
-  <div class="fr-alert fr-alert--warning fr-mb-2w">
-    <i class="bi bi-exclamation-triangle-fill"></i>
-    <h3 class="fr-alert__title">
+  <div
+    class="border-grey-200 relative mb-4 border border-l-[2.5rem] py-4 pr-9 pl-4 text-sm before:absolute before:top-4 before:-left-8 before:size-6 before:bg-white before:mask-size-[100%_100%] before:content-[&#39;&#39;] border-l-warning bg-alt-orange-terre-battue text-label-warning before:[mask-image:var(--alert-icon-warning)]"
+  >
+    <h3 class="mb-1 text-lg leading-6 font-bold">
       Attention : cette organisation a cessé son activité.
     </h3>
   </div>

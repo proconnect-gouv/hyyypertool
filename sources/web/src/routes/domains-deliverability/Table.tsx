@@ -1,4 +1,6 @@
 import { LocalTime } from "#src/ui";
+import { Svg } from "#src/ui/icons/components";
+import { table } from "#src/ui/table";
 import { urls } from "#src/urls";
 import { get_email_deliverability_whitelist } from "./get_email_deliverability_whitelist.query";
 
@@ -12,24 +14,22 @@ export async function Table({
   whitelist: EmailDelivrabilityWhiteList[];
 }) {
   return (
-    <div class="fr-table *:table!">
-      <table>
-        <thead>
-          <tr>
-            <th>Email problématique</th>
-            <th>Domaine de l'email</th>
-            <th>Vérifié par</th>
-            <th>Vérifié le</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {whitelist.map((item) => (
-            <Row key={item.email_domain} whitelist_item={item} />
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <table class={table()}>
+      <thead>
+        <tr>
+          <th>Email problématique</th>
+          <th>Domaine de l'email</th>
+          <th>Vérifié par</th>
+          <th>Vérifié le</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {whitelist.map((item) => (
+          <Row key={item.email_domain} whitelist_item={item} />
+        ))}
+      </tbody>
+    </table>
   );
 }
 
@@ -65,7 +65,7 @@ async function Row({
           type="button"
           aria-label={`Supprimer ${problematic_email}`}
         >
-          <span class="fr-icon-delete-line" aria-hidden="true"></span>
+          <Svg name={"delete"} />
         </button>
       </td>
     </tr>
