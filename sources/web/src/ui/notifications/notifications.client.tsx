@@ -28,6 +28,7 @@
  * ```
  */
 
+import { notice } from "#src/ui/notice";
 import { signal } from "@preact/signals";
 import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 
@@ -109,11 +110,14 @@ export function resetNotificationCounter(): void {
 
 //
 
-const VARIANT_STYLES: Record<NotificationVariant, string> = {
-  danger: "bg-[#ffe9e9] text-[#ce0500]",
-  info: "bg-[#e8edff] text-[#0063cb]",
-  success: "bg-[#b8fec9] text-[#18753c]",
-  warning: "bg-[#ffe9e6] text-[#b34000]",
+const VARIANT_TO_NOTICE_TYPE: Record<
+  NotificationVariant,
+  "alert" | "info" | "success" | "warning"
+> = {
+  danger: "alert",
+  info: "info",
+  success: "success",
+  warning: "warning",
 };
 
 interface NotificationItemProps {
@@ -155,41 +159,46 @@ function NotificationItem({ notification }: NotificationItemProps) {
     };
   }, [startDismissTimer]);
 
+  const noticeType = VARIANT_TO_NOTICE_TYPE[notification.variant];
+  const { base, body, btn_close, container, title } = notice({
+    type: noticeType,
+  });
+
   return (
     <div
-      class={`pointer-events-auto relative py-4 ${VARIANT_STYLES[notification.variant]} transition duration-300 ${
-        isVisible ? "translate-y-0 opacity-100" : "-translate-y-8 opacity-0"
-      }`}
+      class={base({
+        class: `pointer-events-auto transition duration-300 ${
+          isVisible ? "translate-y-0 opacity-100" : "-translate-y-8 opacity-0"
+        }`,
+      })}
       id={notification.id}
       onMouseEnter={pause}
       role="alert"
     >
-      <div class="mx-auto max-w-7xl px-4">
-        <div class="relative flex flex-row items-start justify-between">
+      <div class={container({ class: "mx-auto max-w-7xl" })}>
+        <div class={body()}>
           <p>
-            <span class="relative mr-1 font-bold">{notification.title}</span>
+            <span class={title()}>{notification.title}</span>
             {notification.message && (
               <span class="text-sm">{notification.message}</span>
             )}
           </p>
           <button
-            class="ml-auto min-h-8 bg-transparent px-3 py-1 text-sm leading-6 hover:bg-black/5"
+            class={btn_close()}
             onClick={close}
             title="Masquer le message"
             type="button"
           >
-            Masquer le message
+            <span class="sr-only">Masquer le message</span>
           </button>
         </div>
         {notification.detail && (
-          <div class="fr-notice__body">
-            <details class="mt-2 text-sm opacity-80">
-              <summary class="cursor-pointer">Détails</summary>
-              <pre class="mt-1 overflow-auto text-xs whitespace-pre-wrap">
-                {notification.detail}
-              </pre>
-            </details>
-          </div>
+          <details class="mt-2 text-sm opacity-80">
+            <summary class="cursor-pointer">Détails</summary>
+            <pre class="mt-1 overflow-auto text-xs whitespace-pre-wrap">
+              {notification.detail}
+            </pre>
+          </details>
         )}
       </div>
     </div>

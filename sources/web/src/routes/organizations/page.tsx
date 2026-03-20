@@ -42,7 +42,7 @@ export default async function Page({
   query_result: QueryResult;
 }) {
   return (
-    <main class="container mx-auto my-12 max-w-7xl px-4">
+    <main class="container mx-auto my-12 px-4">
       <h1>Liste des organisations</h1>
       <Filter q={q} />
       <Table pagination={pagination} query_result={query_result} />

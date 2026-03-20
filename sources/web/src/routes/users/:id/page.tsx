@@ -4,6 +4,7 @@ import { hyper_ref } from "#src/html";
 import { z_email_domain } from "#src/schema";
 import { button } from "#src/ui/button";
 import { CopyButton, GoogleSearchButton } from "#src/ui/button/components";
+import { card } from "#src/ui/card";
 import { badge_description_list } from "#src/ui/list";
 import { FrNumberConverter } from "#src/ui/number";
 import { table } from "#src/ui/table";
@@ -47,14 +48,14 @@ export async function UserPage({
       <div class="bg-blue-france-975 py-6">
         <div class="container mx-auto px-4 py-6">
           <h1>👨‍💻 A propos de l'utilisateur</h1>
-          <div className="grid grid-cols-2 gap-4">
-            <div class="border-grey-200 p-6shadow-sm border bg-white">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div class={card().base()}>
               <h1 class="text-blue-france">
                 « {user.given_name} {user.family_name} »
               </h1>
               <Fiche user={user} />
             </div>
-            <div class="border-grey-200 p-6shadow-sm border bg-white">
+            <div class={card().base()}>
               <AccountInfo user={user} />
             </div>
           </div>
@@ -130,11 +131,8 @@ async function MFA({
   }
 
   return (
-    <div className="grid grid-cols-2 gap-4">
-      <div
-        aria-describedby="totp"
-        class="border-grey-200 p-6shadow-sm border bg-white"
-      >
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div aria-describedby="totp" class={card().base()}>
         <h2 class="text-blue-france" id="totp">
           TOTP
         </h2>
@@ -149,7 +147,7 @@ async function MFA({
       {authenticators.map((authenticator) => (
         <div
           aria-describedby={`passkey-${authenticator.credential_id}`}
-          class="border-grey-200 p-6shadow-sm border bg-white"
+          class={card().base()}
         >
           <h2
             class="text-blue-france"
@@ -185,7 +183,7 @@ function FranceConnectInfo({
   const { base, dd, dt } = badge_description_list();
 
   return (
-    <div class="border-grey-200 p-6shadow-sm border bg-white">
+    <div class={card().base()}>
       <dl class={base({ className: "grid-cols-[150px_1fr]" })}>
         <dt class={dt()}>sub</dt>
         <dd class={dd()}>

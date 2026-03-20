@@ -14,17 +14,33 @@ export const CONNECT_LOGO_URL = `url("data:image/svg+xml,%3Csvg%20width%3D%2254%
 // since the SVG data URL is too long for a Tailwind class.
 // Usage: <button class={base()} style={`--connect-bg:${CONNECT_LOGO_URL}`}>
 export const connect = tv({
-  base: [
-    "relative inline-flex flex-col items-start justify-center",
-    "mb-3 min-h-16 py-2.5 pr-3 pl-16",
-    "bg-blue-france hover:bg-blue-france-hover text-white",
-    "before:absolute before:block before:content-['']",
-    "before:top-1/2 before:left-3",
-    "before:h-12 before:w-12",
-    "before:-mt-6",
-    "before:bg-contain before:bg-center before:bg-no-repeat",
-    "before:[background-image:var(--connect-bg)]",
-  ].join(" "),
+  base: `
+    bg-blue-france
+    hover:bg-blue-france-hover
+    relative
+    mb-3
+    inline-flex
+    min-h-16
+    flex-col
+    items-start
+    justify-center
+    py-2.5
+    pr-3
+    pl-16
+    text-white
+    before:absolute
+    before:top-1/2
+    before:left-3
+    before:-mt-6
+    before:block
+    before:h-12
+    before:w-12
+    before:[background-image:var(--connect-bg)]
+    before:bg-contain
+    before:bg-center
+    before:bg-no-repeat
+    before:content-['']
+  `,
   slots: {
     login: "z-1 text-[0.9375rem] leading-tight whitespace-nowrap",
     brand: "z-1 text-[1.125rem] leading-tight font-bold whitespace-nowrap",

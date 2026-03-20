@@ -1,5 +1,6 @@
 /* @jsxImportSource preact */
 
+import { tag } from "#src/ui/tag";
 import { parsed, update_q } from "./q-signal.client";
 
 export interface ProcessedCheckboxProps extends Record<string, unknown> {}
@@ -11,7 +12,7 @@ export function ProcessedCheckbox({}: ProcessedCheckboxProps) {
     parsed.value.processed_requests === undefined || has_search;
 
   return (
-    <label class="fr-tag bg-blue-france-925 m-1 has-checked:bg-(--blue-france-sun-113-625) has-checked:text-white">
+    <label class={tag({ class: "m-1" })}>
       <input
         checked={is_checked}
         hidden

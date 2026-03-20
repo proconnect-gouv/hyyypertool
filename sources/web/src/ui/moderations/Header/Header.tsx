@@ -192,8 +192,6 @@ async function ModerationCallout() {
 
   return (
     <div class={base()}>
-      <hr class="border-none py-3" />
-
       <h3 class={text()}>Modération {state}</h3>
       <p class={title()}>
         Cette modération a été marqué comme traitée le{" "}

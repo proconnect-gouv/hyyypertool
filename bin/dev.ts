@@ -14,6 +14,7 @@ import { join } from "path";
 
 const PROJECT_ROOT = join(import.meta.dir, "..");
 const OUTDIR = join(PROJECT_ROOT, "bin/public/built");
+const TIMEOUT_DELAY = 111;
 
 async function loadReloadNotifier() {
   try {
@@ -71,7 +72,7 @@ function watchClientScripts() {
       rebuildTimer = setTimeout(async () => {
         await buildAllClientScripts();
         rebuildTimer = null;
-      }, 100);
+      }, TIMEOUT_DELAY);
     },
   );
 
@@ -106,14 +107,19 @@ Bun.spawn(
 
 //
 
+let reloading_timeout: Timer | null = null;
 const watcher = watch(OUTDIR, { recursive: true }, (event, filename) => {
   if (!filename) return;
   console.log(
     `\n[${new Date().toLocaleTimeString()}] ♻️ Detected ${event}: ${filename}`,
   );
-  fetch("http://localhost:3000/___dev___/reload", { method: "POST" }).catch(
-    () => {},
-  );
+  if (reloading_timeout) clearTimeout(reloading_timeout);
+  reloading_timeout = setTimeout(async () => {
+    fetch("http://localhost:3000/___dev___/reload", { method: "POST" }).catch(
+      () => {},
+    );
+    reloading_timeout = null;
+  }, TIMEOUT_DELAY);
 });
 
 process.once("SIGINT", () => watcher.close());

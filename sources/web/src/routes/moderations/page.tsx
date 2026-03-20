@@ -101,7 +101,7 @@ function Main({
   poll_interval: number;
 }) {
   return (
-    <main class="container mx-auto my-12 max-w-7xl px-4">
+    <main class="container mx-auto my-12 px-4">
       <h1>Liste des moderations</h1>
       <Filter search={search} nonce={nonce} poll_interval={poll_interval} />
       <Table />
@@ -299,11 +299,10 @@ function StatusCell({
   const { data: status } = ModerationStatusSchema.safeParse(moderation_status);
   if (type === undefined || status === undefined || status === "unknown")
     return (
-      <>
-        <Svg name="new" />
+      <span class="wrap-break-word">
         {moderation_type_to_emoji(moderation_type)}
         {moderation_type_to_title(moderation_type)}
-      </>
+      </span>
     );
 
   return match({ status })
@@ -315,7 +314,6 @@ function StatusCell({
     ))
     .with({ status: "pending" }, () => (
       <span class={badge()}>
-        <Svg name="new" />
         {moderation_type_to_emoji(type)}
         {moderation_type_to_title(type)}
       </span>

@@ -1,7 +1,7 @@
 //
 
 import { validate_form_schema } from "#src/lib/moderations";
-import { checkbox_group, label } from "#src/ui/form";
+import { checkbox_group, input } from "#src/ui/form";
 import { ModerationTypeSchema } from "@~/identite-proconnect/types";
 import { useContext } from "hono/jsx";
 import { context, valid_context } from "./context";
@@ -17,10 +17,12 @@ export function SendNotification() {
   } = useContext(context);
   const { $send_notification } = useContext(valid_context);
   const { data: moderation_type } = ModerationTypeSchema.safeParse(type);
+  const { base, label } = checkbox_group();
 
   return (
-    <div class={checkbox_group()}>
+    <div class={base()}>
       <input
+        class={input()}
         id={$send_notification}
         name={validate_form_schema.keyof().enum.send_notification}
         type="checkbox"

@@ -14,7 +14,7 @@ export function SearchBar(props: {
   onInput?: (e: any) => void;
   label?: string;
 }) {
-  const { base, input: input_slot, button: button_slot } = search_bar();
+  const { base, input, button } = search_bar();
   return (
     <div class={base()}>
       {props.label && (
@@ -23,7 +23,7 @@ export function SearchBar(props: {
         </label>
       )}
       <input
-        class={input_slot()}
+        class={input()}
         id={props.id}
         name={props.name}
         onInput={props.onInput}
@@ -31,7 +31,7 @@ export function SearchBar(props: {
         type="search"
         value={props.value}
       />
-      <button class={button_slot()} title="Rechercher" type="submit">
+      <button class={button()} title="Rechercher" type="submit">
         <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
           <path class={icon({ name: "search" })} />
         </svg>

@@ -25,7 +25,7 @@ export const button = tv({
     intent: {
       danger: "bg-error hover:bg-error-hover",
       dark: "bg-grey-1000 hover:bg-grey-850",
-      ghost: "hover:bg-grey-50 bg-transparent text-black",
+      ghost: "bg-transparent text-current hover:bg-current/10",
       success: "bg-green-bourgeon hover:enabled:bg-green-bourgeon-hover",
       warning: "bg-warning hover:bg-warning-hover",
     },
@@ -45,7 +45,7 @@ export const button = tv({
     icon: {
       left: "[&>svg:first-child]:-ml-0.5",
       right: "[&>svg:last-child]:-mr-0.5",
-      only: "justify-center px-2",
+      only: "aspect-square justify-center p-0",
     },
   },
 });

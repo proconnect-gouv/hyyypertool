@@ -84,8 +84,8 @@ export const input = tv({
     [[type=checkbox]]:bg-transparent
     [[type=checkbox]]:p-0
     [[type=checkbox]]:shadow-none
-    [[type=checkbox]]:checked:bg-[image:var(--checkbox-checkmark)]
-    [[type=checkbox]]:checked:bg-[size:1.25rem]
+    [[type=checkbox]]:checked:bg-(image:--checkbox-checkmark)
+    [[type=checkbox]]:checked:bg-size-[1.25rem]
     [[type=checkbox]]:checked:bg-center
     [[type=checkbox]]:checked:bg-no-repeat
     [[type=checkbox]]:hover:bg-transparent
@@ -127,7 +127,7 @@ export const input_group = tv({
   base: `
     relative mb-4
     before:pointer-events-none before:absolute before:inset-y-0 before:-right-3 before:-left-3
-    before:bg-[size:2px_100%] before:bg-[position:0_0] before:bg-no-repeat
+    before:bg-size-[2px_100%] before:bg-position-[0_0] before:bg-no-repeat
   `,
   variants: {
     intent: {
@@ -144,7 +144,7 @@ export const input_group = tv({
 });
 
 export const tags_group = tv({
-  base: "m-0 flex list-none flex-wrap p-0",
+  base: "m-0 flex list-none flex-wrap gap-2 p-0",
 });
 
 export const radio_group = tv({
@@ -166,12 +166,13 @@ export const checkbox_group = tv({
 // arrow via --select-arrow CSS variable (defined in tailwind.dsfr.css).
 export const select = tv({
   extend: input,
-
   base: `
     appearance-none
-    bg-[image:var(--select-arrow)]
-    bg-[size:1rem_1rem]
-    bg-[position:calc(100%-1rem)_50%] bg-no-repeat pr-10
+    bg-(image:--select-arrow)
+    bg-size-[1rem_1rem]
+    bg-position-[calc(100%-1rem)_50%]
+    bg-no-repeat
+    pr-10
   `,
 });
 
@@ -179,6 +180,6 @@ export const search_bar = tv({
   base: "flex items-stretch",
   slots: {
     input: input(),
-    button: button(),
+    button: button({ class: "transition-colors" }),
   },
 });

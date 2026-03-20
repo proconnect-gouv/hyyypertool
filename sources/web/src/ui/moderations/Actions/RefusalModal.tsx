@@ -15,7 +15,7 @@ export async function RefusalModal({ userEmail }: { userEmail: string }) {
 
   return (
     <div
-      class="border-blue-france bg-blue-france-975 fixed right-0 bottom-14 z-751 m-2 hidden w-4/6 justify-self-end border-solid px-4 py-2"
+      class="border-blue-france bg-blue-france-975 fixed right-0 bottom-14 z-751 m-2 hidden w-4/6 justify-self-end border-solid px-8 py-6 shadow-lg"
       id="refusalModal"
       aria-label="la modale de refus"
     >
@@ -42,7 +42,7 @@ export async function RefusalModal({ userEmail }: { userEmail: string }) {
           />
           <p class="mb-0 text-lg font-bold">❌ Refuser</p>
           <button
-            class={button({ icon: "left", type: "tertiary" })}
+            class={button({ icon: "only", intent: "ghost" })}
             type="button"
             _={`
               on click

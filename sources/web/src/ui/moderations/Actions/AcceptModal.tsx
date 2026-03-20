@@ -24,14 +24,14 @@ export async function AcceptModal({
   });
   return (
     <div
-      class="border-blue-france bg-blue-france-975 fixed right-0 bottom-14 z-[calc(var(--ground)+777)] m-2 hidden justify-self-end border-solid px-4 py-2"
+      class="border-blue-france bg-blue-france-975 fixed right-0 bottom-14 z-[calc(var(--ground)+777)] m-2 hidden justify-self-end border-solid px-8 py-4 shadow-lg"
       id="acceptModal"
       aria-label="la modale de validation"
     >
       <div class="mb-4 flex items-center justify-between">
         <p class="mb-0 text-lg font-bold">✅ Accepter</p>
         <button
-          class={button({ icon: "left", type: "tertiary" })}
+          class={button({ icon: "only", intent: "ghost" })}
           _={`
               on click
                 add .hidden to #acceptModal

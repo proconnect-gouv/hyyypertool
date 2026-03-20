@@ -2,7 +2,7 @@
 
 import { hyper_ref } from "#src/html";
 import { validate_form_schema } from "#src/lib/moderations";
-import { label, radio_group } from "#src/ui/form";
+import { radio_group } from "#src/ui/form";
 import { useContext } from "hono/jsx";
 import { context, valid_context } from "./context";
 
@@ -16,8 +16,9 @@ export function AddAsMemberExternal() {
     },
   } = useContext(context);
   const id = hyper_ref();
+  const { base, label } = radio_group();
   return (
-    <div class={radio_group()}>
+    <div class={base()}>
       <input
         id={id}
         name={validate_form_schema.keyof().enum.add_member}

@@ -162,14 +162,16 @@ export function SearchBar({
           type="search"
           value={text.value}
           onInput={(e) => {
-            const el = e.target as HTMLInputElement;
+            const el = e.target;
+            if (!(el && el instanceof HTMLInputElement)) return;
             text.value = el.value;
             cursor_position.value = el.selectionStart ?? el.value.length;
             dropdown_open.value = true;
             selected_index.value = 0;
           }}
           onClick={(e) => {
-            const el = e.target as HTMLInputElement;
+            const el = e.target;
+            if (!(el && el instanceof HTMLInputElement)) return;
             cursor_position.value = el.selectionStart ?? el.value.length;
             dropdown_open.value = true;
             selected_index.value = 0;
@@ -187,7 +189,11 @@ export function SearchBar({
         <button
           class={button({
             type: dirty.value ? undefined : "secondary",
-            class: "rounded-l-none",
+            class: `
+              rounded-l-none
+              transition-[background-color,box-shadow,color]
+              delay-1000
+              `,
           })}
           type="button"
           title="Rechercher"
