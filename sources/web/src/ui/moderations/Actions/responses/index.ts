@@ -1,6 +1,7 @@
 //
 
 import * as admin_centrale from "./admin_centrale";
+import * as affiliation_institut_francais from "./affiliation_institut_francais";
 import * as agent_comcom_comaglo from "./agent_comcom_comaglo";
 import * as agent_comcom_to_commune from "./agent_comcom_to_commune";
 import * as agent_outside_min_finance_chorus_pro from "./agent_outside_min_finance_chorus_pro";
@@ -9,6 +10,7 @@ import * as association_with_staff_but_no_domain_name from "./association_with_s
 import * as contractors from "./contractors";
 import * as domain_name_not_found from "./domain_name_not_found";
 import * as enseignement_agricole from "./enseignement_agricole";
+import * as evidence_between_chosen_org_and_domain_email_org from "./evidence_between_chosen_org_and_domain_email_org";
 import * as existing_domain_name from "./existing_domain_name";
 import * as first_and_last_name_inversion from "./first_and_last_name_inversion";
 import * as gendarmerie_agent from "./gendarmerie_agent";
@@ -25,6 +27,7 @@ import * as presta_email_orga_public_beta_gouv from "./presta_email_orga_public_
 import * as public_or_private_organization from "./public_or_private_organization";
 import * as refusal_france_travail from "./refusal_france_travail";
 import * as refusal_interieur_gouv from "./refusal_interieur_gouv";
+import * as request_clarification_use_account from "./request_clarification_use_account";
 import * as reservist_or_other_email_perso from "./reservist_or_other_email_perso";
 import * as seconded_agent_min_interior from "./seconded_agent_min_interior";
 import * as student_host_organisation from "./student_host_organisation";
@@ -70,4 +73,7 @@ export const reponse_templates = [
   agent_comcom_comaglo,
   agent_comcom_to_commune,
   domain_name_not_found,
+  affiliation_institut_francais,
+  evidence_between_chosen_org_and_domain_email_org,
+  request_clarification_use_account,
 ];

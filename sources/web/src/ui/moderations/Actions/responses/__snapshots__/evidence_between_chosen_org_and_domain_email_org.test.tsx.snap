@@ -1,0 +1,14 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`Request for evidence of the link between the chosen organisation and the organisation associated with the email domain 1`] = `
+"Bonjour,
+
+Nous avons bien reçu votre demande de rattachement à l&#39;organisation « 🦄 » sur ProConnect.
+
+Le nom de domaine de votre adresse mail : « 🦒 » ne nous permet pas d’établir un lien entre vous et l’organisation « 🦄 ».
+Afin de donner suite à votre demande, pourriez-vous nous transmettre un justificatif légal (type KBIS ou autre) attestant du lien entre l’organisation « 🦄 » et celle correspondant à votre nom de domaine ?
+
+Bien cordialement,
+L’équipe ProConnect.
+"
+`;
