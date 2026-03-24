@@ -1,5 +1,19 @@
 # Changelog
 
+## [2026.3.5](https://github.com/proconnect-gouv/hyyypertool/compare/2026.3.4...2026.3.5) (2026-03-24)
+
+### Changements
+
+- ✨ Ajout de trois nouvelles réponses type
+
+- Demande de précisions sur l’usage du compte
+- Demande de rattachement à la Fondation « Institut Français »
+- Demande de justification du lien entre organisation choisie & organisation du domaine e-mail
+
+### Ajouté
+
+- ✨ Add new response type (#1509) (39deaf93)
+
 ## [2026.3.4](https://github.com/proconnect-gouv/hyyypertool/compare/2026.3.3...2026.3.4) (2026-03-19)
 
 ### Ajouté
