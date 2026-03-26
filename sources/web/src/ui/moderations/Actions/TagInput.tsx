@@ -1,3 +1,4 @@
+import { tags_group } from "#src/ui/form";
 import { tag } from "#src/ui/tag";
 import {
   VerificationTypeSchema,
@@ -23,7 +24,7 @@ const verificationType: Array<[VerificationType, string]> = [
 
 export function TagInput() {
   return (
-    <ul class="fr-tags-group">
+    <ul class={tags_group()}>
       {verificationType.map(([value, key]) => (
         <li key={key}>
           <label class={tag()}>

@@ -20,7 +20,6 @@ export class Hyyyper_title extends HTMLElement {
           animation: fadeIn ${duration}ms both;
         }
         #per {
-          opacity: 0;
           text-shadow: 0 0 4px #000;
         }
         #per.show {
@@ -30,16 +29,16 @@ export class Hyyyper_title extends HTMLElement {
 
       <div class="inline-flex">
         <span class="${visually_hidden()}">Bonjour Hyyypertool !</span>
-        <span class="text-(--text-active-blue-france)">H</span>
-        <span class="text-(--text-active-blue-france)">
+        <span class="text-blue-france">H</span>
+        <span class="text-blue-france">
           ${Array.from(
             { length: yCount },
             (_, i) =>
               `<span class="fade-in" style="animation-delay: ${(i * duration) / yCount}ms">y</span>`,
           ).join("")}
         </span>
-        <span id="per" class="animated flash fast inline-block text-white">per</span>
-        <span class="animated slower delay-1s zoomInDown inline-block text-(--text-active-red-marianne)">tool</span>
+        <span id="per" class="animated flash fast inline-block text-white opacity-0">per</span>
+        <span class="animated slower delay-1s zoomInDown inline-block text-red-marianne">tool</span>
       </div>
     `;
 

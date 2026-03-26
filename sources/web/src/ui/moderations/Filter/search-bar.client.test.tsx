@@ -72,7 +72,7 @@ describe("SearchBar", () => {
     expect(dirty.value).toBe(false);
   });
 
-  test("button is secondary (gray) when clean", () => {
+  test("button is bg-transparent when clean", () => {
     const { container } = render(
       <SearchBar
         initial_q="is:pending"
@@ -82,10 +82,10 @@ describe("SearchBar", () => {
     );
     const button = container.querySelector("button")!;
 
-    expect(button.className).toContain("fr-btn--secondary");
+    expect(button.className).toContain("bg-transparent");
   });
 
-  test("button loses secondary class (turns blue) when dirty", () => {
+  test("button loses transparent class (turns blue) when dirty", () => {
     const { container } = render(
       <SearchBar
         initial_q="is:pending"
@@ -99,7 +99,7 @@ describe("SearchBar", () => {
     fireEvent.input(input, { target: { value: "is:processed" } });
 
     expect(dirty.value).toBe(true);
-    expect(button.className).not.toContain("fr-btn--secondary");
+    expect(button.className).not.toContain("bg-transparent");
   });
 
   test("htmx:afterSettle resets dirty state", () => {

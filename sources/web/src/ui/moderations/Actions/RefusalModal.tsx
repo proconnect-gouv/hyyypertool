@@ -1,6 +1,8 @@
 import { HtmxEvents, hx_disabled_form_elements } from "#src/htmx";
 import { reject_form_schema } from "#src/lib/moderations";
 import { button } from "#src/ui/button";
+import { input, label } from "#src/ui/form";
+import { Svg } from "#src/ui/icons/components";
 import { urls } from "#src/urls";
 import { useContext } from "hono/jsx";
 import { AUTO_GO_BACK_EVENT } from "../AutoGoBack";
@@ -13,7 +15,7 @@ export async function RefusalModal({ userEmail }: { userEmail: string }) {
 
   return (
     <div
-      class="fixed right-0 bottom-14 z-751 m-2 hidden w-4/6 justify-self-end border-solid border-(--text-action-high-blue-france) bg-(--blue-france-975-75) px-4 py-2"
+      class="border-blue-france bg-blue-france-975 fixed right-0 bottom-14 z-751 m-2 hidden w-4/6 justify-self-end border-solid px-8 py-6 shadow-lg"
       id="refusalModal"
       aria-label="la modale de refus"
     >
@@ -33,38 +35,37 @@ export async function RefusalModal({ userEmail }: { userEmail: string }) {
       >
         <div class="mb-1 flex items-center justify-between">
           <input
-            class="fr-input hidden"
+            class="hidden"
             type="text"
             name={reject_form_schema.keyof().enum.subject}
             value={`[ProConnect] Demande pour rejoindre « ${moderation.organization.cached_libelle} »`}
           />
           <p class="mb-0 text-lg font-bold">❌ Refuser</p>
           <button
-            class="fr-btn fr-icon-subtract-line fr-btn--tertiary-no-outline"
+            class={button({ icon: "only", intent: "ghost" })}
             type="button"
             _={`
               on click
                 add .hidden to #refusalModal
             `}
           >
-            Label bouton
+            <Svg name="subtract" />
+            <span class="sr-only">Fermer la modale</span>
           </button>
         </div>
         <p class="mb-1">
           A propos de{" "}
-          <span class="font-bold text-[--text-action-high-blue-france]">
-            {userEmail}{" "}
-          </span>
+          <span class="text-blue-france font-bold">{userEmail} </span>
           pour l'organisation <b>{moderation.organization.cached_libelle}</b>
         </p>
         <p class="mb-1">Motif de refus :</p>
         <ResponseMessageSelector $message={$modal_message} />
         <div class="my-2">
-          <label class="fr-label" for={$modal_message}>
+          <label class={label()} for={$modal_message}>
             Message
           </label>
           <textarea
-            class="fr-input"
+            class={input()}
             rows={15}
             id={$modal_message}
             name={reject_form_schema.keyof().enum.message}

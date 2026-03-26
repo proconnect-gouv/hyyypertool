@@ -1,5 +1,6 @@
 //
 
+import { card } from "#src/ui/card";
 import { About, Investigation } from "#src/ui/organizations/info";
 import type { get_organization_by_id } from "./get_organization_by_id.query";
 
@@ -15,15 +16,12 @@ export async function Fiche({
   organization: Organisation;
 }) {
   return (
-    <section class="grid grid-cols-3 gap-4">
-      <div class="fr-card col-span-2 p-6!">
-        <h1 class="text-(--text-action-high-blue-france)">
-          « {organization.cached_libelle} »
-        </h1>
-        <h2 class="fr-h3">🏛 Organisation</h2>
+    <section class="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div class={card().base({ class: "md:col-span-2" })}>
+        <h1 class="text-blue-france">« {organization.cached_libelle} »</h1>
         <About organization={organization} />
       </div>
-      <div class="fr-card p-6!">
+      <div class={card().base()}>
         <Investigation banaticUrl={banaticUrl} organization={organization} />
       </div>
     </section>

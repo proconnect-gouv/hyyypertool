@@ -2,8 +2,10 @@
 
 import type { GetModerationHeaderOutput } from "#src/lib/moderations";
 import { moderation_type_to_emoji } from "#src/lib/moderations";
+import { badge } from "#src/ui/badge";
 import { button } from "#src/ui/button";
 import { callout } from "#src/ui/callout";
+import { icon } from "#src/ui/icons";
 import { notice } from "#src/ui/notice";
 import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
@@ -55,7 +57,7 @@ export async function Header() {
         Créé le <LocalTime date={moderation.created_at} />
       </div>
       <section class="flex items-baseline space-x-5">
-        <h1 className="fr-h2">
+        <h1 className="text-2xl font-bold">
           {moderation_type_to_emoji(moderation.type)}{" "}
           {moderation.user.given_name} {moderation.user.family_name}
         </h1>
@@ -68,11 +70,11 @@ export async function Header() {
 
       <Info />
 
-      <hr class="bg-none" />
+      <hr class="border-none py-3" />
 
       <Comments />
 
-      <hr class="bg-none" />
+      <hr class="border-none py-3" />
 
       <div {...hx_get_duplicate_warning} hx-trigger="load">
         Demande multiples ?
@@ -88,16 +90,66 @@ function State_Badge() {
   const { data: status } = ModerationStatusSchema.safeParse(moderation.status);
   if (status === undefined || status === "unknown")
     return is_treated ? (
-      <p class="fr-badge fr-badge--success">Traité</p>
+      <p class={badge({ icon: "left", intent: "success" })}>
+        <svg
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          width="1em"
+          height="1em"
+          aria-hidden="true"
+        >
+          <path class={icon({ name: "check" })} />
+        </svg>
+        Traité
+      </p>
     ) : (
-      <p class="fr-badge fr-badge--new">A traiter</p>
+      <p class={badge({ intent: "new" })}>A traiter</p>
     );
 
   return match(status)
-    .with("accepted", () => <p class="fr-badge fr-badge--success">Accepté</p>)
-    .with("pending", () => <p class="fr-badge fr-badge--new">A traiter</p>)
-    .with("rejected", () => <p class="fr-badge fr-badge--error">Rejeté</p>)
-    .with("reopened", () => <p class="fr-badge fr-badge--warning">Réouvert</p>)
+    .with("accepted", () => (
+      <p class={badge({ icon: "left", intent: "success" })}>
+        <svg
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          width="1em"
+          height="1em"
+          aria-hidden="true"
+        >
+          <path class={icon({ name: "check" })} />
+        </svg>
+        Accepté
+      </p>
+    ))
+    .with("pending", () => <p class={badge({ intent: "new" })}>A traiter</p>)
+    .with("rejected", () => (
+      <p class={badge({ icon: "left", intent: "error" })}>
+        <svg
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          width="1em"
+          height="1em"
+          aria-hidden="true"
+        >
+          <path class={icon({ name: "error" })} />
+        </svg>
+        Rejeté
+      </p>
+    ))
+    .with("reopened", () => (
+      <p class={badge({ icon: "left", intent: "warning" })}>
+        <svg
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          width="1em"
+          height="1em"
+          aria-hidden="true"
+        >
+          <path class={icon({ name: "warning" })} />
+        </svg>
+        Réouvert
+      </p>
+    ))
     .exhaustive();
 }
 
@@ -140,8 +192,6 @@ async function ModerationCallout() {
 
   return (
     <div class={base()}>
-      <hr class="bg-none" />
-
       <h3 class={text()}>Modération {state}</h3>
       <p class={title()}>
         Cette modération a été marqué comme traitée le{" "}

@@ -3,7 +3,8 @@
 import type { AppContext } from "#src/middleware/context";
 import { Hono } from "hono";
 import auth_agentconnect_gouv_fr_router from "./auth.agentconnect.gouv.fr";
-import livereload_router from "./reload";
+import design_system_router from "./design-system";
+import reload_router from "./reload";
 
 //
 
@@ -12,5 +13,6 @@ export default new Hono<AppContext>()
     if (c.env.NODE_ENV !== "development") return c.notFound();
     return next();
   })
-  .route("/", livereload_router)
+  .route("/", reload_router)
+  .route("/", design_system_router)
   .route("/auth.agentconnect.gouv.fr/api/v2", auth_agentconnect_gouv_fr_router);

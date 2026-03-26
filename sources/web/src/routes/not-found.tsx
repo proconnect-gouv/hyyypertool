@@ -2,6 +2,7 @@
 
 import type { AppEnvContext } from "#src/config";
 import type { AppContext } from "#src/middleware/context";
+import { button } from "#src/ui/button";
 import type { Context } from "hono";
 import { useRequestContext } from "hono/jsx-renderer";
 
@@ -19,18 +20,18 @@ export function NotFound() {
   } = useRequestContext<AppEnvContext>();
 
   return (
-    <main class="flex min-h-full flex-1 items-center bg-(--blue-france-975-75)">
-      <div class="fr-container grid h-full grid-cols-2 items-center justify-items-center gap-6">
+    <main class="bg-blue-france-975 flex min-h-full flex-1 items-center">
+      <div class="container mx-auto grid h-full grid-cols-2 items-center justify-items-center gap-6 px-4">
         <section>
           <h1>Oups, nous n'avons pas trouvé la page que vous recherchez.</h1>
-          <p class="fr-text--sm fr-mb-3w">Erreur 404</p>
+          <p class="mb-6 text-sm">Erreur 404</p>
 
-          <p class="fr-text--lead fr-mb-3w">
+          <p class="mb-6 text-lg">
             La page que vous cherchez est introuvable.
             <br />
             Excusez-nous pour la gène occasionnée.
           </p>
-          <a href="/" class="fr-btn">
+          <a href="/" class={button()}>
             {" "}
             Retour à l'accueil{" "}
           </a>
