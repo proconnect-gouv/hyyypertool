@@ -52,6 +52,11 @@ export function Foot({
             Précédent
           </button>
           <input
+            type="hidden"
+            name={PaginationSchema.keyof().enum.page_size}
+            value={page_size}
+          />
+          <input
             {...hx_query_props}
             id={id}
             class={input({ class: "inline-block w-auto" })}
