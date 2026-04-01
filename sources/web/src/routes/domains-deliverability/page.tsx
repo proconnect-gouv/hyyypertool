@@ -8,7 +8,7 @@ type Whitelist = Awaited<
 
 export default async function Page({ whitelist }: { whitelist: Whitelist[] }) {
   return (
-    <main class="fr-container my-12">
+    <main class="container mx-auto my-12 px-4">
       <h1>Délivrabilité des domaines</h1>
       <div id="domains-deliverability-container">
         <div

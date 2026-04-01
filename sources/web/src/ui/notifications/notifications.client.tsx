@@ -28,6 +28,7 @@
  * ```
  */
 
+import { notice } from "#src/ui/notice";
 import { signal } from "@preact/signals";
 import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 
@@ -109,6 +110,16 @@ export function resetNotificationCounter(): void {
 
 //
 
+const VARIANT_TO_NOTICE_TYPE: Record<
+  NotificationVariant,
+  "alert" | "info" | "success" | "warning"
+> = {
+  danger: "alert",
+  info: "info",
+  success: "success",
+  warning: "warning",
+};
+
 interface NotificationItemProps {
   notification: Notification;
 }
@@ -116,13 +127,6 @@ interface NotificationItemProps {
 function NotificationItem({ notification }: NotificationItemProps) {
   const [isVisible, setIsVisible] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const variantClass =
-    notification.variant === "danger"
-      ? "alert"
-      : notification.variant === "success"
-        ? "info"
-        : notification.variant;
 
   const startDismissTimer = useCallback(() => {
     timeoutRef.current = setTimeout(() => {
@@ -155,41 +159,46 @@ function NotificationItem({ notification }: NotificationItemProps) {
     };
   }, [startDismissTimer]);
 
+  const noticeType = VARIANT_TO_NOTICE_TYPE[notification.variant];
+  const { base, body, btn_close, container, title } = notice({
+    type: noticeType,
+  });
+
   return (
     <div
-      class={`fr-notice pointer-events-auto fr-notice--${variantClass} transition duration-300 ${
-        isVisible ? "translate-y-0 opacity-100" : "-translate-y-8 opacity-0"
-      }`}
+      class={base({
+        class: `pointer-events-auto transition duration-300 ${
+          isVisible ? "translate-y-0 opacity-100" : "-translate-y-8 opacity-0"
+        }`,
+      })}
       id={notification.id}
       onMouseEnter={pause}
       role="alert"
     >
-      <div class="fr-container">
-        <div class="fr-notice__body">
+      <div class={container({ class: "mx-auto max-w-7xl" })}>
+        <div class={body()}>
           <p>
-            <span class="fr-notice__title">{notification.title}</span>
+            <span class={title()}>{notification.title}</span>
             {notification.message && (
-              <span class="fr-notice__desc">{notification.message}</span>
+              <span class="text-sm">{notification.message}</span>
             )}
           </p>
           <button
-            class="fr-btn--close fr-btn"
+            class={btn_close()}
             onClick={close}
             title="Masquer le message"
             type="button"
           >
-            Masquer le message
+            <span class="sr-only">Masquer le message</span>
           </button>
         </div>
         {notification.detail && (
-          <div class="fr-notice__body">
-            <details class="mt-2 text-sm opacity-80">
-              <summary class="cursor-pointer">Détails</summary>
-              <pre class="mt-1 overflow-auto text-xs whitespace-pre-wrap">
-                {notification.detail}
-              </pre>
-            </details>
-          </div>
+          <details class="mt-2 text-sm opacity-80">
+            <summary class="cursor-pointer">Détails</summary>
+            <pre class="mt-1 overflow-auto text-xs whitespace-pre-wrap">
+              {notification.detail}
+            </pre>
+          </details>
         )}
       </div>
     </div>

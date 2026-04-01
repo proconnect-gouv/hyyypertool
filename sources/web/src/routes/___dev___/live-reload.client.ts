@@ -57,7 +57,7 @@ function connect() {
       } catch {
         // Server not ready yet
       }
-      await new Promise((resolve) => setTimeout(resolve, 200));
+      await new Promise((resolve) => setTimeout(resolve, 100 * attempts));
       attempts++;
     }
     console.error(
@@ -65,6 +65,13 @@ function connect() {
     );
   };
 }
+
+// Chrome blocks navigation when an EventSource is open (crbug/358538891).
+// onerror is NOT fired on page unload, so we must close explicitly on pagehide.
+window.addEventListener("pagehide", () => {
+  eventSource?.close();
+  eventSource = null;
+});
 
 if (
   window.location.hostname === "localhost" ||

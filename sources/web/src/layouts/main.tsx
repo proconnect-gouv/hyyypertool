@@ -3,8 +3,10 @@
 import type { HyyyperUser } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { z_username } from "#src/schema";
-import { button } from "#src/ui";
 import { badge } from "#src/ui/badge";
+import { button } from "#src/ui/button";
+import { header, MARIANNE_LOGO_URL, MOTTO_LOGO_URL, nav } from "#src/ui/header";
+import { Svg } from "#src/ui/icons/components";
 import { NotificationIsland } from "#src/ui/notifications";
 import { urls } from "#src/urls";
 import { roles } from "@~/hyyyperbase";
@@ -21,52 +23,75 @@ export function Main_Layout({ children }: PropsWithChildren) {
   const username = z_username.parse(userinfo);
   return (
     <RootLayout>
-      <div class="flex min-h-full grow flex-col">
-        <header role="banner" class="fr-header">
-          <div class="fr-header__body">
-            <div class="fr-container">
-              <div class="fr-header__body-row">
-                <Brand />
-                <UserMenu
-                  username={username}
-                  email={userinfo?.email}
-                  hyyyper_user={hyyyper_user}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="fr-header__menu fr-modal">
-            <div class="fr-container">
-              <Nav />
-            </div>
-          </div>
-        </header>
-        <div class="relative flex flex-1 flex-col">{children}</div>
-      </div>
+      <Header
+        username={username}
+        email={userinfo?.email}
+        hyyyper_user={hyyyper_user}
+      />
+      {children}
       <NotificationIsland nonce={nonce} />
     </RootLayout>
   );
 }
 
 //
-function Brand() {
+
+function Header({
+  username,
+  email,
+  hyyyper_user,
+}: {
+  username?: string;
+  email?: string | undefined;
+  hyyyper_user: HyyyperUser;
+}) {
+  const { base, body, body_row, container, menu } = header();
   return (
-    <div class="fr-header__brand fr-enlarge-link">
-      <div class="fr-header__brand-top">
-        <div class="fr-header__logo">
-          <p class="fr-logo">
+    <header role="banner" class={base()}>
+      <div class={body()}>
+        <div class={container()}>
+          <div class={body_row()}>
+            <Brand />
+            <UserMenu
+              username={username}
+              email={email}
+              hyyyper_user={hyyyper_user}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class={menu()}>
+        <div class={container()}>
+          <Nav />
+        </div>
+      </div>
+    </header>
+  );
+}
+
+function Brand() {
+  const { brand, brand_top, logo, service, service_tagline, service_title } =
+    header();
+  return (
+    <div class={brand()}>
+      <div class={brand_top()}>
+        <div>
+          <p
+            class={logo()}
+            style={`--logo-bg: ${MARIANNE_LOGO_URL}; --motto-bg: ${MOTTO_LOGO_URL}`}
+          >
             République
             <br />
             Française
           </p>
         </div>
       </div>
-      <div class="fr-header__service">
+      <div class={service()}>
         <a href="/" title="Accueil ">
-          <p class="fr-header__service-title">Hyyypertool</p>
+          <p class={service_title()}>Hyyypertool</p>
         </a>
-        <p class="fr-header__service-tagline">hyyyyyyyypertool</p>
+        <p class={service_tagline()}>hyyyyyyyypertool</p>
       </div>
     </div>
   );
@@ -83,64 +108,60 @@ function UserMenu({
 }) {
   const is_admin = hyyyper_user.role === roles.enum.admin;
   const $menu = "account-menu";
+  const { tools, tools_links } = header();
 
   return (
-    <div class="fr-header__tools">
-      <div class="relative inline-block">
-        <button
-          _={`on click toggle @hidden on #${$menu} then on click from elsewhere if #${$menu} and not @hidden add @hidden to #${$menu} end end`}
-          aria-controls={$menu}
-          aria-expanded="false"
-          aria-haspopup="menu"
-          class={button({
-            class: "fr-icon-account-circle-fill fr-btn--icon-left",
-            type: "tertiary",
-          })}
-          title="Mon espace"
-          type="button"
-        >
-          Mon espace
-        </button>
-        <div
-          class="absolute right-0 z-50 mt-1 min-w-48 rounded border border-gray-200 bg-white shadow-lg"
-          hidden
-          id={$menu}
-          role="menu"
-        >
-          <div class="border-b border-gray-200 px-4 py-3">
-            <p class="font-semibold">
-              {username}{" "}
-              <span
-                class={badge({
-                  intent: role_intent(hyyyper_user.role),
-                  class: "fr-badge--sm",
-                })}
-              >
-                {hyyyper_user.role}
-              </span>
-            </p>
-            {email ? <p class="text-sm text-gray-600">{email}</p> : undefined}
-          </div>
-          <ul class="fr-menu__list">
-            {is_admin ? (
-              <li>
-                <a class="fr-nav__link" href={urls.admin.team.$url().pathname}>
-                  <span>
-                    <span class="fr-icon-settings-5-line fr-icon--sm" />
+    <div class={tools()}>
+      <div class={tools_links()}>
+        <div class="relative inline-block">
+          <button
+            _={`on click toggle @hidden on #${$menu} then on click from elsewhere if #${$menu} and not @hidden add @hidden to #${$menu} end end`}
+            aria-controls={$menu}
+            aria-expanded="false"
+            aria-haspopup="menu"
+            class={button({ type: "tertiary" })}
+            title="Mon espace"
+            type="button"
+          >
+            Mon espace
+          </button>
+          <div
+            class="absolute right-0 z-50 mt-1 min-w-48 rounded border border-gray-200 bg-white shadow-lg"
+            hidden
+            id={$menu}
+            role="menu"
+          >
+            <div class="border-b border-gray-200 px-4 py-3">
+              <p class="font-semibold">
+                {username}{" "}
+                <span class={badge({ intent: role_intent(hyyyper_user.role) })}>
+                  {hyyyper_user.role}
+                </span>
+              </p>
+              {email ? <p class="text-sm text-gray-600">{email}</p> : undefined}
+            </div>
+            <ul class="m-0 list-none p-0">
+              {is_admin ? (
+                <li>
+                  <a
+                    class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-50"
+                    href={urls.admin.team.$url().pathname}
+                  >
                     Gestion de l'équipe
-                  </span>
+                  </a>
+                </li>
+              ) : undefined}
+              <li>
+                <a
+                  class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-50"
+                  href={urls.auth.logout.$url().pathname}
+                >
+                  <Svg name="logout" />
+                  Se deconnecter
                 </a>
               </li>
-            ) : undefined}
-            <li>
-              <a class="fr-nav__link" href={urls.auth.logout.$url().pathname}>
-                <span>
-                  <span class="fr-icon-logout-box-r-line fr-icon--sm" />
-                  Se deconnecter
-                </span>
-              </a>
-            </li>
-          </ul>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -157,62 +178,63 @@ function role_intent(role: string) {
 
 function Nav() {
   const route_path = routePath(useRequestContext());
+  const { base, list, item, link } = nav();
 
   return (
     <nav
-      class="fr-nav"
+      class={base()}
       id="navigation-494"
       role="navigation"
       aria-label="Menu principal"
     >
-      <ul class="fr-nav__list">
-        <li class="fr-nav__item">
+      <ul class={list()}>
+        <li class={item()}>
           <a
             aria-current={route_path.startsWith("/moderations")}
-            class="fr-nav__link"
+            class={link()}
             href={urls.moderations.$url().pathname}
             target="_self"
           >
             Moderations
           </a>
         </li>
-        <li class="fr-nav__item">
+        <li class={item()}>
           <a
             aria-current={route_path.startsWith("/users")}
-            class="fr-nav__link"
+            class={link()}
             href={urls.users.$url().pathname}
             target="_self"
           >
             Utilisateurs
           </a>
         </li>
-        <li class="fr-nav__item">
+        <li class={item()}>
           <a
             aria-current={
               route_path.startsWith("/organizations") &&
               !route_path.startsWith("/organizations/domains")
             }
-            class="fr-nav__link"
+            class={link()}
             href={urls.organizations.$url().pathname}
             target="_self"
           >
             Organisations
           </a>
         </li>
-        <li class="fr-nav__item">
+        <li class={item()}>
           <a
             aria-current={route_path.startsWith("/organizations/domains")}
-            class="fr-nav__link"
+            class={link()}
             href={urls.organizations.domains.$url().pathname}
             target="_self"
           >
             Domaines à vérifier
           </a>
         </li>
-        <li class="fr-nav__item">
+        <li class={item()}>
           <a
             aria-current={route_path.startsWith("/domains-deliverability")}
-            class="fr-nav__link"
+            class={link()}
             href={urls["domains-deliverability"].$url().pathname}
             target="_self"
           >

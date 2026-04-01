@@ -1,5 +1,6 @@
 /* @jsxImportSource preact */
 
+import { select } from "#src/ui/form";
 import { parsed, update_q } from "./q-signal.client";
 
 export interface SearchModeratedByProps extends Record<string, unknown> {
@@ -9,7 +10,7 @@ export interface SearchModeratedByProps extends Record<string, unknown> {
 export function SearchModeratedBy({ moderators_list }: SearchModeratedByProps) {
   return (
     <select
-      class="fr-select"
+      class={select()}
       value={parsed.value.search_moderated_by}
       onChange={(e) => {
         update_q((s) => {

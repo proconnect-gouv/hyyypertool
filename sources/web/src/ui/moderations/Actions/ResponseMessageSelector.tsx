@@ -1,6 +1,7 @@
 //
 
 import { reject_form_schema } from "#src/lib/moderations";
+import { select } from "#src/ui/form";
 import { reponse_templates } from "./responses";
 
 //
@@ -17,7 +18,7 @@ export function ResponseMessageSelector({ $message }: { $message: string }) {
         on keydown[key is 'Enter']
           halt
         `}
-        class="fr-select"
+        class={select()}
         list="responses-type"
         placeholder="Recherche d'une réponse type"
         autocomplete="off"

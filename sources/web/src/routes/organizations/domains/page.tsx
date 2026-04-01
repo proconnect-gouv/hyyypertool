@@ -1,7 +1,9 @@
 import type { Pagination } from "#src/schema";
+import { button } from "#src/ui/button";
 import { CopyButton } from "#src/ui/button/components";
+import { input } from "#src/ui/form";
 import { Foot } from "#src/ui/hx_table";
-import { row } from "#src/ui/table";
+import { row, table } from "#src/ui/table";
 import { urls } from "#src/urls";
 import { createContext, useContext } from "hono/jsx";
 import type { get_unverified_domains } from "./get_unverified_domains.query";
@@ -39,7 +41,7 @@ function Main() {
 
   return (
     <main
-      class="fr-container my-12"
+      class="container mx-auto my-12 px-4"
       {...hx_domains_query_props}
       hx-sync="this"
       hx-trigger={[
@@ -65,19 +67,19 @@ function Filter() {
       hx-trigger={[`keyup changed delay:500ms from:#${$search}`].join(", ")}
       hx-vals={JSON.stringify({ page: 1 })}
     >
-      <div class="fr-search-bar" role="search">
-        <label class="fr-label" for={$search}>
+      <div class="flex items-stretch" role="search">
+        <label class="sr-only" for={$search}>
           Recherche
         </label>
         <input
-          class="fr-input"
+          class={input({ class: "flex-1" })}
           id={$search}
           name={query_schema.keyof().enum.q}
           placeholder="Recherche"
           value={q}
           type="search"
         />
-        <button class="fr-btn" title="Rechercher">
+        <button class={button()} title="Rechercher">
           Rechercher
         </button>
       </div>
@@ -97,8 +99,8 @@ function Table() {
   } = context;
 
   return (
-    <div class="fr-table *:table!" id={$table}>
-      <table aria-describedby={$describedby}>
+    <div id={$table}>
+      <table aria-describedby={$describedby} class={table()}>
         <thead>
           <tr>
             <th></th>
@@ -114,6 +116,7 @@ function Table() {
           ))}
         </tbody>
         <Foot
+          colspan={5}
           count={count}
           hx_query_props={hx_domains_query_props}
           id={$table}
@@ -150,7 +153,7 @@ function Row({
       <td>
         <span>{domainName}</span>
         <CopyButton
-          class="fr-p-O relative z-10 leading-none"
+          class="p-0 leading-none"
           text={domainName}
           title="Copier le nom de domaine"
           variant={{ size: "sm", type: "tertiary" }}

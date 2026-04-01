@@ -1,5 +1,6 @@
 //
 
+import { button } from "#src/ui/button";
 import type { JSX } from "hono/jsx";
 import { visually_hidden } from "../../visually_hidden";
 import { hide_on_click_elsewere } from "./scripts/hide_on_click_elsewere";
@@ -14,12 +15,7 @@ export function Trigger({ target_id, ...other_props }: TriggerProps) {
       _={[toggle_on_click, hide_on_click_elsewere(`#${target_id}`)].join(
         " then ",
       )}
-      class="
-      inline-flex items-center rounded-lg
-      bg-white p-2 text-center text-sm font-medium text-gray-900
-      hover:bg-gray-100
-      focus:ring-4 focus:ring-gray-50 focus:outline-none
-      "
+      class={button({ intent: "ghost" })}
       type="button"
       {...other_props}
     >

@@ -14,7 +14,7 @@ export const MODERATION_TABLE_PAGE_ID = "moderation_table_page";
 export const search_schema = z.object({
   q: z
     .string()
-    .default("is:pending -type:non_verified_domain")
+    .default("is:pending -type:non_verified_domain ")
     .transform(parse_q),
 });
 

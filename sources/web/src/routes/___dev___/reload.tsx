@@ -13,48 +13,49 @@ import { streamSSE } from "hono/streaming";
 type SSEStreamContext = { write: (message: string) => Promise<void> };
 const clients = new Set<SSEStreamContext>();
 
-export function notifyReload() {
-  consola.trace(
-    `[live-reload] Sending reload signal to ${clients.size} connected clients`,
-  );
+export default new Hono<AppContext>()
+  .post("/reload", (c) => {
+    consola.trace(
+      `[live-reload] Sending reload signal to ${clients.size} connected clients`,
+    );
 
-  for (const client of clients) {
-    try {
-      client.write("reload");
-    } catch (error) {
-      consola.trace(`[live-reload] `, error);
-      // Client disconnected
-      clients.delete(client);
+    for (const client of clients) {
+      try {
+        client.write("reload");
+      } catch (error) {
+        consola.trace(`[live-reload] `, error);
+        // Client disconnected
+        clients.delete(client);
+      }
     }
-  }
-}
+    return c.text("ok");
+  })
+  .get("/reload", (c) => {
+    return streamSSE(c, async (stream) => {
+      const client = {
+        write: async (message: string) => {
+          await stream.writeSSE({ data: message });
+        },
+      };
 
-export default new Hono<AppContext>().get("/reload", (c) => {
-  return streamSSE(c, async (stream) => {
-    const client = {
-      write: async (message: string) => {
-        await stream.writeSSE({ data: message });
-      },
-    };
+      clients.add(client);
+      consola.trace(`[live-reload] Client connected (${clients.size} total)`);
 
-    clients.add(client);
-    consola.trace(`[live-reload] Client connected (${clients.size} total)`);
+      // Send initial connection message
+      await stream.writeSSE({ data: "connected" });
 
-    // Send initial connection message
-    await stream.writeSSE({ data: "connected" });
+      // Clean up when client disconnects
+      c.req.raw.signal.addEventListener("abort", () => {
+        clients.delete(client);
+        consola.trace(
+          `[live-reload] Client disconnected (${clients.size} remaining)`,
+        );
+      });
 
-    // Clean up when client disconnects
-    c.req.raw.signal.addEventListener("abort", () => {
-      clients.delete(client);
-      consola.trace(
-        `[live-reload] Client disconnected (${clients.size} remaining)`,
-      );
+      // Keep connection alive with periodic pings
+      while (true) {
+        await stream.sleep(30_000); // ping every 30 seconds
+        await stream.writeSSE({ data: "ping" });
+      }
     });
-
-    // Keep connection alive with periodic pings
-    while (true) {
-      await stream.sleep(30_000); // ping every 30 seconds
-      await stream.writeSSE({ data: "ping" });
-    }
   });
-});

@@ -66,7 +66,7 @@ test("render about section", async () => {
               const props = {
                 children: "",
                 className:
-                  "fr-btn bg-transparent text-black hover:bg-(--background-default-grey-hover)! fr-btn--sm fr-btn--tertiary ml-2",
+                  "disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 text-sm leading-6 text-blue-france hover:bg-grey-50 bg-transparent shadow-[inset_0_0_0_1px_var(--color-grey-200)] aspect-square justify-center p-0 ml-2",
                 text: "cached_libelle",
               };
               let mounted = false;
@@ -89,7 +89,7 @@ test("render about section", async () => {
           siret
           <a
             href="https://annuaire-entreprises.data.gouv.fr/entreprise/siret"
-            class="fr-btn fr-btn--sm fr-btn--tertiary ml-2"
+            class="disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france hover:bg-grey-50 bg-transparent shadow-[inset_0_0_0_1px_var(--color-grey-200)] ml-2"
             rel="noopener noreferrer"
             target="_blank"
             >Fiche annuaire</a
@@ -101,7 +101,7 @@ test("render about section", async () => {
               const props = {
                 children: "",
                 className:
-                  "fr-btn bg-transparent text-black hover:bg-(--background-default-grey-hover)! fr-btn--sm fr-btn--tertiary ml-2",
+                  "disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 text-sm leading-6 text-blue-france hover:bg-grey-50 bg-transparent shadow-[inset_0_0_0_1px_var(--color-grey-200)] aspect-square justify-center p-0 ml-2",
                 text: "siret",
               };
               let mounted = false;

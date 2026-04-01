@@ -5,6 +5,7 @@ import type { Pagination } from "#src/schema";
 import { date_to_dom_string } from "#src/time";
 import { Foot } from "#src/ui/hx_table";
 import { notice } from "#src/ui/notice";
+import { table } from "#src/ui/table";
 import { Time } from "#src/ui/time";
 import { urls } from "#src/urls";
 import type { get_organizations_by_user_id } from "./get_organizations_by_user_id.query";
@@ -42,32 +43,32 @@ export async function Table({
   };
 
   return (
-    <div class="fr-table *:table!">
-      <table aria-describedby={describedby}>
-        <thead>
-          <tr>
-            <th>Date de création</th>
-            <th class="break-words">Siret</th>
-            <th class="break-words">Libellé</th>
-            <th class="break-words">Domains</th>
-            <th class="max-w-32 break-words">Code géographique officiel</th>
-          </tr>
-        </thead>
+    <table class={table()} aria-describedby={describedby}>
+      <thead>
+        <tr>
+          <th>Date de création</th>
+          <th class="warp-break-word">Siret</th>
+          <th class="warp-break-word">Libellé</th>
+          <th class="warp-break-word">Domains</th>
+          <th class="max-w-32 break-words">Code géographique officiel</th>
 
-        <tbody>
-          {organizations.map((organization) => (
-            <Row key={organization.id.toString()} organization={organization} />
-          ))}
-        </tbody>
+          <th></th>
+        </tr>
+      </thead>
 
-        <Foot
-          count={count}
-          hx_query_props={hx_get_organizations_query_props}
-          id={page_ref}
-          pagination={pagination}
-        />
-      </table>
-    </div>
+      <tbody>
+        {organizations.map((organization) => (
+          <Row key={organization.id.toString()} organization={organization} />
+        ))}
+      </tbody>
+
+      <Foot
+        count={count}
+        hx_query_props={hx_get_organizations_query_props}
+        id={page_ref}
+        pagination={pagination}
+      />
+    </table>
   );
 }
 

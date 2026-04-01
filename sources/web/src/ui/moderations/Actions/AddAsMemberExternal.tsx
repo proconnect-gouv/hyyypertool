@@ -2,6 +2,7 @@
 
 import { hyper_ref } from "#src/html";
 import { validate_form_schema } from "#src/lib/moderations";
+import { radio_group } from "#src/ui/form";
 import { useContext } from "hono/jsx";
 import { context, valid_context } from "./context";
 
@@ -15,8 +16,9 @@ export function AddAsMemberExternal() {
     },
   } = useContext(context);
   const id = hyper_ref();
+  const { base, label } = radio_group();
   return (
-    <div class="fr-radio-group">
+    <div class={base()}>
       <input
         id={id}
         name={validate_form_schema.keyof().enum.add_member}
@@ -30,7 +32,7 @@ export function AddAsMemberExternal() {
             add .hidden to #domainInternalSection
         `}
       />
-      <label class="fr-label flex-row!" for={id}>
+      <label class={label({ class: "flex-row!" })} for={id}>
         Ajouter <b class="mx-1">{given_name}</b> à l'organisation EN TANT
         QU'EXTERNE
       </label>

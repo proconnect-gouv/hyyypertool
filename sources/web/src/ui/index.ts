@@ -8,11 +8,9 @@ export * from "./links";
 export * from "./list";
 export * from "./loader";
 export * from "./menu";
-// moderations: About, Investigation, etc
 export * from "./moderations";
 export * from "./notice";
 export * from "./number";
-// organizations: About, Investigation, etc (renamed to avoid conflicts)
 export {
   InactiveWarning,
   About as Organization_About,

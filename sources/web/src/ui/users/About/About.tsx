@@ -22,7 +22,7 @@ export function About({ user, organization, nonce = "" }: AboutProps) {
 
   return (
     <section>
-      <h2 class="fr-h3">
+      <h2>
         <a
           class="bg-none"
           target="_blank"
