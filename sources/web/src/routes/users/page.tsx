@@ -20,7 +20,6 @@ const hx_users_list_query_props = {
   "hx-replace-url": true,
   "hx-select": `#${$table} > table`,
   "hx-target": `#${$table}`,
-  "hx-trigger": "popstate from:window throttle:1s",
 };
 
 //
@@ -52,7 +51,10 @@ function Filter({ q }: { q?: string | string[] }) {
   return (
     <form
       {...hx_users_list_query_props}
-      hx-trigger={[`keyup changed delay:500ms from:#${$search}`].join(", ")}
+      hx-trigger={[
+        `keyup changed delay:500ms from:#${$search}`,
+        "popstate from:window throttle:1s",
+      ].join(", ")}
       hx-vals={JSON.stringify({ page: 1 })}
     >
       <div class="fr-search-bar" role="search">
