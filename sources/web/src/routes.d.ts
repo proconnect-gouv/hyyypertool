@@ -1025,6 +1025,73 @@ declare const app: import("hono/hono-base").HonoBase<
         };
       },
       "/domains-deliverability"
+    >
+  | import("hono/types").MergeSchemaPath<
+      {
+        "/": {
+          $get: {
+            input: {};
+            output: {};
+            outputFormat: string;
+            status: import("hono/utils/http-status").StatusCode;
+          };
+        };
+      } & {
+        "/new": {
+          $get: {
+            input: {};
+            output: {};
+            outputFormat: string;
+            status: import("hono/utils/http-status").StatusCode;
+          };
+        };
+      } & {
+        "/": {
+          $post: {
+            input: {
+              form: {
+                label: string;
+                content: string;
+              };
+            };
+            output: undefined;
+            outputFormat: "redirect";
+            status: 303;
+          };
+        };
+      } & {
+        "/:id": {
+          $get: {
+            input: {
+              param: {
+                id: string;
+              };
+            };
+            output: {};
+            outputFormat: string;
+            status: import("hono/utils/http-status").StatusCode;
+          };
+        };
+      } & {
+        "/:id": {
+          $patch: {
+            input: {
+              form: {
+                label: string;
+                content: string;
+              };
+            } & {
+              param: {
+                id: string;
+              };
+            };
+            output: "";
+            outputFormat: "text";
+            status: 200;
+          };
+        };
+      },
+      "/response-templates"
     >,
   "/",
   "*"
