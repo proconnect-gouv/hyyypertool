@@ -5,6 +5,8 @@ import { button } from "#src/ui/button";
 import { CopyButton } from "#src/ui/button/components";
 import { description_list } from "#src/ui/list";
 import { LocalTime } from "#src/ui/time";
+import { formatTrancheEffectifsUniteLegale } from "@proconnect-gouv/proconnect.api_entreprise/formatters";
+
 import { type JSX } from "hono/jsx";
 import { InactiveWarning } from "./InactiveWarning";
 
@@ -71,8 +73,15 @@ export function About(props: Props) {
           {organization.cached_libelle_tranche_effectif} (code :{" "}
           {organization.cached_tranche_effectifs}){" "}
         </dd>
-        <dt>Tranche d'effectif de l'unité légale</dt>
-        <dd>{organization.cached_tranche_effectifs_unite_legale}</dd>
+        <dt>Tranche d'effectif de l'unité légale </dt>
+        <dd>
+          {formatTrancheEffectifsUniteLegale(
+            organization.cached_tranche_effectifs_unite_legale,
+          ) ?? "Non renseigné"}
+          {organization.cached_tranche_effectifs_unite_legale && (
+            <> (code : {organization.cached_tranche_effectifs_unite_legale})</>
+          )}
+        </dd>
       </dl>
       <details class="my-6">
         <summary>Détails de l'organisation</summary>
