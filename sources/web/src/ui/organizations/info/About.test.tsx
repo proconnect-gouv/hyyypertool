@@ -128,7 +128,7 @@ test("render about section", async () => {
         <dt>Tranche d&#39;effectif</dt>
         <dd>cached_libelle_tranche_effectif (code : cached_tranche_effectifs)</dd>
         <dt>Tranche d&#39;effectif de l&#39;unité légale</dt>
-        <dd>cached_tranche_effectifs_unite_legale</dd>
+        <dd>Non renseigné (code : cached_tranche_effectifs_unite_legale)</dd>
       </dl>
       <details class="my-6">
         <summary>Détails de l&#39;organisation</summary>
