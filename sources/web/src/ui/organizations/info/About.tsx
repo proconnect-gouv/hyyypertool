@@ -18,6 +18,30 @@ type Props = JSX.IntrinsicElements["section"] & {
 export function About(props: Props) {
   const { organization, nonce = "", ...section_props } = props;
 
+  const EFFECTIFS_UNITE_LEGALE_LABELS: Record<string, string> = {
+    NN: "Unité non employeuse",
+    "00": "0 salarié",
+    "01": "1 ou 2 salariés",
+    "02": "3 à 5 salariés",
+    "03": "6 à 9 salariés",
+    "11": "10 à 19 salariés",
+    "12": "20 à 49 salariés",
+    "21": "50 à 99 salariés",
+    "22": "100 à 199 salariés",
+    "31": "200 à 249 salariés",
+    "32": "250 à 499 salariés",
+    "41": "500 à 999 salariés",
+    "42": "1 000 à 1 999 salariés",
+    "51": "2 000 à 4 999 salariés",
+    "52": "5 000 à 9 999 salariés",
+    "53": "10 000 salariés et plus",
+  };
+
+  const getLabelTrancheEffectifs = (code: string | null): string => {
+    if (!code) return "Non renseigné";
+    return EFFECTIFS_UNITE_LEGALE_LABELS[code] ?? "Non renseigné";
+  };
+
   return (
     <section {...section_props}>
       <InactiveWarning organization={organization} />
@@ -71,8 +95,15 @@ export function About(props: Props) {
           {organization.cached_libelle_tranche_effectif} (code :{" "}
           {organization.cached_tranche_effectifs}){" "}
         </dd>
-        <dt>Tranche d'effectif de l'unité légale</dt>
-        <dd>{organization.cached_tranche_effectifs_unite_legale}</dd>
+        <dt>Tranche d'effectif de l'unité légale </dt>
+        <dd>
+          {getLabelTrancheEffectifs(
+            organization.cached_tranche_effectifs_unite_legale,
+          ) ?? "Non renseigné"}
+          {organization.cached_tranche_effectifs_unite_legale && (
+            <> (code : {organization.cached_tranche_effectifs_unite_legale})</>
+          )}
+        </dd>
       </dl>
       <details class="my-6">
         <summary>Détails de l'organisation</summary>
