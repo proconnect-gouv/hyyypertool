@@ -1,5 +1,37 @@
 # Changelog
 
+## [2026.4.0](https://github.com/proconnect-gouv/hyyypertool/compare/2026.3.5...2026.4.0) (2026-04-07)
+
+### Changements
+
+- 💄 Migration des composants DSFR vers Tailwind CSS + tailwind-variants
+
+Remplacement des classes DSFR (fr-tag, fr-alert, fr-card, fr-btn--close, target=\_blank::after) par des composants tv() réutilisables. Ajout des icônes d'alerte, du lien externe et du bouton de fermeture via mask-image CSS. Les pages utilisateurs et organisations utilisent désormais card() avec des grilles responsives.
+
+### Modifié
+
+- 💄 ui: replace dsfr with custom tailwind theme (#1508) (7be2dffa)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): Bump cypress-io/github-action (#1521) (b500cd50)
+- :arrow_upper_right: [patch](deps): Bump the sentry group with 4 updates (#1524) (a3a1c402)
+- :arrow_upper_right: [patch](deps): Bump cypress in /e2e (#1512) (fd70667e)
+
+### CI/CD
+
+- 👷 add the team routes tests (#1518) (7d901c9e)
+
+### Divers
+
+- ↗️ [patch](deps): Bump cypress from 15.12.0 to 15.13.0 in /e2e (#1523) (f57afffb)
+- ↗️ [patch](deps): Bump hono from 4.12.7 to 4.12.9 (#1525) (b0f3ba63)
+- ↗️ [patch](deps-dev): Bump @happy-dom/global-registrator from 20.8.3 to 20.8.8 (#1526) (fd6d49ba)
+- ↗️ [patch](deps): Bump the sentry group with 4 updates (#1513) (b378b468)
+- ↗️ [patch](deps): Bump cypress-io/github-action from 7.1.7 to 7.1.8 (#1510) (020eb1f4)
+- ↗️ [patch](deps): Bump the tailwindcss group with 2 updates (#1514) (86ba810e)
+- ↗️ [patch](deps): Bump preact from 10.28.4 to 10.29.0 (#1517) (46befda4)
+
 ## [2026.3.5](https://github.com/proconnect-gouv/hyyypertool/compare/2026.3.4...2026.3.5) (2026-03-24)
 
 ### Changements
