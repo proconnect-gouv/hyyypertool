@@ -69,7 +69,7 @@
     "@types/bun": "1.3.10",
     "@~/hyyyperbase": "workspace:*",
     "@~/identite-proconnect": "workspace:*",
-    "hono": "4.12.9",
+    "hono": "4.12.12",
     "htmx-ext-debug": "2.0.2",
     "prettier": "3.8.1",
     "prettier-plugin-gherkin": "3.1.3",
