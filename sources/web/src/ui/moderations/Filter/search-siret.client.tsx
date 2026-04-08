@@ -19,6 +19,9 @@ export function SearchSiret({
       onInput={(e) => {
         update_q((s) => {
           s.search_siret = e.currentTarget.value;
+          s.processed_requests = undefined;
+          s.search_type = "";
+          s.exclude_types = [];
         });
       }}
     />

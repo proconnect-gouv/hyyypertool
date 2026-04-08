@@ -19,6 +19,9 @@ export function SearchEmail({
       onInput={(e) => {
         update_q((s) => {
           s.search_email = e.currentTarget.value;
+          s.processed_requests = undefined;
+          s.search_type = "";
+          s.exclude_types = [];
         });
       }}
     />
