@@ -15,6 +15,9 @@ export function SearchModeratedBy({ moderators_list }: SearchModeratedByProps) {
       onChange={(e) => {
         update_q((s) => {
           s.search_moderated_by = e.currentTarget.value;
+          s.processed_requests = undefined;
+          s.search_type = "";
+          s.exclude_types = [];
         }, true);
       }}
     >
