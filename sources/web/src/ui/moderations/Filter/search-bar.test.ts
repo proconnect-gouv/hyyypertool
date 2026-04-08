@@ -12,48 +12,90 @@ import {
 describe("get_token_at_cursor", () => {
   test("returns token at cursor in the middle", () => {
     const result = get_token_at_cursor("email:foo is:pending", 5);
-    expect(result.text).toBe("email:foo");
-    expect(result.start).toBe(0);
-    expect(result.end).toBe(9);
+    expect(result).toMatchInlineSnapshot(`
+      {
+        "end": 9,
+        "start": 0,
+        "text": "email:foo",
+      }
+    `);
   });
 
   test("returns second token when cursor is on it", () => {
     const result = get_token_at_cursor("email:foo is:pending", 12);
-    expect(result.text).toBe("is:pending");
-    expect(result.start).toBe(10);
-    expect(result.end).toBe(20);
+    expect(result).toMatchInlineSnapshot(`
+      {
+        "end": 20,
+        "start": 10,
+        "text": "is:pending",
+      }
+    `);
   });
 
   test("returns empty token when cursor is after trailing space", () => {
     const result = get_token_at_cursor("email:foo ", 10);
-    expect(result.text).toBe("");
+    expect(result).toMatchInlineSnapshot(`
+      {
+        "end": 10,
+        "start": 10,
+        "text": "",
+      }
+    `);
   });
 
   test("returns first token when cursor is at position 0", () => {
     const result = get_token_at_cursor("is:pending email:foo", 0);
-    expect(result.text).toBe("is:pending");
+    expect(result).toMatchInlineSnapshot(`
+      {
+        "end": 10,
+        "start": 0,
+        "text": "is:pending",
+      }
+    `);
   });
 
   test("handles quoted tokens", () => {
     const result = get_token_at_cursor('-service:"my app" email:foo', 10);
-    expect(result.text).toBe('-service:"my app"');
-    expect(result.start).toBe(0);
-    expect(result.end).toBe(17);
+    expect(result).toMatchInlineSnapshot(`
+      {
+        "end": 17,
+        "start": 0,
+        "text": "-service:"my app"",
+      }
+    `);
   });
 
   test("returns empty token for empty string", () => {
     const result = get_token_at_cursor("", 0);
-    expect(result.text).toBe("");
+    expect(result).toMatchInlineSnapshot(`
+      {
+        "end": 0,
+        "start": 0,
+        "text": "",
+      }
+    `);
   });
 
   test("returns token at boundary (cursor at end of token)", () => {
     const result = get_token_at_cursor("email:foo is:pending", 9);
-    expect(result.text).toBe("email:foo");
+    expect(result).toMatchInlineSnapshot(`
+      {
+        "end": 9,
+        "start": 0,
+        "text": "email:foo",
+      }
+    `);
   });
 
   test("returns second token at its start boundary", () => {
     const result = get_token_at_cursor("email:foo is:pending", 10);
-    expect(result.text).toBe("is:pending");
+    expect(result).toMatchInlineSnapshot(`
+      {
+        "end": 20,
+        "start": 10,
+        "text": "is:pending",
+      }
+    `);
   });
 });
 
@@ -64,8 +106,12 @@ describe("replace_token_at_cursor", () => {
       1,
       "email:test@foo.com",
     );
-    expect(result.text).toBe("email:test@foo.com is:pending");
-    expect(result.cursor).toBe(18);
+    expect(result).toMatchInlineSnapshot(`
+      {
+        "cursor": 18,
+        "text": "email:test@foo.com is:pending",
+      }
+    `);
   });
 
   test("replaces last token", () => {
@@ -74,8 +120,12 @@ describe("replace_token_at_cursor", () => {
       15,
       "is:pending",
     );
-    expect(result.text).toBe("email:foo is:pending");
-    expect(result.cursor).toBe(20);
+    expect(result).toMatchInlineSnapshot(`
+      {
+        "cursor": 20,
+        "text": "email:foo is:pending",
+      }
+    `);
   });
 
   test("replaces middle token", () => {
@@ -84,12 +134,22 @@ describe("replace_token_at_cursor", () => {
       12,
       "by:admin@gov.fr",
     );
-    expect(result.text).toBe("email:foo by:admin@gov.fr siret:123");
+    expect(result).toMatchInlineSnapshot(`
+      {
+        "cursor": 25,
+        "text": "email:foo by:admin@gov.fr siret:123",
+      }
+    `);
   });
 
   test("inserts at trailing space (empty token)", () => {
     const result = replace_token_at_cursor("email:foo ", 10, "is:pending");
-    expect(result.text).toBe("email:foo is:pending");
+    expect(result).toMatchInlineSnapshot(`
+      {
+        "cursor": 20,
+        "text": "email:foo is:pending",
+      }
+    `);
   });
 });
 
@@ -100,16 +160,26 @@ describe("get_suggestions", () => {
   describe("pivot item", () => {
     test("positive qualifier shows Exclure pivot first", () => {
       const result = get_suggestions("is:", moderators, sp_names);
-      expect(result[0]!.insert).toBe("-is:");
-      expect(result[0]!.is_category).toBe(true);
-      expect(result[0]!.label).toBe("Exclure");
+      expect(result[0]).toMatchInlineSnapshot(`
+        {
+          "hint": "-is:",
+          "insert": "-is:",
+          "is_category": true,
+          "label": "Exclure",
+        }
+      `);
     });
 
     test("negative qualifier shows positive pivot first", () => {
       const result = get_suggestions("-type:", moderators, sp_names);
-      expect(result[0]!.insert).toBe("type:");
-      expect(result[0]!.is_category).toBe(true);
-      expect(result[0]!.label).toBe("Type");
+      expect(result[0]).toMatchInlineSnapshot(`
+        {
+          "hint": "type:",
+          "insert": "type:",
+          "is_category": true,
+          "label": "Type",
+        }
+      `);
     });
 
     test("pivot disappears when partial is typed", () => {
@@ -122,24 +192,53 @@ describe("get_suggestions", () => {
     test("returns status suggestions after pivot", () => {
       const result = get_suggestions("is:", moderators, sp_names);
       const values = result.filter((s) => !s.is_category);
-      expect(values).toHaveLength(2);
-      expect(values[0]!.insert).toBe("is:pending");
-      expect(values[1]!.insert).toBe("is:processed");
+      expect(values).toMatchInlineSnapshot(`
+        [
+          {
+            "hint": "pending",
+            "insert": "is:pending",
+            "label": "En attente (non modéré)",
+          },
+          {
+            "hint": "processed",
+            "insert": "is:processed",
+            "label": "Traitées (déjà modéré)",
+          },
+        ]
+      `);
     });
 
     test("filters by partial value", () => {
       const result = get_suggestions("is:pen", moderators, sp_names);
-      expect(result).toHaveLength(1);
-      expect(result[0]!.insert).toBe("is:pending");
+      expect(result).toMatchInlineSnapshot(`
+        [
+          {
+            "hint": "pending",
+            "insert": "is:pending",
+            "label": "En attente (non modéré)",
+          },
+        ]
+      `);
     });
 
     test("-is: returns negated status suggestions", () => {
       const values = get_suggestions("-is:", moderators, sp_names).filter(
         (s) => !s.is_category,
       );
-      expect(values).toHaveLength(2);
-      expect(values[0]!.insert).toBe("-is:pending");
-      expect(values[1]!.insert).toBe("-is:processed");
+      expect(values).toMatchInlineSnapshot(`
+        [
+          {
+            "hint": "pending",
+            "insert": "-is:pending",
+            "label": "En attente (non modéré)",
+          },
+          {
+            "hint": "processed",
+            "insert": "-is:processed",
+            "label": "Traitées (déjà modéré)",
+          },
+        ]
+      `);
     });
   });
 
@@ -148,18 +247,40 @@ describe("get_suggestions", () => {
       const values = get_suggestions("-type:", moderators, sp_names).filter(
         (s) => !s.is_category,
       );
-      expect(values).toHaveLength(2);
-      expect(values[0]!.insert).toBe("-type:non_verified_domain");
-      expect(values[1]!.insert).toBe("-type:organization_join_block");
+      expect(values).toMatchInlineSnapshot(`
+        [
+          {
+            "hint": "non_verified_domain",
+            "insert": "-type:non_verified_domain",
+            "label": "Non vérifié",
+          },
+          {
+            "hint": "organization_join_block",
+            "insert": "-type:organization_join_block",
+            "label": "A traiter",
+          },
+        ]
+      `);
     });
 
     test("type: without negation returns suggestions without prefix", () => {
       const values = get_suggestions("type:", moderators, sp_names).filter(
         (s) => !s.is_category,
       );
-      expect(values).toHaveLength(2);
-      expect(values[0]!.insert).toBe("type:non_verified_domain");
-      expect(values[1]!.insert).toBe("type:organization_join_block");
+      expect(values).toMatchInlineSnapshot(`
+        [
+          {
+            "hint": "non_verified_domain",
+            "insert": "type:non_verified_domain",
+            "label": "Non vérifié",
+          },
+          {
+            "hint": "organization_join_block",
+            "insert": "type:organization_join_block",
+            "label": "A traiter",
+          },
+        ]
+      `);
     });
   });
 
@@ -168,29 +289,60 @@ describe("get_suggestions", () => {
       const values = get_suggestions("by:", moderators, sp_names).filter(
         (s) => !s.is_category,
       );
-      expect(values).toHaveLength(2);
-      expect(values[0]!.insert).toBe("by:admin@gov.fr");
+      expect(values).toMatchInlineSnapshot(`
+        [
+          {
+            "insert": "by:admin@gov.fr",
+            "label": "admin@gov.fr",
+          },
+          {
+            "insert": "by:mod@gov.fr",
+            "label": "mod@gov.fr",
+          },
+        ]
+      `);
     });
 
     test("-by: returns negated moderator suggestions", () => {
       const values = get_suggestions("-by:", moderators, sp_names).filter(
         (s) => !s.is_category,
       );
-      expect(values).toHaveLength(2);
-      expect(values[0]!.insert).toBe("-by:admin@gov.fr");
-      expect(values[1]!.insert).toBe("-by:mod@gov.fr");
+      expect(values).toMatchInlineSnapshot(`
+        [
+          {
+            "insert": "-by:admin@gov.fr",
+            "label": "admin@gov.fr",
+          },
+          {
+            "insert": "-by:mod@gov.fr",
+            "label": "mod@gov.fr",
+          },
+        ]
+      `);
     });
 
     test("by:adm filters moderators", () => {
       const result = get_suggestions("by:adm", moderators, sp_names);
-      expect(result).toHaveLength(1);
-      expect(result[0]!.insert).toBe("by:admin@gov.fr");
+      expect(result).toMatchInlineSnapshot(`
+        [
+          {
+            "insert": "by:admin@gov.fr",
+            "label": "admin@gov.fr",
+          },
+        ]
+      `);
     });
 
     test("-by:adm filters negated moderators", () => {
       const result = get_suggestions("-by:adm", moderators, sp_names);
-      expect(result).toHaveLength(1);
-      expect(result[0]!.insert).toBe("-by:admin@gov.fr");
+      expect(result).toMatchInlineSnapshot(`
+        [
+          {
+            "insert": "-by:admin@gov.fr",
+            "label": "admin@gov.fr",
+          },
+        ]
+      `);
     });
   });
 
@@ -199,27 +351,84 @@ describe("get_suggestions", () => {
       const values = get_suggestions("-service:", moderators, sp_names).filter(
         (s) => !s.is_category,
       );
-      expect(values).toHaveLength(4);
-      expect(values[0]!.insert).toBe("-service:App1");
-      expect(values[1]!.insert).toBe("-service:App2");
-      expect(values[2]!.insert).toBe('-service:"My App"');
-      expect(values[2]!.label).toBe("My App");
-      expect(values[3]!.insert).toBe('-service:""');
-      expect(values[3]!.label).toBe("(sans service)");
+      expect(values).toMatchInlineSnapshot(`
+        [
+          {
+            "insert": "-service:App1",
+            "label": "App1",
+          },
+          {
+            "insert": "-service:App2",
+            "label": "App2",
+          },
+          {
+            "insert": "-service:"My App"",
+            "label": "My App",
+          },
+          {
+            "insert": "-service:""",
+            "label": "(sans service)",
+          },
+        ]
+      `);
     });
 
     test("service: returns sp_names suggestions with positive prefix", () => {
       const values = get_suggestions("service:", moderators, sp_names).filter(
         (s) => !s.is_category,
       );
-      expect(values).toHaveLength(4);
-      expect(values[0]!.insert).toBe("service:App1");
+      expect(values).toMatchInlineSnapshot(`
+        [
+          {
+            "insert": "service:App1",
+            "label": "App1",
+          },
+          {
+            "insert": "service:App2",
+            "label": "App2",
+          },
+          {
+            "insert": "service:"My App"",
+            "label": "My App",
+          },
+          {
+            "insert": "service:""",
+            "label": "(sans service)",
+          },
+        ]
+      `);
     });
 
     test("-service:App1 filters by partial", () => {
       const result = get_suggestions("-service:App1", moderators, sp_names);
-      expect(result).toHaveLength(1);
-      expect(result[0]!.insert).toBe("-service:App1");
+      expect(result).toMatchInlineSnapshot(`
+        [
+          {
+            "insert": "-service:App1",
+            "label": "App1",
+          },
+        ]
+      `);
+    });
+
+    test("service:App filters multiple matching names", () => {
+      const result = get_suggestions("service:App", moderators, sp_names);
+      expect(result).toMatchInlineSnapshot(`
+        [
+          {
+            "insert": "service:App1",
+            "label": "App1",
+          },
+          {
+            "insert": "service:App2",
+            "label": "App2",
+          },
+          {
+            "insert": "service:"My App"",
+            "label": "My App",
+          },
+        ]
+      `);
     });
   });
 
@@ -232,81 +441,246 @@ describe("get_suggestions", () => {
       const values = get_suggestions("date:", moderators, sp_names).filter(
         (s) => !s.is_category,
       );
-      expect(values).toHaveLength(7);
-      expect(values[0]!.label).toBe("Aujourd'hui");
-      expect(values[0]!.hint).toBe("2026-03-18");
-      expect(values[0]!.insert).toBe("date:2026-03-18");
-      expect(values[1]!.label).toBe("Hier");
-      expect(values[1]!.hint).toBe("2026-03-17");
+      expect(values).toMatchInlineSnapshot(`
+        [
+          {
+            "hint": "2026-03-18",
+            "insert": "date:2026-03-18",
+            "label": "Aujourd'hui",
+          },
+          {
+            "hint": "2026-03-17",
+            "insert": "date:2026-03-17",
+            "label": "Hier",
+          },
+          {
+            "hint": "2026-03-16",
+            "insert": "date:2026-03-16",
+            "label": "Lundi",
+          },
+          {
+            "hint": "2026-03-15",
+            "insert": "date:2026-03-15",
+            "label": "Dimanche",
+          },
+          {
+            "hint": "2026-03-14",
+            "insert": "date:2026-03-14",
+            "label": "Samedi",
+          },
+          {
+            "hint": "2026-03-13",
+            "insert": "date:2026-03-13",
+            "label": "Vendredi",
+          },
+          {
+            "hint": "2026-03-12",
+            "insert": "date:2026-03-12",
+            "label": "Jeudi",
+          },
+        ]
+      `);
     });
 
     test("-date: returns date suggestions with negation prefix", () => {
       const values = get_suggestions("-date:", moderators, sp_names).filter(
         (s) => !s.is_category,
       );
-      expect(values).toHaveLength(7);
-      expect(values[0]!.insert).toBe("-date:2026-03-18");
-      expect(values[1]!.insert).toBe("-date:2026-03-17");
+      expect(values).toMatchInlineSnapshot(`
+        [
+          {
+            "hint": "2026-03-18",
+            "insert": "-date:2026-03-18",
+            "label": "Aujourd'hui",
+          },
+          {
+            "hint": "2026-03-17",
+            "insert": "-date:2026-03-17",
+            "label": "Hier",
+          },
+          {
+            "hint": "2026-03-16",
+            "insert": "-date:2026-03-16",
+            "label": "Lundi",
+          },
+          {
+            "hint": "2026-03-15",
+            "insert": "-date:2026-03-15",
+            "label": "Dimanche",
+          },
+          {
+            "hint": "2026-03-14",
+            "insert": "-date:2026-03-14",
+            "label": "Samedi",
+          },
+          {
+            "hint": "2026-03-13",
+            "insert": "-date:2026-03-13",
+            "label": "Vendredi",
+          },
+          {
+            "hint": "2026-03-12",
+            "insert": "-date:2026-03-12",
+            "label": "Jeudi",
+          },
+        ]
+      `);
     });
 
     test("date: filters by partial date", () => {
       const result = get_suggestions("date:2026-03-18", moderators, sp_names);
-      expect(result).toHaveLength(1);
-      expect(result[0]!.label).toBe("Aujourd'hui");
+      expect(result).toMatchInlineSnapshot(`
+        [
+          {
+            "hint": "2026-03-18",
+            "insert": "date:2026-03-18",
+            "label": "Aujourd'hui",
+          },
+        ]
+      `);
     });
 
     test("date: filters by label", () => {
       const result = get_suggestions("date:hier", moderators, sp_names);
-      expect(result).toHaveLength(1);
-      expect(result[0]!.label).toBe("Hier");
+      expect(result).toMatchInlineSnapshot(`
+        [
+          {
+            "hint": "2026-03-17",
+            "insert": "date:2026-03-17",
+            "label": "Hier",
+          },
+        ]
+      `);
     });
   });
 
   describe("email: and siret: qualifiers", () => {
     test("email: returns only pivot", () => {
       const result = get_suggestions("email:", moderators, sp_names);
-      expect(result).toHaveLength(1);
-      expect(result[0]!.is_category).toBe(true);
+      expect(result).toMatchInlineSnapshot(`
+        [
+          {
+            "hint": "-email:",
+            "insert": "-email:",
+            "is_category": true,
+            "label": "Exclure",
+          },
+        ]
+      `);
     });
 
     test("-email: returns only pivot", () => {
       const result = get_suggestions("-email:", moderators, sp_names);
-      expect(result).toHaveLength(1);
-      expect(result[0]!.is_category).toBe(true);
+      expect(result).toMatchInlineSnapshot(`
+        [
+          {
+            "hint": "email:",
+            "insert": "email:",
+            "is_category": true,
+            "label": "Email",
+          },
+        ]
+      `);
     });
 
     test("siret: returns only pivot", () => {
       const result = get_suggestions("siret:", moderators, sp_names);
-      expect(result).toHaveLength(1);
-      expect(result[0]!.is_category).toBe(true);
+      expect(result).toMatchInlineSnapshot(`
+        [
+          {
+            "hint": "-siret:",
+            "insert": "-siret:",
+            "is_category": true,
+            "label": "Exclure",
+          },
+        ]
+      `);
     });
 
     test("-siret: returns only pivot", () => {
       const result = get_suggestions("-siret:", moderators, sp_names);
-      expect(result).toHaveLength(1);
-      expect(result[0]!.is_category).toBe(true);
+      expect(result).toMatchInlineSnapshot(`
+        [
+          {
+            "hint": "siret:",
+            "insert": "siret:",
+            "is_category": true,
+            "label": "Siret",
+          },
+        ]
+      `);
     });
   });
 
   describe("unknown qualifier", () => {
     test("returns empty for unknown qualifier", () => {
-      expect(get_suggestions("foo:", moderators, sp_names)).toEqual([]);
+      expect(
+        get_suggestions("foo:", moderators, sp_names),
+      ).toMatchInlineSnapshot(`[]`);
     });
 
     test("returns empty for negated unknown qualifier", () => {
-      expect(get_suggestions("-foo:", moderators, sp_names)).toEqual([]);
+      expect(
+        get_suggestions("-foo:", moderators, sp_names),
+      ).toMatchInlineSnapshot(`[]`);
     });
   });
 
   describe("empty and bare tokens", () => {
     test("empty token returns qualifier categories", () => {
       const result = get_suggestions("", moderators, sp_names);
-      expect(result.length).toBe(7);
-      expect(result.every((s) => s.is_category)).toBe(true);
+      expect(result).toMatchInlineSnapshot(`
+        [
+          {
+            "hint": "is:",
+            "insert": "is:",
+            "is_category": true,
+            "label": "Statut",
+          },
+          {
+            "hint": "date:",
+            "insert": "date:",
+            "is_category": true,
+            "label": "Date",
+          },
+          {
+            "hint": "email:",
+            "insert": "email:",
+            "is_category": true,
+            "label": "Email",
+          },
+          {
+            "hint": "siret:",
+            "insert": "siret:",
+            "is_category": true,
+            "label": "Siret",
+          },
+          {
+            "hint": "type:",
+            "insert": "type:",
+            "is_category": true,
+            "label": "Type",
+          },
+          {
+            "hint": "by:",
+            "insert": "by:",
+            "is_category": true,
+            "label": "Modérateur",
+          },
+          {
+            "hint": "service:",
+            "insert": "service:",
+            "is_category": true,
+            "label": "Service",
+          },
+        ]
+      `);
     });
 
     test("bare text with no qualifier match returns empty", () => {
-      expect(get_suggestions("hello", moderators, sp_names)).toEqual([]);
+      expect(
+        get_suggestions("hello", moderators, sp_names),
+      ).toMatchInlineSnapshot(`[]`);
     });
   });
 });
