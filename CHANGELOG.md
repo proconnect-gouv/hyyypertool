@@ -1,5 +1,17 @@
 # Changelog
 
+## [2026.4.1](https://github.com/proconnect-gouv/hyyypertool/compare/2026.4.0...2026.4.1) (2026-04-08)
+
+### Changements
+
+- ✨ Filtre : suppression automatique des tags is/type lors d'une recherche par champ
+
+Lors d'une recherche par email, SIRET ou modérateur via les champs dédiés, les filtres `is:pending` et `-type:non_verified_domain` présents dans le hyyyper filter sont désormais automatiquement supprimés. Cela évite des combinaisons de filtres incohérentes qui cachaient silencieusement des résultats.
+
+### Ajouté
+
+- ✨ filter: clear is/type tags when using dedicated search fields (#1536) (d3a5b0e5)
+
 ## [2026.4.0](https://github.com/proconnect-gouv/hyyypertool/compare/2026.3.5...2026.4.0) (2026-04-07)
 
 ### Changements
