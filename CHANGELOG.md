@@ -1,5 +1,18 @@
 # Changelog
 
+## [2026.4.2](https://github.com/proconnect-gouv/hyyypertool/compare/2026.4.1...2026.4.2) (2026-04-08)
+
+### Changements
+
+- 🐛 Correction du filtre `service:` positif dans la liste des modérations
+
+Le filtre `service:NomApp` était silencieusement ignoré par la requête : `parse_q` renseignait bien `sp_names` mais la couche SQL ne le lisait pas. La liste affichait toutes les modérations au lieu de celles du service demandé.
+
+### Corrigé
+
+- 🐛 Fix pagination buttons broken by hx-trigger leak (#1519) (cecaf90f)
+- 🐛 positif ignoré dans la liste des modérations (#1538) (29875a78)
+
 ## [2026.4.1](https://github.com/proconnect-gouv/hyyypertool/compare/2026.4.0...2026.4.1) (2026-04-08)
 
 ### Changements
