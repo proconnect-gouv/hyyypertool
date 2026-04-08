@@ -54,6 +54,16 @@ const qualifier_filters: Record<
     ...(s.exclude_types ?? []).map((t) => not(eq(schema.moderations.type, t))),
   ],
   service: (s) => [
+    s.sp_names?.length
+      ? or(
+          s.sp_names.includes("")
+            ? isNull(schema.moderations.sp_name)
+            : undefined,
+          s.sp_names.filter(Boolean).length
+            ? inArray(schema.moderations.sp_name, s.sp_names.filter(Boolean))
+            : undefined,
+        )
+      : undefined,
     s.exclude_sp_names?.length
       ? and(
           s.exclude_sp_names.includes("")

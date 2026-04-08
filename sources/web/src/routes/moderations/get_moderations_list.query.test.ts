@@ -292,8 +292,45 @@ test("excludes moderations by service name", async () => {
     search: { exclude_sp_names: ["App1"] },
   });
 
-  expect(result.count).toBe(2);
-  expect(result.moderations.map((m) => m.sp_name)).toEqual([null, "App2"]);
+  expect(result).toMatchInlineSnapshot(`
+    {
+      "count": 2,
+      "moderations": [
+        {
+          "created_at": "2222-01-01 00:00:00+00",
+          "id": 3,
+          "moderated_at": null,
+          "organization": {
+            "siret": "🦄 siret",
+          },
+          "sp_name": null,
+          "status": "unknown",
+          "type": "",
+          "user": {
+            "email": "adora.pony@unicorn.xyz",
+            "family_name": "Pony",
+            "given_name": "Adora",
+          },
+        },
+        {
+          "created_at": "2222-01-01 00:00:00+00",
+          "id": 2,
+          "moderated_at": null,
+          "organization": {
+            "siret": "🦄 siret",
+          },
+          "sp_name": "App2",
+          "status": "unknown",
+          "type": "",
+          "user": {
+            "email": "adora.pony@unicorn.xyz",
+            "family_name": "Pony",
+            "given_name": "Adora",
+          },
+        },
+      ],
+    }
+  `);
 });
 
 test("excludes multiple services by name", async () => {
@@ -308,8 +345,29 @@ test("excludes multiple services by name", async () => {
     search: { exclude_sp_names: ["App1", "App2"] },
   });
 
-  expect(result.count).toBe(1);
-  expect(result.moderations.at(0)?.sp_name).toBe("App3");
+  expect(result).toMatchInlineSnapshot(`
+    {
+      "count": 1,
+      "moderations": [
+        {
+          "created_at": "2222-01-01 00:00:00+00",
+          "id": 3,
+          "moderated_at": null,
+          "organization": {
+            "siret": "🦄 siret",
+          },
+          "sp_name": "App3",
+          "status": "unknown",
+          "type": "",
+          "user": {
+            "email": "adora.pony@unicorn.xyz",
+            "family_name": "Pony",
+            "given_name": "Adora",
+          },
+        },
+      ],
+    }
+  `);
 });
 
 test("excludes moderations without a service name", async () => {
@@ -323,8 +381,29 @@ test("excludes moderations without a service name", async () => {
     search: { exclude_sp_names: [""] },
   });
 
-  expect(result.count).toBe(1);
-  expect(result.moderations.at(0)?.sp_name).toBe("App1");
+  expect(result).toMatchInlineSnapshot(`
+    {
+      "count": 1,
+      "moderations": [
+        {
+          "created_at": "2222-01-01 00:00:00+00",
+          "id": 1,
+          "moderated_at": null,
+          "organization": {
+            "siret": "🦄 siret",
+          },
+          "sp_name": "App1",
+          "status": "unknown",
+          "type": "",
+          "user": {
+            "email": "adora.pony@unicorn.xyz",
+            "family_name": "Pony",
+            "given_name": "Adora",
+          },
+        },
+      ],
+    }
+  `);
 });
 
 test("excludes both named services and null service names", async () => {
@@ -339,8 +418,155 @@ test("excludes both named services and null service names", async () => {
     search: { exclude_sp_names: ["", "App1"] },
   });
 
-  expect(result.count).toBe(1);
-  expect(result.moderations.at(0)?.sp_name).toBe("App2");
+  expect(result).toMatchInlineSnapshot(`
+    {
+      "count": 1,
+      "moderations": [
+        {
+          "created_at": "2222-01-01 00:00:00+00",
+          "id": 2,
+          "moderated_at": null,
+          "organization": {
+            "siret": "🦄 siret",
+          },
+          "sp_name": "App2",
+          "status": "unknown",
+          "type": "",
+          "user": {
+            "email": "adora.pony@unicorn.xyz",
+            "family_name": "Pony",
+            "given_name": "Adora",
+          },
+        },
+      ],
+    }
+  `);
+});
+
+test("filters to only named service (service:App1)", async () => {
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+
+  await create_adora_pony_moderation(pg, { type: "", sp_name: "App1" });
+  await create_adora_pony_moderation(pg, { type: "", sp_name: "App2" });
+  await create_adora_pony_moderation(pg, { type: "", sp_name: null });
+
+  const result = await get_moderations_list(pg, {
+    search: { sp_names: ["App1"] },
+  });
+
+  expect(result).toMatchInlineSnapshot(`
+    {
+      "count": 1,
+      "moderations": [
+        {
+          "created_at": "2222-01-01 00:00:00+00",
+          "id": 1,
+          "moderated_at": null,
+          "organization": {
+            "siret": "🦄 siret",
+          },
+          "sp_name": "App1",
+          "status": "unknown",
+          "type": "",
+          "user": {
+            "email": "adora.pony@unicorn.xyz",
+            "family_name": "Pony",
+            "given_name": "Adora",
+          },
+        },
+      ],
+    }
+  `);
+});
+
+test('filters to only null service name (service:"")', async () => {
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+
+  await create_adora_pony_moderation(pg, { type: "", sp_name: "App1" });
+  await create_adora_pony_moderation(pg, { type: "", sp_name: null });
+
+  const result = await get_moderations_list(pg, {
+    search: { sp_names: [""] },
+  });
+
+  expect(result).toMatchInlineSnapshot(`
+    {
+      "count": 1,
+      "moderations": [
+        {
+          "created_at": "2222-01-01 00:00:00+00",
+          "id": 2,
+          "moderated_at": null,
+          "organization": {
+            "siret": "🦄 siret",
+          },
+          "sp_name": null,
+          "status": "unknown",
+          "type": "",
+          "user": {
+            "email": "adora.pony@unicorn.xyz",
+            "family_name": "Pony",
+            "given_name": "Adora",
+          },
+        },
+      ],
+    }
+  `);
+});
+
+test("filters to multiple named services (service:App1 service:App2)", async () => {
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+
+  await create_adora_pony_moderation(pg, { type: "", sp_name: "App1" });
+  await create_adora_pony_moderation(pg, { type: "", sp_name: "App2" });
+  await create_adora_pony_moderation(pg, { type: "", sp_name: "App3" });
+
+  const result = await get_moderations_list(pg, {
+    search: { sp_names: ["App1", "App2"] },
+  });
+
+  expect(result).toMatchInlineSnapshot(`
+    {
+      "count": 2,
+      "moderations": [
+        {
+          "created_at": "2222-01-01 00:00:00+00",
+          "id": 1,
+          "moderated_at": null,
+          "organization": {
+            "siret": "🦄 siret",
+          },
+          "sp_name": "App1",
+          "status": "unknown",
+          "type": "",
+          "user": {
+            "email": "adora.pony@unicorn.xyz",
+            "family_name": "Pony",
+            "given_name": "Adora",
+          },
+        },
+        {
+          "created_at": "2222-01-01 00:00:00+00",
+          "id": 2,
+          "moderated_at": null,
+          "organization": {
+            "siret": "🦄 siret",
+          },
+          "sp_name": "App2",
+          "status": "unknown",
+          "type": "",
+          "user": {
+            "email": "adora.pony@unicorn.xyz",
+            "family_name": "Pony",
+            "given_name": "Adora",
+          },
+        },
+      ],
+    }
+  `);
 });
 
 test("supports pagination", async () => {
