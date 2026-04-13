@@ -16,9 +16,7 @@ describe("seed:0000_response_types", () => {
   test("Agent France Travail - FI sur PCF", async () => {
     const agent_france_travail_fi_sur_pcf = response_files.at(0)!;
 
-    expect(agent_france_travail_fi_sur_pcf).toMatchInlineSnapshot(`
-      {
-        "content": 
+    expect(agent_france_travail_fi_sur_pcf.content).toMatchInlineSnapshot(`
       "Bonjour,
 
       Nous avons bien reçu votre demande de rattachement à l'organisation « \${ organization_name } » sur ProConnect (anciennement : AgentConnect, MonComptePro).
@@ -31,11 +29,7 @@ describe("seed:0000_response_types", () => {
 
       Bien cordialement,
       L’équipe ProConnect."
-      ,
-        "created_at": 2026-04-13T15:04:15.185Z,
-        "label": "Utilisateur possédant déjà un compte ProConnect",
-        "updated_at": 2026-04-13T19:55:30.463Z,
-      }
     `);
+    expect(agent_france_travail_fi_sur_pcf.label).toMatchInlineSnapshot(`"Utilisateur possédant déjà un compte ProConnect"`);
   });
 });
