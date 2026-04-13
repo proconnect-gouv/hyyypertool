@@ -19,13 +19,13 @@ import "@testing-library/cypress/add-commands";
  * Useful when working within a particular group of elements such as a <form>.
  * Similar to uuvGetContext(): Cypress.Chainable<Context>
  */
-export let get_within_context: () => Cypress.Chainable<JQuery<HTMLElement>>;
+export let get_within_context: () => Cypress.Chainable<JQuery<any>>;
 
 /**
  * Sets the current context for domain-specific step definitions
  */
 export const set_within_context = (
-  context: () => Cypress.Chainable<JQuery<HTMLElement>>,
+  context: () => Cypress.Chainable<JQuery<any>>,
 ) => {
   get_within_context = context;
 };

@@ -62,9 +62,8 @@
       "out/": true,
     },
     "npm.scriptRunner": "bun",
-    "javascript.preferences.importModuleSpecifier": "shortest",
-    "typescript.preferences.importModuleSpecifier": "shortest",
-    "typescript.tsdk": "root/node_modules/typescript/lib",
+    "js/ts.preferences.importModuleSpecifier": "shortest",
+    "js/ts.tsdk.path": "${workspaceFolder:/}/node_modules/typescript/lib",
     "workbench.editor.labelFormat": "short",
     "editor.quickSuggestions": { "strings": "on" },
     "tailwindCSS.experimental.classRegex": [
