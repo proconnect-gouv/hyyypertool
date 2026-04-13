@@ -23,18 +23,18 @@
   "dependencies": {
     "@proconnect-gouv/proconnect.api_entreprise": "2.0.0",
     "@proconnect-gouv/proconnect.core": "1.0.0",
-    "@proconnect-gouv/proconnect.identite": "1.7.0",
+    "@proconnect-gouv/proconnect.identite": "5.0.0",
     "@proconnect-gouv/proconnect.identite.database": "1.4.0",
-    "@proconnect-gouv/proconnect.insee": "1.0.1",
+    "@proconnect-gouv/proconnect.insee": "2.0.0",
     "consola": "3.4.2",
     "drizzle-orm": "0.45.1",
     "hono": "4.12.9",
     "pg": "8.20.0"
   },
   "devDependencies": {
+    "@~/config.typescript": "workspace:*",
     "@electric-sql/pglite": "0.3.16",
     "@types/pg": "8.18.0",
-    "@~/config.typescript": "workspace:*",
     "drizzle-kit": "0.31.9"
   }
 }

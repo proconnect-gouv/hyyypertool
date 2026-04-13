@@ -24,14 +24,14 @@
     "consola": "3.4.2",
     "zod": "4.3.6"
   },
-  "peerDependencies": {
-    "drizzle-orm": ">=0.45",
-    "pg": ">=8"
-  },
   "devDependencies": {
     "@~/config.typescript": "workspace:*",
     "@electric-sql/pglite": "0.3.16",
     "@types/pg": "8.18.0",
     "drizzle-kit": "0.31.9"
+  },
+  "peerDependencies": {
+    "drizzle-orm": ">=0.45",
+    "pg": ">=8"
   }
 }

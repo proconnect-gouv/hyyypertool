@@ -10,6 +10,9 @@
   "references": [
     {
       "path": "../sources/web"
+    },
+    {
+      "path": "../sources/config/bun-plugin-client-scripts"
     }
   ],
   "include": ["src/**/*.ts"]

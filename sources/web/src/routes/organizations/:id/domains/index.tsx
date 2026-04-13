@@ -11,7 +11,10 @@ import {
 import type { AppContext } from "#src/middleware/context";
 import { DescribedBySchema, EntitySchema, IdSchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
-import { MarkDomainAsVerified } from "@~/identite-proconnect/sdk";
+import {
+  createProconnectIdentiteContext,
+  MarkDomainAsVerified,
+} from "@~/identite-proconnect/sdk";
 import { EmailDomainVerificationTypes } from "@~/identite-proconnect/types";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
@@ -67,9 +70,11 @@ export default new Hono<AppContext>()
           "Domain should not contain the '@' character",
         );
 
+      const identite_context =
+        createProconnectIdentiteContext(identite_pg_client);
       const add_verified_domain = AddVerifiedDomain({
         get_organization_by_id: GetFicheOrganizationById({ pg: identite_pg }),
-        mark_domain_as_verified: MarkDomainAsVerified(identite_pg_client),
+        mark_domain_as_verified: MarkDomainAsVerified(identite_context),
       });
 
       await add_verified_domain({
@@ -113,7 +118,10 @@ export default new Hono<AppContext>()
     }) {
       const { domain_id } = req.valid("param");
       const { type: verification_type } = req.valid("query");
-      const mark_domain_as_verified = MarkDomainAsVerified(identite_pg_client);
+
+      const identite_context =
+        createProconnectIdentiteContext(identite_pg_client);
+      const mark_domain_as_verified = MarkDomainAsVerified(identite_context);
 
       const email_domain = await identite_pg.query.email_domains.findFirst({
         columns: { domain: true, organization_id: true },

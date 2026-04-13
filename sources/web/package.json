@@ -22,6 +22,8 @@
     "start:node": "tsx src/node/index.ts"
   },
   "dependencies": {
+    "@~/hyyyperbase": "workspace:*",
+    "@~/identite-proconnect": "workspace:*",
     "@hono/node-server": "1.19.11",
     "@hono/sentry": "1.2.2",
     "@hono/zod-validator": "0.7.6",
@@ -31,8 +33,6 @@
     "@sentry/core": "10.47.0",
     "@sentry/node": "10.47.0",
     "@tailwindcss/typography": "^0.5.19",
-    "@~/hyyyperbase": "workspace:*",
-    "@~/identite-proconnect": "workspace:*",
     "await-to-js": "3.0.0",
     "consola": "3.4.2",
     "drizzle-orm": "0.45.1",
@@ -62,8 +62,8 @@
     "youch": "4.1.0"
   },
   "devDependencies": {
-    "@happy-dom/global-registrator": "20.8.8",
     "@~/config.typescript": "workspace:*",
+    "@happy-dom/global-registrator": "20.8.8",
     "@types/lodash.sortby": "4.7.9",
     "@types/nprogress": "0.2.3",
     "@types/pg": "8.18.0",
