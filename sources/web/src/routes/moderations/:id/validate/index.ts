@@ -25,6 +25,7 @@ import {
   EmailDomainRepository,
   MarkDomainAsVerified,
   OrganizationRepository,
+  createProconnectIdentiteContext,
 } from "@~/identite-proconnect/sdk";
 import {
   EmailDomainApprovedVerificationTypes,
@@ -60,9 +61,11 @@ export default new Hono<AppContext>().patch(
       req.valid("form");
 
     //#region 💉 Inject dependencies
+    const identite_context =
+      createProconnectIdentiteContext(identite_pg_client);
     const add_verified_domain = AddVerifiedDomain({
       get_organization_by_id: GetFicheOrganizationById({ pg: identite_pg }),
-      mark_domain_as_verified: MarkDomainAsVerified(identite_pg_client),
+      mark_domain_as_verified: MarkDomainAsVerified(identite_context),
     });
     const get_moderation_with_user = GetModerationWithUser(identite_pg);
     const update_user_by_id_in_organization = UpdateUserByIdInOrganization({
