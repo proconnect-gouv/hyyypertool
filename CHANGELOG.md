@@ -1,5 +1,25 @@
 # Changelog
 
+## [2026.4.3](https://github.com/proconnect-gouv/hyyypertool/compare/2026.4.2...2026.4.3) (2026-04-14)
+
+### Changements
+
+- ✨ Ajout du libellé pour tranche_effectifs_unite_legale
+
+J'ai importé les libellés manuellement car `organization` ne contenait pas le libelle de `cached_tranche_effectifs_unite_legale`.
+
+### Ajouté
+
+- ✨ Add libelle for tranche effectif unite legale (#1520) (f751ae3e)
+
+### Divers
+
+- ↗️ (deps): Bump typescript 6.0.2 (#1547) (e76433d3)
+- ↗️ [patch](deps-dev): Bump @types/pg from 8.18.0 to 8.20.0 (#1544) (24629bc3)
+- ↗️ [patch](deps): Bump @types/bun from 1.3.10 to 1.3.11 (#1542) (da47f398)
+- ↗️ [patch](deps): Bump @proconnect-gouv/\* (bea5966b)
+- ↗️ [patch](deps): Bump the sentry group with 4 updates (#1539) (c90573a7)
+
 ## [2026.4.2](https://github.com/proconnect-gouv/hyyypertool/compare/2026.4.1...2026.4.2) (2026-04-08)
 
 ### Changements
