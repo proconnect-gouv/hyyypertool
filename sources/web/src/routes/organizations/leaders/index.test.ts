@@ -176,3 +176,48 @@ test("GET /organizations/leaders - retry fails, button still shown for further r
   `);
   expect(mockFetch).toHaveBeenCalledTimes(1);
 });
+
+test("GET /organizations/leaders - expired token shows error message", async () => {
+  const mockFetch = mock(() =>
+    Promise.resolve(
+      new Response(
+        JSON.stringify({
+          errors: [
+            {
+              code: "00103",
+              title: "Jeton expiré",
+              detail: "Votre token est expiré.",
+            },
+          ],
+        }),
+        {
+          status: 401,
+          headers: { "content-type": "application/json" },
+        },
+      ),
+    ),
+  );
+
+  const response = await new Hono()
+    .use(set_fetch(mockFetch))
+    .route("/", app)
+    .request("/?siret=12345678901234", undefined, {
+      ENTREPRISE_API_GOUV_URL: "https://api.entreprise.example.com",
+      ENTREPRISE_API_GOUV_TOKEN: "test-token",
+      HTTP_CLIENT_TIMEOUT: 5000,
+    });
+
+  expect(response.status).toBe(200);
+  expect(await render_html(await response.text())).toMatchInlineSnapshot(
+    `
+      "<button
+        class="disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france hover:bg-grey-50 bg-transparent shadow-[inset_0_0_0_1px_var(--color-grey-200)]"
+        disabled=""
+      >
+        Erreur API — contacter l&#39;équipe tech
+      </button>
+      "
+    `,
+  );
+  expect(mockFetch).toHaveBeenCalledTimes(1);
+});

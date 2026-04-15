@@ -12,6 +12,8 @@ import lodash_sortby from "lodash.sortby";
 import { match, P } from "ts-pattern";
 import { z } from "zod";
 
+class FatalError extends Error {}
+
 export default new Hono<FetchVariablesContext & AppEnvContext>().get(
   "/",
   zValidator(
@@ -31,6 +33,13 @@ export default new Hono<FetchVariablesContext & AppEnvContext>().get(
     const doc = await load_leaders({ siret, fetch, useRetry, env });
 
     return match(doc)
+      .with(P.instanceOf(FatalError), () =>
+        html(
+          <button class={button({ size: "sm", type: "tertiary" })} disabled>
+            Erreur API — contacter l'équipe tech
+          </button>,
+        ),
+      )
       .with(P.instanceOf(Error), () =>
         html(
           <button
@@ -60,9 +69,9 @@ export default new Hono<FetchVariablesContext & AppEnvContext>().get(
       )
       .otherwise(() =>
         html(
-          <a class={button({ size: "sm", type: "tertiary" })}>
+          <button class={button({ size: "sm", type: "tertiary" })} disabled>
             Pas de liste des dirigeants
-          </a>,
+          </button>,
         ),
       );
   },
@@ -115,6 +124,11 @@ async function load_leaders({
   consola.info(
     `  -->> ${"GET"} ${url} ${response.status} ${response.statusText}${retryLabel}`,
   );
+
+  if (!response.ok) {
+    consola.error(`API error ${response.status}:`, await response.text());
+    return new FatalError(`HTTP ${response.status}`);
+  }
 
   const { data } =
     (await response.json()) as Entreprise_API_Association_Response;
