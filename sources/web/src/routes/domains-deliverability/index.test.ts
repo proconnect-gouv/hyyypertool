@@ -94,7 +94,7 @@ test("PUT /domains-deliverability adds new domain to whitelist", async () => {
         {
           "email_domain": "newdomain.fr",
           "problematic_email": "user@newdomain.fr",
-          "verified_at": "2222-01-01 00:00:00+00",
+          "verified_at": "2222-01-01 01:00:00+01",
           "verified_by": "Jean Dupont",
         },
       ]
@@ -118,7 +118,7 @@ test("DELETE /domains-deliverability/:email_domain removes domain from whitelist
         {
           "email_domain": "tobedeleted.fr",
           "problematic_email": "user@tobedeleted.fr",
-          "verified_at": "2222-01-01 00:00:00+00",
+          "verified_at": "2222-01-01 01:00:00+01",
           "verified_by": "Jean Dupont",
         },
       ]

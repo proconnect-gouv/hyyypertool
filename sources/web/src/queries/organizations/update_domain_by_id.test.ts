@@ -6,7 +6,6 @@ import {
   migrate,
   pg,
 } from "@~/identite-proconnect/database/testing";
-import { EmailDomainVerificationTypes } from "@~/identite-proconnect/types";
 import { beforeAll, expect, setSystemTime, test } from "bun:test";
 import { update_domain_by_id } from "./update_domain_by_id";
 //
@@ -36,14 +35,16 @@ test("should update nothing", async () => {
     await pg.query.email_domains.findFirst({
       where: (table, { eq }) => eq(table.id, domain_id),
     }),
-  ).toEqual({
-    id: expect.any(Number),
-    organization_id: unicorn_organization_id,
-    domain: "unicorn.xyz",
-    verification_type: EmailDomainVerificationTypes.enum.verified,
-    can_be_suggested: true,
-    verified_at: null,
-    created_at: "2222-01-01 00:00:00+00",
-    updated_at: "2222-01-02 00:00:00+00",
-  });
+  ).toMatchInlineSnapshot(`
+    {
+      "can_be_suggested": true,
+      "created_at": "2222-01-01 01:00:00+01",
+      "domain": "unicorn.xyz",
+      "id": 1,
+      "organization_id": 1,
+      "updated_at": "2222-01-02 01:00:00+01",
+      "verification_type": "verified",
+      "verified_at": null,
+    }
+  `);
 });
