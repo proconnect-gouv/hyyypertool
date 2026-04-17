@@ -40,6 +40,7 @@ type PageData = {
   organization_member: OrganizationMember;
   query_domain_count: Promise<number>;
   query_organization_members_count: Promise<number>;
+  response_templates: { label: string }[];
   identite_pg: IdentiteProconnectPgDatabase;
 };
 
@@ -61,6 +62,7 @@ async function ModerationPageContent() {
     organization_fiche,
     query_domain_count,
     query_organization_members_count,
+    response_templates,
   } = useContext(PageContext)!;
 
   const moderation_id = `moderation-${moderation.id}`;
@@ -162,6 +164,7 @@ async function ModerationPageContent() {
               pg: identite_pg,
             }),
           }}
+          response_templates={response_templates}
         />
 
         <hr class="border-none py-3" />

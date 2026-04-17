@@ -3,6 +3,7 @@
 import { set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
 import { set_crisp_client } from "#src/middleware/crisp";
+import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import {
   set_identite_pg,
   set_identite_pg_client,
@@ -19,6 +20,11 @@ import {
   pg,
 } from "@~/identite-proconnect/database/testing";
 import {
+  empty_database as empty_hyyyperbase,
+  hyyyper_pglite,
+} from "@~/hyyyperbase/testing";
+import { insert_central_administration_response } from "@~/hyyyperbase/testing/response_templates";
+import {
   beforeAll,
   beforeEach,
   expect,
@@ -33,6 +39,7 @@ import app from "./index";
 
 beforeAll(migrate);
 beforeEach(empty_database);
+beforeEach(empty_hyyyperbase);
 
 //
 
@@ -226,4 +233,40 @@ test("PATCH /moderations/:id/rejected falls back to nickname when get_user fails
     content: expect.stringContaining("Your request has been rejected."),
     user: { nickname: "Anaïs Tartempion" },
   });
+});
+
+test("GET /message returns textarea with rendered template", async () => {
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+  const moderation_id = await create_adora_pony_moderation(pg, { type: "💼" });
+  const template = await insert_central_administration_response(hyyyper_pglite);
+
+  const response = await new Hono()
+    .use(set_identite_pg(pg))
+    .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_userinfo({ email: "admin@example.com" }))
+    .route("/:id/rejected", app)
+    .request(`/${moderation_id}/rejected/message?reason=${encodeURIComponent(template.label)}`);
+
+  expect(response.status).toBe(200);
+  const html = await response.text();
+  expect(html).toContain(`id="rejection-message-${moderation_id}"`);
+  expect(html).toContain("adora.pony@unicorn.xyz");
+});
+
+test("GET /message returns empty textarea when label not found", async () => {
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+  const moderation_id = await create_adora_pony_moderation(pg, { type: "💼" });
+
+  const response = await new Hono()
+    .use(set_identite_pg(pg))
+    .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_userinfo({ email: "admin@example.com" }))
+    .route("/:id/rejected", app)
+    .request(`/${moderation_id}/rejected/message?reason=unknown-label`);
+
+  expect(response.status).toBe(200);
+  const html = await response.text();
+  expect(html).toContain(`id="rejection-message-${moderation_id}"`);
 });

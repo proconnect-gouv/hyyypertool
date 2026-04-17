@@ -4,7 +4,7 @@ import { set_userinfo } from "#src/middleware/auth";
 import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import { set_identite_pg } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
-import { hyyyper_pglite, reset } from "@~/hyyyperbase/testing";
+import * as hyyyperbase from "@~/hyyyperbase/testing";
 import { insert_moderateur } from "@~/hyyyperbase/testing/users";
 import { schema } from "@~/identite-proconnect/database";
 import {
@@ -19,15 +19,15 @@ import app from "./index";
 //
 
 beforeAll(migrate);
-beforeEach(reset);
 beforeEach(empty_database);
+beforeEach(hyyyperbase.empty_database);
 
 beforeAll(() => {
   setSystemTime(new Date("2222-01-01T00:00:00.000Z"));
 });
 
 test("GET /email delivrability", async () => {
-  const moderator = await insert_moderateur(hyyyper_pglite);
+  const moderator = await insert_moderateur(hyyyperbase.hyyyper_pglite);
   await pg.insert(schema.email_deliverability_whitelist).values([
     {
       problematic_email: "test@ch-lehavre.fr",
@@ -41,7 +41,7 @@ test("GET /email delivrability", async () => {
     .onError((e) => {
       throw e;
     })
-    .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_hyyyper_pg(hyyyperbase.hyyyper_pglite))
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
     .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
@@ -57,14 +57,14 @@ test("GET /email delivrability", async () => {
 });
 
 test("PUT /domains-deliverability adds new domain to whitelist", async () => {
-  const moderator = await insert_moderateur(hyyyper_pglite);
+  const moderator = await insert_moderateur(hyyyperbase.hyyyper_pglite);
   {
     const result = await pg.query.email_deliverability_whitelist.findMany();
     expect(result).toMatchInlineSnapshot(`[]`);
   }
 
   const response = await new Hono()
-    .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_hyyyper_pg(hyyyperbase.hyyyper_pglite))
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
     .use(
@@ -103,7 +103,7 @@ test("PUT /domains-deliverability adds new domain to whitelist", async () => {
 });
 
 test("DELETE /domains-deliverability/:email_domain removes domain from whitelist", async () => {
-  const moderator = await insert_moderateur(hyyyper_pglite);
+  const moderator = await insert_moderateur(hyyyperbase.hyyyper_pglite);
   await pg.insert(schema.email_deliverability_whitelist).values({
     problematic_email: "user@tobedeleted.fr",
     email_domain: "tobedeleted.fr",
@@ -126,7 +126,7 @@ test("DELETE /domains-deliverability/:email_domain removes domain from whitelist
   }
 
   const response = await new Hono()
-    .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_hyyyper_pg(hyyyperbase.hyyyper_pglite))
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
     .use(

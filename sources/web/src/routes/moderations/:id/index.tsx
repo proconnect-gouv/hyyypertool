@@ -13,6 +13,7 @@ import {
 } from "#src/queries/organizations";
 import { EntitySchema, z_email_domain } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
+import { get_response_templates } from "../../response-templates/get_response_templates.query.ts";
 import { to } from "await-to-js";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
@@ -39,7 +40,7 @@ export default new Hono<AppContext>()
       set,
       status,
       env: config,
-      var: { identite_pg },
+      var: { identite_pg, hyyyper_pg },
     }) {
       const { id } = req.valid("param");
 
@@ -84,12 +85,15 @@ export default new Hono<AppContext>()
           GetOrganizationMembersCount(identite_pg);
         const get_domain_count = GetDomainCount(identite_pg);
 
+        const response_templates = await get_response_templates(hyyyper_pg);
+
         const page_data = {
           banaticUrl,
           domain,
           moderation,
           organization_fiche,
           organization_member,
+          response_templates,
           query_domain_count: get_domain_count(moderation.organization_id),
           query_organization_members_count: get_organization_members_count(
             moderation.organization_id,
