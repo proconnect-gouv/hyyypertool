@@ -60,14 +60,14 @@ test("updates user verification type in organization", async () => {
 
   expect(result).toMatchInlineSnapshot(`
     {
-      "created_at": "1970-01-01 00:00:00+00",
+      "created_at": "1970-01-01 00:00:00+01",
       "has_been_greeted": false,
       "is_external": false,
       "needs_official_contact_email_verification": false,
       "official_contact_email_verification_sent_at": null,
       "official_contact_email_verification_token": null,
       "organization_id": 1,
-      "updated_at": "2222-01-11 00:00:00+00",
+      "updated_at": "2222-01-11 01:00:00+01",
       "user_id": 1,
       "verification_type": "domain",
       "verified_at": null,
@@ -112,14 +112,14 @@ test("updates multiple fields in user organization", async () => {
 
   expect(result).toMatchInlineSnapshot(`
     {
-      "created_at": "1970-01-01 00:00:00+00",
+      "created_at": "1970-01-01 00:00:00+01",
       "has_been_greeted": false,
       "is_external": true,
       "needs_official_contact_email_verification": false,
       "official_contact_email_verification_sent_at": null,
       "official_contact_email_verification_token": null,
       "organization_id": 1,
-      "updated_at": "2222-01-11 00:00:00+00",
+      "updated_at": "2222-01-11 01:00:00+01",
       "user_id": 1,
       "verification_type": "no_validation_means_available",
       "verified_at": null,

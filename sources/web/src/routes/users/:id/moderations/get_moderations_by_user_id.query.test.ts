@@ -39,7 +39,7 @@ test("get adora's moderations", async () => {
       {
         "allow_editing": null,
         "comment": null,
-        "created_at": "2222-01-01 00:00:00+00",
+        "created_at": "2222-01-01 01:00:00+01",
         "end_user_reason": "Raison transmise par mail",
         "id": 1,
         "moderated_at": null,

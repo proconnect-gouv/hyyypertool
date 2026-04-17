@@ -178,6 +178,7 @@ export async function get_moderations_list(
       .orderBy(
         order_map[search.search_sort ?? ""] ??
           asc(schema.moderations.created_at),
+        asc(schema.moderations.id),
       )
       .limit(take)
       .offset(page * take);

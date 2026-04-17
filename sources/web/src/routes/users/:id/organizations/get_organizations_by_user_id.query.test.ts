@@ -38,7 +38,7 @@ test("returns organizations for a user", async () => {
         {
           "cached_code_officiel_geographique": null,
           "cached_libelle": "🦄 libelle",
-          "created_at": "1970-01-01T00:00:00+00:00",
+          "created_at": "1970-01-01T00:00:00+01:00",
           "email_domains": [
             {
               "domain": "unicorn.xyz",
@@ -74,7 +74,7 @@ test("supports pagination", async () => {
         {
           "cached_code_officiel_geographique": null,
           "cached_libelle": "🦄 libelle",
-          "created_at": "1970-01-01T00:00:00+00:00",
+          "created_at": "1970-01-01T00:00:00+01:00",
           "email_domains": [
             {
               "domain": "unicorn.xyz",
