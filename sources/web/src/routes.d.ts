@@ -112,6 +112,46 @@ declare const app: import("hono/hono-base").HonoBase<
       | import("hono/types").MergeSchemaPath<
           {
             "/reload": {
+              $post: {
+                input: {};
+                output: "ok";
+                outputFormat: "text";
+                status: import("hono/utils/http-status").ContentfulStatusCode;
+              };
+            };
+          } & {
+            "/reload": {
+              $get: {
+                input: {};
+                output: {};
+                outputFormat: string;
+                status: import("hono/utils/http-status").StatusCode;
+              };
+            };
+          },
+          "/"
+        >
+      | import("hono/types").MergeSchemaPath<
+          {
+            "/design-system": {
+              $get: {
+                input: {};
+                output: {};
+                outputFormat: string;
+                status: import("hono/utils/http-status").StatusCode;
+              };
+            };
+          } & {
+            "/design-system/dsfr": {
+              $get: {
+                input: {};
+                output: {};
+                outputFormat: string;
+                status: import("hono/utils/http-status").StatusCode;
+              };
+            };
+          } & {
+            "/design-system/tailwind": {
               $get: {
                 input: {};
                 output: {};
@@ -467,7 +507,7 @@ declare const app: import("hono/hono-base").HonoBase<
                     };
                     output: undefined;
                     outputFormat: "redirect";
-                    status: import("hono/utils/http-status").RedirectStatusCode;
+                    status: 300 | 301 | 302 | 303 | 304 | 305 | 306 | 307 | 308;
                   };
             };
           } & {
@@ -713,7 +753,7 @@ declare const app: import("hono/hono-base").HonoBase<
                 };
                 output: undefined;
                 outputFormat: "redirect";
-                status: import("hono/utils/http-status").RedirectStatusCode;
+                status: 300 | 301 | 302 | 303 | 304 | 305 | 306 | 307 | 308;
               };
         };
       },
@@ -766,7 +806,16 @@ declare const app: import("hono/hono-base").HonoBase<
                       };
                       output: undefined;
                       outputFormat: "redirect";
-                      status: import("hono/utils/http-status").RedirectStatusCode;
+                      status:
+                        | 300
+                        | 301
+                        | 302
+                        | 303
+                        | 304
+                        | 305
+                        | 306
+                        | 307
+                        | 308;
                     };
               };
             },
@@ -944,7 +993,7 @@ declare const app: import("hono/hono-base").HonoBase<
                         };
                       } & {
                         query: {
-                          type: "verified" | "external" | "refused";
+                          type: "external" | "verified" | "refused";
                         };
                       };
                       output: "OK";
