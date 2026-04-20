@@ -35,14 +35,14 @@ export function Foot({
   );
 
   return (
-    <tfoot>
+    <tfoot class="mt-4">
       <tr>
         <th colspan={info_colspan} class="whitespace-nowrap" scope="row">
           Affiche de {FrNumberConverter.format(page_index * page_size)}-
           {FrNumberConverter.format(page_index * page_size + page_size)} sur{" "}
           {FrNumberConverter.format(count)}
         </th>
-        <td colspan={pagination_colspan}>
+        <td class="space-x-2" colspan={pagination_colspan}>
           <button
             class={button({ type: "tertiary-no-outline" })}
             disabled={page <= 1}
@@ -62,8 +62,8 @@ export function Foot({
             class={input({ class: "inline-block w-auto" })}
             name={name ?? PaginationSchema.keyof().enum.page}
             value={page}
-          />{" "}
-          <span> of {FrNumberConverter.format(last_page)}</span>
+          />
+          <span>of {FrNumberConverter.format(last_page)}</span>
           <button
             class={button({ type: "tertiary-no-outline" })}
             disabled={page >= last_page}

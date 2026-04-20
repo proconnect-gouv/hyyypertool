@@ -5,10 +5,15 @@ import { parsed, update_q } from "./q-signal.client";
 
 export interface HideTypeCheckboxProps extends Record<string, unknown> {
   qualifier: "non_verified_domain" | "organization_join_block";
-  label: string;
+  label_on: string;
+  label_off: string;
 }
 
-export function HideTypeCheckbox({ qualifier, label }: HideTypeCheckboxProps) {
+export function HideTypeCheckbox({
+  qualifier,
+  label_on,
+  label_off,
+}: HideTypeCheckboxProps) {
   const is_checked = parsed.value.exclude_types.includes(qualifier);
 
   return (
@@ -28,7 +33,7 @@ export function HideTypeCheckbox({ qualifier, label }: HideTypeCheckboxProps) {
           }, true);
         }}
       />
-      {label}
+      {is_checked ? label_on : label_off}
     </label>
   );
 }

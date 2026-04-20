@@ -7,10 +7,10 @@ import type { ModerationType } from "./types";
 
 export function moderation_type_to_emoji(type: string) {
   return match(type as ModerationType)
-    .with("ask_for_sponsorship", () => "🧑‍🤝‍🧑")
-    .with("big_organization_join", () => "🏢")
-    .with("non_verified_domain", () => "🔓")
-    .with("organization_join_block", () => "🕵️")
+    .with("ask_for_sponsorship", () => "🧑‍🤝‍🧑 ")
+    .with("big_organization_join", () => "🏢 ")
+    .with("non_verified_domain", () => "🔓 ")
+    .with("organization_join_block", () => "🕵️ ")
     .otherwise(() => "⁉️ " + type);
 }
 

@@ -159,14 +159,16 @@ function Filter({
           <HideTypeCheckboxIsland
             nonce={nonce}
             qualifier="non_verified_domain"
-            label={`Cacher les ${moderation_type_to_emoji("non_verified_domain")}${moderation_type_to_title("non_verified_domain")}`}
+            label_on={`Voir les ${moderation_type_to_emoji("non_verified_domain")}${moderation_type_to_title("non_verified_domain")}`}
+            label_off={`Cacher les ${moderation_type_to_emoji("non_verified_domain")}${moderation_type_to_title("non_verified_domain")}`}
           />
         </li>
         <li>
           <HideTypeCheckboxIsland
             nonce={nonce}
             qualifier="organization_join_block"
-            label={`Cacher les ${moderation_type_to_emoji("organization_join_block")}${moderation_type_to_title("organization_join_block")}`}
+            label_on={`Voir les ${moderation_type_to_emoji("organization_join_block")}${moderation_type_to_title("organization_join_block")}`}
+            label_off={`Cacher les ${moderation_type_to_emoji("organization_join_block")}${moderation_type_to_title("organization_join_block")}`}
           />
         </li>
       </ul>

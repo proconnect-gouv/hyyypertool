@@ -39,7 +39,6 @@ const header_logo = tv({
     after:block
     after:min-w-10.5
     after:bg-no-repeat
-    after:pt-[2.2083333333rem]
     after:content-['']
     after:[bg-image:var(--motto-bg)]
     after:[bg-position:0_calc(100%+1.875rem)]
