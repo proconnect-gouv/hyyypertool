@@ -7,7 +7,7 @@ Fonctionnalité: Ajouter un membre externe lors de la modération
     Quand je navigue sur la page
     Et je me connecte en tant que "moderateur@beta.gouv.fr"
     Alors je vois "Liste des moderations"
-    Quand je clique sur "Cacher les 🔓Non vérifié"
+    Quand je clique sur "Voir les 🔓 Non vérifié"
     Quand je clique sur le lien nommé "Modération non vérifié de Marie Bon pour 57206768400017"
     Et je dois voir le titre de page "Modération non vérifié de Marie Bon pour 57206768400017"
 

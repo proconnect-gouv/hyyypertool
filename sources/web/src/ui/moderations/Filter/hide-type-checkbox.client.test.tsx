@@ -40,7 +40,11 @@ afterAll(() => {
 describe("HideTypeCheckbox — non_verified_domain", () => {
   test("unchecked by default", () => {
     const { container } = render(
-      <HideTypeCheckbox qualifier="non_verified_domain" label="Hide NVD" />,
+      <HideTypeCheckbox
+        qualifier="non_verified_domain"
+        label_on="Show OJB"
+        label_off="Hide OJB"
+      />,
     );
     const checkbox = container.querySelector(
       "input[type='checkbox']",
@@ -51,7 +55,11 @@ describe("HideTypeCheckbox — non_verified_domain", () => {
   test("checked when q has -type:non_verified_domain", () => {
     text.value = "-type:non_verified_domain";
     const { container } = render(
-      <HideTypeCheckbox qualifier="non_verified_domain" label="Hide NVD" />,
+      <HideTypeCheckbox
+        qualifier="non_verified_domain"
+        label_on="Show OJB"
+        label_off="Hide OJB"
+      />,
     );
     const checkbox = container.querySelector(
       "input[type='checkbox']",
@@ -61,7 +69,11 @@ describe("HideTypeCheckbox — non_verified_domain", () => {
 
   test("adds token to q when checked", () => {
     const { container } = render(
-      <HideTypeCheckbox qualifier="non_verified_domain" label="Hide NVD" />,
+      <HideTypeCheckbox
+        qualifier="non_verified_domain"
+        label_on="Show OJB"
+        label_off="Hide OJB"
+      />,
     );
     const checkbox = container.querySelector(
       "input[type='checkbox']",
@@ -74,7 +86,11 @@ describe("HideTypeCheckbox — non_verified_domain", () => {
   test("removes token from q when unchecked", () => {
     text.value = "-type:non_verified_domain";
     const { container } = render(
-      <HideTypeCheckbox qualifier="non_verified_domain" label="Hide NVD" />,
+      <HideTypeCheckbox
+        qualifier="non_verified_domain"
+        label_on="Show OJB"
+        label_off="Hide OJB"
+      />,
     );
     const checkbox = container.querySelector(
       "input[type='checkbox']",
@@ -89,7 +105,11 @@ describe("HideTypeCheckbox — organization_join_block", () => {
   test("checked when q has -type:organization_join_block", () => {
     text.value = "-type:organization_join_block";
     const { container } = render(
-      <HideTypeCheckbox qualifier="organization_join_block" label="Hide OJB" />,
+      <HideTypeCheckbox
+        qualifier="organization_join_block"
+        label_on="Show OJB"
+        label_off="Hide OJB"
+      />,
     );
     const checkbox = container.querySelector(
       "input[type='checkbox']",
@@ -99,7 +119,11 @@ describe("HideTypeCheckbox — organization_join_block", () => {
 
   test("adds token to q when checked", () => {
     const { container } = render(
-      <HideTypeCheckbox qualifier="organization_join_block" label="Hide OJB" />,
+      <HideTypeCheckbox
+        qualifier="organization_join_block"
+        label_on="Show OJB"
+        label_off="Hide OJB"
+      />,
     );
     const checkbox = container.querySelector(
       "input[type='checkbox']",
@@ -112,7 +136,11 @@ describe("HideTypeCheckbox — organization_join_block", () => {
   test("does not affect the other qualifier", () => {
     text.value = "-type:non_verified_domain";
     const { container } = render(
-      <HideTypeCheckbox qualifier="organization_join_block" label="Hide OJB" />,
+      <HideTypeCheckbox
+        qualifier="organization_join_block"
+        label_on="Show OJB"
+        label_off="Hide OJB"
+      />,
     );
     const checkbox = container.querySelector(
       "input[type='checkbox']",

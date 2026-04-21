@@ -25,7 +25,9 @@ export function ProcessedCheckbox({}: ProcessedCheckboxProps) {
           }, true);
         }}
       />
-      Voir les demandes traitées
+      {is_checked
+        ? "Cacher les demandes traitées"
+        : "Voir les demandes traitées"}
     </label>
   );
 }
