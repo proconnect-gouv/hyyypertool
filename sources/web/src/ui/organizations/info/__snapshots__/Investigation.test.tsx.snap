@@ -2,7 +2,9 @@
 
 exports[`render investigation section 1`] = `
 "<!DOCTYPE html>
-<ul class="mt-5 w-full list-none bg-[#F6F6F6] p-3 [&amp;_li]:inline-block">
+<ul
+  class="mt-5 w-full list-none space-y-1 bg-[#F6F6F6] p-3 [&amp;_li]:inline-block"
+>
   <li>
     <a
       href="https://lannuaire.service-public.fr/recherche?where=75015&amp;whoWhat=Mairie"

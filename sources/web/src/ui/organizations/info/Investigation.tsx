@@ -25,7 +25,7 @@ export async function Investigation(props: Props) {
   });
 
   return (
-    <ul class="mt-5 w-full list-none bg-[#F6F6F6] p-3 [&_li]:inline-block">
+    <ul class="mt-5 w-full list-none space-y-1 bg-[#F6F6F6] p-3 [&_li]:inline-block">
       <li>
         <a
           href={`https://lannuaire.service-public.fr/recherche?where=${organization.cached_code_postal}&whoWhat=Mairie`}

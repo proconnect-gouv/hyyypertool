@@ -37,8 +37,9 @@ const styles = tv({
     focus:outline-nones
     absolute
     right-0
-    z-10
-    mt-2
+    bottom-full
+    z-50
+    mb-1
     w-56
     origin-top-right
     divide-y
