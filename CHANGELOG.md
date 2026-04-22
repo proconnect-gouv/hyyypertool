@@ -1,5 +1,32 @@
 # Changelog
 
+## [2026.4.4](https://github.com/proconnect-gouv/hyyypertool/compare/2026.4.3...2026.4.4) (2026-04-22)
+
+### Changements
+
+- ✨ Améliorations visuelles à la suite de la suppression du DSFR
+- ✨ Fix le bug du menu à trois points, ouverture par le haut
+- 🐛 Correction d'un problème d'affichage où une error affichée silencieusement aucune liste dirigeant
+
+### Modifié
+
+- 💄 Open the three-dot menu from the top (#1561) (e3421a80)
+- 💄 UI improvements following the removal of DSFR (#1560) (2af1db1b)
+
+### Corrigé
+
+- 🐛 fix expired API token silently showing "no leaders list" (#1548) (78f27c24)
+
+### Divers
+
+- Bump hono from 4.12.9 to 4.12.14 (#1558) (21ba10da)
+- ↗️ [patch](deps-dev): Bump drizzle-kit from 0.31.9 to 0.31.10 (#1554) (1dd0cae7)
+- ↗️ [patch](deps): Bump @proconnect-gouv/proconnect.identite from 5.0.0 to 7.0.0 (#1551) (27c13f2a)
+- ↗️ [patch](deps): Bump jose from 6.2.1 to 6.2.2 (#1552) (fb66538a)
+- ↗️ [patch](deps): Bump actions/upload-artifact from 7.0.0 to 7.0.1 (#1549) (528e0ba0)
+- ↗️ [patch](deps): Bump drizzle-orm from 0.45.1 to 0.45.2 (#1553) (222366dd)
+- ↗️ [patch](deps): Bump cypress from 15.13.0 to 15.13.1 in /e2e (#1550) (e6c18003)
+
 ## [2026.4.3](https://github.com/proconnect-gouv/hyyypertool/compare/2026.4.2...2026.4.3) (2026-04-14)
 
 ### Changements
