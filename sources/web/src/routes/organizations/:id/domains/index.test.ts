@@ -25,6 +25,7 @@ import {
   LinkTypes,
 } from "@~/identite-proconnect/types";
 import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
+import { asc } from "drizzle-orm";
 import { Hono } from "hono";
 import app from "./index";
 
@@ -90,11 +91,11 @@ test("PUT /organizations/:id/domains adds new domain", async () => {
       [
         {
           "can_be_suggested": true,
-          "created_at": "2222-01-01 00:00:00+00",
+          "created_at": "2222-01-01 01:00:00+01",
           "domain": "unicorn.xyz",
           "id": 1,
           "organization_id": 1,
-          "updated_at": "2222-01-01 00:00:00+00",
+          "updated_at": "2222-01-01 01:00:00+01",
           "verification_type": "verified",
           "verified_at": null,
         },
@@ -128,13 +129,13 @@ test("PUT /organizations/:id/domains adds new domain", async () => {
       [
         {
           "can_be_suggested": true,
-          "created_at": "2222-01-01 00:00:00+00",
+          "created_at": "2222-01-01 01:00:00+01",
           "domain": "unicorn.xyz",
           "id": 2,
           "organization_id": 1,
-          "updated_at": "2222-01-01 00:00:00+00",
+          "updated_at": "2222-01-01 01:00:00+01",
           "verification_type": "verified",
-          "verified_at": "2222-01-01 00:00:00+00",
+          "verified_at": "2222-01-01 01:00:00+01",
         },
       ]
     `);
@@ -142,44 +143,45 @@ test("PUT /organizations/:id/domains adds new domain", async () => {
   {
     const result = await pg.query.users_organizations.findMany({
       where: (table, { eq }) => eq(table.organization_id, organization_id),
+      orderBy: asc(schema.users_organizations.user_id),
     });
     expect(result).toMatchInlineSnapshot(`
       [
         {
-          "created_at": "1970-01-01 00:00:00+00",
+          "created_at": "1970-01-01 00:00:00+01",
           "has_been_greeted": false,
           "is_external": false,
           "needs_official_contact_email_verification": false,
           "official_contact_email_verification_sent_at": null,
           "official_contact_email_verification_token": null,
           "organization_id": 1,
-          "updated_at": "2222-01-01 00:00:00+00",
+          "updated_at": "2222-01-01 01:00:00+01",
           "user_id": 1,
           "verification_type": "domain",
           "verified_at": null,
         },
         {
-          "created_at": "1970-01-01 00:00:00+00",
+          "created_at": "1970-01-01 00:00:00+01",
           "has_been_greeted": false,
           "is_external": false,
           "needs_official_contact_email_verification": false,
           "official_contact_email_verification_sent_at": null,
           "official_contact_email_verification_token": null,
           "organization_id": 1,
-          "updated_at": "2222-01-01 00:00:00+00",
+          "updated_at": "2222-01-01 01:00:00+01",
           "user_id": 2,
           "verification_type": "domain",
           "verified_at": null,
         },
         {
-          "created_at": "1970-01-01 00:00:00+00",
+          "created_at": "1970-01-01 00:00:00+01",
           "has_been_greeted": false,
           "is_external": false,
           "needs_official_contact_email_verification": false,
           "official_contact_email_verification_sent_at": null,
           "official_contact_email_verification_token": null,
           "organization_id": 1,
-          "updated_at": "1970-01-01 00:00:00+00",
+          "updated_at": "1970-01-01 00:00:00+01",
           "user_id": 3,
           "verification_type": "proof_received",
           "verified_at": null,
@@ -222,11 +224,11 @@ test("DELETE /organizations/:id/domains/:domain_id removes domain", async () => 
       [
         {
           "can_be_suggested": true,
-          "created_at": "2222-01-01 00:00:00+00",
+          "created_at": "2222-01-01 01:00:00+01",
           "domain": "unicorn.xyz",
           "id": 1,
           "organization_id": 1,
-          "updated_at": "2222-01-01 00:00:00+00",
+          "updated_at": "2222-01-01 01:00:00+01",
           "verification_type": "verified",
           "verified_at": null,
         },
@@ -291,13 +293,13 @@ test("PATCH /organizations/:id/domains/:domain_id updates verification type to v
       [
         {
           "can_be_suggested": true,
-          "created_at": "2222-01-01 00:00:00+00",
+          "created_at": "2222-01-01 01:00:00+01",
           "domain": "unicorn.xyz",
           "id": 3,
           "organization_id": 1,
-          "updated_at": "2222-01-01 00:00:00+00",
+          "updated_at": "2222-01-01 01:00:00+01",
           "verification_type": "verified",
-          "verified_at": "2222-01-01 00:00:00+00",
+          "verified_at": "2222-01-01 01:00:00+01",
         },
       ]
     `);
@@ -305,44 +307,45 @@ test("PATCH /organizations/:id/domains/:domain_id updates verification type to v
   {
     const result = await pg.query.users_organizations.findMany({
       where: (table, { eq }) => eq(table.organization_id, organization_id),
+      orderBy: asc(schema.users_organizations.user_id),
     });
     expect(result).toMatchInlineSnapshot(`
       [
         {
-          "created_at": "1970-01-01 00:00:00+00",
+          "created_at": "1970-01-01 00:00:00+01",
           "has_been_greeted": false,
           "is_external": false,
           "needs_official_contact_email_verification": false,
           "official_contact_email_verification_sent_at": null,
           "official_contact_email_verification_token": null,
           "organization_id": 1,
-          "updated_at": "2222-01-01 00:00:00+00",
+          "updated_at": "2222-01-01 01:00:00+01",
           "user_id": 1,
           "verification_type": "domain",
           "verified_at": null,
         },
         {
-          "created_at": "1970-01-01 00:00:00+00",
+          "created_at": "1970-01-01 00:00:00+01",
           "has_been_greeted": false,
           "is_external": false,
           "needs_official_contact_email_verification": false,
           "official_contact_email_verification_sent_at": null,
           "official_contact_email_verification_token": null,
           "organization_id": 1,
-          "updated_at": "2222-01-01 00:00:00+00",
+          "updated_at": "2222-01-01 01:00:00+01",
           "user_id": 2,
           "verification_type": "domain",
           "verified_at": null,
         },
         {
-          "created_at": "1970-01-01 00:00:00+00",
+          "created_at": "1970-01-01 00:00:00+01",
           "has_been_greeted": false,
           "is_external": false,
           "needs_official_contact_email_verification": false,
           "official_contact_email_verification_sent_at": null,
           "official_contact_email_verification_token": null,
           "organization_id": 1,
-          "updated_at": "1970-01-01 00:00:00+00",
+          "updated_at": "1970-01-01 00:00:00+01",
           "user_id": 3,
           "verification_type": "proof_received",
           "verified_at": null,

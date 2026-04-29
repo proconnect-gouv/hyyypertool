@@ -35,7 +35,7 @@ test("get a moderation with full organization and user details", async () => {
   expect(moderation).toMatchInlineSnapshot(`
     {
       "comment": null,
-      "created_at": "2222-01-01 00:00:00+00",
+      "created_at": "2222-01-01 01:00:00+01",
       "id": 1,
       "moderated_at": null,
       "moderated_by": null,
@@ -52,10 +52,10 @@ test("get a moderation with full organization and user details", async () => {
         "cached_nom_complet": null,
         "cached_tranche_effectifs": null,
         "cached_tranche_effectifs_unite_legale": null,
-        "created_at": "1970-01-01T00:00:00+00:00",
+        "created_at": "1970-01-01T00:00:00+01:00",
         "id": 1,
         "siret": "🦄 siret",
-        "updated_at": "1970-01-01T00:00:00+00:00",
+        "updated_at": "1970-01-01T00:00:00+01:00",
       },
       "organization_id": 1,
       "sp_name": null,
@@ -63,7 +63,7 @@ test("get a moderation with full organization and user details", async () => {
       "ticket_id": null,
       "type": "",
       "user": {
-        "created_at": "2222-01-01T00:00:00+00:00",
+        "created_at": "2222-01-01T01:00:00+01:00",
         "email": "adora.pony@unicorn.xyz",
         "family_name": "Pony",
         "given_name": "Adora",

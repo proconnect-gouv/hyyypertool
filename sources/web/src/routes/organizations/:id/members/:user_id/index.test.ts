@@ -45,14 +45,14 @@ test("PATCH /organizations/:id/members/:user_id updates user organization member
     expect(result).toMatchInlineSnapshot(`
       [
         {
-          "created_at": "1970-01-01 00:00:00+00",
+          "created_at": "1970-01-01 00:00:00+01",
           "has_been_greeted": false,
           "is_external": false,
           "needs_official_contact_email_verification": false,
           "official_contact_email_verification_sent_at": null,
           "official_contact_email_verification_token": null,
           "organization_id": 1,
-          "updated_at": "1970-01-01 00:00:00+00",
+          "updated_at": "1970-01-01 00:00:00+01",
           "user_id": 1,
           "verification_type": "domain_not_verified_yet",
           "verified_at": null,
@@ -86,17 +86,17 @@ test("PATCH /organizations/:id/members/:user_id updates user organization member
     expect(result).toMatchInlineSnapshot(`
       [
         {
-          "created_at": "1970-01-01 00:00:00+00",
+          "created_at": "1970-01-01 00:00:00+01",
           "has_been_greeted": false,
           "is_external": true,
           "needs_official_contact_email_verification": false,
           "official_contact_email_verification_sent_at": null,
           "official_contact_email_verification_token": null,
           "organization_id": 1,
-          "updated_at": "2222-02-22 00:22:22+00",
+          "updated_at": "2222-02-22 01:22:22+01",
           "user_id": 1,
           "verification_type": "domain",
-          "verified_at": "2222-02-22 00:22:22+00",
+          "verified_at": "2222-02-22 01:22:22+01",
         },
       ]
     `);
@@ -122,17 +122,17 @@ test("PATCH /organizations/:id/members/:user_id clears verification with domain_
     expect(result).toMatchInlineSnapshot(`
       [
         {
-          "created_at": "1970-01-01 00:00:00+00",
+          "created_at": "1970-01-01 00:00:00+01",
           "has_been_greeted": false,
           "is_external": false,
           "needs_official_contact_email_verification": false,
           "official_contact_email_verification_sent_at": null,
           "official_contact_email_verification_token": null,
           "organization_id": 1,
-          "updated_at": "1970-01-01 00:00:00+00",
+          "updated_at": "1970-01-01 00:00:00+01",
           "user_id": 1,
           "verification_type": "domain",
-          "verified_at": "1111-11-11 00:11:11+00",
+          "verified_at": "1111-11-11 01:11:11+01",
         },
       ]
     `);
@@ -162,14 +162,14 @@ test("PATCH /organizations/:id/members/:user_id clears verification with domain_
     expect(result).toMatchInlineSnapshot(`
       [
         {
-          "created_at": "1970-01-01 00:00:00+00",
+          "created_at": "1970-01-01 00:00:00+01",
           "has_been_greeted": false,
           "is_external": false,
           "needs_official_contact_email_verification": false,
           "official_contact_email_verification_sent_at": null,
           "official_contact_email_verification_token": null,
           "organization_id": 1,
-          "updated_at": "2222-02-22 00:22:22+00",
+          "updated_at": "2222-02-22 01:22:22+01",
           "user_id": 1,
           "verification_type": "domain_not_verified_yet",
           "verified_at": null,

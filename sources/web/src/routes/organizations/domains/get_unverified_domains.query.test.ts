@@ -64,7 +64,7 @@ test("returns bi.corn then troll.corn organizations", async () => {
         id: expect.any(Number),
         organization: {
           cached_libelle: "🦄 libelle",
-          created_at: "1970-01-01 00:00:00+00",
+          created_at: "1970-01-01 00:00:00+01",
           id: unicorn_organization_id,
           siret: "🦄 siret",
         },
@@ -74,7 +74,7 @@ test("returns bi.corn then troll.corn organizations", async () => {
         id: expect.any(Number),
         organization: {
           cached_libelle: "🧌 libelle",
-          created_at: "1970-01-01 00:00:00+00",
+          created_at: "1970-01-01 00:00:00+01",
           id: troll_organization_id,
           siret: "🧌 siret",
         },
@@ -111,7 +111,7 @@ test("search for bi.corn organization", async () => {
         id: expect.any(Number),
         organization: {
           cached_libelle: "🦄 libelle",
-          created_at: "1970-01-01 00:00:00+00",
+          created_at: "1970-01-01 00:00:00+01",
           id: unicorn_organization_id,
           siret: "🦄 siret",
         },
@@ -148,7 +148,7 @@ test("search for 🦄 libelle organization", async () => {
         id: expect.any(Number),
         organization: {
           cached_libelle: "🦄 libelle",
-          created_at: "1970-01-01 00:00:00+00",
+          created_at: "1970-01-01 00:00:00+01",
           id: unicorn_organization_id,
           siret: "🦄 siret",
         },
@@ -185,7 +185,7 @@ test("search for 🦄 siret organization", async () => {
         id: expect.any(Number),
         organization: {
           cached_libelle: "🦄 libelle",
-          created_at: "1970-01-01 00:00:00+00",
+          created_at: "1970-01-01 00:00:00+01",
           id: unicorn_organization_id,
           siret: "🦄 siret",
         },

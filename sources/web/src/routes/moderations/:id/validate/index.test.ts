@@ -104,9 +104,9 @@ test.each(cases)(
 
     expect(moderation).toEqual({
       comment: `7979472000000 admin@example.com | Validé par admin@example.com | Raison : "[ProConnect] ✨ Modération validée"`,
-      created_at: "2222-11-10 00:00:00+00",
+      created_at: "2222-11-10 01:00:00+01",
       id: 1,
-      moderated_at: "2222-11-11 00:00:00+00",
+      moderated_at: "2222-11-11 01:00:00+01",
       moderated_by: "admin@example.com",
       organization_id: 1,
       sp_name: null,
@@ -122,17 +122,17 @@ test.each(cases)(
     });
 
     expect(link).toEqual({
-      created_at: "2222-11-11 00:00:00+00",
+      created_at: "2222-11-11 01:00:00+01",
       has_been_greeted: false,
       is_external: add_member === "AS_EXTERNAL",
       needs_official_contact_email_verification: false,
       official_contact_email_verification_sent_at: null,
       official_contact_email_verification_token: null,
       organization_id: 1,
-      updated_at: "2222-11-11 00:00:00+00",
+      updated_at: "2222-11-11 01:00:00+01",
       user_id: 1,
       verification_type: "domain",
-      verified_at: "2222-11-11 00:00:00+00",
+      verified_at: "2222-11-11 01:00:00+01",
     });
 
     if (send_notification === "true") {
