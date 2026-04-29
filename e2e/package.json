@@ -19,7 +19,7 @@
     "@testing-library/cypress": "10.1.0",
     "cypress": "15.13.1",
     "cypress-wait-until": "3.0.2",
-    "typescript": "6.0.2"
+    "typescript": "6.0.3"
   },
   "trustedDependencies": [
     "cypress"
