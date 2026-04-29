@@ -17,7 +17,7 @@
     "start:bun": "bun run src/bun/index.ts"
   },
   "dependencies": {
-    "@hono/node-server": "1.19.11",
+    "@hono/node-server": "2.0.0",
     "@sentry/node": "10.49.0",
     "@sentry/profiling-node": "10.49.0",
     "@tailwindcss/cli": "4.2.4",
