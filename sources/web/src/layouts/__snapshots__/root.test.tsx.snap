@@ -71,6 +71,16 @@ exports[`development 1`] = `
 
         <!--  -->
 
+        <script>
+          const saved = localStorage.getItem("theme");
+          const prefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)",
+          ).matches;
+          if (saved === "dark" || (!saved && prefersDark)) {
+            document.documentElement.classList.add("dark");
+          }
+        </script>
+
         <script nonce="nonce" type="importmap">
           {
             "imports": {
@@ -103,6 +113,16 @@ exports[`development 1`] = `
             <small>version __VERSION__</small>
           </a>
         </footer>
+        <script>
+          const thumb = document.querySelector(".thumb");
+          if (thumb) {
+            thumb.textContent = document.documentElement.classList.contains(
+              "dark",
+            )
+              ? "🌙"
+              : "☀️";
+          }
+        </script>
       </body>
 
       <!--  -->
@@ -262,6 +282,16 @@ exports[`production 1`] = `
 
         <!--  -->
 
+        <script>
+          const saved = localStorage.getItem("theme");
+          const prefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)",
+          ).matches;
+          if (saved === "dark" || (!saved && prefersDark)) {
+            document.documentElement.classList.add("dark");
+          }
+        </script>
+
         <script nonce="nonce" type="importmap">
           {
             "imports": {
@@ -294,6 +324,16 @@ exports[`production 1`] = `
             <small>version __VERSION__</small>
           </a>
         </footer>
+        <script>
+          const thumb = document.querySelector(".thumb");
+          if (thumb) {
+            thumb.textContent = document.documentElement.classList.contains(
+              "dark",
+            )
+              ? "🌙"
+              : "☀️";
+          }
+        </script>
       </body>
 
       <!--  -->

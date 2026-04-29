@@ -10,7 +10,7 @@ exports[`render header section 1`] = `
       >01/01/2023 01:00:00
     </time>
   </div>
-  <section class="flex items-baseline space-x-5">
+  <section class="flex items-center space-x-5">
     <h1 class="text-2xl font-bold">🕵️ Adora Pony</h1>
     <div>
       <p
