@@ -15,7 +15,7 @@ export async function RefusalModal({ userEmail }: { userEmail: string }) {
 
   return (
     <div
-      class="border-blue-france bg-blue-france-975 fixed right-0 bottom-14 z-751 m-2 hidden w-4/6 justify-self-end border-solid px-8 py-6 shadow-lg"
+      class="border-blue-france bg-surface fixed right-0 bottom-14 z-751 m-2 hidden w-4/6 justify-self-end border-solid px-8 py-6 shadow-lg"
       id="refusalModal"
       aria-label="la modale de refus"
     >
@@ -55,7 +55,9 @@ export async function RefusalModal({ userEmail }: { userEmail: string }) {
         </div>
         <p class="mb-1">
           A propos de{" "}
-          <span class="text-blue-france font-bold">{userEmail} </span>
+          <span class="text-blue-france dark:text-blue-france-925 font-bold">
+            {userEmail}{" "}
+          </span>
           pour l'organisation <b>{moderation.organization.cached_libelle}</b>
         </p>
         <p class="mb-1">Motif de refus :</p>

@@ -6,12 +6,12 @@ import { tv } from "tailwind-variants";
 
 export const card = tv({
   base: `
-    border-grey-200
+    border-border
+    bg-background
     relative
     flex
     flex-col
     border
-    bg-white
     p-8
     shadow-sm
   `,

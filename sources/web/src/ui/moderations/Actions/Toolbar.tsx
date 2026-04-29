@@ -6,7 +6,7 @@ type ToolbarProps = {
 export function Toolbar(props: ToolbarProps) {
   return (
     <div
-      class="bg-blue-france-975 fixed right-0 bottom-0 z-50 flex w-full justify-end overflow-hidden p-2"
+      class="bg-surface border-border fixed right-0 bottom-0 z-50 flex w-full justify-end overflow-hidden border-t p-2"
       role="dialog"
       aria-modal="true"
     >
@@ -20,7 +20,10 @@ function SeeExchangesButton() {
   return (
     <a
       href="#exchange_moderation"
-      class={button({ type: "secondary", class: "bg-white" })}
+      class={button({
+        type: "secondary",
+        class: "bg-background dark:bg-surface",
+      })}
       _={`
         on click
           set #exchange_details.open to true
@@ -38,7 +41,10 @@ function ModerationButtonGroup({ moderation }: ToolbarProps) {
   return (
     <>
       <button
-        class={button({ type: "secondary", class: "mr-4 bg-white" })}
+        class={button({
+          type: "secondary",
+          class: "bg-background dark:bg-surface mr-4",
+        })}
         _={`
           on click
             if #refusalModal.classList.contains('hidden') is false
@@ -56,7 +62,10 @@ function ModerationButtonGroup({ moderation }: ToolbarProps) {
       </button>
 
       <button
-        class={button({ type: "secondary", class: "mr-4 bg-white" })}
+        class={button({
+          type: "secondary",
+          class: "bg-background dark:bg-surface mr-4",
+        })}
         _={`
           on click
             if #acceptModal.classList.contains('hidden') is false
