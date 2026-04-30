@@ -64,7 +64,7 @@
   },
   "devDependencies": {
     "@~/config.typescript": "workspace:*",
-    "@happy-dom/global-registrator": "20.8.8",
+    "@happy-dom/global-registrator": "20.9.0",
     "@types/lodash.sortby": "4.7.9",
     "@types/nprogress": "0.2.3",
     "@types/pg": "8.20.0",
