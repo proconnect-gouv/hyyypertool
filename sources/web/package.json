@@ -24,7 +24,7 @@
   "dependencies": {
     "@~/hyyyperbase": "workspace:*",
     "@~/identite-proconnect": "workspace:*",
-    "@hono/node-server": "1.19.11",
+    "@hono/node-server": "2.0.0",
     "@hono/sentry": "1.2.2",
     "@hono/zod-validator": "0.7.6",
     "@proconnect-gouv/proconnect.api_entreprise": "2.2.0",
