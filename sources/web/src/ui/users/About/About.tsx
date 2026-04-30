@@ -68,7 +68,7 @@ export function About({ user, organization, nonce = "" }: AboutProps) {
           {user.job}{" "}
           <a
             href={`https://annuaire-entreprises.data.gouv.fr/dirigeants/${organization.siret.substring(0, 9)}`}
-            class={`${button({ size: "sm", type: "tertiary" })} mr-2 ml-2 bg-white`}
+            class={`${button({ size: "sm", type: "tertiary" })} mr-2 ml-2`}
             rel="noopener noreferrer"
             target="_blank"
           >

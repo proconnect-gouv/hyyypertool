@@ -44,7 +44,7 @@ export async function TextMessage({
           <li>
             Créé le <LocalTime date={new Date(messsage.timestamp)} />
           </li>
-          <li>par {messsage.user.nickname}</li>
+          <li> par {messsage.user.nickname} </li>
           <li>
             <a
               href={link.session(messsage.session_id)}
@@ -65,14 +65,11 @@ export async function TextMessage({
 
 const message_variants = tv({
   base: `
-    [&_blockquote]:border-l-grey-contrast-hover
-    p-6
-    pb-0
+    [&_blockquote]:border-l-border
+    mb-4
+    p-6!
     [&_blockquote]:ml-5
-    [&_blockquote]:border-y-0
-    [&_blockquote]:border-r-0
     [&_blockquote]:border-l-4
-    [&_blockquote]:border-solid
     [&_blockquote]:p-6
     [&_blockquote_p]:text-base
     [&_blockquote_p]:font-normal
@@ -82,21 +79,21 @@ const message_variants = tv({
     body: `
       border-l-4
       border-gray-400
-      pb-6
+      pl-2
       text-base!
       break-words
       **:bg-transparent!
       [&_img]:max-w-full
     `,
     caption: `
-      bg-grey-contrast
-      p-8
+      bg-surface-muted
+      p-2
     `,
   },
   variants: {
     is_family: {
       true: "bg-blue-ecume mr-2 ml-12",
-      false: "bg-grey-50 mr-12 ml-2",
+      false: "bg-surface mr-12 ml-2",
     },
   },
 });

@@ -45,12 +45,12 @@ export async function UserPage({
 
   return (
     <main>
-      <div class="bg-blue-france-975 py-6">
+      <div class="bg-blue-france-975 dark:bg-surface py-6">
         <div class="container mx-auto px-4 py-6">
           <h1>👨‍💻 A propos de l'utilisateur</h1>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div class={card().base()}>
-              <h1 class="text-blue-france">
+              <h1 class="text-blue-france dark:text-blue-france-925">
                 « {user.given_name} {user.family_name} »
               </h1>
               <Fiche user={user} />
@@ -92,7 +92,7 @@ export async function UserPage({
           ></div>
         </div>
       </div>
-      <div class="bg-alt-red-marianne py-6">
+      <div class="bg-alt-red-marianne dark:bg-surface py-6">
         <div class="container mx-auto px-4 py-6">
           <Actions user={user} />
         </div>
@@ -301,7 +301,7 @@ function Fiche({ user }: { user: User }) {
       </dd>
 
       <dt class={dt()}>email</dt>
-      <dd class={dd()}>
+      <dd class={`${dd()} space-x-2`}>
         <b> {user.email}</b>
         <CopyButton
           class="p-0 leading-none"
@@ -312,7 +312,7 @@ function Fiche({ user }: { user: User }) {
       </dd>
 
       <dt class={dt()}>domain</dt>
-      <dd class={dd()}>
+      <dd class={`${dd()} space-x-2`}>
         <b> {domain}</b>
         <CopyButton
           class="p-0 leading-none"

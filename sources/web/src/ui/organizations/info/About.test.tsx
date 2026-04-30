@@ -66,7 +66,7 @@ test("render about section", async () => {
               const props = {
                 children: "",
                 className:
-                  "disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 text-sm leading-6 text-blue-france hover:bg-grey-50 bg-transparent shadow-[inset_0_0_0_1px_var(--color-grey-200)] aspect-square justify-center p-0 ml-2",
+                  "disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface bg-transparent shadow-[inset_0_0_0_1px_var(--color-border)] aspect-square justify-center p-0 ml-2",
                 text: "cached_libelle",
               };
               let mounted = false;
@@ -87,36 +87,38 @@ test("render about section", async () => {
         <dt>Siret</dt>
         <dd>
           siret
-          <a
-            href="https://annuaire-entreprises.data.gouv.fr/entreprise/siret"
-            class="disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france hover:bg-grey-50 bg-transparent shadow-[inset_0_0_0_1px_var(--color-grey-200)] ml-2"
-            rel="noopener noreferrer"
-            target="_blank"
-            >Fiche annuaire</a
-          ><x-copy-button-island
-            ><x-copy-button-root id="test-uuid-2"></x-copy-button-root>
-            <script defer="" nonce="" type="module">
-              import { render, h } from "preact";
-              import { CopyButtonClient } from "/src/ui/button/components/copy.client.js";
-              const props = {
-                children: "",
-                className:
-                  "disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 text-sm leading-6 text-blue-france hover:bg-grey-50 bg-transparent shadow-[inset_0_0_0_1px_var(--color-grey-200)] aspect-square justify-center p-0 ml-2",
-                text: "siret",
-              };
-              let mounted = false;
-              const mount_island = () => {
-                if (mounted) return;
-                const el = document.getElementById("test-uuid-2");
-                if (el) {
-                  render(h(CopyButtonClient, props), el);
-                  mounted = true;
-                }
-              };
-              document.addEventListener("DOMContentLoaded", mount_island);
-              document.addEventListener("htmx:load", mount_island);
-              mount_island();
-            </script></x-copy-button-island
+          <span class="ml-2 inline-flex items-center gap-1"
+            ><a
+              href="https://annuaire-entreprises.data.gouv.fr/entreprise/siret"
+              class="disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface bg-transparent shadow-[inset_0_0_0_1px_var(--color-border)]"
+              rel="noopener noreferrer"
+              target="_blank"
+              >Fiche annuaire</a
+            ><x-copy-button-island
+              ><x-copy-button-root id="test-uuid-2"></x-copy-button-root>
+              <script defer="" nonce="" type="module">
+                import { render, h } from "preact";
+                import { CopyButtonClient } from "/src/ui/button/components/copy.client.js";
+                const props = {
+                  children: "",
+                  className:
+                    "disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface bg-transparent shadow-[inset_0_0_0_1px_var(--color-border)] aspect-square justify-center p-0",
+                  text: "siret",
+                };
+                let mounted = false;
+                const mount_island = () => {
+                  if (mounted) return;
+                  const el = document.getElementById("test-uuid-2");
+                  if (el) {
+                    render(h(CopyButtonClient, props), el);
+                    mounted = true;
+                  }
+                };
+                document.addEventListener("DOMContentLoaded", mount_island);
+                document.addEventListener("htmx:load", mount_island);
+                mount_island();
+              </script></x-copy-button-island
+            ></span
           >
         </dd>
         <dt>NAF/APE</dt>

@@ -20,10 +20,10 @@ export function Investigation(props: InvestigationProps) {
   const domain = z_email_domain.parse(user.email);
 
   return (
-    <ul class="mt-5 w-full bg-[#F6F6F6] p-3 [&_li]:inline-block">
+    <ul class="bg-surface mt-5 w-full p-3 [&_li]:inline-block">
       <li>
         <GoogleSearchButton
-          class={`${button({ size: "sm", type: "tertiary" })} mr-2 bg-white`}
+          class={`${button({ size: "sm", type: "tertiary" })} dark:bg-surface-hover mr-2 bg-white`}
           query={user.email}
         >
           Chercher l'email
@@ -31,7 +31,7 @@ export function Investigation(props: InvestigationProps) {
       </li>
       <li>
         <GoogleSearchButton
-          class={`${button({ size: "sm", type: "tertiary" })} mr-2 bg-white`}
+          class={`${button({ size: "sm", type: "tertiary" })} dark:bg-surface-hover mr-2 bg-white`}
           query={domain}
         >
           Chercher le domaine email
@@ -39,7 +39,7 @@ export function Investigation(props: InvestigationProps) {
       </li>
       <li>
         <GoogleSearchButton
-          class={`${button({ size: "sm", type: "tertiary" })} bg-white`}
+          class={`${button({ size: "sm", type: "tertiary" })} dark:bg-surface-hover mr-2 bg-white`}
           query={`${organization.cached_libelle} ${domain}`}
         >
           Chercher le matching
