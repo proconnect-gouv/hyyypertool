@@ -224,6 +224,6 @@ test("PATCH /moderations/:id/rejected falls back to nickname when get_user fails
   expect(mock_crisp.send_message).toHaveBeenCalledWith({
     session_id: "crisp-fallback",
     content: expect.stringContaining("Your request has been rejected."),
-    user: { nickname: "Anaïs Tartempion" },
+    user: { nickname: "L'équipe ProConnect" },
   });
 });

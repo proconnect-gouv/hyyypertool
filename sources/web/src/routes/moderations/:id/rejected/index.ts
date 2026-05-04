@@ -12,7 +12,7 @@ import {
   GetModerationWithUser,
   UpdateModerationById,
 } from "#src/queries/moderations";
-import { EntitySchema, z_username } from "#src/schema";
+import { EntitySchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
 import { to } from "await-to-js";
 import { Hono } from "hono";
@@ -37,12 +37,11 @@ export default new Hono<ContextType>().patch(
     const update_moderation_by_id = UpdateModerationById({ pg: identite_pg });
     const moderation = await get_moderation_with_user(moderation_id);
 
-    const username = z_username.parse(userinfo);
-    const body = text_body.concat(`  \n\n${username}`);
+    const body = text_body;
     const recipient = moderation.user.email;
 
     const [, operator] = await to(crisp.get_user({ email: userinfo.email }));
-    const sender = operator ?? { nickname: username };
+    const sender = operator ?? { nickname: "L'équipe ProConnect" };
 
     if (!moderation.ticket_id || !is_crisp_ticket(moderation.ticket_id)) {
       const { session_id } = await send_crisp_notification(crisp, {
