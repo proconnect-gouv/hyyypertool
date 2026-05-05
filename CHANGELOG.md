@@ -1,5 +1,35 @@
 # Changelog
 
+## [2026.5.0](https://github.com/proconnect-gouv/hyyypertool/compare/2026.4.4...2026.5.0) (2026-05-05)
+
+### Changements
+
+- ✨ Supprime le nom et prénom du modérateur dans la signature des e-mails de refus de modération
+- 💄 Ajout du mode sombre à l'application
+
+### Ajouté
+
+- ✨ Delete first name and surname from rejection emails (#1576) (7478dc9d)
+
+### Modifié
+
+- 💄 Add dark mode (#1569) (21303af9)
+
+### Divers
+
+- ↗️ [patch](deps-dev): Bump @csmith/release-it-calver-plugin from 2023.12.0 to 2026.3.11 (#1565) (9aca836e)
+- ↗️ [patch](deps): Bump actions/setup-node from 6.3.0 to 6.4.0 (#1562) (ca16e6fb)
+- ↗️ [patch](deps): Bump cypress from 15.13.1 to 15.14.1 in /e2e (#1573) (13efedd9)
+- ↗️ [patch](deps): Bump cypress-io/github-action from 7.1.9 to 7.1.10 (#1570) (a1ea6142)
+- ↗️ [patch](deps): Bump @types/bun from 1.3.11 to 1.3.13 (#1572) (9e23e0f6)
+- ↗️ [patch](deps): Bump @hono/node-server from 1.19.11 to 2.0.0 (#1574) (e27b6ad2)
+- ↗️ [patch](deps-dev): Bump @happy-dom/global-registrator from 20.8.8 to 20.9.0 (#1575) (e78e723d)
+- ↗️ [patch](deps): Bump typescript from 6.0.2 to 6.0.3 in /e2e (#1571) (869e3a74)
+- ↗️ [patch](deps): Bump the tailwindcss group across 1 directory with 2 updates (#1568) (feb394c7)
+- ↗️ [patch](deps): Bump the sentry group with 4 updates (#1567) (d71f0ede)
+- ↗️ [patch](deps): Bump the sentry group with 4 updates (#1563) (b44d5223)
+- ↗️ [patch](deps): Bump @preact/signals from 2.8.2 to 2.9.0 (#1566) (1907eefe)
+
 ## [2026.4.4](https://github.com/proconnect-gouv/hyyypertool/compare/2026.4.3...2026.4.4) (2026-04-22)
 
 ### Changements
