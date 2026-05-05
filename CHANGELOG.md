@@ -1,5 +1,15 @@
 # Changelog
 
+## [2026.5.1](https://github.com/proconnect-gouv/hyyypertool/compare/2026.5.0...2026.5.1) (2026-05-05)
+
+### Changements
+
+- 💄 Améliore le dark mode
+
+### Modifié
+
+- 💄 Improve dark mode contrast and readability (#1577) (12f95aba)
+
 ## [2026.5.0](https://github.com/proconnect-gouv/hyyypertool/compare/2026.4.4...2026.5.0) (2026-05-05)
 
 ### Changements
