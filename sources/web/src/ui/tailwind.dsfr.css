@@ -2,6 +2,7 @@
  * DSFR design tokens and base styles for Tailwind v4.
  * Values extracted from @gouvfr/dsfr v1.14.3.
  */
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   /* Fonts */
@@ -58,6 +59,14 @@
   /* Spacing constants from DSFR */
   --spacing-title: 0 0 1.5rem;
   --spacing-text: 0 0 1.5rem;
+  --color-background: var(--color-background);
+  --color-surface: var(--color-surface);
+  --color-surface-hover: var(--color-surface-hover);
+  --color-surface-muted: var(--color-surface-muted);
+  --color-text-default: var(--color-text-default);
+  --color-text-title: var(--color-text-title);
+  --color-text-muted: var(--color-text-muted);
+  --color-border: var(--color-border);
 }
 
 @layer base {
@@ -120,6 +129,15 @@
 
   :root {
     --ground: 0;
+    --color-background: white;
+    --color-surface: var(--color-grey-50);
+    --color-surface-hover: var(--color-grey-200);
+    --color-surface-muted: var(--color-grey-200);
+    --color-text-default: var(--color-grey-850);
+    --color-text-title: var(--color-grey-1000);
+    --color-text-muted: var(--color-grey-425);
+    --color-border: var(--color-grey-200);
+
     /* Select chevron arrow (matches DSFR fr-select SVG) */
     --select-arrow: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23161616' d='M12 13.1l5-4.9 1.4 1.4L12 15.9 5.6 9.5l1.4-1.4L12 13.1z'/%3E%3C/svg%3E");
     /* Checkbox checkmark (white tick on blue background, matches DSFR) */
@@ -138,6 +156,25 @@
     --external-link-icon: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 6v2H5v11h11v-5h2v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6Zm11-3v8h-2V6.413l-7.793 7.794-1.414-1.414L17.585 5H13V3h8Z'/%3E%3C/svg%3E");
   }
 
+  .dark {
+    --color-background: var(--color-grey-950);
+    --color-surface: #1e1e1e;
+    --color-surface-hover: var(--color-grey-850);
+    --color-surface-muted: var(--color-grey-850);
+    --color-text-default: var(--color-grey-200);
+    --color-text-title: var(--color-grey-50);
+    --color-text-muted: var(--color-grey-425);
+    --color-border: var(--color-grey-850);
+    --color-alt-orange-terre-battue: #4a2000;
+    --color-alt-red-marianne: #4a0000;
+    --color-alt-green-emeraude: #003320;
+    --color-blue-ecume: #1e2433;
+    --color-label-info: #c5d8ff;
+    --color-label-warning: #ffb347;
+    --color-label-error: #ff8080;
+    --color-label-success: #6fcf97;
+  }
+
   html {
     font-size: 16px;
     -webkit-text-size-adjust: 100%;
@@ -147,8 +184,8 @@
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     -webkit-text-size-adjust: 100%;
-    background-color: white;
-    color: var(--color-grey-850);
+    background-color: var(--color-background);
+    color: var(--color-text-default);
     font-size: 1rem;
     line-height: 1.5rem;
     overflow-wrap: break-word;
@@ -161,7 +198,7 @@
   h4,
   h5,
   h6 {
-    color: var(--color-grey-1000);
+    color: var(--color-text-title);
     font-weight: 700;
     margin: var(--spacing-title);
   }

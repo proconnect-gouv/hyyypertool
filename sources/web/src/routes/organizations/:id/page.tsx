@@ -36,7 +36,7 @@ export default async function Page({
 
   return (
     <main>
-      <div class="bg-blue-france-975 py-6">
+      <div class="bg-surface py-6">
         <div class="container mx-auto px-4 py-6">
           <h1>🏛 A propos de l'organisation</h1>
 

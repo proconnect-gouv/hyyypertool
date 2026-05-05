@@ -6,8 +6,8 @@ import { tv } from "tailwind-variants";
 
 export const table = tv({
   base: `
-    [&_td]:border-grey-200
-    [&_th]:bg-grey-50
+    [&_td]:border-border
+    [&_th]:bg-surface
     relative
     mt-4
     mb-10
@@ -37,8 +37,6 @@ export const table = tv({
 export const row = tv({
   variants: {
     is_active: { true: "bg-green-300" },
-    is_clickable: {
-      true: "hover:bg-grey-hover! cursor-pointer",
-    },
+    is_clickable: { true: "hover:bg-surface-hover! cursor-pointer" },
   },
 });

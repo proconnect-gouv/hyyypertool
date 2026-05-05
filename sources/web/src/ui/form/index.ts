@@ -23,7 +23,7 @@ import { button } from "../button";
 export const fieldset = tv({
   base: "relative m-0 flex flex-row flex-wrap items-baseline border-0 p-0",
   slots: {
-    legend: "text-grey-850 w-full pb-4 text-base leading-6 font-bold",
+    legend: "text-text-default w-full pb-4 text-base leading-6 font-bold",
     element: "mb-4 max-w-full flex-[1_1_100%] px-2",
   },
   variants: {
@@ -48,12 +48,12 @@ export const fieldset = tv({
 //   - intent variants for error/valid states (fr-input-group--error / --valid)
 export const input = tv({
   base: `
-    text-grey-850
-    bg-grey-contrast
-    hover:bg-grey-contrast-hover
+    text-text-default
+    bg-surface
+    hover:bg-surface-hover
     focus:outline-blue-france
     disabled:text-grey-425
-    placeholder:text-grey-625
+    placeholder:text-text-muted
     [[type=radio]]:border-blue-france
     [[type=radio]]:checked:bg-blue-france
     [[type=radio]]:checked:hover:bg-blue-france
@@ -70,7 +70,7 @@ export const input = tv({
     py-2
     text-base
     leading-6
-    shadow-[inset_0_-2px_0_0_var(--color-grey-950)]
+    shadow-[inset_0_-2px_0_0_var(--color-border)]
     placeholder:italic
     focus:outline-2
     focus:outline-offset-2
@@ -114,7 +114,7 @@ export const input = tv({
 });
 
 export const label = tv({
-  base: "text-grey-850 mb-2 block text-base leading-6 font-normal",
+  base: "text-text-default mb-2 block text-base leading-6 font-normal",
   variants: {
     intent: {
       error: "text-label-error",

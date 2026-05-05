@@ -48,7 +48,7 @@ Fonctionnalité: Gestion de l'équipe par un admin
   Scénario: L'admin peut désactiver un autre membre et celui-ci ne peut plus se connecter
     Quand je confirme la suppression
     Et je vais à l'intérieur de la rangée nommée "jeanbon@yopmail.com"
-    Et je clique sur "Desactiver"
+    Et je clique sur "Désactiver"
     Alors je réinitialise le contexte
     Et je vois "Desactive"
 
@@ -62,7 +62,7 @@ Fonctionnalité: Gestion de l'équipe par un admin
   Scénario: L'admin peut réactiver un membre désactivé et celui-ci peut se reconnecter
     Quand je confirme la suppression
     Et je vais à l'intérieur de la rangée nommée "jeanbon@yopmail.com"
-    Et je clique sur "Desactiver"
+    Et je clique sur "Désactiver"
     Alors je réinitialise le contexte
     Et je vois "Desactive"
 
@@ -88,5 +88,5 @@ Fonctionnalité: Gestion de l'équipe par un admin
 
   Scénario: L'admin ne peut pas se désactiver lui-même
     Et je vais à l'intérieur de la rangée nommée "admin@omega.gouv.fr"
-    Alors je ne vois pas "Desactiver"
+    Alors je ne vois pas "Désactiver"
     Et je vois "—"

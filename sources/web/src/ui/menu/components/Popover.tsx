@@ -35,6 +35,7 @@ Popover.Context = createContext({ is_open: false });
 const styles = tv({
   base: `
     focus:outline-nones
+    bg-surface
     absolute
     right-0
     bottom-full
@@ -45,7 +46,6 @@ const styles = tv({
     divide-y
     divide-gray-100
     rounded-md
-    bg-white
     shadow-[0_2px_6px_rgba(0,0,18,.16)]
     `,
   variants: {},

@@ -19,13 +19,13 @@ export async function Investigation(props: Props) {
   });
 
   const button_classes = button({
-    class: "mr-2 bg-white",
+    class: "mr-2 bg-white dark:bg-surface-hover",
     size: "sm",
     type: "tertiary",
   });
 
   return (
-    <ul class="mt-5 w-full list-none space-y-1 bg-[#F6F6F6] p-3 [&_li]:inline-block">
+    <ul class="bg-surface mt-5 w-full list-none space-y-1 p-3 [&_li]:inline-block">
       <li>
         <a
           href={`https://lannuaire.service-public.fr/recherche?where=${organization.cached_code_postal}&whoWhat=Mairie`}

@@ -88,6 +88,16 @@ export function RootLayout({ children }: PropsWithChildren) {
 
         <!--  -->
 
+        <script>
+          const saved = localStorage.getItem("theme");
+          const prefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)",
+          ).matches;
+          if (saved === "dark" || (!saved && prefersDark)) {
+            document.documentElement.classList.add("dark");
+          }
+        </script>
+
         <script nonce="${nonce}" type="importmap">
           {
             "imports": {
@@ -125,6 +135,16 @@ export function RootLayout({ children }: PropsWithChildren) {
             <small>version ${config.VERSION}</small>
           </a>
         </footer>
+        <script>
+          const thumb = document.querySelector(".thumb");
+          if (thumb) {
+            thumb.textContent = document.documentElement.classList.contains(
+              "dark",
+            )
+              ? "🌙"
+              : "☀️";
+          }
+        </script>
       </body>
 
       <!--  -->

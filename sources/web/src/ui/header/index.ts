@@ -47,7 +47,7 @@ const header_logo = tv({
 });
 
 export const header = tv({
-  base: "bg-white drop-shadow-[0_1px_3px_rgba(0,0,18,0.16)]",
+  base: "bg-background drop-shadow-[0_1px_3px_rgba(0,0,18,0.16)]",
   slots: {
     body: "",
     body_row: "flex items-center justify-between py-6",
@@ -56,29 +56,29 @@ export const header = tv({
     container: "container mx-auto px-4",
     logo: header_logo(),
     menu: "",
-    service: "border-grey-200 border-l pl-4",
-    service_tagline: "text-grey-850 m-0 text-sm leading-6",
+    service: "border-border border-l pl-4",
+    service_tagline: "text-text-muted m-0 text-sm leading-6",
     service_title: "m-0 text-[1.25rem] leading-7 font-bold",
     tools: "flex items-center",
-    tools_links: "",
+    tools_links: "flex items-center",
   },
 });
 
 export const nav = tv({
-  base: "shadow-[inset_0_1px_0_0_var(--color-grey-200)]",
+  base: "shadow-[inset_0_1px_0_0_var(--color-border)]",
   slots: {
     list: "m-0 flex list-none gap-0 p-0",
     item: "",
     link: `
-      text-grey-850
-      hover:bg-grey-50
-      aria-current:text-blue-france
-      inline-flex
+      text-text-default
+      hover:bg-surface
+      aria-current:text-blue-france inline-flex
       items-center
       px-4
       py-3
       text-sm
-      aria-current:shadow-[inset_0_-2px_0_0_var(--color-blue-france)]
+      aria-current:shadow-[inset_0_-2px_0_0_var(--color-blue-france)] aria-current:dark:text-white
+      aria-current:dark:shadow-[inset_0_-2px_0_0_var(--color-blue-france-925)]
     `,
   },
 });

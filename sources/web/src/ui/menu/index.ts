@@ -14,6 +14,8 @@ export const menu_item = tv({
     text-left
     text-sm
     text-gray-700
+    dark:text-gray-300
+    dark:hover:bg-gray-700
   `,
   variants: {
     override: {

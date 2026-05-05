@@ -40,20 +40,21 @@ export function About(props: Props) {
         <dt>Siret </dt>
         <dd>
           {organization.siret}{" "}
-          <a
-            href={`https://annuaire-entreprises.data.gouv.fr/entreprise/${organization.siret}`}
-            class={`${button({ size: "sm", type: "tertiary" })} ml-2`}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Fiche annuaire
-          </a>
-          <CopyButton
-            class="ml-2"
-            nonce={nonce}
-            text={organization.siret}
-            variant={{ size: "sm", type: "tertiary" }}
-          ></CopyButton>
+          <span class="ml-2 inline-flex items-center gap-1">
+            <a
+              href={`https://annuaire-entreprises.data.gouv.fr/entreprise/${organization.siret}`}
+              class={button({ size: "sm", type: "tertiary" })}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Fiche annuaire
+            </a>
+            <CopyButton
+              nonce={nonce}
+              text={organization.siret}
+              variant={{ size: "sm", type: "tertiary" }}
+            ></CopyButton>
+          </span>
         </dd>
 
         <dt>NAF/APE </dt>

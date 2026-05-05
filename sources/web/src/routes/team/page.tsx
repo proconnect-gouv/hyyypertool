@@ -63,7 +63,7 @@ function AddMember() {
   const { base, element } = fieldset({ inline: true });
   return (
     <form
-      class="mb-6 flex items-end gap-4 rounded border border-gray-200 bg-gray-50 p-4"
+      class="bg-surface mb-6 flex items-end gap-4 rounded border border-gray-200 p-4"
       hx-post={urls.admin.team.$url().pathname}
       hx-swap="none"
     >
@@ -100,6 +100,9 @@ function AddMember() {
           </select>
         </div>
         <div class={element()}>
+          <span class={label()} aria-hidden="true">
+            &nbsp;
+          </span>
           <button class={button()} type="submit">
             Ajouter
           </button>
@@ -276,9 +279,9 @@ function ToggleButton({ id, disabled }: { id: number; disabled: boolean }) {
       class={button({ intent: "warning", size: "sm" })}
       {...urls.admin.team[":id"].disable.$hx_patch({ param: { id } })}
       hx-swap="none"
-      hx-confirm="Desactiver ce membre ?"
+      hx-confirm="Désactiver ce membre ?"
     >
-      Desactiver
+      Désactiver
     </button>
   );
 }

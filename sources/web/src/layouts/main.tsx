@@ -113,9 +113,10 @@ function UserMenu({
   return (
     <div class={tools()}>
       <div class={tools_links()}>
+        <ThemeToggle />
         <div class="relative inline-block">
           <button
-            _={`on click toggle @hidden on #${$menu} then on click from elsewhere if #${$menu} and not @hidden add @hidden to #${$menu} end end`}
+            _={`on click toggle @hidden on #${$menu} then on click from elsewhere if #${$menu} and not @hidden add @hidden to #${$menu} end`}
             aria-controls={$menu}
             aria-expanded="false"
             aria-haspopup="menu"
@@ -126,25 +127,27 @@ function UserMenu({
             Mon espace
           </button>
           <div
-            class="absolute right-0 z-50 mt-1 min-w-48 rounded border border-gray-200 bg-white shadow-lg"
+            class="border-border bg-background absolute right-0 z-50 mt-1 min-w-48 rounded border shadow-lg"
             hidden
             id={$menu}
             role="menu"
           >
-            <div class="border-b border-gray-200 px-4 py-3">
+            <div class="border-border border-b px-4 py-3">
               <p class="font-semibold">
                 {username}{" "}
                 <span class={badge({ intent: role_intent(hyyyper_user.role) })}>
                   {hyyyper_user.role}
                 </span>
               </p>
-              {email ? <p class="text-sm text-gray-600">{email}</p> : undefined}
+              {email ? (
+                <p class="text-text-muted text-sm">{email}</p>
+              ) : undefined}
             </div>
             <ul class="m-0 list-none p-0">
               {is_admin ? (
                 <li>
                   <a
-                    class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-50"
+                    class="hover:bg-surface flex items-center gap-2 px-4 py-2 text-sm"
                     href={urls.admin.team.$url().pathname}
                   >
                     Gestion de l'équipe
@@ -153,7 +156,7 @@ function UserMenu({
               ) : undefined}
               <li>
                 <a
-                  class="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-50"
+                  class="hover:bg-surface flex items-center gap-2 px-4 py-2 text-sm"
                   href={urls.auth.logout.$url().pathname}
                 >
                   <Svg name="logout" />
@@ -243,5 +246,26 @@ function Nav() {
         </li>
       </ul>
     </nav>
+  );
+}
+
+function ThemeToggle() {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-label="Basculer le mode nuit"
+      class="border-border bg-surface-muted relative mr-2 inline-flex h-7 w-13 cursor-pointer items-center rounded-full border transition-colors"
+      onclick={`
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        this.querySelector('.thumb').textContent = isDark ? '🌙' : '☀️';
+        this.style.background = isDark ? '' : 'var(--color-grey-200)';
+      `}
+    >
+      <span class="thumb bg-background pointer-events-none absolute left-0.5 flex h-5.5 w-5.5 items-center justify-center rounded-full text-sm transition-transform dark:translate-x-6">
+        🌙
+      </span>
+    </button>
   );
 }

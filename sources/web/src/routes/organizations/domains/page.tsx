@@ -150,14 +150,14 @@ function Row({
       key={key}
     >
       <td></td>
-      <td>
-        <span>{domainName}</span>
+      <td class="space-x-2">
         <CopyButton
           class="p-0 leading-none"
           text={domainName}
           title="Copier le nom de domaine"
           variant={{ size: "sm", type: "tertiary" }}
         />
+        <span>{domainName}</span>
       </td>
       <td>{organization.siret}</td>
       <td>{organization.cached_libelle}</td>

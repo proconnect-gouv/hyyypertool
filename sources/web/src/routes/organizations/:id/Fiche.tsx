@@ -18,7 +18,9 @@ export async function Fiche({
   return (
     <section class="grid grid-cols-1 gap-4 md:grid-cols-3">
       <div class={card().base({ class: "md:col-span-2" })}>
-        <h1 class="text-blue-france">« {organization.cached_libelle} »</h1>
+        <h1 class="text-blue-france dark:text-blue-france-925">
+          « {organization.cached_libelle} »
+        </h1>
         <About organization={organization} />
       </div>
       <div class={card().base()}>

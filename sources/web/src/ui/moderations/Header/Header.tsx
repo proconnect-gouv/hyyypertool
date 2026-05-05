@@ -56,7 +56,7 @@ export async function Header() {
       <div class="float-right text-xs">
         Créé le <LocalTime date={moderation.created_at} />
       </div>
-      <section class="flex items-baseline space-x-5">
+      <section class="flex items-center space-x-5">
         <h1 className="text-2xl font-bold">
           {moderation_type_to_emoji(moderation.type)}{" "}
           {moderation.user.given_name} {moderation.user.family_name}

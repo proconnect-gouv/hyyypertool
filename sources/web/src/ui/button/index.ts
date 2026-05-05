@@ -38,11 +38,11 @@ export const button = tv({
     },
     type: {
       tertiary:
-        "text-blue-france hover:bg-grey-50 bg-transparent shadow-[inset_0_0_0_1px_var(--color-grey-200)]",
+        "text-blue-france dark:text-blue-france-925 hover:bg-surface bg-transparent shadow-[inset_0_0_0_1px_var(--color-border)]",
       secondary:
-        "text-blue-france hover:bg-blue-france-975 bg-transparent shadow-[inset_0_0_0_1px_var(--color-blue-france)]",
+        "text-blue-france dark:text-blue-france-925 hover:bg-surface bg-transparent shadow-[inset_0_0_0_1px_var(--color-blue-france-925)] dark:shadow-[inset_0_0_0_1px_var(--color-blue-france-925)]",
       "tertiary-no-outline":
-        "text-blue-france hover:bg-grey-50 bg-transparent shadow-none",
+        "text-blue-france dark:text-blue-france-925 hover:bg-surface bg-transparent shadow-none",
       close: "ml-auto min-h-8 px-3 py-1 text-sm leading-6",
     },
     icon: {
