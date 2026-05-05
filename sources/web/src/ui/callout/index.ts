@@ -29,10 +29,10 @@ export const callout = tv({
   variants: {
     intent: {
       success: {
-        base: "border-l-green-emeraude bg-[#c3fad5]",
+        base: "border-l-green-emeraude bg-[#c3fad5] dark:bg-[#c3fad5]/[.15]",
       },
       warning: {
-        base: "border-l-brown-caramel bg-[#f7ebe5]",
+        base: "border-l-brown-caramel bg-[#f7ebe5] dark:bg-[#f7ebe5]/[.15]",
       },
     },
   },

@@ -34,9 +34,11 @@ exports[`render header section 1`] = `
         <div class="relative mr-1 font-bold">
           <p class="mb-0">
             <b>Adora Pony</b>
-            <span class="text-gray-600">veut rejoindre l&#39;organisation</span>
+            <span class="text-gray-600 dark:text-gray-400"
+              >veut rejoindre l&#39;organisation</span
+            >
             « <b>🦄 libelle</b> »
-            <span class="text-gray-600">avec l’adresse</span>
+            <span class="text-gray-600 dark:text-gray-400">avec l’adresse</span>
             <b>adora.pony@unicorn.xyz</b>
           </p>
         </div>

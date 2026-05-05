@@ -20,7 +20,7 @@ export function NotFound() {
   } = useRequestContext<AppEnvContext>();
 
   return (
-    <main class="bg-blue-france-975 flex min-h-full flex-1 items-center">
+    <main class="bg-surface flex min-h-full flex-1 items-center">
       <div class="container mx-auto grid h-full grid-cols-2 items-center justify-items-center gap-6 px-4">
         <section>
           <h1>Oups, nous n'avons pas trouvé la page que vous recherchez.</h1>

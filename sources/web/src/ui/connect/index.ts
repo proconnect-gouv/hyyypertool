@@ -50,5 +50,5 @@ export const connect = tv({
 
 // The connect group wrapper (replaces .fr-connect-group)
 export const connect_group = tv({
-  base: "[&>p]:text-grey-850 [&>p>a]:text-blue-france [&>p]:text-xs [&>p]:leading-5 [&>p>a]:text-sm [&>p>a]:leading-6",
+  base: "[&>p]:text-grey-850 [&>p>a]:text-blue-france dark:[&>p>a]:text-blue-france-925 [&>p]:text-xs [&>p]:leading-5 [&>p>a]:text-sm [&>p>a]:leading-6",
 });
