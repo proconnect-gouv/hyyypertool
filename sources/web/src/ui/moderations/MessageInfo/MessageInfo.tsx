@@ -29,11 +29,12 @@ export function MessageInfo(props: MessageInfoProps) {
       <b>
         {given_name} {family_name}
       </b>{" "}
-      <span class="text-gray-600">
+      <span class="text-gray-600 dark:text-gray-400">
         {moderation_type_to_verb_in_sentence(type)}
       </span>{" "}
       « <b>{cached_libelle}</b> »{" "}
-      <span class="text-gray-600">avec l’adresse</span> <b>{email}</b>
+      <span class="text-gray-600 dark:text-gray-400">avec l’adresse</span>{" "}
+      <b>{email}</b>
       <ServiceProviderInfo sp_name={sp_name} />
     </p>
   );
@@ -43,8 +44,11 @@ function ServiceProviderInfo({ sp_name }: { sp_name: string | null }) {
   if (!sp_name) return null;
   return (
     <>
-      <span class="text-gray-600"> pour se connecter au service </span> «{" "}
-      <b>{sp_name}</b> »{" "}
+      <span class="text-gray-600 dark:text-gray-400">
+        {" "}
+        pour se connecter au service{" "}
+      </span>{" "}
+      « <b>{sp_name}</b> »{" "}
     </>
   );
 }

@@ -254,7 +254,7 @@ function Row({ key, moderation }: { key?: string; moderation: Moderation }) {
       class={row({
         is_clickable: true,
         class:
-          "relative focus-within:outline focus-within:outline-2 focus-within:outline-blue-500",
+          "relative text-[hsl(var(--row-hue),75%,33%)] focus-within:outline-2 focus-within:outline-blue-500 dark:text-[hsl(var(--row-hue),70%,65%)]",
       })}
       style={text_color(new Date(moderation.created_at))}
     >
@@ -346,7 +346,5 @@ const getDayOfYear = (date: Date) =>
 function text_color(date: Date) {
   const diff = getDayOfYear(new Date()) - getDayOfYear(date);
   const hue = Math.floor(diff * 111).toString(10);
-  const saturation = "75%";
-  const lightness = "33%";
-  return `color : hsl(${hue},${saturation},${lightness});`;
+  return `--row-hue: ${hue};`;
 }
