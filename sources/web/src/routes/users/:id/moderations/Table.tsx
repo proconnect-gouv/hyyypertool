@@ -57,7 +57,7 @@ export function Row({
 
   return (
     <tr
-      class="relative focus-within:outline focus-within:outline-2 focus-within:outline-blue-500 hover:bg-gray-100"
+      class="dark:hover:bg-grey-850 relative focus-within:outline-2 focus-within:outline-blue-500 hover:bg-gray-100"
       key={key}
     >
       <td>

@@ -102,7 +102,7 @@ export default new Hono<AppContext>()
               <input type="hidden" name="email" value={profile.email} />
               <button
                 type="submit"
-                class="flex cursor-pointer flex-col items-start gap-1 rounded-lg border p-4 hover:bg-gray-100"
+                class="dark:hover:bg-grey-850 flex cursor-pointer flex-col items-start gap-1 rounded-lg border p-4 hover:bg-gray-100"
               >
                 <span class="font-semibold">
                   {profile.given_name} {profile.usual_name}
