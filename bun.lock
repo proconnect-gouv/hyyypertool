@@ -22,7 +22,7 @@
         "zod": "4.3.6",
       },
       "devDependencies": {
-        "@csmith/release-it-calver-plugin": "2026.3.11",
+        "@csmith/release-it-calver-plugin": "2026.4.0",
         "@testing-library/preact": "3.2.4",
         "@types/bun": "1.3.13",
         "@~/hyyyperbase": "workspace:*",
@@ -234,7 +234,7 @@
 
     "@babel/runtime": ["@babel/runtime@7.28.6", "", {}, "sha512-05WQkdpL9COIMz4LjTxGpPNCdlpyimKppYNoJ5Di5EUObifl8t4tuLuUBBZEpoLYOmfvIWrsp9fCl0HoPRVTdA=="],
 
-    "@csmith/release-it-calver-plugin": ["@csmith/release-it-calver-plugin@2026.3.11", "", { "dependencies": { "calver": "^24.1.0", "chai": "^6.2.2", "mocha": "^11.7.5" }, "peerDependencies": { "release-it": "^19.2.4" } }, "sha512-Xj7Sjw0XNxr7DCzk9gikosdVoO1ylfjZ+DIfvCv/h3R6prDhjM2QGvQ/gZOFwqWFQDkfbSo8bQuTmZPskAz3oQ=="],
+    "@csmith/release-it-calver-plugin": ["@csmith/release-it-calver-plugin@2026.4.0", "", { "dependencies": { "calver": "^24.1.0", "chai": "^6.2.2", "mocha": "^11.7.5" }, "peerDependencies": { "release-it": "^20.0.1" } }, "sha512-6Zqs6E/Rqx9b3fVqDkvENa68DzNTfu0c1nRVryqMNgjyB9xeRpnPIvQVANFjKBQJaZ1tHM6gWT+nL7MCq9FdEw=="],
 
     "@cucumber/gherkin": ["@cucumber/gherkin@32.2.0", "", { "dependencies": { "@cucumber/messages": ">=19.1.4 <28" } }, "sha512-X8xuVhSIqlUjxSRifRJ7t0TycVWyX58fygJH3wDNmHINLg9sYEkvQT0SO2G5YlRZnYc11TIFr4YPenscvdlBIw=="],
 
