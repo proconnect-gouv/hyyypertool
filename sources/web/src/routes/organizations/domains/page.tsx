@@ -144,15 +144,14 @@ function Row({
       aria-label={`Domaine non vérifié ${domainName} pour ${organization.cached_libelle}`}
       class={row({
         is_clickable: true,
-        class:
-          "relative focus-within:outline focus-within:outline-2 focus-within:outline-blue-500",
+        class: "relative focus-within:outline-2 focus-within:outline-blue-500",
       })}
       key={key}
     >
       <td></td>
       <td class="space-x-2">
         <CopyButton
-          class="p-0 leading-none"
+          class="relative z-10 p-0 leading-none"
           text={domainName}
           title="Copier le nom de domaine"
           variant={{ size: "sm", type: "tertiary" }}

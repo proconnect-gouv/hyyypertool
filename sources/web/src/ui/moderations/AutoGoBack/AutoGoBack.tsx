@@ -25,7 +25,7 @@ export async function AutoGoBack({ ...html_props }: JSX.HTMLAttributes) {
   const { base, text } = callout({ intent: "warning" });
   return (
     <section class="hidden" _={on_auto_go_back_event} {...html_props}>
-      <div class={base()}>
+      <div class={`${base()} mt-2`}>
         <p class={text()}>
           Retour automatique à la page précédente dans 2 secondes
         </p>

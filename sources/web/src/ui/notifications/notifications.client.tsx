@@ -177,7 +177,7 @@ function NotificationItem({ notification }: NotificationItemProps) {
     >
       <div class={container({ class: "mx-auto max-w-7xl" })}>
         <div class={body()}>
-          <p>
+          <p class="mb-0">
             <span class={title()}>{notification.title}</span>
             {notification.message && (
               <span class="text-sm">{notification.message}</span>
