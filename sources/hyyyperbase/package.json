@@ -17,8 +17,10 @@
   "scripts": {
     "generate": "drizzle-kit generate",
     "migrate": "bun run bin/migrate.ts",
-    "seed": "bun run bin/seed.ts",
-    "test": "bun test"
+    "seed": "bun run bin/testing/seed.ts",
+    "studio": "drizzle-kit studio",
+    "test": "bun test",
+    "testing:seed": "bun run bin/testing/seed.ts"
   },
   "dependencies": {
     "consola": "3.4.2",
@@ -28,7 +30,8 @@
     "@~/config.typescript": "workspace:*",
     "@electric-sql/pglite": "0.3.16",
     "@types/pg": "8.20.0",
-    "drizzle-kit": "0.31.10"
+    "drizzle-kit": "0.31.10",
+    "ts-dedent": "2.2.0"
   },
   "peerDependencies": {
     "drizzle-orm": ">=0.45",

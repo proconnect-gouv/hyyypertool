@@ -20,6 +20,7 @@ import domains_deliverability_router from "./domains-deliverability";
 import moderations_router from "./moderations";
 import organizations_router from "./organizations";
 import proxy_router from "./proxy";
+import response_templates_router from "./response-templates";
 import users_router from "./users";
 import welcome_router from "./welcome";
 // TODO: Re-enable compression when Bun supports CompressionStream
@@ -98,6 +99,8 @@ const app = new Hono<{ Bindings: AppEnv }>()
   .route("/organizations", organizations_router)
 
   .route("/domains-deliverability", domains_deliverability_router)
+
+  .route("/response-templates", response_templates_router)
 
   .onError(error_handler)
   .notFound(not_found_handler);

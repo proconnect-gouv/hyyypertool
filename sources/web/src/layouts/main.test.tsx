@@ -4,7 +4,7 @@ import { authorized, set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
 import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import { set_nonce } from "#src/middleware/nonce";
-import { hyyyper_pglite, reset } from "@~/hyyyperbase/testing";
+import { empty_database, hyyyper_pglite } from "@~/hyyyperbase/testing";
 import { insert_admin } from "@~/hyyyperbase/testing/users";
 import {
   beforeAll,
@@ -35,11 +35,14 @@ beforeAll(() => {
 beforeEach(() => {
   uuidCounter = 0;
 });
-beforeEach(reset);
+beforeEach(empty_database);
 
 test("Main Layout", async () => {
   const admin = await insert_admin(hyyyper_pglite);
   const app = new Hono()
+    .onError((e) => {
+      throw e;
+    })
     .use(
       set_config({
         ASSETS_PATH: "/assets/ASSETS_PATH",
@@ -64,7 +67,7 @@ test("Main Layout", async () => {
       return c.render("✅");
     });
 
-  const res = await app.request("/");
+  const res = await app.request("/", undefined, {});
   expect(res.status).toBe(200);
   expect(await res.text()).toMatchSnapshot();
 });
