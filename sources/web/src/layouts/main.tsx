@@ -127,20 +127,20 @@ function UserMenu({
             Mon espace
           </button>
           <div
-            class="border-border bg-background absolute right-0 z-50 mt-1 min-w-48 rounded border shadow-lg"
+            class="border-border bg-background absolute right-0 z-50 mt-1 rounded border shadow-lg"
             hidden
             id={$menu}
             role="menu"
           >
             <div class="border-border border-b px-4 py-3">
-              <p class="font-semibold">
+              <p class="mb-1 font-semibold whitespace-nowrap">
                 {username}{" "}
                 <span class={badge({ intent: role_intent(hyyyper_user.role) })}>
                   {hyyyper_user.role}
                 </span>
               </p>
               {email ? (
-                <p class="text-text-muted text-sm">{email}</p>
+                <p class="text-text-muted mb-0 text-sm">{email}</p>
               ) : undefined}
             </div>
             <ul class="m-0 list-none p-0">
