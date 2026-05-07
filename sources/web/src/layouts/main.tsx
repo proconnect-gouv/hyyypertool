@@ -256,12 +256,7 @@ function ThemeToggle() {
       role="switch"
       aria-label="Basculer le mode nuit"
       class="border-border bg-surface-muted relative mr-2 inline-flex h-7 w-13 cursor-pointer items-center rounded-full border transition-colors"
-      onclick={`
-        const isDark = document.documentElement.classList.toggle('dark');
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        this.querySelector('.thumb').textContent = isDark ? '🌙' : '☀️';
-        this.style.background = isDark ? '' : 'var(--color-grey-200)';
-      `}
+      data-dark-toggle
     >
       <span class="thumb bg-background pointer-events-none absolute left-0.5 flex h-5.5 w-5.5 items-center justify-center rounded-full text-sm transition-transform dark:translate-x-6">
         🌙

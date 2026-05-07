@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "lint": "tsc --noEmit",
     "build": "cd .. && bun run build && bun run db:migrate",
+    "lint": "tsc --noEmit",
     "migrate": "cd .. && bun db:migrate",
     "open": "cypress open -b electron --e2e",
     "seed": "cd .. && bun db:seed",
