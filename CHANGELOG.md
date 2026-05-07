@@ -1,5 +1,33 @@
 # Changelog
 
+## [2026.5.2](https://github.com/proconnect-gouv/hyyypertool/compare/2026.5.1...2026.5.2) (2026-05-07)
+
+### Changements
+
+- 💄 Répare le bouton copier + améliorations visuelles mineures
+- 💄 Répare le hover en dark mode
+
+### Modifié
+
+- 🔧 (web): move dark mode to client file script (#1588) (fa3cb916)
+- 💄 Fix hover on dark mode (#1578) (85ce80e1)
+- 💄 Minor UX improvment + copy button repair (#1589) (ee3a3cd0)
+
+### Divers
+
+- ↗️ [patch](deps): Bump type-fest from 5.4.4 to 5.6.0 (#1591) (553f927f)
+- ↗️ [patch](deps-dev): Bump prettier-plugin-tailwindcss from 0.7.2 to 0.8.0 (#1590) (c76e81e8)
+- ↗️ [patch](deps): Bump preact from 10.29.0 to 10.29.1 (#1593) (094f60dc)
+- ↗️ [patch](deps): Bump youch from 4.1.0 to 4.1.1 (#1586) (8cca2390)
+- ↗️ [patch](deps-dev): Bump @csmith/release-it-calver-plugin from 2026.3.11 to 2026.4.0 (#1584) (98b43332)
+- Bump hono from 4.12.14 to 4.12.18 in /packages/hono-slotify (#1587) (b00266a3)
+- ↗️ [patch](deps): Bump actions/labeler from 6.0.1 to 6.1.0 (#1580) (545ab606)
+- ↗️ [patch](deps): Bump @testing-library/cypress from 10.1.0 to 10.1.3 in /e2e (#1582) (bdb891bc)
+- ↗️ [patch](deps): Bump cypress-io/github-action from 7.1.10 to 7.3.0 (#1579) (32ea8c79)
+- ↗️ [patch](deps): Bump cypress from 15.14.1 to 15.14.2 in /e2e (#1581) (f8c61a31)
+- ↗️ [patch](deps): Bump preact-render-to-string from 6.6.6 to 6.6.7 (#1585) (a6e71f1d)
+- ↗️ [patch](deps): Bump the sentry group with 4 updates (#1583) (62c5347c)
+
 ## [2026.5.1](https://github.com/proconnect-gouv/hyyypertool/compare/2026.5.0...2026.5.1) (2026-05-05)
 
 ### Changements
