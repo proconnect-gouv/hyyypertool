@@ -117,6 +117,24 @@ describe("parse_q", () => {
     expect(result.processed_requests).toBe(false);
   });
 
+  test("parses is:accepted as search_status accepted", () => {
+    const result = parse_q("is:accepted");
+    expect(result.search_status).toBe("accepted");
+    expect(result.processed_requests).toBeUndefined();
+  });
+
+  test("parses is:rejected as search_status rejected", () => {
+    const result = parse_q("is:rejected");
+    expect(result.search_status).toBe("rejected");
+    expect(result.processed_requests).toBeUndefined();
+  });
+
+  test("parses is:reopened as search_status reopened", () => {
+    const result = parse_q("is:reopened");
+    expect(result.search_status).toBe("reopened");
+    expect(result.processed_requests).toBeUndefined();
+  });
+
   test("parses -date qualifier as exclude_day", () => {
     const result = parse_q("-date:2026-03-14");
     expect(result.exclude_day).toEqual(new Date("2026-03-14"));
@@ -154,6 +172,18 @@ describe("serialize_q", () => {
     expect(result).toContain("-type:organization_join_block");
     expect(result).toContain("-service:App1");
     expect(result).toContain("-service:App2");
+  });
+
+  test("serializes is:accepted", () => {
+    expect(serialize_q(parse_q("is:accepted"))).toBe("is:accepted");
+  });
+
+  test("serializes is:rejected", () => {
+    expect(serialize_q(parse_q("is:rejected"))).toBe("is:rejected");
+  });
+
+  test("serializes is:reopened", () => {
+    expect(serialize_q(parse_q("is:reopened"))).toBe("is:reopened");
   });
 
   test("quotes values with spaces", () => {

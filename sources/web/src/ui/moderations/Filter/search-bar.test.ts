@@ -197,12 +197,27 @@ describe("get_suggestions", () => {
           {
             "hint": "pending",
             "insert": "is:pending",
-            "label": "En attente (non modéré)",
+            "label": "En attente",
           },
           {
             "hint": "processed",
             "insert": "is:processed",
-            "label": "Traitées (déjà modéré)",
+            "label": "Traitées",
+          },
+          {
+            "hint": "accepted",
+            "insert": "is:accepted",
+            "label": "Acceptées",
+          },
+          {
+            "hint": "rejected",
+            "insert": "is:rejected",
+            "label": "Rejetées",
+          },
+          {
+            "hint": "reopened",
+            "insert": "is:reopened",
+            "label": "Réouvertes",
           },
         ]
       `);
@@ -215,7 +230,7 @@ describe("get_suggestions", () => {
           {
             "hint": "pending",
             "insert": "is:pending",
-            "label": "En attente (non modéré)",
+            "label": "En attente",
           },
         ]
       `);
@@ -230,12 +245,27 @@ describe("get_suggestions", () => {
           {
             "hint": "pending",
             "insert": "-is:pending",
-            "label": "En attente (non modéré)",
+            "label": "En attente",
           },
           {
             "hint": "processed",
             "insert": "-is:processed",
-            "label": "Traitées (déjà modéré)",
+            "label": "Traitées",
+          },
+          {
+            "hint": "accepted",
+            "insert": "-is:accepted",
+            "label": "Acceptées",
+          },
+          {
+            "hint": "rejected",
+            "insert": "-is:rejected",
+            "label": "Rejetées",
+          },
+          {
+            "hint": "reopened",
+            "insert": "-is:reopened",
+            "label": "Réouvertes",
           },
         ]
       `);

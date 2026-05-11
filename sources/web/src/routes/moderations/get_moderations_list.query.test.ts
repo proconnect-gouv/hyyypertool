@@ -569,6 +569,328 @@ test("filters to multiple named services (service:App1 service:App2)", async () 
   `);
 });
 
+test("is:accepted returns only accepted moderations", async () => {
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+
+  await create_adora_pony_moderation(pg, { type: "non_verified_domain" });
+  await create_adora_pony_moderation(pg, {
+    type: "non_verified_domain",
+    moderated_at: "2222-01-01T00:00:00.000Z",
+    status: "accepted",
+  });
+  await create_adora_pony_moderation(pg, {
+    type: "organization_join_block",
+    moderated_at: "2222-01-01T00:00:00.000Z",
+    status: "rejected",
+  });
+
+  const result = await get_moderations_list(pg, {
+    search: { search_status: "accepted" },
+  });
+
+  expect(result).toMatchInlineSnapshot(`
+    {
+      "count": 1,
+      "moderations": [
+        {
+          "created_at": "2222-01-01 00:00:00+00",
+          "id": 2,
+          "moderated_at": "2222-01-01 00:00:00+00",
+          "organization": {
+            "siret": "🦄 siret",
+          },
+          "sp_name": null,
+          "status": "accepted",
+          "type": "non_verified_domain",
+          "user": {
+            "email": "adora.pony@unicorn.xyz",
+            "family_name": "Pony",
+            "given_name": "Adora",
+          },
+        },
+      ],
+    }
+  `);
+});
+
+test("is:rejected returns only rejected moderations", async () => {
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+
+  await create_adora_pony_moderation(pg, { type: "non_verified_domain" });
+  await create_adora_pony_moderation(pg, {
+    type: "non_verified_domain",
+    moderated_at: "2222-01-01T00:00:00.000Z",
+    status: "accepted",
+  });
+  await create_adora_pony_moderation(pg, {
+    type: "organization_join_block",
+    moderated_at: "2222-01-01T00:00:00.000Z",
+    status: "rejected",
+  });
+
+  const result = await get_moderations_list(pg, {
+    search: { search_status: "rejected" },
+  });
+
+  expect(result).toMatchInlineSnapshot(`
+    {
+      "count": 1,
+      "moderations": [
+        {
+          "created_at": "2222-01-01 00:00:00+00",
+          "id": 3,
+          "moderated_at": "2222-01-01 00:00:00+00",
+          "organization": {
+            "siret": "🦄 siret",
+          },
+          "sp_name": null,
+          "status": "rejected",
+          "type": "organization_join_block",
+          "user": {
+            "email": "adora.pony@unicorn.xyz",
+            "family_name": "Pony",
+            "given_name": "Adora",
+          },
+        },
+      ],
+    }
+  `);
+});
+
+test("is:pending returns only unprocessed moderations", async () => {
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+
+  await create_adora_pony_moderation(pg, { type: "non_verified_domain" });
+  await create_adora_pony_moderation(pg, {
+    type: "non_verified_domain",
+    moderated_at: "2222-01-01T00:00:00.000Z",
+    status: "accepted",
+  });
+  await create_adora_pony_moderation(pg, {
+    type: "organization_join_block",
+    moderated_at: "2222-01-01T00:00:00.000Z",
+    status: "rejected",
+  });
+
+  const result = await get_moderations_list(pg, {
+    search: { processed_requests: false },
+  });
+
+  expect(result).toMatchInlineSnapshot(`
+    {
+      "count": 1,
+      "moderations": [
+        {
+          "created_at": "2222-01-01 00:00:00+00",
+          "id": 1,
+          "moderated_at": null,
+          "organization": {
+            "siret": "🦄 siret",
+          },
+          "sp_name": null,
+          "status": "unknown",
+          "type": "non_verified_domain",
+          "user": {
+            "email": "adora.pony@unicorn.xyz",
+            "family_name": "Pony",
+            "given_name": "Adora",
+          },
+        },
+      ],
+    }
+  `);
+});
+
+test("is:processed returns accepted and rejected moderations, not pending", async () => {
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+
+  await create_adora_pony_moderation(pg, { type: "non_verified_domain" });
+  await create_adora_pony_moderation(pg, {
+    type: "non_verified_domain",
+    moderated_at: "2222-01-01T00:00:00.000Z",
+    status: "accepted",
+  });
+  await create_adora_pony_moderation(pg, {
+    type: "organization_join_block",
+    moderated_at: "2222-01-01T00:00:00.000Z",
+    status: "rejected",
+  });
+
+  const result = await get_moderations_list(pg, {
+    search: { processed_requests: true },
+  });
+
+  expect(result).toMatchInlineSnapshot(`
+    {
+      "count": 2,
+      "moderations": [
+        {
+          "created_at": "2222-01-01 00:00:00+00",
+          "id": 3,
+          "moderated_at": "2222-01-01 00:00:00+00",
+          "organization": {
+            "siret": "🦄 siret",
+          },
+          "sp_name": null,
+          "status": "rejected",
+          "type": "organization_join_block",
+          "user": {
+            "email": "adora.pony@unicorn.xyz",
+            "family_name": "Pony",
+            "given_name": "Adora",
+          },
+        },
+        {
+          "created_at": "2222-01-01 00:00:00+00",
+          "id": 2,
+          "moderated_at": "2222-01-01 00:00:00+00",
+          "organization": {
+            "siret": "🦄 siret",
+          },
+          "sp_name": null,
+          "status": "accepted",
+          "type": "non_verified_domain",
+          "user": {
+            "email": "adora.pony@unicorn.xyz",
+            "family_name": "Pony",
+            "given_name": "Adora",
+          },
+        },
+      ],
+    }
+  `);
+});
+
+test("is:processed by:admin lists moderations processed by a specific admin", async () => {
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+
+  await create_adora_pony_moderation(pg, {
+    type: "non_verified_domain",
+    moderated_at: "2222-01-01T00:00:00.000Z",
+    moderated_by: "admin@gov.fr",
+    status: "accepted",
+  });
+  await create_adora_pony_moderation(pg, {
+    type: "non_verified_domain",
+    moderated_at: "2222-01-01T00:00:00.000Z",
+    moderated_by: "other@gov.fr",
+    status: "rejected",
+  });
+
+  const result = await get_moderations_list(pg, {
+    search: { processed_requests: true, search_moderated_by: "admin" },
+  });
+
+  expect(result).toMatchInlineSnapshot(`
+    {
+      "count": 1,
+      "moderations": [
+        {
+          "created_at": "2222-01-01 00:00:00+00",
+          "id": 1,
+          "moderated_at": "2222-01-01 00:00:00+00",
+          "organization": {
+            "siret": "🦄 siret",
+          },
+          "sp_name": null,
+          "status": "accepted",
+          "type": "non_verified_domain",
+          "user": {
+            "email": "adora.pony@unicorn.xyz",
+            "family_name": "Pony",
+            "given_name": "Adora",
+          },
+        },
+      ],
+    }
+  `);
+});
+
+test("type:non_verified_domain filters by moderation type", async () => {
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+
+  await create_adora_pony_moderation(pg, { type: "non_verified_domain" });
+  await create_adora_pony_moderation(pg, { type: "organization_join_block" });
+
+  const result = await get_moderations_list(pg, {
+    search: { search_type: "non_verified_domain" },
+  });
+
+  expect(result).toMatchInlineSnapshot(`
+    {
+      "count": 1,
+      "moderations": [
+        {
+          "created_at": "2222-01-01 00:00:00+00",
+          "id": 1,
+          "moderated_at": null,
+          "organization": {
+            "siret": "🦄 siret",
+          },
+          "sp_name": null,
+          "status": "unknown",
+          "type": "non_verified_domain",
+          "user": {
+            "email": "adora.pony@unicorn.xyz",
+            "family_name": "Pony",
+            "given_name": "Adora",
+          },
+        },
+      ],
+    }
+  `);
+});
+
+test("default query (is:pending -type:non_verified_domain) lists pending non-domain moderations", async () => {
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+
+  await create_adora_pony_moderation(pg, { type: "non_verified_domain" });
+  await create_adora_pony_moderation(pg, { type: "organization_join_block" });
+  await create_adora_pony_moderation(pg, {
+    type: "organization_join_block",
+    moderated_at: "2222-01-01T00:00:00.000Z",
+    status: "accepted",
+  });
+
+  const result = await get_moderations_list(pg, {
+    search: {
+      processed_requests: false,
+      exclude_types: ["non_verified_domain"],
+    },
+  });
+
+  expect(result).toMatchInlineSnapshot(`
+    {
+      "count": 1,
+      "moderations": [
+        {
+          "created_at": "2222-01-01 00:00:00+00",
+          "id": 2,
+          "moderated_at": null,
+          "organization": {
+            "siret": "🦄 siret",
+          },
+          "sp_name": null,
+          "status": "unknown",
+          "type": "organization_join_block",
+          "user": {
+            "email": "adora.pony@unicorn.xyz",
+            "family_name": "Pony",
+            "given_name": "Adora",
+          },
+        },
+      ],
+    }
+  `);
+});
+
 test("supports pagination", async () => {
   await create_unicorn_organization(pg);
   await create_adora_pony_user(pg);

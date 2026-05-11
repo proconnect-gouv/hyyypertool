@@ -89,6 +89,9 @@ const qualifier_filters: Record<
       : s.processed_requests === false
         ? isNull(schema.moderations.moderated_at)
         : undefined,
+    s.search_status
+      ? eq(schema.moderations.status, s.search_status)
+      : undefined,
   ],
   date: (s) => [
     s.day

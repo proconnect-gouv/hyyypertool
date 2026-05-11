@@ -180,6 +180,64 @@ test("GET /moderations?q=type:non_verified_domain shows only that type", async (
   expect(response.status).toBe(200);
 });
 
+test("GET /moderations?q=is:accepted shows only accepted moderations", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+  const accepted_id = await create_adora_pony_moderation(pg, {
+    type: "💼",
+    moderated_at: "2222-01-01T00:00:00.000Z",
+    status: "accepted",
+  });
+  const rejected_id = await create_adora_pony_moderation(pg, {
+    type: "💼",
+    moderated_at: "2222-01-01T00:00:00.000Z",
+    status: "rejected",
+  });
+  const pending_id = await create_adora_pony_moderation(pg, { type: "💼" });
+
+  const response = await create_test_app(moderator).request(
+    "/?q=is:accepted",
+    undefined,
+    {},
+  );
+
+  const html = await response.text();
+  expect(html).toContain(`/moderations/${accepted_id}`);
+  expect(html).not.toContain(`/moderations/${rejected_id}`);
+  expect(html).not.toContain(`/moderations/${pending_id}`);
+  expect(response.status).toBe(200);
+});
+
+test("GET /moderations?q=is:rejected shows only rejected moderations", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+  const accepted_id = await create_adora_pony_moderation(pg, {
+    type: "💼",
+    moderated_at: "2222-01-01T00:00:00.000Z",
+    status: "accepted",
+  });
+  const rejected_id = await create_adora_pony_moderation(pg, {
+    type: "💼",
+    moderated_at: "2222-01-01T00:00:00.000Z",
+    status: "rejected",
+  });
+  const pending_id = await create_adora_pony_moderation(pg, { type: "💼" });
+
+  const response = await create_test_app(moderator).request(
+    "/?q=is:rejected",
+    undefined,
+    {},
+  );
+
+  const html = await response.text();
+  expect(html).toContain(`/moderations/${rejected_id}`);
+  expect(html).not.toContain(`/moderations/${accepted_id}`);
+  expect(html).not.toContain(`/moderations/${pending_id}`);
+  expect(response.status).toBe(200);
+});
+
 test("GET /moderations?q=is:pending shows only pending moderations", async () => {
   const moderator = await insert_moderateur(hyyyper_pglite);
   await create_unicorn_organization(pg);
