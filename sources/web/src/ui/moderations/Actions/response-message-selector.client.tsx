@@ -9,7 +9,7 @@ export function ResponseMessageSelectorClient({
   response_templates,
 }: {
   moderation_id: number;
-  response_templates: { label: string }[];
+  response_templates: { id: number; label: string }[];
 }) {
   const datalist_id = `responses-type-${moderation_id}`;
   const textarea_id = `rejection-message-${moderation_id}`;
@@ -18,7 +18,12 @@ export function ResponseMessageSelectorClient({
     const value = (e.currentTarget as HTMLInputElement).value.trim();
     if (!value) return;
 
-    const url = `/moderations/${moderation_id}/rejected/message?reason=${encodeURIComponent(value)}`;
+    const datalist = document.getElementById(datalist_id);
+    const option = datalist?.querySelector(`option[value="${value}"]`);
+    const template_id = (option as HTMLOptionElement | null)?.dataset.id;
+    if (!template_id) return;
+
+    const url = `/moderations/${moderation_id}/rejected/reason/${template_id}`;
     const res = await fetch(url);
     const content = await res.text();
 
@@ -45,8 +50,8 @@ export function ResponseMessageSelectorClient({
         }}
       />
       <datalist id={datalist_id}>
-        {response_templates.map(({ label }, i) => (
-          <option key={i} value={label} />
+        {response_templates.map(({ id, label }) => (
+          <option key={id} value={label.trim()} data-id={id} />
         ))}
       </datalist>
     </>

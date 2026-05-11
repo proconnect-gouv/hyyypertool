@@ -11,7 +11,7 @@ import { Toolbar } from "./Toolbar";
 
 type ActionProps = {
   value: Omit<Values, "$accept" | "$decision_form" | "$reject" | "domain">;
-  response_templates: { label: string }[];
+  response_templates: { id: number; label: string }[];
 };
 
 export async function Actions({ value, response_templates }: ActionProps) {

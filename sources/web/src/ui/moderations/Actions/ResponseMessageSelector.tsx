@@ -23,7 +23,7 @@ export function ResponseMessageSelector({
   response_templates,
 }: {
   moderation_id: number;
-  response_templates: { label: string }[];
+  response_templates: { id: number; label: string }[];
 }) {
   const {
     var: { nonce },

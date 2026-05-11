@@ -235,7 +235,7 @@ test("PATCH /moderations/:id/rejected falls back to nickname when get_user fails
   });
 });
 
-test("GET /message returns plain text rendered template", async () => {
+test("GET /reason/:response_id returns plain text rendered template", async () => {
   await create_unicorn_organization(pg);
   await create_adora_pony_user(pg);
   const moderation_id = await create_adora_pony_moderation(pg, { type: "💼" });
@@ -246,17 +246,15 @@ test("GET /message returns plain text rendered template", async () => {
     .use(set_hyyyper_pg(hyyyper_pglite))
     .use(set_userinfo({ email: "admin@example.com" }))
     .route("/:id/rejected", app)
-    .request(
-      `/${moderation_id}/rejected/message?reason=${encodeURIComponent(template.label)}`,
-    );
+    .request(`/${moderation_id}/rejected/reason/${template.id}`);
 
-  expect(response.status).toBe(200);
   const text = await response.text();
   expect(text).toContain("adora.pony@unicorn.xyz");
-  expect(text).not.toContain("<textarea");
+
+  expect(response.status).toBe(200);
 });
 
-test("GET /message returns empty plain text when label not found", async () => {
+test("GET /reason/:response_id returns empty plain text when response_id is not found", async () => {
   await create_unicorn_organization(pg);
   await create_adora_pony_user(pg);
   const moderation_id = await create_adora_pony_moderation(pg, { type: "💼" });
@@ -266,10 +264,24 @@ test("GET /message returns empty plain text when label not found", async () => {
     .use(set_hyyyper_pg(hyyyper_pglite))
     .use(set_userinfo({ email: "admin@example.com" }))
     .route("/:id/rejected", app)
-    .request(`/${moderation_id}/rejected/message?reason=unknown-label`);
+    .request(`/${moderation_id}/rejected/reason/42`);
 
-  expect(response.status).toBe(200);
   const text = await response.text();
-  expect(text).toBe("");
-  expect(text).not.toContain("<textarea");
+  expect(text).toEqual("");
+  expect(response.status).toBe(200);
+});
+
+test("GET /reason/:response_id returns 400 when response_id is not a number", async () => {
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+  const moderation_id = await create_adora_pony_moderation(pg, { type: "💼" });
+
+  const response = await new Hono()
+    .use(set_identite_pg(pg))
+    .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_userinfo({ email: "admin@example.com" }))
+    .route("/:id/rejected", app)
+    .request(`/${moderation_id}/rejected/reason/not-a-number`);
+
+  expect(response.status).toBe(400);
 });

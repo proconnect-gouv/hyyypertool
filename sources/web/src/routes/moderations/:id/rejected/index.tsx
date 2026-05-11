@@ -21,36 +21,34 @@ import { Hono } from "hono";
 import { z } from "zod";
 import { build_template_data } from "../build_template_data";
 import type { ContextType } from "../procedures_context";
-import { get_response_template_by_label } from "./get_response_template_by_label.query";
+import { get_response_template } from "./get_response_template.query";
 
 //
 
-const MessageQuerySchema = z.object({
-  reason: z.string().min(1),
+const ReasonParamSchema = EntitySchema.extend({
+  response_id: z.coerce.number().int().positive(),
 });
 
 //
 
 export default new Hono<ContextType>()
   .get(
-    "/message",
-    zValidator("param", EntitySchema),
-    zValidator("query", MessageQuerySchema),
+    "/reason/:response_id",
+    zValidator("param", ReasonParamSchema),
     async function GET({ text, req, var: { identite_pg, hyyyper_pg } }) {
-      const { id } = req.valid("param");
-      const { reason: label } = req.valid("query");
+      const { id, response_id } = req.valid("param");
 
       const [moderation, template] = await Promise.all([
         GetModerationWithDetails(identite_pg)(id),
-        get_response_template_by_label(hyyyper_pg, label),
+        get_response_template(hyyyper_pg, response_id),
       ]);
 
-      const content = render_template(
+      const render_result = render_template(
         template?.content ?? "",
         await build_template_data(moderation, { pg: identite_pg }),
-      ).result;
+      );
 
-      return text(content);
+      return text(render_result.result);
     },
   )
   .patch(

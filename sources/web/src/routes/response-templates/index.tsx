@@ -17,8 +17,8 @@ import Page from "./page";
 //
 
 const TemplateFormSchema = z.object({
-  label: z.string().min(1),
-  content: z.string().min(1),
+  label: z.string().min(1).trim(),
+  content: z.string().min(1).trim(),
 });
 
 //

@@ -14,7 +14,7 @@ export async function RefusalModal({
   response_templates,
 }: {
   userEmail: string;
-  response_templates: { label: string }[];
+  response_templates: { id: number; label: string }[];
 }) {
   const { moderation } = useContext(context);
   const textarea_id = `rejection-message-${moderation.id}`;
