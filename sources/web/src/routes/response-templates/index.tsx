@@ -99,4 +99,14 @@ export default new Hono<AppContext>()
         }),
       });
     },
-  );
+  )
+  .delete("/:id", async function DELETE({ req, var: { hyyyper_pg } }) {
+    const id = parseInt(req.param("id"), 10);
+    await hyyyper_pg
+      .delete(schema.response_templates)
+      .where(eq(schema.response_templates.id, id));
+    return new Response(null, {
+      status: 200,
+      headers: { "HX-Redirect": "/response-templates" },
+    });
+  });
