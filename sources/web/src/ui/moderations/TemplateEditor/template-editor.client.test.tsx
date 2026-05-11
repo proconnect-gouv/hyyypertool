@@ -1,6 +1,12 @@
 /* @jsxImportSource preact */
 import { GlobalRegistrator } from "@happy-dom/global-registrator";
-import { cleanup, render, waitFor, within } from "@testing-library/preact";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  waitFor,
+  within,
+} from "@testing-library/preact";
 import { afterAll, afterEach, beforeAll, expect, test } from "bun:test";
 import { TemplateEditor } from "./template-editor.client";
 
@@ -115,4 +121,97 @@ test("shows preview with rendered template", async () => {
     const previewPanel = getByRole("tabpanel", { name: "Apercu" });
     expect(previewPanel.textContent).toContain("Hello");
   });
+});
+
+test("shows content error when submitting with empty content", async () => {
+  const { container, findByText } = render(
+    <form>
+      <TemplateEditor initialLabel="My Template" />
+    </form>,
+  );
+
+  container
+    .querySelector("form")!
+    .dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+
+  expect(await findByText("Le contenu ne peut pas être vide")).toBeTruthy();
+});
+
+test("shows label error when submitting with empty label", async () => {
+  const { container, findByText } = render(
+    <form>
+      <TemplateEditor initialTemplate="Some content" />
+    </form>,
+  );
+
+  container
+    .querySelector("form")!
+    .dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+
+  expect(await findByText("Le titre ne peut pas être vide")).toBeTruthy();
+});
+
+test("shows both errors when submitting with empty label and content", async () => {
+  const { container, findByText } = render(
+    <form>
+      <TemplateEditor />
+    </form>,
+  );
+
+  container
+    .querySelector("form")!
+    .dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+
+  expect(await findByText("Le titre ne peut pas être vide")).toBeTruthy();
+  expect(await findByText("Le contenu ne peut pas être vide")).toBeTruthy();
+});
+
+test("clears content error when user types in textarea", async () => {
+  const { container, findByText, queryByText, getByRole } = render(
+    <form>
+      <TemplateEditor initialLabel="My Template" />
+    </form>,
+  );
+
+  container
+    .querySelector("form")!
+    .dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+
+  await findByText("Le contenu ne peut pas être vide");
+
+  const textarea = within(
+    getByRole("tabpanel", { name: "Modifier" }),
+  ).getByRole("textbox") as HTMLTextAreaElement;
+  fireEvent.change(textarea, { target: { value: "Some content" } });
+
+  await waitFor(
+    () => {
+      expect(queryByText("Le contenu ne peut pas être vide")).toBeNull();
+    },
+    { timeout: 500 },
+  );
+});
+
+test("clears label error when user types in title input", async () => {
+  const { container, findByText, queryByText, getByLabelText } = render(
+    <form>
+      <TemplateEditor initialTemplate="Some content" />
+    </form>,
+  );
+
+  container
+    .querySelector("form")!
+    .dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+
+  await findByText("Le titre ne peut pas être vide");
+
+  const titleInput = getByLabelText("Titre du template") as HTMLInputElement;
+  fireEvent.input(titleInput, { target: { value: "My Title" } });
+
+  await waitFor(
+    () => {
+      expect(queryByText("Le titre ne peut pas être vide")).toBeNull();
+    },
+    { timeout: 500 },
+  );
 });
