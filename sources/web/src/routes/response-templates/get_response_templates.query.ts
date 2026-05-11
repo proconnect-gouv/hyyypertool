@@ -1,6 +1,7 @@
 //
 
-import type { HyyyperPgDatabase } from "@~/hyyyperbase";
+import { schema, type HyyyperPgDatabase } from "@~/hyyyperbase";
+import { asc } from "drizzle-orm";
 
 //
 
@@ -16,6 +17,7 @@ export async function get_response_templates(
       created_at: true,
       updated_at: true,
     },
+    orderBy: asc(schema.response_templates.label),
     where: (table, { or, ilike }) =>
       or(
         ilike(table.content, "%" + search_term + "%"),
