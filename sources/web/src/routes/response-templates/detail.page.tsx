@@ -40,7 +40,11 @@ export default function DetailPage({
       <div class="mb-6 flex items-center justify-between">
         <a
           href={urls["response-templates"].$url().pathname}
-          class={button({ intent: "ghost", size: "sm" })}
+          class={button({
+            intent: "ghost",
+            size: "sm",
+            type: "tertiary",
+          })}
         >
           <Svg name="arrow-go-back" />
           Retour à la liste
