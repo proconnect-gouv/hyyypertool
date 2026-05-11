@@ -25,7 +25,8 @@ export default function DetailPage({
   const is_new = !template;
   const form_action = is_new
     ? urls["response-templates"].$url().pathname
-    : `${urls["response-templates"].$url().pathname}/${template.id}`;
+    : urls["response-templates"][":id"].$url({ param: { id: template.id } })
+        .pathname;
 
   const { base: alert_base } = alert({ intent: "success" });
 
@@ -36,13 +37,24 @@ export default function DetailPage({
           <p>Template créé !</p>
         </div>
       )}
-      <a
-        href={urls["response-templates"].$url().pathname}
-        class={button({ intent: "ghost", size: "sm", class: "mb-6" })}
-      >
-        <Svg name="arrow-go-back" />
-        Retour à la liste
-      </a>
+      <div class="mb-6 flex items-center justify-between">
+        <a
+          href={urls["response-templates"].$url().pathname}
+          class={button({ intent: "ghost", size: "sm" })}
+        >
+          <Svg name="arrow-go-back" />
+          Retour à la liste
+        </a>
+        {!is_new && (
+          <button
+            class={button({ intent: "danger", size: "sm" })}
+            hx-delete={form_action}
+            hx-confirm="Supprimer ce template ?"
+          >
+            Supprimer
+          </button>
+        )}
+      </div>
 
       <form
         {...(is_new

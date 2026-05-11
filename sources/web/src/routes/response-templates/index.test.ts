@@ -63,3 +63,19 @@ test("GET /response-templates/:id returns detail page", async () => {
   expect(html).toContain(html_encode`${template.label}`.toString());
   expect(html).toContain("Retour à la liste");
 });
+
+test("DELETE /response-templates/:id deletes template and redirects to list", async () => {
+  const template = await insert_central_administration_response(hyyyper_pglite);
+
+  const testing_app = await make_app();
+  const response = await testing_app.request(`/${template.id}`, {
+    method: "DELETE",
+  });
+
+  expect(response.status).toBe(200);
+  expect(response.headers.get("HX-Redirect")).toBe("/response-templates");
+
+  const remaining = await testing_app.request("/");
+  const html = await remaining.text();
+  expect(html).not.toContain(html_encode`${template.label}`.toString());
+});

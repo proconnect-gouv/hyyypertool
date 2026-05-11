@@ -410,20 +410,17 @@ declare const app: import("hono/hono-base").HonoBase<
               >
             | import("hono/types").MergeSchemaPath<
                 {
-                  "/message": {
+                  "/reason/:response_id": {
                     $get: {
                       input: {
                         param: {
                           id: string;
-                        };
-                      } & {
-                        query: {
-                          reason: string;
+                          response_id: string;
                         };
                       };
-                      output: {};
-                      outputFormat: string;
-                      status: import("hono/utils/http-status").StatusCode;
+                      output: string;
+                      outputFormat: "text";
+                      status: import("hono/utils/http-status").ContentfulStatusCode;
                     };
                   };
                 } & {
@@ -1154,6 +1151,19 @@ declare const app: import("hono/hono-base").HonoBase<
             output: "";
             outputFormat: "text";
             status: 200;
+          };
+        };
+      } & {
+        "/:id": {
+          $delete: {
+            input: {
+              param: {
+                id: string;
+              };
+            };
+            output: {};
+            outputFormat: string;
+            status: import("hono/utils/http-status").StatusCode;
           };
         };
       },
