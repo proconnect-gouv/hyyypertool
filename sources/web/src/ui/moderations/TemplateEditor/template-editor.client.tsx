@@ -137,7 +137,7 @@ function TitleInput(props: { label: Signal<string> }) {
       <input
         class={input({
           class: `
-            text-4xl
+            text-xl
             not-focus:bg-transparent
             not-focus:shadow-none
           `,
