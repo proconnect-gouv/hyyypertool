@@ -40,7 +40,7 @@ type PageData = {
   organization_member: OrganizationMember;
   query_domain_count: Promise<number>;
   query_organization_members_count: Promise<number>;
-  response_templates: { label: string }[];
+  response_templates: { id: number; label: string }[];
   identite_pg: IdentiteProconnectPgDatabase;
 };
 
