@@ -14,7 +14,7 @@ import {
   useComputed,
   useSignal,
 } from "@preact/signals";
-import { useRef } from "preact/hooks";
+import { useEffect, useRef } from "preact/hooks";
 import { AVAILABLE_VARIABLES, SAMPLE_DATA } from "./render";
 
 //
@@ -43,11 +43,47 @@ export function TemplateEditor({
   const sampleData = useSignal({ ...SAMPLE_DATA });
   const showSampleEditor = useSignal(false);
   const activeTab = useSignal<"editor" | "preview">("editor");
+  const labelError = useSignal("");
+  const contentError = useSignal("");
+  const labelInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const renderResult = useComputed(() =>
     render(template.value, sampleData.value),
   );
+
+  useEffect(() => {
+    const form = textareaRef.current?.closest("form") as HTMLFormElement | null;
+    if (!form) return;
+    formRef.current = form;
+
+    const validate = (e: Event) => {
+      const labelEmpty = !labelSignal.peek().trim();
+      const contentEmpty = !template.peek().trim();
+      labelError.value = labelEmpty ? "Le titre ne peut pas être vide" : "";
+      contentError.value = contentEmpty
+        ? "Le contenu ne peut pas être vide"
+        : "";
+      if (labelEmpty || contentEmpty) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        if (labelEmpty) {
+          labelInputRef.current?.focus();
+        } else {
+          activeTab.value = "editor";
+          textareaRef.current?.focus();
+        }
+      }
+    };
+
+    form.addEventListener("submit", validate);
+    form.addEventListener("htmx:before-request", validate);
+    return () => {
+      form.removeEventListener("submit", validate);
+      form.removeEventListener("htmx:before-request", validate);
+    };
+  }, []);
 
   const { base, list, tab, panel } = tabs();
 
@@ -56,7 +92,11 @@ export function TemplateEditor({
       <input type="hidden" name="label" value={labelSignal.value} />
       <input type="hidden" name="content" value={template.value} />
       <div class="mb-6">
-        <TitleInput label={labelSignal} />
+        <TitleInput
+          label={labelSignal}
+          error={labelError}
+          inputRef={labelInputRef}
+        />
       </div>
 
       <div class={base()}>
@@ -97,7 +137,11 @@ export function TemplateEditor({
           id="tab-editor-panel"
           tabIndex={0}
         >
-          <TemplateEditorPanel template={template} textareaRef={textareaRef} />
+          <TemplateEditorPanel
+            template={template}
+            textareaRef={textareaRef}
+            error={contentError}
+          />
         </div>
         <div
           class={panel({ selected: activeTab.value === "preview" })}
@@ -127,8 +171,12 @@ export function TemplateEditor({
 
 //
 
-function TitleInput(props: { label: Signal<string> }) {
-  const { label: labelSignal } = props;
+function TitleInput(props: {
+  label: Signal<string>;
+  error: Signal<string>;
+  inputRef: preact.RefObject<HTMLInputElement>;
+}) {
+  const { label: labelSignal, error, inputRef } = props;
   return (
     <>
       <label class="sr-only" htmlFor="template-label">
@@ -136,6 +184,7 @@ function TitleInput(props: { label: Signal<string> }) {
       </label>
       <input
         class={input({
+          intent: error.value ? "error" : undefined,
           class: `
             text-xl
             not-focus:bg-transparent
@@ -144,11 +193,19 @@ function TitleInput(props: { label: Signal<string> }) {
         })}
         placeholder={"Titre du template"}
         id="template-label"
-        onInput={(e) => (labelSignal.value = e.currentTarget.value)}
-        required
+        onInput={(e) => {
+          labelSignal.value = e.currentTarget.value;
+          if (e.currentTarget.value.trim()) error.value = "";
+        }}
+        ref={inputRef}
         type="text"
         value={labelSignal.value}
       />
+      {error.value && (
+        <p class="mt-1 text-sm text-red-600" role="alert">
+          {error.value}
+        </p>
+      )}
     </>
   );
 }
@@ -157,11 +214,13 @@ function TitleInput(props: { label: Signal<string> }) {
 interface TemplateEditorPanelProps {
   template: Signal<string>;
   textareaRef: preact.RefObject<HTMLTextAreaElement>;
+  error: Signal<string>;
 }
 
 function TemplateEditorPanel({
   template,
   textareaRef,
+  error,
 }: TemplateEditorPanelProps) {
   const onInsertVariable = (key: string) => {
     const textarea = textareaRef.current;
@@ -203,9 +262,12 @@ function TemplateEditorPanel({
         Contenu du template
       </label>
       <textarea
-        class={input()}
+        class={input({ intent: error.value ? "error" : undefined })}
         id="template-input"
-        onChange={(e) => (template.value = e.currentTarget.value)}
+        onChange={(e) => {
+          template.value = e.currentTarget.value;
+          if (e.currentTarget.value.trim()) error.value = "";
+        }}
         placeholder="Bonjour ${ given_name } ${ family_name },&#10;&#10;Votre demande pour ${ organization_name } a ete traitee."
         ref={textareaRef}
         rows={22}
@@ -213,6 +275,11 @@ function TemplateEditorPanel({
       >
         {template.value}
       </textarea>
+      {error.value && (
+        <p class="mt-1 text-sm text-red-600" role="alert">
+          {error.value}
+        </p>
+      )}
     </div>
   );
 }
