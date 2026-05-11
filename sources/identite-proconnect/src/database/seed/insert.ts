@@ -263,6 +263,24 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
     consola.verbose(
       `🌱 INSERT ${raphael_alpha.given_name} wants to join ${dinum.cached_nom_complet} again...`,
     );
+    await insert_moderation(db, {
+      comment: [
+        '1687445474000 moderateur@beta.gouv.fr | Rejeté par moderateur@beta.gouv.fr | Raison : "Domaine non autorisé"',
+        "1687460000000 moderateur@beta.gouv.fr | Réouverte par moderateur@beta.gouv.fr",
+      ].join("\n"),
+      created_at: "2011-11-14T12:11:12+02:00",
+      moderated_at: "2023-06-22T16:34:34+02:00",
+      moderated_by: "moderateur@beta.gouv.fr",
+      organization_id: dinum.id,
+      status: "reopened",
+      ticket_id: "session_222",
+      type: MODERATION_TYPES.enum.non_verified_domain,
+      user_id: raphael_alpha.id,
+    });
+    consola.verbose(
+      `🌱 INSERT ${raphael_alpha.given_name} moderation reopened for ${dinum.cached_nom_complet}`,
+    );
+
     await insert_1Password_authenticator(db, raphael_alpha.id);
     consola.verbose(
       `🌱 INSERT ${raphael_alpha.given_name} OnePassword setup...`,

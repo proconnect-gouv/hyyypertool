@@ -158,18 +158,33 @@ const qualifier_suggestions: Record<
   is: (partial, prefix) =>
     [
       {
-        label: "En attente (non modéré)",
+        label: "En attente",
         hint: "pending",
         insert: `${prefix}is:pending`,
       },
       {
-        label: "Traitées (déjà modéré)",
+        label: "Traitées",
         hint: "processed",
         insert: `${prefix}is:processed`,
       },
+      {
+        label: "Acceptées",
+        hint: "accepted",
+        insert: `${prefix}is:accepted`,
+      },
+      {
+        label: "Rejetées",
+        hint: "rejected",
+        insert: `${prefix}is:rejected`,
+      },
+      {
+        label: "Réouvertes",
+        hint: "reopened",
+        insert: `${prefix}is:reopened`,
+      },
     ].filter(
       (s) =>
-        s.hint!.includes(partial) || s.label.toLowerCase().includes(partial),
+        s.hint!.startsWith(partial) || s.label.toLowerCase().includes(partial),
     ),
 
   date: (partial, prefix) =>

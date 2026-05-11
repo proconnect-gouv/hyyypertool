@@ -21,6 +21,7 @@ export interface Search {
   search_email: string;
   search_moderated_by: string;
   search_siret: string;
+  search_status: string;
   search_text: string;
   search_type: string;
   sp_names: string[];
@@ -38,7 +39,8 @@ const positive_handlers: Record<Token, (s: Search, value: string) => void> = {
   },
   is: (search, v) => {
     if (v === "processed") search.processed_requests = true;
-    if (v === "pending") search.processed_requests = false;
+    else if (v === "pending") search.processed_requests = false;
+    else search.search_status = v;
   },
   type: (search, v) => {
     search.search_type = v;
@@ -94,6 +96,7 @@ export function parse_q(q: string): Search {
     search_email: "",
     search_moderated_by: "",
     search_siret: "",
+    search_status: "",
     search_text: "",
     search_type: "",
     sp_names: [],
@@ -121,11 +124,13 @@ export function parse_q(q: string): Search {
 
 const serializers: Record<string, (s: Search) => string[]> = {
   is: (search) =>
-    search.processed_requests === true
-      ? ["is:processed"]
-      : search.processed_requests === false
-        ? ["is:pending"]
-        : [],
+    search.search_status
+      ? [`is:${search.search_status}`]
+      : search.processed_requests === true
+        ? ["is:processed"]
+        : search.processed_requests === false
+          ? ["is:pending"]
+          : [],
   email: (search) => [
     ...(search.search_email ? [`email:${quote(search.search_email)}`] : []),
     ...(search.exclude_email ? [`-email:${quote(search.exclude_email)}`] : []),
