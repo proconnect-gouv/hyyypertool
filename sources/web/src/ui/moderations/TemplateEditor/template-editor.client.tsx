@@ -161,7 +161,7 @@ export function TemplateEditor({
         }
       >
         <summary class="cursor-pointer p-2 text-sm">
-          <span class="ml-2">Modifier les donnees d&apos;exemple</span>
+          <span class="ml-2">Modifier les données d&apos;exemple</span>
         </summary>
         <SampleDataEditor sampleData={sampleData} />
       </details>
@@ -242,8 +242,8 @@ function TemplateEditorPanel({
 
   return (
     <div class="mb-4">
-      <p class="text-grey-625 mb-2 text-sm">
-        Cliquez sur une variable pour l&apos;inserer a la position du curseur
+      <p class="text-grey-625 dark:text-grey-200 mb-2 text-sm">
+        Cliquez sur une variable pour l&apos;insérer à la position du curseur
       </p>
       <div class="mb-2 flex flex-wrap gap-2">
         {AVAILABLE_VARIABLES.map((v) => (
@@ -252,7 +252,7 @@ function TemplateEditorPanel({
             type="button"
             class={tag({ size: "sm" })}
             onClick={() => onInsertVariable(v.key)}
-            title={`Inserer \${ ${v.key} }`}
+            title={`Insérer \${ ${v.key} }`}
           >
             {v.label}
           </button>
@@ -268,7 +268,7 @@ function TemplateEditorPanel({
           template.value = e.currentTarget.value;
           if (e.currentTarget.value.trim()) error.value = "";
         }}
-        placeholder="Bonjour ${ given_name } ${ family_name },&#10;&#10;Votre demande pour ${ organization_name } a ete traitee."
+        placeholder="Bonjour ${ given_name } ${ family_name },&#10;&#10;Votre demande pour ${ organization_name } a été traitée."
         ref={textareaRef}
         rows={22}
         value={template.value}
@@ -326,7 +326,7 @@ function SampleDataEditor({ sampleData }: SampleDataEditorProps) {
   return (
     <div class="mt-2">
       <table class={table()}>
-        <caption>Donnees d&apos;exemple</caption>
+        <caption>Données d&apos;exemple</caption>
         <thead>
           <tr>
             <th>Variable</th>

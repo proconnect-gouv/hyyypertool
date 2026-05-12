@@ -50,7 +50,7 @@ export default function Page({
       </p>
 
       <form
-        class="sticky top-0 z-10 mb-6 bg-white py-2"
+        class="bg-surface sticky top-0 z-10 mb-6 p-2"
         {...hx_templates_query_props}
         hx-trigger={`keyup changed delay:300ms from:#${TEMPLATES_SEARCH_ID}`}
       >
@@ -61,7 +61,7 @@ export default function Page({
           type="search"
           id={TEMPLATES_SEARCH_ID}
           name="q"
-          class={input()}
+          class={`${input()} dark:bg-[#303030]`}
           placeholder="Rechercher par titre ou contenu..."
           value={searchQuery}
         />
@@ -93,7 +93,7 @@ function TemplateList({
 
   return (
     <div id={TEMPLATES_LIST_ID}>
-      <p class="text-grey-625 mb-6 text-sm">
+      <p class="text-grey-625 dark:text-grey-200 mb-6 text-sm">
         {filtered_count}{" "}
         {formattedPlural(filtered_count, {
           one: "template",

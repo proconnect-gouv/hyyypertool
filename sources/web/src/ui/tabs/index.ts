@@ -9,9 +9,9 @@ export const tabs = tv({
   slots: {
     list: "border-grey-200 m-0 mb-4 flex list-none gap-1 border-b p-0",
     tab: `
-      text-grey-625
+      text-text-muted
       hover:border-grey-200
-      hover:text-grey-850
+      hover:text-text-default
       -mb-px
       cursor-pointer
       border-b-2
@@ -26,7 +26,7 @@ export const tabs = tv({
   variants: {
     selected: {
       true: {
-        tab: "border-blue-france text-blue-france",
+        tab: "border-blue-france dark:border-blue-france-925 text-blue-france dark:text-blue-france-925",
         panel: "block",
       },
       false: {
