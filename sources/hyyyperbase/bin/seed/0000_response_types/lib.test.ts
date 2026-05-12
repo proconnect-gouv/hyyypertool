@@ -1,7 +1,12 @@
 //
 
 import { describe, expect, setSystemTime, test } from "bun:test";
+import { glob } from "node:fs/promises";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { load_templates } from "./lib";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 //
 
@@ -9,8 +14,15 @@ setSystemTime(new Date("2026-04-13T15:04:15.185Z"));
 const response_files = await load_templates();
 
 describe("seed:0000_response_types", () => {
-  test("loads old 28 legacy response templates", async () => {
-    expect(response_files).toHaveLength(30);
+  test("loads all response template files", async () => {
+    const files = await Array.fromAsync(
+      glob(join(__dirname, "responses", "*.ts")),
+    );
+    const response_files_count = files.filter(
+      (f) => !f.endsWith(".test.ts") && !f.endsWith("index.ts"),
+    ).length;
+    expect(response_files).toHaveLength(response_files_count);
+    expect(response_files).toHaveLength(36);
   });
 
   test("Utilisateur possédant déjà un compte ProConnect", async () => {
