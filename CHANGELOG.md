@@ -1,5 +1,27 @@
 # Changelog
 
+## [2026.5.4](https://github.com/proconnect-gouv/hyyypertool/compare/2026.5.3...2026.5.4) (2026-05-12)
+
+### Changements
+
+- 🐛 Correction de l'en-tête Cache-Control sur les assets statiques
+
+L'en-tête `Cache-Control: public, max-age=31536000, immutable` n'était jamais envoyé sur les ressources statiques en production, car le middleware vérifiait à tort `c.finalized` après la réponse de `serveStatic`. Les assets (polices, icônes, scripts) sont désormais correctement mis en cache côté navigateur.
+
+- 💄 Améliore le mode dark des templates de réponses + correction accents manquants
+- 🐛 Correction du seed des modèles de réponse
+
+Le pattern glob `[!index]*.ts` était interprété comme une classe de caractères et excluait silencieusement 6 modèles de réponse du seed. Ces 6 templates manquants sont désormais correctement chargés et insérés en base de données.
+
+### Modifié
+
+- 💄 Improves dark mode and adds missing accents (#1598) (2796e542)
+
+### Corrigé
+
+- 🐛 cache: fix immutable middleware never setting cache-control header (#1601) (828cfa50)
+- 🐛 seed: fix glob silently skipping 6 response templates (#1602) (5d24cead)
+
 ## [2026.5.3](https://github.com/proconnect-gouv/hyyypertool/compare/2026.5.2...2026.5.3) (2026-05-12)
 
 ### Ajouté
