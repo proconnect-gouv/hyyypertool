@@ -1,5 +1,17 @@
 # Changelog
 
+## [2026.5.5](https://github.com/proconnect-gouv/hyyypertool/compare/2026.5.4...2026.5.5) (2026-05-12)
+
+### Changements
+
+- 🐛 Correction de l'en-tête Cache-Control sur les assets statiques
+
+L'en-tête `Cache-Control: public, max-age=31536000, immutable` n'était jamais envoyé sur les ressources statiques en production. Le middleware `cache_immutable` vérifiait `c.finalized` après `serveStatic`, ce qui court-circuitait systématiquement l'ajout de l'en-tête. La note de version associée a été perdue lors d'une manipulation de l'historique git, d'où cette nouvelle release.
+
+### Corrigé
+
+- 🐛 cache: fix immutable middleware never setting cache-control header (#1603) (a1714f08)
+
 ## [2026.5.4](https://github.com/proconnect-gouv/hyyypertool/compare/2026.5.3...2026.5.4) (2026-05-12)
 
 ### Changements
