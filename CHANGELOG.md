@@ -1,5 +1,23 @@
 # Changelog
 
+## [2026.5.3](https://github.com/proconnect-gouv/hyyypertool/compare/2026.5.2...2026.5.3) (2026-05-12)
+
+### Ajouté
+
+- ✨ response-templates: add delete action (#1600) (b71adc6b)
+- ✨ filter moderations by decision status (is:accepted/rejected/reopened) (#1594) (9c7765db)
+- ✨ inapp editable response template (#1381) (5de929d6)
+
+### Modifié
+
+- 💄 avoid submiting empty content (#1597) (c0534389)
+- 💄 use alpha order on response type list (#1596) (3ac3e5eb)
+- 💄 use text xl on response type detail input title (#1595) (3ebc249d)
+
+### Corrigé
+
+- 🐛 use reason id as selector (#1599) (a6c5f055)
+
 ## [2026.5.2](https://github.com/proconnect-gouv/hyyypertool/compare/2026.5.1...2026.5.2) (2026-05-07)
 
 ### Changements
