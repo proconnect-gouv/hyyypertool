@@ -23,11 +23,12 @@ type TemplateModule = {
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export async function load_templates(): Promise<ResponseTemplateInsert[]> {
-  const pattern = join(__dirname, "responses", "[!index]*.ts");
+  const pattern = join(__dirname, "responses", "*.ts");
   const files: ResponseTemplateInsert[] = [];
 
   for await (const file of glob(pattern)) {
     if (file.endsWith(".test.ts")) continue;
+    if (file.endsWith("index.ts")) continue;
 
     const module: TemplateModule = await import(file);
 
