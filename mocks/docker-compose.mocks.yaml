@@ -1,17 +1,6 @@
 #
 
 services:
-  api.crisp.chat:
-    image: mockserver/mockserver:5.15.0
-    command: -proxyRemoteHost api.crisp.chat -proxyRemotePort 443
-    environment:
-      MOCKSERVER_LOG_LEVEL: DEBUG
-      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/mockserverInitialization.json
-    volumes:
-      - ./api.crisp.chat/mockserverInitialization.json:/config/mockserverInitialization.json
-    ports:
-      - 6400:1080
-
   entreprise.api.gouv.fr:
     image: mockserver/mockserver:5.15.0
     command: -proxyRemoteHost entreprise.api.gouv.fr -proxyRemotePort 443

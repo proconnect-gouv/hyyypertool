@@ -3,7 +3,6 @@ Fonctionnalité: Accepter une modération bloquante avec la barre d'outils
 
   Contexte:
     Soit une base de données nourrie au grain
-    Et un faux serveur "api.crisp.chat"
     Quand je navigue sur la page
     Et je me connecte en tant que "moderateur@beta.gouv.fr"
 

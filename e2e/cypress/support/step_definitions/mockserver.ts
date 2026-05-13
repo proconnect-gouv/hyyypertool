@@ -14,7 +14,17 @@ type MockServerRequestVerificationBody = {
   };
 };
 
+const DEV_ROUTE_SERVERS: Record<string, string> = {
+  "api.crisp.chat":
+    "http://localhost:3000/___dev___/api.crisp.chat/mockserver/reset",
+};
+
 Given("un faux serveur {string}", function (server: string) {
+  const resetUrl = DEV_ROUTE_SERVERS[server];
+  if (resetUrl) {
+    cy.request({ method: "PUT", url: resetUrl });
+    return;
+  }
   cy.exec(`docker compose restart ${server}`);
   cy.exec(`docker compose up --wait ${server}`);
 });
