@@ -31,3 +31,8 @@ Fonctionnalité: Accepter une modération bloquante avec la barre d'outils
     Alors je ne vois pas "13002526500013"
 
     Alors une notification mail est envoyée
+
+    Et je saisie le mot "{selectAll}is:processed{enter}" dans la boîte à texte nommée "Filtrer les modérations…"
+    Quand je clique sur le lien nommé "Modération a traiter de Jean Bon pour 13002526500013"
+    Quand je clique sur "📥️ Échanges entre Jean et nous :"
+    Alors je vois "Bonjour,"

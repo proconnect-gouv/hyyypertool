@@ -305,6 +305,184 @@ declare const app: import("hono/hono-base").HonoBase<
             };
           },
           "/auth.agentconnect.gouv.fr/api/v2"
+        >
+      | import("hono/types").MergeSchemaPath<
+          {
+            "/readyz": {
+              $get: {
+                input: {};
+                output: "readyz check passed";
+                outputFormat: "text";
+                status: import("hono/utils/http-status").ContentfulStatusCode;
+              };
+            };
+          } & {
+            "/v1/website/:website_id/conversations": {
+              $delete: {
+                input: {
+                  param: {
+                    website_id: string;
+                  };
+                };
+                output: {};
+                outputFormat: "json";
+                status: 200;
+              };
+            };
+          } & {
+            "/v1/website/:website_id/conversations": {
+              $get: {
+                input: {
+                  param: {
+                    website_id: string;
+                  };
+                };
+                output: {
+                  data: {
+                    session_id: string;
+                    messages: {
+                      content: string;
+                      type: string;
+                      timestamp: number;
+                    }[];
+                  }[];
+                };
+                outputFormat: "json";
+                status: import("hono/utils/http-status").ContentfulStatusCode;
+              };
+            };
+          } & {
+            "/v1/website/:website_id/conversation/:session_id": {
+              $get: {
+                input: {
+                  param: {
+                    session_id: string;
+                  } & {
+                    website_id: string;
+                  };
+                };
+                output: {
+                  data: {
+                    meta: {
+                      subjet: string;
+                    };
+                  };
+                };
+                outputFormat: "json";
+                status: import("hono/utils/http-status").ContentfulStatusCode;
+              };
+            };
+          } & {
+            "/v1/website/:website_id/conversation": {
+              $post: {
+                input: {
+                  param: {
+                    website_id: string;
+                  };
+                };
+                output: {
+                  data: {
+                    session_id: string;
+                  };
+                };
+                outputFormat: "json";
+                status: import("hono/utils/http-status").ContentfulStatusCode;
+              };
+            };
+          } & {
+            "/v1/website/:website_id/conversation/:session_id/message": {
+              $post: {
+                input: {
+                  param: {
+                    session_id: string;
+                  } & {
+                    website_id: string;
+                  };
+                };
+                output: {
+                  data: {
+                    fingerprint: string;
+                  };
+                };
+                outputFormat: "json";
+                status: import("hono/utils/http-status").ContentfulStatusCode;
+              };
+            };
+          } & {
+            "/v1/website/:website_id/conversation/:session_id/messages": {
+              $get: {
+                input: {
+                  param: {
+                    session_id: string;
+                  } & {
+                    website_id: string;
+                  };
+                };
+                output: {
+                  data: {
+                    content: string;
+                    type: string;
+                    timestamp: number;
+                  }[];
+                };
+                outputFormat: "json";
+                status: import("hono/utils/http-status").ContentfulStatusCode;
+              };
+            };
+          } & {
+            "/v1/website/:website_id/conversation/:session_id/meta": {
+              $patch: {
+                input: {
+                  param: {
+                    session_id: string;
+                  } & {
+                    website_id: string;
+                  };
+                };
+                output: {};
+                outputFormat: "json";
+                status: import("hono/utils/http-status").ContentfulStatusCode;
+              };
+            };
+          } & {
+            "/v1/website/:website_id/conversation/:session_id/state": {
+              $patch: {
+                input: {
+                  param: {
+                    session_id: string;
+                  } & {
+                    website_id: string;
+                  };
+                };
+                output: {};
+                outputFormat: "json";
+                status: import("hono/utils/http-status").ContentfulStatusCode;
+              };
+            };
+          } & {
+            "/v1/website/:website_id/operators/list": {
+              $get: {
+                input: {
+                  param: {
+                    website_id: string;
+                  };
+                };
+                output: {
+                  data: {
+                    details: {
+                      email: string;
+                      first_name: string;
+                      last_name: string;
+                      user_id: string;
+                    };
+                  }[];
+                };
+                outputFormat: "json";
+                status: import("hono/utils/http-status").ContentfulStatusCode;
+              };
+            };
+          },
+          "/api.crisp.chat"
         >,
       "/___dev___"
     >
