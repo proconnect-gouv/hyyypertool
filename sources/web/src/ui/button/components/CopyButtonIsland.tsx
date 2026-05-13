@@ -18,7 +18,6 @@ type CopyButtonIslandProps = PropsWithChildren<{
   variant?: VariantProps<typeof button>;
   class?: string;
   title?: string;
-  nonce?: string;
 }> &
   Omit<JSX.IntrinsicElements["button"], "class" | "children">;
 
@@ -44,7 +43,6 @@ export function CopyButtonIsland(props: CopyButtonIslandProps) {
   const {
     children,
     class: className,
-    nonce = "",
     text,
     title,
     variant,
@@ -67,5 +65,5 @@ export function CopyButtonIsland(props: CopyButtonIslandProps) {
     ...buttonProps,
   };
 
-  return <BaseCopyButtonIsland nonce={nonce} {...clientProps} />;
+  return <BaseCopyButtonIsland {...clientProps} />;
 }

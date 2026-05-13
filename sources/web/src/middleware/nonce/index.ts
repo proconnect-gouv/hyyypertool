@@ -1,3 +1,3 @@
 //
 
-export { set_nonce } from "./set_nonce";
+export { set_nonce, type NonceVariablesContext } from "./set_nonce";

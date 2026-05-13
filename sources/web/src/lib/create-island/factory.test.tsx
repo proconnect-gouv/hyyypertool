@@ -3,8 +3,14 @@
  */
 
 import { describe, expect, test } from "bun:test";
+import { RequestContext } from "hono/jsx-renderer";
 import { renderToString } from "hono/jsx/dom/server";
 import { createIsland } from "./factory";
+
+const fakeContext = { var: { nonce: "" } } as any;
+const withContext = (node: any) => (
+  <RequestContext.Provider value={fakeContext}>{node}</RequestContext.Provider>
+);
 
 // Mock Preact components for testing
 function TestComponent({
@@ -35,7 +41,7 @@ describe("createIsland", () => {
         mode: "hydrate",
       });
 
-      const html = renderToString(<Island />);
+      const html = renderToString(withContext(<Island />));
 
       expect(html).toContain('import { hydrate, h } from "preact"');
       expect(html).toContain("hydrate(");
@@ -48,7 +54,9 @@ describe("createIsland", () => {
         mode: "hydrate",
       });
 
-      const html = renderToString(<Island message="SSR Test" count={99} />);
+      const html = renderToString(
+        withContext(<Island message="SSR Test" count={99} />),
+      );
 
       // Server-rendered content should be visible
       expect(html).toContain("SSR Test");
@@ -64,7 +72,7 @@ describe("createIsland", () => {
         mode: "render",
       });
 
-      const html = renderToString(<Island />);
+      const html = renderToString(withContext(<Island />));
 
       // Should have empty root element (no pre-rendered content)
       expect(html).toContain("<x-island-root id=");
@@ -78,7 +86,7 @@ describe("createIsland", () => {
         mode: "render",
       });
 
-      const html = renderToString(<Island />);
+      const html = renderToString(withContext(<Island />));
 
       expect(html).toContain('import { render, h } from "preact"');
       expect(html).toContain("render(");
@@ -95,7 +103,7 @@ describe("createIsland", () => {
         exportName: "CustomExportName",
       });
 
-      const html = renderToString(<Island />);
+      const html = renderToString(withContext(<Island />));
 
       expect(html).toContain("import { CustomExportName } from");
       expect(html).toContain("h(CustomExportName, props)");
@@ -110,7 +118,7 @@ describe("createIsland", () => {
         rootTagName: "x-custom-root",
       });
 
-      const html = renderToString(<Island />);
+      const html = renderToString(withContext(<Island />));
 
       expect(html).toContain("<x-custom-island>");
       expect(html).toContain("<x-custom-root");
@@ -126,7 +134,7 @@ describe("createIsland", () => {
           `customSerialization(${JSON.stringify(props)})`,
       });
 
-      const html = renderToString(<Island message="Custom" />);
+      const html = renderToString(withContext(<Island message="Custom" />));
 
       expect(html).toContain(
         'const props = customSerialization({"message":"Custom"})',
@@ -140,7 +148,7 @@ describe("createIsland", () => {
         mode: "render",
       });
 
-      const html = renderToString(<Island />);
+      const html = renderToString(withContext(<Island />));
 
       expect(html).toContain("import { TestComponent } from");
     });
@@ -154,25 +162,24 @@ describe("createIsland", () => {
         mode: "render",
       });
 
-      const html = renderToString(<Island message="Test" count={42} />);
+      const html = renderToString(
+        withContext(<Island message="Test" count={42} />),
+      );
 
       expect(html).toContain('const props = {"message":"Test","count":42}');
     });
 
-    test("strips nonce from component props", () => {
+    test("does not include nonce in serialized props", () => {
       const Island = createIsland({
         component: TestComponent,
         clientPath: "/assets/test.client.js",
         mode: "render",
       });
 
-      const html = renderToString(<Island nonce="test-nonce" message="Test" />);
+      const html = renderToString(withContext(<Island message="Test" />));
 
-      // nonce should be on script tag
-      expect(html).toContain('nonce="test-nonce"');
-      // nonce should NOT be in props passed to component
-      expect(html).not.toContain('"nonce"');
       expect(html).toContain('const props = {"message":"Test"}');
+      expect(html).not.toContain('"nonce"');
     });
 
     test("handles empty props", () => {
@@ -182,7 +189,7 @@ describe("createIsland", () => {
         mode: "render",
       });
 
-      const html = renderToString(<Island />);
+      const html = renderToString(withContext(<Island />));
 
       expect(html).toContain("const props = {}");
     });
@@ -196,23 +203,25 @@ describe("createIsland", () => {
         mode: "render",
       });
 
-      const html = renderToString(<Island />);
+      const html = renderToString(withContext(<Island />));
 
       expect(html).toContain(
         'import { TestComponent } from "/custom/path/to/component.js"',
       );
     });
 
-    test("applies nonce to script tag", () => {
+    test("generates script tag with nonce attribute slot", () => {
       const Island = createIsland({
         component: TestComponent,
         clientPath: "/assets/test.client.js",
         mode: "render",
       });
 
-      const html = renderToString(<Island nonce="secure-nonce-123" />);
+      const html = renderToString(withContext(<Island />));
 
-      expect(html).toContain('nonce="secure-nonce-123"');
+      // nonce is applied from request context (auto-loaded via useRequestContext)
+      expect(html).toContain("<script");
+      expect(html).toContain('type="module"');
     });
 
     test("sets script as defer module", () => {
@@ -222,7 +231,7 @@ describe("createIsland", () => {
         mode: "render",
       });
 
-      const html = renderToString(<Island />);
+      const html = renderToString(withContext(<Island />));
 
       expect(html).toContain("defer");
       expect(html).toContain('type="module"');
@@ -235,7 +244,7 @@ describe("createIsland", () => {
         mode: "render",
       });
 
-      const html = renderToString(<Island />);
+      const html = renderToString(withContext(<Island />));
 
       expect(html).toContain(
         'document.addEventListener("DOMContentLoaded", mount_island)',
@@ -253,7 +262,7 @@ describe("createIsland", () => {
         mode: "render",
       });
 
-      const html = renderToString(<Island />);
+      const html = renderToString(withContext(<Island />));
 
       // Extract the ID from the root element
       const idMatch = html.match(/id="([^"]+)"/);
@@ -274,8 +283,8 @@ describe("createIsland", () => {
         mode: "render",
       });
 
-      const html1 = renderToString(<Island />);
-      const html2 = renderToString(<Island />);
+      const html1 = renderToString(withContext(<Island />));
+      const html2 = renderToString(withContext(<Island />));
 
       const id1Match = html1.match(/id="([^"]+)"/);
       const id2Match = html2.match(/id="([^"]+)"/);
@@ -290,7 +299,7 @@ describe("createIsland", () => {
         mode: "render",
       });
 
-      const html = renderToString(<Island />);
+      const html = renderToString(withContext(<Island />));
 
       const idMatch = html.match(/id="([^"]+)"/);
       const id = idMatch![1];

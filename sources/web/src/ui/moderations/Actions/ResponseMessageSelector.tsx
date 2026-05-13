@@ -1,8 +1,6 @@
 //
 
 import { createIsland } from "#src/lib/create-island";
-import type { AppContext } from "#src/middleware/context";
-import { useRequestContext } from "hono/jsx-renderer";
 import { ResponseMessageSelectorClient } from "./response-message-selector.client";
 
 //
@@ -25,13 +23,8 @@ export function ResponseMessageSelector({
   moderation_id: number;
   response_templates: { id: number; label: string }[];
 }) {
-  const {
-    var: { nonce },
-  } = useRequestContext<AppContext>();
-
   return (
     <ResponseMessageSelectorIsland
-      nonce={nonce}
       moderation_id={moderation_id}
       response_templates={response_templates}
     />

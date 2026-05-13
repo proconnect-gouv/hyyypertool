@@ -35,14 +35,10 @@ export default new Hono<AppContext>()
       return render(<Page templates={templates} searchQuery={searchQuery} />);
     },
   )
-  .get(
-    "/new",
-    jsxRenderer(Main_Layout),
-    function GET({ render, set, var: { nonce } }) {
-      set("page_title", "Nouveau template");
-      return render(<DetailPage nonce={nonce} />);
-    },
-  )
+  .get("/new", jsxRenderer(Main_Layout), function GET({ render, set }) {
+    set("page_title", "Nouveau template");
+    return render(<DetailPage />);
+  })
   .post(
     "/",
     zValidator("form", TemplateFormSchema),
@@ -61,13 +57,7 @@ export default new Hono<AppContext>()
   .get(
     "/:id",
     jsxRenderer(Main_Layout),
-    async function GET({
-      render,
-      set,
-      req,
-      var: { nonce, hyyyper_pg },
-      notFound,
-    }) {
+    async function GET({ render, set, req, var: { hyyyper_pg }, notFound }) {
       const id = parseInt(req.param("id"), 10);
       if (isNaN(id)) return notFound();
 
@@ -77,9 +67,7 @@ export default new Hono<AppContext>()
       set("page_title", template.label);
       const status =
         req.query("status") === "created" ? ("created" as const) : undefined;
-      return render(
-        <DetailPage nonce={nonce} template={template} status={status} />,
-      );
+      return render(<DetailPage template={template} status={status} />);
     },
   )
   .patch(

@@ -1,10 +1,14 @@
 //
 
 import type { Child } from "hono/jsx";
+import { jsx } from "hono/jsx";
+import { RequestContext } from "hono/jsx-renderer";
 import { renderToReadableStream } from "hono/jsx/dom/server";
 import { format, type Options } from "prettier";
 
 //
+
+const fakeContext = { var: { nonce: "" } } as any;
 
 export const render_html = PrettyRenderer({ parser: "html" });
 export const render_md = PrettyRenderer({ parser: "mdx" });
@@ -28,8 +32,12 @@ export function PrettyRenderer(options: Options) {
       }
       return str;
     };
+    const wrapped = jsx(RequestContext.Provider, {
+      value: fakeContext,
+      children: element,
+    });
     return format(
-      await getStringFromStream(await renderToReadableStream(element)),
+      await getStringFromStream(await renderToReadableStream(wrapped)),
       options,
     );
   };

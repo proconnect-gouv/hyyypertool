@@ -12,12 +12,11 @@ import { urls } from "#src/urls";
 type AboutProps = {
   user: GetUserInfoOutput;
   organization: { siret: string };
-  nonce?: string;
 };
 
 //
 
-export function About({ user, organization, nonce = "" }: AboutProps) {
+export function About({ user, organization }: AboutProps) {
   const domain = z_email_domain.parse(user.email);
 
   return (
@@ -37,7 +36,6 @@ export function About({ user, organization, nonce = "" }: AboutProps) {
           {user.email}{" "}
           <CopyButton
             class="ml-2"
-            nonce={nonce}
             text={user.email}
             variant={{ size: "sm", type: "tertiary" }}
           ></CopyButton>
@@ -48,7 +46,6 @@ export function About({ user, organization, nonce = "" }: AboutProps) {
           {domain}{" "}
           <CopyButton
             class="ml-2"
-            nonce={nonce}
             text={domain}
             variant={{ size: "sm", type: "tertiary" }}
           ></CopyButton>
