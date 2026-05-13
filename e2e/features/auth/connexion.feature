@@ -3,7 +3,6 @@ Fonctionnalité: Connexion d'un utilisateur
 
   Contexte:
     Soit une base de données nourrie au grain
-    Et un faux serveur "auth.agentconnect.gouv.fr"
 
   Scénario: Connexion de admin@omega.gouv.fr
     Etant donné que je suis sur la page "/"

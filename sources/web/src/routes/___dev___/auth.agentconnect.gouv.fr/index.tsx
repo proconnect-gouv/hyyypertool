@@ -305,7 +305,7 @@ export default new Hono<AppContext>()
           "Content-Type": "text/html; charset=UTF-8",
           "Transfer-Encoding": "chunked",
         },
-        status: 303,
+        status: 200,
       });
     },
   );
