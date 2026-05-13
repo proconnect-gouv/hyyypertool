@@ -33,14 +33,3 @@ services:
       - ./entreprise.api.gouv.fr/mockserverInitialization.json:/config/mockserverInitialization.json
     ports:
       - 6200:1080
-
-  support.etalab.gouv.fr:
-    image: mockserver/mockserver:5.15.0
-    command: -proxyRemoteHost support.etalab.gouv.fr -proxyRemotePort 443
-    environment:
-      MOCKSERVER_LOG_LEVEL: DEBUG
-      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/mockserverInitialization.json
-    volumes:
-      - ./support.etalab.gouv.fr/mockserverInitialization.json:/config/mockserverInitialization.json
-    ports:
-      - 6500:1080
