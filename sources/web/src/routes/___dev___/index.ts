@@ -5,6 +5,7 @@ import { Hono } from "hono";
 import api_crisp_chat_router from "./api.crisp.chat";
 import auth_agentconnect_gouv_fr_router from "./auth.agentconnect.gouv.fr";
 import design_system_router from "./design-system";
+import entreprise_api_gouv_fr_router from "./entreprise.api.gouv.fr";
 import reload_router from "./reload";
 
 //
@@ -17,4 +18,5 @@ export default new Hono<AppContext>()
   .route("/", reload_router)
   .route("/", design_system_router)
   .route("/auth.agentconnect.gouv.fr/api/v2", auth_agentconnect_gouv_fr_router)
-  .route("/api.crisp.chat", api_crisp_chat_router);
+  .route("/api.crisp.chat", api_crisp_chat_router)
+  .route("/entreprise.api.gouv.fr", entreprise_api_gouv_fr_router);
