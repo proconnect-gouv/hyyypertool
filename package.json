@@ -57,7 +57,7 @@
     "dotenv": "17.3.1",
     "htmx-ext-include-vals": "2.0.2",
     "htmx-ext-sse": "2.2.4",
-    "htmx.org": "2.0.8",
+    "htmx.org": "2.0.10",
     "hyperscript.org": "0.9.14",
     "nprogress": "0.2.0",
     "preact": "10.29.1",
