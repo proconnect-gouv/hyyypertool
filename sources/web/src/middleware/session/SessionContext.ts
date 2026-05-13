@@ -7,8 +7,8 @@ import type { Session } from "hono-sessions";
 interface SessionKeyMapping {
   userinfo?: AgentConnectUserInfo;
   idtoken: string;
-  state: string;
   nonce: string;
+  state: string;
 }
 
 export interface SessionContext extends Env {

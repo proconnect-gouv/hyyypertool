@@ -131,6 +131,7 @@ export default new Hono<Oidc_Context & AppContext>()
       var: { oidc_config, session },
     } = c;
     const id_token_hint = session.get("idtoken");
+    const logout_state = randomState();
 
     const post_logout_redirect_uri = get_logout_redirect_uri(
       req.url,
@@ -140,13 +141,33 @@ export default new Hono<Oidc_Context & AppContext>()
     const logoutUrl = buildEndSessionUrl(oidc_config, {
       id_token_hint,
       post_logout_redirect_uri,
+      state: logout_state,
     });
 
-    session.deleteSession();
+    session.set("userinfo", undefined);
+    session.set("state", logout_state);
     set("userinfo", undefined as any);
 
     return redirect(logoutUrl);
-  });
+  })
+  .get(
+    "/logout/callback",
+    zValidator("query", z.object({ state: z.string() })),
+    (c) => {
+      const {
+        var: { session },
+      } = c;
+      const { state } = c.req.valid("query");
+      const stored = session.get("state");
+
+      if (!stored || stored !== state) {
+        throw new HTTPException(403, { message: "Invalid logout state" });
+      }
+
+      session.deleteSession();
+      return c.redirect("/");
+    },
+  );
 
 //
 
@@ -157,5 +178,5 @@ function get_redirect_uri(url: string, host?: string) {
 
 function get_logout_redirect_uri(url: string, host?: string) {
   const _url = new URL(url);
-  return `${host ? host : _url.origin}`;
+  return `${host ? host : _url.origin}${urls.auth.logout.callback.$url().pathname}`;
 }
