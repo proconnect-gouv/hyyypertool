@@ -9,6 +9,37 @@ import { z } from "zod";
 
 //
 
+function LogoutPage({ redirect_url }: { redirect_url: string }) {
+  return `<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="refresh" content="2; url=${redirect_url}" />
+    <title>Déconnexion</title>
+    <style>
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100dvh;
+        margin: 0;
+        font-family: system-ui, sans-serif;
+        background: #f6f6f6;
+        color: #3a3a3a;
+      }
+      p { font-size: 1.125rem; }
+    </style>
+  </head>
+  <body>
+    <p>Déconnexion en cours...</p>
+    <script>setTimeout(() => location.replace(${JSON.stringify(redirect_url)}), 1111)</script>
+  </body>
+</html>`;
+}
+
+//
+
 const profiles = [
   {
     email: "admin@omega.gouv.fr",
@@ -60,6 +91,60 @@ async function sign_jwt(payload: Record<string, unknown>) {
 //
 
 export default new Hono<AppContext>()
+  .get("/.well-known/openid-configuration", (c) => {
+    const issuer = c.env.AGENTCONNECT_OIDC_ISSUER;
+    return c.json({
+      issuer,
+      authorization_endpoint: `${issuer}/authorize`,
+      token_endpoint: `${issuer}/token`,
+      userinfo_endpoint: `${issuer}/userinfo`,
+      jwks_uri: `${issuer}/jwks`,
+      end_session_endpoint: `${issuer}/session/end`,
+      response_types_supported: ["code"],
+      subject_types_supported: ["pairwise"],
+      id_token_signing_alg_values_supported: ["ES256"],
+      scopes_supported: [
+        "openid",
+        "given_name",
+        "usual_name",
+        "email",
+        "phone",
+        "organizational_unit",
+        "siren",
+        "siret",
+        "belonging_population",
+        "idp_id",
+        "idp_acr",
+        "is_service_public",
+      ],
+      claims_supported: [
+        "sub",
+        "given_name",
+        "usual_name",
+        "email",
+        "phone_number",
+        "siret",
+        "siren",
+        "organizational_unit",
+        "belonging_population",
+        "idp_id",
+        "idp_acr",
+        "is_service_public",
+        "acr",
+        "amr",
+        "iss",
+        "auth_time",
+        "sid",
+      ],
+      acr_values_supported: ["eidas1"],
+      code_challenge_methods_supported: ["S256"],
+      grant_types_supported: ["authorization_code"],
+      token_endpoint_auth_methods_supported: [
+        "client_secret_post",
+        "private_key_jwt",
+      ],
+    });
+  })
   .get("/jwks", async (c) => {
     const jwk = await exportJWK(keys.publicKey);
     return c.json({ keys: [{ ...jwk, alg: "ES256", use: "sig" }] });
@@ -185,4 +270,42 @@ export default new Hono<AppContext>()
     return new Response(jwt, {
       headers: { "content-type": "application/jwt" },
     });
-  });
+  })
+  .get(
+    "/session/end",
+    zValidator(
+      "query",
+      z.object({
+        post_logout_redirect_uri: z.url(),
+        state: z.string(),
+      }),
+    ),
+    (c) => {
+      const { post_logout_redirect_uri, state } = c.req.valid("query");
+
+      const redirect_url = new URL(post_logout_redirect_uri);
+      redirect_url.searchParams.set("state", state);
+
+      const html = new TextEncoder().encode(
+        LogoutPage({ redirect_url: redirect_url.href }),
+      );
+
+      const stream = new ReadableStream({
+        async start(controller) {
+          controller.enqueue(html);
+          await new Promise((resolve) => setTimeout(resolve, 1_111));
+          controller.close();
+        },
+      });
+
+      selected_userinfo = undefined;
+
+      return new Response(stream, {
+        headers: {
+          "Content-Type": "text/html; charset=UTF-8",
+          "Transfer-Encoding": "chunked",
+        },
+        status: 200,
+      });
+    },
+  );

@@ -2,7 +2,7 @@ import { type AppEnv } from "#src/config";
 declare const app: import("hono/hono-base").HonoBase<
   {
     Bindings: AppEnv;
-  } & import("../middleware/nonce/set_nonce").NonceVariablesContext &
+  } & import("#src/middleware/nonce").NonceVariablesContext &
     import("#src/middleware/fetch").FetchVariablesContext &
     import("#src/config").AppEnvContext &
     import("#src/middleware/auth").UserInfoVariablesContext &
@@ -164,6 +164,31 @@ declare const app: import("hono/hono-base").HonoBase<
         >
       | import("hono/types").MergeSchemaPath<
           {
+            "/.well-known/openid-configuration": {
+              $get: {
+                input: {};
+                output: {
+                  issuer: string;
+                  authorization_endpoint: string;
+                  token_endpoint: string;
+                  userinfo_endpoint: string;
+                  jwks_uri: string;
+                  end_session_endpoint: string;
+                  response_types_supported: string[];
+                  subject_types_supported: string[];
+                  id_token_signing_alg_values_supported: string[];
+                  scopes_supported: string[];
+                  claims_supported: string[];
+                  acr_values_supported: string[];
+                  code_challenge_methods_supported: string[];
+                  grant_types_supported: string[];
+                  token_endpoint_auth_methods_supported: string[];
+                };
+                outputFormat: "json";
+                status: import("hono/utils/http-status").ContentfulStatusCode;
+              };
+            };
+          } & {
             "/jwks": {
               $get: {
                 input: {};
@@ -264,6 +289,20 @@ declare const app: import("hono/hono-base").HonoBase<
                     status: import("hono/utils/http-status").ContentfulStatusCode;
                   };
             };
+          } & {
+            "/session/end": {
+              $get: {
+                input: {
+                  query: {
+                    post_logout_redirect_uri: string;
+                    state?: string | undefined;
+                  };
+                };
+                output: {};
+                outputFormat: string;
+                status: import("hono/utils/http-status").StatusCode;
+              };
+            };
           },
           "/auth.agentconnect.gouv.fr/api/v2"
         >,
@@ -298,6 +337,19 @@ declare const app: import("hono/hono-base").HonoBase<
         "/logout": {
           $get: {
             input: {};
+            output: undefined;
+            outputFormat: "redirect";
+            status: 302;
+          };
+        };
+      } & {
+        "/logout/callback": {
+          $get: {
+            input: {
+              query: {
+                state: string;
+              };
+            };
             output: undefined;
             outputFormat: "redirect";
             status: 302;

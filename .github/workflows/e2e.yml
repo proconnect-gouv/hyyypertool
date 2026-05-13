@@ -46,8 +46,6 @@ jobs:
       - name: Wait for mocked services to be ready
         run: |
           docker compose ps
-          echo "Fake https://auth.agentconnect.gouv.fr"
-          curl -sSf -XGET http://127.0.0.1:6100/readyz
           echo
           echo "Fake https://entreprise.api.gouv.fr ready"
           curl -sSf -XGET http://127.0.0.1:6200/readyz
