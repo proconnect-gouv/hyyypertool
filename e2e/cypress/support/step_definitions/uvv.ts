@@ -131,6 +131,22 @@ Then(
   },
 );
 
+When("je navigue au clavier jusqu'au lien nommé {string}", (name: string) => {
+  function tabUntilFocused(remaining: number): void {
+    if (remaining <= 0) {
+      throw new Error(
+        `Le lien nommé "${name}" n'a pas été atteint après le nombre maximal de tabulations`,
+      );
+    }
+    cy.focused().then(($el) => {
+      if ($el.attr("aria-label") === name) return;
+      cy.press(Cypress.Keyboard.Keys.TAB);
+      tabUntilFocused(remaining - 1);
+    });
+  }
+  tabUntilFocused(50);
+});
+
 // Assertions
 
 Then("je dois voir un lien nommé {string}", (name: string) => {
