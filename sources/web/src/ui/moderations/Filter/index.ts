@@ -5,3 +5,4 @@ export { SearchDateIsland } from "./SearchDateIsland";
 export { SearchEmailIsland } from "./SearchEmailIsland";
 export { SearchModeratedByIsland } from "./SearchModeratedByIsland";
 export { SearchSiretIsland } from "./SearchSiretIsland";
+export { SortHeaderIsland } from "./SortHeaderIsland";
