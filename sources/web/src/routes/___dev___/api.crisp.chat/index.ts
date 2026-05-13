@@ -53,9 +53,10 @@ export default new Hono<AppContext>()
   )
 
   .post("/v1/website/:website_id/conversation/:session_id/message", (c) => {
+    const { website_id, session_id } = c.req.param();
     tracked.push({
       method: "POST",
-      path: c.req.path,
+      path: `/v1/website/${website_id}/conversation/${session_id}/message`,
     });
     return c.json({ data: { fingerprint: "123456789" } });
   })
