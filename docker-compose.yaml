@@ -1,8 +1,5 @@
 #
 
-include:
-  - path: ./mocks/docker-compose.mocks.yaml
-
 services:
   postgres-identite-proconnect:
     image: postgres:16.11-alpine

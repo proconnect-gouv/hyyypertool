@@ -43,14 +43,6 @@ jobs:
       - run: bun install --frozen-lockfile
         working-directory: "."
 
-      - name: Wait for mocked services to be ready
-        run: |
-          docker compose ps
-          echo
-          echo "Fake https://entreprise.api.gouv.fr ready"
-          curl -sSf -XGET http://127.0.0.1:6200/readyz
-        working-directory: "."
-
       - name: 🗃️ Migrate database
         run: |
           bun run db:migrate
