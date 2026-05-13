@@ -25,6 +25,8 @@
  * ```
  */
 
+import type { NonceVariablesContext } from "#src/middleware/nonce";
+import { useRequestContext } from "hono/jsx-renderer";
 import { randomUUID } from "node:crypto";
 import type { ComponentType } from "preact";
 import { h } from "preact";
@@ -51,10 +53,7 @@ export interface CreateIslandOptions<P = Record<string, unknown>> {
   serializeProps?: (props: Partial<P>) => string;
 }
 
-export interface IslandProps {
-  /** CSP nonce for inline script */
-  nonce?: string;
-}
+export interface IslandProps {}
 
 /**
  * Creates a Preact Island wrapper component
@@ -88,7 +87,10 @@ export function createIsland<P extends Record<string, unknown>>(
    * client-side hydration/render script
    */
   return function Island(props: P & IslandProps) {
-    const { nonce = "", ...componentProps } = props;
+    const {
+      var: { nonce },
+    } = useRequestContext<NonceVariablesContext>();
+    const componentProps = props;
     const root_id = randomUUID();
 
     // Server-side rendering (only for hydrate mode)

@@ -14,11 +14,9 @@ type TemplateMetadata = NonNullable<
 >;
 
 export default function DetailPage({
-  nonce,
   template,
   status,
 }: {
-  nonce: string;
   template?: TemplateMetadata;
   status?: "created";
 }) {
@@ -66,7 +64,6 @@ export default function DetailPage({
           : { "hx-patch": form_action })}
       >
         <TemplateEditorIsland
-          nonce={nonce}
           initialTemplate={template?.content ?? ""}
           initialLabel={template?.label ?? ""}
         />

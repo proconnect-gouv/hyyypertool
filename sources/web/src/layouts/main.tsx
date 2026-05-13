@@ -18,7 +18,7 @@ import { RootLayout } from "./root";
 //
 export function Main_Layout({ children }: PropsWithChildren) {
   const {
-    var: { userinfo, nonce, hyyyper_user },
+    var: { userinfo, hyyyper_user },
   } = useRequestContext<AppContext>();
   const username = z_username.parse(userinfo);
   return (
@@ -38,7 +38,7 @@ export function Main_Layout({ children }: PropsWithChildren) {
       <div id="main-content" tabindex={-1}>
         {children}
       </div>
-      <NotificationIsland nonce={nonce} />
+      <NotificationIsland />
     </RootLayout>
   );
 }

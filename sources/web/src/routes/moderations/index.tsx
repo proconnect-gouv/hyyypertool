@@ -22,7 +22,7 @@ export default new Hono<AppContext>()
   .get(
     "/",
     jsxRenderer(Main_Layout),
-    async function GET({ env, render, req, set, var: { identite_pg, nonce } }) {
+    async function GET({ env, render, req, set, var: { identite_pg } }) {
       const query = req.query();
 
       const { q: search } = search_schema.parse(query);
@@ -58,7 +58,6 @@ export default new Hono<AppContext>()
           search={search}
           sp_names_list={sp_names_list}
           query_result={query_moderations_list}
-          nonce={nonce}
         />,
       );
     },
