@@ -5,12 +5,27 @@ import { Hono } from "hono";
 
 //
 
-type TrackedRequest = { method: string; path: string };
+type Message = {
+  session_id: string;
+  website_id: string;
+  content: string;
+  type: string;
+  from: string;
+  origin: string;
+  user: Record<string, unknown>;
+  fingerprint: number;
+  timestamp: number;
+  edited: boolean;
+  read: string;
+  delivered: string;
+};
+type Conversation = { session_id: string; messages: Message[] };
 
-const tracked: TrackedRequest[] = [];
+const websites = new Map<string, Map<string, Conversation>>();
 
-function match_path(pattern: string, path: string) {
-  return new RegExp(`^${pattern}$`).test(path);
+function get_conversations(website_id: string) {
+  if (!websites.has(website_id)) websites.set(website_id, new Map());
+  return websites.get(website_id)!;
 }
 
 //
@@ -18,64 +33,74 @@ function match_path(pattern: string, path: string) {
 export default new Hono<AppContext>()
   .get("/readyz", (c) => c.text("readyz check passed"))
 
-  .put("/mockserver/reset", (c) => {
-    tracked.length = 0;
+  .delete("/v1/website/:website_id/conversations", (c) => {
+    websites.delete(c.req.param("website_id"));
     return c.json({}, 200);
   })
 
-  .put("/mockserver/verify", async (c) => {
-    const body = await c.req.json();
-    const { httpRequest, times } = body;
-    const { method, path: pattern } = httpRequest;
-
-    const count = tracked.filter(
-      (r) => (!method || r.method === method) && match_path(pattern, r.path),
-    ).length;
-
-    const atLeast = times?.atLeast ?? 0;
-    const atMost = times?.atMost ?? Infinity;
-
-    if (count >= atLeast && count <= atMost) return c.json({}, 202);
-    return c.json(
-      { message: `Expected ${atLeast}–${atMost} requests, got ${count}` },
-      406,
-    );
+  .get("/v1/website/:website_id/conversations", (c) => {
+    const convs = get_conversations(c.req.param("website_id"));
+    return c.json({ data: [...convs.values()] });
   })
 
-  //
-
-  .get("/v1/website/:website_id/conversation/:session_id", (c) =>
-    c.json({ data: { meta: { subjet: "Lorem Ipsum" } } }),
-  )
-
-  .post("/v1/website/:website_id/conversation", (c) =>
-    c.json({ data: { session_id: "session_123456789" } }),
-  )
-
-  .post("/v1/website/:website_id/conversation/:session_id/message", (c) => {
-    const { website_id, session_id } = c.req.param();
-    tracked.push({
-      method: "POST",
-      path: `/v1/website/${website_id}/conversation/${session_id}/message`,
+  .get("/v1/website/:website_id/conversation/:session_id", (c) => {
+    return c.json({
+      data: {
+        created_at: Date.now(),
+        last_message: "",
+        meta: {
+          avatar: "",
+          data: {},
+          device: {},
+          email: "",
+          ip: "",
+          nickname: "",
+          phone: "",
+          segments: [],
+          subject: "Lorem Ipsum",
+        },
+      },
     });
-    return c.json({ data: { fingerprint: "123456789" } });
   })
+
+  .post("/v1/website/:website_id/conversation", (c) => {
+    const { website_id } = c.req.param();
+    const session_id = `session_${Date.now()}`;
+    get_conversations(website_id).set(session_id, { session_id, messages: [] });
+    return c.json({ data: { session_id } });
+  })
+
+  .post(
+    "/v1/website/:website_id/conversation/:session_id/message",
+    async (c) => {
+      const { website_id, session_id } = c.req.param();
+      const body = await c.req.json().catch(() => ({}));
+      const convs = get_conversations(website_id);
+      if (!convs.has(session_id))
+        convs.set(session_id, { session_id, messages: [] });
+      const fingerprint = Date.now();
+      convs.get(session_id)!.messages.push({
+        session_id,
+        website_id,
+        content: body.content ?? "",
+        type: body.type ?? "text",
+        from: body.from ?? "operator",
+        origin: body.origin ?? "",
+        user: body.user ?? {},
+        fingerprint,
+        timestamp: fingerprint,
+        edited: false,
+        read: "",
+        delivered: "",
+      });
+      return c.json({ data: { fingerprint } });
+    },
+  )
 
   .get("/v1/website/:website_id/conversation/:session_id/messages", (c) => {
-    const { session_id, website_id } = c.req.param();
-    return c.json({
-      data: [
-        {
-          content:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-          type: "text",
-          session_id,
-          website_id,
-          timestamp: 1715097494011,
-          user: { user_id: "123456789", nickname: "John User" },
-        },
-      ],
-    });
+    const { website_id, session_id } = c.req.param();
+    const conv = get_conversations(website_id).get(session_id);
+    return c.json({ data: conv?.messages ?? [] });
   })
 
   .patch("/v1/website/:website_id/conversation/:session_id/meta", (c) =>

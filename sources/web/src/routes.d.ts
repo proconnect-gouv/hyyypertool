@@ -317,31 +317,39 @@ declare const app: import("hono/hono-base").HonoBase<
               };
             };
           } & {
-            "/mockserver/reset": {
-              $put: {
-                input: {};
+            "/v1/website/:website_id/conversations": {
+              $delete: {
+                input: {
+                  param: {
+                    website_id: string;
+                  };
+                };
                 output: {};
                 outputFormat: "json";
                 status: 200;
               };
             };
           } & {
-            "/mockserver/verify": {
-              $put:
-                | {
-                    input: {};
-                    output: {};
-                    outputFormat: "json";
-                    status: 202;
-                  }
-                | {
-                    input: {};
-                    output: {
-                      message: string;
-                    };
-                    outputFormat: "json";
-                    status: 406;
+            "/v1/website/:website_id/conversations": {
+              $get: {
+                input: {
+                  param: {
+                    website_id: string;
                   };
+                };
+                output: {
+                  data: {
+                    session_id: string;
+                    messages: {
+                      content: string;
+                      type: string;
+                      timestamp: number;
+                    }[];
+                  }[];
+                };
+                outputFormat: "json";
+                status: import("hono/utils/http-status").ContentfulStatusCode;
+              };
             };
           } & {
             "/v1/website/:website_id/conversation/:session_id": {
@@ -414,13 +422,7 @@ declare const app: import("hono/hono-base").HonoBase<
                   data: {
                     content: string;
                     type: string;
-                    session_id: string;
-                    website_id: string;
                     timestamp: number;
-                    user: {
-                      user_id: string;
-                      nickname: string;
-                    };
                   }[];
                 };
                 outputFormat: "json";

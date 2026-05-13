@@ -22,6 +22,7 @@ export default defineConfig({
   },
   env: {
     API_CRISP_CHAT_URL: "http://localhost:3000/___dev___/api.crisp.chat",
+    CRISP_WEBSITE_ID: "________-____-____-____-____________",
   },
 });
 

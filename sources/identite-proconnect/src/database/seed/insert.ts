@@ -115,7 +115,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
       sp_name: "Annuaire des entreprises",
       type: MODERATION_TYPES.enum.organization_join_block,
       user_id: jean_bon.id,
-      ticket_id: "115793",
+      ticket_id: "session_115793",
       status: "pending",
     });
     consola.verbose(
