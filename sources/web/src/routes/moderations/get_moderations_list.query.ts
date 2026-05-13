@@ -8,6 +8,7 @@ import {
 import {
   and,
   asc,
+  desc,
   count as drizzle_count,
   eq,
   ilike,
@@ -115,6 +116,27 @@ const qualifier_filters: Record<
   ],
 };
 
+const order_map: Record<string, SQL> = {
+  "created-asc": asc(schema.moderations.created_at),
+  "created-desc": desc(schema.moderations.created_at),
+  "updated-asc": sql`${schema.moderations.moderated_at} ASC NULLS LAST`,
+  "updated-desc": sql`${schema.moderations.moderated_at} DESC NULLS LAST`,
+  "organization-asc": asc(schema.organizations.siret),
+  "organization-desc": desc(schema.organizations.siret),
+  "email-asc": asc(schema.users.email),
+  "email-desc": desc(schema.users.email),
+  "family-name-asc": sql`${schema.users.family_name} ASC NULLS LAST`,
+  "family-name-desc": sql`${schema.users.family_name} DESC NULLS LAST`,
+  "given-name-asc": sql`${schema.users.given_name} ASC NULLS LAST`,
+  "given-name-desc": sql`${schema.users.given_name} DESC NULLS LAST`,
+  "service-asc": sql`${schema.moderations.sp_name} ASC NULLS LAST`,
+  "service-desc": sql`${schema.moderations.sp_name} DESC NULLS LAST`,
+  "status-asc": asc(schema.moderations.status),
+  "status-desc": desc(schema.moderations.status),
+  "id-asc": asc(schema.moderations.id),
+  "id-desc": desc(schema.moderations.id),
+};
+
 export async function get_moderations_list(
   pg: IdentiteProconnectPgDatabase,
   {
@@ -153,7 +175,10 @@ export async function get_moderations_list(
         eq(schema.moderations.organization_id, schema.organizations.id),
       )
       .where(where)
-      .orderBy(asc(schema.moderations.created_at))
+      .orderBy(
+        order_map[search.search_sort ?? ""] ??
+          asc(schema.moderations.created_at),
+      )
       .limit(take)
       .offset(page * take);
     const [{ value: count } = { value: NaN }] = await tx

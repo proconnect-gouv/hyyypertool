@@ -20,6 +20,7 @@ import {
   SearchEmailIsland,
   SearchModeratedByIsland,
   SearchSiretIsland,
+  SortHeaderIsland,
 } from "#src/ui/moderations/Filter";
 import { row, table } from "#src/ui/table";
 import { urls } from "#src/urls";
@@ -53,6 +54,7 @@ const hx_moderations_base_props = {
 };
 const Moderations_Context = createContext({
   moderators_list: [] as string[],
+  search_sort: "",
   sp_names_list: [] as string[],
   query_result: {} as QueryResult,
   pagination: {} as Pagination,
@@ -79,6 +81,7 @@ export function ModerationsPage({
     <Moderations_Context.Provider
       value={{
         moderators_list,
+        search_sort: search.search_sort,
         sp_names_list,
         pagination,
         query_result,
@@ -203,22 +206,87 @@ function Filter({
   );
 }
 
+function aria_sort(
+  name: string,
+  search_sort: string,
+): "ascending" | "descending" | undefined {
+  if (search_sort === `${name}-asc`) return "ascending";
+  if (search_sort === `${name}-desc`) return "descending";
+  return undefined;
+}
+
 async function Table() {
-  const { pagination, query_result } = useContext(Moderations_Context);
+  const { search_sort, pagination, query_result } =
+    useContext(Moderations_Context);
   const { count, moderations } = query_result;
   return (
     <div id={MODERATION_TABLE_ID}>
       <table class={table()}>
         <thead>
           <tr>
-            <th>Statut</th>
-            <th>Date de création</th>
-            <th>Nom</th>
-            <th>Prénom</th>
-            <th>Email</th>
-            <th>Organisation cible</th>
-            <th>Service</th>
-            <th>ID</th>
+            <th>
+              <SortHeaderIsland
+                name="status"
+                label="Statut"
+                aria-sort={aria_sort("status", search_sort)}
+              />
+            </th>
+            <th>
+              <SortHeaderIsland
+                name="created"
+                label="Date de création"
+                aria-sort={aria_sort("created", search_sort)}
+              />
+            </th>
+            <th>
+              <SortHeaderIsland
+                name="updated"
+                label="Traité le"
+                aria-sort={aria_sort("updated", search_sort)}
+              />
+            </th>
+            <th>
+              <SortHeaderIsland
+                name="family-name"
+                label="Nom"
+                aria-sort={aria_sort("family-name", search_sort)}
+              />
+            </th>
+            <th>
+              <SortHeaderIsland
+                name="given-name"
+                label="Prénom"
+                aria-sort={aria_sort("given-name", search_sort)}
+              />
+            </th>
+            <th>
+              <SortHeaderIsland
+                name="email"
+                label="Email"
+                aria-sort={aria_sort("email", search_sort)}
+              />
+            </th>
+            <th>
+              <SortHeaderIsland
+                name="organization"
+                label="Organisation cible"
+                aria-sort={aria_sort("organization", search_sort)}
+              />
+            </th>
+            <th>
+              <SortHeaderIsland
+                name="service"
+                label="Service"
+                aria-sort={aria_sort("service", search_sort)}
+              />
+            </th>
+            <th>
+              <SortHeaderIsland
+                name="id"
+                label="ID"
+                aria-sort={aria_sort("id", search_sort)}
+              />
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -227,7 +295,7 @@ async function Table() {
           ))}
         </tbody>
         <Foot
-          colspan={8}
+          colspan={9}
           count={count}
           hx_query_props={{
             ...hx_moderations_base_props,
@@ -265,6 +333,11 @@ function Row({ key, moderation }: { key?: string; moderation: Moderation }) {
         />
       </td>
       <td>{date_to_string(new Date(moderation.created_at))}</td>
+      <td>
+        {moderation.moderated_at
+          ? date_to_string(new Date(moderation.moderated_at))
+          : "—"}
+      </td>
       <td
         class="max-w-32 overflow-hidden text-ellipsis"
         title={user.family_name ?? ""}

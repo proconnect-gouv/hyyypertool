@@ -703,6 +703,12 @@ describe("get_suggestions", () => {
             "is_category": true,
             "label": "Service",
           },
+          {
+            "hint": "sort:",
+            "insert": "sort:",
+            "is_category": true,
+            "label": "Tri",
+          },
         ]
       `);
     });

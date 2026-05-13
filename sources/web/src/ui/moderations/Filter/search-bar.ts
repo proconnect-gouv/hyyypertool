@@ -109,14 +109,15 @@ const qualifier_labels: Record<string, string> = {
   service: "Service",
 };
 
-const CATEGORIES: Suggestion[] = Object.entries(qualifier_labels).map(
-  ([name, label]) => ({
+const CATEGORIES: Suggestion[] = [
+  ...Object.entries(qualifier_labels).map(([name, label]) => ({
     label,
     hint: `${name}:`,
     insert: `${name}:`,
-    is_category: true,
-  }),
-);
+    is_category: true as const,
+  })),
+  { label: "Tri", hint: "sort:", insert: "sort:", is_category: true as const },
+];
 
 export function get_suggestions(
   token: string,
@@ -222,6 +223,103 @@ const qualifier_suggestions: Record<
     moderators
       .filter((m) => m.toLowerCase().includes(partial))
       .map((m) => ({ label: m, insert: `${prefix}by:${m}` })),
+
+  sort: (partial) =>
+    [
+      {
+        label: "Création — plus anciens en premier",
+        hint: "created-asc",
+        insert: "sort:created-asc",
+      },
+      {
+        label: "Création — plus récents en premier",
+        hint: "created-desc",
+        insert: "sort:created-desc",
+      },
+      {
+        label: "Traitement — plus anciens en premier",
+        hint: "updated-asc",
+        insert: "sort:updated-asc",
+      },
+      {
+        label: "Traitement — plus récents en premier",
+        hint: "updated-desc",
+        insert: "sort:updated-desc",
+      },
+      {
+        label: "Organisation — ordre alphabétique",
+        hint: "organization-asc",
+        insert: "sort:organization-asc",
+      },
+      {
+        label: "Organisation — ordre alphabétique inversé",
+        hint: "organization-desc",
+        insert: "sort:organization-desc",
+      },
+      {
+        label: "Email — ordre alphabétique",
+        hint: "email-asc",
+        insert: "sort:email-asc",
+      },
+      {
+        label: "Email — ordre alphabétique inversé",
+        hint: "email-desc",
+        insert: "sort:email-desc",
+      },
+      {
+        label: "ID — du plus petit",
+        hint: "id-asc",
+        insert: "sort:id-asc",
+      },
+      {
+        label: "ID — du plus grand",
+        hint: "id-desc",
+        insert: "sort:id-desc",
+      },
+      {
+        label: "Nom — ordre alphabétique",
+        hint: "family-name-asc",
+        insert: "sort:family-name-asc",
+      },
+      {
+        label: "Nom — ordre alphabétique inversé",
+        hint: "family-name-desc",
+        insert: "sort:family-name-desc",
+      },
+      {
+        label: "Prénom — ordre alphabétique",
+        hint: "given-name-asc",
+        insert: "sort:given-name-asc",
+      },
+      {
+        label: "Prénom — ordre alphabétique inversé",
+        hint: "given-name-desc",
+        insert: "sort:given-name-desc",
+      },
+      {
+        label: "Service — ordre alphabétique",
+        hint: "service-asc",
+        insert: "sort:service-asc",
+      },
+      {
+        label: "Service — ordre alphabétique inversé",
+        hint: "service-desc",
+        insert: "sort:service-desc",
+      },
+      {
+        label: "Statut — ordre alphabétique",
+        hint: "status-asc",
+        insert: "sort:status-asc",
+      },
+      {
+        label: "Statut — ordre alphabétique inversé",
+        hint: "status-desc",
+        insert: "sort:status-desc",
+      },
+    ].filter(
+      (s) =>
+        s.hint.includes(partial) || s.label.toLowerCase().includes(partial),
+    ),
 };
 
 function get_value_suggestions(

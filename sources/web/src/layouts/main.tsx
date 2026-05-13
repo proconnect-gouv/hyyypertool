@@ -23,12 +23,21 @@ export function Main_Layout({ children }: PropsWithChildren) {
   const username = z_username.parse(userinfo);
   return (
     <RootLayout>
+      <a
+        href="#main-content"
+        aria-label="Aller au contenu principal"
+        class="fixed top-2 left-2 z-50 rounded bg-white px-4 py-2 text-sm shadow-lg not-focus:absolute not-focus:h-px not-focus:w-px not-focus:overflow-hidden not-focus:whitespace-nowrap not-focus:[clip-path:inset(50%)]"
+      >
+        Aller au contenu principal
+      </a>
       <Header
         username={username}
         email={userinfo?.email}
         hyyyper_user={hyyyper_user}
       />
-      {children}
+      <div id="main-content" tabindex={-1}>
+        {children}
+      </div>
       <NotificationIsland nonce={nonce} />
     </RootLayout>
   );

@@ -7,6 +7,7 @@ export type Token =
   | "is"
   | "service"
   | "siret"
+  | "sort"
   | "type";
 
 export interface Search {
@@ -21,6 +22,7 @@ export interface Search {
   search_email: string;
   search_moderated_by: string;
   search_siret: string;
+  search_sort: string;
   search_status: string;
   search_text: string;
   search_type: string;
@@ -41,6 +43,9 @@ const positive_handlers: Record<Token, (s: Search, value: string) => void> = {
     if (v === "processed") search.processed_requests = true;
     else if (v === "pending") search.processed_requests = false;
     else search.search_status = v;
+  },
+  sort: (search, v) => {
+    search.search_sort = v;
   },
   type: (search, v) => {
     search.search_type = v;
@@ -64,6 +69,7 @@ const negative_handlers: Record<Token, (s: Search, value: string) => void> = {
   by: (search, v) => {
     search.exclude_moderated_by = v;
   },
+  sort: () => {},
   is: (search, v) => {
     if (v === "pending") search.processed_requests = true;
     if (v === "processed") search.processed_requests = false;
@@ -96,6 +102,7 @@ export function parse_q(q: string): Search {
     search_email: "",
     search_moderated_by: "",
     search_siret: "",
+    search_sort: "",
     search_status: "",
     search_text: "",
     search_type: "",
@@ -157,6 +164,7 @@ const serializers: Record<string, (s: Search) => string[]> = {
   ],
   service: (search) =>
     search.exclude_sp_names.map((sp) => `-service:${quote(sp)}`),
+  sort: (search) => (search.search_sort ? [`sort:${search.search_sort}`] : []),
   text: (search) => (search.search_text ? [search.search_text] : []),
 };
 
