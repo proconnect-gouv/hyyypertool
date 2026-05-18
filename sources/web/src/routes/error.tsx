@@ -28,8 +28,11 @@ export function error_handler(error: Error, c: Context) {
       // Handle false negatives here :)
       .with(P.instanceOf(NotFoundError), () => notFound())
       // OK this should not happen...
-      .otherwise((error) => {
+      .otherwise(() => {
         consola.error(error);
+        if (error instanceof AggregateError) {
+          consola.error(error.errors);
+        }
         sentry.captureException(error);
 
         //

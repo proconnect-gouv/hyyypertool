@@ -8,7 +8,7 @@ exports[`render investigation section 1`] = `
   <li>
     <a
       href="https://lannuaire.service-public.fr/recherche?where=75015&amp;whoWhat=Mairie"
-      class="disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface shadow-[inset_0_0_0_1px_var(--color-border)] mr-2 bg-white dark:bg-surface-hover"
+      class="disabled:bg-grey-200 disabled:text-grey-425 dark:disabled:bg-grey-850 dark:disabled:text-grey-625 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface-hover dark:hover:bg-surface-hover shadow-[inset_0_0_0_1px_var(--color-border)] mr-2 bg-white dark:bg-surface-hover"
       rel="noopener noreferrer"
       target="_blank"
       >Chercher la mairie associée</a
@@ -17,7 +17,7 @@ exports[`render investigation section 1`] = `
   <li>
     <a
       href="https://lannuaire.service-public.fr/recherche?whoWhat=&amp;where=75015"
-      class="disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface shadow-[inset_0_0_0_1px_var(--color-border)] mr-2 bg-white dark:bg-surface-hover"
+      class="disabled:bg-grey-200 disabled:text-grey-425 dark:disabled:bg-grey-850 dark:disabled:text-grey-625 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface-hover dark:hover:bg-surface-hover shadow-[inset_0_0_0_1px_var(--color-border)] mr-2 bg-white dark:bg-surface-hover"
       rel="noopener noreferrer"
       target="_blank"
       >Chercher les services publics associés</a
@@ -26,7 +26,7 @@ exports[`render investigation section 1`] = `
   <li>
     <a
       href="https://www.banatic.interieur.gouv.fr/intercommunalite/200099711"
-      class="disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface shadow-[inset_0_0_0_1px_var(--color-border)] mr-2 bg-white dark:bg-surface-hover"
+      class="disabled:bg-grey-200 disabled:text-grey-425 dark:disabled:bg-grey-850 dark:disabled:text-grey-625 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface-hover dark:hover:bg-surface-hover shadow-[inset_0_0_0_1px_var(--color-border)] mr-2 bg-white dark:bg-surface-hover"
       rel="noopener noreferrer"
       target="_blank"
       >Chercher via Banatic</a
@@ -35,7 +35,7 @@ exports[`render investigation section 1`] = `
   <li>
     <a
       href="https://www.pour-les-personnes-agees.gouv.fr/annuaire-ehpad-et-comparateur-de-prix-et-restes-a-charge"
-      class="disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface shadow-[inset_0_0_0_1px_var(--color-border)] mr-2 bg-white dark:bg-surface-hover"
+      class="disabled:bg-grey-200 disabled:text-grey-425 dark:disabled:bg-grey-850 dark:disabled:text-grey-625 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface-hover dark:hover:bg-surface-hover shadow-[inset_0_0_0_1px_var(--color-border)] mr-2 bg-white dark:bg-surface-hover"
       rel="noopener noreferrer"
       target="_blank"
       >Chercher via EHPAD</a

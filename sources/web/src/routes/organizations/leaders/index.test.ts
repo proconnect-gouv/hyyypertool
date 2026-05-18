@@ -54,7 +54,7 @@ test("GET /organizations/leaders - happy path with document", async () => {
   expect(await render_html(await response.text())).toMatchInlineSnapshot(
     `
       "<a
-        class="disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface shadow-[inset_0_0_0_1px_var(--color-border)] bg-white"
+        class="disabled:bg-grey-200 disabled:text-grey-425 dark:disabled:bg-grey-850 dark:disabled:text-grey-625 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface-hover dark:hover:bg-surface-hover shadow-[inset_0_0_0_1px_var(--color-border)] dark:bg-transparent bg-white"
         href="https://example.com/leaders-doc.pdf"
         rel="noopener noreferrer"
         target="_blank"
@@ -87,7 +87,7 @@ test("GET /organizations/leaders - timeout error shows retry button", async () =
   expect(await render_html(await response.text())).toMatchInlineSnapshot(
     `
       "<button
-        class="disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface bg-transparent shadow-[inset_0_0_0_1px_var(--color-border)]"
+        class="disabled:bg-grey-200 disabled:text-grey-425 dark:disabled:bg-grey-850 dark:disabled:text-grey-625 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface-hover dark:hover:bg-surface-hover bg-transparent shadow-[inset_0_0_0_1px_var(--color-border)] dark:bg-transparent"
         hx-get="/organizations/leaders?retry=true&amp;siret=12345678901234"
         hx-swap="outerHTML"
       >
@@ -135,7 +135,7 @@ test("GET /organizations/leaders - retry succeeds with longer timeout", async ()
   expect(response.status).toBe(200);
   expect(await render_html(await response.text())).toMatchInlineSnapshot(`
     "<a
-      class="disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface shadow-[inset_0_0_0_1px_var(--color-border)] bg-white"
+      class="disabled:bg-grey-200 disabled:text-grey-425 dark:disabled:bg-grey-850 dark:disabled:text-grey-625 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface-hover dark:hover:bg-surface-hover shadow-[inset_0_0_0_1px_var(--color-border)] dark:bg-transparent bg-white"
       href="https://example.com/retry-success.pdf"
       rel="noopener noreferrer"
       target="_blank"
@@ -166,7 +166,7 @@ test("GET /organizations/leaders - retry fails, button still shown for further r
   expect(response.status).toBe(200);
   expect(await render_html(await response.text())).toMatchInlineSnapshot(`
     "<button
-      class="disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface bg-transparent shadow-[inset_0_0_0_1px_var(--color-border)]"
+      class="disabled:bg-grey-200 disabled:text-grey-425 dark:disabled:bg-grey-850 dark:disabled:text-grey-625 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface-hover dark:hover:bg-surface-hover bg-transparent shadow-[inset_0_0_0_1px_var(--color-border)] dark:bg-transparent"
       hx-get="/organizations/leaders?retry=true&amp;siret=12345678901234"
       hx-swap="outerHTML"
     >
@@ -211,7 +211,7 @@ test("GET /organizations/leaders - expired token shows error message", async () 
   expect(await render_html(await response.text())).toMatchInlineSnapshot(
     `
       "<button
-        class="disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface bg-transparent shadow-[inset_0_0_0_1px_var(--color-border)]"
+        class="disabled:bg-grey-200 disabled:text-grey-425 dark:disabled:bg-grey-850 dark:disabled:text-grey-625 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface-hover dark:hover:bg-surface-hover bg-transparent shadow-[inset_0_0_0_1px_var(--color-border)] dark:bg-transparent"
         disabled=""
       >
         Erreur API — contacter l&#39;équipe tech

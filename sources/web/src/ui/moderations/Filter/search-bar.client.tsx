@@ -1,6 +1,7 @@
 /* @jsxImportSource preact */
 
 import { button } from "#src/ui/button";
+import { dropdown } from "#src/ui/dropdown";
 import { input, input_group, label } from "#src/ui/form";
 import { effect, signal } from "@preact/signals";
 import { useEffect, useRef } from "preact/hooks";
@@ -203,20 +204,15 @@ export function SearchBar({
         </button>
 
         {dropdown_open.value && suggestions.length > 0 && (
-          <ul
-            class="absolute top-full left-0 z-10 mt-1 max-h-80 w-full overflow-y-auto rounded border border-gray-300 bg-white py-1 shadow-lg"
-            role="listbox"
-          >
+          <ul class={dropdown().list()} role="listbox">
             {suggestions.map((suggestion, i) => (
               <li
                 key={suggestion.insert}
                 role="option"
                 aria-selected={i === selected_index.value}
-                class={`flex cursor-pointer items-center justify-between px-3 py-1.5 text-sm ${
-                  i === selected_index.value
-                    ? "bg-blue-50 text-blue-900"
-                    : "hover:bg-gray-50"
-                }`}
+                class={dropdown({
+                  selected: i === selected_index.value,
+                }).item()}
                 onMouseDown={(e) => {
                   e.preventDefault();
                   accept_suggestion(suggestion);
@@ -224,7 +220,7 @@ export function SearchBar({
               >
                 <span>{suggestion.label}</span>
                 {suggestion.hint && (
-                  <span class="text-xs text-gray-400">{suggestion.hint}</span>
+                  <span class={dropdown().hint()}>{suggestion.hint}</span>
                 )}
               </li>
             ))}

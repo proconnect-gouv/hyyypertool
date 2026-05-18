@@ -66,7 +66,7 @@ test("render about section", async () => {
               const props = {
                 children: "",
                 className:
-                  "disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface bg-transparent shadow-[inset_0_0_0_1px_var(--color-border)] aspect-square justify-center p-0 ml-2",
+                  "disabled:bg-grey-200 disabled:text-grey-425 dark:disabled:bg-grey-850 dark:disabled:text-grey-625 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface-hover dark:hover:bg-surface-hover bg-transparent shadow-[inset_0_0_0_1px_var(--color-border)] dark:bg-transparent aspect-square justify-center p-0 ml-2",
                 text: "cached_libelle",
               };
               let mounted = false;
@@ -90,7 +90,7 @@ test("render about section", async () => {
           <span class="ml-2 inline-flex items-center gap-1"
             ><a
               href="https://annuaire-entreprises.data.gouv.fr/entreprise/siret"
-              class="disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface bg-transparent shadow-[inset_0_0_0_1px_var(--color-border)]"
+              class="disabled:bg-grey-200 disabled:text-grey-425 dark:disabled:bg-grey-850 dark:disabled:text-grey-625 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 px-3 py-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface-hover dark:hover:bg-surface-hover bg-transparent shadow-[inset_0_0_0_1px_var(--color-border)] dark:bg-transparent"
               rel="noopener noreferrer"
               target="_blank"
               >Fiche annuaire</a
@@ -102,7 +102,7 @@ test("render about section", async () => {
                 const props = {
                   children: "",
                   className:
-                    "disabled:bg-grey-200 disabled:text-grey-425 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface bg-transparent shadow-[inset_0_0_0_1px_var(--color-border)] aspect-square justify-center p-0",
+                    "disabled:bg-grey-200 disabled:text-grey-425 dark:disabled:bg-grey-850 dark:disabled:text-grey-625 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface-hover dark:hover:bg-surface-hover bg-transparent shadow-[inset_0_0_0_1px_var(--color-border)] dark:bg-transparent aspect-square justify-center p-0",
                   text: "siret",
                 };
                 let mounted = false;
