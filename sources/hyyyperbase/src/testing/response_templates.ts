@@ -56,6 +56,7 @@ export async function insert_domain_name_not_found_response(
       `,
       created_at: new Date("2024-11-12T17:55:31+01:00"),
       label: "Nom de domaine introuvable",
+      end_user_reason: "Ciao bye",
       updated_at: new Date("2024-11-12T17:55:31+01:00"),
       updated_by: user?.id,
     })

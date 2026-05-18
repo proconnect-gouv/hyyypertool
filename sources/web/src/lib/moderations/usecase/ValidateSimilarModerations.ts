@@ -23,7 +23,7 @@ export function ValidateSimilarModerations(pg: IdentiteProconnectPgDatabase) {
     userinfo: { email: string; given_name: string; usual_name: string };
   }) {
     // Auto-validate the matching moderations following PCI rules
-    const reason =
+    const end_user_reason =
       domain_verification_type === "verified"
         ? "[ProConnect] ✨ Validation automatique - domaine vérifié"
         : "[ProConnect] ✨ Validation automatique - domaine externe vérifié";
@@ -57,7 +57,7 @@ export function ValidateSimilarModerations(pg: IdentiteProconnectPgDatabase) {
           const update = build_moderation_update({
             comment: moderation.comment,
             userinfo,
-            reason,
+            end_user_reason,
             type: "VALIDATED",
           });
           await update_moderation_by_id(moderation.id, update);

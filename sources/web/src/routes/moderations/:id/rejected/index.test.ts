@@ -86,7 +86,7 @@ test("PATCH /moderations/:id/rejected rejects moderation via new crisp conversat
       method: "PATCH",
       body: new URLSearchParams({
         message: "Your request has been rejected.",
-        reason: "Not eligible",
+        end_user_reason: "Not eligible",
         subject: "[ProConnect] Rejected",
       }),
     });
@@ -161,7 +161,7 @@ test("PATCH /moderations/:id/rejected rejects moderation via existing crisp conv
       method: "PATCH",
       body: new URLSearchParams({
         message: "Your request has been rejected.",
-        reason: "Not eligible",
+        end_user_reason: "Not eligible",
         subject: "[ProConnect] Rejected",
       }),
     });
@@ -221,7 +221,7 @@ test("PATCH /moderations/:id/rejected falls back to nickname when get_user fails
       method: "PATCH",
       body: new URLSearchParams({
         message: "Your request has been rejected.",
-        reason: "Not eligible",
+        end_user_reason: "Not eligible",
         subject: "[ProConnect] Rejected",
       }),
     });

@@ -27,7 +27,7 @@ async function mark_as_processed(
   const update = build_moderation_update({
     comment: moderation.comment,
     userinfo,
-    reason: "DUPLICATE",
+    end_user_reason: "DUPLICATE",
     type: "REJECTED",
   });
 

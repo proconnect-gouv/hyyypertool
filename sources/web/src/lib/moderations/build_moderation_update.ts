@@ -11,12 +11,12 @@ import {
 export function build_moderation_update({
   comment,
   userinfo,
-  reason,
+  end_user_reason,
   type,
 }: {
   comment: string | null;
   userinfo: { email: string };
-  reason: string;
+  end_user_reason: string;
   type: CommentMeta["type"];
 }) {
   const moderated_by = userinfo.email;
@@ -24,7 +24,7 @@ export function build_moderation_update({
   return {
     comment: append_comment(comment, {
       created_by: userinfo.email,
-      reason,
+      reason: end_user_reason,
       type,
     }),
     moderated_by,

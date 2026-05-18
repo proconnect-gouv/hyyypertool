@@ -21,9 +21,9 @@ afterAll(() => {
 //
 
 const templates = [
-  { id: 1, label: "Adresse email invalide" },
-  { id: 2, label: "Organisation inconnue" },
-  { id: 3, label: "Doublon" },
+  { id: 1, label: "Adresse email invalide", end_user_reason: "" },
+  { id: 2, label: "Organisation inconnue", end_user_reason: "" },
+  { id: 3, label: "Doublon", end_user_reason: "" },
 ];
 
 //
@@ -78,7 +78,9 @@ test("selecting a template whose label has surrounding spaces still fetches by i
   const { container } = render(
     <ResponseMessageSelectorClient
       moderation_id={42}
-      response_templates={[{ id: 7, label: "  Doublon  " }]}
+      response_templates={[
+        { id: 7, label: "  Doublon  ", end_user_reason: "" },
+      ]}
     />,
   );
 

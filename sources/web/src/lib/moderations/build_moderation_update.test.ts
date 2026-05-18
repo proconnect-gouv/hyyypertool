@@ -12,7 +12,7 @@ describe("build_moderation_update", () => {
       userinfo: {
         email: "test@example.com",
       },
-      reason: "Test reason",
+      end_user_reason: "Test reason",
       type: "VALIDATED",
     });
 
@@ -28,7 +28,7 @@ describe("build_moderation_update", () => {
       userinfo: {
         email: "mod@example.com",
       },
-      reason: "New update",
+      end_user_reason: "New update",
       type: "REJECTED",
     });
 
@@ -43,7 +43,7 @@ describe("build_moderation_update", () => {
       userinfo: {
         email: "admin@example.com",
       },
-      reason: "First comment",
+      end_user_reason: "First comment",
       type: "VALIDATED",
     });
 

@@ -1,0 +1,1 @@
+ALTER TABLE "response_templates" ADD COLUMN "end_user_reason" text DEFAULT '' NOT NULL;
