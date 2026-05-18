@@ -53,6 +53,10 @@ export const app_env = z
     CRISP_WEBSITE_ID: z.string().trim(),
     DEPLOY_ENV: DEPLOY_ENV_SHEMA.default("preview"),
     ENTREPRISE_API_GOUV_TOKEN: z.string().trim(),
+    FEATURE_RATE_LIMIT_BY_IP: z
+      .string()
+      .default("true")
+      .transform((v) => v !== "false"),
     ENTREPRISE_API_GOUV_URL: z.url().trim(),
     GIT_SHA: GIT_SHA_SHEMA,
     HOST: z.url().trim().optional(),

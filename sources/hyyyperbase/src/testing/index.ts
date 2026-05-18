@@ -10,14 +10,16 @@ import * as schema from "../schema";
 
 //
 
-const client = new PGlite(undefined, { debug: 0 });
+export const pglite_client = new PGlite(undefined, { debug: 0 });
 
 const migrationsFolder = new URL("../../migrations", import.meta.url).pathname;
 
-export const hyyyper_pglite: HyyyperPgDatabase = drizzle(client, { schema });
+export const hyyyper_pglite: HyyyperPgDatabase = drizzle(pglite_client, {
+  schema,
+});
 
 export async function setup() {
-  await migrate(drizzle(client, { schema }), { migrationsFolder });
+  await migrate(drizzle(pglite_client, { schema }), { migrationsFolder });
 }
 
 export async function empty_database(pg: HyyyperPgDatabase = hyyyper_pglite) {
