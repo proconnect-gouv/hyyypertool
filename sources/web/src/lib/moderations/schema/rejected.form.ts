@@ -5,9 +5,9 @@ import { z } from "zod";
 //
 
 export const reject_form_schema = z.object({
-  message: z.string().trim(),
-  reason: z.string().trim(),
-  subject: z.string().trim(),
+  message: z.string().trim().min(1),
+  subject: z.string().trim().min(1),
+  end_user_reason: z.string().trim().min(1),
 });
 
 export type RejectedMessage = z.infer<typeof reject_form_schema>;

@@ -7,6 +7,7 @@ import { integer, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
 export const response_templates = pgTable("response_templates", {
   content: text("content").notNull(),
   created_at: timestamp("created_at").defaultNow().notNull(),
+  end_user_reason: text("end_user_reason").notNull().default(""),
   id: serial("id").primaryKey(),
   label: text("label").notNull().unique(),
   updated_at: timestamp("updated_at").defaultNow().notNull(),

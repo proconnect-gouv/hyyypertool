@@ -14,7 +14,7 @@ export async function RefusalModal({
   response_templates,
 }: {
   userEmail: string;
-  response_templates: { id: number; label: string }[];
+  response_templates: { id: number; label: string; end_user_reason: string }[];
 }) {
   const { moderation } = useContext(context);
   const textarea_id = `rejection-message-${moderation.id}`;
@@ -71,13 +71,21 @@ export async function RefusalModal({
           moderation_id={moderation.id}
           response_templates={response_templates}
         />
+        <p class="mt-3 mb-1 text-sm">Motif pour l'utilisateur :</p>
+        <input
+          type="text"
+          id={`end-user-reason-${moderation.id}`}
+          name="end_user_reason"
+          class={input()}
+          placeholder="Motif de refus affiché à l'usager"
+        />
         <div class="my-2">
           <label class={label()} for={textarea_id}>
             Message
           </label>
           <textarea
             class={input()}
-            rows={15}
+            rows={12}
             id={textarea_id}
             name={reject_form_schema.keyof().enum.message}
           />

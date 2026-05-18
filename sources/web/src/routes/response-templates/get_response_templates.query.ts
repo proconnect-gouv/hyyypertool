@@ -16,6 +16,7 @@ export async function get_response_templates(
       label: true,
       created_at: true,
       updated_at: true,
+      end_user_reason: true,
     },
     orderBy: asc(schema.response_templates.label),
     where: (table, { or, ilike }) =>

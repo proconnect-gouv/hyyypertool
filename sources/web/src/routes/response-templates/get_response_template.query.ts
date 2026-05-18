@@ -8,6 +8,7 @@ export async function get_response_template(pg: HyyyperPgDatabase, id: number) {
   return pg.query.response_templates.findFirst({
     columns: {
       content: true,
+      end_user_reason: true,
       id: true,
       label: true,
       created_at: true,
