@@ -1,5 +1,17 @@
 # Changelog
 
+## [2026.5.7](https://github.com/proconnect-gouv/hyyypertool/compare/2026.5.6...2026.5.7) (2026-05-18)
+
+### Changements
+
+- ✨ Tri par date de création explicite par défaut
+
+La recherche par défaut inclut désormais `sort:created-asc` afin de rendre explicite l'ordre de tri appliqué. Le filtre par défaut est maintenant `is:pending -type:non_verified_domain sort:created-asc`.
+
+### Ajouté
+
+- ✨ moderations: make default sort order explicit (#1620) (72117b7b)
+
 ## [2026.5.6](https://github.com/proconnect-gouv/hyyypertool/compare/2026.5.5...2026.5.6) (2026-05-18)
 
 ### Changements
