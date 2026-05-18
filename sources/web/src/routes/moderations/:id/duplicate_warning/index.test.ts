@@ -120,7 +120,7 @@ test("GET /moderations/:id/duplicate_warning", async () => {
         >
           <div class="mb-4 max-w-full flex-[1_1_100%] px-2 text-right">
             <button
-              class="disabled:bg-grey-200 disabled:text-grey-425 inline-flex min-h-10 w-fit items-center gap-2 px-4 py-2 text-base leading-6 font-medium text-white no-underline disabled:cursor-not-allowed bg-error hover:bg-error-hover"
+              class="disabled:bg-grey-200 disabled:text-grey-425 dark:disabled:bg-grey-850 dark:disabled:text-grey-625 inline-flex min-h-10 w-fit items-center gap-2 px-4 py-2 text-base leading-6 font-medium text-white no-underline disabled:cursor-not-allowed bg-error hover:bg-error-hover dark:bg-error dark:hover:bg-error-hover dark:text-white"
               type="submit"
             >
               Marquer la modération comme traité
