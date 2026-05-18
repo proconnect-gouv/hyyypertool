@@ -1,5 +1,17 @@
 # Changelog
 
+## [2026.5.8](https://github.com/proconnect-gouv/hyyypertool/compare/2026.5.7...2026.5.8) (2026-05-18)
+
+### Changements
+
+- 🔒 Limitation du débit par adresse IP
+
+Ajout d'un middleware de limitation du débit (rate limiting) basé sur l'adresse IP, afin de bloquer les scanners et scrapers malveillants. Les compteurs sont stockés dans une table PostgreSQL non journalisée (`UNLOGGED`) pour des performances optimales. La fonctionnalité est activée via le flag `FEATURE_RATE_LIMIT_BY_IP`.
+
+### Corrigé
+
+- 🔒️ rate-limit: add IP-based rate limiting via RateLimiterPostgres (#1621) (0e22a72d)
+
 ## [2026.5.7](https://github.com/proconnect-gouv/hyyypertool/compare/2026.5.6...2026.5.7) (2026-05-18)
 
 ### Changements
