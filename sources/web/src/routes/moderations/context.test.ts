@@ -5,7 +5,7 @@ import { search_schema } from "./context";
 
 //
 
-test("SearchSchema > empty object (default q=is:pending -type:non_verified_domain)", () => {
+test("SearchSchema > empty object (default q=is:pending -type:non_verified_domain sort:created-asc)", () => {
   const { q: search } = search_schema.parse({});
 
   expect(search).toEqual({
@@ -15,7 +15,7 @@ test("SearchSchema > empty object (default q=is:pending -type:non_verified_domai
     search_email: "",
     search_moderated_by: "",
     search_siret: "",
-    search_sort: "",
+    search_sort: "created-asc",
     search_status: "",
     exclude_email: "",
     exclude_moderated_by: "",
