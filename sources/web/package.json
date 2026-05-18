@@ -68,6 +68,6 @@
     "@types/lodash.sortby": "4.7.9",
     "@types/nprogress": "0.2.3",
     "@types/pg": "8.20.0",
-    "prettier": "3.8.1"
+    "prettier": "3.8.3"
   }
 }
