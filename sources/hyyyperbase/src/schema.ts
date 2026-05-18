@@ -1,8 +1,23 @@
 //
 
-import { integer, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
+import {
+  bigint,
+  integer,
+  pgTable,
+  serial,
+  text,
+  timestamp,
+  varchar,
+} from "drizzle-orm/pg-core";
 
 //
+
+// from https://github.com/animir/node-rate-limiter-flexible/blob/v11.1.0/lib/RateLimiterPostgres.js#L184-L188
+export const rate_limiter = pgTable("rate_limiter", {
+  key: varchar("key", { length: 255 }).primaryKey(),
+  points: integer("points").notNull().default(0),
+  expire: bigint("expire", { mode: "number" }),
+});
 
 export const response_templates = pgTable("response_templates", {
   content: text("content").notNull(),

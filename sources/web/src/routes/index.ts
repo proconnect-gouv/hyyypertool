@@ -8,11 +8,13 @@ import { set_fetch } from "#src/middleware/fetch";
 import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import { set_identite_pg_database } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
+import { rate_limit } from "#src/middleware/rate-limit";
 import { set_sentry } from "#src/middleware/sentry";
 import { schema } from "@~/hyyyperbase";
 import consola from "consola";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Hono } from "hono";
+import pg from "pg";
 import dev_router from "./___dev___";
 import admin_router from "./admin";
 import auth_router from "./auth";
@@ -39,9 +41,14 @@ import readyz_router from "./readyz";
 const {
   ASSETS_PATH,
   DEPLOY_ENV,
+  FEATURE_RATE_LIMIT_BY_IP,
   HYYYPERBASE_DATABASE_URL,
   PROCONNECT_IDENTITE_DATABASE_URL,
 } = app_env.parse(process.env);
+
+const rate_limit_pool = new pg.Pool({
+  connectionString: HYYYPERBASE_DATABASE_URL,
+});
 
 //
 
@@ -50,6 +57,11 @@ const app = new Hono<{ Bindings: AppEnv }>()
   .use(contextStorage())
   // TODO: Re-enable compression when Bun supports CompressionStream
   // .use(compress())
+  .use(
+    FEATURE_RATE_LIMIT_BY_IP
+      ? rate_limit({ storeClient: rate_limit_pool })
+      : (_, next) => next(),
+  )
   .use(set_sentry())
   .use(set_nonce())
   .use(set_fetch())

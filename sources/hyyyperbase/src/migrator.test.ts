@@ -34,6 +34,9 @@ describe("pglite", () => {
     expect(rows).toMatchInlineSnapshot(`
       [
         {
+          "table_name": "rate_limiter",
+        },
+        {
           "table_name": "response_templates",
         },
         {
@@ -56,6 +59,7 @@ describe.skipIf(!HYYYPERBASE_DATABASE_URL)("node-postgres", () => {
     const db = drizzle_node(pg.client, { schema });
     // Drop all tables for clean migration test
     await db.transaction(async (tx) => {
+      await tx.execute(sql`DROP TABLE IF EXISTS rate_limiter CASCADE;`);
       await tx.execute(sql`DROP TABLE IF EXISTS response_templates CASCADE;`);
       await tx.execute(sql`DROP TABLE IF EXISTS users CASCADE;`);
       await tx.execute(sql`DROP TABLE IF EXISTS drizzle.__drizzle_migrations;`);
@@ -67,6 +71,9 @@ describe.skipIf(!HYYYPERBASE_DATABASE_URL)("node-postgres", () => {
 
     expect(rows).toMatchInlineSnapshot(`
       [
+        {
+          "table_name": "rate_limiter",
+        },
         {
           "table_name": "response_templates",
         },
