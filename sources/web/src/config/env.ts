@@ -72,6 +72,7 @@ export const app_env = z
       .enum(["development", "production", "test"])
       .default("development"),
     POLL_INTERVAL: z.coerce.number().default(11),
+    RATE_LIMIT_POINTS: z.coerce.number().default(120),
     PORT: z.coerce.number().default(3000),
     PROCONNECT_IDENTITE_DATABASE_URL: z
       .url()
