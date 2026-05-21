@@ -12,3 +12,5 @@ export const reject_form_schema = z.object({
 });
 
 export type RejectedMessage = z.infer<typeof reject_form_schema>;
+
+export const reject_form_fields = reject_form_schema.keyof().enum;

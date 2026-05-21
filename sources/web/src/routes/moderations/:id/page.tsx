@@ -1,8 +1,8 @@
 //
 
 import { hx_trigger_from_body } from "#src/htmx";
-import { IsUserExternalMember, MODERATION_EVENTS } from "#src/lib/moderations";
-import { CountUserMemberships, SuggestSameUserEmails } from "#src/lib/users";
+import { MODERATION_EVENTS } from "#src/lib/moderations";
+import { CountUserMemberships } from "#src/lib/users";
 import type { GetModerationWithDetailsDto } from "#src/queries/moderations";
 import { type GetOrganizationMemberDto } from "#src/queries/organizations";
 import { button } from "#src/ui/button";
@@ -23,8 +23,8 @@ import { Investigation as Investigation_User } from "#src/ui/users/Investigation
 import { urls } from "#src/urls";
 import type { IdentiteProconnectPgDatabase } from "@~/identite-proconnect/database";
 import { createContext, useContext } from "hono/jsx";
+import type { ResponseTemplateDto } from "../../response-templates/get_response_templates.query";
 import { ModerationExchanges } from "./ModerationExchanges";
-import { SuggestOrganizationDomains } from "./SuggestOrganizationDomains";
 import type { get_organization_by_id } from "./get_organization_by_id.query";
 
 //
@@ -40,12 +40,7 @@ type PageData = {
   organization_member: OrganizationMember;
   query_domain_count: Promise<number>;
   query_organization_members_count: Promise<number>;
-  response_templates: {
-    id: number;
-    label: string;
-    end_user_reason: string;
-    allow_editing: boolean;
-  }[];
+  response_templates: ResponseTemplateDto[];
   identite_pg: IdentiteProconnectPgDatabase;
 };
 
@@ -157,18 +152,7 @@ async function ModerationPageContent() {
         <hr class="border-none py-3" />
 
         <Actions
-          value={{
-            moderation,
-            query_suggest_same_user_emails: SuggestSameUserEmails({
-              pg: identite_pg,
-            }),
-            query_is_user_external_member: IsUserExternalMember({
-              pg: identite_pg,
-            }),
-            query_suggest_organization_domains: SuggestOrganizationDomains({
-              pg: identite_pg,
-            }),
-          }}
+          moderation={moderation}
           response_templates={response_templates}
         />
 

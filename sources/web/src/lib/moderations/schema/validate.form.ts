@@ -11,3 +11,6 @@ export const validate_form_schema = z.object({
   send_notification: z.stringbool().default(false),
   verification_type: VerificationTypeSchema.optional(),
 });
+
+export const validate_form_fields = validate_form_schema.keyof().enum;
+export const validate_add_member = validate_form_schema.shape.add_member.enum;

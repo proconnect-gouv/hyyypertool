@@ -1,5 +1,9 @@
 /* @jsxImportSource preact */
 
+import {
+  validate_add_member,
+  validate_form_fields,
+} from "#src/lib/moderations/schema";
 import { checkbox_group, input, radio_group } from "#src/ui/form";
 import { useCallback, useState } from "preact/hooks";
 
@@ -32,7 +36,7 @@ export function MemberAndDomainPicker({
         <input
           class={input()}
           id="add_domain_checkbox"
-          name="add_domain"
+          name={validate_form_fields.add_domain}
           type="checkbox"
           value="true"
           checked={add_domain}
@@ -53,10 +57,10 @@ export function MemberAndDomainPicker({
           <input
             class={input()}
             id="add_member_internal"
-            name="add_member"
+            name={validate_form_fields.add_member}
             required
             type="radio"
-            value="AS_INTERNAL"
+            value={validate_add_member.AS_INTERNAL}
             checked={is_internal}
             onChange={() => handle_member_change(true)}
           />
@@ -74,10 +78,10 @@ export function MemberAndDomainPicker({
           <input
             class={input()}
             id="add_member_external"
-            name="add_member"
+            name={validate_form_fields.add_member}
             required
             type="radio"
-            value="AS_EXTERNAL"
+            value={validate_add_member.AS_EXTERNAL}
             checked={!is_internal}
             onChange={() => handle_member_change(false)}
           />

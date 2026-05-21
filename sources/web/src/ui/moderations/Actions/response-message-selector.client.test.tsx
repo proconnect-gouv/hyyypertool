@@ -2,6 +2,7 @@
 import { GlobalRegistrator } from "@happy-dom/global-registrator";
 import { cleanup, fireEvent, render, waitFor } from "@testing-library/preact";
 import { afterAll, afterEach, beforeAll, expect, mock, test } from "bun:test";
+import { createRef } from "preact";
 import { ResponseMessageSelectorClient } from "./response-message-selector.client";
 
 //
@@ -39,10 +40,12 @@ const templates = [
 //
 
 test("renders template labels as datalist options", () => {
+  const textarea_ref = createRef<HTMLTextAreaElement>();
   const { container } = render(
     <ResponseMessageSelectorClient
       moderation_id={42}
       response_templates={templates}
+      textarea_ref={textarea_ref}
     />,
   );
 
@@ -58,14 +61,17 @@ test("renders template labels as datalist options", () => {
 
 test("selecting a template fetches its rendered message by id", async () => {
   const mock_fetch = mock().mockResolvedValue({
+    ok: true,
     text: async () => "rendered content",
   });
   globalThis.fetch = mock_fetch as unknown as typeof fetch;
 
+  const textarea_ref = createRef<HTMLTextAreaElement>();
   const { container } = render(
     <ResponseMessageSelectorClient
       moderation_id={42}
       response_templates={templates}
+      textarea_ref={textarea_ref}
     />,
   );
 
@@ -81,10 +87,12 @@ test("selecting a template fetches its rendered message by id", async () => {
 
 test("selecting a template whose label has surrounding spaces still fetches by id", async () => {
   const mock_fetch = mock().mockResolvedValue({
+    ok: true,
     text: async () => "rendered content",
   });
   globalThis.fetch = mock_fetch as unknown as typeof fetch;
 
+  const textarea_ref = createRef<HTMLTextAreaElement>();
   const { container } = render(
     <ResponseMessageSelectorClient
       moderation_id={42}
@@ -96,6 +104,7 @@ test("selecting a template whose label has surrounding spaces still fetches by i
           allow_editing: false,
         },
       ]}
+      textarea_ref={textarea_ref}
     />,
   );
 
@@ -110,13 +119,18 @@ test("selecting a template whose label has surrounding spaces still fetches by i
 });
 
 test("selecting a value not in the list does not fetch", async () => {
-  const mock_fetch = mock().mockResolvedValue({ text: async () => "" });
+  const mock_fetch = mock().mockResolvedValue({
+    ok: true,
+    text: async () => "",
+  });
   globalThis.fetch = mock_fetch as unknown as typeof fetch;
 
+  const textarea_ref = createRef<HTMLTextAreaElement>();
   const { container } = render(
     <ResponseMessageSelectorClient
       moderation_id={42}
       response_templates={templates}
+      textarea_ref={textarea_ref}
     />,
   );
 
@@ -130,13 +144,18 @@ test("selecting a value not in the list does not fetch", async () => {
 });
 
 test("clearing the input does not fetch", async () => {
-  const mock_fetch = mock().mockResolvedValue({ text: async () => "" });
+  const mock_fetch = mock().mockResolvedValue({
+    ok: true,
+    text: async () => "",
+  });
   globalThis.fetch = mock_fetch as unknown as typeof fetch;
 
+  const textarea_ref = createRef<HTMLTextAreaElement>();
   const { container } = render(
     <ResponseMessageSelectorClient
       moderation_id={42}
       response_templates={templates}
+      textarea_ref={textarea_ref}
     />,
   );
 
