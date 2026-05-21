@@ -44,6 +44,7 @@ const {
   FEATURE_RATE_LIMIT_BY_IP,
   HYYYPERBASE_DATABASE_URL,
   PROCONNECT_IDENTITE_DATABASE_URL,
+  RATE_LIMIT_POINTS,
 } = app_env.parse(process.env);
 
 const rate_limit_pool = new pg.Pool({
@@ -59,7 +60,7 @@ const app = new Hono<{ Bindings: AppEnv }>()
   // .use(compress())
   .use(
     FEATURE_RATE_LIMIT_BY_IP
-      ? rate_limit({ storeClient: rate_limit_pool })
+      ? rate_limit({ points: RATE_LIMIT_POINTS, storeClient: rate_limit_pool })
       : (_, next) => next(),
   )
   .use(set_sentry())
