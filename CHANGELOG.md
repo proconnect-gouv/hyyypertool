@@ -1,5 +1,23 @@
 # Changelog
 
+## [2026.5.10](https://github.com/proconnect-gouv/hyyypertool/compare/2026.5.9...2026.5.10) (2026-05-21)
+
+### Changements
+
+- 🔧 Limite de débit configurable via variable d'environnement
+
+Le seuil de requêtes autorisées par la limite de débit est désormais configurable via la variable d'environnement `RATE_LIMIT_POINTS` (valeur par défaut : 120).
+
+### Modifié
+
+- 🔧 rate-limit: add RATE_LIMIT_POINTS env var with 120 default (#1626) (9f49e2b3)
+
+### Divers
+
+- ↗️ [patch](deps): Bump the tailwindcss group across 1 directory with 2 updates (#1625) (36d396c3)
+- ↗️ [patch](deps): Bump cypress from 15.14.2 to 15.15.0 in /e2e (#1623) (7daf759c)
+- ↗️ [patch](deps): Bump the sentry group with 4 updates (#1624) (d38f48c6)
+
 ## [2026.5.9](https://github.com/proconnect-gouv/hyyypertool/compare/2026.5.8...2026.5.9) (2026-05-18)
 
 ### Changements
