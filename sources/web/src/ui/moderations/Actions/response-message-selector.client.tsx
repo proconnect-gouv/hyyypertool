@@ -53,7 +53,7 @@ export function ResponseMessageSelectorClient({
         list={datalist_id}
         placeholder="Recherche d'une réponse type"
         autocomplete="off"
-        onChange={handleChange}
+        onInput={handleChange}
         onKeyDown={(e) => {
           if (e.key === "Enter") e.preventDefault();
         }}

@@ -26,8 +26,22 @@
     {
       "idx": 3,
       "version": "7",
+      "when": 1776117644698,
+      "tag": "0003_silky_the_hood",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
       "when": 1779102006825,
       "tag": "0003_rate_limiter",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1779375830311,
+      "tag": "0004_acoustic_morph",
       "breakpoints": true
     }
   ]

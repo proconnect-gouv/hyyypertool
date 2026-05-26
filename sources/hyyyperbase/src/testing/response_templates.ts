@@ -26,6 +26,8 @@ export async function insert_central_administration_response(
       `,
       created_at: new Date("2018-07-13T17:35:15+02:00"),
       label: "Agent - adresse e-mail départementale —> Admin centrale",
+      end_user_reason: "Byyye la team",
+      allow_editing: false,
       updated_at: new Date("2023-06-22T16:34:34+02:00"),
       updated_by: user?.id,
     })
@@ -57,6 +59,7 @@ export async function insert_domain_name_not_found_response(
       created_at: new Date("2024-11-12T17:55:31+01:00"),
       label: "Nom de domaine introuvable",
       end_user_reason: "Ciao bye",
+      allow_editing: true,
       updated_at: new Date("2024-11-12T17:55:31+01:00"),
       updated_by: user?.id,
     })

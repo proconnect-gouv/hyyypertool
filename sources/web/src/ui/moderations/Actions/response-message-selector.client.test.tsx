@@ -63,7 +63,7 @@ test("selecting a template fetches its rendered message by id", async () => {
     "input[type=search]",
   ) as HTMLInputElement;
 
-  fireEvent.change(input, { target: { value: "Organisation inconnue" } });
+  fireEvent.input(input, { target: { value: "Organisation inconnue" } });
 
   await waitFor(() => expect(mock_fetch).toHaveBeenCalledTimes(1));
   expect(mock_fetch).toHaveBeenCalledWith("/moderations/42/rejected/reason/2");
@@ -88,7 +88,7 @@ test("selecting a template whose label has surrounding spaces still fetches by i
     "input[type=search]",
   ) as HTMLInputElement;
 
-  fireEvent.change(input, { target: { value: "Doublon" } });
+  fireEvent.input(input, { target: { value: "Doublon" } });
 
   await waitFor(() => expect(mock_fetch).toHaveBeenCalledTimes(1));
   expect(mock_fetch).toHaveBeenCalledWith("/moderations/42/rejected/reason/7");

@@ -31,6 +31,7 @@ export interface TemplateEditorProps extends Record<string, unknown> {
   initialTemplate?: string;
   initialLabel?: string;
   initialEndUserReason?: string;
+  initialAllowEditing?: boolean;
 }
 
 //
@@ -39,6 +40,7 @@ export function TemplateEditor({
   initialTemplate = "",
   initialLabel = "",
   initialEndUserReason = "",
+  initialAllowEditing = false,
 }: TemplateEditorProps) {
   const template = useSignal(decodeHtmlEntities(initialTemplate));
   const labelSignal = useSignal(initialLabel);
@@ -53,6 +55,7 @@ export function TemplateEditor({
   const endUserReasonSignal = useSignal(initialEndUserReason);
   const endUserReasonError = useSignal("");
   const endUserReasonInputRef = useRef<HTMLInputElement>(null);
+  const allowEditingSignal = useSignal(initialAllowEditing ?? false);
 
   const renderResult = useComputed(() =>
     render(template.value, sampleData.value),
@@ -107,6 +110,11 @@ export function TemplateEditor({
         name="end_user_reason"
         value={endUserReasonSignal.value}
       />
+      <input
+        type="hidden"
+        name="allow_editing"
+        value={String(allowEditingSignal.value)}
+      />
       <div class="mb-6">
         <TitleInput
           label={labelSignal}
@@ -121,6 +129,10 @@ export function TemplateEditor({
           error={endUserReasonError}
           inputRef={endUserReasonInputRef}
         />
+      </div>
+
+      <div class="mb-6">
+        <AllowEditingToggle value={allowEditingSignal} />
       </div>
 
       <div class={base()}>
@@ -406,6 +418,32 @@ function SampleDataEditor({ sampleData }: SampleDataEditorProps) {
           ))}
         </tbody>
       </table>
+    </div>
+  );
+}
+
+function AllowEditingToggle({ value }: { value: Signal<boolean> }) {
+  return (
+    <div class="flex items-center gap-3">
+      <label htmlFor="allow-editing" class="text-sm">
+        Autoriser l'utilisateur à modifier ses informations personnelles
+      </label>
+      <button
+        type="button"
+        role="switch"
+        aria-checked={value.value}
+        id="allow-editing"
+        onClick={() => (value.value = !value.value)}
+        class={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+          value.value ? "bg-blue-600" : "bg-gray-300"
+        }`}
+      >
+        <span
+          class={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+            value.value ? "translate-x-6" : "translate-x-1"
+          }`}
+        />
+      </button>
     </div>
   );
 }
