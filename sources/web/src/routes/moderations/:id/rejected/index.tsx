@@ -62,7 +62,11 @@ export default new Hono<ContextType>()
       var: { identite_pg, userinfo, crisp },
     }) {
       const { id: moderation_id } = req.valid("param");
-      const { message: text_body, reason, subject } = req.valid("form");
+      const {
+        message: text_body,
+        subject,
+        end_user_reason,
+      } = req.valid("form");
 
       const get_moderation_with_user = GetModerationWithUser(identite_pg);
       const update_moderation_by_id = UpdateModerationById({ pg: identite_pg });
@@ -114,7 +118,7 @@ export default new Hono<ContextType>()
       const update = build_moderation_update({
         comment: moderation.comment,
         userinfo,
-        reason,
+        end_user_reason,
         type: "REJECTED",
       });
       await update_moderation_by_id(moderation.id, update);

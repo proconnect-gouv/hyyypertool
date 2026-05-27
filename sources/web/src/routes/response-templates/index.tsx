@@ -17,8 +17,13 @@ import Page from "./page";
 //
 
 const TemplateFormSchema = z.object({
-  label: z.string().min(1).trim(),
-  content: z.string().min(1).trim(),
+  label: z.string().trim().min(1),
+  content: z.string().trim().min(1),
+  end_user_reason: z.string().trim().min(1),
+  allow_editing: z
+    .string()
+    .optional()
+    .transform((val) => val === "true"),
 });
 
 //
@@ -43,10 +48,11 @@ export default new Hono<AppContext>()
     "/",
     zValidator("form", TemplateFormSchema),
     async function POST({ req, redirect, var: { hyyyper_pg } }) {
-      const { label, content } = req.valid("form");
+      const { label, content, end_user_reason, allow_editing } =
+        req.valid("form");
       const [inserted] = await hyyyper_pg
         .insert(schema.response_templates)
-        .values({ label, content })
+        .values({ label, content, end_user_reason, allow_editing })
         .returning({ id: schema.response_templates.id });
       return redirect(
         `/response-templates/${inserted!.id}?status=created`,
@@ -75,10 +81,17 @@ export default new Hono<AppContext>()
     zValidator("form", TemplateFormSchema),
     async function PATCH({ req, text, var: { hyyyper_pg } }) {
       const id = parseInt(req.param("id"), 10);
-      const { label, content } = req.valid("form");
+      const { label, content, end_user_reason, allow_editing } =
+        req.valid("form");
       await hyyyper_pg
         .update(schema.response_templates)
-        .set({ label, content, updated_at: new Date() })
+        .set({
+          label,
+          content,
+          end_user_reason,
+          allow_editing,
+          updated_at: new Date(),
+        })
         .where(eq(schema.response_templates.id, id));
       return text("", 200, {
         "HX-Reswap": "none",

@@ -66,6 +66,8 @@ export default function DetailPage({
         <TemplateEditorIsland
           initialTemplate={template?.content ?? ""}
           initialLabel={template?.label ?? ""}
+          initialEndUserReason={template?.end_user_reason ?? ""}
+          initialAllowEditing={template?.allow_editing ?? false}
         />
         <div class="mt-6 flex justify-end">
           <button type="submit" class={button()}>

@@ -30,6 +30,8 @@ export interface TemplateMetadata {
 export interface TemplateEditorProps extends Record<string, unknown> {
   initialTemplate?: string;
   initialLabel?: string;
+  initialEndUserReason?: string;
+  initialAllowEditing?: boolean;
 }
 
 //
@@ -37,6 +39,8 @@ export interface TemplateEditorProps extends Record<string, unknown> {
 export function TemplateEditor({
   initialTemplate = "",
   initialLabel = "",
+  initialEndUserReason = "",
+  initialAllowEditing = false,
 }: TemplateEditorProps) {
   const template = useSignal(decodeHtmlEntities(initialTemplate));
   const labelSignal = useSignal(initialLabel);
@@ -48,6 +52,10 @@ export function TemplateEditor({
   const labelInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const endUserReasonSignal = useSignal(initialEndUserReason);
+  const endUserReasonError = useSignal("");
+  const endUserReasonInputRef = useRef<HTMLInputElement>(null);
+  const allowEditingSignal = useSignal(initialAllowEditing ?? false);
 
   const renderResult = useComputed(() =>
     render(template.value, sampleData.value),
@@ -61,15 +69,21 @@ export function TemplateEditor({
     const validate = (e: Event) => {
       const labelEmpty = !labelSignal.peek().trim();
       const contentEmpty = !template.peek().trim();
+      const motifEmpty = !endUserReasonSignal.peek().trim();
+      endUserReasonError.value = motifEmpty
+        ? "Le motif de refus ne peut pas être vide"
+        : "";
       labelError.value = labelEmpty ? "Le titre ne peut pas être vide" : "";
       contentError.value = contentEmpty
         ? "Le contenu ne peut pas être vide"
         : "";
-      if (labelEmpty || contentEmpty) {
+      if (labelEmpty || contentEmpty || motifEmpty) {
         e.preventDefault();
         e.stopImmediatePropagation();
         if (labelEmpty) {
           labelInputRef.current?.focus();
+        } else if (motifEmpty) {
+          endUserReasonInputRef.current?.focus();
         } else {
           activeTab.value = "editor";
           textareaRef.current?.focus();
@@ -91,12 +105,34 @@ export function TemplateEditor({
     <>
       <input type="hidden" name="label" value={labelSignal.value} />
       <input type="hidden" name="content" value={template.value} />
+      <input
+        type="hidden"
+        name="end_user_reason"
+        value={endUserReasonSignal.value}
+      />
+      <input
+        type="hidden"
+        name="allow_editing"
+        value={String(allowEditingSignal.value)}
+      />
       <div class="mb-6">
         <TitleInput
           label={labelSignal}
           error={labelError}
           inputRef={labelInputRef}
         />
+      </div>
+
+      <div class="mb-6">
+        <EndUserReasonInput
+          value={endUserReasonSignal}
+          error={endUserReasonError}
+          inputRef={endUserReasonInputRef}
+        />
+      </div>
+
+      <div class="mb-6">
+        <AllowEditingToggle value={allowEditingSignal} />
       </div>
 
       <div class={base()}>
@@ -200,6 +236,37 @@ function TitleInput(props: {
         ref={inputRef}
         type="text"
         value={labelSignal.value}
+      />
+      {error.value && (
+        <p class="mt-1 text-sm text-red-600" role="alert">
+          {error.value}
+        </p>
+      )}
+    </>
+  );
+}
+
+function EndUserReasonInput(props: {
+  value: Signal<string>;
+  error: Signal<string>;
+  inputRef: preact.RefObject<HTMLInputElement>;
+}) {
+  const { value: valueSignal, error, inputRef } = props;
+  return (
+    <>
+      <p class="mb-0">Motif de refus pour l'usager :</p>
+      <input
+        class={input({
+          intent: error.value ? "error" : undefined,
+        })}
+        id="template-refusal-reason"
+        onInput={(e) => {
+          valueSignal.value = e.currentTarget.value;
+          if (e.currentTarget.value.trim()) error.value = "";
+        }}
+        type="text"
+        value={valueSignal.value}
+        ref={inputRef}
       />
       {error.value && (
         <p class="mt-1 text-sm text-red-600" role="alert">
@@ -351,6 +418,32 @@ function SampleDataEditor({ sampleData }: SampleDataEditorProps) {
           ))}
         </tbody>
       </table>
+    </div>
+  );
+}
+
+function AllowEditingToggle({ value }: { value: Signal<boolean> }) {
+  return (
+    <div class="flex items-center gap-3">
+      <label htmlFor="allow-editing" class="text-sm">
+        Autoriser l'utilisateur à modifier ses informations personnelles
+      </label>
+      <button
+        type="button"
+        role="switch"
+        aria-checked={value.value}
+        id="allow-editing"
+        onClick={() => (value.value = !value.value)}
+        class={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+          value.value ? "bg-blue-600" : "bg-gray-300"
+        }`}
+      >
+        <span
+          class={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+            value.value ? "translate-x-6" : "translate-x-1"
+          }`}
+        />
+      </button>
     </div>
   );
 }

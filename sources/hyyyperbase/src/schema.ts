@@ -2,6 +2,7 @@
 
 import {
   bigint,
+  boolean,
   integer,
   pgTable,
   serial,
@@ -20,8 +21,10 @@ export const rate_limiter = pgTable("rate_limiter", {
 });
 
 export const response_templates = pgTable("response_templates", {
+  allow_editing: boolean("allow_editing").default(false).notNull(),
   content: text("content").notNull(),
   created_at: timestamp("created_at").defaultNow().notNull(),
+  end_user_reason: text("end_user_reason").notNull().default(""),
   id: serial("id").primaryKey(),
   label: text("label").notNull().unique(),
   updated_at: timestamp("updated_at").defaultNow().notNull(),

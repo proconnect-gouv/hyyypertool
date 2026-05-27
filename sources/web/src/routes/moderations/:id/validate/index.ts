@@ -205,7 +205,7 @@ export default new Hono<AppContext>().patch(
     const update = build_moderation_update({
       comment: moderation.comment,
       userinfo,
-      reason: "[ProConnect] ✨ Modération validée",
+      end_user_reason: "[ProConnect] ✨ Modération validée",
       type: "VALIDATED",
     });
     await update_moderation_by_id(moderation.id, update);
