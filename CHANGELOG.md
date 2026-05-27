@@ -1,5 +1,17 @@
 # Changelog
 
+## [2026.5.11](https://github.com/proconnect-gouv/hyyypertool/compare/2026.5.10...2026.5.11) (2026-05-27)
+
+### Changements
+
+- ✨ Ajout d'un champ "raison du refus" et d'un interrupteur "autoriser la modification"
+
+Il est désormais possible de saisir une raison de refus à destination de l'utilisateur lors du traitement d'une modération. Un interrupteur permet également d'activer ou désactiver la modification de la demande par l'utilisateur.
+
+### Ajouté
+
+- ✨ Add input "reason refusal for user" (#1628) (bd835bf0)
+
 ## [2026.5.10](https://github.com/proconnect-gouv/hyyypertool/compare/2026.5.9...2026.5.10) (2026-05-21)
 
 ### Changements
