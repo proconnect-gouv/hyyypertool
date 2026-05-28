@@ -205,9 +205,7 @@ describe("createIsland", () => {
       });
 
       const html = renderToString(
-        withContext(
-          <Island message={'</script><script>alert(1)//'} />,
-        ),
+        withContext(<Island message={"</script><script>alert(1)//"} />),
       );
 
       // prop value must be Unicode-escaped, not raw — raw </script> would break the script block
@@ -364,6 +362,39 @@ describe("createIsland", () => {
 
       expect(html).toContain("const props = {}");
       expect(html).not.toContain('"children"');
+    });
+  });
+
+  describe("nested islands", () => {
+    test("server > client > server > client > text", () => {
+      // outer island (render mode, no SSR) wraps an inner island as VNode children
+      // inner island (hydrate mode) receives string children and SSR-renders them
+      const InnerIsland = createIsland({
+        component: WithChildrenComponent,
+        clientPath: "/assets/inner.client.js",
+        mode: "hydrate",
+      });
+
+      const OuterIsland = createIsland({
+        component: NoPropsComponent,
+        clientPath: "/assets/outer.client.js",
+        mode: "render",
+      });
+
+      const html = renderToString(
+        withContext(
+          <OuterIsland>
+            <InnerIsland label="inner-label">leaf text</InnerIsland>
+          </OuterIsland>,
+        ),
+      );
+
+      // server: inner island SSR-renders its Preact component — text is in the HTML
+      expect(html).toContain("inner-label");
+      expect(html).toContain("leaf text");
+
+      // client: inner island script carries the serialized children for hydration
+      expect(html).toContain('"children":"leaf text"');
     });
   });
 
