@@ -45,7 +45,7 @@
     "lodash.sortby": "4.7.0",
     "nprogress": "0.2.0",
     "openid-client": "6.8.4",
-    "pg": "8.20.0",
+    "pg": "8.21.0",
     "preact": "10.29.2",
     "preact-render-to-string": "6.6.7",
     "rate-limiter-flexible": "11.1.0",
