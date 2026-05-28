@@ -64,10 +64,10 @@ test("render about section", async () => {
               import { render, h } from "preact";
               import { CopyButtonClient } from "/src/ui/button/components/copy.client.js";
               const props = {
-                children: "",
                 className:
                   "disabled:bg-grey-200 disabled:text-grey-425 dark:disabled:bg-grey-850 dark:disabled:text-grey-625 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface-hover dark:hover:bg-surface-hover bg-transparent shadow-[inset_0_0_0_1px_var(--color-border)] dark:bg-transparent aspect-square justify-center p-0 ml-2",
                 text: "cached_libelle",
+                children: "",
               };
               let mounted = false;
               const mount_island = () => {
@@ -100,10 +100,10 @@ test("render about section", async () => {
                 import { render, h } from "preact";
                 import { CopyButtonClient } from "/src/ui/button/components/copy.client.js";
                 const props = {
-                  children: "",
                   className:
                     "disabled:bg-grey-200 disabled:text-grey-425 dark:disabled:bg-grey-850 dark:disabled:text-grey-625 inline-flex w-fit items-center font-medium no-underline disabled:cursor-not-allowed min-h-8 gap-1 text-sm leading-6 text-blue-france dark:text-blue-france-925 hover:bg-surface-hover dark:hover:bg-surface-hover bg-transparent shadow-[inset_0_0_0_1px_var(--color-border)] dark:bg-transparent aspect-square justify-center p-0",
                   text: "siret",
+                  children: "",
                 };
                 let mounted = false;
                 const mount_island = () => {
