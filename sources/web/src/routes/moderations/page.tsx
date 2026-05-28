@@ -227,65 +227,74 @@ async function Table() {
             <th>
               <SortHeaderIsland
                 name="status"
-                label="Statut"
                 aria-sort={aria_sort("status", search_sort)}
-              />
+              >
+                Statut
+              </SortHeaderIsland>
             </th>
             <th>
               <SortHeaderIsland
                 name="created"
-                label="Date de création"
                 aria-sort={aria_sort("created", search_sort)}
-              />
+              >
+                Date de création
+              </SortHeaderIsland>
             </th>
             <th>
               <SortHeaderIsland
                 name="updated"
-                label="Traité le"
                 aria-sort={aria_sort("updated", search_sort)}
-              />
+              >
+                Traité le
+              </SortHeaderIsland>
             </th>
             <th>
               <SortHeaderIsland
                 name="family-name"
-                label="Nom"
                 aria-sort={aria_sort("family-name", search_sort)}
-              />
+              >
+                Nom
+              </SortHeaderIsland>
             </th>
             <th>
               <SortHeaderIsland
                 name="given-name"
-                label="Prénom"
                 aria-sort={aria_sort("given-name", search_sort)}
-              />
+              >
+                Prénom
+              </SortHeaderIsland>
             </th>
             <th>
               <SortHeaderIsland
                 name="email"
-                label="Email"
                 aria-sort={aria_sort("email", search_sort)}
-              />
+              >
+                Email
+              </SortHeaderIsland>
             </th>
             <th>
               <SortHeaderIsland
                 name="organization"
-                label="Organisation cible"
                 aria-sort={aria_sort("organization", search_sort)}
-              />
+              >
+                Organisation cible
+              </SortHeaderIsland>
             </th>
             <th>
               <SortHeaderIsland
                 name="service"
-                label="Service"
                 aria-sort={aria_sort("service", search_sort)}
-              />
+              >
+                Service
+              </SortHeaderIsland>
             </th>
             <th>
               <SortHeaderIsland
                 name="id"
-                label="ID"
                 aria-sort={aria_sort("id", search_sort)}
-              />
+              >
+                ID
+              </SortHeaderIsland>
             </th>
           </tr>
         </thead>

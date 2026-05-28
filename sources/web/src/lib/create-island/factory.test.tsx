@@ -28,6 +28,21 @@ function TestComponent({
   );
 }
 
+function WithChildrenComponent({
+  label,
+  children,
+}: {
+  label?: string;
+  children?: import("preact").ComponentChildren;
+}) {
+  return (
+    <div>
+      {label && <span>{label}</span>}
+      <div class="slot">{children}</div>
+    </div>
+  );
+}
+
 function NoPropsComponent() {
   return <div>No props</div>;
 }
@@ -182,6 +197,22 @@ describe("createIsland", () => {
       expect(html).not.toContain('"nonce"');
     });
 
+    test("escapes </script> sequences in prop values to prevent script injection", () => {
+      const Island = createIsland({
+        component: TestComponent,
+        clientPath: "/assets/test.client.js",
+        mode: "render",
+      });
+
+      const html = renderToString(
+        withContext(<Island message={"</script><script>alert(1)//"} />),
+      );
+
+      // prop value must be Unicode-escaped, not raw — raw </script> would break the script block
+      expect(html).not.toContain('"message":"</script>');
+      expect(html).toContain('"message":"\\u003c/script\\u003e');
+    });
+
     test("handles empty props", () => {
       const Island = createIsland({
         component: NoPropsComponent,
@@ -272,6 +303,98 @@ describe("createIsland", () => {
 
       // Script should reference the same ID
       expect(html).toContain(`document.getElementById("${rootId}")`);
+    });
+  });
+
+  describe("children support", () => {
+    test("passes children to SSR in hydrate mode", () => {
+      const Island = createIsland({
+        component: WithChildrenComponent,
+        clientPath: "/assets/test.client.js",
+        mode: "hydrate",
+      });
+
+      const html = renderToString(
+        withContext(
+          <Island label="Parent">
+            <p>child content</p>
+          </Island>,
+        ),
+      );
+
+      expect(html).toContain("child content");
+      expect(html).toContain("Parent");
+    });
+
+    test("does not serialize children in client script", () => {
+      const Island = createIsland({
+        component: WithChildrenComponent,
+        clientPath: "/assets/test.client.js",
+        mode: "render",
+      });
+
+      const html = renderToString(
+        withContext(
+          <Island label="Parent">
+            <p>child content</p>
+          </Island>,
+        ),
+      );
+
+      expect(html).toContain('const props = {"label":"Parent"}');
+      expect(html).not.toContain('"children"');
+    });
+
+    test("handles island with only children and no other props", () => {
+      const Island = createIsland({
+        component: WithChildrenComponent,
+        clientPath: "/assets/test.client.js",
+        mode: "render",
+      });
+
+      const html = renderToString(
+        withContext(
+          <Island>
+            <span>only child</span>
+          </Island>,
+        ),
+      );
+
+      expect(html).toContain("const props = {}");
+      expect(html).not.toContain('"children"');
+    });
+  });
+
+  describe("nested islands", () => {
+    test("server > client > server > client > text", () => {
+      // outer island (render mode, no SSR) wraps an inner island as VNode children
+      // inner island (hydrate mode) receives string children and SSR-renders them
+      const InnerIsland = createIsland({
+        component: WithChildrenComponent,
+        clientPath: "/assets/inner.client.js",
+        mode: "hydrate",
+      });
+
+      const OuterIsland = createIsland({
+        component: NoPropsComponent,
+        clientPath: "/assets/outer.client.js",
+        mode: "render",
+      });
+
+      const html = renderToString(
+        withContext(
+          <OuterIsland>
+            <InnerIsland label="inner-label">leaf text</InnerIsland>
+          </OuterIsland>,
+        ),
+      );
+
+      // server: inner island SSR-renders its Preact component — text is in the HTML
+      expect(html).toContain("inner-label");
+      expect(html).toContain("leaf text");
+
+      // client: inner island script carries the serialized children for hydration
+      expect(html).toContain('"children":"leaf text"');
     });
   });
 
