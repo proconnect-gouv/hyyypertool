@@ -28,6 +28,21 @@ function TestComponent({
   );
 }
 
+function WithChildrenComponent({
+  label,
+  children,
+}: {
+  label?: string;
+  children?: import("preact").ComponentChildren;
+}) {
+  return (
+    <div>
+      {label && <span>{label}</span>}
+      <div class="slot">{children}</div>
+    </div>
+  );
+}
+
 function NoPropsComponent() {
   return <div>No props</div>;
 }
@@ -272,6 +287,65 @@ describe("createIsland", () => {
 
       // Script should reference the same ID
       expect(html).toContain(`document.getElementById("${rootId}")`);
+    });
+  });
+
+  describe("children support", () => {
+    test("passes children to SSR in hydrate mode", () => {
+      const Island = createIsland({
+        component: WithChildrenComponent,
+        clientPath: "/assets/test.client.js",
+        mode: "hydrate",
+      });
+
+      const html = renderToString(
+        withContext(
+          <Island label="Parent">
+            <p>child content</p>
+          </Island>,
+        ),
+      );
+
+      expect(html).toContain("child content");
+      expect(html).toContain("Parent");
+    });
+
+    test("does not serialize children in client script", () => {
+      const Island = createIsland({
+        component: WithChildrenComponent,
+        clientPath: "/assets/test.client.js",
+        mode: "render",
+      });
+
+      const html = renderToString(
+        withContext(
+          <Island label="Parent">
+            <p>child content</p>
+          </Island>,
+        ),
+      );
+
+      expect(html).toContain('const props = {"label":"Parent"}');
+      expect(html).not.toContain('"children"');
+    });
+
+    test("handles island with only children and no other props", () => {
+      const Island = createIsland({
+        component: WithChildrenComponent,
+        clientPath: "/assets/test.client.js",
+        mode: "render",
+      });
+
+      const html = renderToString(
+        withContext(
+          <Island>
+            <span>only child</span>
+          </Island>,
+        ),
+      );
+
+      expect(html).toContain("const props = {}");
+      expect(html).not.toContain('"children"');
     });
   });
 
