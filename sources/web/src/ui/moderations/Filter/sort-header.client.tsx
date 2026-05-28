@@ -4,13 +4,13 @@ import { parsed, update_q } from "./q-signal.client";
 
 export interface SortHeaderProps extends Record<string, unknown> {
   name: string;
-  children?: string;
+  label: string;
   "aria-sort"?: "ascending" | "descending";
 }
 
 export function SortHeader({
   name,
-  children,
+  label,
   "aria-sort": initial_sort,
 }: SortHeaderProps) {
   const sort_asc = `${name}-asc`;
@@ -35,7 +35,7 @@ export function SortHeader({
       class="flex cursor-pointer items-center gap-1 font-semibold"
       onClick={handle_click}
     >
-      {children}
+      {label}
       {is_asc && <span aria-hidden="true">↑</span>}
       {is_desc && <span aria-hidden="true">↓</span>}
     </button>

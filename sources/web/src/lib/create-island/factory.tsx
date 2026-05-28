@@ -28,7 +28,7 @@
 import type { NonceVariablesContext } from "#src/middleware/nonce";
 import { useRequestContext } from "hono/jsx-renderer";
 import { randomUUID } from "node:crypto";
-import type { ComponentChildren, ComponentType } from "preact";
+import type { ComponentType } from "preact";
 import { h } from "preact";
 import { renderToString } from "preact-render-to-string";
 
@@ -53,9 +53,7 @@ export interface CreateIslandOptions<P = Record<string, unknown>> {
   serializeProps?: (props: Partial<P>) => string;
 }
 
-export interface IslandProps {
-  children?: ComponentChildren;
-}
+export interface IslandProps {}
 
 /**
  * Creates a Preact Island wrapper component
@@ -92,33 +90,26 @@ export function createIsland<P extends Record<string, unknown>>(
     const {
       var: { nonce },
     } = useRequestContext<NonceVariablesContext>();
-    const { children, ...rest } = props as P &
-      IslandProps & { children?: ComponentChildren };
+    const componentProps = props;
     const root_id = randomUUID();
 
-    // VNode children (objects) can't be JSON-serialized or passed cross-renderer
-    // to Preact's SSR; primitive children (strings/numbers) serialize normally.
-    const isVNodeChildren =
-      children !== null && children !== undefined && typeof children === "object";
-
-    const serializableProps = isVNodeChildren
-      ? rest
-      : { ...rest, ...(children !== undefined ? { children } : {}) };
-
-    // Server-side rendering: only primitive children can pass through Preact's renderer
-    const ssrProps = isVNodeChildren ? (rest as P) : (serializableProps as P);
+    // Server-side rendering (only for hydrate mode)
     const serverRenderedHTML =
-      mode === "hydrate" ? renderToString(h(Component, ssrProps)) : "";
+      mode === "hydrate"
+        ? renderToString(h(Component, componentProps as P))
+        : "";
 
+    // Inline script for client-side hydration/rendering
     const islandScript = generateIslandScript(
       mode,
       clientPath,
       exportName,
       root_id,
-      serializableProps as Partial<P>,
+      componentProps as Partial<P>,
       serializeProps,
     );
 
+    // Custom element tags - cast to any to allow dynamic tag names
     const IslandTag = tagName as any;
     const RootTag = rootTagName as any;
 
@@ -132,7 +123,6 @@ export function createIsland<P extends Record<string, unknown>>(
         ) : (
           <RootTag id={root_id} />
         )}
-        {isVNodeChildren && children}
         <script
           dangerouslySetInnerHTML={{ __html: islandScript }}
           defer
