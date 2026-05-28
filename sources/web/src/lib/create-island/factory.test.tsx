@@ -197,6 +197,24 @@ describe("createIsland", () => {
       expect(html).not.toContain('"nonce"');
     });
 
+    test("escapes </script> sequences in prop values to prevent script injection", () => {
+      const Island = createIsland({
+        component: TestComponent,
+        clientPath: "/assets/test.client.js",
+        mode: "render",
+      });
+
+      const html = renderToString(
+        withContext(
+          <Island message={'</script><script>alert(1)//'} />,
+        ),
+      );
+
+      // prop value must be Unicode-escaped, not raw — raw </script> would break the script block
+      expect(html).not.toContain('"message":"</script>');
+      expect(html).toContain('"message":"\\u003c/script\\u003e');
+    });
+
     test("handles empty props", () => {
       const Island = createIsland({
         component: NoPropsComponent,

@@ -73,7 +73,11 @@ export function createIsland<P extends Record<string, unknown>>(
     exportName = Component.name,
     tagName = "x-island",
     rootTagName = "x-island-root",
-    serializeProps = (props) => JSON.stringify(props),
+    serializeProps = (props) =>
+      JSON.stringify(props)
+        .replace(/</g, "\\u003c")
+        .replace(/>/g, "\\u003e")
+        .replace(/&/g, "\\u0026"),
   } = options;
 
   if (!exportName) {
