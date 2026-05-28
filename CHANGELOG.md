@@ -1,5 +1,19 @@
 # Changelog
 
+## [2026.5.12](https://github.com/proconnect-gouv/hyyypertool/compare/2026.5.11...2026.5.12) (2026-05-28)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): Bump jose from 6.2.2 to 6.2.3 (#1633) (e7b09a21)
+- :arrow_upper_right: [patch](deps): Bump @hono/zod-validator (#1634) (4bdff064)
+
+### Divers
+
+- ↗️ [patch](deps): Bump @hono/node-server from 2.0.1 to 2.0.3 (#1630) (bced4b42)
+- feat(hyyyperbase): add end_user_reason column to response_templates (#1632) (a16cfb4d)
+- ↗️ [patch](deps): Bump @types/bun from 1.3.13 to 1.3.14 (#1629) (4c01416e)
+- ↗️ [patch](deps): Bump docker/setup-compose-action from 2.1.0 to 2.2.0 (#1631) (3d3c92e8)
+
 ## [2026.5.11](https://github.com/proconnect-gouv/hyyypertool/compare/2026.5.10...2026.5.11) (2026-05-27)
 
 ### Changements
