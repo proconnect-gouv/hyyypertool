@@ -103,7 +103,7 @@ test.each(cases)(
     });
 
     expect(moderation).toEqual({
-      comment: `7979472000000 admin@example.com | Validé par admin@example.com | Raison : "[ProConnect] ✨ Modération validée"`,
+      comment: `7979472000000 admin@example.com | Validé par admin@example.com | Raison : "Raison transmise par mail"`,
       created_at: "2222-11-10 00:00:00+00",
       id: 1,
       moderated_at: "2222-11-11 00:00:00+00",
@@ -114,6 +114,8 @@ test.each(cases)(
       ticket_id: send_notification === "true" ? "test-session" : null,
       type: "💼",
       user_id: 1,
+      allow_editing: false,
+      end_user_reason: "Raison transmise par mail",
     });
 
     assert.ok(moderation);

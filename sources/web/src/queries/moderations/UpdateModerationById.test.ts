@@ -45,8 +45,10 @@ test("update a moderation", async () => {
     }),
   ).toMatchInlineSnapshot(`
     {
+      "allow_editing": null,
       "comment": "Adora is a good pony",
       "created_at": "2222-01-01 00:00:00+00",
+      "end_user_reason": "Raison transmise par mail",
       "id": 1,
       "moderated_at": "2222-01-02 00:00:00+00",
       "moderated_by": "Captain Midnight",
