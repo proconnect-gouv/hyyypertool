@@ -21,7 +21,12 @@ export function ResponseMessageSelector({
   response_templates,
 }: {
   moderation_id: number;
-  response_templates: { id: number; label: string; end_user_reason: string }[];
+  response_templates: {
+    id: number;
+    label: string;
+    end_user_reason: string;
+    allow_editing: boolean;
+  }[];
 }) {
   return (
     <ResponseMessageSelectorIsland

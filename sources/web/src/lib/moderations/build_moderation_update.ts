@@ -13,11 +13,13 @@ export function build_moderation_update({
   userinfo,
   end_user_reason,
   type,
+  allow_editing = false,
 }: {
   comment: string | null;
   userinfo: { email: string };
   end_user_reason: string;
   type: CommentMeta["type"];
+  allow_editing?: boolean;
 }) {
   const moderated_by = userinfo.email;
 
@@ -31,6 +33,6 @@ export function build_moderation_update({
     moderated_at: new Date().toISOString(),
     status: comment_type_to_status(type),
     end_user_reason,
-    allow_editing: false,
+    allow_editing,
   };
 }

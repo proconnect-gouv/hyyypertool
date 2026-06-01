@@ -9,7 +9,12 @@ export function ResponseMessageSelectorClient({
   response_templates,
 }: {
   moderation_id: number;
-  response_templates: { id: number; label: string; end_user_reason: string }[];
+  response_templates: {
+    id: number;
+    label: string;
+    end_user_reason: string;
+    allow_editing: boolean;
+  }[];
 }) {
   const datalist_id = `responses-type-${moderation_id}`;
   const textarea_id = `rejection-message-${moderation_id}`;
@@ -23,6 +28,8 @@ export function ResponseMessageSelectorClient({
     const template_id = (option as HTMLOptionElement | null)?.dataset.id;
     const end_user_reason = (option as HTMLOptionElement | null)?.dataset
       .endUserReason;
+    const allow_editing = (option as HTMLOptionElement | null)?.dataset
+      .allowEditing;
     if (!template_id) return;
 
     const url = `/moderations/${moderation_id}/rejected/reason/${template_id}`;
@@ -42,6 +49,13 @@ export function ResponseMessageSelectorClient({
     if (end_user_reason_input instanceof HTMLInputElement) {
       end_user_reason_input.value = String(end_user_reason);
     }
+
+    const allow_editing_input = document.getElementById(
+      `allow-editing-${moderation_id}`,
+    );
+    if (allow_editing_input instanceof HTMLInputElement) {
+      allow_editing_input.value = String(allow_editing === "true");
+    }
   };
 
   return (
@@ -59,14 +73,17 @@ export function ResponseMessageSelectorClient({
         }}
       />
       <datalist id={datalist_id}>
-        {response_templates.map(({ id, label, end_user_reason }) => (
-          <option
-            key={id}
-            value={label.trim()}
-            data-id={id}
-            data-end-user-reason={end_user_reason}
-          />
-        ))}
+        {response_templates.map(
+          ({ id, label, end_user_reason, allow_editing }) => (
+            <option
+              key={id}
+              value={label.trim()}
+              data-id={id}
+              data-end-user-reason={end_user_reason}
+              data-allow-editing={String(allow_editing)}
+            />
+          ),
+        )}
       </datalist>
     </>
   );
