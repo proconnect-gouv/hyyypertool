@@ -56,6 +56,12 @@ export function ResponseMessageSelectorClient({
     if (allow_editing_input instanceof HTMLInputElement) {
       allow_editing_input.value = String(allow_editing === "true");
     }
+    const warning = document.getElementById(
+      `allow-editing-warning-${moderation_id}`,
+    );
+    if (warning instanceof HTMLElement) {
+      warning.classList.toggle("hidden", allow_editing !== "true");
+    }
   };
 
   return (
