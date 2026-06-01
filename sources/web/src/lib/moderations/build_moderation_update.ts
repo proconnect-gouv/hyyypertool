@@ -30,5 +30,7 @@ export function build_moderation_update({
     moderated_by,
     moderated_at: new Date().toISOString(),
     status: comment_type_to_status(type),
+    end_user_reason,
+    allow_editing: false,
   };
 }

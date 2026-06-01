@@ -14,6 +14,7 @@ export function GetModerationWithUser(pg: IdentiteProconnectPgDatabase) {
         organization_id: true,
         user_id: true,
         ticket_id: true,
+        end_user_reason: true,
       },
       with: { user: { columns: { email: true } } },
       where: (table, { eq }) => eq(table.id, moderation_id),

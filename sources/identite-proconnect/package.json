@@ -23,8 +23,8 @@
   "dependencies": {
     "@proconnect-gouv/proconnect.api_entreprise": "2.2.0",
     "@proconnect-gouv/proconnect.core": "1.0.0",
-    "@proconnect-gouv/proconnect.identite": "8.0.0",
-    "@proconnect-gouv/proconnect.identite.database": "1.4.0",
+    "@proconnect-gouv/proconnect.identite": "8.1.0",
+    "@proconnect-gouv/proconnect.identite.database": "1.5.0",
     "@proconnect-gouv/proconnect.insee": "2.0.0",
     "consola": "3.4.2",
     "drizzle-orm": "0.45.2",

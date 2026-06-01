@@ -31,6 +31,7 @@ test("get a moderation with minimal fields", async () => {
   expect(moderation).toMatchInlineSnapshot(`
     {
       "comment": null,
+      "end_user_reason": "Raison transmise par mail",
       "id": 1,
       "organization_id": 1,
       "ticket_id": null,

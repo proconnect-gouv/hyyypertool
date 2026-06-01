@@ -16,6 +16,8 @@ export type ModerationUpdate = Pick<
   | "sp_name"
   | "status"
   | "ticket_id"
+  | "end_user_reason"
+  | "allow_editing"
 >;
 
 export function UpdateModerationById({ pg }: IdentiteProconnectDatabaseCradle) {
