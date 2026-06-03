@@ -244,7 +244,7 @@ export function ModerationProcessedMessage({
   return dedent`
     Bonjour,
 
-    Le rattachement de votre compte ProConnect (${email}) à l'organisation « ${libelle} » a été validée sur ${baseurl}.
+    Le rattachement de votre compte ProConnect (${email}) à l'organisation « ${libelle} » a été validé sur ProConnect ${baseurl}.
 
     Vous pouvez à présent vous connecter sur le service en ligne souhaité.
 
