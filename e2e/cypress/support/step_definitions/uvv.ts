@@ -176,6 +176,10 @@ Then("je ne vois pas {string}", (text: string) => {
   get_within_context().within(() => cy.contains(text).should("not.exist"));
 });
 
+Then("je ne vois pas le texte {string}", (text: string) => {
+  get_within_context().within(() => cy.contains(text).should("not.be.visible"));
+});
+
 Then(
   "je ne dois pas voir un élément ayant pour aria-label {string}",
   (text: string) => {

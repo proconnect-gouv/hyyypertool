@@ -88,6 +88,7 @@ test("PATCH /moderations/:id/rejected rejects moderation via new crisp conversat
         message: "Your request has been rejected.",
         end_user_reason: "Not eligible",
         subject: "[ProConnect] Rejected",
+        allow_editing: "false",
       }),
     });
 
@@ -118,7 +119,6 @@ test("PATCH /moderations/:id/rejected rejects moderation via new crisp conversat
     status: "rejected",
     ticket_id: "crisp-new-session",
     end_user_reason: "Not eligible",
-    allow_editing: false,
   });
 });
 
@@ -226,6 +226,7 @@ test("PATCH /moderations/:id/rejected falls back to nickname when get_user fails
         message: "Your request has been rejected.",
         end_user_reason: "Not eligible",
         subject: "[ProConnect] Rejected",
+        allow_editing: "false",
       }),
     });
 

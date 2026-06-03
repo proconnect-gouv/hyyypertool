@@ -88,7 +88,6 @@ export async function RefusalModal({
           type="hidden"
           name="allow_editing"
           id={`allow-editing-${moderation.id}`}
-          value="false"
         />
         <p
           id={`allow-editing-warning-${moderation.id}`}

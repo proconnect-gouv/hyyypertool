@@ -32,7 +32,7 @@ export default function DetailPage({
     <main class="container mx-auto my-12 px-4">
       {status === "created" && (
         <div class={alert_base()} role="alert">
-          <p>Template créé !</p>
+          <p class="mb-0">Template créé !</p>
         </div>
       )}
       <div class="mb-6 flex items-center justify-between">

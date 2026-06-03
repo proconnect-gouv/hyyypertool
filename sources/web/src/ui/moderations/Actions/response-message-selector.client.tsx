@@ -86,7 +86,7 @@ export function ResponseMessageSelectorClient({
               value={label.trim()}
               data-id={id}
               data-end-user-reason={end_user_reason}
-              data-allow-editing={String(allow_editing)}
+              data-allow-editing={allow_editing ? "true" : "false"}
             />
           ),
         )}
