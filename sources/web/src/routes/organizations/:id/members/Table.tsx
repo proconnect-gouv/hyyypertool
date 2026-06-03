@@ -88,7 +88,11 @@ function Row({ variants }: { variants?: VariantProps<typeof row> }) {
       <td>{user.given_name}</td>
       <td>{user.family_name}</td>
       <td>{user.is_external ? "❌" : "✅"}</td>
-      <td>{user.email}</td>
+      <td>
+        <a href={urls.users[":id"].$url({ param: { id: user.id } }).pathname}>
+          {user.email}
+        </a>
+      </td>
       <td>{user.job}</td>
       <td>
         {user.needs_official_contact_email_verification ? (
