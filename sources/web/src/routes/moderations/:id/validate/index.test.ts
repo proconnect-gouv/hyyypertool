@@ -143,7 +143,7 @@ test.each(cases)(
       });
       expect(mock_crisp.send_message).toHaveBeenCalledWith({
         session_id: "test-session",
-        content: expect.stringContaining("a été validée"),
+        content: expect.stringContaining("a été validé"),
         user: { user_id: "operator-123", nickname: "Anaïs T." },
       });
       expect(mock_crisp.mark_conversation_as_resolved).toHaveBeenCalledWith({
