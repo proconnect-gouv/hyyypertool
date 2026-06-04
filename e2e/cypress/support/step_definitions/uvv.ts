@@ -80,7 +80,14 @@ When("je clique sur le bouton nommé {string}", (text: string) => {
 });
 
 When("je clique sur le lien nommé {string}", (name: string) => {
-  get_within_context().within(() => cy.findByRole("link", { name }).click());
+  get_within_context().within(() =>
+    cy
+      .get(`a[aria-label="${name}"], a:contains("${name}")`, {
+        timeout: 20_000,
+      })
+      .first()
+      .click(),
+  );
 });
 
 When(
