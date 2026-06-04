@@ -1,5 +1,31 @@
 # Changelog
 
+## [2026.6.1](https://github.com/proconnect-gouv/hyyypertool/compare/2026.6.0...2026.6.1) (2026-06-04)
+
+### Changements
+
+- 💬 Corrige coquille dans email automatique + ajoute "ProConnect" devant lien ProConnect Identité
+- ✨ Ajoute un lien sur l'email d'un membre de l'organisation qui vers le profil du membre
+
+### Ajouté
+
+- ✨ Add end_user_reason and allow_editing fields to moderation (#1652) (71b4d380)
+- ✨ Make member email a link to user profile (#1653) (e8ab071b)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): Bump oxc-parser (#1659) (a8456778)
+- :arrow_upper_right: [patch](deps): Bump cypress-io/github-action (#1655) (19db1c6a)
+- :arrow_upper_right: [patch](deps): Bump actions/checkout (#1656) (192a8f50)
+- :arrow_upper_right: [patch](deps): Bump hono from 4.12.21 to 4.12.23 (#1660) (97ce6566)
+- :arrow_upper_right: [patch](deps): Bump the sentry group with 4 updates (#1658) (438d5e40)
+- :arrow_upper_right: [patch](deps): Bump tsx from 4.21.0 to 4.22.3 (#1648) (9c68391d)
+
+### Divers
+
+- 💬 Corrects typo in the automated email (#1654) (bf09e6d7)
+- ↗️ [patch](deps): Bump preact-render-to-string from 6.6.7 to 6.7.0 (#1645) (6720a912)
+
 ## [2026.6.0](https://github.com/proconnect-gouv/hyyypertool/compare/2026.5.12...2026.6.0) (2026-06-01)
 
 ### Ajouté
