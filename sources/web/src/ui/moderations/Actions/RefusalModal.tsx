@@ -14,7 +14,12 @@ export async function RefusalModal({
   response_templates,
 }: {
   userEmail: string;
-  response_templates: { id: number; label: string; end_user_reason: string }[];
+  response_templates: {
+    id: number;
+    label: string;
+    end_user_reason: string;
+    allow_editing: boolean;
+  }[];
 }) {
   const { moderation } = useContext(context);
   const textarea_id = `rejection-message-${moderation.id}`;
@@ -79,6 +84,18 @@ export async function RefusalModal({
           class={input()}
           placeholder="Motif de refus affiché à l'usager"
         />
+        <input
+          type="hidden"
+          name="allow_editing"
+          id={`allow-editing-${moderation.id}`}
+        />
+        <p
+          id={`allow-editing-warning-${moderation.id}`}
+          class="text-warning mt-3 mb-0 hidden text-sm"
+        >
+          ⚠️ Attention, cette réponse type autorise l'utilisateur à éditer ses
+          informations personnelles.
+        </p>
         <div class="my-2">
           <label class={label()} for={textarea_id}>
             Message

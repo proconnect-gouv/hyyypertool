@@ -11,7 +11,12 @@ import { Toolbar } from "./Toolbar";
 
 type ActionProps = {
   value: Omit<Values, "$accept" | "$decision_form" | "$reject" | "domain">;
-  response_templates: { id: number; label: string; end_user_reason: string }[];
+  response_templates: {
+    id: number;
+    label: string;
+    end_user_reason: string;
+    allow_editing: boolean;
+  }[];
 };
 
 export async function Actions({ value, response_templates }: ActionProps) {

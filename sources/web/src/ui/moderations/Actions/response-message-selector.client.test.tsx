@@ -21,9 +21,19 @@ afterAll(() => {
 //
 
 const templates = [
-  { id: 1, label: "Adresse email invalide", end_user_reason: "" },
-  { id: 2, label: "Organisation inconnue", end_user_reason: "" },
-  { id: 3, label: "Doublon", end_user_reason: "" },
+  {
+    id: 1,
+    label: "Adresse email invalide",
+    end_user_reason: "",
+    allow_editing: false,
+  },
+  {
+    id: 2,
+    label: "Organisation inconnue",
+    end_user_reason: "",
+    allow_editing: false,
+  },
+  { id: 3, label: "Doublon", end_user_reason: "", allow_editing: false },
 ];
 
 //
@@ -79,7 +89,12 @@ test("selecting a template whose label has surrounding spaces still fetches by i
     <ResponseMessageSelectorClient
       moderation_id={42}
       response_templates={[
-        { id: 7, label: "  Doublon  ", end_user_reason: "" },
+        {
+          id: 7,
+          label: "  Doublon  ",
+          end_user_reason: "",
+          allow_editing: false,
+        },
       ]}
     />,
   );

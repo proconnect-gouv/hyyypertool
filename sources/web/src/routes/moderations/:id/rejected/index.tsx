@@ -66,6 +66,7 @@ export default new Hono<ContextType>()
         message: text_body,
         subject,
         end_user_reason,
+        allow_editing,
       } = req.valid("form");
 
       const get_moderation_with_user = GetModerationWithUser(identite_pg);
@@ -120,6 +121,7 @@ export default new Hono<ContextType>()
         userinfo,
         end_user_reason,
         type: "REJECTED",
+        allow_editing,
       });
       await update_moderation_by_id(moderation.id, update);
 
