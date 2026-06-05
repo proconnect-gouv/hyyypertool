@@ -1,3 +1,6 @@
+/* @jsxImportSource preact */
+
+import { validate_form_fields } from "#src/lib/moderations/schema";
 import { tags_group } from "#src/ui/form";
 import { tag } from "#src/ui/tag";
 import {
@@ -33,7 +36,7 @@ export function TagInput() {
               class="m-1"
               type="radio"
               value={value ?? "null"}
-              name="verification_type"
+              name={validate_form_fields.verification_type}
             />
             {key}
           </label>

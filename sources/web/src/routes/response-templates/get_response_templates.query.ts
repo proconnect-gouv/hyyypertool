@@ -5,6 +5,10 @@ import { asc } from "drizzle-orm";
 
 //
 
+export type ResponseTemplateDto = Awaited<
+  ReturnType<typeof get_response_templates>
+>[number];
+
 export async function get_response_templates(
   pg: HyyyperPgDatabase,
   search_term: string,

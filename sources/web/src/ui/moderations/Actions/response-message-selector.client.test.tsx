@@ -58,6 +58,7 @@ test("renders template labels as datalist options", () => {
 
 test("selecting a template fetches its rendered message by id", async () => {
   const mock_fetch = mock().mockResolvedValue({
+    ok: true,
     text: async () => "rendered content",
   });
   globalThis.fetch = mock_fetch as unknown as typeof fetch;
@@ -73,7 +74,8 @@ test("selecting a template fetches its rendered message by id", async () => {
     "input[type=search]",
   ) as HTMLInputElement;
 
-  fireEvent.input(input, { target: { value: "Organisation inconnue" } });
+  input.value = "Organisation inconnue";
+  fireEvent.input(input);
 
   await waitFor(() => expect(mock_fetch).toHaveBeenCalledTimes(1));
   expect(mock_fetch).toHaveBeenCalledWith("/moderations/42/rejected/reason/2");
@@ -81,6 +83,7 @@ test("selecting a template fetches its rendered message by id", async () => {
 
 test("selecting a template whose label has surrounding spaces still fetches by id", async () => {
   const mock_fetch = mock().mockResolvedValue({
+    ok: true,
     text: async () => "rendered content",
   });
   globalThis.fetch = mock_fetch as unknown as typeof fetch;
@@ -103,14 +106,18 @@ test("selecting a template whose label has surrounding spaces still fetches by i
     "input[type=search]",
   ) as HTMLInputElement;
 
-  fireEvent.input(input, { target: { value: "Doublon" } });
+  input.value = "Doublon";
+  fireEvent.input(input);
 
   await waitFor(() => expect(mock_fetch).toHaveBeenCalledTimes(1));
   expect(mock_fetch).toHaveBeenCalledWith("/moderations/42/rejected/reason/7");
 });
 
 test("selecting a value not in the list does not fetch", async () => {
-  const mock_fetch = mock().mockResolvedValue({ text: async () => "" });
+  const mock_fetch = mock().mockResolvedValue({
+    ok: true,
+    text: async () => "",
+  });
   globalThis.fetch = mock_fetch as unknown as typeof fetch;
 
   const { container } = render(
@@ -130,7 +137,10 @@ test("selecting a value not in the list does not fetch", async () => {
 });
 
 test("clearing the input does not fetch", async () => {
-  const mock_fetch = mock().mockResolvedValue({ text: async () => "" });
+  const mock_fetch = mock().mockResolvedValue({
+    ok: true,
+    text: async () => "",
+  });
   globalThis.fetch = mock_fetch as unknown as typeof fetch;
 
   const { container } = render(
