@@ -1,7 +1,7 @@
 //
 
 import { PGlite } from "@electric-sql/pglite";
-import { describe, expect, test } from "bun:test";
+import { afterAll, describe, expect, test } from "bun:test";
 import { sql } from "drizzle-orm";
 import { drizzle as drizzle_node } from "drizzle-orm/node-postgres";
 import { drizzle as drizzle_pglite } from "drizzle-orm/pglite";
@@ -25,8 +25,11 @@ const table_exists_query = sql`
 //
 
 describe("pglite", () => {
+  const pglite = new PGlite(undefined, { debug: 0 });
+  afterAll(() => pglite.close());
+
   test("migration creates users table", async () => {
-    const db = drizzle_pglite(new PGlite(undefined, { debug: 0 }));
+    const db = drizzle_pglite(pglite);
     await pglite_migrate(db, { migrationsFolder });
 
     const { rows } = await db.execute(table_exists_query);
