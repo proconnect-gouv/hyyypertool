@@ -1,20 +1,24 @@
 /* @jsxImportSource preact */
 
 import { select } from "#src/ui/form";
-import type { RefObject } from "preact";
 
 //
 
 export function ResponseMessageSelectorClient({
   moderation_id,
   response_templates,
-  textarea_ref,
+  onContent,
   onSelect,
 }: {
   moderation_id: number;
-  response_templates: { id: number; label: string; end_user_reason: string }[];
-  textarea_ref: RefObject<HTMLTextAreaElement>;
-  onSelect?: (end_user_reason: string) => void;
+  response_templates: {
+    id: number;
+    label: string;
+    end_user_reason: string;
+    allow_editing: boolean;
+  }[];
+  onContent?: (content: string) => void;
+  onSelect?: (end_user_reason: string, allow_editing: boolean) => void;
 }) {
   const datalist_id = `responses-type-${moderation_id}`;
 
@@ -27,6 +31,8 @@ export function ResponseMessageSelectorClient({
     const template_id = (option as HTMLOptionElement | null)?.dataset.id;
     const end_user_reason = (option as HTMLOptionElement | null)?.dataset
       .endUserReason;
+    const allow_editing =
+      (option as HTMLOptionElement | null)?.dataset.allowEditing === "true";
     if (!template_id) return;
 
     const url = `/moderations/${moderation_id}/rejected/reason/${template_id}`;
@@ -34,14 +40,8 @@ export function ResponseMessageSelectorClient({
     if (!res.ok) return;
     const content = await res.text();
 
-    const textarea = textarea_ref.current;
-    if (!textarea) return;
-
-    textarea.value = content;
-    textarea.focus();
-    textarea.select();
-
-    onSelect?.(end_user_reason ?? "");
+    onContent?.(content);
+    onSelect?.(end_user_reason ?? "", allow_editing);
   };
 
   return (
@@ -58,14 +58,17 @@ export function ResponseMessageSelectorClient({
         }}
       />
       <datalist id={datalist_id}>
-        {response_templates.map(({ id, label, end_user_reason }) => (
-          <option
-            key={id}
-            value={label.trim()}
-            data-id={id}
-            data-end-user-reason={end_user_reason}
-          />
-        ))}
+        {response_templates.map(
+          ({ id, label, end_user_reason, allow_editing }) => (
+            <option
+              key={id}
+              value={label.trim()}
+              data-id={id}
+              data-end-user-reason={end_user_reason}
+              data-allow-editing={String(allow_editing)}
+            />
+          ),
+        )}
       </datalist>
     </>
   );

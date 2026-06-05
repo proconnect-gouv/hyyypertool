@@ -2,7 +2,6 @@
 import { GlobalRegistrator } from "@happy-dom/global-registrator";
 import { cleanup, fireEvent, render, waitFor } from "@testing-library/preact";
 import { afterAll, afterEach, beforeAll, expect, mock, test } from "bun:test";
-import { createRef } from "preact";
 import { ResponseMessageSelectorClient } from "./response-message-selector.client";
 
 //
@@ -40,12 +39,10 @@ const templates = [
 //
 
 test("renders template labels as datalist options", () => {
-  const textarea_ref = createRef<HTMLTextAreaElement>();
   const { container } = render(
     <ResponseMessageSelectorClient
       moderation_id={42}
       response_templates={templates}
-      textarea_ref={textarea_ref}
     />,
   );
 
@@ -66,12 +63,10 @@ test("selecting a template fetches its rendered message by id", async () => {
   });
   globalThis.fetch = mock_fetch as unknown as typeof fetch;
 
-  const textarea_ref = createRef<HTMLTextAreaElement>();
   const { container } = render(
     <ResponseMessageSelectorClient
       moderation_id={42}
       response_templates={templates}
-      textarea_ref={textarea_ref}
     />,
   );
 
@@ -79,7 +74,8 @@ test("selecting a template fetches its rendered message by id", async () => {
     "input[type=search]",
   ) as HTMLInputElement;
 
-  fireEvent.input(input, { target: { value: "Organisation inconnue" } });
+  input.value = "Organisation inconnue";
+  fireEvent.input(input);
 
   await waitFor(() => expect(mock_fetch).toHaveBeenCalledTimes(1));
   expect(mock_fetch).toHaveBeenCalledWith("/moderations/42/rejected/reason/2");
@@ -92,7 +88,6 @@ test("selecting a template whose label has surrounding spaces still fetches by i
   });
   globalThis.fetch = mock_fetch as unknown as typeof fetch;
 
-  const textarea_ref = createRef<HTMLTextAreaElement>();
   const { container } = render(
     <ResponseMessageSelectorClient
       moderation_id={42}
@@ -104,7 +99,6 @@ test("selecting a template whose label has surrounding spaces still fetches by i
           allow_editing: false,
         },
       ]}
-      textarea_ref={textarea_ref}
     />,
   );
 
@@ -112,7 +106,8 @@ test("selecting a template whose label has surrounding spaces still fetches by i
     "input[type=search]",
   ) as HTMLInputElement;
 
-  fireEvent.input(input, { target: { value: "Doublon" } });
+  input.value = "Doublon";
+  fireEvent.input(input);
 
   await waitFor(() => expect(mock_fetch).toHaveBeenCalledTimes(1));
   expect(mock_fetch).toHaveBeenCalledWith("/moderations/42/rejected/reason/7");
@@ -125,12 +120,10 @@ test("selecting a value not in the list does not fetch", async () => {
   });
   globalThis.fetch = mock_fetch as unknown as typeof fetch;
 
-  const textarea_ref = createRef<HTMLTextAreaElement>();
   const { container } = render(
     <ResponseMessageSelectorClient
       moderation_id={42}
       response_templates={templates}
-      textarea_ref={textarea_ref}
     />,
   );
 
@@ -150,12 +143,10 @@ test("clearing the input does not fetch", async () => {
   });
   globalThis.fetch = mock_fetch as unknown as typeof fetch;
 
-  const textarea_ref = createRef<HTMLTextAreaElement>();
   const { container } = render(
     <ResponseMessageSelectorClient
       moderation_id={42}
       response_templates={templates}
-      textarea_ref={textarea_ref}
     />,
   );
 

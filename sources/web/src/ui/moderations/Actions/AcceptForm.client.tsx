@@ -1,18 +1,29 @@
 /* @jsxImportSource preact */
 
 import { MODERATION_EVENTS } from "#src/lib/moderations/event";
-import { validate_form_fields } from "#src/lib/moderations/schema";
+import {
+  validate_form_fields,
+  validate_form_schema,
+} from "#src/lib/moderations/schema";
 import { button } from "#src/ui/button";
-import { checkbox_group, input } from "#src/ui/form";
+import { checkbox_group, input, input_group } from "#src/ui/form";
 import { icon } from "#src/ui/icons";
 import { AUTO_GO_BACK_EVENT } from "#src/ui/moderations/AutoGoBack";
 import { useState } from "preact/hooks";
 import { MemberAndDomainPicker } from "./MemberAndDomainPicker.client";
 import { TagInput } from "./TagInput";
+import { toolbar_open } from "./toolbar-modal.signal";
 
 //
 
-export interface AcceptFormProps extends Record<string, unknown> {
+const notify_danger = (message: string) =>
+  window.dispatchEvent(
+    new CustomEvent("notify", {
+      detail: { variant: "danger", title: "Erreur", message },
+    }),
+  );
+
+export interface AcceptFormProps {
   moderation_id: number;
   domain: string;
   given_name: string;
@@ -30,42 +41,59 @@ export function AcceptForm({
   moderation_type,
 }: AcceptFormProps) {
   const [submitting, setSubmitting] = useState(false);
+  const [field_errors, set_field_errors] = useState<
+    Partial<Record<"add_member", string>>
+  >({});
 
   const send_notification_default = moderation_type !== "non_verified_domain";
 
-  const handleClose = () => {
-    document.getElementById("acceptModal")?.classList.add("hidden");
-  };
-
   const handleSubmit = async (e: Event) => {
     e.preventDefault();
-    setSubmitting(true);
     const form = e.currentTarget as HTMLFormElement;
     const body = new FormData(form);
 
-    const res = await fetch(`/moderations/${moderation_id}/validate`, {
-      method: "PATCH",
-      body,
-    });
-
-    if (res.ok) {
-      document.body.dispatchEvent(
-        new CustomEvent(MODERATION_EVENTS.enum.MODERATION_UPDATED),
-      );
-      document
-        .getElementById("auto_go_back")
-        ?.dispatchEvent(new CustomEvent(AUTO_GO_BACK_EVENT));
+    const parsed = validate_form_schema.safeParse(Object.fromEntries(body));
+    if (!parsed.success) {
+      const errors: Partial<Record<string, string>> = {};
+      for (const issue of parsed.error.issues) {
+        const field = String(issue.path[0]);
+        if (!errors[field]) errors[field] = issue.message;
+      }
+      set_field_errors(errors);
+      return;
     }
+    set_field_errors({});
+    setSubmitting(true);
 
-    setSubmitting(false);
+    try {
+      const res = await fetch(`/moderations/${moderation_id}/validate`, {
+        method: "PATCH",
+        body,
+      });
+
+      if (res.ok) {
+        toolbar_open.value = null;
+        document.body.dispatchEvent(
+          new CustomEvent(MODERATION_EVENTS.enum.MODERATION_UPDATED),
+        );
+        document
+          .getElementById("auto_go_back")
+          ?.dispatchEvent(new CustomEvent(AUTO_GO_BACK_EVENT));
+      } else {
+        notify_danger(`Échec de la validation (${res.status})`);
+      }
+    } catch {
+      notify_danger("Une erreur inattendue est survenue.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const { base, label: checkbox_label } = checkbox_group();
 
   return (
     <div
-      id="acceptModal"
-      class="border-blue-france bg-surface fixed right-0 bottom-14 z-[calc(var(--ground)+777)] m-2 hidden justify-self-end border-solid px-8 py-4 shadow-lg"
+      class={`border-blue-france bg-surface fixed right-0 bottom-14 z-[calc(var(--ground)+777)] m-2 justify-self-end border-solid px-8 py-4 shadow-lg ${toolbar_open.value === "accept" ? "" : "hidden"}`}
       aria-label="la modale de validation"
     >
       <div class="mb-4 flex items-center justify-between">
@@ -74,7 +102,7 @@ export function AcceptForm({
           class={button({ icon: "only", intent: "ghost" })}
           type="button"
           disabled={submitting}
-          onClick={handleClose}
+          onClick={() => (toolbar_open.value = null)}
         >
           <svg
             viewBox="0 0 24 24"
@@ -96,7 +124,18 @@ export function AcceptForm({
         pour l'organisation <b>{organization_name}</b>, je valide :
       </p>
       <form onSubmit={handleSubmit}>
-        <MemberAndDomainPicker domain={domain} given_name={given_name} />
+        <div
+          class={input_group({
+            intent: field_errors.add_member ? "error" : undefined,
+          })}
+        >
+          <MemberAndDomainPicker domain={domain} given_name={given_name} />
+          {field_errors.add_member && (
+            <p class="mt-1 text-sm text-red-600" role="alert">
+              Veuillez sélectionner un type de membre.
+            </p>
+          )}
+        </div>
         <div class="mb-5">
           <TagInput />
         </div>
@@ -108,7 +147,7 @@ export function AcceptForm({
               name={validate_form_fields.send_notification}
               type="checkbox"
               value="true"
-              checked={send_notification_default}
+              defaultChecked={send_notification_default}
               disabled={submitting}
             />
             <label
