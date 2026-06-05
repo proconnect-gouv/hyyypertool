@@ -2,7 +2,7 @@
 
 import type { HyyyperPgDatabase } from "#src";
 import { PGlite } from "@electric-sql/pglite";
-import { afterAll, beforeAll } from "bun:test";
+import { beforeAll } from "bun:test";
 import { sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/pglite";
 import { migrate } from "drizzle-orm/pglite/migrator";
@@ -34,4 +34,3 @@ export async function empty_database(pg: HyyyperPgDatabase = hyyyper_pglite) {
 //
 
 beforeAll(setup);
-afterAll(() => pglite_client.close());
