@@ -26,7 +26,8 @@ const table_exists_query = sql`
 
 describe("pglite", () => {
   test("migration creates users table", async () => {
-    const db = drizzle_pglite(new PGlite(undefined, { debug: 0 }));
+    await using pglite = new PGlite(undefined, { debug: 0 });
+    const db = drizzle_pglite(pglite);
     await pglite_migrate(db, { migrationsFolder });
 
     const { rows } = await db.execute(table_exists_query);
