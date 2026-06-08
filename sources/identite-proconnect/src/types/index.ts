@@ -1,7 +1,7 @@
 //
 
 import {
-  LinkTypes,
+  LinkEnum,
   ModerationStatusSchema,
   ModerationTypeSchema,
 } from "@proconnect-gouv/proconnect.identite/types";
@@ -11,8 +11,8 @@ import z from "zod";
 
 export * from "@proconnect-gouv/proconnect.identite/types";
 
-export const VerificationTypeSchema = LinkTypes;
-export type VerificationType = z.output<typeof LinkTypes>;
+export const VerificationTypeSchema = LinkEnum;
+export type VerificationType = z.output<typeof LinkEnum>;
 
 //
 //
