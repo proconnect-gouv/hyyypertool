@@ -21,8 +21,8 @@ import {
   pg,
 } from "@~/identite-proconnect/database/testing";
 import {
-  EmailDomainVerificationTypes,
-  LinkTypes,
+  EmailDomainVerificationEnum,
+  LinkEnum,
 } from "@~/identite-proconnect/types";
 import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
 import { asc } from "drizzle-orm";
@@ -43,7 +43,7 @@ test("GET /organizations/:id/domains returns domains for organization", async ()
   await pg.insert(schema.email_domains).values({
     domain: "rainbow.xyz",
     organization_id,
-    verification_type: EmailDomainVerificationTypes.enum.not_verified_yet,
+    verification_type: EmailDomainVerificationEnum.enum.not_verified_yet,
   });
 
   const response = await new Hono()
@@ -70,17 +70,17 @@ test("PUT /organizations/:id/domains adds new domain", async () => {
   await pg.insert(schema.users_organizations).values({
     organization_id: organization_id,
     user_id: adora_pony_user_id,
-    verification_type: LinkTypes.enum.domain_not_verified_yet,
+    verification_type: LinkEnum.enum.domain_not_verified_yet,
   });
   await pg.insert(schema.users_organizations).values({
     organization_id: organization_id,
     user_id: pink_diamond_user_id,
-    verification_type: LinkTypes.enum.no_validation_means_available,
+    verification_type: LinkEnum.enum.no_validation_means_available,
   });
   await pg.insert(schema.users_organizations).values({
     organization_id: organization_id,
     user_id: red_diamond_user_id,
-    verification_type: LinkTypes.enum.proof_received,
+    verification_type: LinkEnum.enum.proof_received,
   });
 
   {
@@ -199,7 +199,7 @@ test("DELETE /organizations/:id/domains/:domain_id removes domain", async () => 
     .values({
       domain: "tobedeleted.xyz",
       organization_id,
-      verification_type: EmailDomainVerificationTypes.enum.not_verified_yet,
+      verification_type: EmailDomainVerificationEnum.enum.not_verified_yet,
     })
     .returning({ id: schema.email_domains.id });
 
@@ -246,17 +246,17 @@ test("PATCH /organizations/:id/domains/:domain_id updates verification type to v
   await pg.insert(schema.users_organizations).values({
     organization_id,
     user_id: adora_pony_user_id,
-    verification_type: LinkTypes.enum.domain_not_verified_yet,
+    verification_type: LinkEnum.enum.domain_not_verified_yet,
   });
   await pg.insert(schema.users_organizations).values({
     organization_id,
     user_id: pink_diamond_user_id,
-    verification_type: LinkTypes.enum.no_validation_means_available,
+    verification_type: LinkEnum.enum.no_validation_means_available,
   });
   await pg.insert(schema.users_organizations).values({
     organization_id,
     user_id: red_diamond_user_id,
-    verification_type: LinkTypes.enum.proof_received,
+    verification_type: LinkEnum.enum.proof_received,
   });
 
   // Insert an unverified domain matching the seed users' email domain
@@ -265,7 +265,7 @@ test("PATCH /organizations/:id/domains/:domain_id updates verification type to v
     .values({
       domain: "unicorn.xyz",
       organization_id,
-      verification_type: EmailDomainVerificationTypes.enum.not_verified_yet,
+      verification_type: EmailDomainVerificationEnum.enum.not_verified_yet,
     })
     .returning({ id: schema.email_domains.id });
 

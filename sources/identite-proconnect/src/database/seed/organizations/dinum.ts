@@ -1,4 +1,4 @@
-import { EmailDomainVerificationTypes } from "#src/types";
+import { EmailDomainVerificationEnum } from "#src/types";
 import type { IdentiteProconnectPgDatabase } from "../..";
 import { schema } from "../..";
 
@@ -31,17 +31,17 @@ export async function insert_dinum(db: IdentiteProconnectPgDatabase) {
   await db.insert(schema.email_domains).values({
     domain: "beta.gouv.fr",
     organization_id: organization.id,
-    verification_type: EmailDomainVerificationTypes.enum.verified,
+    verification_type: EmailDomainVerificationEnum.enum.verified,
   });
   await db.insert(schema.email_domains).values({
     domain: "modernisation.gouv.fr",
     organization_id: organization.id,
-    verification_type: EmailDomainVerificationTypes.enum.verified,
+    verification_type: EmailDomainVerificationEnum.enum.verified,
   });
   await db.insert(schema.email_domains).values({
     domain: "prestataire.modernisation.gouv.fr",
     organization_id: organization.id,
-    verification_type: EmailDomainVerificationTypes.enum.external,
+    verification_type: EmailDomainVerificationEnum.enum.external,
   });
   return organization;
 }

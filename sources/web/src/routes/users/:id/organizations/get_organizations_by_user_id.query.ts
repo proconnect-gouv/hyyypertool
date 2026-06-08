@@ -3,7 +3,7 @@
 import type { Pagination } from "#src/schema";
 import type { IdentiteProconnectPgDatabase } from "@~/identite-proconnect/database";
 import { schema } from "@~/identite-proconnect/database";
-import { EmailDomainVerificationTypes } from "@~/identite-proconnect/types";
+import { EmailDomainVerificationEnum } from "@~/identite-proconnect/types";
 import { and, asc, count as drizzle_count, eq } from "drizzle-orm";
 
 //
@@ -45,7 +45,7 @@ export async function get_organizations_by_user_id(
               columns: { domain: true },
               where: eq(
                 schema.email_domains.verification_type,
-                EmailDomainVerificationTypes.enum.verified,
+                EmailDomainVerificationEnum.enum.verified,
               ),
             },
           },

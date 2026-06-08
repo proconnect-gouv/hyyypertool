@@ -1,4 +1,4 @@
-import { EmailDomainVerificationTypes } from "#src/types";
+import { EmailDomainVerificationEnum } from "#src/types";
 import type { IdentiteProconnectPgDatabase } from "../..";
 import { schema } from "../..";
 
@@ -25,7 +25,7 @@ export async function insert_dengi(db: IdentiteProconnectPgDatabase) {
   await db.insert(schema.email_domains).values({
     domain: "scapartois.fr",
     organization_id: organization.id,
-    verification_type: EmailDomainVerificationTypes.enum.verified,
+    verification_type: EmailDomainVerificationEnum.enum.verified,
   });
   return organization;
 }
