@@ -10,7 +10,7 @@ import { table } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
 import {
-  EmailDomainVerificationTypes,
+  EmailDomainVerificationEnum,
   type EmailDomainVerificationType,
 } from "@~/identite-proconnect/types";
 import { match } from "ts-pattern";
@@ -204,7 +204,7 @@ async function Row_Actions({
         <li>
           <button
             {...await hx_change_type_props(
-              EmailDomainVerificationTypes.enum.verified,
+              EmailDomainVerificationEnum.enum.verified,
             )}
             class={menu_item()}
             hx-swap="none"
@@ -216,7 +216,7 @@ async function Row_Actions({
         <li>
           <button
             {...await hx_change_type_props(
-              EmailDomainVerificationTypes.enum.external,
+              EmailDomainVerificationEnum.enum.external,
             )}
             class={menu_item()}
             hx-swap="none"
@@ -228,7 +228,7 @@ async function Row_Actions({
         <li>
           <button
             {...await hx_change_type_props(
-              EmailDomainVerificationTypes.enum.refused,
+              EmailDomainVerificationEnum.enum.refused,
             )}
             class={menu_item()}
             hx-swap="none"

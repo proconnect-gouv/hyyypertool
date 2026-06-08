@@ -28,9 +28,8 @@ import {
   createProconnectIdentiteContext,
 } from "@~/identite-proconnect/sdk";
 import {
-  EmailDomainApprovedVerificationTypes,
-  EmailDomainVerificationTypes,
-  LinkTypes,
+  EmailDomainApprovedVerificationEnum,
+  LinkEnum,
   type EmailDomain,
 } from "@~/identite-proconnect/types";
 import { to } from "await-to-js";
@@ -224,12 +223,10 @@ function deduce_verification_type_from_organization_domains(
   return email_domains.some(
     ({ domain, verification_type }) =>
       domain === user_domain &&
-      EmailDomainVerificationTypes.extract(
-        EmailDomainApprovedVerificationTypes,
-      ).safeParse(verification_type).success,
+      EmailDomainApprovedVerificationEnum.safeParse(verification_type).success,
   )
-    ? LinkTypes.enum.domain
-    : LinkTypes.enum.no_validation_means_available;
+    ? LinkEnum.enum.domain
+    : LinkEnum.enum.no_validation_means_available;
 }
 
 export function ModerationProcessedMessage({

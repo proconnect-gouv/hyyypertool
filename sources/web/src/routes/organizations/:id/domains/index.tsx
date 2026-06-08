@@ -15,7 +15,7 @@ import {
   createProconnectIdentiteContext,
   MarkDomainAsVerified,
 } from "@~/identite-proconnect/sdk";
-import { EmailDomainVerificationTypes } from "@~/identite-proconnect/types";
+import { EmailDomainVerificationEnum } from "@~/identite-proconnect/types";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { z } from "zod";
@@ -79,7 +79,7 @@ export default new Hono<AppContext>()
 
       await add_verified_domain({
         domain,
-        domain_verification_type: EmailDomainVerificationTypes.enum.verified,
+        domain_verification_type: EmailDomainVerificationEnum.enum.verified,
         organization_id,
       });
 

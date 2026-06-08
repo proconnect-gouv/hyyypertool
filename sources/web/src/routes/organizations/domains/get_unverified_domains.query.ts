@@ -6,7 +6,7 @@ import {
   schema,
   type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
-import { EmailDomainVerificationTypes } from "@~/identite-proconnect/types";
+import { EmailDomainVerificationEnum } from "@~/identite-proconnect/types";
 import {
   and,
   asc,
@@ -54,7 +54,7 @@ export async function get_unverified_domains(
   const where_authorized_email_domains = and(
     eq(
       schema.email_domains.verification_type,
-      EmailDomainVerificationTypes.enum.not_verified_yet,
+      EmailDomainVerificationEnum.enum.not_verified_yet,
     ),
   )!;
 
