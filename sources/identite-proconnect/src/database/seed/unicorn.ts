@@ -91,6 +91,49 @@ export async function create_pink_diamond_user(
   return user_id;
 }
 
+export async function create_unicorn_oidc_client(
+  pg: IdentiteProconnectPgDatabase,
+) {
+  const [{ id: oidc_client_id } = { id: NaN }] = await pg
+    .insert(schema.oidc_clients)
+    .values({
+      client_id: "🦄 client_id",
+      client_name: "🦄 client_name",
+      client_secret: "🦄 client_secret",
+    })
+    .returning({ id: schema.oidc_clients.id });
+
+  return oidc_client_id;
+}
+
+export async function create_adora_pony_oidc_connection(
+  pg: IdentiteProconnectPgDatabase,
+  override: Partial<
+    Omit<typeof schema.users_oidc_clients.$inferInsert, "user_id">
+  > = {},
+) {
+  const adora_pony_user = await pg.query.users.findFirst({
+    columns: { id: true },
+    where: eq(schema.users.email, "adora.pony@unicorn.xyz"),
+  });
+  const unicorn_oidc_client = await pg.query.oidc_clients.findFirst({
+    columns: { id: true },
+    where: eq(schema.oidc_clients.client_id, "🦄 client_id"),
+  });
+  const [{ id: connection_id } = { id: NaN }] = await pg
+    .insert(schema.users_oidc_clients)
+    .values({
+      created_at: new Date().toISOString(),
+      oidc_client_id: unicorn_oidc_client!.id,
+      updated_at: new Date().toISOString(),
+      user_id: adora_pony_user!.id,
+      ...override,
+    })
+    .returning({ id: schema.users_oidc_clients.id });
+
+  return connection_id;
+}
+
 export async function create_red_diamond_user(
   pg: IdentiteProconnectPgDatabase,
 ) {

@@ -17,6 +17,7 @@ import { get_franceconnect_by_user_id } from "./get_franceconnect_by_user_id.que
 import { get_user_by_id } from "./get_user_by_id.query";
 import user_moderations_route from "./moderations";
 import { UserNotFound } from "./not-found";
+import user_oidc_clients_route from "./oidc_clients";
 import user_organizations_page_route from "./organizations";
 import { UserPage } from "./page";
 
@@ -142,6 +143,7 @@ export default new Hono<AppContext>()
   )
   //
   .route("/organizations", user_organizations_page_route)
-  .route("/moderations", user_moderations_route);
+  .route("/moderations", user_moderations_route)
+  .route("/oidc_clients", user_oidc_clients_route);
 
 //
