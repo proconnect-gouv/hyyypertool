@@ -8,8 +8,7 @@ export async function insert_abracadabra(db: IdentiteProconnectPgDatabase) {
     .insert(schema.organizations)
     .values({
       cached_activite_principale: "90.02Z",
-      cached_adresse:
-        "14 rue des freres d'astier de la vigerie, 75013 Paris",
+      cached_adresse: "14 rue des freres d'astier de la vigerie, 75013 Paris",
       cached_categorie_juridique: "5499",
       cached_code_officiel_geographique: "75113",
       cached_code_postal: "75013",

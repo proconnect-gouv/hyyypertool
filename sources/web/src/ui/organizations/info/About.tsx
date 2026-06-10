@@ -108,7 +108,11 @@ export function About(props: Props) {
         <dt>Caractéristiques</dt>
         <dd class="flex flex-wrap gap-1">
           {org_tags.map((t) => (
-            <><span class={badge({ intent: "info", size: "sm" })}>{t}</span>{" "}</>
+            <>
+              <span class={badge({ intent: "info", size: "sm" })}>
+                {t}
+              </span>{" "}
+            </>
           ))}
           {org_tags.length === 0 && <span class="text-grey-600">—</span>}
         </dd>

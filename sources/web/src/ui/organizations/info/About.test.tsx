@@ -132,7 +132,20 @@ test("render about section", async () => {
         <dt>Tranche d&#39;effectif de l&#39;unité légale</dt>
         <dd>Non renseigné (code : cached_tranche_effectifs_unite_legale)</dd>
         <dt>Caractéristiques</dt>
-        <dd class="flex flex-wrap gap-1"><span class="text-grey-600">—</span></dd>
+        <dd class="flex flex-wrap gap-1">
+          <span
+            class="inline-flex w-fit items-center rounded-sm font-bold uppercase text-label-info bg-blue-ecume min-h-5 gap-0.5 px-1.5 py-0.5 text-[0.625rem] leading-3"
+            >Non diffusible</span
+          >
+          <span
+            class="inline-flex w-fit items-center rounded-sm font-bold uppercase text-label-info bg-blue-ecume min-h-5 gap-0.5 px-1.5 py-0.5 text-[0.625rem] leading-3"
+            >En activité</span
+          >
+          <span
+            class="inline-flex w-fit items-center rounded-sm font-bold uppercase text-label-info bg-blue-ecume min-h-5 gap-0.5 px-1.5 py-0.5 text-[0.625rem] leading-3"
+            >Secondaire</span
+          >
+        </dd>
       </dl>
       <details class="my-6">
         <summary>Détails de l&#39;organisation</summary>
