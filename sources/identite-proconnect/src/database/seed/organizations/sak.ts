@@ -17,7 +17,7 @@ export async function insert_sak(db: IdentiteProconnectPgDatabase) {
       cached_libelle_tranche_effectif: "200 à 249 salariés, en 2019",
       cached_etat_administratif: "F",
       cached_est_active: false,
-      cached_statut_diffusion: "O",
+      cached_statut_diffusion: "diffusible",
       cached_est_diffusible: true,
       cached_adresse:
         "8 place francois mitterrand, 62130 Saint-pol-sur-ternoise",

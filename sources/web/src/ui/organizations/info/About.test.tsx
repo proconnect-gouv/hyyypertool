@@ -26,26 +26,29 @@ test("render about section", async () => {
           cached_activite_principale: "cached_activite_principale",
           cached_adresse: "cached_adresse",
           cached_categorie_juridique: "cached_categorie_juridique",
-          cached_code_postal: "cached_code_postal",
-          cached_est_active: true,
-          cached_nom_complet: "cached_nom_complet",
-          created_at: "2011-11-22 14:34:34.000Z",
-          id: 42,
-          siret: "siret",
           cached_code_officiel_geographique:
             "cached_code_officiel_geographique",
-          updated_at: "2011-11-15T13:48:00.000Z",
+          cached_code_postal: "cached_code_postal",
+          cached_enseigne: "cached_enseigne",
+          cached_est_active: true,
+          cached_est_diffusible: null,
+          cached_etat_administratif: "cached_etat_administratif",
           cached_libelle_activite_principale:
             "cached_libelle_activite_principale",
           cached_libelle_categorie_juridique:
             "cached_libelle_categorie_juridique",
           cached_libelle_tranche_effectif: "cached_libelle_tranche_effectif",
+          cached_libelle: "cached_libelle",
+          cached_nom_complet: "cached_nom_complet",
+          cached_siege_social: null,
+          cached_statut_diffusion: null,
           cached_tranche_effectifs_unite_legale:
             "cached_tranche_effectifs_unite_legale",
-          cached_libelle: "cached_libelle",
-          cached_enseigne: "cached_enseigne",
           cached_tranche_effectifs: "cached_tranche_effectifs",
-          cached_etat_administratif: "cached_etat_administratif",
+          created_at: "2011-11-22 14:34:34.000Z",
+          id: 42,
+          siret: "siret",
+          updated_at: "2011-11-15T13:48:00.000Z",
         }}
         id="about_section"
       />,
@@ -131,6 +134,21 @@ test("render about section", async () => {
         <dd>cached_libelle_tranche_effectif (code : cached_tranche_effectifs)</dd>
         <dt>Tranche d&#39;effectif de l&#39;unité légale</dt>
         <dd>Non renseigné (code : cached_tranche_effectifs_unite_legale)</dd>
+        <dt>Caractéristiques</dt>
+        <dd class="flex flex-wrap gap-1">
+          <span
+            class="inline-flex w-fit items-center rounded-sm font-bold uppercase text-label-info bg-blue-ecume min-h-5 gap-0.5 px-1.5 py-0.5 text-[0.625rem] leading-3"
+            >Non diffusible</span
+          >
+          <span
+            class="inline-flex w-fit items-center rounded-sm font-bold uppercase text-label-info bg-blue-ecume min-h-5 gap-0.5 px-1.5 py-0.5 text-[0.625rem] leading-3"
+            >En activité</span
+          >
+          <span
+            class="inline-flex w-fit items-center rounded-sm font-bold uppercase text-label-info bg-blue-ecume min-h-5 gap-0.5 px-1.5 py-0.5 text-[0.625rem] leading-3"
+            >Secondaire</span
+          >
+        </dd>
       </dl>
       <details class="my-6">
         <summary>Détails de l&#39;organisation</summary>

@@ -19,16 +19,17 @@ export async function insert_yes_we_hack(pg: IdentiteProconnectPgDatabase) {
       cached_libelle_activite_principale:
         "62.09Z - Autres activités informatiques",
       cached_libelle_categorie_juridique: "SAS, société par actions simplifiée",
-      cached_libelle_tranche_effectif: "20 à 49 salariés, en 2021",
+      cached_libelle_tranche_effectif: "20 à 49 salariés, en 2023",
       cached_libelle: "Yes we hack",
       cached_nom_complet: "Yes we hack",
-      cached_statut_diffusion: "O",
+      cached_siege_social: true,
+      cached_statut_diffusion: "diffusible",
       cached_tranche_effectifs_unite_legale: "21",
       cached_tranche_effectifs: "12",
-      created_at: "2023-12-19T10:02:33.274+02:00",
-      organization_info_fetched_at: "2024-09-24T09:15:41.308+02:00",
+      created_at: "2023-12-19T10:02:33.274+00:00",
+      organization_info_fetched_at: "2026-05-27T19:26:33.483+00:00",
       siret: "81403721400016",
-      updated_at: "2024-09-24T09:15:41.308+02:00",
+      updated_at: "2026-05-27T19:26:33.483+00:00",
     })
     .returning({ id: schema.organizations.id });
 

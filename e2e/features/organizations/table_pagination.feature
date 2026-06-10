@@ -8,11 +8,11 @@ Fonctionnalité: Pagination de la liste des organisations
     Et je me connecte en tant que "jeanbon@yopmail.com"
 
   Scénario: Navigation avant et arrière dans la liste
-    Quand je suis sur la page "/organizations?page_size=1&page=3"
+    Quand je suis sur la page "/organizations?page_size=1&page=4"
     Alors je vois "Yes we hack"
     Quand je clique sur "Suivant"
-    Alors je vois "Abracadabra"
-    Et je suis redirigé vers "page=4"
+    Alors je vois "Abracadabra (ABRACADABRA)"
+    Et je suis redirigé vers "page=5"
     Quand je clique sur "Précédent"
     Alors je vois "Yes we hack"
-    Et je suis redirigé vers "page=3"
+    Et je suis redirigé vers "page=4"
