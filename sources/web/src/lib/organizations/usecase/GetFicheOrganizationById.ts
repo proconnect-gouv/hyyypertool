@@ -29,7 +29,6 @@ export function GetFicheOrganizationById({
         cached_tranche_effectifs: true,
         created_at: true,
         id: true,
-        organization_info_fetched_at: true,
         siret: true,
         updated_at: true,
       },
