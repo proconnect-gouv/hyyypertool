@@ -1,5 +1,35 @@
 # Changelog
 
+## [2026.6.2](https://github.com/proconnect-gouv/hyyypertool/compare/2026.6.1...2026.6.2) (2026-06-10)
+
+### Changements
+
+- ✨ Badges de caractéristiques dans les fiches organisation
+
+La section « Caractéristiques » des fiches organisation affiche désormais des badges synthétiques : type de service public (administration d'État, collectivité…), statut de diffusion, état d'activité (en activité / fermé), siège social ou établissement secondaire, et éligibilité à la vérification dirigeant.
+
+### Ajouté
+
+- ✨ about: add characteristics badges to org and user panels (#1672) (68b933e7)
+
+### Modifié
+
+- ♻️ moderations: replace SSR modal shells with self-contained Preact islands (#1627) (242dad76)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): Bump @proconnect-gouv/proconnect.identite from 8.1.0 to 9.1.2 (#1663) (617dc129)
+- :arrow_upper_right: [patch](deps): Bump the sentry group across 1 directory with 4 updates (#1662) (e677fe8b)
+
+### Divers
+
+- ↗️ [patch](deps): Bump the sentry group with 4 updates (#1667) (9742a301)
+- ↗️ [patch](deps-dev): Bump release-it from 20.0.1 to 20.2.0 (#1669) (302b29c1)
+- ↗️ [patch](deps): Bump @proconnect-gouv/proconnect.identite from 9.1.2 to 9.1.3 (#1668) (b4ef7abe)
+- ↗️ [patch](deps): Bump @hono/node-server from 2.0.3 to 2.0.4 (#1666) (14fa4671)
+- ↗️ [patch](deps): Bump @preact/signals from 2.9.0 to 2.9.1 (#1664) (85c329a2)
+- ↗️ [patch](deps-dev): Bump @electric-sql/pglite from 0.3.16 to 0.4.3 (#1543) (0916a54f)
+
 ## [2026.6.1](https://github.com/proconnect-gouv/hyyypertool/compare/2026.6.0...2026.6.1) (2026-06-04)
 
 ### Changements
