@@ -1,11 +1,18 @@
 //
 
 import type { GetFicheOrganizationByIdHandler } from "#src/lib/organizations/usecase";
+import { badge } from "#src/ui/badge";
 import { button } from "#src/ui/button";
 import { CopyButton } from "#src/ui/button/components";
 import { description_list } from "#src/ui/list";
 import { LocalTime } from "#src/ui/time";
 import { formatTrancheEffectifsUniteLegale } from "@proconnect-gouv/proconnect.api_entreprise/formatters";
+import {
+  computeServicePublicInfo,
+  isEntrepriseUnipersonnelle,
+  isOrganizationCoveredByCertificationDirigeant,
+  isSmallEtablissementPublic,
+} from "@proconnect-gouv/proconnect.identite/services/organization";
 
 import { type JSX } from "hono/jsx";
 import { InactiveWarning } from "./InactiveWarning";
@@ -18,6 +25,18 @@ type Props = JSX.IntrinsicElements["section"] & {
 
 export function About(props: Props) {
   const { organization, ...section_props } = props;
+
+  const { isServicePublic, isAdministrationEtat, isCollectivite } =
+    computeServicePublicInfo(organization);
+  const org_tags = [
+    isServicePublic && "Service public",
+    isAdministrationEtat && "Administration d'État",
+    isCollectivite && "Collectivité",
+    isEntrepriseUnipersonnelle(organization) && "Unipersonnelle",
+    isSmallEtablissementPublic(organization) && "Petit établissement public",
+    isOrganizationCoveredByCertificationDirigeant(organization) &&
+      "Certif. dirigeant",
+  ].filter(Boolean);
 
   return (
     <section {...section_props}>
@@ -79,6 +98,14 @@ export function About(props: Props) {
           {organization.cached_tranche_effectifs_unite_legale && (
             <> (code : {organization.cached_tranche_effectifs_unite_legale})</>
           )}
+        </dd>
+
+        <dt>Caractéristiques</dt>
+        <dd class="flex flex-wrap gap-1">
+          {org_tags.map((t) => (
+            <span class={badge({ intent: "info", size: "sm" })}>{t}</span>
+          ))}
+          {org_tags.length === 0 && <span class="text-grey-600">—</span>}
         </dd>
       </dl>
       <details class="my-6">

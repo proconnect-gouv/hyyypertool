@@ -2,10 +2,12 @@
 
 import type { GetUserInfoOutput } from "#src/lib/users";
 import { z_email_domain } from "#src/schema";
+import { badge } from "#src/ui/badge";
 import { button } from "#src/ui/button";
 import { CopyButton } from "#src/ui/button/components";
 import { description_list } from "#src/ui/list";
 import { urls } from "#src/urls";
+import { isAFreeDomain } from "@proconnect-gouv/proconnect.core/services/email";
 
 //
 
@@ -18,6 +20,11 @@ type AboutProps = {
 
 export function About({ user, organization }: AboutProps) {
   const domain = z_email_domain.parse(user.email);
+
+  const user_tags = [
+    isAFreeDomain(domain) && "Email gratuit",
+    domain.endsWith(".gouv.fr") && "Domaine gouv.fr",
+  ].filter(Boolean);
 
   return (
     <section>
@@ -71,6 +78,14 @@ export function About({ user, organization }: AboutProps) {
           >
             Liste dirigeants - Annuaire entreprise API
           </a>
+        </dd>
+
+        <dt>Caractéristiques</dt>
+        <dd class="flex flex-wrap gap-1">
+          {user_tags.map((t) => (
+            <span class={badge({ intent: "info", size: "sm" })}>{t}</span>
+          ))}
+          {user_tags.length === 0 && <span class="text-grey-600">—</span>}
         </dd>
       </dl>
     </section>
