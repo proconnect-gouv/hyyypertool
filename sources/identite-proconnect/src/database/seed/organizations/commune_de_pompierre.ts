@@ -24,7 +24,7 @@ export async function insert_commune_de_pompierre(
       cached_libelle_tranche_effectif: "1 ou 2 salariés, en 2019",
       cached_libelle: "Commune de pompierre - Mairie",
       cached_nom_complet: "Commune de pompierre",
-      cached_statut_diffusion: "O",
+      cached_statut_diffusion: "diffusible",
       cached_tranche_effectifs_unite_legale: "02",
       cached_tranche_effectifs: "01",
       created_at: "2022-04-11T15:31:44.199+02:00",

@@ -7,21 +7,31 @@ export async function insert_abracadabra(db: IdentiteProconnectPgDatabase) {
   const insert = await db
     .insert(schema.organizations)
     .values({
-      cached_activite_principale:
-        "90.02Z - Activités de soutien au spectacle vivant",
-      cached_categorie_juridique:
-        "Société à responsabilité limitée (sans autre indication)",
-      cached_est_active: false,
+      cached_activite_principale: "90.02Z",
+      cached_adresse:
+        "14 rue des freres d'astier de la vigerie, 75013 Paris",
+      cached_categorie_juridique: "5499",
+      cached_code_officiel_geographique: "75113",
+      cached_code_postal: "75013",
+      cached_enseigne: "",
+      cached_est_active: true,
+      cached_est_diffusible: true,
       cached_etat_administratif: "A",
-      cached_libelle_tranche_effectif: "10 à 19 salariés, en 2019",
-      cached_libelle: "Abracadabra",
+      cached_libelle_activite_principale:
+        "90.02Z - Activités de soutien au spectacle vivant",
+      cached_libelle_categorie_juridique:
+        "Société à responsabilité limitée (sans autre indication)",
+      cached_libelle_tranche_effectif: "10 à 19 salariés, en 2023",
+      cached_libelle: "Abracadabra (ABRACADABRA)",
       cached_nom_complet: "Abracadabra (ABRACADABRA)",
+      cached_siege_social: true,
+      cached_statut_diffusion: "diffusible",
       cached_tranche_effectifs: "11",
       cached_tranche_effectifs_unite_legale: "11",
-      created_at: "2022-08-08T17:43:15.501+02:00",
-      organization_info_fetched_at: "2022-08-08T17:43:15.501+02:00",
+      created_at: "2022-08-08T17:43:15.501+00:00",
+      organization_info_fetched_at: "2022-08-08T17:43:15.501+00:00",
       siret: "51935970700022",
-      updated_at: "2022-08-08T17:43:15.501+02:00",
+      updated_at: "2022-08-08T17:43:15.501+00:00",
     })
     .returning();
 

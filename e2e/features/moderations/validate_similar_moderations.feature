@@ -13,7 +13,7 @@ Fonctionnalité: Validation automatique des modérations similaires
 
   Plan du Scénario: Validation automatique des modérations similaires avec domaine yopmail.com
     Quand je clique sur "✅ Accepter"
-    Alors je vois "A propos de jeanbon@yopmail.com pour l'organisation Abracadabra, je valide :"
+    Alors je vois "A propos de jeanbon@yopmail.com pour l'organisation Abracadabra (ABRACADABRA), je valide :"
 
     Soit je vais à l'intérieur du dialogue nommé "la modale de validation"
     Quand je clique sur "<add_member>"

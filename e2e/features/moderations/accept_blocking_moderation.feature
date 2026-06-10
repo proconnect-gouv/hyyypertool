@@ -15,7 +15,7 @@ Fonctionnalité: Accepter une modération bloquante avec la barre d'outils
 
   Scénario: Le modérateur le valide avec la barre d'outils
     Quand je clique sur "✅ Accepter"
-    Alors je vois "A propos de jeanbon@yopmail.com pour l'organisation DINUM, je valide :"
+    Alors je vois "A propos de jeanbon@yopmail.com pour l'organisation Direction interministerielle du numerique (DINUM), je valide :"
 
     Soit je vais à l'intérieur du dialogue nommé "la modale de validation"
     Quand je clique sur "Terminer"

@@ -12,7 +12,7 @@ Fonctionnalité: Sélectionner un type de vérification lors de l'acceptation
     Et je clique sur "✅ Accepter"
 
   Plan du Scénario: Sélectionner différents types de vérification
-    Alors je vois "A propos de jeanbon@yopmail.com pour l'organisation Abracadabra, je valide :"
+    Alors je vois "A propos de jeanbon@yopmail.com pour l'organisation Abracadabra (ABRACADABRA), je valide :"
     Soit je vais à l'intérieur du dialogue nommé "la modale de validation"
     Quand je clique sur "<type_verification>"
     Quand je clique sur "Terminer"
