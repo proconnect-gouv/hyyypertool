@@ -35,7 +35,12 @@ export function About(props: Props) {
     isEntrepriseUnipersonnelle(organization) && "Unipersonnelle",
     isSmallEtablissementPublic(organization) && "Petit établissement public",
     isOrganizationCoveredByCertificationDirigeant(organization) &&
-      "Certif. dirigeant",
+      "Éligible vérif. dirigeant",
+    organization.cached_statut_diffusion === "diffusible"
+      ? "Diffusible"
+      : "Non diffusible",
+    organization.cached_est_active ? "En activité" : "Fermé",
+    organization.cached_siege_social ? "Siège social" : "Secondaire",
   ].filter(Boolean);
 
   return (
@@ -103,7 +108,7 @@ export function About(props: Props) {
         <dt>Caractéristiques</dt>
         <dd class="flex flex-wrap gap-1">
           {org_tags.map((t) => (
-            <span class={badge({ intent: "info", size: "sm" })}>{t}</span>
+            <><span class={badge({ intent: "info", size: "sm" })}>{t}</span>{" "}</>
           ))}
           {org_tags.length === 0 && <span class="text-grey-600">—</span>}
         </dd>

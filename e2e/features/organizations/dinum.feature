@@ -23,6 +23,7 @@ Fonctionnalité: Page organisation
     Et je vois "Nature juridique Service central d'un ministère (7120)"
     Et je vois "Tranche d'effectif 250 à 499 salariés, en 2023 (code : 32)"
     Et je vois "Tranche d'effectif de l'unité légale 250 à 499 salariés (code : 32)"
+    Et je vois "Service public Administration d'État Diffusible En activité Siège social"
 
     # Scénario: domaine connu dans l'organisation DINUM
     Alors je dois voir un tableau nommé "🌐 3 domaines connu dans l'organisation" et contenant
