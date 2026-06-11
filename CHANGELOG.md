@@ -1,5 +1,17 @@
 # Changelog
 
+## [2026.6.4](https://github.com/proconnect-gouv/hyyypertool/compare/2026.6.3...2026.6.4) (2026-06-11)
+
+### Changements
+
+- ✨ Pagination de l'historique de connexion OIDC
+
+L'historique de connexion OIDC sur la page utilisateur est désormais paginé. Les connexions sont affichées par pages de 10, avec des boutons « Précédent » et « Suivant » pour naviguer dans la liste.
+
+### Ajouté
+
+- ✨ users: paginate OIDC connection history on user page (#1678) (47e19c30)
+
 ## [2026.6.3](https://github.com/proconnect-gouv/hyyypertool/compare/2026.6.2...2026.6.3) (2026-06-11)
 
 ### Changements
