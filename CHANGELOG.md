@@ -1,5 +1,28 @@
 # Changelog
 
+## [2026.6.3](https://github.com/proconnect-gouv/hyyypertool/compare/2026.6.2...2026.6.3) (2026-06-11)
+
+### Changements
+
+- ✨ Historique de connexion aux services sur la fiche utilisateur
+
+La fiche utilisateur affiche désormais un tableau de l'historique de connexion aux services ProConnect, chargé de manière asynchrone. Chaque entrée indique la date, le service (nom du client OIDC) et l'organisation utilisée lors de la connexion.
+
+### Ajouté
+
+- ✨ users: surface OIDC connection history on user page (#1673) (2c17b2c4)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): Bump tsx from 4.22.3 to 4.22.4 (#1677) (546ebe6a)
+- :arrow_upper_right: [patch](deps): Bump @proconnect-gouv/proconnect.identite.database (#1674) (939da198)
+- :arrow_upper_right: [patch](deps-dev): Bump @electric-sql/pglite (#1676) (8d1c7e9b)
+- :arrow_upper_right: [patch](deps): Bump oxc-parser (#1675) (b37faa84)
+
+### Divers
+
+- ↗️ [patch](deps): Bump type-fest from 5.6.0 to 5.7.0 (#1671) (c23156ff)
+
 ## [2026.6.2](https://github.com/proconnect-gouv/hyyypertool/compare/2026.6.1...2026.6.2) (2026-06-10)
 
 ### Changements
