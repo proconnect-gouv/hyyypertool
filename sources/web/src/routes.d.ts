@@ -1628,7 +1628,10 @@ declare const app: import("hono/hono-base").HonoBase<
                             };
                           } & {
                             query: {
-                              describedby: string;
+                              describedby: string | string[];
+                              page_ref: string | string[];
+                              page?: string | string[] | undefined;
+                              page_size?: string | string[] | undefined;
                             };
                           };
                           output: {};
@@ -1642,7 +1645,10 @@ declare const app: import("hono/hono-base").HonoBase<
                             };
                           } & {
                             query: {
-                              describedby: string;
+                              describedby: string | string[];
+                              page_ref: string | string[];
+                              page?: string | string[] | undefined;
+                              page_size?: string | string[] | undefined;
                             };
                           };
                           output: import("zod").ZodSafeParseError<{
@@ -1658,11 +1664,17 @@ declare const app: import("hono/hono-base").HonoBase<
                             };
                           } & {
                             query: {
-                              describedby: string;
+                              describedby: string | string[];
+                              page_ref: string | string[];
+                              page?: string | string[] | undefined;
+                              page_size?: string | string[] | undefined;
                             };
                           };
                           output: import("zod").ZodSafeParseError<{
+                            page: number;
+                            page_size: number;
                             describedby: string;
+                            page_ref: string;
                           }>;
                           outputFormat: "json";
                           status: 400;

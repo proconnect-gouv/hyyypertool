@@ -46,7 +46,7 @@ export async function UserPage({
   const hx_get_user_oidc_clients_props = urls.users[":id"].oidc_clients.$hx_get(
     {
       param: { id: user.id },
-      query: { describedby: $oidc_clients_describedby },
+      query: { describedby: $oidc_clients_describedby, page_ref: hyper_ref() },
     },
   );
 
