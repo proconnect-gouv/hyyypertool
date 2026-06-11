@@ -37,7 +37,7 @@ test("GET /users/:id/oidc_clients renders connection history", async () => {
     .use(set_nonce("nonce"))
     .use(set_userinfo({ email: "test@example.com" }))
     .route("/:id/oidc_clients", app)
-    .request(`/${user_id}/oidc_clients?describedby=test`);
+    .request(`/${user_id}/oidc_clients?describedby=test&page_ref=test-ref`);
 
   const html = await response.text();
   expect(html).toContain("Service");
@@ -45,6 +45,27 @@ test("GET /users/:id/oidc_clients renders connection history", async () => {
   expect(html).toContain("🦄 client_name");
   expect(html).toContain("🦄 sp");
   expect(response.status).toBe(200);
+});
+
+test("GET /users/:id/oidc_clients handles pagination", async () => {
+  const user_id = await create_adora_pony_user(pg);
+  await create_unicorn_oidc_client(pg);
+  await create_adora_pony_oidc_connection(pg, { sp_name: "🦄 sp" });
+
+  const response = await new Hono()
+    .use(set_config({}))
+    .use(set_identite_pg(pg))
+    .use(set_nonce("nonce"))
+    .use(set_userinfo({ email: "test@example.com" }))
+    .route("/:id/oidc_clients", app)
+    .request(
+      `/${user_id}/oidc_clients?describedby=test&page_ref=test-ref&page=1&page_size=10`,
+    );
+
+  expect(response.status).toBe(200);
+  const html = await response.text();
+  expect(html).toContain("🦄 client_name");
+  expect(html).toContain("Suivant");
 });
 
 test("GET /users/:id/oidc_clients with no connections renders empty table", async () => {
@@ -56,7 +77,7 @@ test("GET /users/:id/oidc_clients with no connections renders empty table", asyn
     .use(set_nonce("nonce"))
     .use(set_userinfo({ email: "test@example.com" }))
     .route("/:id/oidc_clients", app)
-    .request(`/${user_id}/oidc_clients?describedby=test`);
+    .request(`/${user_id}/oidc_clients?describedby=test&page_ref=test-ref`);
 
   const html = await response.text();
   expect(html).toContain("Service");

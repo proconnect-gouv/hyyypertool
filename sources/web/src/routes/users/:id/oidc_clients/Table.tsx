@@ -1,5 +1,8 @@
 //
 
+import { hx_include } from "#src/htmx";
+import type { Pagination } from "#src/schema";
+import { Foot } from "#src/ui/hx_table";
 import { table } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
@@ -7,15 +10,36 @@ import type { get_oidc_clients_by_user_id } from "./get_oidc_clients_by_user_id.
 
 //
 
-type ConnectionList = Awaited<ReturnType<typeof get_oidc_clients_by_user_id>>;
+type ConnectionsCollection = Awaited<
+  ReturnType<typeof get_oidc_clients_by_user_id>
+>;
+type Connection = ConnectionsCollection["connections"][number];
 
 export function Table({
-  connections,
+  connections_collection,
   describedby,
+  page_ref,
+  pagination,
+  user_id,
 }: {
-  connections: ConnectionList;
+  connections_collection: ConnectionsCollection;
   describedby: string;
+  page_ref: string;
+  pagination: Pagination;
+  user_id: number;
 }) {
+  const { connections, count } = connections_collection;
+
+  const hx_get_oidc_clients_query_props = {
+    ...urls.users[":id"].oidc_clients.$hx_get({
+      param: {
+        id: user_id,
+      },
+      query: { describedby, page_ref },
+    }),
+    "hx-include": hx_include([page_ref]),
+  };
+
   return (
     <table class={table()} aria-describedby={describedby}>
       <thead>
@@ -31,19 +55,21 @@ export function Table({
           <Row key={`${connection.id}`} connection={connection} />
         ))}
       </tbody>
+
+      <Foot
+        colspan={4}
+        count={count}
+        hx_query_props={hx_get_oidc_clients_query_props}
+        id={page_ref}
+        pagination={pagination}
+      />
     </table>
   );
 }
 
 //
 
-function Row({
-  connection,
-  key,
-}: {
-  connection: ConnectionList[number];
-  key?: string;
-}) {
+function Row({ connection, key }: { connection: Connection; key?: string }) {
   const org = connection.organization;
   const org_href = org
     ? urls.organizations[":id"].$url({ param: { id: org.id } }).pathname
