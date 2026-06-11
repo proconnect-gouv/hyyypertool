@@ -31,6 +31,7 @@ export async function UserPage({
 }) {
   const $organizations_describedby = hyper_ref("user_organizations");
   const $moderations_describedby = hyper_ref("user_moderations");
+  const $oidc_clients_describedby = hyper_ref("user_oidc_clients");
 
   const hx_get_user_organizations_props = urls.users[
     ":id"
@@ -42,6 +43,12 @@ export async function UserPage({
     param: { id: user.id },
     query: { describedby: $moderations_describedby },
   });
+  const hx_get_user_oidc_clients_props = urls.users[":id"].oidc_clients.$hx_get(
+    {
+      param: { id: user.id },
+      query: { describedby: $oidc_clients_describedby },
+    },
+  );
 
   return (
     <main>
@@ -86,6 +93,21 @@ export async function UserPage({
         <div class="max-w-full overflow-x-auto">
           <div
             {...hx_get_user_moderations_props}
+            hx-target="this"
+            hx-trigger="load"
+            class={table()}
+          ></div>
+        </div>
+
+        <hr class="border-none py-3" />
+
+        <h1 id={$oidc_clients_describedby}>
+          Historique de connexion de {user.given_name}
+        </h1>
+
+        <div class="max-w-full overflow-x-auto">
+          <div
+            {...hx_get_user_oidc_clients_props}
             hx-target="this"
             hx-trigger="load"
             class={table()}

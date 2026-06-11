@@ -7,6 +7,9 @@ import { schema } from "..";
 import { insert_nordPass_authenticator } from "./authenticators/nordPass";
 import { insert_1Password_authenticator } from "./authenticators/onePassword";
 import { insert_email_deliverability_whitelist } from "./email_deliverability_whitelist";
+import { insert_annuaire_entreprises } from "./oidc_clients/annuaire_entreprises";
+import { insert_resana } from "./oidc_clients/resana";
+import { insert_tchap } from "./oidc_clients/tchap";
 import { insert_abracadabra } from "./organizations/abracadabra";
 import { insert_aldp } from "./organizations/aldp";
 import { insert_bosch_france } from "./organizations/bosch_france";
@@ -24,6 +27,8 @@ import { insert_pierrebon } from "./users/pierrebon";
 import { insert_raphael } from "./users/raphael";
 import { insert_raphael_alpha } from "./users/raphael_alpha";
 import { insert_richardbon } from "./users/richardbon";
+import { insert_jean_bon_oidc_connections } from "./users_oidc_clients/jean_bon";
+import { insert_raphael_oidc_connections } from "./users_oidc_clients/raphael";
 
 //
 
@@ -287,6 +292,36 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
     );
     await insert_nordPass_authenticator(db, raphael_alpha.id);
     consola.verbose(`🌱 INSERT ${raphael_alpha.given_name} NordPass setup...`);
+
+    //
+
+    const annuaire_entreprises = await insert_annuaire_entreprises(db);
+    consola.verbose(
+      `🌱 INSERT oidc_client ${annuaire_entreprises.client_name}`,
+    );
+    const tchap = await insert_tchap(db);
+    consola.verbose(`🌱 INSERT oidc_client ${tchap.client_name}`);
+    const resana = await insert_resana(db);
+    consola.verbose(`🌱 INSERT oidc_client ${resana.client_name}`);
+
+    await insert_raphael_oidc_connections(db, {
+      oidc_client_id: annuaire_entreprises.id,
+      organization_id: dinum.id,
+      user_id: raphael.id,
+    });
+    consola.verbose(
+      `🌱 INSERT ${raphael.given_name} connection history (${annuaire_entreprises.client_name})`,
+    );
+
+    await insert_jean_bon_oidc_connections(db, {
+      dinum_id: dinum.id,
+      resana_id: resana.id,
+      tchap_id: tchap.id,
+      user_id: jean_bon.id,
+    });
+    consola.verbose(
+      `🌱 INSERT ${jean_bon.given_name} connection history (${tchap.client_name}, ${resana.client_name})`,
+    );
 
     await insert_franceconnect_userinfo(db, {
       birthcountry: "99100",
