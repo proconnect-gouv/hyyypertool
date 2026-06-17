@@ -231,6 +231,9 @@ function LastComment() {
 function Comments() {
   const { comment } = useContext(context).moderation;
   const parsed_comment = parse_comment(comment);
+  if (parsed_comment.length === 0) {
+    return <em>Aucun commentaire</em>;
+  }
   const last_index = parsed_comment.length - 1;
   return (
     <details>
