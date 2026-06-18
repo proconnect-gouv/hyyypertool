@@ -1,5 +1,11 @@
 # Changelog
 
+## [2026.6.5](https://github.com/proconnect-gouv/hyyypertool/compare/2026.6.4...2026.6.5) (2026-06-18)
+
+### Modifié
+
+- 🔧 (auth): update acr values (#1687) (fc6c0604)
+
 ## [2026.6.4](https://github.com/proconnect-gouv/hyyypertool/compare/2026.6.3...2026.6.4) (2026-06-11)
 
 ### Changements
