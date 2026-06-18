@@ -59,10 +59,16 @@ export default new Hono<Oidc_Context & AppContext>()
           acr: {
             essential: true,
             values: [
-              "eidas2",
-              "eidas3",
-              "https://proconnect.gouv.fr/assurance/self-asserted-2fa",
-              "https://proconnect.gouv.fr/assurance/consistency-checked-2fa",
+              MfaAcrValueSchema.enum["eidas0-mfa"],
+              MfaAcrValueSchema.enum["eidas1-mfa"],
+              MfaAcrValueSchema.enum.eidas2,
+              MfaAcrValueSchema.enum.eidas3,
+              MfaAcrValueSchema.enum[
+                "https://proconnect.gouv.fr/assurance/consistency-checked-2fa"
+              ],
+              MfaAcrValueSchema.enum[
+                "https://proconnect.gouv.fr/assurance/self-asserted-2fa"
+              ],
             ],
           },
         },
