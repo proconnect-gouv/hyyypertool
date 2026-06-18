@@ -36,10 +36,12 @@ export const DescribedBySchema = z.object({
 });
 export type DescribedBy = z.infer<typeof DescribedBySchema>;
 export const MfaAcrValueSchema = z.enum([
+  "eidas0-mfa",
+  "eidas1-mfa",
   "eidas2",
   "eidas3",
-  "https://proconnect.gouv.fr/assurance/self-asserted-2fa",
   "https://proconnect.gouv.fr/assurance/consistency-checked-2fa",
+  "https://proconnect.gouv.fr/assurance/self-asserted-2fa",
 ]);
 
 export type MfaAcrValue = z.infer<typeof MfaAcrValueSchema>;
