@@ -50,7 +50,7 @@
     "pg": "8.21.0",
     "preact": "10.29.2",
     "preact-render-to-string": "6.7.0",
-    "rate-limiter-flexible": "11.1.0",
+    "rate-limiter-flexible": "11.2.0",
     "rehype-sanitize": "6.0.0",
     "rehype-stringify": "10.0.1",
     "remark-parse": "11.0.0",
