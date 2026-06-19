@@ -45,7 +45,7 @@ test("update a moderation", async () => {
     }),
   ).toMatchInlineSnapshot(`
     {
-      "allow_editing": null,
+      "allow_editing": false,
       "comment": "Adora is a good pony",
       "created_at": "2222-01-01 01:00:00+01",
       "end_user_reason": "Raison transmise par mail",
