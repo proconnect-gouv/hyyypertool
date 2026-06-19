@@ -33,7 +33,7 @@
     "@sentry/browser": "10.57.0",
     "@sentry/core": "10.57.0",
     "@sentry/node": "10.57.0",
-    "@tailwindcss/typography": "^0.5.19",
+    "@tailwindcss/typography": "^0.5.20",
     "@~/hyyyperbase": "workspace:*",
     "@~/identite-proconnect": "workspace:*",
     "await-to-js": "3.0.0",
