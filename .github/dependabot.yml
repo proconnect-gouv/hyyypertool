@@ -1,6 +1,16 @@
 version: 2
 
 updates:
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - dependencies
+    commit-message:
+      prefix: ":arrow_upper_right: [patch]"
+      include: "scope"
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:

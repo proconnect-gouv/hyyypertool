@@ -2,7 +2,7 @@
 
 services:
   postgres-identite-proconnect:
-    image: postgres:16.11-alpine
+    image: postgres:17.10-alpine
     volumes:
       - postgres:/var/lib/postgresql/data
     environment:
@@ -16,7 +16,7 @@ services:
       - "5432:5432"
 
   postgres-hyyyperbase:
-    image: postgres:16.11-alpine
+    image: postgres:17.10-alpine
     volumes:
       - postgres-hyyyperbase:/var/lib/postgresql/data
       - ./mocks/postgres-hyyyperbase/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
