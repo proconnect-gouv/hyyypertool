@@ -37,7 +37,7 @@ test("get adora's moderations", async () => {
   expect(moderations).toMatchInlineSnapshot(`
     [
       {
-        "allow_editing": null,
+        "allow_editing": false,
         "comment": null,
         "created_at": "2222-01-01 01:00:00+01",
         "end_user_reason": "Raison transmise par mail",

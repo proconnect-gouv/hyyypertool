@@ -160,7 +160,7 @@
         "@proconnect-gouv/proconnect.api_entreprise": "2.2.0",
         "@proconnect-gouv/proconnect.core": "1.0.0",
         "@proconnect-gouv/proconnect.identite": "9.1.3",
-        "@proconnect-gouv/proconnect.identite.database": "1.5.0",
+        "@proconnect-gouv/proconnect.identite.database": "1.7.0",
         "@proconnect-gouv/proconnect.insee": "2.0.0",
         "consola": "3.4.2",
         "drizzle-orm": "0.45.2",
@@ -500,7 +500,7 @@
 
     "@proconnect-gouv/proconnect.identite": ["@proconnect-gouv/proconnect.identite@9.1.3", "", { "dependencies": { "leven": "^4.0.0", "openid-client": "^6.6.4", "sql-template-tag": "^5.2.1", "ts-pattern": "^5.7.0", "zod": "^4.3.5" }, "peerDependencies": { "@proconnect-gouv/proconnect.annuaire_entreprises": "^2.0.2", "@proconnect-gouv/proconnect.api_entreprise": "^2.2.0", "@proconnect-gouv/proconnect.core": "^1.0.0", "@proconnect-gouv/proconnect.insee": "^2.0.0", "@proconnect-gouv/proconnect.registre_national_entreprises": "^4.0.0" }, "optionalPeers": ["@proconnect-gouv/proconnect.annuaire_entreprises", "@proconnect-gouv/proconnect.api_entreprise", "@proconnect-gouv/proconnect.core", "@proconnect-gouv/proconnect.insee", "@proconnect-gouv/proconnect.registre_national_entreprises"] }, "sha512-FxKWK14P9Td3rccE/w+oNGZqfZkxnal6meyvXOSUe1UUEGfWKcAix8pjMMqk5nF8CYz1mGi0hzowuiQyhB9ppA=="],
 
-    "@proconnect-gouv/proconnect.identite.database": ["@proconnect-gouv/proconnect.identite.database@1.5.0", "", { "peerDependencies": { "drizzle-orm": ">=0.44" }, "optionalPeers": ["drizzle-orm"] }, "sha512-uDRv53tDv9VUQ7JALx0xfk4T6eXeuStv87LlfKoJeCmeg24TZPBHdVP4D5Q7TcOoUyS6Pcv3k3evt/R5aVvQzg=="],
+    "@proconnect-gouv/proconnect.identite.database": ["@proconnect-gouv/proconnect.identite.database@1.7.0", "", { "peerDependencies": { "drizzle-orm": ">=0.44" }, "optionalPeers": ["drizzle-orm"] }, "sha512-+UROJpQbC/Sja2XcgxFaAncgOQkgE9X1ttq7IopzpAH55PZ73+UMCJUl+gurIzI62ZZdRj3K0PQ3WC+fDeorgQ=="],
 
     "@proconnect-gouv/proconnect.insee": ["@proconnect-gouv/proconnect.insee@2.0.0", "", { "dependencies": { "openapi-fetch": "^0.17.0" } }, "sha512-RKox55L7Sc2VheP94vjPQVF57hftskmLucEgFJewXIgfpl82UfBNdqUX2hySthOt3eWJDSzVbMqEcjsXlonqlA=="],
 

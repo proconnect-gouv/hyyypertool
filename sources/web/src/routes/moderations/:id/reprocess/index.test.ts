@@ -51,7 +51,7 @@ test("PATCH /moderations/:id/reprocess resets moderation to pending", async () =
 
   expect(moderation).toMatchInlineSnapshot(`
     {
-      "allow_editing": null,
+      "allow_editing": false,
       "comment": "7952428800000 admin@example.com | Réouverte par admin@example.com",
       "created_at": "2222-01-01 01:00:00+01",
       "end_user_reason": "Raison transmise par mail",
