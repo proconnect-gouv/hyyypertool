@@ -46,10 +46,7 @@ exports[`render header section 1`] = `
     </div>
   </div>
   <hr class="border-none py-3" />
-  <details>
-    <summary>Commentaires</summary>
-    <ul class="ml-4"></ul>
-  </details>
+  <em>Aucun commentaire</em>
   <hr class="border-none py-3" />
   <div
     hx-get="/moderations/42/duplicate_warning?organization_id=43&amp;user_id=44"
