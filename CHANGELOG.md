@@ -1,5 +1,27 @@
 # Changelog
 
+## [2026.6.6](https://github.com/proconnect-gouv/hyyypertool/compare/2026.6.5...2026.6.6) (2026-06-24)
+
+### Changements
+
+- ✨ Affichage de la section "Commentaires" uniquement s'il y a au moins un commentaire pour la modération concernée
+
+### Ajouté
+
+- ✨ hide comments section if no comment (#1679) (b8e6f415)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps-dev): Bump @electric-sql/pglite (#1691) (cc183369)
+
+### Divers
+
+- ↗️ [patch](deps): Bump rate-limiter-flexible from 11.1.0 to 11.2.0 (#1690) (b367950f)
+- ↗️ [patch](deps): Bump actions/checkout from 6.0.3 to 7.0.0 (#1689) (3aacfa75)
+- ↗️ [patch](deps): Bump hono from 4.12.23 to 4.12.25 (#1684) (2c56ad47)
+- ↗️ [patch](deps): Bump @proconnect-gouv/proconnect.identite.database from 1.5.0 to 1.7.0 (#1686) (bef1372c)
+- ↗️ [patch](deps): Bump the sentry group with 4 updates (#1682) (563311ca)
+
 ## [2026.6.5](https://github.com/proconnect-gouv/hyyypertool/compare/2026.6.4...2026.6.5) (2026-06-18)
 
 ### Modifié
