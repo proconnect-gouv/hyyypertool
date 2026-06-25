@@ -17,6 +17,7 @@ export interface ActionsClientProps extends Record<string, unknown> {
   organization_name: string | null;
   moderation_type: string;
   response_templates: ResponseTemplateDto[];
+  is_editor?: boolean;
 }
 
 export function ActionsClient({
@@ -28,7 +29,10 @@ export function ActionsClient({
   organization_name,
   moderation_type,
   response_templates,
+  is_editor = true,
 }: ActionsClientProps) {
+  if (!is_editor) return null;
+
   return (
     <>
       <div

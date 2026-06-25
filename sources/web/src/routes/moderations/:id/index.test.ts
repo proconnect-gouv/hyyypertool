@@ -9,7 +9,10 @@ import {
   hyyyper_pglite,
   empty_database as hyyyperbase_empty_database,
 } from "@~/hyyyperbase/testing";
-import { insert_moderateur } from "@~/hyyyperbase/testing/users";
+import {
+  insert_jeanbon,
+  insert_moderateur,
+} from "@~/hyyyperbase/testing/users";
 import {
   create_adora_pony_moderation,
   create_adora_pony_user,
@@ -79,6 +82,32 @@ test("GET /moderations/:id returns 404 for non-existent moderation", async () =>
   expect(response.status).toBe(404);
   const html = await response.text();
   expect(html).toContain("Modération <em>999999</em> non trouvée");
+});
+
+test("GET /moderations/:id hides action toolbar for visitors", async () => {
+  const visitor = await insert_jeanbon(hyyyper_pglite);
+  const user_id = await create_adora_pony_user(pg);
+  const organization_id = await create_unicorn_organization(pg);
+  const moderation_id = await create_adora_pony_moderation(pg, {
+    type: "non_verified_domain",
+    status: "pending",
+  });
+
+  const response = await new Hono()
+    .use(set_config({ HTTP_CLIENT_TIMEOUT: 5000 }))
+    .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_identite_pg(pg))
+    .use(set_nonce("nonce"))
+    .use(set_userinfo({ email: visitor.email, sub: visitor.sub! }))
+    .use(authorized())
+    .route("/:id", app)
+    .request(`/${moderation_id}`);
+
+  expect(response.status).toBe(200);
+  const html = await response.text();
+
+  expect(html).not.toContain("✅ Accepter");
+  expect(html).not.toContain("❌ Refuser");
 });
 
 //

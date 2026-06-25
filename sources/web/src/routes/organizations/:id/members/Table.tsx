@@ -24,12 +24,14 @@ export async function Table({
   query_members_collection,
   describedby,
   page_ref,
+  is_editor = true,
 }: {
   organization_id: number;
   pagination: Pagination;
   query_members_collection: QueryResult;
   describedby: string;
   page_ref: string;
+  is_editor?: boolean;
 }) {
   const { users, count } = query_members_collection;
 
@@ -60,7 +62,7 @@ export async function Table({
 
       <tbody>
         {users.map((user) => (
-          <MemberContext.Provider value={{ user, organization_id }}>
+          <MemberContext.Provider value={{ user, organization_id, is_editor }}>
             <Row />
           </MemberContext.Provider>
         ))}
@@ -78,7 +80,7 @@ export async function Table({
 }
 
 function Row({ variants }: { variants?: VariantProps<typeof row> }) {
-  const { user } = useContext(MemberContext);
+  const { user, is_editor } = useContext(MemberContext);
 
   return (
     <tr
@@ -112,9 +114,7 @@ function Row({ variants }: { variants?: VariantProps<typeof row> }) {
           </div>
         )}
       </td>
-      <td class="space-x-2 text-end">
-        <RowActions />
-      </td>
+      <td class="space-x-2 text-end">{is_editor && <RowActions />}</td>
     </tr>
   );
 }

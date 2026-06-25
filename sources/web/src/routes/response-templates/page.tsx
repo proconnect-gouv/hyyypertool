@@ -30,20 +30,24 @@ const hx_templates_query_props = {
 export default function Page({
   templates,
   searchQuery = "",
+  is_editor = false,
 }: {
   templates: PageTemplate[];
   searchQuery?: string;
+  is_editor?: boolean;
 }) {
   return (
     <main class="container mx-auto my-12 px-4">
       <div class="mb-6 flex items-baseline justify-between">
         <h1 class="mb-0">Templates de réponse</h1>
-        <a
-          href={urls["response-templates"].new.$url().pathname}
-          class={button()}
-        >
-          Nouveau template
-        </a>
+        {is_editor && (
+          <a
+            href={urls["response-templates"].new.$url().pathname}
+            class={button()}
+          >
+            Nouveau template
+          </a>
+        )}
       </div>
       <p class="mb-6 text-lg leading-7">
         Sélectionnez un template pour le visualiser et l'éditer.
@@ -67,7 +71,11 @@ export default function Page({
         />
       </form>
 
-      <TemplateList templates={templates} searchQuery={searchQuery} />
+      <TemplateList
+        templates={templates}
+        searchQuery={searchQuery}
+        is_editor={is_editor}
+      />
     </main>
   );
 }
@@ -75,9 +83,11 @@ export default function Page({
 function TemplateList({
   templates,
   searchQuery = "",
+  is_editor = false,
 }: {
   templates: PageTemplate[];
   searchQuery?: string;
+  is_editor?: boolean;
 }) {
   const query = searchQuery.toLowerCase().trim();
   const filteredTemplates = query
@@ -104,14 +114,24 @@ function TemplateList({
 
       <ul>
         {filteredTemplates.map((template) => (
-          <TemplateAccordion key={template.id} template={template} />
+          <TemplateAccordion
+            key={template.id}
+            template={template}
+            is_editor={is_editor}
+          />
         ))}
       </ul>
     </div>
   );
 }
 
-function TemplateAccordion({ template }: { template: PageTemplate }) {
+function TemplateAccordion({
+  template,
+  is_editor = false,
+}: {
+  template: PageTemplate;
+  is_editor?: boolean;
+}) {
   const accordionId = `accordion-${template.id}`;
 
   const { base, btn } = accordion();
@@ -119,16 +139,18 @@ function TemplateAccordion({ template }: { template: PageTemplate }) {
     <details class={base()} open={undefined}>
       <summary class={btn()}>
         <span class="flex-1">{template.label}</span>
-        <a
-          href={`/response-templates/${template.id}`}
-          class={button({
-            intent: "ghost",
-            size: "sm",
-            class: "mr-2",
-          })}
-        >
-          Éditer
-        </a>
+        {is_editor && (
+          <a
+            href={`/response-templates/${template.id}`}
+            class={button({
+              intent: "ghost",
+              size: "sm",
+              class: "mr-2",
+            })}
+          >
+            Éditer
+          </a>
+        )}
       </summary>
       <div id={accordionId}>
         <TemplatePreview template={template} />

@@ -16,9 +16,11 @@ type TemplateMetadata = NonNullable<
 export default function DetailPage({
   template,
   status,
+  is_editor = false,
 }: {
   template?: TemplateMetadata;
   status?: "created";
+  is_editor?: boolean;
 }) {
   const is_new = !template;
   const form_action = is_new
@@ -47,7 +49,7 @@ export default function DetailPage({
           <Svg name="arrow-go-back" />
           Retour à la liste
         </a>
-        {!is_new && (
+        {!is_new && is_editor && (
           <button
             class={button({ intent: "danger", size: "sm" })}
             hx-delete={form_action}
@@ -58,23 +60,43 @@ export default function DetailPage({
         )}
       </div>
 
-      <form
-        {...(is_new
-          ? { method: "post", action: form_action }
-          : { "hx-patch": form_action })}
-      >
-        <TemplateEditorIsland
-          initialTemplate={template?.content ?? ""}
-          initialLabel={template?.label ?? ""}
-          initialEndUserReason={template?.end_user_reason ?? ""}
-          initialAllowEditing={template?.allow_editing ?? false}
+      {is_editor && (
+        <TemplateForm
+          template={template}
+          form_action={form_action}
+          is_new={is_new}
         />
-        <div class="mt-6 flex justify-end">
-          <button type="submit" class={button()}>
-            Enregistrer
-          </button>
-        </div>
-      </form>
+      )}
     </main>
+  );
+}
+
+function TemplateForm({
+  template,
+  form_action,
+  is_new,
+}: {
+  template?: TemplateMetadata;
+  form_action: string;
+  is_new: boolean;
+}) {
+  return (
+    <form
+      {...(is_new
+        ? { method: "post", action: form_action }
+        : { "hx-patch": form_action })}
+    >
+      <TemplateEditorIsland
+        initialTemplate={template?.content ?? ""}
+        initialLabel={template?.label ?? ""}
+        initialEndUserReason={template?.end_user_reason ?? ""}
+        initialAllowEditing={template?.allow_editing ?? false}
+      />
+      <div class="mt-6 flex justify-end">
+        <button type="submit" class={button()}>
+          Enregistrer
+        </button>
+      </div>
+    </form>
   );
 }

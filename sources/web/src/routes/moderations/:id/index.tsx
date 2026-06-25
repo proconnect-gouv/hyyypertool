@@ -4,6 +4,7 @@ import { NotFoundError } from "#src/errors";
 import { Main_Layout } from "#src/layouts";
 import { moderation_type_to_title } from "#src/lib/moderations";
 import { GetBanaticUrl } from "#src/lib/organizations/usecase";
+import { editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { GetModerationWithDetails } from "#src/queries/moderations";
 import {
@@ -13,6 +14,7 @@ import {
 } from "#src/queries/organizations";
 import { EntitySchema, z_email_domain } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
+import { roles } from "@~/hyyyperbase";
 import { to } from "await-to-js";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
@@ -40,7 +42,7 @@ export default new Hono<AppContext>()
       set,
       status,
       env: config,
-      var: { identite_pg, hyyyper_pg },
+      var: { identite_pg, hyyyper_pg, hyyyper_user },
     }) {
       const { id } = req.valid("param");
 
@@ -87,6 +89,7 @@ export default new Hono<AppContext>()
 
         const response_templates = await get_response_templates(hyyyper_pg, "");
 
+        const is_editor = hyyyper_user.role !== roles.enum.visitor;
         const page_data = {
           banaticUrl,
           domain,
@@ -98,6 +101,7 @@ export default new Hono<AppContext>()
           query_organization_members_count: get_organization_members_count(
             moderation.organization_id,
           ),
+          is_editor,
         };
 
         set(
@@ -117,6 +121,7 @@ export default new Hono<AppContext>()
   )
   .route("/email", moderation_email_router)
   .route("/duplicate_warning", duplicate_warning_router)
+  .use(editor_guard())
   .route("/validate", moderation_validate_router)
   .route("/rejected", moderation_rejected_router)
   .route("/processed", moderation_processed_router)

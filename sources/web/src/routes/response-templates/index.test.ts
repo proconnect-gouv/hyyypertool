@@ -1,12 +1,15 @@
 //
 
-import { set_userinfo } from "#src/middleware/auth";
+import { authorized, set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
 import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import { set_nonce } from "#src/middleware/nonce";
 import { empty_database, hyyyper_pglite } from "@~/hyyyperbase/testing";
 import { insert_central_administration_response } from "@~/hyyyperbase/testing/response_templates";
-import { insert_moderateur } from "@~/hyyyperbase/testing/users";
+import {
+  insert_jeanbon,
+  insert_moderateur,
+} from "@~/hyyyperbase/testing/users";
 import { beforeEach, expect, test } from "bun:test";
 import { Hono } from "hono";
 import { html as html_encode } from "hono/html";
@@ -23,6 +26,7 @@ async function make_app() {
     .use(set_nonce("nonce"))
     .use(set_hyyyper_pg(hyyyper_pglite))
     .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
     .route("/", app);
 }
 
@@ -78,4 +82,25 @@ test("DELETE /response-templates/:id deletes template and redirects to list", as
   const remaining = await testing_app.request("/");
   const html = await remaining.text();
   expect(html).not.toContain(html_encode`${template.label}`.toString());
+});
+
+test("GET /response-templates hides edit controls for visitors", async () => {
+  const visitor = await insert_jeanbon(hyyyper_pglite);
+  await insert_central_administration_response(hyyyper_pglite);
+
+  const testing_app = new Hono()
+    .use(set_config({ ALLOWED_USERS: visitor.email }))
+    .use(set_nonce("nonce"))
+    .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_userinfo({ email: visitor.email, sub: visitor.sub! }))
+    .use(authorized())
+    .route("/", app);
+
+  const response = await testing_app.request("/");
+
+  expect(response.status).toBe(200);
+  const html = await response.text();
+  expect(html).toContain("Templates de réponse");
+  expect(html).not.toContain("Nouveau template");
+  expect(html).not.toContain("Éditer");
 });
