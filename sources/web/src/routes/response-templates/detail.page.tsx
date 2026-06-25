@@ -61,24 +61,42 @@ export default function DetailPage({
       </div>
 
       {is_editor && (
-        <form
-          {...(is_new
-            ? { method: "post", action: form_action }
-            : { "hx-patch": form_action })}
-        >
-          <TemplateEditorIsland
-            initialTemplate={template?.content ?? ""}
-            initialLabel={template?.label ?? ""}
-            initialEndUserReason={template?.end_user_reason ?? ""}
-            initialAllowEditing={template?.allow_editing ?? false}
-          />
-          <div class="mt-6 flex justify-end">
-            <button type="submit" class={button()}>
-              Enregistrer
-            </button>
-          </div>
-        </form>
+        <TemplateForm
+          template={template}
+          form_action={form_action}
+          is_new={is_new}
+        />
       )}
     </main>
+  );
+}
+
+function TemplateForm({
+  template,
+  form_action,
+  is_new,
+}: {
+  template?: TemplateMetadata;
+  form_action: string;
+  is_new: boolean;
+}) {
+  return (
+    <form
+      {...(is_new
+        ? { method: "post", action: form_action }
+        : { "hx-patch": form_action })}
+    >
+      <TemplateEditorIsland
+        initialTemplate={template?.content ?? ""}
+        initialLabel={template?.label ?? ""}
+        initialEndUserReason={template?.end_user_reason ?? ""}
+        initialAllowEditing={template?.allow_editing ?? false}
+      />
+      <div class="mt-6 flex justify-end">
+        <button type="submit" class={button()}>
+          Enregistrer
+        </button>
+      </div>
+    </form>
   );
 }

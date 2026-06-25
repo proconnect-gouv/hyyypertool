@@ -31,79 +31,75 @@ export function ActionsClient({
   response_templates,
   is_editor = true,
 }: ActionsClientProps) {
+  if (!is_editor) return null;
+
   return (
     <>
-      {is_editor && (
-        <div
-          class="bg-surface border-border fixed right-0 bottom-0 z-50 flex w-full justify-end overflow-hidden border-t p-2"
-          role="toolbar"
+      <div
+        class="bg-surface border-border fixed right-0 bottom-0 z-50 flex w-full justify-end overflow-hidden border-t p-2"
+        role="toolbar"
+      >
+        {!moderated_at && (
+          <>
+            <button
+              class={button({
+                type: "secondary",
+                class: "bg-background dark:bg-surface mr-4",
+              })}
+              type="button"
+              onClick={() => {
+                toolbar_open.value =
+                  toolbar_open.value === "accept" ? null : "accept";
+              }}
+            >
+              ✅ Accepter
+            </button>
+            <button
+              class={button({
+                type: "secondary",
+                class: "bg-background dark:bg-surface mr-4",
+              })}
+              type="button"
+              onClick={() => {
+                toolbar_open.value =
+                  toolbar_open.value === "refusal" ? null : "refusal";
+              }}
+            >
+              ❌ Refuser
+            </button>
+          </>
+        )}
+        <a
+          href="#exchange_moderation"
+          class={button({
+            type: "secondary",
+            class: "bg-background dark:bg-surface",
+          })}
+          onClick={() => {
+            toolbar_open.value = null;
+            const details = document.getElementById(
+              "exchange_details",
+            ) as HTMLDetailsElement | null;
+            if (details) details.open = true;
+          }}
         >
-          {!moderated_at && (
-            <>
-              <button
-                class={button({
-                  type: "secondary",
-                  class: "bg-background dark:bg-surface mr-4",
-                })}
-                type="button"
-                onClick={() => {
-                  toolbar_open.value =
-                    toolbar_open.value === "accept" ? null : "accept";
-                }}
-              >
-                ✅ Accepter
-              </button>
-              <button
-                class={button({
-                  type: "secondary",
-                  class: "bg-background dark:bg-surface mr-4",
-                })}
-                type="button"
-                onClick={() => {
-                  toolbar_open.value =
-                    toolbar_open.value === "refusal" ? null : "refusal";
-                }}
-              >
-                ❌ Refuser
-              </button>
-            </>
-          )}
-          <a
-            href="#exchange_moderation"
-            class={button({
-              type: "secondary",
-              class: "bg-background dark:bg-surface",
-            })}
-            onClick={() => {
-              toolbar_open.value = null;
-              const details = document.getElementById(
-                "exchange_details",
-              ) as HTMLDetailsElement | null;
-              if (details) details.open = true;
-            }}
-          >
-            💬 Voir les échanges
-          </a>
-        </div>
-      )}
-      {is_editor && (
-        <>
-          <AcceptForm
-            moderation_id={moderation_id}
-            domain={domain}
-            given_name={given_name}
-            user_email={user_email}
-            organization_name={organization_name}
-            moderation_type={moderation_type}
-          />
-          <RefusalForm
-            moderation_id={moderation_id}
-            user_email={user_email}
-            organization_name={organization_name}
-            response_templates={response_templates}
-          />
-        </>
-      )}
+          💬 Voir les échanges
+        </a>
+      </div>
+      <AcceptForm
+        moderation_id={moderation_id}
+        domain={domain}
+        given_name={given_name}
+        user_email={user_email}
+        organization_name={organization_name}
+        moderation_type={moderation_type}
+      />
+      <RefusalForm
+        moderation_id={moderation_id}
+        user_email={user_email}
+        organization_name={organization_name}
+        response_templates={response_templates}
+      />
     </>
   );
 }
