@@ -1,9 +1,15 @@
 //
 
-import { set_userinfo } from "#src/middleware/auth";
+import { authorized, set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
+import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import { set_identite_pg } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
+import {
+  hyyyper_pglite,
+  empty_database as hyyyperbase_empty_database,
+} from "@~/hyyyperbase/testing";
+import { insert_moderateur } from "@~/hyyyperbase/testing/users";
 import { schema } from "@~/identite-proconnect/database";
 import {
   create_adora_pony_user,
@@ -23,9 +29,22 @@ import app from "./index";
 
 beforeAll(migrate);
 beforeEach(empty_database);
+beforeEach(hyyyperbase_empty_database);
 setSystemTime(new Date("2222-02-22 22:22:22+22"));
 
 //
+
+async function make_app() {
+  const moderator = await insert_moderateur(hyyyper_pglite);
+  return new Hono()
+    .use(set_config({}))
+    .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_identite_pg(pg))
+    .use(set_nonce("nonce"))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
+    .route("/:id/members/:user_id", app);
+}
 
 test("PATCH /organizations/:id/members/:user_id updates user organization membership", async () => {
   const organization_id = await create_unicorn_organization(pg);
@@ -61,20 +80,18 @@ test("PATCH /organizations/:id/members/:user_id updates user organization member
     `);
   }
 
-  const response = await new Hono()
-    .use(set_config({}))
-    .use(set_identite_pg(pg))
-    .use(set_nonce("nonce"))
-    .use(set_userinfo({ email: "test@example.com" }))
-    .route("/:id/members/:user_id", app)
-    .request(`/${organization_id}/members/${user_id}`, {
+  const testing_app = await make_app();
+  const response = await testing_app.request(
+    `/${organization_id}/members/${user_id}`,
+    {
       method: "PATCH",
       body: new URLSearchParams({
         is_external: "true",
         verification_type: VerificationTypeSchema.enum.domain,
       }),
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    });
+    },
+  );
 
   expect(response.status).toBe(200);
   expect(response.headers.get("HX-Trigger")).toBe("MEMBERS_UPDATED");
@@ -138,19 +155,17 @@ test("PATCH /organizations/:id/members/:user_id clears verification with domain_
     `);
   }
 
-  const response = await new Hono()
-    .use(set_config({}))
-    .use(set_identite_pg(pg))
-    .use(set_nonce("nonce"))
-    .use(set_userinfo({ email: "test@example.com" }))
-    .route("/:id/members/:user_id", app)
-    .request(`/${organization_id}/members/${user_id}`, {
+  const testing_app = await make_app();
+  const response = await testing_app.request(
+    `/${organization_id}/members/${user_id}`,
+    {
       method: "PATCH",
       body: new URLSearchParams({
         verification_type: VerificationTypeSchema.enum.domain_not_verified_yet,
       }),
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    });
+    },
+  );
 
   expect(response.status).toBe(200);
   expect(response.headers.get("HX-Trigger")).toBe("MEMBERS_UPDATED");
@@ -197,15 +212,13 @@ test("DELETE /organizations/:id/members/:user_id removes user from organization"
     expect(result).toHaveLength(1);
   }
 
-  const response = await new Hono()
-    .use(set_config({}))
-    .use(set_identite_pg(pg))
-    .use(set_nonce("nonce"))
-    .use(set_userinfo({ email: "test@example.com" }))
-    .route("/:id/members/:user_id", app)
-    .request(`/${organization_id}/members/${user_id}`, {
+  const testing_app = await make_app();
+  const response = await testing_app.request(
+    `/${organization_id}/members/${user_id}`,
+    {
       method: "DELETE",
-    });
+    },
+  );
 
   expect(response.status).toBe(200);
   expect(response.headers.get("HX-Trigger")).toBe("MEMBERS_UPDATED");
