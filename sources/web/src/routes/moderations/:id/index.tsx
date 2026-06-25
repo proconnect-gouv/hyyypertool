@@ -14,6 +14,7 @@ import {
 } from "#src/queries/organizations";
 import { EntitySchema, z_email_domain } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
+import { roles } from "@~/hyyyperbase";
 import { to } from "await-to-js";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
@@ -88,7 +89,7 @@ export default new Hono<AppContext>()
 
         const response_templates = await get_response_templates(hyyyper_pg, "");
 
-        const is_editor = hyyyper_user.role !== "visitor";
+        const is_editor = hyyyper_user.role !== roles.enum.visitor;
         const page_data = {
           banaticUrl,
           domain,

@@ -71,7 +71,11 @@ export default function Page({
         />
       </form>
 
-      <TemplateList templates={templates} searchQuery={searchQuery} is_editor={is_editor} />
+      <TemplateList
+        templates={templates}
+        searchQuery={searchQuery}
+        is_editor={is_editor}
+      />
     </main>
   );
 }
@@ -110,7 +114,11 @@ function TemplateList({
 
       <ul>
         {filteredTemplates.map((template) => (
-          <TemplateAccordion key={template.id} template={template} is_editor={is_editor} />
+          <TemplateAccordion
+            key={template.id}
+            template={template}
+            is_editor={is_editor}
+          />
         ))}
       </ul>
     </div>

@@ -13,7 +13,11 @@ type ActionProps = {
   is_editor?: boolean;
 };
 
-export async function Actions({ moderation, response_templates, is_editor = true }: ActionProps) {
+export async function Actions({
+  moderation,
+  response_templates,
+  is_editor = true,
+}: ActionProps) {
   const domain = z_email_domain.parse(moderation.user.email);
 
   return (

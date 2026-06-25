@@ -3,6 +3,7 @@
 import type { AppContext } from "#src/middleware/context";
 import { DescribedBySchema, EntitySchema, PaginationSchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
+import { roles } from "@~/hyyyperbase";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { match } from "ts-pattern";
@@ -43,7 +44,7 @@ export default new Hono<AppContext>()
         },
       );
 
-      const is_editor = hyyyper_user.role !== "visitor";
+      const is_editor = hyyyper_user.role !== roles.enum.visitor;
       return render(
         <Table
           organization_id={organization_id}

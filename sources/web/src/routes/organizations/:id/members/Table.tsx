@@ -114,9 +114,7 @@ function Row({ variants }: { variants?: VariantProps<typeof row> }) {
           </div>
         )}
       </td>
-      <td class="space-x-2 text-end">
-        {is_editor && <RowActions />}
-      </td>
+      <td class="space-x-2 text-end">{is_editor && <RowActions />}</td>
     </tr>
   );
 }

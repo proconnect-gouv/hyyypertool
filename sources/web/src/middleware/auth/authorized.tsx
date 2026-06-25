@@ -1,7 +1,12 @@
 //
 
 import { is_htmx_request, type HtmxHeader } from "#src/htmx";
-import { roles, schema, type HyyyperPgDatabase, type Roles } from "@~/hyyyperbase";
+import {
+  roles,
+  schema,
+  type HyyyperPgDatabase,
+  type Roles,
+} from "@~/hyyyperbase";
 import { and, eq, isNull } from "drizzle-orm";
 import type { Env } from "hono";
 import { createMiddleware } from "hono/factory";
@@ -75,10 +80,7 @@ export function editor_guard() {
   return createMiddleware<HyyyperUserContext>(
     async function editor_guard_middleware(c, next) {
       const { role } = c.var.hyyyper_user;
-      if (
-        role !== roles.enum.admin &&
-        role !== roles.enum.moderator
-      ) {
+      if (role !== roles.enum.admin && role !== roles.enum.moderator) {
         if (is_htmx_request(c.req.raw)) {
           return c.text("Forbidden", 403, {
             "HX-Location": "/",

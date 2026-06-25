@@ -4,7 +4,7 @@ import { Main_Layout } from "#src/layouts";
 import { authorized, editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
-import { schema } from "@~/hyyyperbase";
+import { roles, schema } from "@~/hyyyperbase";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
@@ -33,13 +33,22 @@ export default new Hono<AppContext>()
   .get(
     "/",
     jsxRenderer(Main_Layout),
-    async function GET({ render, set, req, var: { hyyyper_pg, hyyyper_user } }) {
+    async function GET({
+      render,
+      set,
+      req,
+      var: { hyyyper_pg, hyyyper_user },
+    }) {
       set("page_title", "Templates de réponse");
       const searchQuery = req.query("q") ?? "";
       const templates = await get_response_templates(hyyyper_pg, searchQuery);
-      const is_editor = hyyyper_user.role !== "visitor";
+      const is_editor = hyyyper_user.role !== roles.enum.visitor;
       return render(
-        <Page templates={templates} searchQuery={searchQuery} is_editor={is_editor} />,
+        <Page
+          templates={templates}
+          searchQuery={searchQuery}
+          is_editor={is_editor}
+        />,
       );
     },
   )
@@ -48,14 +57,20 @@ export default new Hono<AppContext>()
     jsxRenderer(Main_Layout),
     function GET({ render, set, var: { hyyyper_user } }) {
       set("page_title", "Nouveau template");
-      const is_editor = hyyyper_user.role !== "visitor";
+      const is_editor = hyyyper_user.role !== roles.enum.visitor;
       return render(<DetailPage is_editor={is_editor} />);
     },
   )
   .get(
     "/:id",
     jsxRenderer(Main_Layout),
-    async function GET({ render, set, req, var: { hyyyper_pg, hyyyper_user }, notFound }) {
+    async function GET({
+      render,
+      set,
+      req,
+      var: { hyyyper_pg, hyyyper_user },
+      notFound,
+    }) {
       const id = parseInt(req.param("id"), 10);
       if (isNaN(id)) return notFound();
 
@@ -65,8 +80,14 @@ export default new Hono<AppContext>()
       set("page_title", template.label);
       const status =
         req.query("status") === "created" ? ("created" as const) : undefined;
-      const is_editor = hyyyper_user.role !== "visitor";
-      return render(<DetailPage template={template} status={status} is_editor={is_editor} />);
+      const is_editor = hyyyper_user.role !== roles.enum.visitor;
+      return render(
+        <DetailPage
+          template={template}
+          status={status}
+          is_editor={is_editor}
+        />,
+      );
     },
   )
   .use(editor_guard())
