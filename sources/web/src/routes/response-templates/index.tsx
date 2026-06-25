@@ -33,21 +33,29 @@ export default new Hono<AppContext>()
   .get(
     "/",
     jsxRenderer(Main_Layout),
-    async function GET({ render, set, req, var: { hyyyper_pg } }) {
+    async function GET({ render, set, req, var: { hyyyper_pg, hyyyper_user } }) {
       set("page_title", "Templates de réponse");
       const searchQuery = req.query("q") ?? "";
       const templates = await get_response_templates(hyyyper_pg, searchQuery);
-      return render(<Page templates={templates} searchQuery={searchQuery} />);
+      const is_editor = hyyyper_user.role !== "visitor";
+      return render(
+        <Page templates={templates} searchQuery={searchQuery} is_editor={is_editor} />,
+      );
     },
   )
-  .get("/new", jsxRenderer(Main_Layout), function GET({ render, set }) {
-    set("page_title", "Nouveau template");
-    return render(<DetailPage />);
-  })
+  .get(
+    "/new",
+    jsxRenderer(Main_Layout),
+    function GET({ render, set, var: { hyyyper_user } }) {
+      set("page_title", "Nouveau template");
+      const is_editor = hyyyper_user.role !== "visitor";
+      return render(<DetailPage is_editor={is_editor} />);
+    },
+  )
   .get(
     "/:id",
     jsxRenderer(Main_Layout),
-    async function GET({ render, set, req, var: { hyyyper_pg }, notFound }) {
+    async function GET({ render, set, req, var: { hyyyper_pg, hyyyper_user }, notFound }) {
       const id = parseInt(req.param("id"), 10);
       if (isNaN(id)) return notFound();
 
@@ -57,7 +65,8 @@ export default new Hono<AppContext>()
       set("page_title", template.label);
       const status =
         req.query("status") === "created" ? ("created" as const) : undefined;
-      return render(<DetailPage template={template} status={status} />);
+      const is_editor = hyyyper_user.role !== "visitor";
+      return render(<DetailPage template={template} status={status} is_editor={is_editor} />);
     },
   )
   .use(editor_guard())

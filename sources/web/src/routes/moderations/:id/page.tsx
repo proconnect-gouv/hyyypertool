@@ -42,6 +42,7 @@ type PageData = {
   query_organization_members_count: Promise<number>;
   response_templates: ResponseTemplateDto[];
   identite_pg: IdentiteProconnectPgDatabase;
+  is_editor: boolean;
 };
 
 const PageContext = createContext<PageData>({} as PageData);
@@ -63,6 +64,7 @@ async function ModerationPageContent() {
     query_domain_count,
     query_organization_members_count,
     response_templates,
+    is_editor,
   } = useContext(PageContext)!;
 
   const moderation_id = `moderation-${moderation.id}`;
@@ -154,6 +156,7 @@ async function ModerationPageContent() {
         <Actions
           moderation={moderation}
           response_templates={response_templates}
+          is_editor={is_editor}
         />
 
         <hr class="border-none py-3" />

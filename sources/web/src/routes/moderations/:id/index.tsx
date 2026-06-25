@@ -41,7 +41,7 @@ export default new Hono<AppContext>()
       set,
       status,
       env: config,
-      var: { identite_pg, hyyyper_pg },
+      var: { identite_pg, hyyyper_pg, hyyyper_user },
     }) {
       const { id } = req.valid("param");
 
@@ -88,6 +88,7 @@ export default new Hono<AppContext>()
 
         const response_templates = await get_response_templates(hyyyper_pg, "");
 
+        const is_editor = hyyyper_user.role !== "visitor";
         const page_data = {
           banaticUrl,
           domain,
@@ -99,6 +100,7 @@ export default new Hono<AppContext>()
           query_organization_members_count: get_organization_members_count(
             moderation.organization_id,
           ),
+          is_editor,
         };
 
         set(

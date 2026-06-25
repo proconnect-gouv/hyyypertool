@@ -28,7 +28,7 @@ export default new Hono<AppContext>()
         page_ref: z.string(),
       }),
     ),
-    async function GET({ render, req, var: { identite_pg } }) {
+    async function GET({ render, req, var: { identite_pg, hyyyper_user } }) {
       const { id: organization_id } = req.valid("param");
       const { describedby, page_ref } = req.valid("query");
       const pagination = match(PaginationSchema.safeParse(req.query()))
@@ -43,6 +43,7 @@ export default new Hono<AppContext>()
         },
       );
 
+      const is_editor = hyyyper_user.role !== "visitor";
       return render(
         <Table
           organization_id={organization_id}
@@ -50,6 +51,7 @@ export default new Hono<AppContext>()
           query_members_collection={query_members_collection}
           describedby={describedby}
           page_ref={page_ref}
+          is_editor={is_editor}
         />,
       );
     },

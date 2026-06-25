@@ -17,6 +17,7 @@ export interface ActionsClientProps extends Record<string, unknown> {
   organization_name: string | null;
   moderation_type: string;
   response_templates: ResponseTemplateDto[];
+  is_editor?: boolean;
 }
 
 export function ActionsClient({
@@ -28,10 +29,11 @@ export function ActionsClient({
   organization_name,
   moderation_type,
   response_templates,
+  is_editor = true,
 }: ActionsClientProps) {
   return (
     <>
-      <div
+      {is_editor && <div
         class="bg-surface border-border fixed right-0 bottom-0 z-50 flex w-full justify-end overflow-hidden border-t p-2"
         role="toolbar"
       >
@@ -81,21 +83,25 @@ export function ActionsClient({
         >
           💬 Voir les échanges
         </a>
-      </div>
-      <AcceptForm
-        moderation_id={moderation_id}
-        domain={domain}
-        given_name={given_name}
-        user_email={user_email}
-        organization_name={organization_name}
-        moderation_type={moderation_type}
-      />
-      <RefusalForm
-        moderation_id={moderation_id}
-        user_email={user_email}
-        organization_name={organization_name}
-        response_templates={response_templates}
-      />
+      </div>}
+      {is_editor && (
+        <>
+          <AcceptForm
+            moderation_id={moderation_id}
+            domain={domain}
+            given_name={given_name}
+            user_email={user_email}
+            organization_name={organization_name}
+            moderation_type={moderation_type}
+          />
+          <RefusalForm
+            moderation_id={moderation_id}
+            user_email={user_email}
+            organization_name={organization_name}
+            response_templates={response_templates}
+          />
+        </>
+      )}
     </>
   );
 }

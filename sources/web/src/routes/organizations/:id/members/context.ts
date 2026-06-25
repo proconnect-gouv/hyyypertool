@@ -12,4 +12,5 @@ type User = Awaited<
 export const MemberContext = createContext({
   user: {} as User,
   organization_id: 0,
+  is_editor: true,
 });
