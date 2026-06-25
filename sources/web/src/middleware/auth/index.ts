@@ -3,6 +3,7 @@
 export type { AgentConnectUserInfo } from "./AgentConnectUserInfo";
 export {
   authorized,
+  editor_guard,
   type HyyyperUser,
   type HyyyperUserContext,
 } from "./authorized";

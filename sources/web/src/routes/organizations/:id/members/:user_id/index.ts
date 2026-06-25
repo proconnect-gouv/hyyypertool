@@ -2,6 +2,7 @@
 
 import type { HtmxHeader } from "#src/htmx";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
+import { editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { RemoveUserFromOrganization } from "#src/queries/moderations";
 import { EntitySchema } from "#src/schema";
@@ -17,7 +18,7 @@ const params_schema = EntitySchema.extend({
   user_id: z.string().pipe(z.coerce.number()),
 });
 export default new Hono<AppContext>()
-  //
+  .use(editor_guard())
   .patch(
     "/",
     zValidator("param", params_schema),

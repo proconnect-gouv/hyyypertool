@@ -1,7 +1,7 @@
 //
 
 import { Main_Layout } from "#src/layouts";
-import { authorized } from "#src/middleware/auth";
+import { authorized, editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
 import { schema } from "@~/hyyyperbase";
@@ -44,22 +44,6 @@ export default new Hono<AppContext>()
     set("page_title", "Nouveau template");
     return render(<DetailPage />);
   })
-  .post(
-    "/",
-    zValidator("form", TemplateFormSchema),
-    async function POST({ req, redirect, var: { hyyyper_pg } }) {
-      const { label, content, end_user_reason, allow_editing } =
-        req.valid("form");
-      const [inserted] = await hyyyper_pg
-        .insert(schema.response_templates)
-        .values({ label, content, end_user_reason, allow_editing })
-        .returning({ id: schema.response_templates.id });
-      return redirect(
-        `/response-templates/${inserted!.id}?status=created`,
-        303,
-      );
-    },
-  )
   .get(
     "/:id",
     jsxRenderer(Main_Layout),
@@ -74,6 +58,23 @@ export default new Hono<AppContext>()
       const status =
         req.query("status") === "created" ? ("created" as const) : undefined;
       return render(<DetailPage template={template} status={status} />);
+    },
+  )
+  .use(editor_guard())
+  .post(
+    "/",
+    zValidator("form", TemplateFormSchema),
+    async function POST({ req, redirect, var: { hyyyper_pg } }) {
+      const { label, content, end_user_reason, allow_editing } =
+        req.valid("form");
+      const [inserted] = await hyyyper_pg
+        .insert(schema.response_templates)
+        .values({ label, content, end_user_reason, allow_editing })
+        .returning({ id: schema.response_templates.id });
+      return redirect(
+        `/response-templates/${inserted!.id}?status=created`,
+        303,
+      );
     },
   )
   .patch(

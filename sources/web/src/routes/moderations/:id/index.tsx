@@ -4,6 +4,7 @@ import { NotFoundError } from "#src/errors";
 import { Main_Layout } from "#src/layouts";
 import { moderation_type_to_title } from "#src/lib/moderations";
 import { GetBanaticUrl } from "#src/lib/organizations/usecase";
+import { editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { GetModerationWithDetails } from "#src/queries/moderations";
 import {
@@ -117,6 +118,7 @@ export default new Hono<AppContext>()
   )
   .route("/email", moderation_email_router)
   .route("/duplicate_warning", duplicate_warning_router)
+  .use(editor_guard())
   .route("/validate", moderation_validate_router)
   .route("/rejected", moderation_rejected_router)
   .route("/processed", moderation_processed_router)
