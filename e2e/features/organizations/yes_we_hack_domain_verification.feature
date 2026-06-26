@@ -5,7 +5,7 @@ Fonctionnalité: Page organisation - domaine à vérifier
     Soit une base de données nourrie au grain
     Quand je navigue sur la page
     Et je vois "Bonjour Hyyypertool !"
-    Et je me connecte en tant que "jeanbon@yopmail.com"
+    Et je me connecte en tant que "moderateur@beta.gouv.fr"
 
   Scénario:
     Quand je clique sur "Domaines à vérifier"

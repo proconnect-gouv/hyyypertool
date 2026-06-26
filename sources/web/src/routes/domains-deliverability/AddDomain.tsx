@@ -3,7 +3,8 @@ import { button } from "#src/ui/button";
 import { input, input_group, label } from "#src/ui/form";
 import { urls } from "#src/urls";
 
-export async function AddDomain() {
+export async function AddDomain({ is_editor }: { is_editor: boolean }) {
+  if (!is_editor) return <></>;
   const $describedby = hyper_ref("add_problematic_email");
 
   const hx_add_props = urls["domains-deliverability"].$hx_put();

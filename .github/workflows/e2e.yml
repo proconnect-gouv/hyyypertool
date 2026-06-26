@@ -104,5 +104,6 @@ jobs:
           - moderations/verify_domain.feature
           - organizations
           - response-templates
+          - security/visitor_read_only.feature
           - team
           - users

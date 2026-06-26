@@ -8,9 +8,11 @@ import {
   GetFicheOrganizationById,
   RemoveDomainEmailById,
 } from "#src/lib/organizations/usecase";
+import { editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { DescribedBySchema, EntitySchema, IdSchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
+import { roles } from "@~/hyyyperbase";
 import {
   createProconnectIdentiteContext,
   MarkDomainAsVerified,
@@ -35,11 +37,11 @@ export default new Hono<AppContext>()
     jsxRenderer(),
     zValidator("param", EntitySchema),
     zValidator("query", DescribedBySchema),
-    async function GET({ render, req, var: { identite_pg } }) {
+    async function GET({ render, req, var: { identite_pg, hyyyper_user } }) {
       const { id: organization_id } = req.valid("param");
       const { describedby } = req.valid("query");
 
-      // Load data directly in handler
+      const is_editor = hyyyper_user.role !== roles.enum.visitor;
       const domains = await get_organization_domains(
         { pg: identite_pg },
         { organization_id },
@@ -47,12 +49,17 @@ export default new Hono<AppContext>()
 
       return render(
         <>
-          <Table domains={domains} describedby={describedby} />
-          <AddDomain organization_id={organization_id} />
+          <Table
+            domains={domains}
+            describedby={describedby}
+            is_editor={is_editor}
+          />
+          <AddDomain organization_id={organization_id} is_editor={is_editor} />
         </>,
       );
     },
   )
+  .use(editor_guard())
   .put(
     "/",
     zValidator("param", EntitySchema),

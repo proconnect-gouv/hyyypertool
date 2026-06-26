@@ -10,8 +10,10 @@ type EmailDelivrabilityWhiteList = Awaited<
 
 export async function Table({
   whitelist,
+  is_editor,
 }: {
   whitelist: EmailDelivrabilityWhiteList[];
+  is_editor: boolean;
 }) {
   return (
     <table class={table()}>
@@ -26,7 +28,11 @@ export async function Table({
       </thead>
       <tbody>
         {whitelist.map((item) => (
-          <Row key={item.email_domain} whitelist_item={item} />
+          <Row
+            key={item.email_domain}
+            whitelist_item={item}
+            is_editor={is_editor}
+          />
         ))}
       </tbody>
     </table>
@@ -36,18 +42,14 @@ export async function Table({
 async function Row({
   key,
   whitelist_item,
+  is_editor,
 }: {
   key?: string;
   whitelist_item: EmailDelivrabilityWhiteList;
+  is_editor: boolean;
 }) {
   const { verified_at, problematic_email, email_domain, verified_by } =
     whitelist_item;
-
-  const hx_delete_props = urls["domains-deliverability"][
-    ":email_domain"
-  ].$hx_delete({
-    param: { email_domain: email_domain },
-  });
 
   return (
     <tr aria-label={`Domaine ${email_domain}`} key={key}>
@@ -58,16 +60,38 @@ async function Row({
         <LocalTime date={verified_at} />
       </td>
       <td>
-        <button
-          {...hx_delete_props}
-          hx-confirm={`Êtes-vous sûr de vouloir supprimer le domaine « ${email_domain} » de la liste des emails délivrables ?`}
-          hx-swap="none"
-          type="button"
-          aria-label={`Supprimer ${problematic_email}`}
-        >
-          <Svg name={"delete"} />
-        </button>
+        <DeliverabilityRowActions
+          whitelist_item={whitelist_item}
+          is_editor={is_editor}
+        />
       </td>
     </tr>
+  );
+}
+
+function DeliverabilityRowActions({
+  whitelist_item,
+  is_editor,
+}: {
+  whitelist_item: EmailDelivrabilityWhiteList;
+  is_editor: boolean;
+}) {
+  if (!is_editor) return <></>;
+  const { problematic_email, email_domain } = whitelist_item;
+  const hx_delete_props = urls["domains-deliverability"][
+    ":email_domain"
+  ].$hx_delete({
+    param: { email_domain: email_domain },
+  });
+  return (
+    <button
+      {...hx_delete_props}
+      hx-confirm={`Êtes-vous sûr de vouloir supprimer le domaine « ${email_domain} » de la liste des emails délivrables ?`}
+      hx-swap="none"
+      type="button"
+      aria-label={`Supprimer ${problematic_email}`}
+    >
+      <Svg name={"delete"} />
+    </button>
   );
 }
