@@ -17,6 +17,9 @@
       "path": "../identite-proconnect"
     },
     {
+      "path": "../../packages/bun-webview-dsl"
+    },
+    {
       "path": "../../packages/hono-slotify"
     }
   ]

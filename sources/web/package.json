@@ -66,11 +66,12 @@
     "youch": "4.1.1"
   },
   "devDependencies": {
-    "@~/config.typescript": "workspace:*",
     "@happy-dom/global-registrator": "20.10.6",
     "@types/lodash.sortby": "4.7.9",
     "@types/nprogress": "0.2.3",
     "@types/pg": "8.20.0",
+    "@~/config.typescript": "workspace:*",
+    "bun-webview-dsl": "workspace:*",
     "prettier": "3.8.3"
   }
 }
