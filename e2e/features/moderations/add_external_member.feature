@@ -21,6 +21,7 @@ Fonctionnalité: Ajouter un membre externe lors de la modération
     Et je clique sur "Ajouter Marie à l'organisation EN TANT QU'EXTERNE"
     Et je clique sur "Terminer"
     Et je réinitialise le contexte
+    Quand je clique sur "Retour immédiat"
 
     Alors une notification mail n'est pas envoyée
 
@@ -50,6 +51,7 @@ Fonctionnalité: Ajouter un membre externe lors de la modération
     Et je clique sur "Notifier marie.bon@fr.bosch.com du traitement de la modération."
     Et je clique sur "Terminer"
     Et je réinitialise le contexte
+    Quand je clique sur "Retour immédiat"
 
     Alors une notification mail est envoyée
 

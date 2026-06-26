@@ -25,9 +25,11 @@ type Domains = Awaited<ReturnType<typeof get_organization_domains>>;
 export function Table({
   domains,
   describedby,
+  is_editor,
 }: {
   domains: Domains;
   describedby: string;
+  is_editor: boolean;
 }) {
   return (
     <table class={table()} aria-describedby={describedby}>
@@ -43,7 +45,11 @@ export function Table({
       </thead>
       <tbody>
         {domains.map((domain) => (
-          <Row key={`${domain.id}`} organization_domain={domain} />
+          <Row
+            key={`${domain.id}`}
+            organization_domain={domain}
+            is_editor={is_editor}
+          />
         ))}
       </tbody>
     </table>
@@ -52,9 +58,12 @@ export function Table({
 
 export async function AddDomain({
   organization_id,
+  is_editor,
 }: {
   organization_id: number;
+  is_editor: boolean;
 }) {
+  if (!is_editor) return <></>;
   const $describedby = hyper_ref("add_domain");
 
   const hx_add_domain_props = urls.organizations[":id"].domains.$hx_put({
@@ -129,9 +138,11 @@ function TypeToEmoji({ type }: { type: EmailDomainVerificationType }) {
 function Row({
   key,
   organization_domain,
+  is_editor,
 }: {
   key?: string;
   organization_domain: Domains[number];
+  is_editor: boolean;
 }) {
   const {
     created_at,
@@ -173,13 +184,27 @@ function Row({
         >
           Vérifier le matching
         </GoogleSearchButton>
-        <Row_Actions organization_domain={organization_domain} />
+        <DomainRowActions
+          organization_domain={organization_domain}
+          is_editor={is_editor}
+        />
       </td>
     </tr>
   );
 }
 
-async function Row_Actions({
+function DomainRowActions({
+  organization_domain,
+  is_editor,
+}: {
+  organization_domain: Domains[number];
+  is_editor: boolean;
+}) {
+  if (!is_editor) return <></>;
+  return <RowActions organization_domain={organization_domain} />;
+}
+
+async function RowActions({
   organization_domain,
 }: {
   organization_domain: Domains[number];

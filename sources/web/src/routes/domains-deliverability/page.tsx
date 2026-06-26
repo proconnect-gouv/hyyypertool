@@ -6,7 +6,13 @@ type Whitelist = Awaited<
   ReturnType<typeof get_email_deliverability_whitelist>
 >[number];
 
-export default async function Page({ whitelist }: { whitelist: Whitelist[] }) {
+export default async function Page({
+  whitelist,
+  is_editor,
+}: {
+  whitelist: Whitelist[];
+  is_editor: boolean;
+}) {
   return (
     <main class="container mx-auto my-12 px-4">
       <h1>Délivrabilité des domaines</h1>
@@ -17,8 +23,8 @@ export default async function Page({ whitelist }: { whitelist: Whitelist[] }) {
           hx-trigger="domains-deliverability-updated"
           hx-swap="innerHTML"
         >
-          <AddDomain />
-          <Table whitelist={whitelist} />
+          <AddDomain is_editor={is_editor} />
+          <Table whitelist={whitelist} is_editor={is_editor} />
         </div>
       </div>
     </main>

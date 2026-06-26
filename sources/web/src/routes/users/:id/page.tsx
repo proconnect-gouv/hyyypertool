@@ -23,10 +23,12 @@ type User = Awaited<ReturnType<typeof get_user_by_id>>;
 export async function UserPage({
   authenticators,
   franceconnect,
+  is_editor,
   user,
 }: {
   authenticators: Authenticators;
   franceconnect: FranceConnect;
+  is_editor: boolean;
   user: User;
 }) {
   const $organizations_describedby = hyper_ref("user_organizations");
@@ -116,7 +118,7 @@ export async function UserPage({
       </div>
       <div class="bg-alt-red-marianne dark:bg-surface py-6">
         <div class="container mx-auto px-4 py-6">
-          <Actions user={user} />
+          <UserActions is_editor={is_editor} user={user} />
         </div>
       </div>
 
@@ -248,6 +250,11 @@ function FranceConnectInfo({
       </dl>
     </div>
   );
+}
+
+function UserActions({ is_editor, user }: { is_editor: boolean; user: User }) {
+  if (!is_editor) return null;
+  return <Actions user={user} />;
 }
 
 async function Actions({ user }: { user: User }) {

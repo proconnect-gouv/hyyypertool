@@ -10,7 +10,10 @@ import {
   hyyyper_pglite,
   empty_database as hyyyperbase_empty_database,
 } from "@~/hyyyperbase/testing";
-import { insert_moderateur } from "@~/hyyyperbase/testing/users";
+import {
+  insert_jeanbon,
+  insert_moderateur,
+} from "@~/hyyyperbase/testing/users";
 import { schema } from "@~/identite-proconnect/database";
 import { create_adora_pony_user } from "@~/identite-proconnect/database/seed/unicorn";
 import {
@@ -62,13 +65,16 @@ test("GET /users/:id returns user details", async () => {
 });
 
 test("DELETE /users/:id deletes user and redirects", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
   const user_id = await create_adora_pony_user(pg);
 
   const response = await new Hono()
     .use(set_config({}))
+    .use(set_hyyyper_pg(hyyyper_pglite))
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
-    .use(set_userinfo({ email: "test@example.com" }))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
     .route("/:id", app)
     .request(`/${user_id}`, { method: "DELETE" });
 
@@ -82,13 +88,16 @@ test("DELETE /users/:id deletes user and redirects", async () => {
 });
 
 test("PATCH /users/:id/reset/email_verified resets email verification", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
   const user_id = await create_adora_pony_user(pg);
 
   const response = await new Hono()
     .use(set_config({}))
+    .use(set_hyyyper_pg(hyyyper_pglite))
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
-    .use(set_userinfo({ email: "test@example.com" }))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
     .route("/:id", app)
     .request(`/${user_id}/reset/email_verified`, { method: "PATCH" });
 
@@ -103,6 +112,7 @@ test("PATCH /users/:id/reset/email_verified resets email verification", async ()
 });
 
 test("PATCH /users/:id/reset/france_connect remove FranceConnect data", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
   const user_id = await create_adora_pony_user(pg);
   await pg.insert(schema.franceconnect_userinfo).values({
     created_at: "2022-01-01T00:00:00.000Z",
@@ -114,9 +124,11 @@ test("PATCH /users/:id/reset/france_connect remove FranceConnect data", async ()
   });
   const response = await new Hono()
     .use(set_config({}))
+    .use(set_hyyyper_pg(hyyyper_pglite))
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
-    .use(set_userinfo({ email: "test@example.com" }))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
     .route("/:id", app)
     .onError((error) => {
       throw error;
@@ -133,6 +145,7 @@ test("PATCH /users/:id/reset/france_connect remove FranceConnect data", async ()
 });
 
 test("PATCH /users/:id/reset/password resets password", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
   const user_id = await create_adora_pony_user(pg);
 
   const mockCrisp = {
@@ -152,10 +165,12 @@ test("PATCH /users/:id/reset/password resets password", async () => {
         CRISP_KEY: "test",
       }),
     )
+    .use(set_hyyyper_pg(hyyyper_pglite))
     .use(set_crisp_client(mockCrisp))
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
-    .use(set_userinfo({ email: "test@example.com" }))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
     .route("/:id", app)
     .request(`/${user_id}/reset/password`, { method: "PATCH" });
 
@@ -164,6 +179,7 @@ test("PATCH /users/:id/reset/password resets password", async () => {
 });
 
 test("PATCH /users/:id/reset/mfa resets MFA", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
   const user_id = await create_adora_pony_user(pg);
 
   const mockCrisp = {
@@ -183,13 +199,32 @@ test("PATCH /users/:id/reset/mfa resets MFA", async () => {
         CRISP_KEY: "test",
       }),
     )
+    .use(set_hyyyper_pg(hyyyper_pglite))
     .use(set_crisp_client(mockCrisp))
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
-    .use(set_userinfo({ email: "test@example.com" }))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
     .route("/:id", app)
     .request(`/${user_id}/reset/mfa`, { method: "PATCH" });
 
   expect(response.status).toBe(200);
   expect(response.text()).resolves.toBe("OK");
+});
+
+test("GET /users/:id as visitor returns 200 (read-only access)", async () => {
+  const visitor = await insert_jeanbon(hyyyper_pglite);
+  const user_id = await create_adora_pony_user(pg);
+
+  const response = await new Hono()
+    .use(set_config({}))
+    .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_identite_pg(pg))
+    .use(set_nonce("nonce"))
+    .use(set_userinfo({ email: visitor.email, sub: visitor.sub! }))
+    .use(authorized())
+    .route("/:id", app)
+    .request(`/${user_id}`);
+
+  expect(response.status).toBe(200);
 });

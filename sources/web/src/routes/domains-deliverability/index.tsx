@@ -2,10 +2,11 @@
 
 import type { HtmxHeader } from "#src/htmx";
 import { Main_Layout } from "#src/layouts";
-import { authorized } from "#src/middleware/auth";
+import { authorized, editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { z_username } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
+import { roles } from "@~/hyyyperbase";
 import { schema } from "@~/identite-proconnect/database";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
@@ -27,17 +28,19 @@ export default new Hono<AppContext>()
     "/",
     jsxRenderer(Main_Layout),
 
-    async function GET({ render, set, var: { identite_pg } }) {
+    async function GET({ render, set, var: { identite_pg, hyyyper_user } }) {
+      const is_editor = hyyyper_user.role !== roles.enum.visitor;
       const whitelist = await get_email_deliverability_whitelist(identite_pg);
 
       set("page_title", "Délivrabilité des domaines");
       return render(
         <>
-          <Page whitelist={whitelist} />
+          <Page whitelist={whitelist} is_editor={is_editor} />
         </>,
       );
     },
   )
+  .use(editor_guard())
   .put(
     "/",
     zValidator("form", z.object({ problematic_email: z.string().min(1) })),

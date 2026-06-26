@@ -21,6 +21,7 @@ Fonctionnalité: Ajouter un membre interne lors de la modération
     Et je clique sur "Ajouter Marie à l'organisation EN TANT QU'INTERNE"
     Quand je clique sur "Terminer"
     Et je réinitialise le contexte
+    Quand je clique sur "Retour immédiat"
 
     Alors une notification mail n'est pas envoyée
 
@@ -41,5 +42,6 @@ Fonctionnalité: Ajouter un membre interne lors de la modération
     Et je clique sur "Ajouter Raphael à l'organisation EN TANT QU'INTERNE"
     Quand je clique sur "Terminer"
     Et je réinitialise le contexte
+    Quand je clique sur "Retour immédiat"
 
     Alors je vois "Liste des moderations"

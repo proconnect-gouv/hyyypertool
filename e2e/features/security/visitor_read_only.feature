@@ -28,3 +28,22 @@ Fonctionnalité: Un visiteur ne peut pas modifier les données
     Quand je clique sur le lien nommé "Modération a traiter de Jean Bon pour 13002526500013"
     Alors je ne vois pas "✅ Accepter"
     Et je ne vois pas "❌ Refuser"
+
+  Scénario: Le visiteur ne voit pas les actions sur un utilisateur
+    Etant donné que je suis sur la page "/users"
+    Quand je clique sur le lien nommé "Utilisateur Jean Bon (jeanbon@yopmail.com)"
+    Alors je ne vois pas "réinitialiser la vérification de l'email"
+    Et je ne vois pas "supprimer définitivement ce compte"
+
+  Scénario: Le visiteur ne voit pas les actions sur les domaines d'une organisation
+    Quand je clique sur "Organisations"
+    Alors je suis redirigé sur "/organizations"
+    Quand je clique sur le lien nommé "Organisation Direction interministerielle du numerique (DINUM) (13002526500013)"
+    Alors je ne vois pas "Ajouter"
+    Et je ne vois pas "Supprimer"
+
+  Scénario: Le visiteur ne voit pas les actions sur la délivrabilité des domaines
+    Etant donné que je suis sur la page "/domains-deliverability"
+    Alors je vois "Délivrabilité des domaines"
+    Mais je ne vois pas "Ajouter un email problématique"
+    Et je ne vois pas "Supprimer test@ch-lehavre.fr"

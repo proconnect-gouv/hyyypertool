@@ -4,10 +4,12 @@ import { NotFoundError } from "#src/errors";
 import type { HtmxHeader } from "#src/htmx";
 import { Main_Layout } from "#src/layouts";
 import { ResetMFA, ResetPassword } from "#src/lib/users";
+import { editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { EntitySchema } from "#src/schema";
 import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
+import { roles } from "@~/hyyyperbase";
 import { schema } from "@~/identite-proconnect/database";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
@@ -28,8 +30,15 @@ export default new Hono<AppContext>()
     "/",
     jsxRenderer(Main_Layout),
     zValidator("param", EntitySchema),
-    async function GET({ render, req, set, status, var: { identite_pg } }) {
+    async function GET({
+      render,
+      req,
+      set,
+      status,
+      var: { identite_pg, hyyyper_user },
+    }) {
       const { id } = req.valid("param");
+      const is_editor = hyyyper_user.role !== roles.enum.visitor;
 
       try {
         const user = await get_user_by_id(identite_pg, id);
@@ -51,6 +60,7 @@ export default new Hono<AppContext>()
           <UserPage
             authenticators={authenticators}
             franceconnect={franceconnect}
+            is_editor={is_editor}
             user={user}
           />,
         );
@@ -63,6 +73,12 @@ export default new Hono<AppContext>()
       }
     },
   )
+  //
+  .route("/organizations", user_organizations_page_route)
+  .route("/moderations", user_moderations_route)
+  .route("/oidc_clients", user_oidc_clients_route)
+  //
+  .use(editor_guard())
   .delete(
     "/",
     zValidator("param", EntitySchema),
@@ -140,10 +156,6 @@ export default new Hono<AppContext>()
 
       return text("OK", 200, { "HX-Refresh": "true" } as HtmxHeader);
     },
-  )
-  //
-  .route("/organizations", user_organizations_page_route)
-  .route("/moderations", user_moderations_route)
-  .route("/oidc_clients", user_oidc_clients_route);
+  );
 
 //

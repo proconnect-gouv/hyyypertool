@@ -1,12 +1,18 @@
 //
 
-import { set_userinfo } from "#src/middleware/auth";
+import { authorized, set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
+import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import {
   set_identite_pg,
   set_identite_pg_client,
 } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
+import {
+  hyyyper_pglite,
+  empty_database as hyyyperbase_empty_database,
+} from "@~/hyyyperbase/testing";
+import { insert_moderateur } from "@~/hyyyperbase/testing/users";
 import { schema } from "@~/identite-proconnect/database";
 import {
   create_adora_pony_user,
@@ -33,11 +39,13 @@ import app from "./index";
 
 beforeAll(migrate);
 beforeEach(empty_database);
+beforeEach(hyyyperbase_empty_database);
 setSystemTime(new Date("2222-01-01T00:00:00.000Z"));
 
 //
 
 test("GET /organizations/:id/domains returns domains for organization", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
   const organization_id = await create_unicorn_organization(pg);
 
   await pg.insert(schema.email_domains).values({
@@ -48,9 +56,11 @@ test("GET /organizations/:id/domains returns domains for organization", async ()
 
   const response = await new Hono()
     .use(set_config({}))
+    .use(set_hyyyper_pg(hyyyper_pglite))
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
-    .use(set_userinfo({ email: "test@example.com" }))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
     .route("/:id/domains", app)
     .request(`/${organization_id}/domains?describedby=test-id`);
 
@@ -62,6 +72,7 @@ test("GET /organizations/:id/domains returns domains for organization", async ()
 });
 
 test("PUT /organizations/:id/domains adds new domain", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
   const organization_id = await create_unicorn_organization(pg);
   const adora_pony_user_id = await create_adora_pony_user(pg);
   const pink_diamond_user_id = await create_pink_diamond_user(pg);
@@ -105,10 +116,12 @@ test("PUT /organizations/:id/domains adds new domain", async () => {
 
   const response = await new Hono()
     .use(set_config({}))
+    .use(set_hyyyper_pg(hyyyper_pglite))
     .use(set_identite_pg(pg))
     .use(set_identite_pg_client(client as any))
     .use(set_nonce("nonce"))
-    .use(set_userinfo({ email: "test@example.com" }))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
     .route("/:id/domains", app)
     .request(`/${organization_id}/domains`, {
       method: "PUT",
@@ -192,6 +205,7 @@ test("PUT /organizations/:id/domains adds new domain", async () => {
 });
 
 test("DELETE /organizations/:id/domains/:domain_id removes domain", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
   const organization_id = await create_unicorn_organization(pg);
 
   const [{ id: domain_id } = { id: NaN }] = await pg
@@ -205,9 +219,11 @@ test("DELETE /organizations/:id/domains/:domain_id removes domain", async () => 
 
   const response = await new Hono()
     .use(set_config({}))
+    .use(set_hyyyper_pg(hyyyper_pglite))
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
-    .use(set_userinfo({ email: "test@example.com" }))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
     .route("/:id/domains", app)
     .request(`/${organization_id}/domains/${domain_id}`, {
       method: "DELETE",
@@ -238,6 +254,7 @@ test("DELETE /organizations/:id/domains/:domain_id removes domain", async () => 
 });
 
 test("PATCH /organizations/:id/domains/:domain_id updates verification type to verified", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
   const organization_id = await create_unicorn_organization(pg);
   const adora_pony_user_id = await create_adora_pony_user(pg);
   const pink_diamond_user_id = await create_pink_diamond_user(pg);
@@ -271,10 +288,12 @@ test("PATCH /organizations/:id/domains/:domain_id updates verification type to v
 
   const response = await new Hono()
     .use(set_config({}))
+    .use(set_hyyyper_pg(hyyyper_pglite))
     .use(set_identite_pg(pg))
     .use(set_identite_pg_client(client as any))
     .use(set_nonce("nonce"))
-    .use(set_userinfo({ email: "test@example.com" }))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
     .route("/:id/domains", app)
     .request(`/${organization_id}/domains/${domain_id}?type=verified`, {
       method: "PATCH",
