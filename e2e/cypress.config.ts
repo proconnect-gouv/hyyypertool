@@ -6,6 +6,7 @@ import createBundler from "@bahmutov/cypress-esbuild-preprocessor";
 import { execSync } from "child_process";
 import { defineConfig } from "cypress";
 import { env } from "node:process";
+import { fileURLToPath } from "node:url";
 import { resolve } from "path";
 
 //
@@ -13,8 +14,10 @@ import { resolve } from "path";
 export default defineConfig({
   e2e: {
     baseUrl: "http://localhost:3000",
-    reporter:
-      require.resolve("@badeball/cypress-cucumber-preprocessor/pretty-reporter"),
+    reporter: fileURLToPath(
+      import.meta
+        .resolve("@badeball/cypress-cucumber-preprocessor/pretty-reporter"),
+    ),
     setupNodeEvents,
     specPattern: "**/*.feature",
     supportFile: "cypress/support/e2e.ts",
@@ -51,7 +54,7 @@ async function setupNodeEvents(
 //
 
 async function seed() {
-  const rootDir = resolve(__dirname, "..");
+  const rootDir = resolve(fileURLToPath(import.meta.url), "..", "..");
 
   try {
     // Run the root-level db:seed script
