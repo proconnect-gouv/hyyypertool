@@ -110,4 +110,32 @@ test("GET /moderations/:id hides action toolbar for visitors", async () => {
   expect(html).not.toContain("❌ Refuser");
 });
 
+test("GET /moderations/:id hides the reprocess button for visitors on a treated moderation", async () => {
+  const visitor = await insert_jeanbon(hyyyper_pglite);
+  await create_adora_pony_user(pg);
+  await create_unicorn_organization(pg);
+  const moderation_id = await create_adora_pony_moderation(pg, {
+    type: "non_verified_domain",
+    status: "accepted",
+    moderated_at: "2222-01-01T00:00:00.000Z",
+    moderated_by: "moderateur@beta.gouv.fr",
+  });
+
+  const response = await new Hono()
+    .use(set_config({ HTTP_CLIENT_TIMEOUT: 5000 }))
+    .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_identite_pg(pg))
+    .use(set_nonce("nonce"))
+    .use(set_userinfo({ email: visitor.email, sub: visitor.sub! }))
+    .use(authorized())
+    .route("/:id", app)
+    .request(`/${moderation_id}`);
+
+  expect(response.status).toBe(200);
+  const html = await response.text();
+
+  expect(html).toContain("Modération acceptée");
+  expect(html).not.toContain("Retraiter");
+});
+
 //

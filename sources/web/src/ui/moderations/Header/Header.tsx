@@ -32,6 +32,7 @@ const comment_item = tv({
 
 interface Values {
   moderation: GetModerationHeaderOutput;
+  is_editor: boolean;
 }
 const context = createContext<Values>({} as any);
 
@@ -170,7 +171,7 @@ function Info() {
 }
 
 async function ModerationCallout() {
-  const { moderation } = useContext(context);
+  const { moderation, is_editor } = useContext(context);
   if (!moderation.moderated_at) return raw``;
 
   const { base, text, title } = callout({
@@ -207,13 +208,15 @@ async function ModerationCallout() {
         .
       </p>
       <LastComment />
-      <button
-        class={button({ size: "sm", type: "tertiary" })}
-        {...hx_patch_moderation_reprocess}
-        hx-swap="none"
-      >
-        Retraiter
-      </button>
+      {is_editor ? (
+        <button
+          class={button({ size: "sm", type: "tertiary" })}
+          {...hx_patch_moderation_reprocess}
+          hx-swap="none"
+        >
+          Retraiter
+        </button>
+      ) : null}
     </div>
   );
 }

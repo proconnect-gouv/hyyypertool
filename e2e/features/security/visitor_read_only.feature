@@ -29,6 +29,13 @@ Fonctionnalité: Un visiteur ne peut pas modifier les données
     Alors je ne vois pas "✅ Accepter"
     Et je ne vois pas "❌ Refuser"
 
+  Scénario: Le visiteur ne voit pas le bouton "Retraiter" sur une modération traitée
+    Etant donné que je suis sur la page "/moderations"
+    Quand je saisie le mot "{selectAll}is:processed{enter}" dans la boîte à texte nommée "Filtrer les modérations…"
+    Quand je clique sur le lien nommé "Modération a traiter de Richard Bon pour 38514019900014"
+    Alors je vois "Modération acceptée"
+    Mais je ne vois pas "Retraiter"
+
   Scénario: Le visiteur ne voit pas les actions sur un utilisateur
     Etant donné que je suis sur la page "/users"
     Quand je clique sur le lien nommé "Utilisateur Jean Bon (jeanbon@yopmail.com)"

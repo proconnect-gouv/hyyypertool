@@ -26,6 +26,7 @@ test("render header section", async () => {
               id: 44,
             },
           },
+          is_editor: true,
         }}
       >
         <Header />
