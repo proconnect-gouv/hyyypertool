@@ -98,7 +98,7 @@ async function ModerationPageContent() {
         ])}
         id={moderation_id}
       >
-        <Header.Provier value={{ moderation }}>
+        <Header.Provier value={{ moderation, is_editor }}>
           <Header />
         </Header.Provier>
 
