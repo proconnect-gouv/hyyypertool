@@ -1,5 +1,18 @@
 # Changelog
 
+## [2026.6.7](https://github.com/proconnect-gouv/hyyypertool/compare/2026.6.6...2026.6.7) (2026-06-26)
+
+### Changements
+
+- 🔒 Restriction de l'interface d'édition aux visiteurs
+
+Les visiteurs ne peuvent plus accéder aux actions d'édition ni effectuer de modifications en base de données. Les droits d'écriture sont désormais réservés aux rôles administrateur et modérateur.
+
+### Divers
+
+- 🛂 restrict DB writes to admin and moderator roles (#1695) (3e40f3da)
+- ↗️ [patch](deps): Bump @preact/signals from 2.9.1 to 2.9.2 (#1694) (14de32b6)
+
 ## [2026.6.6](https://github.com/proconnect-gouv/hyyypertool/compare/2026.6.5...2026.6.6) (2026-06-24)
 
 ### Changements
