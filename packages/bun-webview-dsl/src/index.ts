@@ -270,17 +270,19 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
 
     fill: async (label, value) => {
       await view.evaluate(`
-        const el =
-          document.querySelector('[placeholder=${JSON.stringify(label)}]') ||
-          document.querySelector('[aria-label=${JSON.stringify(label)}]') ||
-          [...document.querySelectorAll('label')]
-            .find(l => l.textContent.trim() === ${JSON.stringify(label)})
-            ?.control;
-        if (el) {
-          el.value = ${JSON.stringify(value)};
-          el.dispatchEvent(new Event('input', { bubbles: true }));
-          el.dispatchEvent(new Event('change', { bubbles: true }));
-        }
+        (() => {
+          const el =
+            document.querySelector('[placeholder=${JSON.stringify(label)}]') ||
+            document.querySelector('[aria-label=${JSON.stringify(label)}]') ||
+            [...document.querySelectorAll('label')]
+              .find(l => l.textContent.trim() === ${JSON.stringify(label)})
+              ?.control;
+          if (el) {
+            el.value = ${JSON.stringify(value)};
+            el.dispatchEvent(new Event('input', { bubbles: true }));
+            el.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        })()
       `);
       await wait_for_htmx();
     },
