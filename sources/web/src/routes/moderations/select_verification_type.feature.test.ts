@@ -1,7 +1,7 @@
 import { set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
 import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
-import { set_identite_pg } from "#src/middleware/identite-pg";
+import { set_identite_pg, set_identite_pg_client } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
 import { create_asset_router } from "#src/routes/assets";
 import {
@@ -11,6 +11,7 @@ import {
 import { insert_moderateur } from "@~/hyyyperbase/testing/users";
 import { insert_database } from "@~/identite-proconnect/database/seed/insert";
 import {
+  client,
   empty_database as identite_empty_database,
   migrate,
   pg,
@@ -67,6 +68,7 @@ beforeAll(() => {
     )
     .use(set_hyyyper_pg(hyyyper_pglite))
     .use(set_identite_pg(pg))
+    .use(set_identite_pg_client(client))
     .use(set_nonce("nonce"))
     .use(set_userinfo(MODERATOR))
     .route(
@@ -88,41 +90,45 @@ beforeEach(() => insert_moderateur(hyyyper_pglite));
 
 //
 
-Scenario(
-  "Moderator can search a moderation by email",
-  () => `http://localhost:${server.port}`,
-  ({ I }) => {
-    I.navigate("/moderations");
-    I.see("Liste des moderations");
-    I.see("Richard");
-    I.fill("Filtrer les modérations…", "is:pending email:jeanbon");
-    I.see("13002526500013");
-    I.not_see("Raphael");
+const examples = [
+  { type_verification: "Mail officiel", verification_enum: "official_contact_email" },
+  { type_verification: "Liste des dirigeants RNA", verification_enum: "in_liste_dirigeants_rna" },
+  { type_verification: "Liste des dirigeants RNE", verification_enum: "in_liste_dirigeants_rne" },
+  { type_verification: "Justificatif transmis", verification_enum: "proof_received" },
+  {
+    type_verification: "Domaine d'ordre professionnel",
+    verification_enum: "ordre_professionnel_domain",
   },
-);
+];
 
-Scenario(
-  "Moderator can search a moderation by SIRET",
-  () => `http://localhost:${server.port}`,
-  ({ I }) => {
-    I.navigate("/moderations");
-    I.see("Liste des moderations");
-    I.see("Richard");
-    I.fill("Filtrer les modérations…", "is:pending siret:51935970700022");
-    I.see("51935970700022");
-    I.not_see("Raphael");
-  },
-);
-
-Scenario(
-  "Moderator can explore a moderation from the list",
-  () => `http://localhost:${server.port}`,
-  ({ I }) => {
-    I.navigate("/moderations");
-    I.see("Liste des moderations");
-    I.see("Richard");
-    I.click_link("Modération a traiter de Jean Bon pour 13002526500013");
-    I.see_in_title("Modération a traiter de Jean Bon pour 13002526500013");
-    I.see("jeanbon@yopmail.com");
-  },
-);
+for (const { type_verification, verification_enum } of examples) {
+  Scenario(
+    `Sélectionner ${type_verification}`,
+    () => `http://localhost:${server.port}`,
+    ({ I }) => {
+      I.navigate("/moderations");
+      I.see_in_title("Liste des moderations");
+      I.see("Liste des moderations");
+      I.click_link("Modération a traiter de Jean Bon pour 51935970700022");
+      I.see_in_title("Modération a traiter de Jean Bon pour 51935970700022");
+      I.click("✅ Accepter");
+      I.see(
+        "A propos de jeanbon@yopmail.com pour l'organisation Abracadabra (ABRACADABRA), je valide :",
+      );
+      I.within("la modale de validation").click(type_verification);
+      I.within("la modale de validation").click("Terminer");
+      I.click("Annuler");
+      I.see("Cette modération a été marqué comme traitée le");
+      I.see("Validé par moderateur@beta.gouv.fr");
+      I.click("Moderations");
+      I.see_in_title("Liste des moderations");
+      I.see("Liste des moderations");
+      I.fill_and_submit("Filtrer les modérations…", "is:processed");
+      I.click_link("Modération a traiter de Jean Bon pour 51935970700022");
+      I.click("👥 1 membre connu dans l'organisation");
+      I.see_table("👥 1 membre connu dans l'organisation", [
+        ["Jean", "Bon", verification_enum],
+      ]);
+    },
+  );
+}

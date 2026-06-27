@@ -1,7 +1,7 @@
 import { set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
 import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
-import { set_identite_pg } from "#src/middleware/identite-pg";
+import { set_identite_pg, set_identite_pg_client } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
 import { create_asset_router } from "#src/routes/assets";
 import {
@@ -88,41 +88,48 @@ beforeEach(() => insert_moderateur(hyyyper_pglite));
 
 //
 
-Scenario(
-  "Moderator can search a moderation by email",
-  () => `http://localhost:${server.port}`,
-  ({ I }) => {
-    I.navigate("/moderations");
-    I.see("Liste des moderations");
-    I.see("Richard");
-    I.fill("Filtrer les modérations…", "is:pending email:jeanbon");
-    I.see("13002526500013");
-    I.not_see("Raphael");
+const examples = [
+  {
+    add_member: "EN TANT QU'INTERNE",
+    add_domain: "yopmail.com en interne à l'organisation",
+    cause: "domaine vérifié",
   },
-);
+  {
+    add_member: "EN TANT QU'EXTERNE",
+    add_domain: "yopmail.com en externe à l'organisation",
+    cause: "domaine externe vérifié",
+  },
+];
 
-Scenario(
-  "Moderator can search a moderation by SIRET",
-  () => `http://localhost:${server.port}`,
-  ({ I }) => {
-    I.navigate("/moderations");
-    I.see("Liste des moderations");
-    I.see("Richard");
-    I.fill("Filtrer les modérations…", "is:pending siret:51935970700022");
-    I.see("51935970700022");
-    I.not_see("Raphael");
-  },
-);
-
-Scenario(
-  "Moderator can explore a moderation from the list",
-  () => `http://localhost:${server.port}`,
-  ({ I }) => {
-    I.navigate("/moderations");
-    I.see("Liste des moderations");
-    I.see("Richard");
-    I.click_link("Modération a traiter de Jean Bon pour 13002526500013");
-    I.see_in_title("Modération a traiter de Jean Bon pour 13002526500013");
-    I.see("jeanbon@yopmail.com");
-  },
-);
+for (const { add_member, add_domain, cause } of examples) {
+  Scenario(
+    `Valider les modérations similaires - ${add_member}`,
+    () => `http://localhost:${server.port}`,
+    ({ I }) => {
+      I.navigate("/moderations");
+      I.see_in_title("Liste des moderations");
+      I.see("Liste des moderations");
+      I.click_link("Modération a traiter de Jean Bon pour 51935970700022");
+      I.see_in_title("Modération a traiter de Jean Bon pour 51935970700022");
+      I.click("✅ Accepter");
+      I.see(
+        "A propos de jeanbon@yopmail.com pour l'organisation Abracadabra (ABRACADABRA), je valide :",
+      );
+      I.within("la modale de validation").click(add_member);
+      I.within("la modale de validation").click("J'autorise le domaine " + add_domain);
+      I.within("la modale de validation").click("Terminer");
+      I.click("Annuler");
+      I.see("Cette modération a été marqué comme traitée le");
+      I.see("Validé par moderateur@beta.gouv.fr");
+      I.click("Moderations");
+      I.see_in_title("Liste des moderations");
+      I.fill_and_submit("Filtrer les modérations…", "is:processed");
+      I.not_see("Jean Bon");
+      I.not_see("Jean Dré");
+      I.fill_and_submit("Filtrer les modérations…", "is:processed siret:51935970700022");
+      I.click_link("Modération a traiter de Jean Dré pour 51935970700022");
+      I.see_in_title("Modération a traiter de Jean Dré pour 51935970700022");
+      I.see("Validation automatique - " + cause);
+    },
+  );
+}

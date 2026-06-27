@@ -31,7 +31,7 @@ import { hyyyyyypertool_session } from "#src/middleware/session";
 import { contextStorage } from "hono/context-storage";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { logger } from "hono/logger";
-import asserts_router from "./assets";
+import { create_asset_router } from "./assets";
 import { error_handler } from "./error";
 import { not_found_handler } from "./not-found";
 import readyz_router from "./readyz";
@@ -70,7 +70,7 @@ const app = new Hono<{ Bindings: AppEnv }>()
   .get("/healthz", ({ text }) => text(`healthz check passed`))
   .get("/livez", ({ text }) => text(`livez check passed`))
 
-  .route(ASSETS_PATH, asserts_router)
+  .route(ASSETS_PATH, create_asset_router({ assets_path: ASSETS_PATH }))
   .route("/readyz", readyz_router)
 
   //
