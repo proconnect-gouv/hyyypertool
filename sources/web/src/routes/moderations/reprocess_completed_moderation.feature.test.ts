@@ -89,40 +89,19 @@ beforeEach(() => insert_moderateur(hyyyper_pglite));
 //
 
 Scenario(
-  "Moderator can search a moderation by email",
+  "Retraiter une modération complétée",
   () => `http://localhost:${server.port}`,
   ({ I }) => {
     I.navigate("/moderations");
     I.see("Liste des moderations");
-    I.see("Richard");
-    I.fill("Filtrer les modérations…", "is:pending email:jeanbon");
-    I.see("13002526500013");
-    I.not_see("Raphael");
-  },
-);
-
-Scenario(
-  "Moderator can search a moderation by SIRET",
-  () => `http://localhost:${server.port}`,
-  ({ I }) => {
-    I.navigate("/moderations");
-    I.see("Liste des moderations");
-    I.see("Richard");
-    I.fill("Filtrer les modérations…", "is:pending siret:51935970700022");
-    I.see("51935970700022");
-    I.not_see("Raphael");
-  },
-);
-
-Scenario(
-  "Moderator can explore a moderation from the list",
-  () => `http://localhost:${server.port}`,
-  ({ I }) => {
-    I.navigate("/moderations");
-    I.see("Liste des moderations");
-    I.see("Richard");
-    I.click_link("Modération a traiter de Jean Bon pour 13002526500013");
-    I.see_in_title("Modération a traiter de Jean Bon pour 13002526500013");
-    I.see("jeanbon@yopmail.com");
+    I.fill_and_submit("Filtrer les modérations…", "is:processed date:2011-11-12");
+    I.click_link("Modération non vérifié de Marie Bon pour 44023386400014");
+    I.see_in_title("Modération non vérifié de Marie Bon pour 44023386400014");
+    I.see("Cette modération a été marqué comme traité");
+    I.see("Marie Bon a rejoint une organisation avec un domain non vérifié « Bosch rexroth d.s.i. »");
+    I.click("Retraiter");
+    I.not_see("Cette modération a été marqué comme traité");
+    I.click("👥 0 membre connu dans l'organisation");
+    I.see_table("👥 0 membre connu dans l'organisation", []);
   },
 );

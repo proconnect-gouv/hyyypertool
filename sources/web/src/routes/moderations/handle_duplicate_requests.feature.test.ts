@@ -5,8 +5,8 @@ import { set_identite_pg } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
 import { create_asset_router } from "#src/routes/assets";
 import {
-  empty_database as hyyyperbase_empty_database,
   hyyyper_pglite,
+  empty_database as hyyyperbase_empty_database,
 } from "@~/hyyyperbase/testing";
 import { insert_moderateur } from "@~/hyyyperbase/testing/users";
 import { insert_database } from "@~/identite-proconnect/database/seed/insert";
@@ -15,8 +15,8 @@ import {
   migrate,
   pg,
 } from "@~/identite-proconnect/database/testing";
-import { afterAll, beforeAll, beforeEach } from "bun:test";
 import { Scenario } from "bun-webview-dsl";
+import { afterAll, beforeAll, beforeEach, describe } from "bun:test";
 import { Hono } from "hono";
 import app from "./index";
 
@@ -88,41 +88,20 @@ beforeEach(() => insert_moderateur(hyyyper_pglite));
 
 //
 
-Scenario(
-  "Moderator can search a moderation by email",
-  () => `http://localhost:${server.port}`,
-  ({ I }) => {
-    I.navigate("/moderations");
-    I.see("Liste des moderations");
-    I.see("Richard");
-    I.fill("Filtrer les modérations…", "is:pending email:jeanbon");
-    I.see("13002526500013");
-    I.not_see("Raphael");
-  },
-);
-
-Scenario(
-  "Moderator can search a moderation by SIRET",
-  () => `http://localhost:${server.port}`,
-  ({ I }) => {
-    I.navigate("/moderations");
-    I.see("Liste des moderations");
-    I.see("Richard");
-    I.fill("Filtrer les modérations…", "is:pending siret:51935970700022");
-    I.see("51935970700022");
-    I.not_see("Raphael");
-  },
-);
-
-Scenario(
-  "Moderator can explore a moderation from the list",
-  () => `http://localhost:${server.port}`,
-  ({ I }) => {
-    I.navigate("/moderations");
-    I.see("Liste des moderations");
-    I.see("Richard");
-    I.click_link("Modération a traiter de Jean Bon pour 13002526500013");
-    I.see_in_title("Modération a traiter de Jean Bon pour 13002526500013");
-    I.see("jeanbon@yopmail.com");
-  },
+describe(
+  "Richard Bon veut rejoindre l'organisation Dengi - Leclerc",
+  Scenario(
+    () => `http://localhost:${server.port}`,
+    ({ I }) => {
+      I.navigate("/moderations");
+      I.see("Liste des moderations");
+      I.click_link("Modération a traiter de Richard Bon pour 38514019900014");
+      I.see_in_title("Modération a traiter de Richard Bon pour 38514019900014");
+      I.see("Richard Bon veut rejoindre l'organisation « Dengi - Leclerc »");
+      I.see("Attention : demande multiples");
+      I.see("Il s'agit de la 2e demande pour cette organisation");
+      I.see("Moderation#5 Accepté");
+      I.see("Moderation#6 A traiter");
+    },
+  ),
 );

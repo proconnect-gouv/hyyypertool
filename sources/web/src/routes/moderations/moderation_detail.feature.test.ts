@@ -1,7 +1,9 @@
 import { set_userinfo } from "#src/middleware/auth";
+import { set_config } from "#src/middleware/config";
 import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import { set_identite_pg } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
+import { create_asset_router } from "#src/routes/assets";
 import {
   hyyyper_pglite,
   empty_database as hyyyperbase_empty_database,
@@ -25,6 +27,9 @@ const MODERATOR = {
   sub: "oidc-sub-moderateur",
 };
 
+const ASSETS_PATH = "/assets/test-v123";
+const PUBLIC_ASSETS_PATH = `${ASSETS_PATH}/public/built`;
+
 let server: ReturnType<typeof Bun.serve>;
 beforeAll(migrate);
 beforeAll(() => {
@@ -32,10 +37,46 @@ beforeAll(() => {
     .onError((e) => {
       throw e;
     })
+    .use(
+      set_config({
+        AGENTCONNECT_OIDC_CLIENT_ID: "",
+        AGENTCONNECT_OIDC_ISSUER: "https://agentconnect.example.com",
+        AGENTCONNECT_OIDC_SECRET_ID: "",
+        ALLOWED_USERS: "",
+        API_AUTH_PASSWORD: "",
+        API_AUTH_URL: "https://auth.example.com",
+        API_AUTH_USERNAME: "",
+        ASSETS_PATH,
+        CRISP_BASE_URL: "https://api.crisp.chat",
+        CRISP_IDENTIFIER: "",
+        CRISP_KEY: "",
+        CRISP_PLUGIN_URN: "",
+        CRISP_RESOLVE_DELAY: 2_000,
+        CRISP_USER_NICKNAME: "",
+        CRISP_WEBSITE_ID: "",
+        DEPLOY_ENV: "preview",
+        HTTP_CLIENT_TIMEOUT: 3_000,
+        NODE_ENV: "test",
+        POLL_INTERVAL: 11,
+        PUBLIC_ASSETS_PATH,
+        SENTRY_DNS: undefined,
+        SENTRY_PROFILES_SAMPLE_RATE: 0,
+        SENTRY_TRACES_SAMPLE_RATE: 0,
+        VERSION: "test-v123",
+      }),
+    )
     .use(set_hyyyper_pg(hyyyper_pglite))
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
     .use(set_userinfo(MODERATOR))
+    .route(
+      ASSETS_PATH,
+      create_asset_router({
+        assets_path: ASSETS_PATH,
+        node_modules_root: ".",
+        public_root: "./bin",
+      }),
+    )
     .route("/moderations", app);
   server = Bun.serve({ fetch: hono.fetch });
 });

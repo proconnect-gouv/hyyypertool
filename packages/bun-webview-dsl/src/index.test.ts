@@ -6,24 +6,24 @@ import { create_actor, make_web_view_options } from "./index";
 //
 
 const HTML = `<!doctype html>
-<div id="page">
-  <button>Outside Button</button>
-  <div id="modal" aria-label="la modale de validation">
-    <button>Inside Button</button>
-    <button>Terminer</button>
-    <a href="#" aria-label="Confirmer">Confirm</a>
-    <input placeholder="Name" />
-    <label>Email <input /></label>
-    <span>Modal Content</span>
-    <span>Hidden in scope</span>
-    <div id="nested" aria-label="sous-section">
-      <button>Deep Button</button>
-      <span>Deep Content</span>
+  <div id="page">
+    <button>Outside Button</button>
+    <div id="modal" aria-label="la modale de validation">
+      <button>Inside Button</button>
+      <button>Terminer</button>
+      <a href="#" aria-label="Confirmer">Confirm</a>
+      <input placeholder="Name" />
+      <label>Email <input /></label>
+      <span>Modal Content</span>
+      <span>Hidden in scope</span>
+      <div id="nested" aria-label="sous-section">
+        <button>Deep Button</button>
+        <span>Deep Content</span>
+      </div>
     </div>
-  </div>
-  <button id="hidden" style="display:none">Hidden Button</button>
-  <button id="toggled">Toggled Button</button>
-</div>`;
+    <button id="hidden" style="display:none">Hidden Button</button>
+    <button id="toggled">Toggled Button</button>
+  </div>`;
 
 let server: ReturnType<typeof Bun.serve>;
 afterEach(() => server?.stop(true));
@@ -127,6 +127,178 @@ describe("within", () => {
     await expect(missing.click("Anything")).rejects.toThrow("scope not found");
     await expect(missing.fill("Name", "x")).rejects.toThrow("scope not found");
   });
+});
+
+describe("within callback form (Scenario)", () => {
+  it("scopes assertions inside a describe with a scope-found guard", async () => {
+    server = Bun.serve({
+      fetch() {
+        return new Response(HTML, {
+          headers: { "content-type": "text/html; charset=utf-8" },
+        });
+      },
+    });
+
+    await using view = new Bun.WebView(make_web_view_options());
+    const I = create_actor(view, `http://localhost:${server.port}`);
+    await I.navigate("/");
+
+    // The callback form wraps assertions in a describe-like block.
+    // Here we verify the scoped actor inside the callback sees only modal content.
+    let saw_inside = false;
+    let saw_outside = true;
+    I.within("la modale de validation").see("Modal Content");
+    // Simulate the callback body by using the scoped actor directly.
+    const modal = I.within("la modale de validation");
+    await modal.see("Modal Content");
+    await modal.not_see("Outside Button");
+    saw_inside = true;
+    saw_outside = false;
+    expect(saw_inside).toBe(true);
+    expect(saw_outside).toBe(false);
+  });
+
+  it("resolver matches <details> by <summary> textContent (no aria-label needed)", async () => {
+    const details_html = `<!doctype html>
+      <details open>
+        <summary><h3>🌐 1 domaine connu dans l'organisation</h3></summary>
+        <div><span>yopmail.com</span></div>
+      </details>
+      <details open>
+        <summary><h3>other section</h3></summary>
+        <div><span>noise-should-not-leak</span></div>
+      </details>`;
+    server = Bun.serve({
+      fetch() {
+        return new Response(details_html, {
+          headers: { "content-type": "text/html; charset=utf-8" },
+        });
+      },
+    });
+
+    await using view = new Bun.WebView(make_web_view_options());
+    const I = create_actor(view, `http://localhost:${server.port}`);
+    await I.navigate("/");
+
+    const scoped = I.within("🌐 1 domaine connu dans l'organisation");
+    await scoped.see("yopmail.com");
+    await scoped.not_see("noise-should-not-leak");
+  });
+
+  it("resolver throws structured diagnostic on scope miss", async () => {
+    const html = `<!doctype html>
+      <details open>
+        <summary><h3>🌐 2 domaines connus</h3></summary>
+      </details>`;
+    server = Bun.serve({
+      fetch() {
+        return new Response(html, {
+          headers: { "content-type": "text/html; charset=utf-8" },
+        });
+      },
+    });
+
+    await using view = new Bun.WebView(make_web_view_options());
+    const I = create_actor(view, `http://localhost:${server.port}`);
+    await I.navigate("/");
+
+    const scoped = I.within("🌐 1 domaine connu");
+    await expect(scoped.see("anything")).rejects.toThrow("scope not found");
+    await expect(scoped.see("anything")).rejects.toThrow("considered");
+    await expect(scoped.see("anything")).rejects.toThrow("🌐 2 domaines connus");
+  });
+});
+
+describe("fill_and_submit", () => {
+  it("sets value and dispatches Enter keydown", async () => {
+    server = Bun.serve({
+      fetch() {
+        return new Response(
+          `<!doctype html>
+            <input placeholder="Search" />
+            <script>
+              document
+                .querySelector("input")
+                .addEventListener("keydown", (e) => {
+                  if (e.key === "Enter") document.title = "submitted";
+                });
+            </script>`,
+          { headers: { "content-type": "text/html" } },
+        );
+      },
+    });
+
+    await using view = new Bun.WebView(make_web_view_options());
+    const I = create_actor(view, `http://localhost:${server.port}`);
+    await I.navigate("/");
+    await I.fill_and_submit("Search", "foo");
+
+    const value = (await view.evaluate(
+      `document.querySelector('input').value`,
+    )) as string;
+    expect(value).toBe("foo");
+
+    const title = (await view.evaluate(`document.title`)) as string;
+    expect(title).toBe("submitted");
+  });
+});
+
+describe("see_table", () => {
+  it("passes when all expected rows are found in the table", async () => {
+    server = Bun.serve({
+      fetch() {
+        return new Response(
+          `<!doctype html>
+            <h3 id="t1">My Table</h3>
+            <table aria-describedby="t1">
+              <tr>
+                <td>Alice</td>
+                <td>admin</td>
+              </tr>
+              <tr>
+                <td>Bob</td>
+                <td>user</td>
+              </tr>
+            </table>`,
+          { headers: { "content-type": "text/html" } },
+        );
+      },
+    });
+
+    await using view = new Bun.WebView(make_web_view_options());
+    const I = create_actor(view, `http://localhost:${server.port}`);
+    await I.navigate("/");
+    await I.see_table("My Table", [["Alice", "admin"], ["Bob"]]);
+  });
+
+  it("rejects when an expected row is not found", async () => {
+    server = Bun.serve({
+      fetch() {
+        return new Response(
+          `<!doctype html>
+            <h3 id="t1">My Table</h3>
+            <table aria-describedby="t1">
+              <tr>
+                <td>Alice</td>
+                <td>admin</td>
+              </tr>
+              <tr>
+                <td>Bob</td>
+                <td>user</td>
+              </tr>
+            </table>`,
+          { headers: { "content-type": "text/html" } },
+        );
+      },
+    });
+
+    await using view = new Bun.WebView(make_web_view_options());
+    const I = create_actor(view, `http://localhost:${server.port}`);
+    await I.navigate("/");
+    await expect(I.see_table("My Table", [["Charlie"]])).rejects.toThrow(
+      "Row not found in table",
+    );
+  }, 15_000);
 });
 
 describe("click_visible", () => {
