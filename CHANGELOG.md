@@ -1,5 +1,29 @@
 # Changelog
 
+## [2026.6.8](https://github.com/proconnect-gouv/hyyypertool/compare/2026.6.7...2026.6.8) (2026-06-29)
+
+### Changements
+
+- 🛂 Masquage des actions d'édition pour les visiteurs
+
+Les visiteurs (rôle en lecture seule) ne voient plus les actions destructrices (suppression de domaine, réinitialisation d'utilisateur, réinitialisation de vérification d'email). Ces contrôles sont désormais réservés aux éditeurs (modérateurs/administrateurs)
+
+- 🔒 Masquage du bouton « Retraiter » pour les visiteurs
+
+Le bouton de retraitement d'une modération était visible par les visiteurs en lecture seule. Désormais, il ne s'affiche que pour les utilisateurs ayant les droits d'édition.
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): Bump oxc-parser (#1685) (302b79d9)
+
+### Divers
+
+- ↗️ [patch](deps): Bump cypress from 15.15.0 to 15.17.0 in /e2e (#1680) (de8e8c85)
+- 🛂 Hide reprocess button from visitors (#1697) (7eabb975)
+- 🛂 Hide editor actions from visitors (#1696) (a634cf29)
+- ↗️ [patch](deps-dev): Bump @csmith/release-it-calver-plugin from 2026.4.0 to 2026.6.0 (#1692) (8e15e1be)
+- ↗️ [patch](deps): Bump @preact/signals-core from 1.14.2 to 1.14.3 (#1693) (0ca267a2)
+
 ## [2026.6.7](https://github.com/proconnect-gouv/hyyypertool/compare/2026.6.6...2026.6.7) (2026-06-26)
 
 ### Changements
