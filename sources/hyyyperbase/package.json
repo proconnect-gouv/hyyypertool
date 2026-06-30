@@ -31,7 +31,7 @@
     "@electric-sql/pglite": "0.5.2",
     "@types/pg": "8.20.0",
     "drizzle-kit": "0.31.10",
-    "ts-dedent": "2.2.0"
+    "ts-dedent": "2.3.0"
   },
   "peerDependencies": {
     "drizzle-orm": ">=0.45",
