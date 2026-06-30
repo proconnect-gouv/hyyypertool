@@ -146,7 +146,7 @@
         "@types/pg": "8.20.0",
         "@~/config.typescript": "workspace:*",
         "drizzle-kit": "0.31.10",
-        "ts-dedent": "2.2.0",
+        "ts-dedent": "2.3.0",
       },
       "peerDependencies": {
         "drizzle-orm": ">=0.45",
@@ -214,7 +214,7 @@
         "static-path": "0.0.4",
         "tailwind-variants": "3.2.2",
         "tailwindcss": "4.3.0",
-        "ts-dedent": "2.2.0",
+        "ts-dedent": "2.3.0",
         "ts-pattern": "5.9.0",
         "tsx": "4.22.4",
         "type-fest": "5.7.0",
@@ -1424,7 +1424,7 @@
 
     "trough": ["trough@2.2.0", "", {}, "sha512-tmMpK00BjZiUyVyvrBK7knerNgmgvcV/KLVyuma/SC+TQN167GrMRciANTz09+k3zW8L8t60jWO1GpfkZdjTaw=="],
 
-    "ts-dedent": ["ts-dedent@2.2.0", "", {}, "sha512-q5W7tVM71e2xjHZTlgfTDoPF/SmqKG5hddq9SzR49CH2hayqRKJtQ4mtRlSxKaJlR/+9rEM+mnBHf7I2/BQcpQ=="],
+    "ts-dedent": ["ts-dedent@2.3.0", "", {}, "sha512-JfJeIHke7y2egdGGgRAvpCwYFUsHlM2gPcrVOxFkznt/4uzQ7HFmvE63iFHVLBJNDuyDOQgijDK/tXH/f6Msjg=="],
 
     "ts-pattern": ["ts-pattern@5.9.0", "", {}, "sha512-6s5V71mX8qBUmlgbrfL33xDUwO0fq48rxAu2LBE11WBeGdpCPOsXksQbZJHvHwhrd3QjUusd3mAOM5Gg0mFBLg=="],
 
