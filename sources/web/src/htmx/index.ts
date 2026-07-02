@@ -57,6 +57,15 @@ export const HtmxEvents = z.nativeEnum({
 export function hx_trigger_from_body(events: string[]) {
   return events.map((event) => `${event} from:body`);
 }
+
+// "load delay:1s" staggers htmx fetches in production to avoid a thundering
+// herd on page load. In tests the delay creates a registration race: the
+// request isn't in-flight when the DSL's readiness gate polls, so the gate
+// returns before the swap and assertions time out. Drop the delay in test
+// mode so the request fires immediately and the network-idle gate catches it.
+export function hx_trigger_load(): string {
+  return process.env.NODE_ENV === "test" ? "load" : "load delay:1s";
+}
 export function hx_include(ids: string[]) {
   return ids.map(prefix_id).join(", ");
 }

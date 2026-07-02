@@ -8,10 +8,7 @@ import { set_nonce } from "../middleware/nonce";
 import { create_asset_router } from "../routes/assets";
 import { create_router } from "#src/router";
 import { hyyyper_pglite } from "@~/hyyyperbase/testing";
-import {
-  client as identite_pg_client,
-  pg,
-} from "@~/identite-proconnect/database/testing";
+import { client as identite_pg_client, pg } from "@~/identite-proconnect/database/testing";
 import { Hono } from "hono";
 
 export const ASSETS_PATH = "/assets/test-v123";
@@ -38,7 +35,7 @@ export function create_testing_router() {
         SENTRY_PROFILES_SAMPLE_RATE: 0,
         ALLOWED_USERS: "",
         POLL_INTERVAL: 11,
-        HTTP_CLIENT_TIMEOUT: 3_000,
+        HTTP_CLIENT_TIMEOUT: 1_000,
         CRISP_BASE_URL: "https://api.crisp.chat",
         CRISP_IDENTIFIER: "",
         CRISP_KEY: "",

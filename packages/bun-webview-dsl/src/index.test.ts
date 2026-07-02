@@ -205,7 +205,9 @@ describe("within callback form (Scenario)", () => {
     const scoped = I.within("🌐 1 domaine connu");
     await expect(scoped.see("anything")).rejects.toThrow("scope not found");
     await expect(scoped.see("anything")).rejects.toThrow("considered");
-    await expect(scoped.see("anything")).rejects.toThrow("🌐 2 domaines connus");
+    await expect(scoped.see("anything")).rejects.toThrow(
+      "🌐 2 domaines connus",
+    );
   });
 });
 
