@@ -12,6 +12,7 @@ import { resolve } from "path";
 //
 
 export default defineConfig({
+  allowCypressEnv: false,
   e2e: {
     baseUrl: "http://localhost:3000",
     reporter: fileURLToPath(
