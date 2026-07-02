@@ -16,14 +16,8 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import { Hono } from "hono";
 import pg from "pg";
 import dev_router from "./___dev___";
-import admin_router from "./admin";
 import auth_router from "./auth";
-import domains_deliverability_router from "./domains-deliverability";
-import moderations_router from "./moderations";
-import organizations_router from "./organizations";
 import proxy_router from "./proxy";
-import response_templates_router from "./response-templates";
-import users_router from "./users";
 import welcome_router from "./welcome";
 // TODO: Re-enable compression when Bun supports CompressionStream
 // import { compress } from "hono/compress";
@@ -32,6 +26,7 @@ import { contextStorage } from "hono/context-storage";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { logger } from "hono/logger";
 import { create_asset_router } from "./assets";
+import { create_router } from "#src/router";
 import { error_handler } from "./error";
 import { not_found_handler } from "./not-found";
 import readyz_router from "./readyz";
@@ -103,17 +98,7 @@ const app = new Hono<{ Bindings: AppEnv }>()
   )
   //
 
-  .route("/moderations", moderations_router)
-
-  .route("/admin", admin_router)
-
-  .route("/users", users_router)
-
-  .route("/organizations", organizations_router)
-
-  .route("/domains-deliverability", domains_deliverability_router)
-
-  .route("/response-templates", response_templates_router)
+  .route("/", create_router())
 
   .onError(error_handler)
   .notFound(not_found_handler);
