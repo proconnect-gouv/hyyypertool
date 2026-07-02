@@ -1,4 +1,5 @@
 import { set_crisp_client } from "#src/middleware/crisp";
+import { create_testing_router } from "#src/testing";
 import {
   hyyyper_pglite,
   empty_database as hyyyperbase_empty_database,
@@ -10,7 +11,6 @@ import {
   migrate,
   pg,
 } from "@~/identite-proconnect/database/testing";
-import { create_testing_router } from "#src/testing";
 import { Scenario } from "bun-webview-dsl";
 import { afterAll, beforeAll, describe, mock } from "bun:test";
 

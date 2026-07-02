@@ -1,11 +1,16 @@
 import { afterAll, beforeAll, describe, expect, it } from "bun:test";
 
-export const make_web_view_options = (): ConstructorParameters<typeof Bun.WebView>[0] =>
+export const make_web_view_options = (): ConstructorParameters<
+  typeof Bun.WebView
+>[0] =>
   process.platform === "linux"
     ? {
         backend: {
           type: "chrome",
-          argv: ["--no-sandbox", `--user-data-dir=/tmp/bun-webview-${crypto.randomUUID()}`],
+          argv: [
+            "--no-sandbox",
+            `--user-data-dir=/tmp/bun-webview-${crypto.randomUUID()}`,
+          ],
         },
       }
     : {};
@@ -97,7 +102,10 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
   };
   const cdp = <T>(method: string, params?: unknown): Promise<T> => {
     const run = eval_chain.then(() =>
-      (view as { cdp: (m: string, p?: unknown) => Promise<T> }).cdp(method, params),
+      (view as { cdp: (m: string, p?: unknown) => Promise<T> }).cdp(
+        method,
+        params,
+      ),
     );
     eval_chain = run.then(
       () => undefined,
@@ -128,7 +136,10 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
     })();
     return cdp_enable_promise;
   };
-  const wait_for_network_idle = async (timeout = 5_000, grace = 0): Promise<void> => {
+  const wait_for_network_idle = async (
+    timeout = 5_000,
+    grace = 0,
+  ): Promise<void> => {
     await enable_cdp_network();
     if (!cdp_state.active) {
       return;
@@ -144,7 +155,9 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
   };
 
   const poll_body = async (): Promise<string> =>
-    normalize((await evaluate(`document.body.textContent`).catch(() => "")) as string);
+    normalize(
+      (await evaluate(`document.body.textContent`).catch(() => "")) as string,
+    );
 
   const wait_for = async (
     condition: (body: string) => boolean,
@@ -174,7 +187,10 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
     await wait_for_network_idle();
   };
 
-  const wait_for_navigation = async (url_before: string, timeout = 5_000): Promise<void> => {
+  const wait_for_navigation = async (
+    url_before: string,
+    timeout = 5_000,
+  ): Promise<void> => {
     const deadline = Date.now() + timeout;
     while (Date.now() < deadline) {
       const url = (await evaluate(`location.href`)) as string;
@@ -207,10 +223,12 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
   };
 
   function create_scoped_actor(selector: string): Actor {
-    return create_expr_scoped_actor(`document.querySelector(${JSON.stringify(selector)})`, (name) =>
-      create_scoped_actor(
-        `:is(${selector}) [aria-label*=${JSON.stringify(name)}], :is(${selector}) [aria-labelledby*=${JSON.stringify(name)}]`,
-      ),
+    return create_expr_scoped_actor(
+      `document.querySelector(${JSON.stringify(selector)})`,
+      (name) =>
+        create_scoped_actor(
+          `:is(${selector}) [aria-label*=${JSON.stringify(name)}], :is(${selector}) [aria-labelledby*=${JSON.stringify(name)}]`,
+        ),
     );
   }
 
@@ -235,7 +253,11 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
         var r = ${scoped_root};
         if (r && r.__not_found) return r;
         return r ? r.textContent : null;
-      })()`)) as string | null | undefined | { __not_found: true; message: string };
+      })()`)) as
+        | string
+        | null
+        | undefined
+        | { __not_found: true; message: string };
       if (got && typeof got === "object" && (got as any).__not_found) {
         throw new Error((got as { message: string }).message);
       }
@@ -317,7 +339,9 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
           }
           await Bun.sleep(50);
         }
-        throw new Error(`Timed out waiting to click visible ${JSON.stringify(text)}`);
+        throw new Error(
+          `Timed out waiting to click visible ${JSON.stringify(text)}`,
+        );
       },
 
       fill: async (label, value) => {
@@ -432,7 +456,9 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
             for (const row of rows) {
               const expected = row.filter((c) => c !== "");
               expect(
-                actual!.some((tr) => expected.every((c) => tr.some((cell) => cell.includes(c)))),
+                actual!.some((tr) =>
+                  expected.every((c) => tr.some((cell) => cell.includes(c))),
+                ),
                 `Row not found in table "${name}": ${JSON.stringify(row)}\nActual rows: ${JSON.stringify(actual)}`,
               ).toBe(true);
             }
@@ -487,7 +513,9 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
 
     click_link: async (name) => {
       const url_before = (await evaluate(`location.href`)) as string;
-      await evaluate(`document.querySelector('[aria-label*=${JSON.stringify(name)}]')?.click()`);
+      await evaluate(
+        `document.querySelector('[aria-label*=${JSON.stringify(name)}]')?.click()`,
+      );
       await wait_for_navigation(url_before);
       await wait_for_load_settled();
     },
@@ -509,7 +537,9 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
         }
         await Bun.sleep(50);
       }
-      throw new Error(`Timed out waiting to click visible ${JSON.stringify(text)}`);
+      throw new Error(
+        `Timed out waiting to click visible ${JSON.stringify(text)}`,
+      );
     },
 
     fill: async (label, value) => {
@@ -601,7 +631,9 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
           for (const row of rows) {
             const expected = row.filter((c) => c !== "");
             expect(
-              actual!.some((tr) => expected.every((c) => tr.some((cell) => cell.includes(c)))),
+              actual!.some((tr) =>
+                expected.every((c) => tr.some((cell) => cell.includes(c))),
+              ),
               `Row not found in table "${name}": ${JSON.stringify(row)}\nActual rows: ${JSON.stringify(actual)}`,
             ).toBe(true);
           }
@@ -694,7 +726,10 @@ export type ScenarioActor = {
   within_row: (text: string) => ScenarioActor;
 };
 
-export type ScenarioWithin = (name: string, fn: (section: { I: ScenarioActor }) => void) => void;
+export type ScenarioWithin = (
+  name: string,
+  fn: (section: { I: ScenarioActor }) => void,
+) => void;
 
 export function Scenario(
   get_base_url: () => string,
@@ -714,7 +749,11 @@ export function Scenario(
       // any assertion verb. `see("")` passes iff scope resolves (any textContent
       // includes ""), and throws the resolver's rich diagnostic on miss.
       // Localises "scope missing" failures to a distinct it, not the first assertion.
-      it(`scope found`, () => create_actor(view, get_base_url()).within(name).see(""), 30_000);
+      it(
+        `scope found`,
+        () => create_actor(view, get_base_url()).within(name).see(""),
+        30_000,
+      );
       fn({
         I: _create_scenario_actor(
           () => view,
@@ -732,7 +771,8 @@ function _create_scenario_actor(
   scope?: (actor: Actor) => Actor,
   row_text?: string,
 ): ScenarioActor {
-  const act = (label: string, action: () => Promise<void>) => it(label, action, 30_000);
+  const act = (label: string, action: () => Promise<void>) =>
+    it(label, action, 30_000);
 
   const get_scoped = (actor: Actor): Actor =>
     row_text ? actor.within_row(row_text) : scope ? scope(actor) : actor;
@@ -741,14 +781,20 @@ function _create_scenario_actor(
     _create_scenario_actor(
       get_view,
       get_base_url,
-      scope ? (actor) => scope(actor).within(name) : (actor) => actor.within(name),
+      scope
+        ? (actor) => scope(actor).within(name)
+        : (actor) => actor.within(name),
     );
 
   return {
     navigate: (path) =>
-      act(`navigate "${path}"`, () => create_actor(get_view(), get_base_url()).navigate(path)),
+      act(`navigate "${path}"`, () =>
+        create_actor(get_view(), get_base_url()).navigate(path),
+      ),
     see: (text) =>
-      act(`see "${text}"`, () => get_scoped(create_actor(get_view(), get_base_url())).see(text)),
+      act(`see "${text}"`, () =>
+        get_scoped(create_actor(get_view(), get_base_url())).see(text),
+      ),
     see_table: (name, rows) =>
       act(`see table "${name}"`, () =>
         create_actor(get_view(), get_base_url()).see_table(name, rows),
@@ -771,7 +817,9 @@ function _create_scenario_actor(
       ),
     click_visible: (text) =>
       act(`click visible "${text}"`, () =>
-        get_scoped(create_actor(get_view(), get_base_url())).click_visible(text),
+        get_scoped(create_actor(get_view(), get_base_url())).click_visible(
+          text,
+        ),
       ),
     fill: (label, value) =>
       act(`fill "${label}" with "${value}"`, () =>
@@ -779,7 +827,10 @@ function _create_scenario_actor(
       ),
     fill_and_submit: (label, value) =>
       act(`fill and submit "${label}" with "${value}"`, () =>
-        get_scoped(create_actor(get_view(), get_base_url())).fill_and_submit(label, value),
+        get_scoped(create_actor(get_view(), get_base_url())).fill_and_submit(
+          label,
+          value,
+        ),
       ),
     url: () =>
       act(`check url`, () =>
@@ -788,6 +839,7 @@ function _create_scenario_actor(
           .then(() => {}),
       ),
 
-    within_row: (text) => _create_scenario_actor(get_view, get_base_url, undefined, text),
+    within_row: (text) =>
+      _create_scenario_actor(get_view, get_base_url, undefined, text),
   };
 }
