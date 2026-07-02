@@ -22,11 +22,11 @@ import welcome_router from "./welcome";
 // TODO: Re-enable compression when Bun supports CompressionStream
 // import { compress } from "hono/compress";
 import { hyyyyyypertool_session } from "#src/middleware/session";
+import { create_router } from "#src/router";
 import { contextStorage } from "hono/context-storage";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { logger } from "hono/logger";
 import { create_asset_router } from "./assets";
-import { create_router } from "#src/router";
 import { error_handler } from "./error";
 import { not_found_handler } from "./not-found";
 import readyz_router from "./readyz";

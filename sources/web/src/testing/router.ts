@@ -1,15 +1,18 @@
-import { set_userinfo } from "../middleware/auth";
-import { set_config } from "../middleware/config";
-import { set_hyyyper_pg } from "../middleware/hyyyperbase";
-import { set_identite_pg } from "../middleware/identite-pg";
-import { set_fetch } from "../middleware/fetch";
-import { set_crisp_client } from "../middleware/crisp";
-import { set_nonce } from "../middleware/nonce";
-import { create_asset_router } from "../routes/assets";
 import { create_router } from "#src/router";
 import { hyyyper_pglite } from "@~/hyyyperbase/testing";
-import { client as identite_pg_client, pg } from "@~/identite-proconnect/database/testing";
+import {
+  client as identite_pg_client,
+  pg,
+} from "@~/identite-proconnect/database/testing";
 import { Hono } from "hono";
+import { set_userinfo } from "../middleware/auth";
+import { set_config } from "../middleware/config";
+import { set_crisp_client } from "../middleware/crisp";
+import { set_fetch } from "../middleware/fetch";
+import { set_hyyyper_pg } from "../middleware/hyyyperbase";
+import { set_identite_pg } from "../middleware/identite-pg";
+import { set_nonce } from "../middleware/nonce";
+import { create_asset_router } from "../routes/assets";
 
 export const ASSETS_PATH = "/assets/test-v123";
 export const PUBLIC_ASSETS_PATH = `${ASSETS_PATH}/public/built`;
