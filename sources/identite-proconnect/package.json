@@ -29,7 +29,7 @@
     "consola": "3.4.2",
     "drizzle-orm": "0.45.2",
     "hono": "4.12.27",
-    "pg": "8.21.0"
+    "pg": "8.22.0"
   },
   "devDependencies": {
     "@~/config.typescript": "workspace:*",
