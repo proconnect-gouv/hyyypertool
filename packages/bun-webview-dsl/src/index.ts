@@ -147,10 +147,11 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
   // grace: CDP Network.requestWillBeSent events arrive asynchronously after
   // the DOM action that triggered the request, so an immediate inflight check
   // can win the race and declare idle before the request registers. Hold the
-  // idle verdict for a beat and re-check.
+  // idle verdict for a grace window, sliced so a late-registering request
+  // exits the wait early instead of paying the full window.
   const wait_for_network_idle = async (
     timeout = 5_000,
-    grace = 150,
+    grace = 50,
   ): Promise<void> => {
     await enable_cdp_network();
     if (!cdp_state.active) {
@@ -159,11 +160,32 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
     const deadline = Date.now() + timeout;
     while (Date.now() < deadline) {
       if (cdp_state.inflight <= 0) {
-        await Bun.sleep(grace);
+        const until = Date.now() + grace;
+        while (Date.now() < until && cdp_state.inflight <= 0) {
+          await Bun.sleep(10);
+        }
         if (cdp_state.inflight <= 0) return;
       }
-      await Bun.sleep(50);
+      await Bun.sleep(20);
     }
+  };
+
+  // htmx marks in-flight requests with the .htmx-request class synchronously
+  // when the triggering event dispatches, so the evaluate() that performed an
+  // action can report authoritatively whether a request started — no
+  // grace-window guessing. Poll until the class clears, then let the CDP
+  // counter drain any chained non-htmx requests.
+  const htmx_started_js = `!!document.querySelector('.htmx-request')`;
+  const settle_after_action = async (htmx_started: boolean): Promise<void> => {
+    if (htmx_started) {
+      const deadline = Date.now() + 5_000;
+      while (Date.now() < deadline) {
+        const busy = (await evaluate(htmx_started_js)) as boolean;
+        if (!busy) break;
+        await Bun.sleep(20);
+      }
+    }
+    await wait_for_network_idle();
   };
 
   const poll_body = async (): Promise<string> =>
@@ -310,12 +332,12 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
               ${scope_guard_js}
               const el = [...root.querySelectorAll('button,a,input[type=submit],label,summary')]
                 .find(el => ${text_match_expr("el.textContent", text)});
-              if (el) { el.click(); return true; }
-              return false;
+              if (el) { el.click(); return ${htmx_started_js} ? 2 : 1; }
+              return 0;
             })()
-          `)) as boolean;
+          `)) as number;
           if (clicked) {
-            await wait_for_network_idle();
+            await settle_after_action(clicked === 2);
             return;
           }
           await Bun.sleep(50);
@@ -345,12 +367,12 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
               ${scope_guard_js}
               const el = [...root.querySelectorAll('button,a,input[type=submit],label,summary')]
                 .find(el => ${text_match_expr("el.textContent", text)} && el.getClientRects().length > 0);
-              if (el) { el.click(); return true; }
-              return false;
+              if (el) { el.click(); return ${htmx_started_js} ? 2 : 1; }
+              return 0;
             })()
-          `)) as boolean;
+          `)) as number;
           if (clicked) {
-            await wait_for_network_idle();
+            await settle_after_action(clicked === 2);
             return;
           }
           await Bun.sleep(50);
@@ -361,7 +383,7 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
       },
 
       fill: async (label, value) => {
-        await evaluate(`
+        const started = (await evaluate(`
           (function(){
             const root = ${scoped_root};
             ${scope_guard_js}
@@ -375,14 +397,16 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
               el.value = ${JSON.stringify(value)};
               el.dispatchEvent(new Event('input', { bubbles: true }));
               el.dispatchEvent(new Event('change', { bubbles: true }));
+              return ${htmx_started_js};
             }
+            return false;
           })()
-        `);
-        await wait_for_network_idle();
+        `)) as boolean;
+        await settle_after_action(started);
       },
 
       fill_and_submit: async (label, value) => {
-        await evaluate(`
+        const started = (await evaluate(`
           (function(){
             const root = ${scoped_root};
             ${scope_guard_js}
@@ -396,12 +420,18 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
               el.value = ${JSON.stringify(value)};
               el.dispatchEvent(new Event('input', { bubbles: true }));
               el.dispatchEvent(new Event('change', { bubbles: true }));
+              // Escape first: close any autocomplete dropdown so Enter submits
+              // the typed value instead of accepting a highlighted suggestion.
+              el.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+              el.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape', bubbles: true }));
               el.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
               el.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter', bubbles: true }));
+              return ${htmx_started_js};
             }
+            return false;
           })()
-        `);
-        await wait_for_network_idle();
+        `)) as boolean;
+        await settle_after_action(started);
       },
 
       navigate: async (path) => {
@@ -411,14 +441,14 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
 
       not_see: (text) =>
         scoped_wait_for(
-          (body) => !body.includes(text),
-          (body) => expect(body).not.toContain(text),
+          (body) => !body.includes(normalize(text)),
+          (body) => expect(body).not.toContain(normalize(text)),
         ),
 
       see: (text) =>
         scoped_wait_for(
-          (body) => body.includes(text),
-          (body) => expect(body).toContain(text),
+          (body) => body.includes(normalize(text)),
+          (body) => expect(body).toContain(normalize(text)),
         ),
 
       see_in_title: (text) =>
@@ -512,12 +542,12 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
           `(() => {
             const el = [...document.querySelectorAll('button,a,input[type=submit],label,summary')]
               .find(el => ${text_match_expr("el.textContent", text)});
-            if (el) { el.click(); return true; }
-            return false;
+            if (el) { el.click(); return ${htmx_started_js} ? 2 : 1; }
+            return 0;
           })()`,
-        )) as boolean;
+        )) as number;
         if (clicked) {
-          await wait_for_network_idle();
+          await settle_after_action(clicked === 2);
           return;
         }
         await Bun.sleep(50);
@@ -560,12 +590,12 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
           `(() => {
             const el = [...document.querySelectorAll('button,a,input[type=submit],label,summary')]
               .find(el => ${text_match_expr("el.textContent", text)} && el.getClientRects().length > 0);
-            if (el) { el.click(); return true; }
-            return false;
+            if (el) { el.click(); return ${htmx_started_js} ? 2 : 1; }
+            return 0;
           })()`,
-        )) as boolean;
+        )) as number;
         if (clicked) {
-          await wait_for_network_idle();
+          await settle_after_action(clicked === 2);
           return;
         }
         await Bun.sleep(50);
@@ -576,7 +606,7 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
     },
 
     fill: async (label, value) => {
-      await evaluate(`
+      const started = (await evaluate(`
         (() => {
           const el =
             document.querySelector('[placeholder=${JSON.stringify(label)}]') ||
@@ -588,14 +618,16 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
             el.value = ${JSON.stringify(value)};
             el.dispatchEvent(new Event('input', { bubbles: true }));
             el.dispatchEvent(new Event('change', { bubbles: true }));
+            return ${htmx_started_js};
           }
+          return false;
         })()
-      `);
-      await wait_for_network_idle();
+      `)) as boolean;
+      await settle_after_action(started);
     },
 
     fill_and_submit: async (label, value) => {
-      await evaluate(`
+      const started = (await evaluate(`
         (() => {
           const el =
             document.querySelector('[placeholder=${JSON.stringify(label)}]') ||
@@ -615,10 +647,12 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
             el.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape', bubbles: true }));
             el.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
             el.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter', bubbles: true }));
+            return ${htmx_started_js};
           }
+          return false;
         })()
-      `);
-      await wait_for_network_idle();
+      `)) as boolean;
+      await settle_after_action(started);
     },
 
     see: (text) =>
