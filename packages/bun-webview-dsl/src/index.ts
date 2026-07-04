@@ -88,10 +88,7 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
   // apostrophes (U+2019/U+2018, standard in French UI copy) must compare
   // equal to the ASCII "'" test authors type.
   const normalize = (text: string): string =>
-    text
-      .replace(/\s+/g, " ")
-      .replace(/[’‘]/g, "'")
-      .trim();
+    text.replace(/\s+/g, " ").replace(/[’‘]/g, "'").trim();
 
   // Browser-side twin of normalize() — both sides of a text match must agree.
   const norm_js = `(function(s){return s.replace(/\\s+/g,' ').replace(/[\\u2019\\u2018]/g,"'")})`;

@@ -12,7 +12,7 @@ import {
   pg,
 } from "@~/identite-proconnect/database/testing";
 import { Scenario } from "bun-webview-dsl";
-import { afterAll, beforeAll, beforeEach, describe, mock } from "bun:test";
+import { afterAll, beforeAll, describe, mock } from "bun:test";
 
 //
 
@@ -31,10 +31,6 @@ beforeAll(() => {
   server = Bun.serve({ fetch: router.fetch, port: 0 });
 });
 afterAll(() => server.stop(true));
-beforeEach(identite_empty_database);
-beforeEach(hyyyperbase_empty_database);
-beforeEach(() => insert_database(pg));
-beforeEach(() => insert_moderateur(hyyyper_pglite));
 
 //
 
