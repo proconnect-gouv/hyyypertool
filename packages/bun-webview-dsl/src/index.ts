@@ -84,8 +84,19 @@ function attach_cdp_listeners(view: Bun.WebView): void {
 export function create_actor(view: Bun.WebView, base_url: string): Actor {
   // Cypress-equivalent text normalization: collapse runs of whitespace so
   // assertions match rendered text, not the raw (often multi-spaced) DOM
-  // textContent emitted by JSX island bridges and inline SVG.
-  const normalize = (text: string): string => text.replace(/\s+/g, " ").trim();
+  // textContent emitted by JSX island bridges and inline SVG. Typographic
+  // apostrophes (U+2019/U+2018, standard in French UI copy) must compare
+  // equal to the ASCII "'" test authors type.
+  const normalize = (text: string): string =>
+    text
+      .replace(/\s+/g, " ")
+      .replace(/[’‘]/g, "'")
+      .trim();
+
+  // Browser-side twin of normalize() — both sides of a text match must agree.
+  const norm_js = `(function(s){return s.replace(/\\s+/g,' ').replace(/[\\u2019\\u2018]/g,"'")})`;
+  const text_match_expr = (subject: string, needle: string): string =>
+    `${norm_js}(${subject}).includes(${JSON.stringify(normalize(needle))})`;
 
   // Bun.WebView rejects concurrent evaluate() calls ("an evaluate() is already
   // pending"). Serialize so fire-and-forget calls from upstream code queue
@@ -136,9 +147,13 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
     })();
     return cdp_enable_promise;
   };
+  // grace: CDP Network.requestWillBeSent events arrive asynchronously after
+  // the DOM action that triggered the request, so an immediate inflight check
+  // can win the race and declare idle before the request registers. Hold the
+  // idle verdict for a beat and re-check.
   const wait_for_network_idle = async (
     timeout = 5_000,
-    grace = 0,
+    grace = 150,
   ): Promise<void> => {
     await enable_cdp_network();
     if (!cdp_state.active) {
@@ -223,7 +238,7 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
   };
 
   function row_finder_expr(text: string): string {
-    return `[...document.querySelectorAll('tr')].find(function(tr){return tr.textContent.includes(${JSON.stringify(text)});})`;
+    return `[...document.querySelectorAll('tr')].find(function(tr){return ${text_match_expr("tr.textContent", text)};})`;
   }
 
   function create_scoped_actor(selector: string): Actor {
@@ -297,7 +312,7 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
               const root = ${scoped_root};
               ${scope_guard_js}
               const el = [...root.querySelectorAll('button,a,input[type=submit],label,summary')]
-                .find(el => el.textContent.includes(${JSON.stringify(text)}));
+                .find(el => ${text_match_expr("el.textContent", text)});
               if (el) { el.click(); return true; }
               return false;
             })()
@@ -332,7 +347,7 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
               const root = ${scoped_root};
               ${scope_guard_js}
               const el = [...root.querySelectorAll('button,a,input[type=submit],label,summary')]
-                .find(el => el.textContent.includes(${JSON.stringify(text)}) && el.getClientRects().length > 0);
+                .find(el => ${text_match_expr("el.textContent", text)} && el.getClientRects().length > 0);
               if (el) { el.click(); return true; }
               return false;
             })()
@@ -422,10 +437,11 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
         while (true) {
           const error = (await evaluate(
             `(function(){
-              var name = ${JSON.stringify(name)};
+              var name = ${JSON.stringify(normalize(name))};
               var rows = ${JSON.stringify(rows)};
               var header = [...document.querySelectorAll('[id]')]
-                .find(function(el){ return el.textContent.trim().includes(name); });
+                .filter(function(el){ return ${norm_js}(el.textContent).trim().includes(name); })
+                .sort(function(a, b){ return a.textContent.length - b.textContent.length; })[0];
               if (!header) return 'Table header not found: ' + name;
               var table = document.querySelector('[aria-describedby="' + header.id + '"]');
               if (!table) return 'Table not found for: ' + name;
@@ -445,9 +461,10 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
           if (Date.now() > deadline) {
             const actual = (await evaluate(
               `(function(){
-                var name = ${JSON.stringify(name)};
+                var name = ${JSON.stringify(normalize(name))};
                 var header = [...document.querySelectorAll('[id]')]
-                  .find(function(el){ return el.textContent.trim().includes(name); });
+                  .filter(function(el){ return ${norm_js}(el.textContent).trim().includes(name); })
+                .sort(function(a, b){ return a.textContent.length - b.textContent.length; })[0];
                 if (!header) return null;
                 var table = document.querySelector('[aria-describedby="' + header.id + '"]');
                 if (!table) return null;
@@ -497,7 +514,7 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
         const clicked = (await evaluate(
           `(() => {
             const el = [...document.querySelectorAll('button,a,input[type=submit],label,summary')]
-              .find(el => el.textContent.includes(${JSON.stringify(text)}));
+              .find(el => ${text_match_expr("el.textContent", text)});
             if (el) { el.click(); return true; }
             return false;
           })()`,
@@ -508,14 +525,33 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
         }
         await Bun.sleep(50);
       }
-      throw new Error(`Timed out waiting to click ${JSON.stringify(text)}`);
+      const candidates = (await evaluate(
+        `[...document.querySelectorAll('button,a,input[type=submit],label,summary')]
+          .map(el => ${norm_js}(el.textContent).trim().slice(0, 80))
+          .filter(t => t.length > 0)`,
+      ).catch(() => [])) as string[];
+      throw new Error(
+        `Timed out waiting to click ${JSON.stringify(text)} — candidates: ${JSON.stringify(candidates)}`,
+      );
     },
 
     click_link: async (name) => {
       const url_before = (await evaluate(`location.href`)) as string;
-      await evaluate(
-        `document.querySelector('[aria-label*=${JSON.stringify(name)}]')?.click()`,
-      );
+      const found = (await evaluate(
+        `(() => {
+          const el = document.querySelector('[aria-label*=${JSON.stringify(name)}]');
+          if (el) { el.click(); return true; }
+          return false;
+        })()`,
+      )) as boolean;
+      if (!found) {
+        const labels = (await evaluate(
+          `[...document.querySelectorAll('[aria-label]')].map(el => el.getAttribute('aria-label'))`,
+        ).catch(() => [])) as string[];
+        throw new Error(
+          `Link not found: ${JSON.stringify(name)} — aria-labels present: ${JSON.stringify(labels)}`,
+        );
+      }
       await wait_for_navigation(url_before);
       await wait_for_load_settled();
     },
@@ -526,7 +562,7 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
         const clicked = (await evaluate(
           `(() => {
             const el = [...document.querySelectorAll('button,a,input[type=submit],label,summary')]
-              .find(el => el.textContent.includes(${JSON.stringify(text)}) && el.getClientRects().length > 0);
+              .find(el => ${text_match_expr("el.textContent", text)} && el.getClientRects().length > 0);
             if (el) { el.click(); return true; }
             return false;
           })()`,
@@ -574,6 +610,12 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
             el.value = ${JSON.stringify(value)};
             el.dispatchEvent(new Event('input', { bubbles: true }));
             el.dispatchEvent(new Event('change', { bubbles: true }));
+            // Escape first: autocomplete widgets (e.g. the Hyyyper Filter
+            // search bar) reroute Enter to "accept highlighted suggestion"
+            // while their dropdown is open — fill_and_submit means "submit
+            // the typed value", so close any dropdown before submitting.
+            el.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+            el.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape', bubbles: true }));
             el.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
             el.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter', bubbles: true }));
           }
@@ -584,8 +626,8 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
 
     see: (text) =>
       wait_for(
-        (body) => body.includes(text),
-        (body) => expect(body).toContain(text),
+        (body) => body.includes(normalize(text)),
+        (body) => expect(body).toContain(normalize(text)),
       ),
 
     see_table: async (name, rows) => {
@@ -593,10 +635,11 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
       while (true) {
         const error = (await evaluate(
           `(function(){
-            var name = ${JSON.stringify(name)};
+            var name = ${JSON.stringify(normalize(name))};
             var rows = ${JSON.stringify(rows)};
             var header = [...document.querySelectorAll('[id]')]
-              .find(function(el){ return el.textContent.trim().includes(name); });
+              .filter(function(el){ return ${norm_js}(el.textContent).trim().includes(name); })
+                .sort(function(a, b){ return a.textContent.length - b.textContent.length; })[0];
             if (!header) return 'Table header not found: ' + name;
             var table = document.querySelector('[aria-describedby="' + header.id + '"]');
             if (!table) return 'Table not found for: ' + name;
@@ -616,9 +659,10 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
         if (Date.now() > deadline) {
           const actual = (await evaluate(
             `(function(){
-              var name = ${JSON.stringify(name)};
+              var name = ${JSON.stringify(normalize(name))};
               var header = [...document.querySelectorAll('[id]')]
-                .find(function(el){ return el.textContent.trim().includes(name); });
+                .filter(function(el){ return ${norm_js}(el.textContent).trim().includes(name); })
+                .sort(function(a, b){ return a.textContent.length - b.textContent.length; })[0];
               if (!header) return null;
               var table = document.querySelector('[aria-describedby="' + header.id + '"]');
               if (!table) return null;
@@ -651,8 +695,8 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
 
     not_see: (text) =>
       wait_for(
-        (body) => !body.includes(text),
-        (body) => expect(body).not.toContain(text),
+        (body) => !body.includes(normalize(text)),
+        (body) => expect(body).not.toContain(normalize(text)),
       ),
 
     url: () => evaluate(`location.pathname`) as Promise<string>,
@@ -668,17 +712,18 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
         // scope_guard_js consumers.
         `(function(){
           var name = ${JSON.stringify(name)};
+          var norm_name = ${JSON.stringify(normalize(name))};
           var byAria = document.querySelector('[aria-label*=' + JSON.stringify(name) + '], [aria-labelledby*=' + JSON.stringify(name) + ']');
           if (byAria) return byAria;
           var summaries = [...document.querySelectorAll('summary')];
-          var summary = summaries.find(function(s){ return s.textContent.includes(name); });
+          var summary = summaries.find(function(s){ return ${norm_js}(s.textContent).includes(norm_name); });
           if (summary) return summary.closest('details') || summary;
           var labelledEls = [...document.querySelectorAll('[aria-labelledby]')];
           var labelled = labelledEls.find(function(el){
             var ids = (el.getAttribute('aria-labelledby') || '').split(/\\s+/);
             return ids.some(function(id){
               var owner = document.getElementById(id);
-              return owner && owner.textContent.includes(name);
+              return owner && ${norm_js}(owner.textContent).includes(norm_name);
             });
           });
           if (labelled) return labelled;
