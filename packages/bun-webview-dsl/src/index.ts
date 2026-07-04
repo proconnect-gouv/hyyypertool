@@ -222,6 +222,10 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
     }
   };
 
+  function row_finder_expr(text: string): string {
+    return `[...document.querySelectorAll('tr')].find(function(tr){return tr.textContent.includes(${JSON.stringify(text)});})`;
+  }
+
   function create_scoped_actor(selector: string): Actor {
     return create_expr_scoped_actor(
       `document.querySelector(${JSON.stringify(selector)})`,
@@ -472,10 +476,10 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
 
       within_row: (text) =>
         create_expr_scoped_actor(
-          `[...document.querySelectorAll('tr')].find(function(tr){return tr.textContent.includes(${JSON.stringify(text)});})`,
+          row_finder_expr(text),
           (name) =>
             create_expr_scoped_actor(
-              `[...document.querySelectorAll('tr')].find(function(tr){return tr.textContent.includes(${JSON.stringify(text)});})`,
+              row_finder_expr(text),
               (innerName) =>
                 create_scoped_actor(
                   `[aria-label*=${JSON.stringify(innerName)}], [aria-labelledby*=${JSON.stringify(innerName)}]`,
@@ -704,7 +708,7 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
 
     within_row: (text) =>
       create_expr_scoped_actor(
-        `[...document.querySelectorAll('tr')].find(function(tr){return tr.textContent.includes(${JSON.stringify(text)});})`,
+        row_finder_expr(text),
       ),
   };
 }
@@ -776,15 +780,6 @@ function _create_scenario_actor(
 
   const get_scoped = (actor: Actor): Actor =>
     row_text ? actor.within_row(row_text) : scope ? scope(actor) : actor;
-
-  const scoped = (name: string) =>
-    _create_scenario_actor(
-      get_view,
-      get_base_url,
-      scope
-        ? (actor) => scope(actor).within(name)
-        : (actor) => actor.within(name),
-    );
 
   return {
     navigate: (path) =>

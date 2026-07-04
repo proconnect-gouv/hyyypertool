@@ -145,17 +145,9 @@ describe("within callback form (Scenario)", () => {
 
     // The callback form wraps assertions in a describe-like block.
     // Here we verify the scoped actor inside the callback sees only modal content.
-    let saw_inside = false;
-    let saw_outside = true;
-    I.within("la modale de validation").see("Modal Content");
-    // Simulate the callback body by using the scoped actor directly.
     const modal = I.within("la modale de validation");
     await modal.see("Modal Content");
     await modal.not_see("Outside Button");
-    saw_inside = true;
-    saw_outside = false;
-    expect(saw_inside).toBe(true);
-    expect(saw_outside).toBe(false);
   });
 
   it("resolver matches <details> by <summary> textContent (no aria-label needed)", async () => {
