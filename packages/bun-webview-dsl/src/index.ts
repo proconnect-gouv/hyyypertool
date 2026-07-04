@@ -475,16 +475,12 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
       within: make_within,
 
       within_row: (text) =>
-        create_expr_scoped_actor(
-          row_finder_expr(text),
-          (name) =>
-            create_expr_scoped_actor(
-              row_finder_expr(text),
-              (innerName) =>
-                create_scoped_actor(
-                  `[aria-label*=${JSON.stringify(innerName)}], [aria-labelledby*=${JSON.stringify(innerName)}]`,
-                ),
-            ).within(name),
+        create_expr_scoped_actor(row_finder_expr(text), (name) =>
+          create_expr_scoped_actor(row_finder_expr(text), (innerName) =>
+            create_scoped_actor(
+              `[aria-label*=${JSON.stringify(innerName)}], [aria-labelledby*=${JSON.stringify(innerName)}]`,
+            ),
+          ).within(name),
         ),
     };
   }
@@ -706,10 +702,7 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
         })()`,
       ),
 
-    within_row: (text) =>
-      create_expr_scoped_actor(
-        row_finder_expr(text),
-      ),
+    within_row: (text) => create_expr_scoped_actor(row_finder_expr(text)),
   };
 }
 
