@@ -36,7 +36,7 @@
     "test:features": "bun test 'feature.test'",
     "test:inspect": "bun test --inspect-wait=localhost:6499/",
     "test:type-check": "bun x tsc --build",
-    "test:unit": "bun test --path-ignore-patterns='*feature.test.ts'"
+    "test:unit": "bun test --path-ignore-patterns='**/*.feature.test.ts'"
   },
   "prettier": {
     "plugins": [
