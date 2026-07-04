@@ -170,17 +170,39 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
     }
   };
 
-  // htmx marks in-flight requests with the .htmx-request class synchronously
-  // when the triggering event dispatches, so the evaluate() that performed an
-  // action can report authoritatively whether a request started — no
-  // grace-window guessing. Poll until the class clears, then let the CDP
-  // counter drain any chained non-htmx requests.
-  const htmx_started_js = `!!document.querySelector('.htmx-request')`;
-  const settle_after_action = async (htmx_started: boolean): Promise<void> => {
-    if (htmx_started) {
+  // fetch() and XMLHttpRequest.send() are called synchronously inside the
+  // event handlers an action triggers, so a wrapped counter read in the same
+  // evaluate() as the action reports authoritatively whether a request
+  // started — no grace-window guessing, no dependence on CDP event latency.
+  // The shim is installed idempotently at the top of each action evaluate.
+  const inflight_shim_js = `
+    if (!window.__dsl_inflight_installed) {
+      window.__dsl_inflight_installed = true;
+      window.__dsl_inflight = 0;
+      const _fetch = window.fetch;
+      window.fetch = function () {
+        window.__dsl_inflight++;
+        return _fetch.apply(this, arguments).finally(function () {
+          window.__dsl_inflight--;
+        });
+      };
+      const _send = XMLHttpRequest.prototype.send;
+      XMLHttpRequest.prototype.send = function () {
+        window.__dsl_inflight++;
+        this.addEventListener('loadend', function () {
+          window.__dsl_inflight--;
+        });
+        return _send.apply(this, arguments);
+      };
+    }`;
+  const request_started_js = `(window.__dsl_inflight || 0) > 0`;
+  const settle_after_action = async (
+    request_started: boolean,
+  ): Promise<void> => {
+    if (request_started) {
       const deadline = Date.now() + 5_000;
       while (Date.now() < deadline) {
-        const busy = (await evaluate(htmx_started_js)) as boolean;
+        const busy = (await evaluate(request_started_js)) as boolean;
         if (!busy) break;
         await Bun.sleep(20);
       }
@@ -330,9 +352,10 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
             (function(){
               const root = ${scoped_root};
               ${scope_guard_js}
+              ${inflight_shim_js}
               const el = [...root.querySelectorAll('button,a,input[type=submit],label,summary')]
                 .find(el => ${text_match_expr("el.textContent", text)});
-              if (el) { el.click(); return ${htmx_started_js} ? 2 : 1; }
+              if (el) { el.click(); return ${request_started_js} ? 2 : 1; }
               return 0;
             })()
           `)) as number;
@@ -365,9 +388,10 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
             (function(){
               const root = ${scoped_root};
               ${scope_guard_js}
+              ${inflight_shim_js}
               const el = [...root.querySelectorAll('button,a,input[type=submit],label,summary')]
                 .find(el => ${text_match_expr("el.textContent", text)} && el.getClientRects().length > 0);
-              if (el) { el.click(); return ${htmx_started_js} ? 2 : 1; }
+              if (el) { el.click(); return ${request_started_js} ? 2 : 1; }
               return 0;
             })()
           `)) as number;
@@ -387,6 +411,7 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
           (function(){
             const root = ${scoped_root};
             ${scope_guard_js}
+            ${inflight_shim_js}
             const el =
               root.querySelector('[placeholder=${JSON.stringify(label)}]') ||
               root.querySelector('[aria-label=${JSON.stringify(label)}]') ||
@@ -397,7 +422,7 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
               el.value = ${JSON.stringify(value)};
               el.dispatchEvent(new Event('input', { bubbles: true }));
               el.dispatchEvent(new Event('change', { bubbles: true }));
-              return ${htmx_started_js};
+              return ${request_started_js};
             }
             return false;
           })()
@@ -410,6 +435,7 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
           (function(){
             const root = ${scoped_root};
             ${scope_guard_js}
+            ${inflight_shim_js}
             const el =
               root.querySelector('[placeholder=${JSON.stringify(label)}]') ||
               root.querySelector('[aria-label=${JSON.stringify(label)}]') ||
@@ -426,7 +452,7 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
               el.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape', bubbles: true }));
               el.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
               el.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter', bubbles: true }));
-              return ${htmx_started_js};
+              return ${request_started_js};
             }
             return false;
           })()
@@ -540,9 +566,10 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
       while (Date.now() < deadline) {
         const clicked = (await evaluate(
           `(() => {
+            ${inflight_shim_js}
             const el = [...document.querySelectorAll('button,a,input[type=submit],label,summary')]
               .find(el => ${text_match_expr("el.textContent", text)});
-            if (el) { el.click(); return ${htmx_started_js} ? 2 : 1; }
+            if (el) { el.click(); return ${request_started_js} ? 2 : 1; }
             return 0;
           })()`,
         )) as number;
@@ -588,9 +615,10 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
       while (Date.now() < deadline) {
         const clicked = (await evaluate(
           `(() => {
+            ${inflight_shim_js}
             const el = [...document.querySelectorAll('button,a,input[type=submit],label,summary')]
               .find(el => ${text_match_expr("el.textContent", text)} && el.getClientRects().length > 0);
-            if (el) { el.click(); return ${htmx_started_js} ? 2 : 1; }
+            if (el) { el.click(); return ${request_started_js} ? 2 : 1; }
             return 0;
           })()`,
         )) as number;
@@ -608,6 +636,7 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
     fill: async (label, value) => {
       const started = (await evaluate(`
         (() => {
+          ${inflight_shim_js}
           const el =
             document.querySelector('[placeholder=${JSON.stringify(label)}]') ||
             document.querySelector('[aria-label=${JSON.stringify(label)}]') ||
@@ -618,7 +647,7 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
             el.value = ${JSON.stringify(value)};
             el.dispatchEvent(new Event('input', { bubbles: true }));
             el.dispatchEvent(new Event('change', { bubbles: true }));
-            return ${htmx_started_js};
+            return ${request_started_js};
           }
           return false;
         })()
@@ -629,6 +658,7 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
     fill_and_submit: async (label, value) => {
       const started = (await evaluate(`
         (() => {
+          ${inflight_shim_js}
           const el =
             document.querySelector('[placeholder=${JSON.stringify(label)}]') ||
             document.querySelector('[aria-label=${JSON.stringify(label)}]') ||
@@ -639,15 +669,15 @@ export function create_actor(view: Bun.WebView, base_url: string): Actor {
             el.value = ${JSON.stringify(value)};
             el.dispatchEvent(new Event('input', { bubbles: true }));
             el.dispatchEvent(new Event('change', { bubbles: true }));
-            // Escape first: autocomplete widgets (e.g. the Hyyyper Filter
-            // search bar) reroute Enter to "accept highlighted suggestion"
-            // while their dropdown is open — fill_and_submit means "submit
-            // the typed value", so close any dropdown before submitting.
+            // Escape first: autocomplete widgets reroute Enter to "accept
+            // highlighted suggestion" while their dropdown is open —
+            // fill_and_submit means "submit the typed value", so close any
+            // dropdown before submitting.
             el.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
             el.dispatchEvent(new KeyboardEvent('keyup', { key: 'Escape', bubbles: true }));
             el.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
             el.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter', bubbles: true }));
-            return ${htmx_started_js};
+            return ${request_started_js};
           }
           return false;
         })()
