@@ -1,5 +1,54 @@
 # Changelog
 
+## [2026.7.0](https://github.com/proconnect-gouv/hyyypertool/compare/2026.6.8...2026.7.0) (2026-07-07)
+
+### Changements
+
+- 💄 Sections repliables dans la page utilisateur
+
+Extrait les listes d'organisations, modérations et historique OIDC dans des composants dédiés, rendus repliables via `<details>` / `<summary>` pour alléger la page.
+
+- ✨ Badges de comptage avec émojis dans les sections utilisateur
+
+Ajoute des badges affichant le nombre d'éléments avec des émojis dans les sections repliables (🏢 organisations, 🛂 modérations, 🔐 connexions) de la page utilisateur.
+
+- ♻️ Extraction des actions membres dans un composant partagé
+
+Extrait le menu d'actions des membres de la table d'une organisation vers un composant `MemberRowActions` réutilisable. Ajoute ce menu à la page des organisations d'un utilisateur avec une visibilité restreinte selon le rôle (visiteur non éditeur).
+
+- ✨ Ajout de la colonne « Type de vérification » dans le tableau des organisations
+
+Affiche le type de vérification de chaque organisation dans une nouvelle colonne du tableau.
+
+### Ajouté
+
+- ✨ Add count badges with emojis to user table sections (#1716) (9c2cdd6e)
+- ✨ Add verification type column to organizations table (#1713) (8145c06b)
+
+### Modifié
+
+- 💄 Wrap user table sections in collapsible details/summary (#1715) (d241be93)
+- ♻️ Extract MemberRowActions to shared ui component (#1714) (eedb6afa)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): Bump the sentry group with 4 updates (#1707) (bd812603)
+- :arrow_upper_right: [patch](deps): Bump pg from 8.21.0 to 8.22.0 (#1710) (cce88a90)
+
+### Divers
+
+- ↗️ [patch](deps): Bump docker/setup-compose-action from 2.2.0 to 2.3.0 (#1703) (8a7a1529)
+- ↗️ [patch](deps): Bump cypress-io/github-action from 7.4.0 to 7.4.1 (#1704) (657117b7)
+- ↗️ [patch](deps): Bump hono from 4.12.25 to 4.12.27 (#1708) (71f76c07)
+- ↗️ [patch](deps): Bump oxc-parser from 0.135.0 to 0.137.0 (#1709) (d280ffb6)
+- ↗️ [patch](deps-dev): Bump @electric-sql/pglite from 0.5.2 to 0.5.3 (#1711) (3ffe60ae)
+- ↗️ [patch](deps): Bump cypress from 15.17.0 to 15.18.0 in /e2e (#1705) (5520e80c)
+- ↗️ [patch](deps): Bump the tailwindcss group across 1 directory with 3 updates (#1699) (8432f304)
+- ↗️ [patch](deps-dev): Bump @happy-dom/global-registrator from 20.9.0 to 20.10.6 (#1701) (316471e7)
+- ↗️ [patch](deps): Bump ts-dedent from 2.2.0 to 2.3.0 (#1702) (92e76f93)
+- ↗️ [patch](deps): Bump the sentry group with 4 updates (#1698) (c847a041)
+- ↗️ [patch](deps-dev): Bump @csmith/release-it-calver-plugin from 2026.6.0 to 2026.6.1 (#1700) (168852e0)
+
 ## [2026.6.8](https://github.com/proconnect-gouv/hyyypertool/compare/2026.6.7...2026.6.8) (2026-06-29)
 
 ### Changements
