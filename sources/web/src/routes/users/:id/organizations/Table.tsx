@@ -50,6 +50,7 @@ export async function Table({
           <th class="warp-break-word">Siret</th>
           <th class="warp-break-word">Libellé</th>
           <th class="warp-break-word">Domains</th>
+          <th class="warp-break-word">Type de vérification</th>
           <th class="max-w-32 break-words">Code géographique officiel</th>
 
           <th></th>
@@ -88,6 +89,7 @@ export function Row({
     email_domains,
     id,
     siret,
+    verification_type,
   } = organization;
 
   const href = urls.organizations[":id"].$url({ param: { id: id } }).pathname;
@@ -106,6 +108,7 @@ export function Row({
       <td>{siret}</td>
       <td>{cached_libelle}</td>
       <td>{email_domains.map(({ domain }) => domain).join(", ")}</td>
+      <td>{verification_type}</td>
       <td>
         <a
           class="after:absolute after:inset-0 after:content-[''] focus:outline-none"
