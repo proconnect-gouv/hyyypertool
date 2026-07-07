@@ -74,47 +74,27 @@ export async function UserPage({
       <hr class="border-none py-3" />
 
       <div class="container mx-auto px-4">
-        <h1 id={$organizations_describedby}>
-          Liste des organisations de {user.given_name}
-        </h1>
-        <div class="max-w-full">
-          <div
-            {...hx_get_user_organizations_props}
-            hx-target="this"
-            hx-trigger="load"
-            class={table()}
-          ></div>
-        </div>
+        <UserOrganizationsList
+          describedby={$organizations_describedby}
+          hx_props={hx_get_user_organizations_props}
+          user={user}
+        />
 
         <hr class="border-none py-3" />
 
-        <h1 id={$moderations_describedby}>
-          Liste des modérations de {user.given_name}
-        </h1>
-
-        <div class="max-w-full">
-          <div
-            {...hx_get_user_moderations_props}
-            hx-target="this"
-            hx-trigger="load"
-            class={table()}
-          ></div>
-        </div>
+        <UserModerationsList
+          describedby={$moderations_describedby}
+          hx_props={hx_get_user_moderations_props}
+          user={user}
+        />
 
         <hr class="border-none py-3" />
 
-        <h1 id={$oidc_clients_describedby}>
-          Historique de connexion de {user.given_name}
-        </h1>
-
-        <div class="max-w-full">
-          <div
-            {...hx_get_user_oidc_clients_props}
-            hx-target="this"
-            hx-trigger="load"
-            class={table()}
-          ></div>
-        </div>
+        <UserOidcClientsList
+          describedby={$oidc_clients_describedby}
+          hx_props={hx_get_user_oidc_clients_props}
+          user={user}
+        />
       </div>
       <div class="bg-alt-red-marianne dark:bg-surface py-6">
         <div class="container mx-auto px-4 py-6">
@@ -136,6 +116,96 @@ export async function UserPage({
         <FranceConnectInfo franceconnect={franceconnect} />
       </div>
     </main>
+  );
+}
+
+function UserOrganizationsList({
+  describedby,
+  hx_props,
+  user,
+}: {
+  describedby: string;
+  hx_props: Record<string, string>;
+  user: Pick<User, "given_name">;
+}) {
+  return (
+    <section>
+      <details>
+        <summary>
+          <h1 class="inline-block" id={describedby}>
+            Liste des organisations de {user.given_name}
+          </h1>
+        </summary>
+        <div class="max-w-full">
+          <div
+            {...hx_props}
+            hx-target="this"
+            hx-trigger="load"
+            class={table()}
+          ></div>
+        </div>
+      </details>
+    </section>
+  );
+}
+
+function UserModerationsList({
+  describedby,
+  hx_props,
+  user,
+}: {
+  describedby: string;
+  hx_props: Record<string, string>;
+  user: Pick<User, "given_name">;
+}) {
+  return (
+    <section>
+      <details>
+        <summary>
+          <h1 class="inline-block" id={describedby}>
+            Liste des modérations de {user.given_name}
+          </h1>
+        </summary>
+        <div class="max-w-full">
+          <div
+            {...hx_props}
+            hx-target="this"
+            hx-trigger="load"
+            class={table()}
+          ></div>
+        </div>
+      </details>
+    </section>
+  );
+}
+
+function UserOidcClientsList({
+  describedby,
+  hx_props,
+  user,
+}: {
+  describedby: string;
+  hx_props: Record<string, string>;
+  user: Pick<User, "given_name">;
+}) {
+  return (
+    <section>
+      <details>
+        <summary>
+          <h1 class="inline-block" id={describedby}>
+            Historique de connexion de {user.given_name}
+          </h1>
+        </summary>
+        <div class="max-w-full">
+          <div
+            {...hx_props}
+            hx-target="this"
+            hx-trigger="load"
+            class={table()}
+          ></div>
+        </div>
+      </details>
+    </section>
   );
 }
 
