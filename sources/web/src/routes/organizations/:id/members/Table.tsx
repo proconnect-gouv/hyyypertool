@@ -3,8 +3,7 @@
 import { hx_include } from "#src/htmx";
 import type { Pagination } from "#src/schema";
 import { Foot } from "#src/ui/hx_table";
-import { menu_item } from "#src/ui/menu";
-import { HorizontalMenu } from "#src/ui/menu/components";
+import { MemberRowActions } from "#src/ui/member-row-actions";
 import { row, table } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
@@ -80,7 +79,7 @@ export async function Table({
 }
 
 function Row({ variants }: { variants?: VariantProps<typeof row> }) {
-  const { user, is_editor } = useContext(MemberContext);
+  const { user, organization_id, is_editor } = useContext(MemberContext);
 
   return (
     <tr
@@ -114,7 +113,19 @@ function Row({ variants }: { variants?: VariantProps<typeof row> }) {
           </div>
         )}
       </td>
-      <td class="space-x-2 text-end">{is_editor && <RowActions />}</td>
+      <td class="space-x-2 text-end">
+        {is_editor && (
+          <MemberRowActions
+            user_id={user.id}
+            organization_id={organization_id}
+            is_external={user.is_external}
+            verification_type={user.verification_type}
+            open_href={
+              urls.users[":id"].$url({ param: { id: user.id } }).pathname
+            }
+          />
+        )}
+      </td>
     </tr>
   );
 }
@@ -125,167 +136,4 @@ function VerificationTypeBadge({ value }: { value: string | null }) {
     return <>{parsed.data}</>;
   }
   return <span class="text-red-500">{value}</span>;
-}
-
-async function RowActions() {
-  const { user, organization_id } = useContext(MemberContext);
-  const { id: user_id, is_external, verification_type } = user;
-
-  return (
-    <HorizontalMenu>
-      <ul class=" [&_li+li]:border-t-grey-200 list-none p-0 [&_li+li]:border-t">
-        <li>
-          <a
-            class={menu_item({ override: "[href]" })}
-            href={urls.users[":id"].$url({ param: { id: user.id } }).pathname}
-          >
-            Ouvrir
-          </a>
-        </li>
-        <li>
-          <button
-            class={menu_item()}
-            {...urls.organizations[":id"].members[":user_id"].$hx_delete({
-              param: {
-                id: organization_id,
-                user_id: user_id,
-              },
-            })}
-            hx-swap="none"
-          >
-            🚪🚶retirer de l'orga
-          </button>
-        </li>
-        <li>
-          <button
-            class={menu_item()}
-            {...urls.organizations[":id"].members[":user_id"].$hx_patch({
-              param: {
-                id: organization_id,
-                user_id: user_id,
-              },
-              form: {
-                verification_type:
-                  VerificationTypeSchema.enum.in_liste_dirigeants_rna,
-              },
-            })}
-            hx-swap="none"
-          >
-            🔄 vérif: liste dirigeants
-          </button>
-        </li>
-        <li>
-          <button
-            class={menu_item()}
-            {...urls.organizations[":id"].members[":user_id"].$hx_patch({
-              param: {
-                id: organization_id,
-                user_id: user_id,
-              },
-              form: {
-                verification_type: VerificationTypeSchema.enum.domain,
-              },
-            })}
-            hx-swap="none"
-          >
-            🔄 vérif: domaine email
-          </button>
-        </li>
-        <li>
-          <button
-            class={menu_item()}
-            {...urls.organizations[":id"].members[":user_id"].$hx_patch({
-              param: {
-                id: organization_id,
-                user_id: user_id,
-              },
-              form: {
-                verification_type:
-                  VerificationTypeSchema.enum.official_contact_email,
-              },
-            })}
-            hx-swap="none"
-          >
-            🔄 vérif: mail officiel
-          </button>
-        </li>
-        <li>
-          <button
-            class={menu_item()}
-            {...urls.organizations[":id"].members[":user_id"].$hx_patch({
-              param: {
-                id: organization_id,
-                user_id: user_id,
-              },
-              form: {
-                verification_type:
-                  VerificationTypeSchema.enum.no_validation_means_available,
-              },
-            })}
-            hx-swap="none"
-          >
-            🔄 vérif: no validation means available
-          </button>
-        </li>
-        <li>
-          <button
-            class={menu_item()}
-            {...urls.organizations[":id"].members[":user_id"].$hx_patch({
-              param: {
-                id: organization_id,
-                user_id: user_id,
-              },
-              form: {
-                verification_type:
-                  VerificationTypeSchema.enum
-                    .verified_by_coop_mediation_numerique,
-              },
-            })}
-            hx-swap="none"
-          >
-            🔄 vérif: verified by coop mediation numerique
-          </button>
-        </li>
-        <li>
-          {verification_type ? (
-            <button
-              class={menu_item()}
-              {...urls.organizations[":id"].members[":user_id"].$hx_patch({
-                param: {
-                  id: organization_id,
-                  user_id: user_id,
-                },
-                form: {
-                  verification_type:
-                    VerificationTypeSchema.enum.domain_not_verified_yet,
-                },
-              })}
-              hx-swap="none"
-            >
-              🚫 non vérifié
-            </button>
-          ) : (
-            <></>
-          )}
-        </li>
-        <li>
-          <button
-            class={menu_item()}
-            {...urls.organizations[":id"].members[":user_id"].$hx_patch({
-              param: {
-                id: organization_id,
-                user_id: user_id,
-              },
-              form: {
-                is_external: String(!is_external),
-              },
-            })}
-            hx-swap="none"
-          >
-            🔄 interne/externe
-          </button>
-        </li>
-      </ul>
-    </HorizontalMenu>
-  );
 }

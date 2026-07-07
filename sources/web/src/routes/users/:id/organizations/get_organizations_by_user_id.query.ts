@@ -25,6 +25,7 @@ export async function get_organizations_by_user_id(
   return pg.transaction(async function organization_with_count(tx) {
     const users_organizations = await tx.query.users_organizations.findMany({
       columns: {
+        is_external: true,
         verification_type: true,
       },
       limit: take,
@@ -53,8 +54,9 @@ export async function get_organizations_by_user_id(
       },
     });
     const organizations = users_organizations.map(
-      ({ organization, verification_type }) => ({
+      ({ organization, is_external, verification_type }) => ({
         ...organization,
+        is_external,
         verification_type,
       }),
     );
