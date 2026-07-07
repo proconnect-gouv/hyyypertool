@@ -48,6 +48,7 @@ test("GET /users/:id/organizations returns user's organizations", async () => {
   expect(html).toContain("Date de création");
   expect(html).toContain("Siret");
   expect(html).toContain("Libellé");
+  expect(html).toContain("domain_not_verified_yet");
 });
 
 test("GET /users/:id/organizations handles pagination", async () => {
