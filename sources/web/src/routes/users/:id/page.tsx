@@ -7,6 +7,7 @@ import { CopyButton, GoogleSearchButton } from "#src/ui/button/components";
 import { card } from "#src/ui/card";
 import { badge_description_list } from "#src/ui/list";
 import { FrNumberConverter } from "#src/ui/number";
+import { formattedPlural } from "#src/ui/plurial";
 import { table } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
@@ -24,11 +25,17 @@ export async function UserPage({
   authenticators,
   franceconnect,
   is_editor,
+  query_moderations_count,
+  query_oidc_clients_count,
+  query_organizations_count,
   user,
 }: {
   authenticators: Authenticators;
   franceconnect: FranceConnect;
   is_editor: boolean;
+  query_moderations_count: Promise<number>;
+  query_oidc_clients_count: Promise<number>;
+  query_organizations_count: Promise<number>;
   user: User;
 }) {
   const $organizations_describedby = hyper_ref("user_organizations");
@@ -77,6 +84,7 @@ export async function UserPage({
         <UserOrganizationsList
           describedby={$organizations_describedby}
           hx_props={hx_get_user_organizations_props}
+          query_count={query_organizations_count}
           user={user}
         />
 
@@ -85,6 +93,7 @@ export async function UserPage({
         <UserModerationsList
           describedby={$moderations_describedby}
           hx_props={hx_get_user_moderations_props}
+          query_count={query_moderations_count}
           user={user}
         />
 
@@ -93,6 +102,7 @@ export async function UserPage({
         <UserOidcClientsList
           describedby={$oidc_clients_describedby}
           hx_props={hx_get_user_oidc_clients_props}
+          query_count={query_oidc_clients_count}
           user={user}
         />
       </div>
@@ -119,21 +129,30 @@ export async function UserPage({
   );
 }
 
-function UserOrganizationsList({
+async function UserOrganizationsList({
   describedby,
   hx_props,
+  query_count,
   user,
 }: {
   describedby: string;
   hx_props: Record<string, string>;
+  query_count: Promise<number>;
   user: Pick<User, "given_name">;
 }) {
+  const count = await query_count;
+
   return (
     <section>
       <details>
         <summary>
           <h1 class="inline-block" id={describedby}>
-            Liste des organisations de {user.given_name}
+            🏢 {count}{" "}
+            {formattedPlural(count, {
+              one: "organisation",
+              other: "organisations",
+            })}{" "}
+            de {user.given_name}
           </h1>
         </summary>
         <div class="max-w-full">
@@ -149,21 +168,30 @@ function UserOrganizationsList({
   );
 }
 
-function UserModerationsList({
+async function UserModerationsList({
   describedby,
   hx_props,
+  query_count,
   user,
 }: {
   describedby: string;
   hx_props: Record<string, string>;
+  query_count: Promise<number>;
   user: Pick<User, "given_name">;
 }) {
+  const count = await query_count;
+
   return (
     <section>
       <details>
         <summary>
           <h1 class="inline-block" id={describedby}>
-            Liste des modérations de {user.given_name}
+            🛂 {count}{" "}
+            {formattedPlural(count, {
+              one: "modération",
+              other: "modérations",
+            })}{" "}
+            de {user.given_name}
           </h1>
         </summary>
         <div class="max-w-full">
@@ -179,21 +207,30 @@ function UserModerationsList({
   );
 }
 
-function UserOidcClientsList({
+async function UserOidcClientsList({
   describedby,
   hx_props,
+  query_count,
   user,
 }: {
   describedby: string;
   hx_props: Record<string, string>;
+  query_count: Promise<number>;
   user: Pick<User, "given_name">;
 }) {
+  const count = await query_count;
+
   return (
     <section>
       <details>
         <summary>
           <h1 class="inline-block" id={describedby}>
-            Historique de connexion de {user.given_name}
+            🔐 {count}{" "}
+            {formattedPlural(count, {
+              one: "connexion",
+              other: "connexions",
+            })}{" "}
+            de {user.given_name}
           </h1>
         </summary>
         <div class="max-w-full">

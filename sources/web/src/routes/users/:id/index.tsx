@@ -3,7 +3,7 @@
 import { NotFoundError } from "#src/errors";
 import type { HtmxHeader } from "#src/htmx";
 import { Main_Layout } from "#src/layouts";
-import { ResetMFA, ResetPassword } from "#src/lib/users";
+import { CountUserMemberships, ResetMFA, ResetPassword } from "#src/lib/users";
 import { editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { EntitySchema } from "#src/schema";
@@ -18,8 +18,10 @@ import { get_authenticators_by_user_id } from "./get_authenticators_by_user_id.q
 import { get_franceconnect_by_user_id } from "./get_franceconnect_by_user_id.query";
 import { get_user_by_id } from "./get_user_by_id.query";
 import user_moderations_route from "./moderations";
+import { count_moderations_by_user_id } from "./moderations/count_moderations_by_user_id.query";
 import { UserNotFound } from "./not-found";
 import user_oidc_clients_route from "./oidc_clients";
+import { count_oidc_clients_by_user_id } from "./oidc_clients/count_oidc_clients_by_user_id.query";
 import user_organizations_page_route from "./organizations";
 import { UserPage } from "./page";
 
@@ -51,6 +53,18 @@ export default new Hono<AppContext>()
           id,
         );
 
+        const query_organizations_count = CountUserMemberships({
+          pg: identite_pg,
+        })(user.id);
+        const query_moderations_count = count_moderations_by_user_id(
+          identite_pg,
+          user.id,
+        );
+        const query_oidc_clients_count = count_oidc_clients_by_user_id(
+          identite_pg,
+          user.id,
+        );
+
         set(
           "page_title",
           `Utilisateur ${user.given_name} ${user.family_name} (${user.email})`,
@@ -61,6 +75,9 @@ export default new Hono<AppContext>()
             authenticators={authenticators}
             franceconnect={franceconnect}
             is_editor={is_editor}
+            query_moderations_count={query_moderations_count}
+            query_oidc_clients_count={query_oidc_clients_count}
+            query_organizations_count={query_organizations_count}
             user={user}
           />,
         );
