@@ -77,7 +77,7 @@ export async function UserPage({
         <h1 id={$organizations_describedby}>
           Liste des organisations de {user.given_name}
         </h1>
-        <div class="max-w-full overflow-x-auto">
+        <div class="max-w-full">
           <div
             {...hx_get_user_organizations_props}
             hx-target="this"
@@ -92,7 +92,7 @@ export async function UserPage({
           Liste des modérations de {user.given_name}
         </h1>
 
-        <div class="max-w-full overflow-x-auto">
+        <div class="max-w-full">
           <div
             {...hx_get_user_moderations_props}
             hx-target="this"
@@ -107,7 +107,7 @@ export async function UserPage({
           Historique de connexion de {user.given_name}
         </h1>
 
-        <div class="max-w-full overflow-x-auto">
+        <div class="max-w-full">
           <div
             {...hx_get_user_oidc_clients_props}
             hx-target="this"

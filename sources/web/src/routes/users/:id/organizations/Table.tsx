@@ -4,6 +4,7 @@ import { hx_include } from "#src/htmx";
 import type { Pagination } from "#src/schema";
 import { date_to_dom_string } from "#src/time";
 import { Foot } from "#src/ui/hx_table";
+import { MemberRowActions } from "#src/ui/member-row-actions";
 import { notice } from "#src/ui/notice";
 import { table } from "#src/ui/table";
 import { Time } from "#src/ui/time";
@@ -23,12 +24,14 @@ export async function Table({
   user_id,
   describedby,
   page_ref,
+  is_editor = true,
 }: {
   pagination: Pagination;
   organizations_collection: OrganizationsCollection;
   user_id: number;
   describedby: string;
   page_ref: string;
+  is_editor?: boolean;
 }) {
   const { organizations, count } = organizations_collection;
 
@@ -59,7 +62,12 @@ export async function Table({
 
       <tbody>
         {organizations.map((organization) => (
-          <Row key={organization.id.toString()} organization={organization} />
+          <Row
+            key={organization.id.toString()}
+            is_editor={is_editor}
+            organization={organization}
+            user_id={user_id}
+          />
         ))}
       </tbody>
 
@@ -77,10 +85,14 @@ export async function Table({
 
 export function Row({
   key,
+  is_editor = true,
   organization,
+  user_id,
 }: {
   key?: string;
+  is_editor?: boolean;
   organization: Organization;
+  user_id: number;
 }) {
   const {
     cached_code_officiel_geographique,
@@ -117,6 +129,17 @@ export function Row({
         >
           {cached_code_officiel_geographique}
         </a>
+      </td>
+      <td class="space-x-2 text-end">
+        {is_editor && (
+          <MemberRowActions
+            user_id={user_id}
+            organization_id={id}
+            is_external={organization.is_external}
+            verification_type={organization.verification_type}
+            open_href={href}
+          />
+        )}
       </td>
     </tr>
   );

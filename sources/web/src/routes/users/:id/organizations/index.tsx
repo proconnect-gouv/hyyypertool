@@ -3,6 +3,7 @@
 import type { AppContext } from "#src/middleware/context";
 import { PaginationSchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
+import { roles } from "@~/hyyyperbase";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { match } from "ts-pattern";
@@ -17,7 +18,7 @@ export default new Hono<AppContext>().get(
   jsxRenderer(),
   zValidator("param", ParamSchema),
   zValidator("query", QuerySchema),
-  async function GET({ req, var: { identite_pg }, render }) {
+  async function GET({ req, var: { identite_pg, hyyyper_user }, render }) {
     const { id: user_id } = req.valid("param");
     const { describedby, page_ref } = req.valid("query");
 
@@ -32,8 +33,11 @@ export default new Hono<AppContext>().get(
         pagination: { ...pagination, page: pagination.page - 1 },
       },
     );
+
+    const is_editor = hyyyper_user.role !== roles.enum.visitor;
     return render(
       <Table
+        is_editor={is_editor}
         pagination={pagination}
         organizations_collection={organizations_collection}
         user_id={user_id}
