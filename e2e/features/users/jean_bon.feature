@@ -25,7 +25,7 @@ Fonctionnalité: Page utilisateur with moderations
     Et je vois "Dernière modification22/06/2023 16:34:34"
     Et je vois "Email vérifié envoyé le22/06/2023 16:34:34"
 
-    Alors je dois voir un tableau nommé "Liste des modérations de Jean" et contenant
+    Alors je dois voir un tableau nommé "🛂 2 modérations de Jean" et contenant
       | Type          |
       | 🕵️ A traiter |
 
