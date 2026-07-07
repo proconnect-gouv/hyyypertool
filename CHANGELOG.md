@@ -1,5 +1,17 @@
 # Changelog
 
+## [2026.7.1](https://github.com/proconnect-gouv/hyyypertool/compare/2026.7.0...2026.7.1) (2026-07-07)
+
+### Changements
+
+- 💄 Colonne Externe dans le tableau des organisations
+
+Ajoute une colonne « Externe » avec indicateur ✅/❌ dans le tableau des organisations de la page utilisateur.
+
+### Modifié
+
+- 💄 Add Interne column to user organizations table (#1717) (6ca8f1cd)
+
 ## [2026.7.0](https://github.com/proconnect-gouv/hyyypertool/compare/2026.6.8...2026.7.0) (2026-07-07)
 
 ### Changements
