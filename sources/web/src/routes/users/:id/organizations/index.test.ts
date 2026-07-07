@@ -62,6 +62,8 @@ test("GET /users/:id/organizations returns user's organizations", async () => {
   expect(html).toContain("Siret");
   expect(html).toContain("Libellé");
   expect(html).toContain("domain_not_verified_yet");
+  expect(html).toContain("Interne");
+  expect(html).toContain("✅");
   expect(html).toContain("hx-delete");
 });
 
