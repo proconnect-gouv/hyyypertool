@@ -22,7 +22,7 @@
     "typescript": "6.0.3"
   },
   "devDependencies": {
-    "@types/node": "24.8.1"
+    "@types/node": "26.1.0"
   },
   "trustedDependencies": [
     "cypress"
