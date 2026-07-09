@@ -16,22 +16,17 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import { Hono } from "hono";
 import pg from "pg";
 import dev_router from "./___dev___";
-import admin_router from "./admin";
 import auth_router from "./auth";
-import domains_deliverability_router from "./domains-deliverability";
-import moderations_router from "./moderations";
-import organizations_router from "./organizations";
 import proxy_router from "./proxy";
-import response_templates_router from "./response-templates";
-import users_router from "./users";
 import welcome_router from "./welcome";
 // TODO: Re-enable compression when Bun supports CompressionStream
 // import { compress } from "hono/compress";
 import { hyyyyyypertool_session } from "#src/middleware/session";
+import { create_router } from "#src/router";
 import { contextStorage } from "hono/context-storage";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { logger } from "hono/logger";
-import asserts_router from "./assets";
+import { create_asset_router } from "./assets";
 import { error_handler } from "./error";
 import { not_found_handler } from "./not-found";
 import readyz_router from "./readyz";
@@ -70,7 +65,7 @@ const app = new Hono<{ Bindings: AppEnv }>()
   .get("/healthz", ({ text }) => text(`healthz check passed`))
   .get("/livez", ({ text }) => text(`livez check passed`))
 
-  .route(ASSETS_PATH, asserts_router)
+  .route(ASSETS_PATH, create_asset_router({ assets_path: ASSETS_PATH }))
   .route("/readyz", readyz_router)
 
   //
@@ -103,17 +98,7 @@ const app = new Hono<{ Bindings: AppEnv }>()
   )
   //
 
-  .route("/moderations", moderations_router)
-
-  .route("/admin", admin_router)
-
-  .route("/users", users_router)
-
-  .route("/organizations", organizations_router)
-
-  .route("/domains-deliverability", domains_deliverability_router)
-
-  .route("/response-templates", response_templates_router)
+  .route("/", create_router())
 
   .onError(error_handler)
   .notFound(not_found_handler);

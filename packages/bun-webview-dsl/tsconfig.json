@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "lib": ["ESNext", "DOM"],
+    "outDir": "./node_modules/.cache/tsc",
+    "types": ["@types/bun"]
+  },
+  "extends": "@~/config.typescript/api/tsconfig.json",
+  "references": []
+}
