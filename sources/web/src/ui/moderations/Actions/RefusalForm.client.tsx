@@ -106,11 +106,6 @@ export function RefusalForm({
         />
         <input
           type="hidden"
-          name={reject_form_fields.end_user_reason}
-          value={end_user_reason}
-        />
-        <input
-          type="hidden"
           name={reject_form_fields.allow_editing}
           value={String(allow_editing)}
         />
@@ -134,17 +129,18 @@ export function RefusalForm({
             <span class="sr-only">Fermer la modale</span>
           </button>
         </div>
-        <p class="mb-1">
+        <p class="mb-2">
           A propos de{" "}
           <span class="text-blue-france dark:text-blue-france-925 font-bold">
             {user_email}{" "}
           </span>
           pour l'organisation <b>{organization_name}</b>
         </p>
-        <p class="mb-1">Motif de refus :</p>
+        <p class="mb-0.5 text-sm">Motif de refus :</p>
         <div
           class={input_group({
             intent: field_errors.end_user_reason ? "error" : undefined,
+            class: "mb-2.5",
           })}
         >
           <ResponseMessageSelectorClient
@@ -164,9 +160,41 @@ export function RefusalForm({
             </p>
           )}
           {allow_editing && (
-            <p class="mt-1 text-sm text-amber-600" role="alert">
+            <p class="my-1.5 text-sm text-amber-600" role="alert">
               ⚠️ Attention, cette réponse type autorise l'utilisateur à éditer
               ses informations personnelles.
+            </p>
+          )}
+        </div>
+        <div class="my-2">
+          <label
+            class={label({
+              intent: field_errors.end_user_reason ? "error" : undefined,
+              class: "mb-0.5! text-sm",
+            })}
+            for="end-user-reason"
+          >
+            Motif transmis à l'utilisateur :
+          </label>
+          <input
+            class={input({
+              intent: field_errors.end_user_reason ? "error" : undefined,
+            })}
+            id="end-user-reason"
+            name={reject_form_fields.end_user_reason}
+            value={end_user_reason}
+            disabled={submitting}
+            onInput={(e) => {
+              const value = (e.currentTarget as HTMLInputElement).value;
+              set_selection((prev) => ({
+                end_user_reason: value,
+                allow_editing: prev?.allow_editing ?? false,
+              }));
+            }}
+          />
+          {field_errors.end_user_reason && (
+            <p class="mt-1 text-sm text-red-600" role="alert">
+              Veuillez renseigner le motif transmis à l'utilisateur.
             </p>
           )}
         </div>
@@ -183,7 +211,7 @@ export function RefusalForm({
             class={input({
               intent: field_errors.message ? "error" : undefined,
             })}
-            rows={15}
+            rows={12}
             id="rejection-message"
             name={reject_form_fields.message}
             ref={textarea_ref}

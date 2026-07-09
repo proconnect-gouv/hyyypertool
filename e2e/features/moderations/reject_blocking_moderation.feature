@@ -18,6 +18,7 @@ Fonctionnalité: Refuser une modération bloquante
     Soit je vais à l'intérieur du dialogue nommé "la modale de refus"
     Quand je saisie le mot "Nom de domaine introuvable{enter}" dans la boîte à texte nommée "Recherche d'une réponse type"
     Alors je vois "⚠️ Attention, cette réponse type autorise l'utilisateur à éditer ses informations personnelles."
+    Alors je vois "Motif transmis à l'utilisateur :"
 
     Et je clique sur "Notifier et terminer"
     Et je réinitialise le contexte
@@ -36,3 +37,4 @@ Fonctionnalité: Refuser une modération bloquante
     Soit je vais à l'intérieur du dialogue nommé "la modale de refus"
     Quand je saisie le mot "Agent - adresse e-mail départementale —> Admin centrale{enter}" dans la boîte à texte nommée "Recherche d'une réponse type"
     Alors je ne vois pas "⚠️ Attention, cette réponse type autorise l'utilisateur à éditer ses informations personnelles."
+    Alors je vois "Motif transmis à l'utilisateur :"
