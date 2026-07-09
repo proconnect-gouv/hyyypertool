@@ -1,5 +1,28 @@
 # Changelog
 
+## [2026.7.2](https://github.com/proconnect-gouv/hyyypertool/compare/2026.7.1...2026.7.2) (2026-07-09)
+
+### Changements
+
+- ⏪ Retour de l'affichage du champ éditable du motif de modération
+
+### Ajouté
+
+- ✨ Add editable input end_user_reason in refusal modal (#1718) (ab840f61)
+
+### Documentation
+
+- 📝 (6ace166c)
+
+### Divers
+
+- ↗️ [patch](deps): Bump the tailwindcss group across 1 directory with 2 updates (#1722) (1491b369)
+- ↗️ [patch](deps-dev): Bump @csmith/release-it-calver-plugin from 2026.6.1 to 2026.6.2 (#1723) (f2a9dee5)
+- ↗️ [patch](deps-dev): Bump @types/node from 24.8.1 to 26.1.0 in /e2e (#1720) (f7675fc6)
+- ↗️ [patch](deps): Bump oxc-parser from 0.137.0 to 0.138.0 (#1724) (473e9a16)
+- ↗️ [patch](deps): Bump the sentry group with 4 updates (#1721) (c78d9fe1)
+- ↗️ [patch](deps-dev): Bump release-it from 20.2.0 to 20.2.1 (#1725) (5d5c8d05)
+
 ## [2026.7.1](https://github.com/proconnect-gouv/hyyypertool/compare/2026.7.0...2026.7.1) (2026-07-07)
 
 ### Changements
