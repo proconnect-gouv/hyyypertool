@@ -377,7 +377,7 @@ async function Actions({ user }: { user: User }) {
           })}
           hx-swap="none"
         >
-          🚫 réinitialiser la vérification de l’email (bloquer)
+          🚫 révoquer l’identité
         </button>
         <button
           class={button({ intent: "danger" })}

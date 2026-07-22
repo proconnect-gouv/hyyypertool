@@ -39,7 +39,7 @@ Fonctionnalité: Un visiteur ne peut pas modifier les données
   Scénario: Le visiteur ne voit pas les actions sur un utilisateur
     Etant donné que je suis sur la page "/users"
     Quand je clique sur le lien nommé "Utilisateur Jean Bon (jeanbon@yopmail.com)"
-    Alors je ne vois pas "réinitialiser la vérification de l'email"
+    Alors je ne vois pas "révoquer l’identité"
     Et je ne vois pas "supprimer définitivement ce compte"
 
   Scénario: Le visiteur ne voit pas les actions sur les domaines d'une organisation
