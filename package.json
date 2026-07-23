@@ -72,7 +72,7 @@
     "@~/identite-proconnect": "workspace:*",
     "hono": "4.12.28",
     "htmx-ext-debug": "2.0.2",
-    "prettier": "3.8.3",
+    "prettier": "3.9.5",
     "prettier-plugin-gherkin": "4.0.0",
     "prettier-plugin-organize-imports": "4.3.0",
     "prettier-plugin-tailwindcss": "0.8.0",
