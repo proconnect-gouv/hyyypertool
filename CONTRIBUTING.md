@@ -411,9 +411,7 @@ export function SearchEmail() {
 ```typescript
 // sources/web/src/lib/moderations/moderation_type.mapper.ts
 export type ModerationType =
-  | "create_organization"
-  | "join_organization"
-  | "add_external_member";
+  "create_organization" | "join_organization" | "add_external_member";
 
 export function moderation_type_to_label(type: ModerationType): string {
   const labels: Record<ModerationType, string> = {

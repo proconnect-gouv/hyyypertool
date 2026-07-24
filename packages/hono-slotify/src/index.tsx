@@ -42,8 +42,7 @@ export function createSlot<P extends {}>() {
     }
 
     const children_array = Children.toArray(children as Child[]) as
-      | Child[]
-      | [FunctionChild<P>];
+      Child[] | [FunctionChild<P>];
 
     if (
       restProps &&

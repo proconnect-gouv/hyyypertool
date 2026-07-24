@@ -22,19 +22,19 @@
     "e2e:install": "cd e2e && bun install",
     "e2e:run": "cd e2e && bun run",
     "fixtures:load": "bun run database:identite-proconnect:migrator && bun run database:identite-proconnect:seed",
-    "format": "bun run --parallel format:*",
-    "format:fix": "bun x prettier --log-level silent --write .",
+    "format": "bun x prettier --write .",
     "format:pkg": "bun x sort-package-json ./package.json ./sources/*/package.json ./sources/*/*/package.json ./e2e/package.json",
     "format:tsconfig": "bun x @monorepo-utils/workspaces-to-typescript-project-references && prettier --log-level silent --write **/tsconfig.json",
-    "lint": "bun x prettier --check . && bun run test:type-check",
+    "lint": "bun run --parallel lint:*",
+    "lint:format": "prettier --check .",
+    "lint:type-check": "tsc --build",
     "postadd": "bun run format:tsconfig",
     "renovate": "bun x npm-check-updates --packageManager bun --interactive --upgrade --deep",
     "start": "tsx --import ./bin/src/node/instrument.ts bin/src/node/index.ts",
     "studio:identite-proconnect": "bun run database:identite-proconnect:run studio",
     "test": "bun run format && bun run test:type-check && bun run test:all",
     "test:all": "bun test",
-    "test:inspect": "bun test --inspect-wait=localhost:6499/",
-    "test:type-check": "bun x tsc --build"
+    "test:inspect": "bun test --inspect-wait=localhost:6499/"
   },
   "prettier": {
     "plugins": [

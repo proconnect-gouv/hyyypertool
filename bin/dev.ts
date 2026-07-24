@@ -58,9 +58,9 @@ function watchClientScripts() {
     { recursive: true },
     (event, filename) => {
       if (!filename) return;
-      if (
-        !(filename.endsWith(".client.ts") || filename.endsWith(".client.tsx"))
-      )
+      if (!(
+        filename.endsWith(".client.ts") || filename.endsWith(".client.tsx")
+      ))
         return;
       if (filename.includes(".test.") || filename.includes(".spec.")) return;
 

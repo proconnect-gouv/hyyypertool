@@ -5,14 +5,7 @@ import type { HasRequiredKeys, UnionToIntersection } from "hono/utils/types";
 import type { Router } from "../routes";
 
 type Methods =
-  | "get"
-  | "post"
-  | "put"
-  | "delete"
-  | "patch"
-  | "head"
-  | "options"
-  | "trace";
+  "get" | "post" | "put" | "delete" | "patch" | "head" | "options" | "trace";
 
 type InputEndpoint = { form?: {}; query?: {}; param?: {} };
 
@@ -32,9 +25,11 @@ type HtmxSpecifiedAttributes<
     : Record<`hx-${Method}`, string>;
 
 type UrlClientRequest<TSchema extends Schema> = {
-  [$$Method in keyof TSchema as $$Method extends `$${infer Method}`
-    ? `$hx_${Method}`
-    : never]: TSchema[$$Method] extends Endpoint & {
+  [
+    $$Method in keyof TSchema as $$Method extends `$${infer Method}`
+      ? `$hx_${Method}`
+      : never
+  ]: TSchema[$$Method] extends Endpoint & {
     input: infer $Input;
   }
     ? { input: $Input; method: $$Method } extends {
