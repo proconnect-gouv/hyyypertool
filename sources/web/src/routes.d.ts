@@ -1779,15 +1779,7 @@ declare const app: import("hono/hono-base").HonoBase<
                       output: undefined;
                       outputFormat: "redirect";
                       status:
-                        | 300
-                        | 301
-                        | 302
-                        | 303
-                        | 304
-                        | 305
-                        | 306
-                        | 307
-                        | 308;
+                        300 | 301 | 302 | 303 | 304 | 305 | 306 | 307 | 308;
                     };
               };
             },

@@ -1,14 +1,7 @@
 //
 
 export type Token =
-  | "by"
-  | "date"
-  | "email"
-  | "is"
-  | "service"
-  | "siret"
-  | "sort"
-  | "type";
+  "by" | "date" | "email" | "is" | "service" | "siret" | "sort" | "type";
 
 export interface Search {
   day: Date | undefined;

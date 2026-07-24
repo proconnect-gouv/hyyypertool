@@ -132,9 +132,9 @@ exports[`development 1`] = `
       <!--  -->
 
       <script
-            nonce="nonce"
-            src="/assets/ASSETS_PATH/node_modules/htmx.org/dist/htmx.js"
-          ></script>
+              nonce="nonce"
+              src="/assets/ASSETS_PATH/node_modules/htmx.org/dist/htmx.js"
+            ></script>
 
       <meta
         name="htmx-env"
@@ -142,9 +142,9 @@ exports[`development 1`] = `
       />
 
       <script
-            nonce="nonce"
-            src="/assets/ASSETS_PATH/node_modules/htmx-ext-debug/debug.js"
-          ></script>
+              nonce="nonce"
+              src="/assets/ASSETS_PATH/node_modules/htmx-ext-debug/debug.js"
+            ></script>
 
       <script
         defer
@@ -162,14 +162,14 @@ exports[`development 1`] = `
       <!--  -->
 
       <script
-              nonce="nonce"
-              src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/_hyperscript.js"
-            ></script>
+                nonce="nonce"
+                src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/_hyperscript.js"
+              ></script>
 
-            <script
-              nonce="nonce"
-              src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/hdb.js"
-            ></script>
+              <script
+                nonce="nonce"
+                src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/hdb.js"
+              ></script>
       <script
         nonce="nonce"
         src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/template.js"
@@ -187,11 +187,11 @@ exports[`development 1`] = `
       <!--  -->
 
       <script
-            defer
-            nonce="nonce"
-            src="/assets/PUBLIC_ASSETS_PATH/public/built/routes/___dev___/live-reload.client.js"
-            type="module"
-          ></script>
+              defer
+              nonce="nonce"
+              src="/assets/PUBLIC_ASSETS_PATH/public/built/routes/___dev___/live-reload.client.js"
+              type="module"
+            ></script>
     </html>
   "
 `;
@@ -328,9 +328,9 @@ exports[`production 1`] = `
       <!--  -->
 
       <script
-            nonce="nonce"
-            src="/assets/ASSETS_PATH/node_modules/htmx.org/dist/htmx.min.js"
-          ></script>
+              nonce="nonce"
+              src="/assets/ASSETS_PATH/node_modules/htmx.org/dist/htmx.min.js"
+            ></script>
 
       <meta
         name="htmx-env"
@@ -355,9 +355,9 @@ exports[`production 1`] = `
       <!--  -->
 
       <script
-            nonce="nonce"
-            src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/_hyperscript.min.js"
-          ></script>
+              nonce="nonce"
+              src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/_hyperscript.min.js"
+            ></script>
       <script
         nonce="nonce"
         src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/template.js"

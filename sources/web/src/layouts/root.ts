@@ -109,12 +109,14 @@ export function RootLayout({ children }: PropsWithChildren) {
         </script>
 
         <title>
-          ${page_title ??
-          `H${
-            Array.from({ length: Math.max(3, nonce.length) })
-              .fill("y")
-              .join("") + "pertool"
-          }`}
+          ${
+            page_title ??
+            `H${
+              Array.from({ length: Math.max(3, nonce.length) })
+                .fill("y")
+                .join("") + "pertool"
+            }`
+          }
         </title>
       </head>
       <body class="flex min-h-screen flex-col">
@@ -153,15 +155,17 @@ export function RootLayout({ children }: PropsWithChildren) {
 
       <!--  -->
 
-      ${config.NODE_ENV === "development"
-        ? html`<script
-            nonce="${nonce}"
-            src="${config.ASSETS_PATH}/node_modules/htmx.org/dist/htmx.js"
-          ></script>`
-        : html`<script
-            nonce="${nonce}"
-            src="${config.ASSETS_PATH}/node_modules/htmx.org/dist/htmx.min.js"
-          ></script>`}
+      ${
+        config.NODE_ENV === "development"
+          ? html`<script
+              nonce="${nonce}"
+              src="${config.ASSETS_PATH}/node_modules/htmx.org/dist/htmx.js"
+            ></script>`
+          : html`<script
+              nonce="${nonce}"
+              src="${config.ASSETS_PATH}/node_modules/htmx.org/dist/htmx.min.js"
+            ></script>`
+      }
 
       <meta
         name="htmx-env"
@@ -173,12 +177,14 @@ export function RootLayout({ children }: PropsWithChildren) {
         })}"
       />
 
-      ${config.NODE_ENV === "production"
-        ? ""
-        : html`<script
-            nonce="${nonce}"
-            src="${config.ASSETS_PATH}/node_modules/htmx-ext-debug/debug.js"
-          ></script>`}
+      ${
+        config.NODE_ENV === "production"
+          ? ""
+          : html`<script
+              nonce="${nonce}"
+              src="${config.ASSETS_PATH}/node_modules/htmx-ext-debug/debug.js"
+            ></script>`
+      }
 
       <script
         defer
@@ -195,20 +201,22 @@ export function RootLayout({ children }: PropsWithChildren) {
 
       <!--  -->
 
-      ${config.NODE_ENV === "development"
-        ? html`<script
-              nonce="${nonce}"
-              src="${config.ASSETS_PATH}/node_modules/hyperscript.org/dist/_hyperscript.js"
-            ></script>
+      ${
+        config.NODE_ENV === "development"
+          ? html`<script
+                nonce="${nonce}"
+                src="${config.ASSETS_PATH}/node_modules/hyperscript.org/dist/_hyperscript.js"
+              ></script>
 
-            <script
+              <script
+                nonce="${nonce}"
+                src="${config.ASSETS_PATH}/node_modules/hyperscript.org/dist/hdb.js"
+              ></script>`
+          : html`<script
               nonce="${nonce}"
-              src="${config.ASSETS_PATH}/node_modules/hyperscript.org/dist/hdb.js"
+              src="${config.ASSETS_PATH}/node_modules/hyperscript.org/dist/_hyperscript.min.js"
             ></script>`
-        : html`<script
-            nonce="${nonce}"
-            src="${config.ASSETS_PATH}/node_modules/hyperscript.org/dist/_hyperscript.min.js"
-          ></script>`}
+      }
       <script
         nonce="${nonce}"
         src="${config.ASSETS_PATH}/node_modules/hyperscript.org/dist/template.js"
@@ -225,14 +233,16 @@ export function RootLayout({ children }: PropsWithChildren) {
 
       <!--  -->
 
-      ${config.NODE_ENV === "development"
-        ? html`<script
-            defer
-            nonce="${nonce}"
-            src="${config.PUBLIC_ASSETS_PATH}/routes/___dev___/live-reload.client.js"
-            type="module"
-          ></script>`
-        : ""}
+      ${
+        config.NODE_ENV === "development"
+          ? html`<script
+              defer
+              nonce="${nonce}"
+              src="${config.PUBLIC_ASSETS_PATH}/routes/___dev___/live-reload.client.js"
+              type="module"
+            ></script>`
+          : ""
+      }
     </html>
   `;
 }
