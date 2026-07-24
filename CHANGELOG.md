@@ -1,5 +1,35 @@
 # Changelog
 
+## [2026.7.3](https://github.com/proconnect-gouv/hyyypertool/compare/2026.7.2...2026.7.3) (2026-07-24)
+
+### Changements
+
+- 💄 Renommer bouton '🚫 réinitialiser la vérification de l’email (bloquer)'
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): Bump actions/labeler (#1739) (11f7a167)
+- :arrow_upper_right: [patch](deps): Bump the sentry group with 4 updates (#1740) (1b03f34d)
+- :arrow_upper_right: [patch](deps): Bump actions/checkout (#1738) (1d6a4468)
+- :arrow_upper_right: [patch](deps): Bump actions/setup-node (#1727) (4cbf42be)
+- :arrow_upper_right: [patch](deps): Bump hono from 4.12.27 to 4.12.28 (#1733) (2aeae022)
+- :arrow_upper_right: [patch](deps): Bump tsx from 4.22.4 to 4.23.0 (#1735) (740d578c)
+- :arrow_upper_right: [patch](deps): Bump oxc-parser (#1734) (a1d761f8)
+- :arrow_upper_right: [patch](deps): Bump typescript in /e2e (#1731) (fa0b7208)
+- :arrow_upper_right: [patch](deps): Bump cypress in /e2e (#1729) (69c7b209)
+- :arrow_upper_right: [patch](deps): Bump actions/labeler (#1726) (5f40c748)
+- :arrow_upper_right: [patch](deps): Bump @preact/signals (#1736) (288a3c39)
+
+### Divers
+
+- 💬 Reword revoke identity button (#1737) (37c676c7)
+- ↗️ [patch](deps-dev): Bump prettier from 3.8.3 to 3.9.5 (#1743) (741f2847)
+- ↗️ [patch](deps): Bump tsx from 4.23.0 to 4.23.1 (#1741) (27f23dd7)
+- ↗️ [patch](deps-dev): Bump typescript from 6.0.3 to 7.0.2 (#1744) (b571f853)
+- ↗️ [patch](deps-dev): Bump @types/node from 26.1.0 to 26.1.1 in /e2e (#1728) (d58be589)
+- ↗️ [patch](deps): Bump @badeball/cypress-cucumber-preprocessor from 24.0.1 to 26.0.0 in /e2e (#1730) (ebfcbbde)
+- ↗️ [patch](deps): Bump the sentry group with 4 updates (#1732) (bf3dffb0)
+
 ## [2026.7.2](https://github.com/proconnect-gouv/hyyypertool/compare/2026.7.1...2026.7.2) (2026-07-09)
 
 ### Changements
