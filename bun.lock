@@ -17,7 +17,7 @@
         "htmx.org": "2.0.10",
         "hyperscript.org": "0.9.14",
         "nprogress": "0.2.0",
-        "preact": "10.29.2",
+        "preact": "10.29.7",
         "tsx": "4.23.1",
         "zod": "4.4.3",
       },
@@ -204,7 +204,7 @@
         "nprogress": "0.2.0",
         "openid-client": "6.8.4",
         "pg": "8.22.0",
-        "preact": "10.29.2",
+        "preact": "10.29.7",
         "preact-render-to-string": "6.7.0",
         "rate-limiter-flexible": "11.2.0",
         "rehype-sanitize": "6.0.0",
@@ -1264,7 +1264,7 @@
 
     "powershell-utils": ["powershell-utils@0.1.0", "", {}, "sha512-dM0jVuXJPsDN6DvRpea484tCUaMiXWjuCn++HGTqUWzGDjv5tZkEZldAJ/UMlqRYGFrD/etByo4/xOuC/snX2A=="],
 
-    "preact": ["preact@10.29.2", "", {}, "sha512-7tNmwg/7mzzAoB/8kSg6Hl37JraAZw3Z3A0JSY7VXlZwo82Xn0G7wKbNNs2qoF4ZEEsQGTwDAroNdqKs1ofJxQ=="],
+    "preact": ["preact@10.29.7", "", { "peerDependencies": { "preact-render-to-string": ">=5" }, "optionalPeers": ["preact-render-to-string"] }, "sha512-DCHYrK/B10yUD3ZjLfhZ3WIE/9Vf9VFUODcRE2dRomTYDpJk6z6L9wecSfhfE6M9ZTHUdyQkoC46arIDhEV84Q=="],
 
     "preact-render-to-string": ["preact-render-to-string@6.7.0", "", { "peerDependencies": { "preact": ">=10 || >= 11.0.0-0" } }, "sha512-Z4WR8fmLMRpdYqJ9i7vrlXSsSrxVJydwrkEXHapexfARbWfGb7vGcnvNQnIzN0cXciMVOlz/XLoiMCi9gUsy9Q=="],
 
