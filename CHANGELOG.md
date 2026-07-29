@@ -1,5 +1,21 @@
 # Changelog
 
+## [2026.7.4](https://github.com/proconnect-gouv/hyyypertool/compare/2026.7.3...2026.7.4) (2026-07-29)
+
+### Changements
+
+- 🐛 Ouverture du PDF des dirigeants d'association dans un nouvel onglet
+
+Le lien « Liste dirigeants associations » proxifie désormais le document via une nouvelle route /document qui force l'affichage inline, au lieu de renvoyer vers l'URL externe brute.
+
+### Documentation
+
+- 📝 Add release note for association leaders PDF inline fix (2a4647a2)
+
+### Divers
+
+- fix(organizations): open association leaders PDF inline in a new tab (#1746) (b3ef5b2f)
+
 ## [2026.7.3](https://github.com/proconnect-gouv/hyyypertool/compare/2026.7.2...2026.7.3) (2026-07-24)
 
 ### Changements
