@@ -14,68 +14,117 @@ import { z } from "zod";
 
 class FatalError extends Error {}
 
-export default new Hono<FetchVariablesContext & AppEnvContext>().get(
-  "/",
-  zValidator(
-    "query",
-    z.object({
-      siret: z.string(),
-      retry: z.string().optional(),
-    }),
-  ),
-  async function GET({ html, req, env, var: { fetch } }) {
-    const { siret, retry } = req.valid("query");
-    const useRetry = retry === "true";
-    const hx_organizations_leaders_props = urls.organizations.leaders.$hx_get({
-      query: { retry: "true", siret },
-    });
-
-    const doc = await load_leaders({ siret, fetch, useRetry, env });
-
-    return match(doc)
-      .with(P.instanceOf(FatalError), () =>
-        html(
-          <button class={button({ size: "sm", type: "tertiary" })} disabled>
-            Erreur API — contacter l'équipe tech
-          </button>,
-        ),
-      )
-      .with(P.instanceOf(Error), () =>
-        html(
-          <button
-            class={button({ size: "sm", type: "tertiary" })}
-            {...hx_organizations_leaders_props}
-            hx-swap="outerHTML"
-          >
-            Liste dirigeants associations (Réessayer)
-          </button>,
-        ),
-      )
-      .with({ url: P.string }, ({ url }) =>
-        html(
-          <a
-            class={button({
-              className: "bg-white",
-              size: "sm",
-              type: "tertiary",
-            })}
-            href={url}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Liste dirigeants associations
-          </a>,
-        ),
-      )
-      .otherwise(() =>
-        html(
-          <button class={button({ size: "sm", type: "tertiary" })} disabled>
-            Pas de liste des dirigeants
-          </button>,
-        ),
+export default new Hono<FetchVariablesContext & AppEnvContext>()
+  .get(
+    "/",
+    zValidator(
+      "query",
+      z.object({
+        siret: z.string(),
+        retry: z.string().optional(),
+      }),
+    ),
+    async function GET({ html, req, env, var: { fetch } }) {
+      const { siret, retry } = req.valid("query");
+      const useRetry = retry === "true";
+      const hx_organizations_leaders_props = urls.organizations.leaders.$hx_get(
+        {
+          query: { retry: "true", siret },
+        },
       );
-  },
-);
+
+      const doc = await load_leaders({ siret, fetch, useRetry, env });
+
+      const document_href = `/organizations/leaders/document?${new URLSearchParams({ siret })}`;
+
+      return match(doc)
+        .with(P.instanceOf(FatalError), () =>
+          html(
+            <button class={button({ size: "sm", type: "tertiary" })} disabled>
+              Erreur API — contacter l'équipe tech
+            </button>,
+          ),
+        )
+        .with(P.instanceOf(Error), () =>
+          html(
+            <button
+              class={button({ size: "sm", type: "tertiary" })}
+              {...hx_organizations_leaders_props}
+              hx-swap="outerHTML"
+            >
+              Liste dirigeants associations (Réessayer)
+            </button>,
+          ),
+        )
+        .with({ url: P.string }, () =>
+          html(
+            <a
+              class={button({
+                className: "bg-white",
+                size: "sm",
+                type: "tertiary",
+              })}
+              href={document_href}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Liste dirigeants associations
+            </a>,
+          ),
+        )
+        .otherwise(() =>
+          html(
+            <button class={button({ size: "sm", type: "tertiary" })} disabled>
+              Pas de liste des dirigeants
+            </button>,
+          ),
+        );
+    },
+  )
+  .get(
+    "/document",
+    zValidator("query", z.object({ siret: z.string() })),
+    async function GET({ req, env, var: { fetch }, text }) {
+      const { siret } = req.valid("query");
+      const doc = await load_leaders({ siret, fetch, env });
+
+      if (!doc || doc instanceof Error || !doc.url) {
+        return text("Document introuvable", 404);
+      }
+
+      consola.info(`  <<-- ${"GET"} ${doc.url}`);
+      const [error, response] = await to(
+        fetch(doc.url, {
+          signal: AbortSignal.timeout(env.HTTP_CLIENT_TIMEOUT),
+        }),
+      );
+
+      if (error || !response) {
+        consola.error(`Failed to fetch leaders document:`, error);
+        return text("Impossible de récupérer le document", 502);
+      }
+
+      consola.info(
+        `  -->> ${"GET"} ${doc.url} ${response.status} ${response.statusText}`,
+      );
+
+      if (!response.ok) {
+        return text("Impossible de récupérer le document", 502);
+      }
+
+      const headers = new Headers();
+      headers.set(
+        "Content-Type",
+        response.headers.get("Content-Type") ?? "application/pdf",
+      );
+      headers.set(
+        "Content-Disposition",
+        'inline; filename="liste-dirigeants-associations.pdf"',
+      );
+
+      return new Response(response.body, { status: 200, headers });
+    },
+  );
 
 //
 
