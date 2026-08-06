@@ -1,5 +1,19 @@
 # Changelog
 
+## [2026.8.0](https://github.com/proconnect-gouv/hyyypertool/compare/2026.7.4...2026.8.0) (2026-08-06)
+
+### Changements
+
+- ✨ Ajoute un bouton WHOIS avec le nom de domaine correspondant à la modération
+
+### Ajouté
+
+- ✨ Add who is button (#1757) (5c723639)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps-dev): Bump prettier from 3.9.5 to 3.9.6 (#1751) (5be7a2e7)
+
 ## [2026.7.4](https://github.com/proconnect-gouv/hyyypertool/compare/2026.7.3...2026.7.4) (2026-07-29)
 
 ### Changements
