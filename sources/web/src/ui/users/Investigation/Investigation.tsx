@@ -45,6 +45,16 @@ export function Investigation(props: InvestigationProps) {
           Chercher le matching
         </GoogleSearchButton>
       </li>
+      <li>
+        <a
+          class={`${button({ size: "sm", type: "tertiary" })} dark:bg-surface-hover mr-2 bg-white`}
+          href={`https://who.is/whois/${domain}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Chercher domaine WHOIS
+        </a>
+      </li>
     </ul>
   );
 }
