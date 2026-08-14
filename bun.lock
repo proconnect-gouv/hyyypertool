@@ -27,7 +27,7 @@
         "@types/bun": "1.3.14",
         "@~/hyyyperbase": "workspace:*",
         "@~/identite-proconnect": "workspace:*",
-        "hono": "4.12.28",
+        "hono": "4.13.2",
         "htmx-ext-debug": "2.0.2",
         "prettier": "3.9.6",
         "prettier-plugin-gherkin": "4.0.0",
@@ -45,7 +45,7 @@
         "hyyypertool-bun": "./src/bun/index.ts",
       },
       "dependencies": {
-        "@hono/node-server": "2.0.4",
+        "@hono/node-server": "2.1.1",
         "@sentry/node": "10.65.0",
         "@sentry/profiling-node": "10.65.0",
         "@tailwindcss/cli": "4.3.3",
@@ -53,7 +53,7 @@
         "@~/web": "workspace:*",
         "consola": "3.4.2",
         "dotenv-flow": "4.1.0",
-        "hono": "4.12.28",
+        "hono": "4.13.2",
         "tailwindcss": "4.3.3",
         "tsx": "4.23.1",
       },
@@ -67,7 +67,7 @@
       "name": "hono-slotify",
       "version": "1.0.0",
       "dependencies": {
-        "hono": "4.12.28",
+        "hono": "4.13.2",
       },
       "devDependencies": {
         "@types/bun": "1.3.14",
@@ -131,7 +131,7 @@
         "@tsconfig/bun": "1.0.10",
         "@tsconfig/strictest": "2.0.8",
         "@types/bun": "1.3.14",
-        "hono": "4.12.28",
+        "hono": "4.13.2",
       },
     },
     "sources/hyyyperbase": {
@@ -164,7 +164,7 @@
         "@proconnect-gouv/proconnect.insee": "2.0.0",
         "consola": "3.4.2",
         "drizzle-orm": "0.45.2",
-        "hono": "4.12.28",
+        "hono": "4.13.2",
         "pg": "8.22.0",
       },
       "devDependencies": {
@@ -178,7 +178,7 @@
       "name": "@~/web",
       "version": "1.0.0",
       "dependencies": {
-        "@hono/node-server": "2.0.4",
+        "@hono/node-server": "2.1.1",
         "@hono/sentry": "1.2.2",
         "@hono/zod-validator": "0.9.0",
         "@proconnect-gouv/proconnect.annuaire_entreprises": "2.0.2",
@@ -195,7 +195,7 @@
         "await-to-js": "3.0.0",
         "consola": "3.4.2",
         "drizzle-orm": "0.45.2",
-        "hono": "4.12.28",
+        "hono": "4.13.2",
         "hono-sessions": "0.8.1",
         "hono-slotify": "workspace:*",
         "is-disposable-email-domain": "1.0.7",
@@ -320,7 +320,7 @@
 
     "@happy-dom/global-registrator": ["@happy-dom/global-registrator@20.10.6", "", { "dependencies": { "@types/node": ">=20.0.0", "happy-dom": "^20.10.6" } }, "sha512-Nu/IjRkkNxmeG2ywWsyJSO4d1BrWTqVzxCPL+gXj0b97klhmjd6wLzt6Bx/laNpkZ3WLW7zNCqmtMIbIlahqug=="],
 
-    "@hono/node-server": ["@hono/node-server@2.0.4", "", { "peerDependencies": { "hono": "^4" } }, "sha512-Ut3y0dMMPWy6bZ2kVfx25EOVbZlm15dhF4mOsezMlhpNHy+4MkU1qN9Y6lnruYi4wPmFzimGX2X7LF/FwHli4A=="],
+    "@hono/node-server": ["@hono/node-server@2.1.1", "", { "peerDependencies": { "hono": "^4" } }, "sha512-ELuehkj5VCBdgEw9zs+ivkKwyzzUCSQuE96YmiPvn1ECBoZCczbFXJLeEGMTYjphP6gydh4pHMqEYPVMYUVgQg=="],
 
     "@hono/sentry": ["@hono/sentry@1.2.2", "", { "dependencies": { "toucan-js": "^4.0.0" }, "peerDependencies": { "hono": ">=3.*" } }, "sha512-027grZBrRGDPor8mRd+QOBcSpUlF07YrTp/WFDXZhbvWZ+1LrZdERUqcdg1gBGDUTanHhd9ucblpNNN6+V1bxg=="],
 
@@ -950,7 +950,7 @@
 
     "hast-util-whitespace": ["hast-util-whitespace@3.0.0", "", { "dependencies": { "@types/hast": "^3.0.0" } }, "sha512-88JUN06ipLwsnv+dVn+OIYOvAuvBMy/Qoi6O7mQHxdPXpjy+Cd6xRkWwux7DKO+4sYILtLBRIKgsdpS2gQc7qw=="],
 
-    "hono": ["hono@4.12.28", "", {}, "sha512-YwUvVpSF7m1yOblFPrU3Hbo8XhPheBoiyfGuII6z19LnOr6JpDnyyp7LFNrfV56wS8tpvtBFGRISHN02pDdLOA=="],
+    "hono": ["hono@4.13.2", "", {}, "sha512-JydRilDRkYBQMt9qR9U92mXxmbGqsqSn/IKOrh4e7/gEbn+0zSr8igTu0obwJoNGN4sez28DIql7FBHWydoJpA=="],
 
     "hono-sessions": ["hono-sessions@0.8.1", "", { "dependencies": { "iron-webcrypto": "^1.2.1", "ohash": "^2" }, "peerDependencies": { "hono": "^4.0.0" } }, "sha512-YLSKuIP13yhXTQe2x3sCc1JWsqt1Z3WZB2DWE+oX+YpOsC3lv8uCHnCoNHcY9DPyflDw4XQJN+MFVvcp5QwWdw=="],
 
