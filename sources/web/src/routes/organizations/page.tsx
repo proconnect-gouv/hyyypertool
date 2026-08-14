@@ -5,10 +5,13 @@ import { hx_include } from "#src/htmx";
 import type { Pagination } from "#src/schema";
 import { date_to_dom_string } from "#src/time";
 import { button } from "#src/ui/button";
+import { card } from "#src/ui/card";
 import { input } from "#src/ui/form";
 import { Foot } from "#src/ui/hx_table";
+import { Svg } from "#src/ui/icons/components";
 import { row, table } from "#src/ui/table";
 import { Time } from "#src/ui/time";
+import { isSiretValid } from "@proconnect-gouv/proconnect.core/security";
 import { urls } from "#src/urls";
 import { query_schema } from "./context";
 import type { get_organizations_list } from "./get_organizations_list.query";
@@ -35,16 +38,30 @@ export default async function Page({
   q,
   pagination,
   query_result,
+  is_editor,
 }: {
   q?: string | string[];
   pagination: Pagination;
   query_result: QueryResult;
+  is_editor: boolean;
 }) {
   return (
     <main class="container mx-auto my-12 px-4">
-      <h1>Liste des organisations</h1>
+      <div class="mb-6 flex items-baseline justify-between">
+        <h1 class="mb-0">Liste des organisations</h1>
+        {is_editor && (
+          <a href={urls.organizations.new.$url().pathname} class={button()}>
+            Ajouter une organisation
+          </a>
+        )}
+      </div>
       <Filter q={q} />
-      <Table pagination={pagination} query_result={query_result} />
+      <Table
+        q={q}
+        pagination={pagination}
+        query_result={query_result}
+        is_editor={is_editor}
+      />
     </main>
   );
 }
@@ -80,13 +97,21 @@ function Filter({ q }: { q?: string | string[] }) {
 }
 
 async function Table({
+  q,
   pagination,
   query_result,
+  is_editor,
 }: {
+  q?: string | string[];
   pagination: Pagination;
   query_result: QueryResult;
+  is_editor: boolean;
 }) {
   const { count, organizations } = query_result;
+  const searched_siret = isSiretValid(q) ? q : undefined;
+
+  if (count === 0 && searched_siret)
+    return <EmptySiretSearch siret={searched_siret} is_editor={is_editor} />;
 
   return (
     <div id={$table}>
@@ -160,5 +185,36 @@ function Row({
         </a>
       </td>
     </tr>
+  );
+}
+
+function EmptySiretSearch({
+  siret,
+  is_editor,
+}: {
+  siret: string;
+  is_editor: boolean;
+}) {
+  const href = `${urls.organizations.new.$url().pathname}?siret=${siret}`;
+  const { base, title, desc } = card();
+
+  return (
+    <div class={base({ class: "mb-4 items-center py-12 text-center" })}>
+      <span class="text-muted mb-4 text-4xl" aria-hidden="true">
+        <Svg name="search" />
+      </span>
+      <p class={title()}>Aucune organisation trouvée</p>
+      <p class={desc({ class: "max-w-prose" })}>
+        Aucune organisation n'existe pour le SIRET <strong>{siret}</strong>.
+        {is_editor
+          ? " Vous pouvez l'ajouter à partir de ses informations légales."
+          : ""}
+      </p>
+      {is_editor && (
+        <a class={button({ class: "mt-6" })} href={href}>
+          Ajouter cette organisation
+        </a>
+      )}
+    </div>
   );
 }

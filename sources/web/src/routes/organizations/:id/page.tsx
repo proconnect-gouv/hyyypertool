@@ -3,6 +3,7 @@
 import { hyper_ref } from "#src/html";
 import { hx_include, hx_trigger_from_body } from "#src/htmx";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
+import { alert } from "#src/ui/notice";
 import { FrNumberConverter } from "#src/ui/number";
 import { formattedPlural } from "#src/ui/plurial";
 import { table } from "#src/ui/table";
@@ -21,11 +22,13 @@ export default async function Page({
   organization,
   domains_count,
   members_count,
+  status,
 }: {
   banaticUrl: string;
   organization: Organisation;
   domains_count: number;
   members_count: number;
+  status?: "created";
 }) {
   const $domains_describedby = hyper_ref();
 
@@ -34,11 +37,19 @@ export default async function Page({
     query: { describedby: $domains_describedby },
   });
 
+  const { base: alert_base } = alert({ intent: "success" });
+
   return (
     <main>
       <div class="bg-surface py-6">
         <div class="container mx-auto px-4 py-6">
           <h1>🏛 A propos de l'organisation</h1>
+
+          {status === "created" && (
+            <div class={alert_base()} role="alert">
+              <p class="mb-0">Organisation créée !</p>
+            </div>
+          )}
 
           <Fiche organization={organization} banaticUrl={banaticUrl} />
         </div>

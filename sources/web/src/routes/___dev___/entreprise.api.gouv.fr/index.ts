@@ -1,12 +1,42 @@
 //
 
 import type { AppContext } from "#src/middleware/context";
+import * as etablissements_siret from "@proconnect-gouv/proconnect.api_entreprise/testing/seed/v3-insee-sirene-etablissements-siret";
 import { Hono } from "hono";
+
+//
+
+const etablissements_by_siret = new Map(
+  Object.values(etablissements_siret).map((etablissement) => [
+    etablissement.siret,
+    etablissement,
+  ]),
+);
 
 //
 
 export default new Hono<AppContext>()
   .get("/readyz", (c) => c.text("readyz check passed"))
+
+  .get("/v3/insee/sirene/etablissements/:siret", (c) => {
+    const { siret } = c.req.param();
+    const etablissement = etablissements_by_siret.get(siret);
+    if (!etablissement) {
+      return c.json(
+        {
+          errors: [
+            {
+              code: "00404",
+              title: "Ressource non trouvée",
+              detail: `Le siret ${siret} n'a pas été trouvé`,
+            },
+          ],
+        },
+        404,
+      );
+    }
+    return c.json({ data: etablissement });
+  })
 
   .get("/v4/djepva/api-association/associations/:siren_or_rna", (c) => {
     const { siren_or_rna } = c.req.param();

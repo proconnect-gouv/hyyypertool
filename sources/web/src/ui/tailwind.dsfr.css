@@ -14,6 +14,7 @@
   --color-blue-france-hover: #1212ff;
   --color-blue-france-975: #f5f5fe;
   --color-blue-france-925: #e3e3fd;
+  --color-blue-france-sun-113-625: #8585f6;
   --color-blue-ecume: #e8edff;
   --color-blue-ecume-975: #f4f6fe;
 
@@ -174,6 +175,10 @@
     --color-label-error: #ff8080;
     --color-label-success: #6fcf97;
     --checkbox-checkmark: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000091' d='M10 15.17l9.2-9.2 1.4 1.42L10 18l-6.36-6.36 1.4-1.42z'/%3E%3C/svg%3E");
+  }
+
+  .dark a {
+    color: var(--color-blue-france-sun-113-625);
   }
 
   html {
