@@ -5,7 +5,7 @@ import type { Env, MiddlewareHandler } from "hono";
 //
 
 export function set_fetch(
-  value?: () => Promise<Response> | typeof fetch,
+  value?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>,
 ): MiddlewareHandler<FetchVariablesContext> {
   return async function set_fetch_middleware({ set }, next) {
     set("fetch", (value as any) ?? globalThis.fetch);

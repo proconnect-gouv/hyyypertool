@@ -11,6 +11,7 @@ import { EntitySchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
+import { z } from "zod";
 import organization_domains_router from "./domains";
 import { get_organization_by_id } from "./get_organization_by_id.query";
 import organization_members_router from "./members";
@@ -18,11 +19,16 @@ import OrganizationPage from "./page";
 
 //
 
+const OrganizationQuery_Schema = z.object({
+  status: z.enum(["created"]).optional(),
+});
+
 export default new Hono<AppContext>()
   .use("/", jsxRenderer(Main_Layout))
   .get(
     "/",
     zValidator("param", EntitySchema),
+    zValidator("query", OrganizationQuery_Schema),
     async function GET({
       render,
       req,
@@ -31,6 +37,7 @@ export default new Hono<AppContext>()
       var: { identite_pg },
     }) {
       const { id } = req.valid("param");
+      const { status } = req.valid("query");
 
       const organization = await get_organization_by_id(identite_pg, id);
 
@@ -53,6 +60,7 @@ export default new Hono<AppContext>()
           organization={organization}
           domains_count={domains_count}
           members_count={members_count}
+          status={status}
         />,
       );
     },
