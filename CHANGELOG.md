@@ -1,5 +1,35 @@
 # Changelog
 
+## [2026.9.0](https://github.com/proconnect-gouv/hyyypertool/compare/2026.8.0...2026.9.0) (2026-09-02)
+
+### Ajouté
+
+- ✨ organizations: add bulk SIRET organization creation (#1762) (5ec74745)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps-dev): Bump @happy-dom/global-registrator (#1776) (feff544e)
+- :arrow_upper_right: [patch](deps): Bump cypress in /e2e (#1774) (e75b5f76)
+- :arrow_upper_right: [patch](deps): Bump cypress-io/github-action (#1773) (876499fe)
+- :arrow_upper_right: [patch](deps-dev): Bump release-it (#1775) (30bf600e)
+- :arrow_upper_right: [patch](deps-dev): Bump @types/node in /e2e (#1764) (4f9b7b68)
+- :arrow_upper_right: [patch](deps): Bump @preact/signals (#1768) (c356ccc2)
+- :arrow_upper_right: [patch](deps): Bump the sentry group with 4 updates (#1766) (61075958)
+- :arrow_upper_right: [patch](deps): Bump cypress in /e2e (#1765) (75b1d994)
+- :arrow_upper_right: [patch](deps): Bump cypress-io/github-action (#1763) (ed0701bc)
+- :arrow_upper_right: [patch](deps-dev): Bump @csmith/release-it-calver-plugin (#1769) (da995e86)
+- :arrow_upper_right: [patch](deps): Bump the sentry group across 1 directory with 4 updates (#1749) (c4d82512)
+- ⬆️ Bump hono from 4.12.28 to 4.13.2 (#1760) (5aa0cd46)
+- :arrow_upper_right: [patch](deps): Bump cypress in /e2e (#1761) (49a0a9df)
+- ⬆️ update to node 24.18.0 (#1747) (91539b7d)
+- :arrow_upper_right: [patch](deps): Bump @hono/zod-validator (#1754) (e5dfb35a)
+- :arrow_upper_right: [patch](deps-dev): Bump @types/node in /e2e (#1755) (71a720a6)
+- :arrow_upper_right: [patch](deps): Bump the tailwindcss group across 1 directory with 2 updates (#1750) (924ce8c7)
+
+### Divers
+
+- Update Node.js version in package.json (#1771) (e431d629)
+
 ## [2026.8.0](https://github.com/proconnect-gouv/hyyypertool/compare/2026.7.4...2026.8.0) (2026-08-06)
 
 ### Changements
