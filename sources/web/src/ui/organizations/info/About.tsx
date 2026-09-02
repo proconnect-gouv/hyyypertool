@@ -7,6 +7,7 @@ import { CopyButton } from "#src/ui/button/components";
 import { description_list } from "#src/ui/list";
 import { LocalTime } from "#src/ui/time";
 import { formatTrancheEffectifsUniteLegale } from "@proconnect-gouv/proconnect.api_entreprise/formatters";
+import type { toPartialOrganization } from "@proconnect-gouv/proconnect.identite/managers/organization";
 import {
   computeServicePublicInfo,
   isEntrepriseUnipersonnelle,
@@ -20,7 +21,9 @@ import { InactiveWarning } from "./InactiveWarning";
 //
 
 type Props = JSX.IntrinsicElements["section"] & {
-  organization: Awaited<ReturnType<GetFicheOrganizationByIdHandler>>;
+  organization:
+    | Awaited<ReturnType<GetFicheOrganizationByIdHandler>>
+    | ReturnType<typeof toPartialOrganization>;
 };
 
 export function About(props: Props) {
@@ -117,32 +120,28 @@ export function About(props: Props) {
           {org_tags.length === 0 && <span class="text-grey-600">—</span>}
         </dd>
       </dl>
-      <details class="my-6">
-        <summary>Détails de l'organisation</summary>
-        <ul>
-          <li>
-            id : <b>{organization.id}</b>
-          </li>
-          <li>
-            Création de l'organisation :{" "}
-            <b>
-              <LocalTime date={organization.created_at} />
-            </b>
-          </li>
-          <li>
-            Dernière mise à jour :{" "}
-            <b>
-              <LocalTime date={organization.updated_at} />
-            </b>
-          </li>
-          <li>
-            Dernière mise à jour :{" "}
-            <b>
-              <LocalTime date={organization.updated_at} />
-            </b>
-          </li>
-        </ul>
-      </details>
+      {"id" in organization && (
+        <details class="my-6">
+          <summary>Détails de l'organisation</summary>
+          <ul>
+            <li>
+              id : <b>{organization.id}</b>
+            </li>
+            <li>
+              Création de l'organisation :{" "}
+              <b>
+                <LocalTime date={organization.created_at} />
+              </b>
+            </li>
+            <li>
+              Dernière mise à jour :{" "}
+              <b>
+                <LocalTime date={organization.updated_at} />
+              </b>
+            </li>
+          </ul>
+        </details>
+      )}
     </section>
   );
 }

@@ -174,16 +174,6 @@ test("render about section", async () => {
               </time></b
             >
           </li>
-          <li>
-            Dernière mise à jour :
-            <b
-              ><time
-                datetime="2011-11-15T13:48:00.000Z"
-                title="Tue Nov 15 2011 14:48:00 GMT+0100 (Central European Standard Time)"
-                >15/11/2011 14:48:00
-              </time></b
-            >
-          </li>
         </ul>
       </details>
     </section>
