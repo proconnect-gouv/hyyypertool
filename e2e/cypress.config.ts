@@ -46,6 +46,7 @@ async function setupNodeEvents(
 
   on("task", {
     seed,
+    sh,
   });
 
   return config;
@@ -68,5 +69,12 @@ async function seed() {
     throw e;
   }
 
+  return null;
+}
+
+//
+
+function sh(command: string) {
+  execSync(command, { stdio: "inherit" });
   return null;
 }
