@@ -54,3 +54,10 @@ updates:
     commit-message:
       prefix: ":arrow_upper_right: [patch]"
       include: "scope"
+
+  - package-ecosystem: "nix"
+    directory: "/"
+    labels:
+      - dependencies
+    schedule:
+      interval: "weekly"
