@@ -6,18 +6,18 @@
     "build": "cd .. && bun run build && bun run db:migrate",
     "lint": "tsc --noEmit",
     "migrate": "cd .. && bun db:migrate",
-    "open": "cypress open -b electron --e2e",
+    "open": "cypress open -b chromium --e2e",
     "seed": "cd .. && bun db:seed",
     "start": "cd .. && bun start",
-    "studio": "cypress open -b electron --e2e",
-    "test": "cypress run -e filterSpecs=true"
+    "studio": "cypress open -b chromium --e2e",
+    "test": "cypress run -x filterSpecs=true"
   },
   "dependencies": {
-    "@badeball/cypress-cucumber-preprocessor": "26.0.0",
+    "@badeball/cypress-cucumber-preprocessor": "28.0.0",
     "@bahmutov/cypress-esbuild-preprocessor": "2.2.8",
     "@proconnect-gouv/proconnect.identite.database": "1.7.0",
     "@testing-library/cypress": "10.1.3",
-    "cypress": "15.21.1",
+    "cypress": "16.0.0",
     "cypress-wait-until": "3.0.2",
     "typescript": "7.0.2"
   },

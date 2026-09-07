@@ -14,8 +14,8 @@ Given("un faux serveur {string}", function (server: string) {
     );
     return;
   }
-  cy.exec(`docker compose restart ${server}`);
-  cy.exec(`docker compose up --wait ${server}`);
+  cy.task("sh", `docker compose restart ${server}`);
+  cy.task("sh", `docker compose up --wait ${server}`);
 });
 
 Then("une notification mail est envoyée", function () {
