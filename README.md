@@ -8,7 +8,7 @@
 
 ## Install 📦
 
-First, you need bun to be installed: https://bun.sh/
+First, you need bun to be installed: https://bun.sh/, or run `nix develop` to get a shell with the correct Node.js, Bun and Cypress versions (see `flake.nix`).
 
 Then install dependencies with: `bun install`.
 
