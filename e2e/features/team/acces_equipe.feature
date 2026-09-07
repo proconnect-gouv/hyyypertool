@@ -18,10 +18,10 @@ Fonctionnalité: Accès à la gestion de l'équipe
     Alors je vois "(vous)"
     Quand je réinitialise le contexte
     Et je vais à l'intérieur de la rangée nommée "moderateur@beta.gouv.fr"
-    Alors je vois "moderator"
+    Alors je vois "moderator" dans la liste déroulante nommée "role"
     Quand je réinitialise le contexte
     Et je vais à l'intérieur de la rangée nommée "jeanbon@yopmail.com"
-    Alors je vois "visitor"
+    Alors je vois "visitor" dans la liste déroulante nommée "role"
 
   Scénario: Un modérateur ne peut pas accéder à la gestion de l'équipe
     Etant donné que je suis sur la page "/"

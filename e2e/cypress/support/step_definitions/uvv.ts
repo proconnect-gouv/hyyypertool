@@ -276,3 +276,12 @@ When(
     get_within_context().within(() => cy.findByLabelText(label).select(value));
   },
 );
+
+Then(
+  "je vois {string} dans la liste déroulante nommée {string}",
+  (value: string, label: string) => {
+    get_within_context().within(() =>
+      cy.findByLabelText(label).should("have.value", value),
+    );
+  },
+);

@@ -34,6 +34,7 @@
           packages = [
             pkgs.nodejs_24
             pkgs.bun
+            pkgs.chromium
             cypress
           ];
 

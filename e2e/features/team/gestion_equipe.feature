@@ -16,12 +16,12 @@ Fonctionnalité: Gestion de l'équipe par un admin
 
     Quand je réinitialise le contexte
     Et je vais à l'intérieur de la rangée nommée "moderateur@beta.gouv.fr"
-    Alors je vois "moderator"
+    Alors je vois "moderator" dans la liste déroulante nommée "role"
     Et je vois "Actif"
 
     Quand je réinitialise le contexte
     Et je vais à l'intérieur de la rangée nommée "jeanbon@yopmail.com"
-    Alors je vois "visitor"
+    Alors je vois "visitor" dans la liste déroulante nommée "role"
     Et je vois "Actif"
 
   Scénario: L'admin peut ajouter un nouveau membre
