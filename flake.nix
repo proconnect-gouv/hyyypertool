@@ -15,16 +15,16 @@
           inherit system;
           # nixpkgs' cypress at this version is flagged for its bundled
           # Electron's EOL/CVEs; we run it locally/dev-only, not exposed.
-          config.permittedInsecurePackages = [ "cypress-15.21.0" ];
+          config.permittedInsecurePackages = [ "cypress-15.21.1" ];
         };
 
         # pin to match "cypress" in e2e/package.json exactly — nixpkgs-unstable's
         # cypress drifts from it otherwise. Bump both together.
         cypress = pkgs.cypress.overrideAttrs (old: rec {
-          version = "15.21.0";
+          version = "15.21.1";
           src = pkgs.fetchurl {
             url = "https://cdn.cypress.io/desktop/${version}/linux-x64/cypress.zip";
-            hash = "sha256-UuN1QK8oqtgI3fAQy9wDGU26nxqsY9817R58WuuN32I=";
+            hash = "sha256-kGyqDNDlARLrJY5yoB4iIKUPibLuvtDUmlplaEMNR/4=";
           };
         });
       in
