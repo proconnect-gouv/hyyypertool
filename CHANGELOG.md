@@ -1,5 +1,29 @@
 # Changelog
 
+## [2026.9.1](https://github.com/proconnect-gouv/hyyypertool/compare/2026.9.0...2026.9.1) (2026-09-08)
+
+### Changements
+
+- ✨ Retirer les noms de domaine refusés des RT Hyypertool
+
+### Ajouté
+
+- ✨ Function GetDomains returns approved email domains (#1782) (e97a7be3)
+
+### Modifié
+
+- 🔧 add nix flake for sudoless dev shell (#1783) (5dfb04b8)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): Bump the sentry group across 1 directory with 4 updates (#1780) (9b264a08)
+- :arrow_upper_right: [patch](deps-dev): Bump @types/node in /e2e (#1784) (358553e1)
+- :arrow_upper_right: [patch](deps): Bump cypress in /e2e (#1778) (ad505a7e)
+
+### Divers
+
+- 🧪 try cypress 16 (#1786) (b5bfa30e)
+
 ## [2026.9.0](https://github.com/proconnect-gouv/hyyypertool/compare/2026.8.0...2026.9.0) (2026-09-02)
 
 ### Ajouté
