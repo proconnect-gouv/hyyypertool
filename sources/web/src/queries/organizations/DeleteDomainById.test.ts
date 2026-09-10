@@ -25,7 +25,9 @@ test("deletes domain by id", async () => {
   expect(result).toMatchInlineSnapshot(`
     {
       "affectedRows": 1,
+      "command": "DELETE",
       "fields": [],
+      "rowCount": 1,
       "rows": [],
     }
   `);

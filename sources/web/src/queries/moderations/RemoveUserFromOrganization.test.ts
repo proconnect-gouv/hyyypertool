@@ -40,11 +40,15 @@ test("remove adora from unicorn organization", async () => {
     user_id: adora_pony_user_id,
   });
 
-  expect(response).toEqual({
-    affectedRows: 1,
-    fields: [],
-    rows: [],
-  });
+  expect(response).toMatchInlineSnapshot(`
+    {
+      "affectedRows": 1,
+      "command": "DELETE",
+      "fields": [],
+      "rowCount": 1,
+      "rows": [],
+    }
+  `);
 });
 
 test("do nothing if adora is not a unicorn member", async () => {
@@ -57,9 +61,13 @@ test("do nothing if adora is not a unicorn member", async () => {
     user_id: adora_pony_user_id,
   });
 
-  expect(response).toEqual({
-    affectedRows: 0,
-    fields: [],
-    rows: [],
-  });
+  expect(response).toMatchInlineSnapshot(`
+    {
+      "affectedRows": 0,
+      "command": "DELETE",
+      "fields": [],
+      "rowCount": 0,
+      "rows": [],
+    }
+  `);
 });
