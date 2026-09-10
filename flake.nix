@@ -27,13 +27,34 @@
             hash = "sha256-qeTcRlwMO9/c29kEbfXClql/4POqjDRWHziPLkAxXuk=";
           };
         });
+
+        # nixpkgs-unstable's "bun" still trails upstream (1.3.13 as of
+        # 2026-09-10); pull the official prebuilt binary directly so it
+        # matches "packageManager" in package.json. Drop this override once
+        # nixpkgs catches up to 1.4.x.
+        bun = pkgs.stdenv.mkDerivation {
+          pname = "bun";
+          version = "1.4.2";
+          src = pkgs.fetchurl {
+            url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.2/bun-linux-x64.zip";
+            hash = "sha256-NjaPrvdSeHXV/6UuU81IAhdB8qg+tiCKjdZAaNQiqRM=";
+          };
+          nativeBuildInputs = [
+            pkgs.unzip
+            pkgs.autoPatchelfHook
+          ];
+          installPhase = ''
+            mkdir -p $out/bin
+            install -m755 bun $out/bin/bun
+          '';
+        };
       in
       {
         devShells.default = pkgs.mkShell {
           # matches "engines.node" in package.json (24.19.0); npm ships with nodejs
           packages = [
             pkgs.nodejs_24
-            pkgs.bun
+            bun
             pkgs.chromium
             cypress
           ];
