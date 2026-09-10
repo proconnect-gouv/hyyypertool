@@ -758,7 +758,7 @@ declare const app: import("hono/hono-base").HonoBase<
             | import("hono/types").MergeSchemaPath<
                 {
                   "/": {
-                    $get:
+                    $patch:
                       | {
                           output: {};
                           outputFormat: string;
@@ -766,11 +766,6 @@ declare const app: import("hono/hono-base").HonoBase<
                           input: {
                             param: {
                               id: string;
-                            };
-                          } & {
-                            query: {
-                              organization_id: string | string[];
-                              user_id: string | string[];
                             };
                           };
                         }
@@ -784,34 +779,11 @@ declare const app: import("hono/hono-base").HonoBase<
                             param: {
                               id: string;
                             };
-                          } & {
-                            query: {
-                              organization_id: string | string[];
-                              user_id: string | string[];
-                            };
-                          };
-                        }
-                      | {
-                          output: import("zod").ZodSafeParseError<{
-                            organization_id: number;
-                            user_id: number;
-                          }>;
-                          outputFormat: "json";
-                          status: 400;
-                          input: {
-                            param: {
-                              id: string;
-                            };
-                          } & {
-                            query: {
-                              organization_id: string | string[];
-                              user_id: string | string[];
-                            };
                           };
                         };
                   };
                 },
-                "/duplicate_warning"
+                "/processed"
               >
             | import("hono/types").MergeSchemaPath<
                 {
@@ -866,6 +838,64 @@ declare const app: import("hono/hono-base").HonoBase<
                   };
                 },
                 "/email"
+              >
+            | import("hono/types").MergeSchemaPath<
+                {
+                  "/": {
+                    $get:
+                      | {
+                          output: {};
+                          outputFormat: string;
+                          status: import("hono/utils/http-status").StatusCode;
+                          input: {
+                            param: {
+                              id: string;
+                            };
+                          } & {
+                            query: {
+                              organization_id: string | string[];
+                              user_id: string | string[];
+                            };
+                          };
+                        }
+                      | {
+                          output: import("zod").ZodSafeParseError<{
+                            id: number;
+                          }>;
+                          outputFormat: "json";
+                          status: 400;
+                          input: {
+                            param: {
+                              id: string;
+                            };
+                          } & {
+                            query: {
+                              organization_id: string | string[];
+                              user_id: string | string[];
+                            };
+                          };
+                        }
+                      | {
+                          output: import("zod").ZodSafeParseError<{
+                            organization_id: number;
+                            user_id: number;
+                          }>;
+                          outputFormat: "json";
+                          status: 400;
+                          input: {
+                            param: {
+                              id: string;
+                            };
+                          } & {
+                            query: {
+                              organization_id: string | string[];
+                              user_id: string | string[];
+                            };
+                          };
+                        };
+                  };
+                },
+                "/duplicate_warning"
               >
             | import("hono/types").MergeSchemaPath<
                 {
@@ -1010,36 +1040,6 @@ declare const app: import("hono/hono-base").HonoBase<
                   "/": {
                     $patch:
                       | {
-                          output: {};
-                          outputFormat: string;
-                          status: import("hono/utils/http-status").StatusCode;
-                          input: {
-                            param: {
-                              id: string;
-                            };
-                          };
-                        }
-                      | {
-                          output: import("zod").ZodSafeParseError<{
-                            id: number;
-                          }>;
-                          outputFormat: "json";
-                          status: 400;
-                          input: {
-                            param: {
-                              id: string;
-                            };
-                          };
-                        };
-                  };
-                },
-                "/processed"
-              >
-            | import("hono/types").MergeSchemaPath<
-                {
-                  "/": {
-                    $patch:
-                      | {
                           output: "OK";
                           outputFormat: "text";
                           status: 200;
@@ -1125,10 +1125,7 @@ declare const app: import("hono/hono-base").HonoBase<
                         }
                       | {
                           output: import("zod").ZodSafeParseError<{
-                            message: string;
-                            subject: string;
-                            end_user_reason: string;
-                            allow_editing: boolean;
+                            id: number;
                           }>;
                           outputFormat: "json";
                           status: 400;
@@ -1155,7 +1152,10 @@ declare const app: import("hono/hono-base").HonoBase<
                         }
                       | {
                           output: import("zod").ZodSafeParseError<{
-                            id: number;
+                            message: string;
+                            subject: string;
+                            end_user_reason: string;
+                            allow_editing: boolean;
                           }>;
                           outputFormat: "json";
                           status: 400;
@@ -1330,18 +1330,24 @@ declare const app: import("hono/hono-base").HonoBase<
                       input: {
                         query: {
                           siret?: string | undefined;
+                          created?: string | undefined;
+                          skipped?: string | undefined;
                         };
                       };
                     }
                   | {
                       output: import("zod").ZodSafeParseError<{
                         siret?: string | undefined;
+                        created?: string | undefined;
+                        skipped?: string | undefined;
                       }>;
                       outputFormat: "json";
                       status: 400;
                       input: {
                         query: {
                           siret?: string | undefined;
+                          created?: string | undefined;
+                          skipped?: string | undefined;
                         };
                       };
                     };
@@ -1355,19 +1361,19 @@ declare const app: import("hono/hono-base").HonoBase<
                       status: import("hono/utils/http-status").StatusCode;
                       input: {
                         form: {
-                          siret: string;
+                          sirets: string;
                         };
                       };
                     }
                   | {
                       output: import("zod").ZodSafeParseError<{
-                        siret: string;
+                        sirets: string;
                       }>;
                       outputFormat: "json";
                       status: 400;
                       input: {
                         form: {
-                          siret: string;
+                          sirets: string;
                         };
                       };
                     };
@@ -1381,19 +1387,19 @@ declare const app: import("hono/hono-base").HonoBase<
                       status: 303;
                       input: {
                         form: {
-                          siret: string;
+                          "sirets[]": string[];
                         };
                       };
                     }
                   | {
                       output: import("zod").ZodSafeParseError<{
-                        siret: string;
+                        "sirets[]": string[];
                       }>;
                       outputFormat: "json";
                       status: 400;
                       input: {
                         form: {
-                          siret: string;
+                          "sirets[]": string[];
                         };
                       };
                     };
@@ -1600,6 +1606,10 @@ declare const app: import("hono/hono-base").HonoBase<
                           param: {
                             id: string;
                           };
+                        } & {
+                          query: {
+                            status?: "created" | undefined;
+                          };
                         };
                       }
                     | {
@@ -1611,6 +1621,26 @@ declare const app: import("hono/hono-base").HonoBase<
                         input: {
                           param: {
                             id: string;
+                          };
+                        } & {
+                          query: {
+                            status?: "created" | undefined;
+                          };
+                        };
+                      }
+                    | {
+                        output: import("zod").ZodSafeParseError<{
+                          status?: "created" | undefined;
+                        }>;
+                        outputFormat: "json";
+                        status: 400;
+                        input: {
+                          param: {
+                            id: string;
+                          };
+                        } & {
+                          query: {
+                            status?: "created" | undefined;
                           };
                         };
                       };
@@ -2202,6 +2232,215 @@ declare const app: import("hono/hono-base").HonoBase<
                 status: import("hono/utils/http-status").ContentfulStatusCode;
                 input: {};
               };
+            };
+          } & {
+            "/v3/insee/sirene/etablissements/:siret": {
+              $get:
+                | {
+                    output: {
+                      errors: {
+                        code: string;
+                        title: string;
+                        detail: string;
+                      }[];
+                    };
+                    outputFormat: "json";
+                    status: 404;
+                    input: {
+                      param: {
+                        siret: string;
+                      };
+                    };
+                  }
+                | {
+                    output: {
+                      data: {
+                        siret: string;
+                        siege_social: true | false;
+                        etat_administratif: "A" | "F";
+                        date_fermeture: number | null;
+                        activite_principale: {
+                          code: string | null;
+                          libelle: string;
+                          nomenclature: string | null;
+                        };
+                        tranche_effectif_salarie: {
+                          code:
+                            | "NN"
+                            | "00"
+                            | "01"
+                            | "02"
+                            | "03"
+                            | "11"
+                            | "12"
+                            | "21"
+                            | "22"
+                            | "31"
+                            | "32"
+                            | "41"
+                            | "42"
+                            | "51"
+                            | "52"
+                            | "53"
+                            | null;
+                          intitule: string | null;
+                          date_reference: string | null;
+                          de: number | null;
+                          a: number | null;
+                        };
+                        status_diffusion:
+                          | "diffusible"
+                          | "partiellement_diffusible"
+                          | "non_diffusible";
+                        diffusable_commercialement: boolean;
+                        enseigne: string | null;
+                        unite_legale: {
+                          siren: string;
+                          rna: string | null;
+                          siret_siege_social: string;
+                          type: "personne_physique" | "personne_morale";
+                          personne_morale_attributs: {
+                            raison_sociale: string | null;
+                            sigle: string | null;
+                          };
+                          personne_physique_attributs: {
+                            pseudonyme: string | null;
+                            prenom_usuel: string | null;
+                            prenom_1: string | null;
+                            prenom_2: string | null;
+                            prenom_3: string | null;
+                            prenom_4: string | null;
+                            nom_usage: string | null;
+                            nom_naissance: string | null;
+                            sexe: "M" | "F" | null;
+                          };
+                          categorie_entreprise: "GE" | "ETI" | "PME" | null;
+                          status_diffusion:
+                            | "diffusible"
+                            | "partiellement_diffusible"
+                            | "non_diffusible";
+                          diffusable_commercialement: boolean;
+                          forme_juridique: {
+                            code: string;
+                            libelle: string;
+                          };
+                          activite_principale: {
+                            code: string | null;
+                            libelle: string;
+                            nomenclature: string | null;
+                          };
+                          tranche_effectif_salarie: {
+                            code:
+                              | "NN"
+                              | "00"
+                              | "01"
+                              | "02"
+                              | "03"
+                              | "11"
+                              | "12"
+                              | "21"
+                              | "22"
+                              | "31"
+                              | "32"
+                              | "41"
+                              | "42"
+                              | "51"
+                              | "52"
+                              | "53"
+                              | null;
+                            intitule: string | null;
+                            date_reference: string | null;
+                            de: number | null;
+                            a: number | null;
+                          };
+                          etat_administratif: "A" | "C";
+                          economie_sociale_et_solidaire: true | false | null;
+                          date_creation: number | null;
+                        };
+                        adresse: {
+                          numero_voie: string;
+                          indice_repetition_voie:
+                            "bis" | "ter" | "quarter" | "quinquies" | null;
+                          type_voie:
+                            | "ALLÉE"
+                            | "AVENUE"
+                            | "BOULEVARD"
+                            | "CARREFOUR"
+                            | "CHEMIN"
+                            | "CHAUSSÉE"
+                            | "CITÉ"
+                            | "CORNICHE"
+                            | "COURS"
+                            | "DOMAINE"
+                            | "DESCENTE"
+                            | "ECART"
+                            | "ESPLANADE"
+                            | "FAUBOURG"
+                            | "GRANDE RUE"
+                            | "HAMEAU"
+                            | "HALLE"
+                            | "IMPASSE"
+                            | "LIEU-DIT"
+                            | "LOTISSEMENT"
+                            | "MARCHÉ"
+                            | "MONTÉE"
+                            | "PASSAGE"
+                            | "PLACE"
+                            | "PLAINE"
+                            | "PLATEAU"
+                            | "PROMENADE"
+                            | "PARVIS"
+                            | "QUARTIER"
+                            | "QUAI"
+                            | "RÉSIDENCE"
+                            | "RUELLE"
+                            | "ROCADE"
+                            | "ROND-POINT"
+                            | "ROUTE"
+                            | "RUE"
+                            | "SENTIER"
+                            | "SQUARE"
+                            | "TERRE-PLEIN"
+                            | "TRAVERSE"
+                            | "VILLA"
+                            | "VILLAGE"
+                            | null;
+                          libelle_voie: string;
+                          complement_adresse: string | null;
+                          code_commune: string | null;
+                          code_postal: string | null;
+                          distribution_speciale: string | null;
+                          code_cedex: string | null;
+                          libelle_cedex: string | null;
+                          libelle_commune: string | null;
+                          libelle_commune_etranger: string | null;
+                          code_pays_etranger: string | null;
+                          libelle_pays_etranger: string | null;
+                          status_diffusion:
+                            | "diffusible"
+                            | "partiellement_diffusible"
+                            | "non_diffusible";
+                          acheminement_postal: {
+                            l1: string | null;
+                            l2: string | null;
+                            l3: string | null;
+                            l4: string | null;
+                            l5: string | null;
+                            l6: string | null;
+                            l7: string | null;
+                          };
+                        };
+                        date_creation: number | null;
+                      };
+                    };
+                    outputFormat: "json";
+                    status: import("hono/utils/http-status").ContentfulStatusCode;
+                    input: {
+                      param: {
+                        siret: string;
+                      };
+                    };
+                  };
             };
           } & {
             "/v4/djepva/api-association/associations/:siren_or_rna": {

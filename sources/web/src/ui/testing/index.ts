@@ -17,6 +17,7 @@ export const render_md = PrettyRenderer({ parser: "mdx" });
 
 export function PrettyRenderer(options: Options) {
   return async function render_formated(element: Child) {
+    if (typeof element === "string") return format(element, options);
     const textDecoder = new TextDecoder();
     const getStringFromStream = async (
       stream: ReadableStream<Uint8Array>,
