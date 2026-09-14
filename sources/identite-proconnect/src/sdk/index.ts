@@ -11,7 +11,11 @@ import * as UserOrganisationRepository from "@proconnect-gouv/proconnect.identit
 import type Pg from "pg";
 
 //
-export { EmailDomainRepository, OrganizationRepository, UserOrganisationRepository };
+export {
+  EmailDomainRepository,
+  OrganizationRepository,
+  UserOrganisationRepository,
+};
 
 export function createProconnectIdentiteContext(client: Pg.Pool) {
   return createContext({

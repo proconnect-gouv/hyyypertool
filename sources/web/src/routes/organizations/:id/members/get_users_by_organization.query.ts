@@ -5,13 +5,7 @@ import {
   schema,
   type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
-import {
-  and,
-  desc,
-  count as drizzle_count,
-  eq,
-  isNotNull,
-} from "drizzle-orm";
+import { and, desc, count as drizzle_count, eq, isNotNull } from "drizzle-orm";
 
 //
 
