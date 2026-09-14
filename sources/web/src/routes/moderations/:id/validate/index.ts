@@ -24,7 +24,7 @@ import { zValidator } from "@hono/zod-validator";
 import {
   EmailDomainRepository,
   MarkDomainAsVerified,
-  OrganizationRepository,
+  UserOrganisationRepository,
   createProconnectIdentiteContext,
 } from "@~/identite-proconnect/sdk";
 import {
@@ -71,7 +71,7 @@ export default new Hono<AppContext>().patch(
       pg: identite_pg,
     });
     const link_user_to_organization =
-      OrganizationRepository.linkUserToOrganizationFactory({
+      UserOrganisationRepository.createUserOrganizationFactory({
         pg: identite_pg_client,
       });
     const validate_similar_moderations =

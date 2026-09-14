@@ -5,7 +5,13 @@ import {
   schema,
   type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
-import { and, desc, count as drizzle_count, eq } from "drizzle-orm";
+import {
+  and,
+  desc,
+  count as drizzle_count,
+  eq,
+  isNotNull,
+} from "drizzle-orm";
 
 //
 
@@ -35,8 +41,9 @@ export async function get_users_by_organization(
         id: schema.users.id,
         is_external: schema.users_organizations.is_external,
         job: schema.users.job,
-        needs_official_contact_email_verification:
-          schema.users_organizations.needs_official_contact_email_verification,
+        needs_official_contact_email_verification: isNotNull(
+          schema.official_contact_email_verifications.user_id,
+        ),
         updated_at: schema.users_organizations.updated_at,
         verification_type: schema.users_organizations.verification_type,
       })
@@ -44,6 +51,19 @@ export async function get_users_by_organization(
       .innerJoin(
         schema.users_organizations,
         eq(schema.users.id, schema.users_organizations.user_id),
+      )
+      .leftJoin(
+        schema.official_contact_email_verifications,
+        and(
+          eq(
+            schema.official_contact_email_verifications.user_id,
+            schema.users_organizations.user_id,
+          ),
+          eq(
+            schema.official_contact_email_verifications.organization_id,
+            schema.users_organizations.organization_id,
+          ),
+        ),
       )
       .where(where)
       .orderBy(desc(schema.users.created_at), desc(schema.users.id))
