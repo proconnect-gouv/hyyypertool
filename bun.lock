@@ -104,6 +104,10 @@
       "name": "@~/release-it-plugin-types",
       "version": "0.0.0",
     },
+    "packages/tailwind-dsfr": {
+      "name": "tailwind-dsfr",
+      "version": "1.0.0",
+    },
     "sources/config/bun-plugin-client-scripts": {
       "name": "@~/config.bun-plugin-client-scripts",
       "version": "0.0.0",
@@ -212,7 +216,8 @@
         "remark-parse": "11.0.0",
         "remark-rehype": "11.1.2",
         "static-path": "0.0.4",
-        "tailwind-variants": "3.3.1",
+        "tailwind-dsfr": "workspace:*",
+        "tailwind-variants": "3.2.2",
         "tailwindcss": "4.3.3",
         "ts-dedent": "2.3.0",
         "ts-pattern": "5.9.0",
@@ -1355,6 +1360,8 @@
     "supports-color": ["supports-color@10.2.2", "", {}, "sha512-SS+jx45GF1QjgEXQx4NJZV9ImqmO2NPz5FNsIHrsDjh2YsHnawpan7SNQ1o8NuhrbHZy9AZhIoCUiCeaW/C80g=="],
 
     "tagged-tag": ["tagged-tag@1.0.0", "", {}, "sha512-yEFYrVhod+hdNyx7g5Bnkkb0G6si8HJurOoOEgC8B/O0uXLHlaey/65KRv6cuWBNhBgHKAROVpc7QyYqE5gFng=="],
+
+    "tailwind-dsfr": ["tailwind-dsfr@workspace:packages/tailwind-dsfr"],
 
     "tailwind-merge": ["tailwind-merge@3.6.0", "", {}, "sha512-uxL7qAVQriqRQPAyK3pj66VqskWqoZ37PW94jwOTwNfq/z9oyu1V+eqrZqtR2+fCiXdYOZe/Modt8GtvqNzu+w=="],
 
