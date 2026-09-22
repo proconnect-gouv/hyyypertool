@@ -346,8 +346,8 @@ export const expect = base_expect as (<T>(
 
 // fill() + Enter never reaches the search bar island on a list reached by
 // navigation, and the island resets #q when it hydrates: set #q in-page and
-// retry until the URL carries the query and `until` shows.
-export async function search_moderations(q: string, until: DescribedLocator) {
+// retry until the URL carries the query and `until`, if given, shows.
+export async function search_moderations(q: string, until?: DescribedLocator) {
   const set_q = new Function(
     `return () => {
       const input = document.getElementById("q");
@@ -362,7 +362,7 @@ export async function search_moderations(q: string, until: DescribedLocator) {
       new RegExp(`[?&]q=${encodeURIComponent(q)}(&|$)`),
       { timeout: 1_000 },
     );
-    await expect(until).toBeVisible({ timeout: 1_000 });
+    if (until) await expect(until).toBeVisible({ timeout: 1_000 });
   }).toPass();
 }
 
