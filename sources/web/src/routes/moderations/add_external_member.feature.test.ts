@@ -9,7 +9,7 @@ import {
   setup_feature_test,
   to_have_title,
 } from "#src/testing";
-import { expect, test } from "bun:test";
+import { test } from "bun:test";
 
 //
 
