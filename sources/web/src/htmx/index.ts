@@ -57,6 +57,11 @@ export const HtmxEvents = z.nativeEnum({
 export function hx_trigger_from_body(events: string[]) {
   return events.map((event) => `${event} from:body`);
 }
+
+// test mode drops htmx's load delay — readiness polling would otherwise race the request
+export function hx_trigger_load(): string {
+  return process.env.NODE_ENV === "test" ? "load" : "load delay:1s";
+}
 export function hx_include(ids: string[]) {
   return ids.map(prefix_id).join(", ");
 }

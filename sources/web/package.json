@@ -72,6 +72,7 @@
     "@types/lodash.sortby": "4.7.9",
     "@types/nprogress": "0.2.3",
     "@types/pg": "8.20.0",
+    "bunwright": "^0.3.2",
     "prettier": "3.9.6"
   }
 }
