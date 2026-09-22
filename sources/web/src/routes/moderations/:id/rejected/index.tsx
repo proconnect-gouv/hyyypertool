@@ -98,7 +98,7 @@ export default new Hono<ContextType>()
 
         await crisp.mark_conversation_as_resolved({ session_id });
       } else {
-        await send_crisp_notification(crisp, {
+        const { session_id } = await send_crisp_notification(crisp, {
           ticket_id: String(moderation.ticket_id),
           email: recipient,
           subject,
@@ -107,13 +107,17 @@ export default new Hono<ContextType>()
           sender,
         });
 
+        if (String(moderation.ticket_id) !== session_id) {
+          await update_moderation_by_id(moderation.id, {
+            ticket_id: session_id,
+          });
+        }
+
         await new Promise((resolve) =>
           setTimeout(resolve, config.CRISP_RESOLVE_DELAY),
         );
 
-        await crisp.mark_conversation_as_resolved({
-          session_id: String(moderation.ticket_id),
-        });
+        await crisp.mark_conversation_as_resolved({ session_id });
       }
 
       const update = build_moderation_update({

@@ -16,21 +16,42 @@ export async function send_crisp_notification(
     sender: Partial<User>;
   },
 ): Promise<{ session_id: string }> {
-  const session_id =
-    params.ticket_id ??
-    (
+  async function create_conversation() {
+    return (
       await crisp.create_conversation({
         email: params.email,
         subject: params.subject,
         nickname: params.nickname,
       })
     ).session_id;
+  }
 
-  await crisp.send_message({
-    session_id,
-    content: params.content,
-    user: params.sender,
-  });
+  let session_id = params.ticket_id ?? (await create_conversation());
+
+  try {
+    await crisp.send_message({
+      session_id,
+      content: params.content,
+      user: params.sender,
+    });
+  } catch (error) {
+    // fetch_crisp throws plain Errors with no status field, so a stale
+    // (deleted on Crisp's side) ticket_id is detected by matching " 404 "
+    // in the message text.
+    if (
+      params.ticket_id === undefined ||
+      !(error instanceof Error) ||
+      !/ 404 /.test(error.message)
+    ) {
+      throw error;
+    }
+    session_id = await create_conversation();
+    await crisp.send_message({
+      session_id,
+      content: params.content,
+      user: params.sender,
+    });
+  }
 
   return { session_id };
 }
