@@ -1,5 +1,21 @@
 # Changelog
 
+## [2026.9.3](https://github.com/proconnect-gouv/hyyypertool/compare/2026.9.2...2026.9.3) (2026-09-22)
+
+### Corrigé
+
+- 🐛 fall back to new Crisp conversation on stale ticket_id (#1800) (eff60fe5)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps-dev): Bump @types/node in /e2e (#1793) (2e8eda50)
+- :arrow_upper_right: [patch](deps): Bump @preact/signals (#1795) (54df111b)
+- :arrow_upper_right: [patch](deps): Bump the sentry group with 4 updates (#1794) (e2050784)
+- :arrow_upper_right: [patch](deps): Bump oxc-parser (#1798) (2018bfeb)
+- :arrow_up: Bump nixpkgs from `c043004` to `eaad089` (#1799) (26de7d5f)
+- :arrow_upper_right: [patch](deps): Bump @tsconfig/bun (#1796) (f26c9740)
+- :arrow_upper_right: [patch](deps): Bump jose from 6.2.3 to 6.2.12 (#1797) (5b3e302d)
+
 ## [2026.9.2](https://github.com/proconnect-gouv/hyyypertool/compare/2026.9.1...2026.9.2) (2026-09-14)
 
 ### Changements
