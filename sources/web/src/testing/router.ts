@@ -14,9 +14,9 @@ import { set_identite_pg } from "../middleware/identite-pg";
 import { set_nonce } from "../middleware/nonce";
 import { create_asset_router } from "../routes/assets";
 
-export const ASSETS_PATH = "/assets/test-v123";
-export const PUBLIC_ASSETS_PATH = `${ASSETS_PATH}/public/built`;
-export const MODERATOR = {
+const ASSETS_PATH = "/assets/test-v123";
+const PUBLIC_ASSETS_PATH = `${ASSETS_PATH}/public/built`;
+const MODERATOR = {
   email: "moderateur@beta.gouv.fr",
   sub: "oidc-sub-moderateur",
 };

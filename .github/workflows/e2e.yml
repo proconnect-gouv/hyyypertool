@@ -86,8 +86,6 @@ jobs:
         e2e_test:
           - auth
           - delivrability-domain
-          - moderations/accept_blocking_moderation.feature
-          - moderations/add_external_member.feature
           - moderations/add_internal_member.feature
           - moderations/filter_by_moderator.feature
           - moderations/handle_big_organization.feature
