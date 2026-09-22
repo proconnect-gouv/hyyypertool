@@ -3,13 +3,13 @@ import {
   click_label_until,
   expect,
   expect_table_contains,
-  getByPlaceholder,
   getByRole,
   getByText,
   is_checked,
   is_q,
   named_table_rows,
   page,
+  search_moderations,
   setup_feature_test,
   test,
 } from "#src/testing";
@@ -58,8 +58,7 @@ test("Marie est un membre externe de l'organization", async () => {
 
   await expect(page).toHaveTitle("Liste des moderations");
 
-  await getByPlaceholder("Filtrer les modérations…").fill("is:processed");
-  await page.press("Enter");
+  await search_moderations("is:processed", marie_moderation_link());
 
   await marie_moderation_link().click();
 
@@ -123,8 +122,7 @@ test("Marie est validée en externe avec notification et ajout du domaine en ext
 
   await expect(page).toHaveTitle("Liste des moderations");
 
-  await getByPlaceholder("Filtrer les modérations…").fill("is:processed");
-  await page.press("Enter");
+  await search_moderations("is:processed", marie_moderation_link());
 
   await marie_moderation_link().click();
 

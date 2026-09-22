@@ -4,8 +4,8 @@ import {
   getByLabel,
   getByRole,
   getByText,
-  getByTitle,
   page,
+  search_moderations,
   setup_feature_test,
   test,
 } from "#src/testing";
@@ -55,17 +55,7 @@ test("Moderator can accept a blocking moderation with the toolbar", async () => 
   await expect(page).toHaveTitle("Liste des moderations");
   await expect(getByText("13002526500013")).not.toBeVisible();
 
-  // fill() never reaches the search bar island here (see bunwright skill), and
-  // the island resets #q on hydration: set it in-page, retry until it sticks
-  await expect(async () => {
-    await page.evaluate(() => {
-      const input = document.getElementById("q") as HTMLInputElement;
-      input.value = "is:processed";
-      input.dispatchEvent(new Event("input", { bubbles: true }));
-    });
-    await getByTitle("Rechercher").click();
-    await expect(moderation_link()).toBeVisible({ timeout: 1_000 });
-  }).toPass();
+  await search_moderations("is:processed", moderation_link());
 
   await moderation_link().click();
 

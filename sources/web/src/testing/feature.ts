@@ -344,4 +344,26 @@ export const expect = base_expect as (<T>(
 ) => Matchers<T> & WebFirstMatchers & { not: Matchers<T> & WebFirstMatchers }) &
   typeof base_expect;
 
+// fill() + Enter never reaches the search bar island on a list reached by
+// navigation, and the island resets #q when it hydrates: set #q in-page and
+// retry until the URL carries the query and `until` shows.
+export async function search_moderations(q: string, until: DescribedLocator) {
+  const set_q = new Function(
+    `return () => {
+      const input = document.getElementById("q");
+      input.value = ${JSON.stringify(q)};
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+    }`,
+  )() as () => void;
+  await expect(async () => {
+    await page.evaluate(set_q);
+    await getByTitle("Rechercher").click();
+    await expect(page).toHaveURL(
+      new RegExp(`[?&]q=${encodeURIComponent(q)}(&|$)`),
+      { timeout: 1_000 },
+    );
+    await expect(until).toBeVisible({ timeout: 1_000 });
+  }).toPass();
+}
+
 export { test } from "bun:test";
