@@ -1,3 +1,9 @@
+diff --git a/node_modules/bunwright/.bun-tag-12c77077bd854a16 b/.bun-tag-12c77077bd854a16
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/bunwright/.bun-tag-e6ff5a8c42e726f2 b/.bun-tag-e6ff5a8c42e726f2
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
 diff --git a/dist/browser.d.ts b/dist/browser.d.ts
 index 94a1e7a636f857424826df69e3dd410a6ff06bd6..30ede044ff457d1e3ed6c0f3e710c5c0967fd571 100644
 --- a/dist/browser.d.ts
@@ -20,21 +26,37 @@ index 94a1e7a636f857424826df69e3dd410a6ff06bd6..30ede044ff457d1e3ed6c0f3e710c5c0
      }): Promise<this>;
      evaluate<T>(fn: () => T): Promise<T>;
 diff --git a/dist/index.mjs b/dist/index.mjs
-index 4dfc62f9a9f6942f3cfdc7166e907031098df234..c25a215e5641541c169e6e55603e26b5a0d33776 100755
+index 4dfc62f9a9f6942f3cfdc7166e907031098df234..12e7014f6710ba45a419aeebba6a8e944b7e5ee7 100755
 --- a/dist/index.mjs
 +++ b/dist/index.mjs
-@@ -73,7 +73,9 @@ var init_selectors = __esm(() => {
-         return { css: cache.get(sel), isCoordinate: false };
-       }
-       const resolved = await this.#resolveInternal(sel);
--      cache.set(sel, resolved.css);
-+      if (resolved.css !== ":not(*)") {
-+        cache.set(sel, resolved.css);
-+      }
-       SelectorResolver.#cache.set(this.view, cache);
-       return resolved;
+@@ -63,19 +63,11 @@ var SelectorResolver;
+ var init_selectors = __esm(() => {
+   SelectorResolver = class SelectorResolver {
+     view;
+-    static #cache = new WeakMap;
+     constructor(view) {
+       this.view = view;
      }
-@@ -142,17 +144,17 @@ var init_selectors = __esm(() => {
+     async resolve(sel) {
+-      const cache = SelectorResolver.#cache.get(this.view) ?? new Map;
+-      if (cache.has(sel)) {
+-        return { css: cache.get(sel), isCoordinate: false };
+-      }
+-      const resolved = await this.#resolveInternal(sel);
+-      cache.set(sel, resolved.css);
+-      SelectorResolver.#cache.set(this.view, cache);
+-      return resolved;
++      return this.#resolveInternal(sel);
+     }
+     async#resolveInternal(sel) {
+       if (sel.startsWith("css:")) {
+@@ -137,22 +129,22 @@ var init_selectors = __esm(() => {
+       return path.join(' > ');
+     })()`;
+       const result = await this.view.evaluate(script);
+-      return { css: result ?? `[role="${role}"]`, isCoordinate: false };
++      return { css: result ?? ":not(*)", isCoordinate: false };
+     }
      async#resolveLabel(labelText) {
        const script = `(() => { const label = Array.from(document.querySelectorAll('label')).find(l => l.textContent.trim() === "${labelText}"); if (!label) return null; const forAttr = label.getAttribute('for'); if (forAttr) { const input = document.getElementById(forAttr); if (input) { const path = []; let cur = input; while (cur && cur !== document.body) { const siblings = Array.from(cur.parentElement?.children ?? []).filter(c => c.tagName === cur.tagName); const idx = siblings.indexOf(cur); const tag = cur.tagName.toLowerCase(); path.unshift(idx > 0 ? \`\${tag}:nth-of-type(\${idx + 1})\` : tag); cur = cur.parentElement; } return path.join(' > '); } } const input = label.querySelector('input,select,textarea'); if (input) { const path = []; let cur = input; while (cur && cur !== document.body) { const siblings = Array.from(cur.parentElement?.children ?? []).filter(c => c.tagName === cur.tagName); const idx = siblings.indexOf(cur); const tag = cur.tagName.toLowerCase(); path.unshift(idx > 0 ? \`\${tag}:nth-of-type(\${idx + 1})\` : tag); cur = cur.parentElement; } return path.join(' > '); } return null; })()`;
        const result = await this.view.evaluate(script);
@@ -56,7 +78,7 @@ index 4dfc62f9a9f6942f3cfdc7166e907031098df234..c25a215e5641541c169e6e55603e26b5
      }
    };
  });
-@@ -341,13 +343,13 @@ var init_locator = __esm(() => {
+@@ -341,13 +333,13 @@ var init_locator = __esm(() => {
        return this.page.webview;
      }
      async click() {
@@ -72,8 +94,45 @@ index 4dfc62f9a9f6942f3cfdc7166e907031098df234..c25a215e5641541c169e6e55603e26b5
        await this.webview.type(text);
      }
      async press(key, modifiers) {
-@@ -447,7 +449,7 @@ var init_locator = __esm(() => {
-       await this.waitForEnabledInternal(css, timeout);
+@@ -412,6 +404,20 @@ var init_locator = __esm(() => {
+       }
+       return css;
+     }
++    async waitForActionable(action, timeout, enabled) {
++      const deadline = Date.now() + timeout;
++      for (;;) {
++        const css = await this.resolveSelector();
++        const remaining = deadline - Date.now();
++        const condition = `(() => { const el = document.querySelector(${JSON.stringify(css)}); if (!el) return false; const style = window.getComputedStyle(el); return style.display !== 'none' && style.visibility !== 'hidden' && el.offsetWidth > 0 && el.offsetHeight > 0${enabled ? " && !el.hasAttribute('disabled') && !el.hasAttribute('readonly')" : ""}; })()`;
++        const result = await this.webview.evaluate(inPageWaitScript(condition, Math.min(250, Math.max(remaining, 0))));
++        if (result.ok) return css;
++        if (remaining <= 0) {
++          const state = await this.webview.evaluate(`(() => { const el = document.querySelector(${JSON.stringify(css)}); if (!el) return 'element not found'; const style = window.getComputedStyle(el); if (style.display === 'none' || style.visibility === 'hidden' || el.offsetWidth <= 0 || el.offsetHeight <= 0) return 'element not visible'; return 'element not enabled'; })()`);
++          throw new TimeoutError(`locator.${action}: ${this.description ?? [this.selector, ...this.filters].join(" >> ")}: ${state} after ${timeout}ms`);
++        }
++      }
++    }
+     async waitForVisibleInternal(css, timeout) {
+       const condition = `(() => { const el = document.querySelector('${css}'); if (!el) return false; const style = window.getComputedStyle(el); return style.display !== 'none' && style.visibility !== 'hidden' && el.offsetWidth > 0 && el.offsetHeight > 0; })()`;
+       const result = await this.webview.evaluate(inPageWaitScript(condition, timeout));
+@@ -431,8 +437,7 @@ var init_locator = __esm(() => {
+       }
+     }
+     async waitForVisible(opts) {
+-      const css = await this.resolveSelector();
+-      await this.waitForVisibleInternal(css, opts?.timeout ?? this.retryTimeout);
++      await this.waitForActionable('waitForVisible', opts?.timeout ?? this.retryTimeout, false);
+       return this;
+     }
+     async waitForEnabled(opts) {
+@@ -442,12 +447,10 @@ var init_locator = __esm(() => {
+     }
+     async click(opts) {
+       const timeout = opts?.timeout ?? this.retryTimeout;
+-      const css = await this.resolveSelector();
+-      await this.waitForVisibleInternal(css, timeout);
+-      await this.waitForEnabledInternal(css, timeout);
++      const css = await this.waitForActionable('click', timeout, true);
        for (let attempt = 1;attempt <= MAX_RETRIES; attempt++) {
          try {
 -          await this.webview.click(css);
@@ -81,8 +140,25 @@ index 4dfc62f9a9f6942f3cfdc7166e907031098df234..c25a215e5641541c169e6e55603e26b5
            return;
          } catch (error) {
            if (attempt === MAX_RETRIES) {
-@@ -481,7 +483,7 @@ var init_locator = __esm(() => {
-       await this.waitForEnabledInternal(css, timeout);
+@@ -459,9 +462,7 @@ var init_locator = __esm(() => {
+     }
+     async dblClick(opts) {
+       const timeout = opts?.timeout ?? this.retryTimeout;
+-      const css = await this.resolveSelector();
+-      await this.waitForVisibleInternal(css, timeout);
+-      await this.waitForEnabledInternal(css, timeout);
++      const css = await this.waitForActionable('dblClick', timeout, true);
+       for (let attempt = 1;attempt <= MAX_RETRIES; attempt++) {
+         try {
+           await this.webview.evaluate(`(() => { const el = document.querySelector('${css}'); if (!el) return; const rect = el.getBoundingClientRect(); const x = rect.left + rect.width / 2; const y = rect.top + rect.height / 2; el.dispatchEvent(new MouseEvent('dblclick', { bubbles: true, clientX: x, clientY: y })); })()`);
+@@ -476,12 +477,10 @@ var init_locator = __esm(() => {
+     }
+     async type(text, opts) {
+       const timeout = opts?.timeout ?? this.retryTimeout;
+-      const css = await this.resolveSelector();
+-      await this.waitForVisibleInternal(css, timeout);
+-      await this.waitForEnabledInternal(css, timeout);
++      const css = await this.waitForActionable('type', timeout, true);
        for (let attempt = 1;attempt <= MAX_RETRIES; attempt++) {
          try {
 -          await this.webview.click(css);
@@ -90,16 +166,37 @@ index 4dfc62f9a9f6942f3cfdc7166e907031098df234..c25a215e5641541c169e6e55603e26b5
            await this.webview.type(text);
            return;
          } catch (error) {
-@@ -497,7 +499,7 @@ var init_locator = __esm(() => {
-       await this.waitForVisibleInternal(css, this.retryTimeout);
-       await this.waitForEnabledInternal(css, this.retryTimeout);
+@@ -493,16 +492,13 @@ var init_locator = __esm(() => {
+       }
+     }
+     async fill(text) {
+-      const css = await this.resolveSelector();
+-      await this.waitForVisibleInternal(css, this.retryTimeout);
+-      await this.waitForEnabledInternal(css, this.retryTimeout);
++      const css = await this.waitForActionable('fill', this.retryTimeout, true);
        await this.webview.evaluate(`(() => { const el = document.querySelector('${css}'); if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) { el.value = ''; } })()`);
 -      await this.webview.click(css);
 +      await this.webview.evaluate(`(() => { const el = document.querySelector('${css}'); if (el) el.click(); })()`);
        await this.webview.type(text);
      }
      async press(key, modifiers) {
-@@ -1051,7 +1053,7 @@ class Page {
+-      const css = await this.resolveSelector();
+-      await this.waitForVisibleInternal(css, this.retryTimeout);
++      const css = await this.waitForActionable('press', this.retryTimeout, false);
+       await this.webview.press(key, modifiers ? { modifiers } : undefined);
+     }
+     async screenshot(opts) {
+@@ -566,8 +562,7 @@ var init_locator = __esm(() => {
+       return this.webview.evaluate(script);
+     }
+     async toElement() {
+-      const css = await this.resolveSelector();
+-      await this.waitForVisibleInternal(css, this.retryTimeout);
++      const css = await this.waitForActionable('toElement', this.retryTimeout, false);
+       return new ElementHandle(css, this.page);
+     }
+   };
+@@ -1051,7 +1046,7 @@ class Page {
      await this.#retry(async () => {
        await this.#autoWait(sel, opts?.timeout);
        const resolved = await this.#resolver.resolve(sel);
@@ -108,6 +205,54 @@ index 4dfc62f9a9f6942f3cfdc7166e907031098df234..c25a215e5641541c169e6e55603e26b5
      }, opts?.timeout);
      return this;
    }
+@@ -1214,14 +1209,19 @@ class Page {
+   }
+   async waitForSelector(sel, opts) {
+     await this.#ensureNotClosed();
+-    const resolved = await this.#resolver.resolve(sel);
+     const maxTime = opts?.timeout ?? this.retryTimeout;
+-    const condition = `document.querySelector('${resolved.css.replace(/'/g, "\\'")}') !== null`;
+-    const result = await this.webview.evaluate(inPageWaitScript(condition, maxTime));
+-    if (!result.ok) {
+-      const reason = result.error ? ` (last check error: ${result.error})` : "";
+-      const expr = result.expression ? `; expression: ${result.expression}` : "";
+-      throw new TimeoutError(`Selector ${sel} not found within ${maxTime}ms${reason}${expr}`);
++    const deadline = Date.now() + maxTime;
++    for (;;) {
++      const resolved = await this.#resolver.resolve(sel);
++      const condition = `document.querySelector('${resolved.css.replace(/'/g, "\\'")}') !== null`;
++      const remaining = deadline - Date.now();
++      const result = await this.webview.evaluate(inPageWaitScript(condition, Math.min(250, Math.max(remaining, 0))));
++      if (result.ok) return;
++      if (remaining <= 0) {
++        const reason = result.error ? ` (last check error: ${result.error})` : "";
++        const expr = result.expression ? `; expression: ${result.expression}` : "";
++        throw new TimeoutError(`Selector ${sel} not found within ${maxTime}ms${reason}${expr}`);
++      }
+     }
+   }
+   async waitForURL(url, opts) {
+@@ -1249,11 +1249,16 @@ class Page {
+   }
+   async waitFor(sel, opts) {
+     await this.#ensureNotClosed();
+-    const resolved = await this.#resolver.resolve(sel);
+     const maxTime = opts?.timeout ?? this.retryTimeout;
+-    const condition = `document.querySelector('${resolved.css.replace(/'/g, "\\'")}') !== null`;
+-    const result = await this.webview.evaluate(inPageWaitScript(condition, maxTime));
+-    return result.ok;
++    const deadline = Date.now() + maxTime;
++    for (;;) {
++      const resolved = await this.#resolver.resolve(sel);
++      const condition = `document.querySelector('${resolved.css.replace(/'/g, "\\'")}') !== null`;
++      const remaining = deadline - Date.now();
++      const result = await this.webview.evaluate(inPageWaitScript(condition, Math.min(250, Math.max(remaining, 0))));
++      if (result.ok) return true;
++      if (remaining <= 0) return false;
++    }
+   }
+   async waitForTimeout(ms) {
+     await this.#ensureNotClosed();
 diff --git a/package.json b/package.json
 index d52c87c53faf69bd1f91a02ba76681fcb158e7cc..2fa3f952f8e757a6ffffb96c0de29d76b5dbc7ce 100644
 --- a/package.json

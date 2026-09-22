@@ -21,6 +21,30 @@ const MODERATOR = {
   sub: "oidc-sub-moderateur",
 };
 
+export function create_test_fetch(): (
+  input: RequestInfo | URL,
+  init?: RequestInit,
+) => Promise<Response> {
+  const json = (status: number, body: unknown) =>
+    new Response(JSON.stringify(body), {
+      status,
+      headers: { "content-type": "application/json" },
+    });
+  return async (input, init) => {
+    const url = String(input instanceof Request ? input.url : input);
+    if (url.startsWith("https://entreprise.api.example.com/")) {
+      return json(200, { data: { documents_rna: [] } });
+    }
+    if (url.startsWith("https://auth.example.com/")) {
+      return json(200, {});
+    }
+    if (url.startsWith("https://banatic.example.com/")) {
+      return new Response(null, { status: 200 });
+    }
+    return fetch(input, init);
+  };
+}
+
 export function create_testing_router() {
   return new Hono()
     .onError((e) => {
@@ -46,6 +70,7 @@ export function create_testing_router() {
         CRISP_USER_NICKNAME: "",
         CRISP_WEBSITE_ID: "",
         CRISP_RESOLVE_DELAY: 0,
+        BANATIC_BASE_URL: "https://banatic.example.com",
         API_AUTH_URL: "https://auth.example.com",
         API_AUTH_USERNAME: "",
         API_AUTH_PASSWORD: "",
@@ -71,7 +96,7 @@ export function create_testing_router() {
       } as never),
     )
     .use(set_nonce("nonce"))
-    .use(set_fetch())
+    .use(set_fetch(create_test_fetch()))
     .use(set_userinfo(MODERATOR))
     .route(
       ASSETS_PATH,
