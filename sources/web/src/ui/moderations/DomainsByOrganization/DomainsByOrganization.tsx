@@ -1,7 +1,7 @@
 //
 
 import { hyper_ref } from "#src/html";
-import { hx_trigger_from_body } from "#src/htmx";
+import { hx_trigger_from_body, hx_trigger_load } from "#src/htmx";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import { Loader } from "#src/ui/loader";
 import { formattedPlural } from "#src/ui/plurial";
@@ -43,7 +43,7 @@ export async function DomainsByOrganization(props: Props) {
           {...query_domains_by_organization_id}
           class="mb-10"
           hx-trigger={[
-            "load delay:1s",
+            hx_trigger_load(),
             ...hx_trigger_from_body([ORGANISATION_EVENTS.enum.DOMAIN_UPDATED]),
           ].join(", ")}
         >

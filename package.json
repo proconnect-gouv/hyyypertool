@@ -33,7 +33,8 @@
     "start": "tsx --import ./bin/src/node/instrument.ts bin/src/node/index.ts",
     "studio:identite-proconnect": "bun run database:identite-proconnect:run studio",
     "test": "bun run format && bun run lint:type-check && bun run test:all",
-    "test:all": "bun test",
+    "test:all": "bun test --path-ignore-patterns='**/*.feature.test.ts'",
+    "test:features": "bun test 'feature.test' --timeout=15000",
     "test:inspect": "bun test --inspect-wait=localhost:6499/"
   },
   "prettier": {
@@ -109,5 +110,8 @@
       },
       "./packages/release-it-changeset-plugin": {}
     }
+  },
+  "patchedDependencies": {
+    "bunwright@0.3.2": "patches/bunwright@0.3.2.patch"
   }
 }

@@ -1,0 +1,111 @@
+diff --git a/dist/browser.d.ts b/dist/browser.d.ts
+index 94a1e7a636f857424826df69e3dd410a6ff06bd6..30ede044ff457d1e3ed6c0f3e710c5c0967fd571 100644
+--- a/dist/browser.d.ts
++++ b/dist/browser.d.ts
+@@ -17,6 +17,7 @@ export interface ContextOptions {
+         domain?: string;
+         path?: string;
+     }>;
++    backend?: BrowserConfig["backend"];
+ }
+ declare class BunwrightBrowser {
+     #private;
+@@ -68,7 +69,7 @@ export declare class Page {
+         timeout?: number;
+     }): Promise<this>;
+     check(sel: Selector): Promise<this>;
+-    waitForLoadState(state: LoadState, opts?: {
++    waitForLoadState(state?: LoadState, opts?: {
+         timeout?: number;
+     }): Promise<this>;
+     evaluate<T>(fn: () => T): Promise<T>;
+diff --git a/dist/index.mjs b/dist/index.mjs
+index 4dfc62f9a9f6942f3cfdc7166e907031098df234..c4c775f20abdd84d417024e7facd410c8814490d 100755
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -142,17 +142,17 @@ var init_selectors = __esm(() => {
+     async#resolveLabel(labelText) {
+       const script = `(() => { const label = Array.from(document.querySelectorAll('label')).find(l => l.textContent.trim() === "${labelText}"); if (!label) return null; const forAttr = label.getAttribute('for'); if (forAttr) { const input = document.getElementById(forAttr); if (input) { const path = []; let cur = input; while (cur && cur !== document.body) { const siblings = Array.from(cur.parentElement?.children ?? []).filter(c => c.tagName === cur.tagName); const idx = siblings.indexOf(cur); const tag = cur.tagName.toLowerCase(); path.unshift(idx > 0 ? \`\${tag}:nth-of-type(\${idx + 1})\` : tag); cur = cur.parentElement; } return path.join(' > '); } } const input = label.querySelector('input,select,textarea'); if (input) { const path = []; let cur = input; while (cur && cur !== document.body) { const siblings = Array.from(cur.parentElement?.children ?? []).filter(c => c.tagName === cur.tagName); const idx = siblings.indexOf(cur); const tag = cur.tagName.toLowerCase(); path.unshift(idx > 0 ? \`\${tag}:nth-of-type(\${idx + 1})\` : tag); cur = cur.parentElement; } return path.join(' > '); } return null; })()`;
+       const result = await this.view.evaluate(script);
+-      return { css: result ?? `label:has-text("${labelText}")`, isCoordinate: false };
++      return { css: result ?? ":not(*)", isCoordinate: false };
+     }
+     async#resolveText(text) {
+       const script = `(() => { const el = Array.from(document.querySelectorAll('*')).find(e => e.textContent.trim() === "${text}"); if (!el) return null; const path = []; let cur = el; while (cur && cur !== document.body) { const siblings = Array.from(cur.parentElement?.children ?? []).filter(c => c.tagName === cur.tagName); const idx = siblings.indexOf(cur); const tag = cur.tagName.toLowerCase(); path.unshift(idx > 0 ? \`\${tag}:nth-of-type(\${idx + 1})\` : tag); cur = cur.parentElement; } return path.join(' > '); })()`;
+       const result = await this.view.evaluate(script);
+-      return { css: result ?? `text="${text}"`, isCoordinate: false };
++      return { css: result ?? ":not(*)", isCoordinate: false };
+     }
+     async#resolveXpath(xpath) {
+       const script = `(() => { const result = document.evaluate(\`${xpath}\`, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null); const el = result.singleNodeValue; if (!el) return null; const path = []; let cur = el; while (cur && cur !== document.body) { const siblings = Array.from(cur.parentElement?.children ?? []).filter(c => c.tagName === cur.tagName); const idx = siblings.indexOf(cur); const tag = cur.tagName.toLowerCase(); path.unshift(idx > 0 ? \`\${tag}:nth-of-type(\${idx + 1})\` : tag); cur = cur.parentElement; } return path.join(' > '); })()`;
+       const result = await this.view.evaluate(script);
+-      return { css: result ?? `xpath=${xpath}`, isCoordinate: false };
++      return { css: result ?? ":not(*)", isCoordinate: false };
+     }
+   };
+ });
+@@ -341,13 +341,13 @@ var init_locator = __esm(() => {
+       return this.page.webview;
+     }
+     async click() {
+-      await this.webview.click(this.cssSelector);
++      await this.webview.evaluate(`(() => { const el = document.querySelector('${this.cssSelector}'); if (el) el.click(); })()`);
+     }
+     async dblClick() {
+       await this.webview.evaluate(`(() => { const el = document.querySelector('${this.cssSelector}'); if (!el) return; const rect = el.getBoundingClientRect(); const x = rect.left + rect.width / 2; const y = rect.top + rect.height / 2; el.dispatchEvent(new MouseEvent('dblclick', { bubbles: true, clientX: x, clientY: y })); })()`);
+     }
+     async type(text) {
+-      await this.webview.click(this.cssSelector);
++      await this.webview.evaluate(`(() => { const el = document.querySelector('${this.cssSelector}'); if (el) el.click(); })()`);
+       await this.webview.type(text);
+     }
+     async press(key, modifiers) {
+@@ -447,7 +447,7 @@ var init_locator = __esm(() => {
+       await this.waitForEnabledInternal(css, timeout);
+       for (let attempt = 1;attempt <= MAX_RETRIES; attempt++) {
+         try {
+-          await this.webview.click(css);
++          await this.webview.evaluate(`(() => { const el = document.querySelector('${css}'); if (el) el.click(); })()`);
+           return;
+         } catch (error) {
+           if (attempt === MAX_RETRIES) {
+@@ -481,7 +481,7 @@ var init_locator = __esm(() => {
+       await this.waitForEnabledInternal(css, timeout);
+       for (let attempt = 1;attempt <= MAX_RETRIES; attempt++) {
+         try {
+-          await this.webview.click(css);
++          await this.webview.evaluate(`(() => { const el = document.querySelector('${css}'); if (el) el.click(); })()`);
+           await this.webview.type(text);
+           return;
+         } catch (error) {
+@@ -497,7 +497,7 @@ var init_locator = __esm(() => {
+       await this.waitForVisibleInternal(css, this.retryTimeout);
+       await this.waitForEnabledInternal(css, this.retryTimeout);
+       await this.webview.evaluate(`(() => { const el = document.querySelector('${css}'); if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) { el.value = ''; } })()`);
+-      await this.webview.click(css);
++      await this.webview.evaluate(`(() => { const el = document.querySelector('${css}'); if (el) el.click(); })()`);
+       await this.webview.type(text);
+     }
+     async press(key, modifiers) {
+@@ -1051,7 +1051,7 @@ class Page {
+     await this.#retry(async () => {
+       await this.#autoWait(sel, opts?.timeout);
+       const resolved = await this.#resolver.resolve(sel);
+-      await this.webview.click(resolved.css);
++      await this.webview.evaluate(`(() => { const el = document.querySelector('${resolved.css}'); if (el) el.click(); })()`);
+     }, opts?.timeout);
+     return this;
+   }
+diff --git a/package.json b/package.json
+index d52c87c53faf69bd1f91a02ba76681fcb158e7cc..2fa3f952f8e757a6ffffb96c0de29d76b5dbc7ce 100644
+--- a/package.json
++++ b/package.json
+@@ -21,7 +21,7 @@
+   ],
+   "type": "module",
+   "module": "./dist/index.mjs",
+-  "types": "./dist/types.d.ts",
++  "types": "./dist/index.d.ts",
+   "scripts": {
+     "build": "bun run build:dist && bun run build:types",
+     "build:dist": "bun build.ts",
