@@ -51,7 +51,7 @@
     "@gouvfr/dsfr": "1.14.4",
     "@preact/signals": "2.11.1",
     "@preact/signals-core": "1.14.3",
-    "@tsconfig/bun": "1.0.10",
+    "@tsconfig/bun": "1.0.11",
     "@~/bin": "workspace:*",
     "animate.css": "4.1.1",
     "dotenv": "17.4.2",
