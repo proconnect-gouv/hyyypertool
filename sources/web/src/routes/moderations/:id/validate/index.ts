@@ -186,7 +186,7 @@ export default new Hono<AppContext>().patch(
         sender,
       });
 
-      if (!moderation.ticket_id) {
+      if (moderation.ticket_id !== session_id) {
         await update_moderation_by_id(moderation.id, {
           ticket_id: session_id,
         });
