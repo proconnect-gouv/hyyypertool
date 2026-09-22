@@ -20,10 +20,21 @@ index 94a1e7a636f857424826df69e3dd410a6ff06bd6..30ede044ff457d1e3ed6c0f3e710c5c0
      }): Promise<this>;
      evaluate<T>(fn: () => T): Promise<T>;
 diff --git a/dist/index.mjs b/dist/index.mjs
-index 4dfc62f9a9f6942f3cfdc7166e907031098df234..c4c775f20abdd84d417024e7facd410c8814490d 100755
+index 4dfc62f9a9f6942f3cfdc7166e907031098df234..c25a215e5641541c169e6e55603e26b5a0d33776 100755
 --- a/dist/index.mjs
 +++ b/dist/index.mjs
-@@ -142,17 +142,17 @@ var init_selectors = __esm(() => {
+@@ -73,7 +73,9 @@ var init_selectors = __esm(() => {
+         return { css: cache.get(sel), isCoordinate: false };
+       }
+       const resolved = await this.#resolveInternal(sel);
+-      cache.set(sel, resolved.css);
++      if (resolved.css !== ":not(*)") {
++        cache.set(sel, resolved.css);
++      }
+       SelectorResolver.#cache.set(this.view, cache);
+       return resolved;
+     }
+@@ -142,17 +144,17 @@ var init_selectors = __esm(() => {
      async#resolveLabel(labelText) {
        const script = `(() => { const label = Array.from(document.querySelectorAll('label')).find(l => l.textContent.trim() === "${labelText}"); if (!label) return null; const forAttr = label.getAttribute('for'); if (forAttr) { const input = document.getElementById(forAttr); if (input) { const path = []; let cur = input; while (cur && cur !== document.body) { const siblings = Array.from(cur.parentElement?.children ?? []).filter(c => c.tagName === cur.tagName); const idx = siblings.indexOf(cur); const tag = cur.tagName.toLowerCase(); path.unshift(idx > 0 ? \`\${tag}:nth-of-type(\${idx + 1})\` : tag); cur = cur.parentElement; } return path.join(' > '); } } const input = label.querySelector('input,select,textarea'); if (input) { const path = []; let cur = input; while (cur && cur !== document.body) { const siblings = Array.from(cur.parentElement?.children ?? []).filter(c => c.tagName === cur.tagName); const idx = siblings.indexOf(cur); const tag = cur.tagName.toLowerCase(); path.unshift(idx > 0 ? \`\${tag}:nth-of-type(\${idx + 1})\` : tag); cur = cur.parentElement; } return path.join(' > '); } return null; })()`;
        const result = await this.view.evaluate(script);
@@ -31,7 +42,8 @@ index 4dfc62f9a9f6942f3cfdc7166e907031098df234..c4c775f20abdd84d417024e7facd410c
 +      return { css: result ?? ":not(*)", isCoordinate: false };
      }
      async#resolveText(text) {
-       const script = `(() => { const el = Array.from(document.querySelectorAll('*')).find(e => e.textContent.trim() === "${text}"); if (!el) return null; const path = []; let cur = el; while (cur && cur !== document.body) { const siblings = Array.from(cur.parentElement?.children ?? []).filter(c => c.tagName === cur.tagName); const idx = siblings.indexOf(cur); const tag = cur.tagName.toLowerCase(); path.unshift(idx > 0 ? \`\${tag}:nth-of-type(\${idx + 1})\` : tag); cur = cur.parentElement; } return path.join(' > '); })()`;
+-      const script = `(() => { const el = Array.from(document.querySelectorAll('*')).find(e => e.textContent.trim() === "${text}"); if (!el) return null; const path = []; let cur = el; while (cur && cur !== document.body) { const siblings = Array.from(cur.parentElement?.children ?? []).filter(c => c.tagName === cur.tagName); const idx = siblings.indexOf(cur); const tag = cur.tagName.toLowerCase(); path.unshift(idx > 0 ? \`\${tag}:nth-of-type(\${idx + 1})\` : tag); cur = cur.parentElement; } return path.join(' > '); })()`;
++      const script = `(() => { const matches = Array.from(document.querySelectorAll('*')).filter(e => e.textContent.trim() === "${text}"); const el = matches.find(e => !matches.some(m => m !== e && e.contains(m))); if (!el) return null; const path = []; let cur = el; while (cur && cur !== document.body) { const siblings = Array.from(cur.parentElement?.children ?? []).filter(c => c.tagName === cur.tagName); const idx = siblings.indexOf(cur); const tag = cur.tagName.toLowerCase(); path.unshift(idx > 0 ? \`\${tag}:nth-of-type(\${idx + 1})\` : tag); cur = cur.parentElement; } return path.join(' > '); })()`;
        const result = await this.view.evaluate(script);
 -      return { css: result ?? `text="${text}"`, isCoordinate: false };
 +      return { css: result ?? ":not(*)", isCoordinate: false };
@@ -44,7 +56,7 @@ index 4dfc62f9a9f6942f3cfdc7166e907031098df234..c4c775f20abdd84d417024e7facd410c
      }
    };
  });
-@@ -341,13 +341,13 @@ var init_locator = __esm(() => {
+@@ -341,13 +343,13 @@ var init_locator = __esm(() => {
        return this.page.webview;
      }
      async click() {
@@ -60,7 +72,7 @@ index 4dfc62f9a9f6942f3cfdc7166e907031098df234..c4c775f20abdd84d417024e7facd410c
        await this.webview.type(text);
      }
      async press(key, modifiers) {
-@@ -447,7 +447,7 @@ var init_locator = __esm(() => {
+@@ -447,7 +449,7 @@ var init_locator = __esm(() => {
        await this.waitForEnabledInternal(css, timeout);
        for (let attempt = 1;attempt <= MAX_RETRIES; attempt++) {
          try {
@@ -69,7 +81,7 @@ index 4dfc62f9a9f6942f3cfdc7166e907031098df234..c4c775f20abdd84d417024e7facd410c
            return;
          } catch (error) {
            if (attempt === MAX_RETRIES) {
-@@ -481,7 +481,7 @@ var init_locator = __esm(() => {
+@@ -481,7 +483,7 @@ var init_locator = __esm(() => {
        await this.waitForEnabledInternal(css, timeout);
        for (let attempt = 1;attempt <= MAX_RETRIES; attempt++) {
          try {
@@ -78,7 +90,7 @@ index 4dfc62f9a9f6942f3cfdc7166e907031098df234..c4c775f20abdd84d417024e7facd410c
            await this.webview.type(text);
            return;
          } catch (error) {
-@@ -497,7 +497,7 @@ var init_locator = __esm(() => {
+@@ -497,7 +499,7 @@ var init_locator = __esm(() => {
        await this.waitForVisibleInternal(css, this.retryTimeout);
        await this.waitForEnabledInternal(css, this.retryTimeout);
        await this.webview.evaluate(`(() => { const el = document.querySelector('${css}'); if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) { el.value = ''; } })()`);
@@ -87,7 +99,7 @@ index 4dfc62f9a9f6942f3cfdc7166e907031098df234..c4c775f20abdd84d417024e7facd410c
        await this.webview.type(text);
      }
      async press(key, modifiers) {
-@@ -1051,7 +1051,7 @@ class Page {
+@@ -1051,7 +1053,7 @@ class Page {
      await this.#retry(async () => {
        await this.#autoWait(sel, opts?.timeout);
        const resolved = await this.#resolver.resolve(sel);
