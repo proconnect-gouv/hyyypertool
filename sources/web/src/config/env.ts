@@ -38,6 +38,10 @@ export const app_env = z
       .default("ES256"),
     ALLOWED_USERS: z.string().trim().default(""),
     API_AUTH_PASSWORD: z.string().trim(),
+    BANATIC_BASE_URL: z
+      .url()
+      .trim()
+      .default("https://www.banatic.interieur.gouv.fr"),
     API_AUTH_URL: z.url().trim(),
     API_AUTH_USERNAME: z.string().trim(),
     COOKIE_ENCRYPTION_KEY: z

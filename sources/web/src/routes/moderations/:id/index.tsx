@@ -42,7 +42,7 @@ export default new Hono<AppContext>()
       set,
       status,
       env: config,
-      var: { identite_pg, hyyyper_pg, hyyyper_user },
+      var: { fetch, identite_pg, hyyyper_pg, hyyyper_user },
     }) {
       const { id } = req.valid("param");
 
@@ -78,6 +78,8 @@ export default new Hono<AppContext>()
         // Get Banatic URL for organization
         const siren = organization_fiche.siret.substring(0, 9);
         const get_banatic_url = GetBanaticUrl({
+          banatic_base_url: config.BANATIC_BASE_URL,
+          fetch,
           http_timout: config.HTTP_CLIENT_TIMEOUT,
         });
         const banaticUrl = (await get_banatic_url(siren)).url;

@@ -34,7 +34,7 @@ export default new Hono<AppContext>()
       req,
       set,
       env: config,
-      var: { identite_pg },
+      var: { fetch, identite_pg },
     }) {
       const { id } = req.valid("param");
       const { status } = req.valid("query");
@@ -43,6 +43,8 @@ export default new Hono<AppContext>()
 
       const siren = organization.siret.substring(0, 9);
       const get_banatic_url = GetBanaticUrl({
+        banatic_base_url: config.BANATIC_BASE_URL,
+        fetch,
         http_timout: config.HTTP_CLIENT_TIMEOUT,
       });
 
