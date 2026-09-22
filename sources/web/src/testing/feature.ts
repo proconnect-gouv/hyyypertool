@@ -202,12 +202,17 @@ async function poll<T>(
   timeout: number,
 ) {
   const deadline = Date.now() + timeout;
-  let value = await read();
-  while (!done(value) && Date.now() < deadline) {
+  for (;;) {
+    try {
+      const value = await read();
+      if (done(value) || Date.now() >= deadline) return value;
+    } catch (error) {
+      // A navigation still in flight tears down the page mid-evaluate
+      const navigating = String(error).includes("navigated or closed");
+      if (!navigating || Date.now() >= deadline) throw error;
+    }
     await Bun.sleep(100);
-    value = await read();
   }
-  return value;
 }
 
 async function page_line() {
