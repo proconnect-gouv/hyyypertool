@@ -89,15 +89,6 @@ export const is_q = (expected: string) =>
     `return () => document.getElementById("q")?.value === ${JSON.stringify(expected)};`,
   )() as () => boolean;
 
-export async function to_have_title(expected: string) {
-  const deadline = Date.now() + 10_000;
-  while (Date.now() < deadline) {
-    if ((await page.evaluate(() => document.title)) === expected) return;
-    await Bun.sleep(100);
-  }
-  base_expect(await page.evaluate(() => document.title)).toBe(expected);
-}
-
 export async function named_table_rows(table_name: string) {
   const describedby_id = await page
     .locator(`text:${table_name}`)
