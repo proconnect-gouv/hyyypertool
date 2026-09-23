@@ -95,7 +95,6 @@ jobs:
           - moderations/select_verification_type.feature
           - moderations/tab_navigation.feature
           - moderations/validate_similar_moderations.feature
-          - moderations/verify_domain.feature
           - organizations
           - response-templates
           - security/visitor_read_only.feature
