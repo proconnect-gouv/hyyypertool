@@ -249,6 +249,42 @@ base_expect.extend({
         ].join("\n"),
     };
   },
+  async toBeFocused(actual, options?: { timeout?: number }) {
+    const locator = actual as DescribedLocator;
+    const timeout = options?.timeout ?? page.retryTimeout;
+    const state = await poll(
+      async () =>
+        (await locator.count()) === 0
+          ? "element not found"
+          : (await locator.evaluate(
+                (element) => element === document.activeElement,
+              ))
+            ? "focused"
+            : "not focused",
+      (state) => (state === "focused") !== this.isNot,
+      timeout,
+    );
+    const pass = state === "focused";
+    const focused =
+      pass === this.isNot
+        ? await page.evaluate(
+            () => document.activeElement?.outerHTML.slice(0, 120) ?? "none",
+          )
+        : "";
+    const page_info = pass === this.isNot ? await page_line() : "";
+    return {
+      pass,
+      message: () =>
+        [
+          `Locator:  ${locator.description}`,
+          `Expected: ${this.isNot ? "not focused" : "focused"}`,
+          `Received: ${state}`,
+          `Focus on: ${focused}`,
+          `Timeout:  ${timeout}ms`,
+          page_info,
+        ].join("\n"),
+    };
+  },
   async toHaveTitle(actual, expected: string, options?: { timeout?: number }) {
     const target = actual as typeof page;
     const timeout = options?.timeout ?? page.retryTimeout;
@@ -331,6 +367,7 @@ base_expect.extend({
 });
 
 type WebFirstMatchers = {
+  toBeFocused(options?: { timeout?: number }): Promise<void>;
   toBeVisible(options?: { timeout?: number }): Promise<void>;
   toHaveTitle(expected: string, options?: { timeout?: number }): Promise<void>;
   toHaveURL(
