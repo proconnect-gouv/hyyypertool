@@ -34,7 +34,7 @@
     "studio:identite-proconnect": "bun run database:identite-proconnect:run studio",
     "test": "bun run format && bun run lint:type-check && bun run test:all",
     "test:all": "bun test --path-ignore-patterns='**/*.feature.test.ts'",
-    "test:features": "bun test 'feature.test' --timeout=30000 --parallel",
+    "test:features": "bun test 'feature.test' --timeout=30000",
     "test:inspect": "bun test --inspect-wait=localhost:6499/"
   },
   "prettier": {
