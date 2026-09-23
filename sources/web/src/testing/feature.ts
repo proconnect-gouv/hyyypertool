@@ -202,12 +202,17 @@ async function poll<T>(
   timeout: number,
 ) {
   const deadline = Date.now() + timeout;
-  let value = await read();
-  while (!done(value) && Date.now() < deadline) {
+  for (;;) {
+    try {
+      const value = await read();
+      if (done(value) || Date.now() >= deadline) return value;
+    } catch (error) {
+      // A navigation still in flight tears down the page mid-evaluate
+      const navigating = String(error).includes("navigated or closed");
+      if (!navigating || Date.now() >= deadline) throw error;
+    }
     await Bun.sleep(100);
-    value = await read();
   }
-  return value;
 }
 
 async function page_line() {
@@ -344,25 +349,19 @@ export const expect = base_expect as (<T>(
 ) => Matchers<T> & WebFirstMatchers & { not: Matchers<T> & WebFirstMatchers }) &
   typeof base_expect;
 
-// fill() + Enter never reaches the search bar island on a list reached by
-// navigation, and the island resets #q when it hydrates: set #q in-page and
-// retry until the URL carries the query and `until` shows.
-export async function search_moderations(q: string, until: DescribedLocator) {
-  const set_q = new Function(
-    `return () => {
-      const input = document.getElementById("q");
-      input.value = ${JSON.stringify(q)};
-      input.dispatchEvent(new Event("input", { bubbles: true }));
-    }`,
-  )() as () => void;
+// The search bar island resets #q when it hydrates, so a query typed before
+// that is lost: retry until the URL carries the query and `until`, if
+// given, shows.
+export async function search_moderations(q: string, until?: DescribedLocator) {
   await expect(async () => {
-    await page.evaluate(set_q);
-    await getByTitle("Rechercher").click();
+    await getByPlaceholder("Filtrer les modérations…").fill(q);
+    await page.press("Enter");
     await expect(page).toHaveURL(
-      new RegExp(`[?&]q=${encodeURIComponent(q)}(&|$)`),
+      // Enter accepts the autocomplete suggestion, which appends a space
+      new RegExp(`[?&]q=${encodeURIComponent(q)}(%20)*(&|$)`),
       { timeout: 1_000 },
     );
-    await expect(until).toBeVisible({ timeout: 1_000 });
+    if (until) await expect(until).toBeVisible({ timeout: 1_000 });
   }).toPass();
 }
 

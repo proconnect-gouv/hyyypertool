@@ -1,6 +1,9 @@
 diff --git a/node_modules/bunwright/.bun-tag-12c77077bd854a16 b/.bun-tag-12c77077bd854a16
 new file mode 100644
 index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/bunwright/.bun-tag-be591d5a13af0a07 b/.bun-tag-be591d5a13af0a07
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
 diff --git a/node_modules/bunwright/.bun-tag-e6ff5a8c42e726f2 b/.bun-tag-e6ff5a8c42e726f2
 new file mode 100644
 index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
@@ -26,7 +29,7 @@ index 94a1e7a636f857424826df69e3dd410a6ff06bd6..30ede044ff457d1e3ed6c0f3e710c5c0
      }): Promise<this>;
      evaluate<T>(fn: () => T): Promise<T>;
 diff --git a/dist/index.mjs b/dist/index.mjs
-index 4dfc62f9a9f6942f3cfdc7166e907031098df234..12e7014f6710ba45a419aeebba6a8e944b7e5ee7 100755
+index 4dfc62f9a9f6942f3cfdc7166e907031098df234..dc24cae9bc557183b474841260eec2e792ab6028 100755
 --- a/dist/index.mjs
 +++ b/dist/index.mjs
 @@ -63,19 +63,11 @@ var SelectorResolver;
@@ -90,21 +93,30 @@ index 4dfc62f9a9f6942f3cfdc7166e907031098df234..12e7014f6710ba45a419aeebba6a8e94
      }
      async type(text) {
 -      await this.webview.click(this.cssSelector);
-+      await this.webview.evaluate(`(() => { const el = document.querySelector('${this.cssSelector}'); if (el) el.click(); })()`);
++      await this.webview.evaluate(`(() => { const el = document.querySelector('${this.cssSelector}'); if (el) { el.focus(); el.click(); } })()`);
        await this.webview.type(text);
      }
      async press(key, modifiers) {
-@@ -412,6 +404,20 @@ var init_locator = __esm(() => {
+@@ -412,6 +404,29 @@ var init_locator = __esm(() => {
        }
        return css;
      }
 +    async waitForActionable(action, timeout, enabled) {
 +      const deadline = Date.now() + timeout;
 +      for (;;) {
-+        const css = await this.resolveSelector();
 +        const remaining = deadline - Date.now();
-+        const condition = `(() => { const el = document.querySelector(${JSON.stringify(css)}); if (!el) return false; const style = window.getComputedStyle(el); return style.display !== 'none' && style.visibility !== 'hidden' && el.offsetWidth > 0 && el.offsetHeight > 0${enabled ? " && !el.hasAttribute('disabled') && !el.hasAttribute('readonly')" : ""}; })()`;
-+        const result = await this.webview.evaluate(inPageWaitScript(condition, Math.min(250, Math.max(remaining, 0))));
++        let css, result;
++        try {
++          css = await this.resolveSelector();
++          const condition = `(() => { const el = document.querySelector(${JSON.stringify(css)}); if (!el) return false; const style = window.getComputedStyle(el); return style.display !== 'none' && style.visibility !== 'hidden' && el.offsetWidth > 0 && el.offsetHeight > 0${enabled ? " && !el.hasAttribute('disabled') && !el.hasAttribute('readonly')" : ""}; })()`;
++          result = await this.webview.evaluate(inPageWaitScript(condition, Math.min(250, Math.max(remaining, 0))));
++        } catch (error) {
++          // A navigation still in flight tears down the page mid-evaluate:
++          // not ready yet, same as a miss.
++          if (remaining <= 0 || !String(error?.message).includes("navigated or closed")) throw error;
++          await sleep(50);
++          continue;
++        }
 +        if (result.ok) return css;
 +        if (remaining <= 0) {
 +          const state = await this.webview.evaluate(`(() => { const el = document.querySelector(${JSON.stringify(css)}); if (!el) return 'element not found'; const style = window.getComputedStyle(el); if (style.display === 'none' || style.visibility === 'hidden' || el.offsetWidth <= 0 || el.offsetHeight <= 0) return 'element not visible'; return 'element not enabled'; })()`);
@@ -115,7 +127,7 @@ index 4dfc62f9a9f6942f3cfdc7166e907031098df234..12e7014f6710ba45a419aeebba6a8e94
      async waitForVisibleInternal(css, timeout) {
        const condition = `(() => { const el = document.querySelector('${css}'); if (!el) return false; const style = window.getComputedStyle(el); return style.display !== 'none' && style.visibility !== 'hidden' && el.offsetWidth > 0 && el.offsetHeight > 0; })()`;
        const result = await this.webview.evaluate(inPageWaitScript(condition, timeout));
-@@ -431,8 +437,7 @@ var init_locator = __esm(() => {
+@@ -431,8 +446,7 @@ var init_locator = __esm(() => {
        }
      }
      async waitForVisible(opts) {
@@ -125,7 +137,7 @@ index 4dfc62f9a9f6942f3cfdc7166e907031098df234..12e7014f6710ba45a419aeebba6a8e94
        return this;
      }
      async waitForEnabled(opts) {
-@@ -442,12 +447,10 @@ var init_locator = __esm(() => {
+@@ -442,12 +456,10 @@ var init_locator = __esm(() => {
      }
      async click(opts) {
        const timeout = opts?.timeout ?? this.retryTimeout;
@@ -140,7 +152,7 @@ index 4dfc62f9a9f6942f3cfdc7166e907031098df234..12e7014f6710ba45a419aeebba6a8e94
            return;
          } catch (error) {
            if (attempt === MAX_RETRIES) {
-@@ -459,9 +462,7 @@ var init_locator = __esm(() => {
+@@ -459,9 +471,7 @@ var init_locator = __esm(() => {
      }
      async dblClick(opts) {
        const timeout = opts?.timeout ?? this.retryTimeout;
@@ -151,7 +163,7 @@ index 4dfc62f9a9f6942f3cfdc7166e907031098df234..12e7014f6710ba45a419aeebba6a8e94
        for (let attempt = 1;attempt <= MAX_RETRIES; attempt++) {
          try {
            await this.webview.evaluate(`(() => { const el = document.querySelector('${css}'); if (!el) return; const rect = el.getBoundingClientRect(); const x = rect.left + rect.width / 2; const y = rect.top + rect.height / 2; el.dispatchEvent(new MouseEvent('dblclick', { bubbles: true, clientX: x, clientY: y })); })()`);
-@@ -476,12 +477,10 @@ var init_locator = __esm(() => {
+@@ -476,12 +486,10 @@ var init_locator = __esm(() => {
      }
      async type(text, opts) {
        const timeout = opts?.timeout ?? this.retryTimeout;
@@ -162,21 +174,24 @@ index 4dfc62f9a9f6942f3cfdc7166e907031098df234..12e7014f6710ba45a419aeebba6a8e94
        for (let attempt = 1;attempt <= MAX_RETRIES; attempt++) {
          try {
 -          await this.webview.click(css);
-+          await this.webview.evaluate(`(() => { const el = document.querySelector('${css}'); if (el) el.click(); })()`);
++          await this.webview.evaluate(`(() => { const el = document.querySelector('${css}'); if (el) { el.focus(); el.click(); } })()`);
            await this.webview.type(text);
            return;
          } catch (error) {
-@@ -493,16 +492,13 @@ var init_locator = __esm(() => {
+@@ -493,16 +501,15 @@ var init_locator = __esm(() => {
        }
      }
      async fill(text) {
 -      const css = await this.resolveSelector();
 -      await this.waitForVisibleInternal(css, this.retryTimeout);
 -      await this.waitForEnabledInternal(css, this.retryTimeout);
-+      const css = await this.waitForActionable('fill', this.retryTimeout, true);
-       await this.webview.evaluate(`(() => { const el = document.querySelector('${css}'); if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) { el.value = ''; } })()`);
+-      await this.webview.evaluate(`(() => { const el = document.querySelector('${css}'); if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) { el.value = ''; } })()`);
 -      await this.webview.click(css);
-+      await this.webview.evaluate(`(() => { const el = document.querySelector('${css}'); if (el) el.click(); })()`);
++      const css = await this.waitForActionable('fill', this.retryTimeout, true);
++      // Select the current value and type over it, like a user: a bare
++      // el.value = '' fires no input event, so framework state keeps the old
++      // text and the typed text ends up appended to it.
++      await this.webview.evaluate(`(() => { const el = document.querySelector('${css}'); if (!el) return; el.focus(); el.click(); if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) el.select(); })()`);
        await this.webview.type(text);
      }
      async press(key, modifiers) {
@@ -186,7 +201,7 @@ index 4dfc62f9a9f6942f3cfdc7166e907031098df234..12e7014f6710ba45a419aeebba6a8e94
        await this.webview.press(key, modifiers ? { modifiers } : undefined);
      }
      async screenshot(opts) {
-@@ -566,8 +562,7 @@ var init_locator = __esm(() => {
+@@ -566,8 +573,7 @@ var init_locator = __esm(() => {
        return this.webview.evaluate(script);
      }
      async toElement() {
@@ -196,7 +211,7 @@ index 4dfc62f9a9f6942f3cfdc7166e907031098df234..12e7014f6710ba45a419aeebba6a8e94
        return new ElementHandle(css, this.page);
      }
    };
-@@ -1051,7 +1046,7 @@ class Page {
+@@ -1051,7 +1057,7 @@ class Page {
      await this.#retry(async () => {
        await this.#autoWait(sel, opts?.timeout);
        const resolved = await this.#resolver.resolve(sel);
@@ -205,7 +220,16 @@ index 4dfc62f9a9f6942f3cfdc7166e907031098df234..12e7014f6710ba45a419aeebba6a8e94
      }, opts?.timeout);
      return this;
    }
-@@ -1214,14 +1209,19 @@ class Page {
+@@ -1076,6 +1082,8 @@ class Page {
+     await this.#ensureNotClosed();
+     await this.#retry(async () => {
+       await this.click(sel, opts);
++      const resolved = await this.#resolver.resolve(sel);
++      await this.webview.evaluate(`document.querySelector(${JSON.stringify(resolved.css)})?.focus()`);
+       await this.webview.type(text);
+     }, opts?.timeout);
+     return this;
+@@ -1214,14 +1222,19 @@ class Page {
    }
    async waitForSelector(sel, opts) {
      await this.#ensureNotClosed();
@@ -232,7 +256,7 @@ index 4dfc62f9a9f6942f3cfdc7166e907031098df234..12e7014f6710ba45a419aeebba6a8e94
      }
    }
    async waitForURL(url, opts) {
-@@ -1249,11 +1249,16 @@ class Page {
+@@ -1249,11 +1262,16 @@ class Page {
    }
    async waitFor(sel, opts) {
      await this.#ensureNotClosed();

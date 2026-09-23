@@ -32,7 +32,10 @@ Reset the local database with : `bun run scripts/seed.ts`.
 
 ### E2E Testing
 
-Run specific e2e test: `bun run e2e:run test --spec="features/organizations/dinum.feature"`
+Two suites, split by what they need:
+
+- **Feature tests** (`sources/web/src/routes/**/*.feature.test.ts`, [bunwright](https://github.com/jonaspm/bunwright)) — the default for new scenarios. They run in-process against a seeded database with auth and external APIs faked, so they need no running server: `bun run test:features`, or one file with `bun test sources/web/src/routes/moderations/moderation_list.feature.test.ts`.
+- **Cypress** (`e2e/features/`) — only for what needs the full stack: a real login through the dev identity provider, per-role access (`auth/`, `team/`, `security/`). Run one with `bun run e2e:run test --spec="features/auth/connexion.feature"`.
 
 ## Deployment 🚀
 
