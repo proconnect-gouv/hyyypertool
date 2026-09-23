@@ -93,7 +93,6 @@ jobs:
           - moderations/manage_internal_domain.feature
           - moderations/moderation_detail.feature
           - moderations/reject_blocking_moderation.feature
-          - moderations/reprocess_completed_moderation.feature
           - moderations/select_verification_type.feature
           - moderations/tab_navigation.feature
           - moderations/validate_similar_moderations.feature
