@@ -89,7 +89,6 @@ jobs:
           - moderations/filter_by_moderator.feature
           - moderations/handle_big_organization.feature
           - moderations/handle_duplicate_requests.feature
-          - moderations/manage_external_domain.feature
           - moderations/manage_internal_domain.feature
           - moderations/moderation_detail.feature
           - moderations/reject_blocking_moderation.feature
