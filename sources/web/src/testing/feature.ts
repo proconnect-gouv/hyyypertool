@@ -17,6 +17,7 @@ import {
   expect as base_expect,
   type Matchers,
 } from "bun:test";
+import { config as buncept } from "buncept";
 import { browser, type Chain, type Locator, type Selector } from "bunwright";
 import { create_testing_router } from "./router";
 
@@ -25,7 +26,7 @@ import { create_testing_router } from "./router";
 export let page: Awaited<ReturnType<typeof browser.newPage>>;
 export let base_url = "";
 
-export function setup_feature_test() {
+function setup_app() {
   let server: ReturnType<typeof Bun.serve>;
   beforeAll(migrate);
   beforeAll(() => {
@@ -33,11 +34,22 @@ export function setup_feature_test() {
     base_url = `http://localhost:${server.port}`;
   });
   afterAll(() => server.stop(true));
-  afterAll(() => browser.close());
   beforeEach(identite_empty_database);
   beforeEach(hyyyperbase_empty_database);
   beforeEach(() => insert_database(pg));
   beforeEach(() => insert_moderateur(hyyyper_pglite));
+}
+
+export function setup_scenarios() {
+  setup_app();
+  beforeAll(() => {
+    buncept.url = base_url;
+  });
+}
+
+export function setup_feature_test() {
+  setup_app();
+  afterAll(() => browser.close());
   beforeEach(async () => {
     page = await browser.newPage({
       backend:

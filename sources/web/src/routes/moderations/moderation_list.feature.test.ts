@@ -1,57 +1,43 @@
-import {
-  base_url,
-  expect,
-  getByPlaceholder,
-  getByRole,
-  getByText,
-  page,
-  setup_feature_test,
-  test,
-} from "#src/testing";
+import { setup_scenarios } from "#src/testing";
+import { Scenario } from "buncept";
 
 //
 
-setup_feature_test();
+setup_scenarios();
 
 //
 
-test("Moderator can search a moderation by email", async () => {
-  await page.navigate(`${base_url}/moderations`);
-  await expect(getByText("Liste des moderations")).toBeVisible();
-  await expect(getByText("Richard")).toBeVisible();
+Scenario("Moderator can search a moderation by email", ({ I }) => {
+  I.amOnPage("/moderations");
+  I.see("Liste des moderations");
+  I.see("Richard");
 
-  await getByPlaceholder("Filtrer les modérations…").type(
-    "is:pending email:jeanbon",
-  );
+  I.fillField("Filtrer les modérations…", "is:pending email:jeanbon");
+  I.pressKey("Enter");
 
-  await expect(getByText("13002526500013")).toBeVisible();
-  await expect(getByText("Raphael")).not.toBeVisible();
+  I.see("13002526500013");
+  I.dontSee("Raphael");
 });
 
-test("Moderator can search a moderation by SIRET", async () => {
-  await page.navigate(`${base_url}/moderations`);
-  await expect(getByText("Liste des moderations")).toBeVisible();
-  await expect(getByText("Richard")).toBeVisible();
+Scenario("Moderator can search a moderation by SIRET", ({ I }) => {
+  I.amOnPage("/moderations");
+  I.see("Liste des moderations");
+  I.see("Richard");
 
-  await getByPlaceholder("Filtrer les modérations…").type(
-    "is:pending siret:51935970700022",
-  );
+  I.fillField("Filtrer les modérations…", "is:pending siret:51935970700022");
+  I.pressKey("Enter");
 
-  await expect(getByText("51935970700022")).toBeVisible();
-  await expect(getByText("Raphael")).not.toBeVisible();
+  I.see("51935970700022");
+  I.dontSee("Raphael");
 });
 
-test("Moderator can explore a moderation from the list", async () => {
-  await page.navigate(`${base_url}/moderations`);
-  await expect(getByText("Liste des moderations")).toBeVisible();
-  await expect(getByText("Richard")).toBeVisible();
+Scenario("Moderator can explore a moderation from the list", ({ I }) => {
+  I.amOnPage("/moderations");
+  I.see("Liste des moderations");
+  I.see("Richard");
 
-  await getByRole("link", {
-    name: "Modération a traiter de Jean Bon pour 13002526500013",
-  }).click();
+  I.click("Modération a traiter de Jean Bon pour 13002526500013");
 
-  await expect(page).toHaveTitle(
-    "Modération a traiter de Jean Bon pour 13002526500013",
-  );
-  await expect(getByText("jeanbon@yopmail.com")).toBeVisible();
+  I.seeTitleEquals("Modération a traiter de Jean Bon pour 13002526500013");
+  I.see("jeanbon@yopmail.com");
 });
