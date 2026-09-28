@@ -1,65 +1,43 @@
-import {
-  base_url,
-  expect,
-  getByLabel,
-  getByRole,
-  getByText,
-  page,
-  search_moderations,
-  setup_feature_test,
-  test,
-} from "#src/testing";
+import { setup_scenarios } from "#src/testing";
+import { Scenario } from "buncept";
 
 //
 
-setup_feature_test();
+setup_scenarios();
 
 //
 
-const moderation_link = () =>
-  getByRole("link", {
-    name: "Modération a traiter de Jean Bon pour 13002526500013",
-  });
+Scenario(
+  "Moderator can accept a blocking moderation with the toolbar",
+  ({ I }) => {
+    I.amOnPage("/moderations");
+    I.seeTitleEquals("Liste des moderations");
+    I.click("Modération a traiter de Jean Bon pour 13002526500013");
 
-test("Moderator can accept a blocking moderation with the toolbar", async () => {
-  await page.navigate(`${base_url}/moderations`);
-  await expect(page).toHaveTitle("Liste des moderations");
+    I.seeTitleEquals("Modération a traiter de Jean Bon pour 13002526500013");
+    I.see("jeanbon@yopmail.com");
 
-  await moderation_link().click();
-
-  await expect(page).toHaveTitle(
-    "Modération a traiter de Jean Bon pour 13002526500013",
-  );
-  await expect(getByText("jeanbon@yopmail.com")).toBeVisible();
-
-  await getByRole("button", { name: "✅ Accepter" }).click();
-
-  await expect(getByLabel("la modale de validation")).toBeVisible();
-  await expect(
-    getByText(
+    I.click("✅ Accepter");
+    I.see(
       "A propos de jeanbon@yopmail.com pour l'organisation Direction interministerielle du numerique (DINUM), je valide :",
-    ),
-  ).toBeVisible();
+    );
+    I.within("la modale de validation", () => {
+      I.click("Terminer");
+    });
+    I.click("Annuler");
 
-  await getByRole("button", { name: "Terminer" }).click();
-  await getByRole("button", { name: "Annuler" }).click();
+    I.see("Modération acceptée");
+    I.see("Cette modération a été marqué comme traitée le");
+    I.see("Validé par moderateur@beta.gouv.fr");
 
-  await expect(getByText("Modération acceptée")).toBeVisible();
-  await expect(
-    getByText("Cette modération a été marqué comme traitée le"),
-  ).toBeVisible();
-  await expect(getByText("Validé par moderateur@beta.gouv.fr")).toBeVisible();
+    I.click("Moderations");
+    I.seeTitleEquals("Liste des moderations");
+    I.dontSee("13002526500013");
 
-  await getByRole("link", { name: "Moderations" }).click();
+    I.fillField("Filtrer les modérations…", "is:processed");
+    I.pressKey("Enter");
+    I.click("Modération a traiter de Jean Bon pour 13002526500013");
 
-  await expect(page).toHaveTitle("Liste des moderations");
-  await expect(getByText("13002526500013")).not.toBeVisible();
-
-  await search_moderations("is:processed", moderation_link());
-
-  await moderation_link().click();
-
-  await expect(page).toHaveTitle(
-    "Modération a traiter de Jean Bon pour 13002526500013",
-  );
-});
+    I.seeTitleEquals("Modération a traiter de Jean Bon pour 13002526500013");
+  },
+);
