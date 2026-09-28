@@ -17,7 +17,17 @@ beforeAll(() => {
           <tr><td>Raphael</td><td><button>Menu</button></td></tr>
         </table>
         <details><summary>👥 2 membres</summary><p>Marie</p></details>
-        <a aria-label="Open Richard" href="#richard">→</a>`,
+        <a aria-label="Open Richard" href="#richard">→</a>
+        <label><input type="checkbox" id="notify"> Notify Jean</label>
+        <p id="notified"></p>
+        <script>
+          // The first click is lost, like one landing before hydration
+          let lost = false;
+          notify.addEventListener("change", () => {
+            if (!lost) return (lost = true), (notify.checked = false);
+            notified.textContent = notify.checked ? "notify on" : "";
+          });
+        </script>`,
         { headers: { "content-type": "text/html; charset=utf-8" } },
       ),
   });
@@ -44,6 +54,13 @@ Scenario("locators resolve the way a user reads the page", ({ I }) => {
   I.click("Open Richard");
   I.seeInCurrentUrl("#richard");
   I.seeTitleEquals("Fixture");
+});
+
+Scenario("checkOption clicks again until the option stays checked", ({ I }) => {
+  I.amOnPage("/");
+  I.dontSee("notify on");
+  I.checkOption("Notify Jean");
+  I.see("notify on");
 });
 
 test("concurrent calls to the view are serialized", async () => {
