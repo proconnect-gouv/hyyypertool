@@ -1,66 +1,42 @@
-import {
-  base_url,
-  expect,
-  expect_table_contains,
-  getByPlaceholder,
-  getByRole,
-  getByText,
-  named_table_rows,
-  page,
-  setup_feature_test,
-  test,
-} from "#src/testing";
+import { setup_scenarios } from "#src/testing";
+import { Scenario } from "buncept";
 
 //
 
-setup_feature_test();
+setup_scenarios();
 
 //
 
-const domains_table = "🌐 1 domaine connu dans l’organisation";
+const JEAN = "Modération a traiter de Jean Bon pour 51935970700022";
 
-async function expect_domains(expected: string[][]) {
-  await expect(async () =>
-    expect_table_contains(await named_table_rows(domains_table), expected),
-  ).toPass();
-}
+Scenario("Domaine interne", ({ I }) => {
+  I.amOnPage("/moderations");
+  I.see("Liste des moderations");
+  I.click(JEAN);
+  I.seeTitleEquals(JEAN);
+  I.click("🌐 1 domaine connu dans l’organisation");
 
-test("Domaine interne", async () => {
-  await page.navigate(`${base_url}/moderations`);
-  await getByRole("link", {
-    name: "Modération a traiter de Jean Bon pour 51935970700022",
-  }).click();
-  await expect(page).toHaveTitle(
-    "Modération a traiter de Jean Bon pour 51935970700022",
-  );
-  await getByText(domains_table).click();
+  I.within("~Domaine yopmail.com (not_verified_yet)", () => {
+    I.see("❓");
+    I.click("Menu");
+    I.click("✅ Domaine autorisé");
+  });
 
-  await expect_domains([
-    ["Domain", "Status", "Type"],
-    ["yopmail.com", "❓", "not_verified_yet"],
-  ]);
+  I.within("~Domaine yopmail.com (verified)", () => {
+    I.see("✅");
+    I.click("Menu");
+    I.click("🚫 Domaine refusé");
+  });
 
-  // The table holds a single row, so its menu is the only one on the page
-  await getByRole("button", { name: "Menu" }).click();
-  await getByRole("button", { name: "✅ Domaine autorisé" }).click();
-  await expect_domains([
-    ["Domain", "Status", "Type"],
-    ["yopmail.com", "✅", "verified"],
-  ]);
+  I.within("~Domaine yopmail.com (refused)", () => {
+    I.see("🚫");
+  });
 
-  await getByRole("button", { name: "Menu" }).click();
-  await getByRole("button", { name: "🚫 Domaine refusé" }).click();
-  await expect_domains([
-    ["Domain", "Status", "Type"],
-    ["yopmail.com", "🚫", "refused"],
-  ]);
+  I.fillField("Ajouter un domain", "poymail.com");
+  I.pressKey("Enter");
 
-  await getByPlaceholder("Ajouter un domain").fill("poymail.com");
-  await page.press("Enter");
-
-  await expect(getByText("poymail.com")).toBeVisible();
-  await expect_domains([
-    ["Domain", "Status", "Type"],
-    ["poymail.com", "✅", "verified"],
-  ]);
+  I.see("poymail.com");
+  I.within("~Domaine poymail.com (verified)", () => {
+    I.see("✅");
+  });
 });
