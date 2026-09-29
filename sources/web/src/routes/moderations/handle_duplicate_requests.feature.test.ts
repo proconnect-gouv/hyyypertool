@@ -1,35 +1,27 @@
-import {
-  base_url,
-  expect,
-  getByRole,
-  getByText,
-  page,
-  setup_feature_test,
-  test,
-} from "#src/testing";
+import { setup_scenarios } from "#src/testing";
+import { Scenario } from "buncept";
 
 //
 
-setup_feature_test();
+setup_scenarios();
 
 //
 
-test("Richard Bon veut rejoindre l'organisation Dengi - Leclerc", async () => {
-  await page.navigate(`${base_url}/moderations`);
-  await getByRole("link", {
-    name: "Modération a traiter de Richard Bon pour 38514019900014",
-  }).click();
-  await expect(page).toHaveTitle(
-    "Modération a traiter de Richard Bon pour 38514019900014",
-  );
+const RICHARD = "Modération a traiter de Richard Bon pour 38514019900014";
 
-  await expect(
-    getByText("Richard Bon veut rejoindre l'organisation « Dengi - Leclerc »"),
-  ).toBeVisible();
-  await expect(getByText("Attention : demande multiples")).toBeVisible();
-  await expect(
-    getByText("Il s'agit de la 2e demande pour cette organisation"),
-  ).toBeVisible();
-  await expect(getByText("Moderation#5 Accepté")).toBeVisible();
-  await expect(getByText("Moderation#6 A traiter")).toBeVisible();
-});
+Scenario(
+  "Richard Bon veut rejoindre l'organisation Dengi - Leclerc",
+  ({ I }) => {
+    I.amOnPage("/moderations");
+    I.see("Liste des moderations");
+    I.click(RICHARD);
+    I.seeTitleEquals(RICHARD);
+
+    I.see("Richard Bon veut rejoindre l'organisation « Dengi - Leclerc »");
+    I.see("Attention : demande multiples");
+    I.see("Il s'agit de la 2e demande pour cette organisation");
+    // The status badges are styled uppercase: this is the text on screen
+    I.see("Moderation#5 ACCEPTÉ");
+    I.see("Moderation#6 A TRAITER");
+  },
+);
