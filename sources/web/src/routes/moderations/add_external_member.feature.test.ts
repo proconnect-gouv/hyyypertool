@@ -1,146 +1,89 @@
-import {
-  base_url,
-  click_label_until,
-  expect,
-  expect_table_contains,
-  getByRole,
-  getByText,
-  is_checked,
-  is_q,
-  named_table_rows,
-  page,
-  search_moderations,
-  setup_feature_test,
-  test,
-} from "#src/testing";
+import { setup_scenarios } from "#src/testing";
+import { Scenario, type Actor } from "buncept";
 
 //
 
-setup_feature_test();
+setup_scenarios();
 
 //
 
-const marie_moderation_link = () =>
-  getByRole("link", {
-    name: "Modération non vérifié de Marie Bon pour 57206768400017",
+const MARIE = "Modération non vérifié de Marie Bon pour 57206768400017";
+
+// Cucumber's "Contexte": the steps both scenarios start with
+function background(I: Actor) {
+  I.amOnPage("/moderations");
+  I.seeTitleEquals("Liste des moderations");
+  I.click("Voir les 🔓 Non vérifié");
+  I.click(MARIE);
+  I.seeTitleEquals(MARIE);
+}
+
+//
+
+Scenario("Marie est un membre externe de l'organization", ({ I }) => {
+  background(I);
+
+  I.click("👥 0 membre connu dans l’organisation");
+
+  I.click("✅ Accepter");
+  I.within("la modale de validation", () => {
+    I.checkOption("Ajouter Marie à l'organisation EN TANT QU'EXTERNE");
+    I.click("Terminer");
   });
-const revealed_q = is_q("is:pending sort:created-asc");
+  I.click("Retour immédiat");
 
-//
+  I.seeTitleEquals("Liste des moderations");
+  I.fillField("Filtrer les modérations…", "is:processed");
+  I.pressKey("Enter");
+  I.click(MARIE);
 
-test("Marie est un membre externe de l'organization", async () => {
-  await page.navigate(`${base_url}/moderations`);
-  await expect(page).toHaveTitle("Liste des moderations");
-
-  await click_label_until(/🔓 Non vérifié/, revealed_q);
-
-  await marie_moderation_link().click();
-  await expect(page).toHaveTitle(
-    "Modération non vérifié de Marie Bon pour 57206768400017",
-  );
-
-  await getByText("👥 0 membre connu dans l’organisation").click();
-  expect_table_contains(
-    await named_table_rows("👥 0 membre connu dans l’organisation"),
-    [[""]],
-  );
-
-  await getByRole("button", { name: "✅ Accepter" }).click();
-  await click_label_until(
-    /^Ajouter Marie à l'organisation EN TANT QU'EXTERNE$/,
-    is_checked("add_member_external"),
-  );
-  // ponytail: bunwright can't scope a locator inside another, getByLabel(modal).getByRole(button) once it can
-  await page.click(
-    'css:[aria-label="la modale de validation"] button[type="submit"]',
-  );
-  await getByText("Retour immédiat").click();
-
-  await expect(page).toHaveTitle("Liste des moderations");
-
-  await search_moderations("is:processed", marie_moderation_link());
-
-  await marie_moderation_link().click();
-
-  await getByText("👥 1 membre connu dans l’organisation").click();
-  expect_table_contains(
-    await named_table_rows("👥 1 membre connu dans l’organisation"),
-    [
-      ["Prénom", "Nom", "Interne", "Email", "Type de vérification"],
-      [
-        "Marie",
-        "Bon",
-        "❌",
-        "marie.bon@fr.bosch.com",
-        "no_validation_means_available",
-      ],
-    ],
-  );
+  // Open already: the members list unfolds for 1 to 3 members
+  I.see("👥 1 membre connu dans l’organisation");
+  I.within({ row: "marie.bon@fr.bosch.com" }, () => {
+    I.see("Marie");
+    I.see("Bon");
+    I.see("❌");
+    I.see("no_validation_means_available");
+  });
 });
 
-test("Marie est validée en externe avec notification et ajout du domaine en externe", async () => {
-  await page.navigate(`${base_url}/moderations`);
-  await expect(page).toHaveTitle("Liste des moderations");
+Scenario(
+  "Marie est validée en externe avec notification et ajout du domaine en externe",
+  ({ I }) => {
+    background(I);
 
-  await click_label_until(/🔓 Non vérifié/, revealed_q);
+    I.click("👥 0 membre connu dans l’organisation");
+    I.click("🌐 0 domaine connu dans l’organisation");
 
-  await marie_moderation_link().click();
-  await expect(page).toHaveTitle(
-    "Modération non vérifié de Marie Bon pour 57206768400017",
-  );
+    I.click("✅ Accepter");
+    I.within("la modale de validation", () => {
+      I.checkOption("Ajouter Marie à l'organisation EN TANT QU'EXTERNE");
+      I.checkOption(
+        "J'autorise le domaine fr.bosch.com en externe à l'organisation",
+      );
+      I.checkOption(
+        "Notifier marie.bon@fr.bosch.com du traitement de la modération.",
+      );
+      I.click("Terminer");
+    });
+    I.click("Retour immédiat");
 
-  await getByText("👥 0 membre connu dans l’organisation").click();
-  expect_table_contains(
-    await named_table_rows("👥 0 membre connu dans l’organisation"),
-    [[""]],
-  );
+    I.seeTitleEquals("Liste des moderations");
+    I.fillField("Filtrer les modérations…", "is:processed");
+    I.pressKey("Enter");
+    I.click(MARIE);
 
-  await getByText("🌐 0 domaine connu dans l’organisation").click();
-  expect_table_contains(
-    await named_table_rows("🌐 0 domaine connu dans l’organisation"),
-    [[""]],
-  );
+    // Open already: the members list unfolds for 1 to 3 members
+    I.see("👥 1 membre connu dans l’organisation");
+    I.within({ row: "marie.bon@fr.bosch.com" }, () => {
+      I.see("Marie");
+      I.see("❌");
+      I.see("domain");
+    });
 
-  await getByRole("button", { name: "✅ Accepter" }).click();
-  await click_label_until(
-    /^Ajouter Marie à l'organisation EN TANT QU'EXTERNE$/,
-    is_checked("add_member_external"),
-  );
-  await click_label_until(
-    /^J'autorise le domaine fr\.bosch\.com en externe à l'organisation$/,
-    is_checked("add_domain_checkbox"),
-  );
-  await click_label_until(
-    /^Notifier marie\.bon@fr\.bosch\.com du traitement de la modération\.$/,
-    is_checked("send_notification_checkbox"),
-  );
-  // ponytail: bunwright can't scope a locator inside another, getByLabel(modal).getByRole(button) once it can
-  await page.click(
-    'css:[aria-label="la modale de validation"] button[type="submit"]',
-  );
-  await getByText("Retour immédiat").click();
-
-  await expect(page).toHaveTitle("Liste des moderations");
-
-  await search_moderations("is:processed", marie_moderation_link());
-
-  await marie_moderation_link().click();
-
-  await getByText("👥 1 membre connu dans l’organisation").click();
-  expect_table_contains(
-    await named_table_rows("👥 1 membre connu dans l’organisation"),
-    [
-      ["Prénom", "Nom", "Interne", "Email", "Type de vérification"],
-      ["Marie", "Bon", "❌", "marie.bon@fr.bosch.com", "domain"],
-    ],
-  );
-
-  await getByText("🌐 1 domaine connu dans l’organisation").click();
-  expect_table_contains(
-    await named_table_rows("🌐 1 domaine connu dans l’organisation"),
-    [
-      ["Domain", "Type"],
-      ["fr.bosch.com", "external"],
-    ],
-  );
-});
+    I.click("🌐 1 domaine connu dans l’organisation");
+    I.within({ row: "external" }, () => {
+      I.see("fr.bosch.com");
+    });
+  },
+);

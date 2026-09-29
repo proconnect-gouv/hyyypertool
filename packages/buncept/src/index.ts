@@ -104,6 +104,10 @@ function create_actor(steps: Step[]) {
     amOnPage: step("am on page", (browser, _, path: string) =>
       browser.navigate(new URL(path, config.url).href),
     ),
+    // https://codecept.io/web-api/#checkoption
+    checkOption: step("check option", (browser, scopes, field: Locator) =>
+      browser.check(scopes, field),
+    ),
     // https://codecept.io/web-api/#click
     click: step("click", async (browser, scopes, locator: Locator) => {
       await browser.act("click", scopes, locator, (element) =>
@@ -248,6 +252,24 @@ export function create_browser(view: Bun.WebView) {
 
   return {
     act,
+    // Clicks the option's label until the box stays checked: a click that
+    // lands before its island hydrates is lost, so click again.
+    async check(scopes: Locator[], field: Locator) {
+      const deadline = Date.now() + config.timeout;
+      const check = in_page(check_in_page, scopes, field);
+      for (;;) {
+        await until(
+          `${JSON.stringify(field)} is not checked`,
+          (checked) => checked === true,
+          check,
+        );
+        // ponytail: same 150ms settle as fill, see there
+        await Bun.sleep(150);
+        if ((await evaluate(check)) === true) return;
+        if (Date.now() >= deadline)
+          throw new Error(`${JSON.stringify(field)} kept unchecking`);
+      }
+    },
     // Types over the current value like a user, then checks it held: an
     // island hydrating after the keystrokes resets the field, so retype.
     async fill(scopes: Locator[], field: Locator, value: string) {
@@ -348,6 +370,17 @@ function field_value(root: Element | null, field: Locator) {
   return root
     ? (find("field", field, [], root) as HTMLInputElement | null)?.value
     : undefined;
+}
+
+// true once checked; otherwise clicks the label, like a user, and reports
+function check_in_page(root: Element | null, field: Locator) {
+  const input = root
+    ? (find("field", field, [], root) as HTMLInputElement | null)
+    : null;
+  if (!input) return "element not found";
+  if (input.checked) return true;
+  (input.labels?.[0] ?? input).click();
+  return false;
 }
 
 function actionable(element: Element) {
