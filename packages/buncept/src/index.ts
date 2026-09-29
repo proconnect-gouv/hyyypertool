@@ -10,7 +10,7 @@
 // Modified for hyyypertool: rewritten as a CodeceptJS-style `I` actor over
 // Bun.WebView, relicensed under the GPL-3.0 as LGPL-2.1 §3 allows.
 
-import { test } from "bun:test";
+import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 
 //
 
@@ -18,84 +18,75 @@ import { test } from "bun:test";
 // A string is matched the way a user reads the page; objects are strict.
 export type Locator = string | { css: string } | { row: string };
 
-export const config = { url: "", timeout: 10_000 };
+export const config: {
+  url: string;
+  timeout: number;
+  // Runs once before each Scenario, e.g. to reset and seed databases
+  before_scenario?: () => Promise<void> | void;
+} = { url: "", timeout: 10_000 };
 
 export type Actor = ReturnType<typeof create_actor>;
 
 // https://codecept.io/basics/#writing-tests
 export function Scenario(title: string, body: (context: { I: Actor }) => void) {
-  test(title, async () => {
-    const view = new Bun.WebView(
-      process.platform === "linux"
-        ? {
-            backend: {
-              type: "chrome",
-              argv: [
-                "--no-sandbox",
-                `--user-data-dir=/tmp/buncept-${crypto.randomUUID()}`,
-              ],
-            },
-          }
-        : {},
-    );
-    const steps: Step[] = [];
-    body({ I: create_actor(steps) });
-
-    const browser = create_browser(view);
-    const log = [title];
-    const started = performance.now();
-    try {
-      for (const step of steps) {
-        log.push(`${"  ".repeat(step.depth + 1)}${step.label}`);
-        try {
-          await step.run(browser, step.scopes);
-        } catch (error) {
-          const reason = error instanceof Error ? error.message : String(error);
-          step.site.message = `${step.label}\n${reason}\n${await browser.page_line()}`;
-          throw step.site;
-        }
-      }
-      log.push(`  ✔ OK in ${Math.round(performance.now() - started)}ms`);
-    } catch (error) {
-      log.push(`  ✖ FAILED in ${Math.round(performance.now() - started)}ms`);
-      throw error;
-    } finally {
-      // One write per scenario, so --parallel workers don't interleave lines
-      process.stderr.write(`${log.join("\n")}\n\n`);
-      view.close();
-    }
+  describe.serial(title, () => {
+    const scenario = {} as Parameters<typeof create_actor>[0];
+    let view: Bun.WebView | undefined;
+    beforeAll(async () => {
+      await config.before_scenario?.();
+      view = new Bun.WebView(
+        process.platform === "linux"
+          ? {
+              backend: {
+                type: "chrome",
+                argv: [
+                  "--no-sandbox",
+                  `--user-data-dir=/tmp/buncept-${crypto.randomUUID()}`,
+                ],
+              },
+            }
+          : {},
+      );
+      scenario.browser = create_browser(view);
+    });
+    afterAll(() => view?.close());
+    body({ I: create_actor(scenario) });
   });
 }
 
 //
 
 type Browser = ReturnType<typeof create_browser>;
-type Step = {
-  depth: number;
-  label: string;
-  run: (browser: Browser, scopes: Locator[]) => Promise<void>;
-  scopes: Locator[];
-  site: Error;
-};
 
-// Steps are queued synchronously, like CodeceptJS, then run in order by
-// Scenario: a test reads as a list of sentences, with no `await`.
-function create_actor(steps: Step[]) {
-  const scopes: Locator[] = [];
+// Each step is its own test, so the bun reporter prints the step log: a
+// test reads as a list of sentences, with no `await`.
+function create_actor(scenario: { browser: Browser; failed_step?: string }) {
+  let scopes: Locator[] = [];
   const step = <A extends unknown[]>(
     name: string,
     run: (browser: Browser, scopes: Locator[], ...args: A) => Promise<void>,
   ) =>
     function call(...args: A) {
-      // Re-point failures at the test line that queued the step
+      // Re-point failures at the test line that called the step
       const site = new Error();
       Error.captureStackTrace(site, call);
-      steps.push({
-        depth: scopes.length,
-        label: `I ${name} ${args.map((arg) => JSON.stringify(arg)).join(", ")}`,
-        run: (browser, scopes) => run(browser, scopes, ...args),
-        scopes: [...scopes],
-        site,
+      const label = `I ${name} ${args.map((arg) => JSON.stringify(arg)).join(", ")}`;
+      const step_scopes = scopes;
+      test(label, async () => {
+        // ponytail: bun 1.4.2 has no runtime skip, so steps after a failure
+        // fail as "skipped"; use it once bun ships one
+        if (scenario.failed_step)
+          return expect().fail(
+            `skipped: step "${scenario.failed_step}" failed`,
+          );
+        try {
+          await run(scenario.browser, step_scopes, ...args);
+        } catch (error) {
+          scenario.failed_step = label;
+          const reason = error instanceof Error ? error.message : String(error);
+          site.message = `${label}\n${reason}\n${await scenario.browser.page_line()}`;
+          throw site;
+        }
       });
     };
 
@@ -192,19 +183,18 @@ function create_actor(steps: Step[]) {
     ),
     // https://codecept.io/basics/#within
     within(scope: Locator, fn: () => void) {
-      steps.push({
-        depth: scopes.length,
-        label: `Within ${JSON.stringify(scope)}:`,
-        run: async () => {},
-        scopes: [],
-        site: new Error(),
+      // bun runs a nested describe's callback after its parent's, so the
+      // scopes it sees are captured now
+      const inner = [...scopes, scope];
+      describe(`within ${JSON.stringify(scope)}`, () => {
+        const outer = scopes;
+        scopes = inner;
+        try {
+          fn();
+        } finally {
+          scopes = outer;
+        }
       });
-      scopes.push(scope);
-      try {
-        fn();
-      } finally {
-        scopes.pop();
-      }
     },
   };
 }
