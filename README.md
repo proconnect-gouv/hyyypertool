@@ -34,7 +34,7 @@ Reset the local database with : `bun run scripts/seed.ts`.
 
 Two suites, split by what they need:
 
-- **Feature tests** (`sources/web/src/routes/<area>/__features__/*.feature.test.ts`) — the default for new scenarios, written with [buncept](packages/buncept), a CodeceptJS-style `I` actor (`I.click(…)`, `I.see(…)`). They run in-process against a seeded database with auth and external APIs faked, so they need no running server. The pages load their island scripts from `bin/public/built`, so run `bun run build` first, then from the repo root: `bun run test:features`, or one file with `bun test sources/web/src/routes/moderations/__features__/moderation_list.feature.test.ts`. A few older ones still use bunwright while they are being moved.
+- **Feature tests** (`sources/web/src/routes/<area>/__features__/*.feature.test.ts`) — the default for new scenarios, written with [buncept](packages/buncept), a CodeceptJS-style `I` actor (`I.click(…)`, `I.see(…)`). They run in-process against a seeded database with auth and external APIs faked, so they need no running server. The pages load their island scripts from `bin/public/built`, so run `bun run build` first, then from the repo root: `bun run test:features`, or one file with `bun test sources/web/src/routes/moderations/__features__/moderation_list.feature.test.ts`.
 - **Cypress** (`e2e/features/`) — only for what needs the full stack: a real login through the dev identity provider, per-role access (`auth/`, `team/`, `security/`). Run one with `bun run e2e:run test --spec="features/auth/connexion.feature"`.
 
 ## Deployment 🚀

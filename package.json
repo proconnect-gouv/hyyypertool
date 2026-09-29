@@ -110,8 +110,5 @@
       },
       "./packages/release-it-changeset-plugin": {}
     }
-  },
-  "patchedDependencies": {
-    "bunwright@0.3.2": "patches/bunwright@0.3.2.patch"
   }
 }
