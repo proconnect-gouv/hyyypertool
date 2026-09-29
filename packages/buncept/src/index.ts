@@ -1,6 +1,6 @@
 // Parts of this file (actionability check, click dispatched in-page, fill by
 // focus + select + type-over, retry on "navigated or closed") are adapted
-// from bunwright 0.3.2 and this repo's patches/bunwright@0.3.2.patch:
+// from bunwright 0.3.2 and the local patch this repo carried on it (removed):
 //
 //   Bunwright: The lightweight browser automation library for Bun
 //   Copyright (C) Jonas Perusquia Morales
