@@ -248,12 +248,21 @@ export function create_browser(view: Bun.WebView) {
       (state) => state === "ok",
       `(() => {
         ${INFLIGHT_SHIM}
+        if (!(${LOADED})) return "page still loading";
         const element = (${find})(${JSON.stringify(kind)}, ${JSON.stringify(locator)}, ${JSON.stringify(scopes)});
         if (!element) return "element not found";
         if (!(${actionable})(element)) return "element not visible or not enabled";
         (${action})(element);
         return "ok";
       })()`,
+    );
+
+  // The same wait as `act`, for actions that don't go through it.
+  const ready = () =>
+    until<boolean>(
+      "page still loading",
+      (loaded) => loaded === true,
+      `(() => { ${INFLIGHT_SHIM}; return ${LOADED}; })()`,
     );
 
   // htmx and islands use fetch/XHR: wait until none is in flight.
@@ -275,6 +284,7 @@ export function create_browser(view: Bun.WebView) {
     async check(scopes: Locator[], field: Locator) {
       const deadline = Date.now() + config.timeout;
       const check = in_page(check_in_page, scopes, field);
+      await ready();
       for (;;) {
         await until(
           `${JSON.stringify(field)} is not checked`,
@@ -335,7 +345,10 @@ export function create_browser(view: Bun.WebView) {
         return "Page: unavailable";
       }
     },
-    press: (key: string) => serial(() => view.press(key)),
+    async press(key: string) {
+      await ready();
+      await serial(() => view.press(key));
+    },
     settle,
     until,
   };
@@ -357,6 +370,15 @@ const in_page = (
 
 // The functions below run in the page: they are sent as source text, so
 // they must only use their arguments and each other through `find`.
+
+// Every action first waits for the current document to be fully loaded with
+// no request in flight. A navigating click's settle() can run against the
+// old, already-complete page and return at once; the next action then lands
+// while the new page's scripts are still loading, before they attach their
+// handlers, and is lost.
+// ponytail: a handler attached by a dynamic import() after load is not
+// covered; wait on that import too if a page needs it.
+const LOADED = `document.readyState === "complete" && !(window.__buncept_inflight > 0)`;
 
 const INFLIGHT_SHIM = `
   if (!window.__buncept_inflight_installed) {

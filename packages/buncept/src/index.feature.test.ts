@@ -7,9 +7,33 @@ let server: ReturnType<typeof Bun.serve>;
 beforeAll(() => {
   server = Bun.serve({
     port: 0,
-    fetch: () =>
-      new Response(
-        `<!doctype html><title>Fixture</title>
+    fetch: async ({ url }) => {
+      const { pathname } = new URL(url);
+      // A slow page whose button handler comes from a slower script: a
+      // navigating click settles on the old page, and the button is visible
+      // before its handler exists
+      if (pathname === "/slow") {
+        await Bun.sleep(200);
+        return html(
+          `<title>Slow</title><button id="handle">Handle</button><p id="out"></p>
+          <script type="module" src="/slow.js"></script>`,
+        );
+      }
+      if (pathname === "/slow.js") {
+        await Bun.sleep(500);
+        return new Response(
+          `handle.addEventListener("click", () => (out.textContent = "handled"));`,
+          { headers: { "content-type": "text/javascript" } },
+        );
+      }
+      // Navigates a beat after the click, so settle() reliably checks the
+      // old page, as a plain link does now and then under load
+      if (pathname === "/nav")
+        return html(
+          `<button onclick="setTimeout(() => (location.href = '/slow'), 50)">Go slow</button>`,
+        );
+      return html(
+        `<title>Fixture</title>
         <label for="email">Email</label><input id="email">
         <input placeholder="Filtrer…">
         <table>
@@ -28,12 +52,17 @@ beforeAll(() => {
             notified.textContent = notify.checked ? "notify on" : "";
           });
         </script>`,
-        { headers: { "content-type": "text/html; charset=utf-8" } },
-      ),
+      );
+    },
   });
   config.url = `http://localhost:${server.port}`;
 });
 afterAll(() => server.stop(true));
+
+const html = (body: string) =>
+  new Response(`<!doctype html>${body}`, {
+    headers: { "content-type": "text/html; charset=utf-8" },
+  });
 
 //
 
@@ -64,6 +93,16 @@ Scenario("checkOption clicks again until the option stays checked", ({ I }) => {
   I.checkOption("Notify Jean");
   I.see("notify on");
 });
+
+Scenario(
+  "an action after a navigating click waits for the new page",
+  ({ I }) => {
+    I.amOnPage("/nav");
+    I.click("Go slow");
+    I.click("Handle");
+    I.see("handled");
+  },
+);
 
 test("concurrent calls to the view are serialized", async () => {
   const view = new Bun.WebView(
