@@ -51,6 +51,8 @@ Scenario("locators resolve the way a user reads the page", ({ I }) => {
   I.dontSee("Marie");
   I.click("👥 2 membres");
   I.see("Marie");
+  I.seeElement("~Open Richard");
+  I.dontSeeElement("~Open");
   I.click("Open Richard");
   I.seeInCurrentUrl("#richard");
   I.seeTitleEquals("Fixture");

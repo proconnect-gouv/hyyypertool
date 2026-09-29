@@ -1,39 +1,42 @@
-import {
-  base_url,
-  expect,
-  getByRole,
-  page,
-  search_moderations,
-  setup_feature_test,
-  test,
-} from "#src/testing";
+import { setup_scenarios } from "#src/testing";
+import { Scenario, type Actor } from "buncept";
 
 //
 
-setup_feature_test();
+setup_scenarios();
 
 //
 
-const jean_bon_moderation_link = () =>
-  getByRole("link", {
-    name: "Modération a traiter de Jean Bon pour 13002526500013",
-  });
+const JEAN_BON = "~Modération a traiter de Jean Bon pour 13002526500013";
+const EXCLUDE_ANNUAIRE = 'is:pending -service:"Annuaire des entreprises"';
 
-test("Exclure un fournisseur de service masque les modérations associées", async () => {
-  await page.navigate(`${base_url}/moderations`);
-  await expect(jean_bon_moderation_link()).toBeVisible();
+// Cucumber's "Contexte": the steps both scenarios start with
+function background(I: Actor) {
+  I.amOnPage("/moderations");
+  I.see("Liste des moderations");
+}
 
-  await search_moderations('is:pending -service:"Annuaire des entreprises"');
+//
 
-  await expect(jean_bon_moderation_link()).not.toBeVisible();
-});
+Scenario(
+  "Exclure un fournisseur de service masque les modérations associées",
+  ({ I }) => {
+    background(I);
 
-test("Retirer un filtre réaffiche les modérations exclues", async () => {
-  await page.navigate(`${base_url}/moderations`);
-  await expect(page).toHaveTitle("Liste des moderations");
+    I.seeElement(JEAN_BON);
+    I.fillField("Filtrer les modérations…", EXCLUDE_ANNUAIRE);
+    I.pressKey("Enter");
+    I.dontSeeElement(JEAN_BON);
+  },
+);
 
-  await search_moderations('is:pending -service:"Annuaire des entreprises"');
-  await expect(jean_bon_moderation_link()).not.toBeVisible();
+Scenario("Retirer un filtre réaffiche les modérations exclues", ({ I }) => {
+  background(I);
 
-  await search_moderations("is:pending", jean_bon_moderation_link());
+  I.fillField("Filtrer les modérations…", EXCLUDE_ANNUAIRE);
+  I.pressKey("Enter");
+  I.dontSeeElement(JEAN_BON);
+  I.fillField("Filtrer les modérations…", "is:pending");
+  I.pressKey("Enter");
+  I.seeElement(JEAN_BON);
 });
