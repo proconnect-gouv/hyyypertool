@@ -144,6 +144,12 @@ function create_actor(steps: Step[]) {
       await browser.press(key);
       await browser.settle();
     }),
+    // Not in CodeceptJS: "navigate by keyboard to …", like a user tabbing
+    pressKeyUntilFocused: step(
+      "press key until focused",
+      (browser, scopes, key: string, locator: Locator) =>
+        browser.press_until_focused(scopes, key, locator),
+    ),
     // https://codecept.io/web-api/#see
     see: step("see", (browser, scopes, text: string) =>
       browser.until(
@@ -158,6 +164,14 @@ function create_actor(steps: Step[]) {
         `${JSON.stringify(locator)} is not visible`,
         (visible) => visible === true,
         in_page(element_in_page, scopes, locator),
+      ),
+    ),
+    // Not in CodeceptJS: keyboard focus is on the element a user would name
+    seeFocused: step("see focused", (browser, scopes, locator: Locator) =>
+      browser.until(
+        `${JSON.stringify(locator)} is not focused`,
+        (focused) => focused === true,
+        in_page(focused_in_page, scopes, locator),
       ),
     ),
     // https://codecept.io/web-api/#seeincurrenturl
@@ -198,6 +212,7 @@ function create_actor(steps: Step[]) {
 //
 
 const TRANSIENT = /navigated or closed|navigation is already pending/;
+const PRESS_CAP = 50;
 
 export function create_browser(view: Bun.WebView) {
   // Bun.WebView rejects concurrent calls ("an evaluate() is already
@@ -349,6 +364,25 @@ export function create_browser(view: Bun.WebView) {
       await ready();
       await serial(() => view.press(key));
     },
+    // Presses `key` until focus lands on `locator`, as a user tabs through
+    // a page; a cap keeps a wrong locator from cycling the page forever.
+    async press_until_focused(
+      scopes: Locator[],
+      key: string,
+      locator: Locator,
+    ) {
+      const focused = in_page(focused_in_page, scopes, locator);
+      let last: unknown = null;
+      for (let presses = 0; presses <= PRESS_CAP; presses++) {
+        await ready();
+        last = await evaluate(focused);
+        if (last === true) return;
+        if (presses < PRESS_CAP) await serial(() => view.press(key));
+      }
+      throw new Error(
+        `${JSON.stringify(locator)} not focused after ${PRESS_CAP} presses of "${key}" (got ${JSON.stringify(last)})`,
+      );
+    },
     settle,
     until,
   };
@@ -417,6 +451,19 @@ function element_in_page(root: Element | null, locator: Locator) {
     ? (find("text", locator, [], root) as HTMLElement)
     : null;
   return !!element && (element.offsetWidth > 0 || element.offsetHeight > 0);
+}
+
+// true when the focused element is the one `locator` names; otherwise what
+// has focus, for the failure message
+function focused_in_page(root: Element | null, locator: Locator) {
+  const active = document.activeElement as HTMLElement | null;
+  if (root && active && find("click", locator, [], root) === active)
+    return true;
+  return active
+    ? (active.getAttribute("aria-label") ?? active.innerText ?? "")
+        .trim()
+        .slice(0, 80) || active.tagName
+    : null;
 }
 
 // true once checked; otherwise clicks the label, like a user, and reports
