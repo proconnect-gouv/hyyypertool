@@ -123,6 +123,16 @@ function create_actor(steps: Step[]) {
         in_page(see_in_page, scopes, text),
       ),
     ),
+    // https://codecept.io/web-api/#dontseeelement
+    dontSeeElement: step(
+      "don't see element",
+      (browser, scopes, locator: Locator) =>
+        browser.until(
+          `${JSON.stringify(locator)} is still visible`,
+          (visible) => !visible,
+          in_page(element_in_page, scopes, locator),
+        ),
+    ),
     // https://codecept.io/web-api/#fillfield
     fillField: step(
       "fill field",
@@ -140,6 +150,14 @@ function create_actor(steps: Step[]) {
         `"${text}" is not visible`,
         (visible) => visible === true,
         in_page(see_in_page, scopes, text),
+      ),
+    ),
+    // https://codecept.io/web-api/#seeelement
+    seeElement: step("see element", (browser, scopes, locator: Locator) =>
+      browser.until(
+        `${JSON.stringify(locator)} is not visible`,
+        (visible) => visible === true,
+        in_page(element_in_page, scopes, locator),
       ),
     ),
     // https://codecept.io/web-api/#seeincurrenturl
@@ -372,6 +390,13 @@ function field_value(root: Element | null, field: Locator) {
     : undefined;
 }
 
+function element_in_page(root: Element | null, locator: Locator) {
+  const element = root
+    ? (find("text", locator, [], root) as HTMLElement)
+    : null;
+  return !!element && (element.offsetWidth > 0 || element.offsetHeight > 0);
+}
+
 // true once checked; otherwise clicks the label, like a user, and reports
 function check_in_page(root: Element | null, field: Locator) {
   const input = root
@@ -429,6 +454,15 @@ function find(
       return (
         all(root, "tr").find((tr) => normalize(tr.textContent).includes(row)) ??
         null
+      );
+    }
+    // CodeceptJS "~label": the element whose aria-label is exactly label
+    if (locator.startsWith("~")) {
+      const label = normalize(locator.slice(1));
+      return (
+        all(root, "[aria-label]").find(
+          (element) => normalize(element.getAttribute("aria-label")) === label,
+        ) ?? null
       );
     }
     const text = normalize(locator);
