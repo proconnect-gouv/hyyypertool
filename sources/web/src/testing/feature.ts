@@ -9,7 +9,7 @@ import {
   migrate,
   pg,
 } from "@~/identite-proconnect/database/testing";
-import { afterAll, beforeAll, beforeEach } from "bun:test";
+import { afterAll, beforeAll } from "bun:test";
 import { config as buncept } from "buncept";
 import { create_testing_router } from "./router";
 
@@ -23,8 +23,11 @@ export function setup_scenarios() {
     buncept.url = `http://localhost:${server.port}`;
   });
   afterAll(() => server.stop(true));
-  beforeEach(identite_empty_database);
-  beforeEach(hyyyperbase_empty_database);
-  beforeEach(() => insert_database(pg));
-  beforeEach(() => insert_moderateur(hyyyper_pglite));
+  // Once per Scenario: each step is its own test, state carries across them
+  buncept.before_scenario = async () => {
+    await identite_empty_database();
+    await hyyyperbase_empty_database();
+    await insert_database(pg);
+    await insert_moderateur(hyyyper_pglite);
+  };
 }
