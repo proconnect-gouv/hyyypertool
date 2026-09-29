@@ -1,102 +1,66 @@
-import {
-  base_url,
-  click_label_until,
-  expect,
-  expect_table_contains,
-  getByRole,
-  getByText,
-  is_checked,
-  is_q,
-  named_table_rows,
-  page,
-  search_moderations,
-  setup_feature_test,
-  test,
-} from "#src/testing";
+import { setup_scenarios } from "#src/testing";
+import { Scenario, type Actor } from "buncept";
 
 //
 
-setup_feature_test();
+setup_scenarios();
 
 //
 
-const marie_moderation_link = () =>
-  getByRole("link", {
-    name: "Modération non vérifié de Marie Bon pour 57206768400017",
+const MARIE = "Modération non vérifié de Marie Bon pour 57206768400017";
+const RAPHAEL = "Modération non vérifié de Raphael Dubigny pour 81403721400016";
+
+// Cucumber's "Contexte": the steps both scenarios start with
+function background(I: Actor) {
+  I.amOnPage("/moderations");
+  I.seeTitleEquals("Liste des moderations");
+  I.click("Voir les 🔓 Non vérifié");
+}
+
+//
+
+Scenario("Marie est un membre interne de l'organization", ({ I }) => {
+  background(I);
+
+  I.click(MARIE);
+  I.seeTitleEquals(MARIE);
+
+  I.click("👥 0 membre connu dans l’organisation");
+
+  I.click("✅ Accepter");
+  I.within("la modale de validation", () => {
+    I.checkOption("Ajouter Marie à l'organisation EN TANT QU'INTERNE");
+    I.click("Terminer");
   });
-const raphael_moderation_link = () =>
-  getByRole("link", {
-    name: "Modération non vérifié de Raphael Dubigny pour 81403721400016",
+  I.click("Retour immédiat");
+
+  I.seeTitleEquals("Liste des moderations");
+  I.fillField("Filtrer les modérations…", "is:processed");
+  I.pressKey("Enter");
+  I.click(MARIE);
+
+  // Open already: the members list unfolds for 1 to 3 members
+  I.see("👥 1 membre connu dans l’organisation");
+  I.within({ row: "Marie" }, () => {
+    I.see("Bon");
   });
-const revealed_q = is_q("is:pending sort:created-asc");
-
-//
-
-test("Marie est un membre interne de l'organization", async () => {
-  await page.navigate(`${base_url}/moderations`);
-  await expect(page).toHaveTitle("Liste des moderations");
-
-  await click_label_until(/🔓 Non vérifié/, revealed_q);
-
-  await marie_moderation_link().click();
-  await expect(page).toHaveTitle(
-    "Modération non vérifié de Marie Bon pour 57206768400017",
-  );
-
-  await getByText("👥 0 membre connu dans l’organisation").click();
-  expect_table_contains(
-    await named_table_rows("👥 0 membre connu dans l’organisation"),
-    [[""]],
-  );
-
-  await getByRole("button", { name: "✅ Accepter" }).click();
-  await click_label_until(
-    /^Ajouter Marie à l'organisation EN TANT QU'INTERNE$/,
-    is_checked("add_member_internal"),
-  );
-  // ponytail: bunwright can't scope a locator inside another, getByLabel(modal).getByRole(button) once it can
-  await page.click(
-    'css:[aria-label="la modale de validation"] button[type="submit"]',
-  );
-  await getByText("Retour immédiat").click();
-
-  await expect(page).toHaveTitle("Liste des moderations");
-
-  await search_moderations("is:processed", marie_moderation_link());
-
-  await marie_moderation_link().click();
-
-  await getByText("👥 1 membre connu dans l’organisation").click();
-  expect_table_contains(
-    await named_table_rows("👥 1 membre connu dans l’organisation"),
-    [
-      ["Prénom", "Nom"],
-      ["Marie", "Bon"],
-    ],
-  );
 });
 
-test("Raphael est déjà membre de l'organisation mais sa modération peut être validée", async () => {
-  await page.navigate(`${base_url}/moderations`);
-  await expect(page).toHaveTitle("Liste des moderations");
+Scenario(
+  "Raphael est déjà membre de l'organisation mais sa modération peut être validée",
+  ({ I }) => {
+    background(I);
 
-  await click_label_until(/🔓 Non vérifié/, revealed_q);
+    I.click(RAPHAEL);
+    I.seeTitleEquals(RAPHAEL);
 
-  await raphael_moderation_link().click();
-  await expect(page).toHaveTitle(
-    "Modération non vérifié de Raphael Dubigny pour 81403721400016",
-  );
+    I.click("✅ Accepter");
+    I.within("la modale de validation", () => {
+      I.checkOption("Ajouter Raphael à l'organisation EN TANT QU'INTERNE");
+      I.click("Terminer");
+    });
+    I.click("Retour immédiat");
 
-  await getByRole("button", { name: "✅ Accepter" }).click();
-  await click_label_until(
-    /^Ajouter Raphael à l'organisation EN TANT QU'INTERNE$/,
-    is_checked("add_member_internal"),
-  );
-  // ponytail: bunwright can't scope a locator inside another, getByLabel(modal).getByRole(button) once it can
-  await page.click(
-    'css:[aria-label="la modale de validation"] button[type="submit"]',
-  );
-  await getByText("Retour immédiat").click();
-
-  await expect(page).toHaveTitle("Liste des moderations");
-});
+    I.seeTitleEquals("Liste des moderations");
+  },
+);
