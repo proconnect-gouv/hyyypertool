@@ -28,6 +28,8 @@ beforeAll(() => {
       }
       // Navigates a beat after the click, so settle() reliably checks the
       // old page, as a plain link does now and then under load
+      if (pathname === "/keyboard")
+        return html(`<a href="#first">First</a> <a href="#second">Second</a>`);
       if (pathname === "/nav")
         return html(
           `<button onclick="setTimeout(() => (location.href = '/slow'), 50)">Go slow</button>`,
@@ -92,6 +94,20 @@ Scenario("checkOption clicks again until the option stays checked", ({ I }) => {
   I.dontSee("notify on");
   I.checkOption("Notify Jean");
   I.see("notify on");
+});
+
+Scenario("seeFocused follows the keyboard focus", ({ I }) => {
+  I.amOnPage("/keyboard");
+  I.pressKey("Tab");
+  I.seeFocused("First");
+  I.pressKey("Tab");
+  I.seeFocused("Second");
+});
+
+Scenario("pressKeyUntilFocused tabs to the named element", ({ I }) => {
+  I.amOnPage("/keyboard");
+  I.pressKeyUntilFocused("Tab", "Second");
+  I.seeFocused("Second");
 });
 
 Scenario(
