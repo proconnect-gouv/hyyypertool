@@ -171,7 +171,7 @@
       "dependencies": {
         "@proconnect-gouv/proconnect.api_entreprise": "2.2.0",
         "@proconnect-gouv/proconnect.core": "1.0.0",
-        "@proconnect-gouv/proconnect.identite": "10.1.0",
+        "@proconnect-gouv/proconnect.identite": "10.2.2",
         "@proconnect-gouv/proconnect.identite.database": "1.8.0",
         "@proconnect-gouv/proconnect.insee": "2.0.0",
         "consola": "3.4.2",
@@ -197,7 +197,7 @@
         "@proconnect-gouv/proconnect.api_entreprise": "2.2.0",
         "@proconnect-gouv/proconnect.core": "1.0.0",
         "@proconnect-gouv/proconnect.crisp": "1.0.1",
-        "@proconnect-gouv/proconnect.identite": "10.1.0",
+        "@proconnect-gouv/proconnect.identite": "10.2.2",
         "@sentry/browser": "10.75.2",
         "@sentry/core": "10.75.2",
         "@sentry/node": "10.75.2",
@@ -500,7 +500,7 @@
 
     "@proconnect-gouv/proconnect.crisp": ["@proconnect-gouv/proconnect.crisp@1.0.1", "", {}, "sha512-I9TwlyLeBhhNstfmO4brBG1w74JUX5JE/4OTV+UGVF9ThUyPseYLI6UBQH5eK4UfTR0tt57G4tcsDnQ6QZIr7g=="],
 
-    "@proconnect-gouv/proconnect.identite": ["@proconnect-gouv/proconnect.identite@10.1.0", "", { "dependencies": { "leven": "^4.0.0", "openid-client": "^6.6.4", "sql-template-tag": "^5.2.1", "ts-pattern": "^5.7.0", "zod": "^4.3.5" }, "peerDependencies": { "@proconnect-gouv/proconnect.annuaire_entreprises": "^3.0.2", "@proconnect-gouv/proconnect.api_entreprise": "^2.2.0", "@proconnect-gouv/proconnect.core": "^1.0.0", "@proconnect-gouv/proconnect.insee": "^2.0.0", "@proconnect-gouv/proconnect.registre_national_entreprises": "^4.0.0" }, "optionalPeers": ["@proconnect-gouv/proconnect.annuaire_entreprises", "@proconnect-gouv/proconnect.api_entreprise", "@proconnect-gouv/proconnect.core", "@proconnect-gouv/proconnect.insee", "@proconnect-gouv/proconnect.registre_national_entreprises"] }, "sha512-F7pV47dqyTUeh65zuOaN1Sbl0oSjtbxrgHqKLIPE0JSZV84YSJhPAx8xH500r4S4spLQzOaB1DCzxYnZ1z8BJQ=="],
+    "@proconnect-gouv/proconnect.identite": ["@proconnect-gouv/proconnect.identite@10.2.2", "", { "dependencies": { "leven": "^4.0.0", "openid-client": "^6.6.4", "sql-template-tag": "^5.2.1", "ts-pattern": "^5.7.0", "zod": "^4.3.5" }, "peerDependencies": { "@proconnect-gouv/proconnect.annuaire_entreprises": "^3.0.5", "@proconnect-gouv/proconnect.api_entreprise": "^2.3.0", "@proconnect-gouv/proconnect.core": "^1.0.0", "@proconnect-gouv/proconnect.insee": "^2.0.0", "@proconnect-gouv/proconnect.registre_national_entreprises": "^4.1.0" }, "optionalPeers": ["@proconnect-gouv/proconnect.annuaire_entreprises", "@proconnect-gouv/proconnect.api_entreprise", "@proconnect-gouv/proconnect.core", "@proconnect-gouv/proconnect.insee", "@proconnect-gouv/proconnect.registre_national_entreprises"] }, "sha512-RLfHDQSS6K/fOeuUOWzR2PS/YJZ6r73DKG2SRRRHj8GshYJ7SMGjqzqmkM/cHNEfUSgeSHOoMr1dyM2xz4P0Ew=="],
 
     "@proconnect-gouv/proconnect.identite.database": ["@proconnect-gouv/proconnect.identite.database@1.8.0", "", { "peerDependencies": { "drizzle-orm": ">=0.44" }, "optionalPeers": ["drizzle-orm"] }, "sha512-TOPkGZCgKiRAYOGx22a0pZPIJ/Bl1eQbezpYsetLW2ipdJrweFa/YfwayLF84kkz9E1gpBLzF45dP2H0dI1wAQ=="],
 
