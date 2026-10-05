@@ -29,20 +29,11 @@ export function RemoveMemberFromOrganization({
   }: RemoveMemberFromOrganization_Input) {
     const get_user = GetUserInfo({ pg });
     const { email, given_name, family_name } = await get_user(user_id);
+    const nickname = z_username.parse({ given_name, usual_name: family_name });
 
     const get_organization = GetFicheOrganizationById({ pg });
     const { cached_libelle, siret } = await get_organization(organization_id);
     const organization_name = cached_libelle ?? siret;
-
-    const remove_user_from_organization = RemoveUserFromOrganization({ pg });
-    await remove_user_from_organization({ organization_id, user_id });
-
-    const nickname = z_username.parse({ given_name, usual_name: family_name });
-    const { session_id } = await crisp.create_conversation({
-      email,
-      subject: "[ProConnect] - Retrait d'une organisation",
-      nickname,
-    });
 
     const [, found_user] = await await_to(
       crisp.get_user({ email: moderator.email }),
@@ -51,6 +42,14 @@ export function RemoveMemberFromOrganization({
       nickname: z_username.parse(moderator),
       email: moderator.email,
     };
+    const remove_user_from_organization = RemoveUserFromOrganization({ pg });
+    await remove_user_from_organization({ organization_id, user_id });
+
+    const { session_id } = await crisp.create_conversation({
+      email,
+      subject: "[ProConnect] - Retrait d'une organisation",
+      nickname,
+    });
 
     await crisp.send_message({
       content: RemoveFromOrganizationMessage({ organization_name }),

@@ -26,15 +26,7 @@ export function DeleteUser({
   return async function delete_user({ moderator, user_id }: DeleteUser_Input) {
     const get_user = GetUserInfo({ pg });
     const { email, given_name, family_name } = await get_user(user_id);
-
-    await pg.delete(schema.users).where(eq(schema.users.id, user_id));
-
     const nickname = z_username.parse({ given_name, usual_name: family_name });
-    const { session_id } = await crisp.create_conversation({
-      email,
-      subject: "[ProConnect] - Suppression de votre compte",
-      nickname,
-    });
 
     const [, found_user] = await await_to(
       crisp.get_user({ email: moderator.email }),
@@ -43,6 +35,14 @@ export function DeleteUser({
       nickname: z_username.parse(moderator),
       email: moderator.email,
     };
+
+    await pg.delete(schema.users).where(eq(schema.users.id, user_id));
+
+    const { session_id } = await crisp.create_conversation({
+      email,
+      subject: "[ProConnect] - Suppression de votre compte",
+      nickname,
+    });
 
     await crisp.send_message({
       content: DeleteAccountMessage(),

@@ -27,22 +27,9 @@ export function RevokeIdentity({
     moderator,
     user_id,
   }: RevokeIdentity_Input) {
-    await pg
-      .update(schema.users)
-      .set({
-        email_verified: false,
-      })
-      .where(eq(schema.users.id, user_id));
-
     const get_user = GetUserInfo({ pg });
     const { email, given_name, family_name } = await get_user(user_id);
     const nickname = z_username.parse({ given_name, usual_name: family_name });
-    const { session_id } = await crisp.create_conversation({
-      email,
-      subject:
-        "[ProConnect] - Réinitialisation de la vérification de votre adresse email",
-      nickname,
-    });
 
     const [, found_user] = await await_to(
       crisp.get_user({ email: moderator.email }),
@@ -51,6 +38,20 @@ export function RevokeIdentity({
       nickname: z_username.parse(moderator),
       email: moderator.email,
     };
+
+    await pg
+      .update(schema.users)
+      .set({
+        email_verified: false,
+      })
+      .where(eq(schema.users.id, user_id));
+
+    const { session_id } = await crisp.create_conversation({
+      email,
+      subject:
+        "[ProConnect] - Réinitialisation de la vérification de votre adresse email",
+      nickname,
+    });
 
     await crisp.send_message({
       content: RevokeIdentityMessage(),
