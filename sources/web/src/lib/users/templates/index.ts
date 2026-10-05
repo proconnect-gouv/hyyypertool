@@ -28,3 +28,27 @@ export function ResetPasswordMessage() {
     L'équipe ProConnect.
   `;
 }
+
+export function RevokeIdentityMessage() {
+  return dedent`
+    Bonjour,
+
+    Nous avons réinitialisé la vérification de votre adresse email.
+    Il vous sera demandé de confirmer à nouveau votre adresse email.
+
+    Excellente journée,
+    L'équipe ProConnect.
+  `;
+}
+
+export function DeleteAccountMessage() {
+  return dedent`
+    Bonjour,
+
+    Nous avons supprimé votre compte ProConnect.
+    Vous pouvez créer un nouveau compte à tout moment avec votre adresse email.
+
+    Excellente journée,
+    L'équipe ProConnect.
+  `;
+}

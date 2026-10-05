@@ -5,3 +5,4 @@ export * from "./GetUserInfo";
 export * from "./ResetMFA";
 export * from "./ResetPassword";
 export * from "./SuggestSameUserEmails";
+export * from "./RevokeIdentity";

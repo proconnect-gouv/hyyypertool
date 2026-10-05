@@ -3,7 +3,12 @@
 import { NotFoundError } from "#src/errors";
 import type { HtmxHeader } from "#src/htmx";
 import { Main_Layout } from "#src/layouts";
-import { CountUserMemberships, ResetMFA, ResetPassword } from "#src/lib/users";
+import {
+  CountUserMemberships,
+  ResetMFA,
+  ResetPassword,
+  RevokeIdentity,
+} from "#src/lib/users";
 import { editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { EntitySchema } from "#src/schema";
@@ -110,14 +115,19 @@ export default new Hono<AppContext>()
   .patch(
     "/reset/email_verified",
     zValidator("param", EntitySchema),
-    async function reset_email_verified({ text, req, var: { identite_pg } }) {
-      const { id } = req.valid("param");
-      await identite_pg
-        .update(schema.users)
-        .set({
-          email_verified: false,
-        })
-        .where(eq(schema.users.id, id));
+    async function reset_email_verified({
+      text,
+      req,
+      env: config,
+      var: { crisp, identite_pg, userinfo },
+    }) {
+      const { id: user_id } = req.valid("param");
+      const revoke_identity = RevokeIdentity({
+        crisp,
+        pg: identite_pg,
+        resolve_delay: config.CRISP_RESOLVE_DELAY,
+      });
+      await revoke_identity({ moderator: userinfo, user_id });
       return text("OK", 200, { "HX-Refresh": "true" } as HtmxHeader);
     },
   )
