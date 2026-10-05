@@ -5,6 +5,7 @@ import type { HtmxHeader } from "#src/htmx";
 import { Main_Layout } from "#src/layouts";
 import {
   CountUserMemberships,
+  DeleteUser,
   ResetMFA,
   ResetPassword,
   RevokeIdentity,
@@ -104,9 +105,21 @@ export default new Hono<AppContext>()
   .delete(
     "/",
     zValidator("param", EntitySchema),
-    async function DELETE({ text, req, var: { identite_pg } }) {
-      const { id } = req.valid("param");
-      await identite_pg.delete(schema.users).where(eq(schema.users.id, id));
+    async function DELETE({
+      text,
+      req,
+      env: config,
+      var: { crisp, identite_pg, userinfo },
+    }) {
+      const { id: user_id } = req.valid("param");
+
+      const delete_user = DeleteUser({
+        crisp,
+        pg: identite_pg,
+        resolve_delay: config.CRISP_RESOLVE_DELAY,
+      });
+      await delete_user({ moderator: userinfo, user_id });
+
       return text("OK", 200, {
         "HX-Location": urls.users.$url().pathname,
       } as HtmxHeader);
