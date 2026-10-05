@@ -7,3 +7,4 @@ export * from "./ResetPassword";
 export * from "./SuggestSameUserEmails";
 export * from "./RevokeIdentity";
 export * from "./DeleteUser";
+export * from "./RemoveMemberFromOrganization";
