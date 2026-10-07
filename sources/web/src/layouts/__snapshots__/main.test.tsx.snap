@@ -173,10 +173,6 @@ mount_island();</script></x-notification-island></div>
               nonce="nonce"
               src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/_hyperscript.min.js"
             ></script>
-      <script
-        nonce="nonce"
-        src="/assets/ASSETS_PATH/node_modules/hyperscript.org/dist/template.js"
-      ></script>
 
       <!--  -->
 

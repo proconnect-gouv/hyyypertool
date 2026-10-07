@@ -2,8 +2,8 @@
 
 import { GlobalRegistrator } from "@happy-dom/global-registrator";
 import { afterAll, beforeAll, expect, test } from "bun:test";
-import _hyperscript from "hyperscript.org";
-import "hyperscript.org/src/hdb";
+import "hyperscript.org";
+import "hyperscript.org/ext/hdb.js";
 import { hide_on_click_elsewere } from "./hide_on_click_elsewere";
 
 //
@@ -21,7 +21,12 @@ test("hide on click elsewere", () => {
     </>
   ).toString();
 
-  _hyperscript.processNode(document.body);
+  // hyperscript.org 0.9.93 attaches itself to globalThis as a side effect of the
+  // "hyperscript.org" import above; the package ships no type declarations.
+  const hyperscript_global = globalThis as unknown as {
+    _hyperscript: { processNode(el: Element): void };
+  };
+  hyperscript_global._hyperscript.processNode(document.body);
 
   const ike = document.querySelector("#ike")!;
 
