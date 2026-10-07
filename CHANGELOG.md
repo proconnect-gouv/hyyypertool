@@ -1,5 +1,71 @@
 # Changelog
 
+## [2026.10.0](https://github.com/proconnect-gouv/hyyypertool/compare/2026.9.3...2026.10.0) (2026-10-07)
+
+### Changements
+
+- 🐛 Correction d'une erreur empêchant l'ajout d'une nouvelle organisation
+- 🐛 Le lien « Liste dirigeants - Annuaire entreprise API » pointe directement vers la page des dirigeants, sans redirection intermédiaire
+- ✨ Envoyer un email aux utilisateurs lorsqu'une action est réalisée sur leur compte par le support
+
+### Ajouté
+
+- ✨ Add crisp email on support actions (#1846) (0b2d10d0)
+- ✨ port verify_domain feature test to buncept (#1837) (52ae08cf)
+- ✨ port tab_navigation feature test to buncept (#1835) (2f4249cd)
+- ✨ port manage_internal_domain feature test to buncept (#1833) (1421731f)
+- ✨ port handle_duplicate_requests feature test to buncept (#1832) (5270f11d)
+- ✨ port filter_by_service_provider feature test to buncept (#1831) (b1e2b991)
+- ✨ port add_internal_member feature test to buncept (#1830) (bfba1178)
+- ✨ port add_external_member feature test to buncept (#1829) (a1ee7b52)
+- ✨ port accept_blocking_moderation feature test to buncept (#1828) (fc3fe0a9)
+- ✨ Add buncept, a CodeceptJS-style e2e actor, and port moderation_list (#1827) (efe91f55)
+- ✨ port tab_navigation.feature to bunwright (#1814) (5821167f)
+- ✨ port reprocess_completed_moderation.feature to bunwright (#1813) (1cf51002)
+- ✨ port filter_by_service_provider.feature to bunwright (#1807) (93ea889e)
+- ✨ port verify_domain.feature to bunwright (#1815) (bfca7e56)
+- ✨ port handle_duplicate_requests.feature to bunwright (#1809) (2cca1979)
+- ✨ port manage_internal_domain.feature to bunwright (#1811) (394e0ae6)
+- ✨ Port add_internal_member.feature to bunwright (#1803) (c6d71c74)
+- ✨ Migrate remaining Cucumber scenarios to bunwright (#1802) (37713313)
+- ✨ Add bunwright e2e test harness, migrate moderation_list off Cypress (#1801) (8253efd5)
+
+### Modifié
+
+- ♻️ buncept: Scenario is a describe.serial, each step a test (#1839) (a01ba7ea)
+- 🚚 move buncept feature tests into **features** (#1836) (cfbafa99)
+
+### Corrigé
+
+- 🐛 fix lien vers la liste des dirigeants sur annuaire-entreprises (#1847) (1dc873ec)
+- 🐛 Wait for page load before buncept actions, port reprocess_completed_moderation (#1834) (be097b15)
+- 🐛 Fix bunwright typing and navigation races in feature tests (#1805) (28e69991)
+
+### Supprimé
+
+- 🔥 drop bunwright (#1838) (981b71d6)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): Bump hyperscript.org from 0.9.14 to 0.9.93 (#1823) (0928186d)
+- :arrow_upper_right: [patch](deps): Bump the sentry group across 1 directory with 4 updates (#1841) (a30664c5)
+- :arrow_upper_right: [patch](deps): Bump @proconnect-gouv/proconnect.identite from 10.1.0 to 10.2.2 (#1845) (1f4f9166)
+- :arrow_upper_right: [patch](deps-dev): Bump @types/node in /e2e (#1840) (5638ed21)
+- :arrow_upper_right: [patch](deps): Bump tailwind-merge (#1842) (a3cf8235)
+- :arrow_upper_right: [patch](deps): Bump cypress-io/github-action (#1818) (99384f4a)
+- :arrow_upper_right: [patch](deps-dev): Bump release-it (#1843) (2ab2b37d)
+- :arrow_upper_right: [patch](deps): Bump the sentry group across 1 directory with 4 updates (#1821) (202e7415)
+- :arrow_upper_right: [patch](deps): Bump cypress in /e2e (#1819) (51903f1b)
+- :arrow_upper_right: [patch](deps): Bump type-fest from 5.7.0 to 5.10.0 (#1824) (b72a50a7)
+- :arrow_upper_right: [patch](deps): Bump docker/setup-compose-action (#1817) (a101338b)
+- :arrow_upper_right: [patch](deps-dev): Bump @types/node in /e2e (#1820) (fcf22e15)
+- :arrow_upper_right: [patch](deps): Bump tsx from 4.23.1 to 4.23.13 (#1825) (6e1f36f8)
+
+### Divers
+
+- Bump nixpkgs from `20b1ddd` to `e158d9e` (#1844) (72719d22)
+- Bump nixpkgs from `eaad089` to `20b1ddd` (#1826) (2f966394)
+
 ## [2026.9.3](https://github.com/proconnect-gouv/hyyypertool/compare/2026.9.2...2026.9.3) (2026-09-22)
 
 ### Corrigé
