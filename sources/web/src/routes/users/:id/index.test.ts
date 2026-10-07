@@ -68,9 +68,25 @@ test("DELETE /users/:id deletes user and redirects", async () => {
   const moderator = await insert_moderateur(hyyyper_pglite);
   const user_id = await create_adora_pony_user(pg);
 
+  const mockCrisp = {
+    create_conversation: mock().mockResolvedValue({
+      session_id: "session_123",
+    }),
+    get_user: mock().mockResolvedValue({ nickname: "Test User" }),
+    mark_conversation_as_resolved: mock().mockResolvedValue(undefined),
+    send_message: mock().mockResolvedValue(undefined),
+  };
+
   const response = await new Hono()
-    .use(set_config({}))
+    .use(
+      set_config({
+        CRISP_RESOLVE_DELAY: 0,
+        CRISP_WEBSITE_ID: "test",
+        CRISP_KEY: "test",
+      }),
+    )
     .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_crisp_client(mockCrisp))
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
     .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
@@ -79,21 +95,41 @@ test("DELETE /users/:id deletes user and redirects", async () => {
     .request(`/${user_id}`, { method: "DELETE" });
 
   expect(response.status).toBe(200);
-  expect(response.text()).resolves.toBe("OK");
+  await expect(response.text()).resolves.toBe("OK");
 
   const deleted_user = await pg.query.users.findFirst({
     where: eq(schema.users.id, user_id),
   });
   expect(deleted_user).toBeUndefined();
+  expect(mockCrisp.send_message).toHaveBeenCalledTimes(1);
+  expect(mockCrisp.mark_conversation_as_resolved).toHaveBeenCalledWith({
+    session_id: "session_123",
+  });
 });
 
 test("PATCH /users/:id/reset/email_verified resets email verification", async () => {
   const moderator = await insert_moderateur(hyyyper_pglite);
   const user_id = await create_adora_pony_user(pg);
 
+  const mockCrisp = {
+    create_conversation: mock().mockResolvedValue({
+      session_id: "session_123",
+    }),
+    get_user: mock().mockResolvedValue({ nickname: "Test User" }),
+    mark_conversation_as_resolved: mock().mockResolvedValue(undefined),
+    send_message: mock().mockResolvedValue(undefined),
+  };
+
   const response = await new Hono()
-    .use(set_config({}))
+    .use(
+      set_config({
+        CRISP_RESOLVE_DELAY: 0,
+        CRISP_WEBSITE_ID: "test",
+        CRISP_KEY: "test",
+      }),
+    )
     .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_crisp_client(mockCrisp))
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
     .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
@@ -102,13 +138,21 @@ test("PATCH /users/:id/reset/email_verified resets email verification", async ()
     .request(`/${user_id}/reset/email_verified`, { method: "PATCH" });
 
   expect(response.status).toBe(200);
-  expect(response.text()).resolves.toBe("OK");
+  await expect(response.text()).resolves.toBe("OK");
 
   const updated_user = await pg.query.users.findFirst({
     where: eq(schema.users.id, user_id),
     columns: { email_verified: true },
   });
   expect(updated_user?.email_verified).toBe(false);
+
+  expect(mockCrisp.create_conversation).toHaveBeenCalledWith(
+    expect.objectContaining({ email: "adora.pony@unicorn.xyz" }),
+  );
+  expect(mockCrisp.send_message).toHaveBeenCalledTimes(1);
+  expect(mockCrisp.mark_conversation_as_resolved).toHaveBeenCalledWith({
+    session_id: "session_123",
+  });
 });
 
 test("PATCH /users/:id/reset/france_connect remove FranceConnect data", async () => {
