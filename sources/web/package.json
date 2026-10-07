@@ -31,6 +31,7 @@
     "@proconnect-gouv/proconnect.crisp": "1.0.1",
     "@proconnect-gouv/proconnect.identite": "10.3.0",
     "@sentry/browser": "11.1.0",
+    "@sentry/conventions": "0.24.0",
     "@sentry/core": "11.1.0",
     "@sentry/node": "11.1.0",
     "@tailwindcss/typography": "^0.5.20",

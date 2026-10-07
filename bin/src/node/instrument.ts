@@ -28,7 +28,8 @@ Sentry.init({
     Sentry.postgresIntegration(),
     Sentry.httpIntegration(),
   ],
-  profilesSampleRate: config.SENTRY_PROFILES_SAMPLE_RATE,
+  profileLifecycle: "trace",
+  profileSessionSampleRate: config.SENTRY_PROFILES_SAMPLE_RATE,
   release: config.VERSION,
   tracesSampleRate: config.SENTRY_TRACES_SAMPLE_RATE,
 });
