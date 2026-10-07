@@ -22,7 +22,7 @@
         "zod": "4.4.3",
       },
       "devDependencies": {
-        "@csmith/release-it-calver-plugin": "2026.7.0",
+        "@csmith/release-it-calver-plugin": "2026.9.0",
         "@testing-library/preact": "3.2.4",
         "@types/bun": "1.4.2",
         "@~/hyyyperbase": "workspace:*",
@@ -253,7 +253,7 @@
 
     "@babel/runtime": ["@babel/runtime@7.29.7", "", {}, "sha512-Nq8OhGWiZIZGV6hLHoyAKLLcJihP/xFeBMGJoUrxTX2psI8dCifzLhZISFb+VWS3wFMRDmCGw5R+dOySCqPLhw=="],
 
-    "@csmith/release-it-calver-plugin": ["@csmith/release-it-calver-plugin@2026.7.0", "", { "dependencies": { "calver": "^24.1.0" }, "peerDependencies": { "release-it": "^21.0.0" } }, "sha512-V6iYrayMveHPuFEtQLdFnyR96xDiUvQ51fuTRIEsKtScNgM4o7wEuig7+jMGKWP4mSIXNOzgNZ1A02zHbvAiMQ=="],
+    "@csmith/release-it-calver-plugin": ["@csmith/release-it-calver-plugin@2026.9.0", "", { "dependencies": { "calver": "^24.1.0" }, "peerDependencies": { "release-it": "^21.0.0" } }, "sha512-zL74jOwdIRCTUaLGADMCmpDSsIgW7YTgev0t49bmFkSf8uOlohqdTIRxgbLwXjb7CbW/Dxw+czZ4VdYKOwY/pw=="],
 
     "@cucumber/gherkin": ["@cucumber/gherkin@39.1.0", "", { "dependencies": { "@cucumber/messages": ">=31.0.0 <33" } }, "sha512-pqmSO2bUWxJm3TbNrKXlDaHjL6c77+ez9kWmfCd9oRPeTRPEVH3spZvpAqdXYWOZYSNYwWFCAAeZ4RGpkauNoQ=="],
 
@@ -696,8 +696,6 @@
     "@~/release-it-plugin-types": ["@~/release-it-plugin-types@workspace:packages/release-it-plugin-types"],
 
     "@~/web": ["@~/web@workspace:sources/web"],
-
-    "acorn": ["acorn@8.16.0", "", { "bin": { "acorn": "bin/acorn" } }, "sha512-UVJyE9MttOsBQIDKw1skb9nAwQuR5wuGD3+82K6JgJlm/Y+KI92oNsMNGZCYdDsVtRHSak0pcV5Dno5+4jh9sw=="],
 
     "agent-base": ["agent-base@9.0.0", "", {}, "sha512-TQf59BsZnytt8GdJKLPfUZ54g/iaUL2OWDSFCCvMOhsHduDQxO8xC4PNeyIkVcA5KwL2phPSv0douC0fgWzmnA=="],
 
