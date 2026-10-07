@@ -210,17 +210,13 @@ export function RootLayout({ children }: PropsWithChildren) {
 
               <script
                 nonce="${nonce}"
-                src="${config.ASSETS_PATH}/node_modules/hyperscript.org/dist/hdb.js"
+                src="${config.ASSETS_PATH}/node_modules/hyperscript.org/dist/ext/hdb.js"
               ></script>`
           : html`<script
               nonce="${nonce}"
               src="${config.ASSETS_PATH}/node_modules/hyperscript.org/dist/_hyperscript.min.js"
             ></script>`
       }
-      <script
-        nonce="${nonce}"
-        src="${config.ASSETS_PATH}/node_modules/hyperscript.org/dist/template.js"
-      ></script>
 
       <!--  -->
 
