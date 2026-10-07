@@ -50,7 +50,10 @@ export function GetOrganizationInfo({
     "13002526500013",
   );
 
-  return getOrganizationInfoFactory(client);
+  return getOrganizationInfoFactory(client, {
+    findCompanyBySiren: () => Promise.reject(),
+    findPouvoirsBySiren: () => Promise.reject(),
+  });
 }
 
 export type GetOrganizationInfoHandler = ReturnType<typeof GetOrganizationInfo>;

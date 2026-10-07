@@ -21,9 +21,17 @@ import {
   pg,
 } from "@~/identite-proconnect/database/testing";
 import { VerificationTypeSchema } from "@~/identite-proconnect/types";
-import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
+import {
+  beforeAll,
+  beforeEach,
+  expect,
+  mock,
+  setSystemTime,
+  test,
+} from "bun:test";
 import { Hono } from "hono";
 import app from "./index";
+import { set_crisp_client } from "#src/middleware/crisp";
 
 //
 
@@ -34,11 +42,29 @@ setSystemTime(new Date("2222-02-22 22:22:22+22"));
 
 //
 
-async function make_app() {
+function make_crisp_mock() {
+  return {
+    create_conversation: mock().mockResolvedValue({
+      session_id: "session_123",
+    }),
+    get_user: mock().mockResolvedValue({ nickname: "Test User" }),
+    mark_conversation_as_resolved: mock().mockResolvedValue(undefined),
+    send_message: mock().mockResolvedValue(undefined),
+  };
+}
+
+async function make_app({ crisp = make_crisp_mock() } = {}) {
   const moderator = await insert_moderateur(hyyyper_pglite);
   return new Hono()
-    .use(set_config({}))
+    .use(
+      set_config({
+        CRISP_RESOLVE_DELAY: 0,
+        CRISP_WEBSITE_ID: "test",
+        CRISP_KEY: "test",
+      }),
+    )
     .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_crisp_client(crisp))
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
     .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
@@ -199,8 +225,8 @@ test("DELETE /organizations/:id/members/:user_id removes user from organization"
     });
     expect(result).toHaveLength(1);
   }
-
-  const testing_app = await make_app();
+  const mockCrisp = make_crisp_mock();
+  const testing_app = await make_app({ crisp: mockCrisp });
   const response = await testing_app.request(
     `/${organization_id}/members/${user_id}`,
     {
@@ -217,4 +243,15 @@ test("DELETE /organizations/:id/members/:user_id removes user from organization"
     });
     expect(result).toHaveLength(0);
   }
+  expect(mockCrisp.create_conversation).toHaveBeenCalledWith(
+    expect.objectContaining({ email: "adora.pony@unicorn.xyz" }),
+  );
+  expect(mockCrisp.send_message).toHaveBeenCalledWith(
+    expect.objectContaining({
+      content: expect.stringContaining("🦄 libelle"),
+    }),
+  );
+  expect(mockCrisp.mark_conversation_as_resolved).toHaveBeenCalledWith({
+    session_id: "session_123",
+  });
 });

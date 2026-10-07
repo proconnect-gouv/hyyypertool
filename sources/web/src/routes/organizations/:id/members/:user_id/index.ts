@@ -4,7 +4,7 @@ import type { HtmxHeader } from "#src/htmx";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import { editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
-import { RemoveUserFromOrganization } from "#src/queries/moderations";
+import { RemoveMemberFromOrganization } from "#src/lib/users";
 import { EntitySchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
 import { schema } from "@~/identite-proconnect/database";
@@ -63,13 +63,21 @@ export default new Hono<AppContext>()
       "param",
       EntitySchema.extend({ user_id: z.string().pipe(z.coerce.number()) }),
     ),
-    async function DELETE({ text, req, var: { identite_pg } }) {
+    async function DELETE({
+      text,
+      req,
+      env: config,
+      var: { crisp, identite_pg, userinfo },
+    }) {
       const { id: organization_id, user_id } = req.valid("param");
 
-      const remove_user_from_organization = RemoveUserFromOrganization({
+      const remove_member_from_organization = RemoveMemberFromOrganization({
+        crisp,
         pg: identite_pg,
+        resolve_delay: config.CRISP_RESOLVE_DELAY,
       });
-      await remove_user_from_organization({
+      await remove_member_from_organization({
+        moderator: userinfo,
         organization_id,
         user_id,
       });
