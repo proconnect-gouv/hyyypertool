@@ -1,6 +1,6 @@
+import { SENTRY_SEGMENT_NAME_SOURCE } from "@sentry/conventions/attributes";
 import {
   SEMANTIC_ATTRIBUTE_SENTRY_ORIGIN,
-  SEMANTIC_ATTRIBUTE_SENTRY_SOURCE,
   Scope,
   continueTrace,
   getGlobalScope,
@@ -63,7 +63,7 @@ export function set_sentry() {
               attributes: {
                 [SEMANTIC_ATTRIBUTE_SENTRY_ORIGIN]: "auto.http.node",
                 "http.request.method": c.req.method || "GET",
-                [SEMANTIC_ATTRIBUTE_SENTRY_SOURCE]: "url",
+                [SENTRY_SEGMENT_NAME_SOURCE]: "url",
               },
               op: "http.server",
               name: `${c.req.method} ${c.req.path || "/"}`,
