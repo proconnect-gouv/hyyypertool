@@ -84,9 +84,6 @@
   },
   "release-it": {
     "github": {
-      "comments": {
-        "submit": true
-      },
       "release": true
     },
     "hooks": {
