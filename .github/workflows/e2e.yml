@@ -87,7 +87,6 @@ jobs:
           - auth
           - delivrability-domain
           - moderations/reject_blocking_moderation.feature
-          - moderations/select_verification_type.feature
           - moderations/validate_similar_moderations.feature
           - organizations
           - response-templates
