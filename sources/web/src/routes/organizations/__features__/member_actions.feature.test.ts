@@ -36,7 +36,10 @@ for (const { action, verification_resultat } of [
       I.amOnPage("/moderations");
       I.click("Organisations");
       I.seeInCurrentUrl("/organizations");
-      I.click({ role: "link", name: "Organisation Direction interministerielle du numerique (DINUM) (13002526500013)" });
+      I.click({
+        role: "link",
+        name: "Organisation Direction interministerielle du numerique (DINUM) (13002526500013)",
+      });
       I.click("1 membre");
       I.within("~Membre Raphael Dubigny (rdubigny@beta.gouv.fr)", () => {
         I.see("domain");
@@ -52,7 +55,10 @@ Scenario("Basculer un membre entre interne et externe : ✅", ({ I }) => {
   I.amOnPage("/moderations");
   I.click("Organisations");
   I.seeInCurrentUrl("/organizations");
-  I.click({ role: "link", name: "Organisation Direction interministerielle du numerique (DINUM) (13002526500013)" });
+  I.click({
+    role: "link",
+    name: "Organisation Direction interministerielle du numerique (DINUM) (13002526500013)",
+  });
   I.click("1 membre");
   I.within("~Membre Raphael Dubigny (rdubigny@beta.gouv.fr)", () => {
     I.see("✅");
@@ -66,7 +72,10 @@ Scenario("Retirer un membre de l'organisation", ({ I }) => {
   I.amOnPage("/moderations");
   I.click("Organisations");
   I.seeInCurrentUrl("/organizations");
-  I.click({ role: "link", name: "Organisation Direction interministerielle du numerique (DINUM) (13002526500013)" });
+  I.click({
+    role: "link",
+    name: "Organisation Direction interministerielle du numerique (DINUM) (13002526500013)",
+  });
   I.click("1 membre");
   I.within("~Membre Raphael Dubigny (rdubigny@beta.gouv.fr)", () => {
     I.click("Menu");
