@@ -28,7 +28,7 @@ jobs:
           persist-credentials: false
       - name: 🔎 Select mode
         id: select-mode
-        uses: proconnect-gouv/release-action/select-mode@df5813c78bf8f07a31214d75ca8c57f97459097a # v1.1.0
+        uses: proconnect-gouv/release-action/select-mode@aabbb2ed4d87456c578f17118a0621a4145cdfee # v1.3.0
 
   version:
     name: 📝 Open release PR
@@ -45,7 +45,7 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - name: 📝 Version
-        uses: proconnect-gouv/release-action/version@df5813c78bf8f07a31214d75ca8c57f97459097a # v1.1.0
+        uses: proconnect-gouv/release-action/version@aabbb2ed4d87456c578f17118a0621a4145cdfee # v1.3.0
 
   publish:
     name: 🚀 Publish
@@ -61,4 +61,4 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - name: 🚀 Publish
-        uses: proconnect-gouv/release-action/publish@df5813c78bf8f07a31214d75ca8c57f97459097a # v1.1.0
+        uses: proconnect-gouv/release-action/publish@aabbb2ed4d87456c578f17118a0621a4145cdfee # v1.3.0
