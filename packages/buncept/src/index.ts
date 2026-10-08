@@ -242,9 +242,7 @@ export function create_browser(view: Bun.WebView) {
     }
   }
 
-  // A native confirm()/alert() blocks the page and every evaluate after it,
-  // so once accepted, each action first replaces them in the current page.
-  let popups = "";
+  let popup_stubs = "";
 
   // Waits for the element to be visible (and enabled), then runs `action`
   // on it in the same evaluate, so no swap can land between find and act.
@@ -259,7 +257,7 @@ export function create_browser(view: Bun.WebView) {
       (state) => state === "ok",
       `(() => {
         ${INFLIGHT_SHIM}
-        ${popups}
+        ${popup_stubs}
         if (!(${LOADED})) return "page still loading";
         const element = (${find})(${JSON.stringify(kind)}, ${JSON.stringify(locator)}, ${JSON.stringify(scopes)});
         if (!element) return "element not found";
@@ -274,7 +272,7 @@ export function create_browser(view: Bun.WebView) {
     until<boolean>(
       "page still loading",
       (loaded) => loaded === true,
-      `(() => { ${INFLIGHT_SHIM}; ${popups} return ${LOADED}; })()`,
+      `(() => { ${INFLIGHT_SHIM}; ${popup_stubs} return ${LOADED}; })()`,
     );
 
   // htmx and islands use fetch/XHR: wait until none is in flight.
@@ -291,7 +289,7 @@ export function create_browser(view: Bun.WebView) {
 
   return {
     accept_popups() {
-      popups = `window.confirm = () => true; window.alert = () => {};`;
+      popup_stubs = `window.confirm = () => true; window.alert = () => {};`;
     },
     act,
     // Clicks the option's label until the box stays checked: a click that
@@ -519,8 +517,7 @@ function find(
   ): Element | null => {
     if (typeof locator !== "string") {
       if ("role" in locator) {
-        // Explicit role, or the implicit ARIA role of the tags this app renders
-        const implicit: Record<string, string> = {
+        const implicit_role_selectors: Record<string, string> = {
           button: "button, input[type=button], input[type=submit]",
           checkbox: "input[type=checkbox]",
           combobox: "select",
@@ -532,11 +529,12 @@ function find(
           textbox:
             "input:not([type]), input[type=text], input[type=email], textarea",
         };
-        const selector = [`[role="${locator.role}"]`, implicit[locator.role]]
+        const selector = [
+          `[role="${locator.role}"]`,
+          implicit_role_selectors[locator.role],
+        ]
           .filter(Boolean)
           .join(", ");
-        // ponytail: accessible name = aria-label, label, text, title, value;
-        // no aria-labelledby, add it when a page needs it
         const name = (element: Element) =>
           [
             element.getAttribute("aria-label"),

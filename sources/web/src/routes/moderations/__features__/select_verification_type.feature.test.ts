@@ -67,7 +67,6 @@ for (const { type_verification, verification_enum } of [
       I.fillField("Filtrer les modérations…", "is:processed");
       I.pressKey("Enter");
       I.click("Modération a traiter de Jean Bon pour 51935970700022");
-      // Open already: the members list unfolds for 1 to 3 members
       I.see("👥 1 membre connu dans l’organisation");
       I.within({ row: "Jean" }, () => {
         I.see("Bon");

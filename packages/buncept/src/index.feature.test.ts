@@ -97,7 +97,6 @@ Scenario("locators resolve the way a user reads the page", ({ I }) => {
   I.seeTitleEquals("Fixture");
 });
 
-// A native confirm() would block the page until the step times out
 Scenario("amAcceptingPopups answers yes to confirm()", ({ I }) => {
   I.amAcceptingPopups();
   I.amOnPage("/confirm");
