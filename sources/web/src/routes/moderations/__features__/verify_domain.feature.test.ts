@@ -7,14 +7,12 @@ setup_scenarios();
 
 //
 
-const MARIE = "Modération non vérifié de Marie Bon pour 57206768400017";
-
 Scenario("Le nom de domaine est vérifié", ({ I }) => {
   I.amOnPage("/moderations");
   I.see("Liste des moderations");
   I.click("Voir les 🔓 Non vérifié");
-  I.click(MARIE);
-  I.seeTitleEquals(MARIE);
+  I.click("Modération non vérifié de Marie Bon pour 57206768400017");
+  I.seeTitleEquals("Modération non vérifié de Marie Bon pour 57206768400017");
 
   I.click("🌐 0 domaine connu dans l’organisation");
 
@@ -30,7 +28,7 @@ Scenario("Le nom de domaine est vérifié", ({ I }) => {
   I.seeTitleEquals("Liste des moderations");
   I.fillField("Filtrer les modérations…", "is:processed");
   I.pressKey("Enter");
-  I.click(MARIE);
+  I.click("Modération non vérifié de Marie Bon pour 57206768400017");
 
   I.click("🌐 1 domaine connu dans l’organisation");
   I.within({ row: "fr.bosch.com" }, () => {

@@ -1,5 +1,5 @@
 import { setup_scenarios } from "#src/testing";
-import { Scenario, type Actor } from "buncept";
+import { Scenario } from "buncept";
 
 //
 
@@ -7,21 +7,12 @@ setup_scenarios();
 
 //
 
-const MARIE = "Modération non vérifié de Marie Bon pour 57206768400017";
-
-// Cucumber's "Contexte": the steps both scenarios start with
-function background(I: Actor) {
+Scenario("Marie est un membre externe de l'organization", ({ I }) => {
   I.amOnPage("/moderations");
   I.seeTitleEquals("Liste des moderations");
   I.click("Voir les 🔓 Non vérifié");
-  I.click(MARIE);
-  I.seeTitleEquals(MARIE);
-}
-
-//
-
-Scenario("Marie est un membre externe de l'organization", ({ I }) => {
-  background(I);
+  I.click("Modération non vérifié de Marie Bon pour 57206768400017");
+  I.seeTitleEquals("Modération non vérifié de Marie Bon pour 57206768400017");
 
   I.click("👥 0 membre connu dans l’organisation");
 
@@ -35,7 +26,7 @@ Scenario("Marie est un membre externe de l'organization", ({ I }) => {
   I.seeTitleEquals("Liste des moderations");
   I.fillField("Filtrer les modérations…", "is:processed");
   I.pressKey("Enter");
-  I.click(MARIE);
+  I.click("Modération non vérifié de Marie Bon pour 57206768400017");
 
   // Open already: the members list unfolds for 1 to 3 members
   I.see("👥 1 membre connu dans l’organisation");
@@ -50,7 +41,11 @@ Scenario("Marie est un membre externe de l'organization", ({ I }) => {
 Scenario(
   "Marie est validée en externe avec notification et ajout du domaine en externe",
   ({ I }) => {
-    background(I);
+    I.amOnPage("/moderations");
+    I.seeTitleEquals("Liste des moderations");
+    I.click("Voir les 🔓 Non vérifié");
+    I.click("Modération non vérifié de Marie Bon pour 57206768400017");
+    I.seeTitleEquals("Modération non vérifié de Marie Bon pour 57206768400017");
 
     I.click("👥 0 membre connu dans l’organisation");
     I.click("🌐 0 domaine connu dans l’organisation");
@@ -71,7 +66,7 @@ Scenario(
     I.seeTitleEquals("Liste des moderations");
     I.fillField("Filtrer les modérations…", "is:processed");
     I.pressKey("Enter");
-    I.click(MARIE);
+    I.click("Modération non vérifié de Marie Bon pour 57206768400017");
 
     // Open already: the members list unfolds for 1 to 3 members
     I.see("👥 1 membre connu dans l’organisation");

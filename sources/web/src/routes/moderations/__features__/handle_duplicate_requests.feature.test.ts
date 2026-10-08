@@ -7,15 +7,13 @@ setup_scenarios();
 
 //
 
-const RICHARD = "Modération a traiter de Richard Bon pour 38514019900014";
-
 Scenario(
   "Richard Bon veut rejoindre l'organisation Dengi - Leclerc",
   ({ I }) => {
     I.amOnPage("/moderations");
     I.see("Liste des moderations");
-    I.click(RICHARD);
-    I.seeTitleEquals(RICHARD);
+    I.click("Modération a traiter de Richard Bon pour 38514019900014");
+    I.seeTitleEquals("Modération a traiter de Richard Bon pour 38514019900014");
 
     I.see("Richard Bon veut rejoindre l'organisation « Dengi - Leclerc »");
     I.see("Attention : demande multiples");
