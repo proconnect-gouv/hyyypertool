@@ -30,6 +30,10 @@ beforeAll(() => {
       // old page, as a plain link does now and then under load
       if (pathname === "/keyboard")
         return html(`<a href="#first">First</a> <a href="#second">Second</a>`);
+      if (pathname === "/confirm")
+        return html(
+          `<button onclick="out.textContent = confirm('Sure?') ? 'deleted' : 'kept'">Delete</button><p id="out"></p>`,
+        );
       if (pathname === "/nav")
         return html(
           `<button onclick="setTimeout(() => (location.href = '/slow'), 50)">Go slow</button>`,
@@ -91,6 +95,14 @@ Scenario("locators resolve the way a user reads the page", ({ I }) => {
   I.click("Open Richard");
   I.seeInCurrentUrl("#richard");
   I.seeTitleEquals("Fixture");
+});
+
+// A native confirm() would block the page until the step times out
+Scenario("amAcceptingPopups answers yes to confirm()", ({ I }) => {
+  I.amAcceptingPopups();
+  I.amOnPage("/confirm");
+  I.click("Delete");
+  I.see("deleted");
 });
 
 Scenario("checkOption clicks again until the option stays checked", ({ I }) => {
