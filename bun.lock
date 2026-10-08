@@ -138,7 +138,7 @@
       "version": "1.0.0",
       "dependencies": {
         "@proconnect-gouv/proconnect.api_entreprise": "2.2.0",
-        "@proconnect-gouv/proconnect.core": "1.0.0",
+        "@proconnect-gouv/proconnect.core": "1.0.2",
         "@proconnect-gouv/proconnect.identite": "10.3.0",
         "@proconnect-gouv/proconnect.identite.database": "1.8.1",
         "@proconnect-gouv/proconnect.insee": "2.0.0",
@@ -163,7 +163,7 @@
         "@hono/zod-validator": "0.9.0",
         "@proconnect-gouv/proconnect.annuaire_entreprises": "3.0.3",
         "@proconnect-gouv/proconnect.api_entreprise": "2.2.0",
-        "@proconnect-gouv/proconnect.core": "1.0.0",
+        "@proconnect-gouv/proconnect.core": "1.0.2",
         "@proconnect-gouv/proconnect.crisp": "1.0.1",
         "@proconnect-gouv/proconnect.identite": "10.3.0",
         "@sentry/browser": "11.1.0",
@@ -389,7 +389,7 @@
 
     "@proconnect-gouv/proconnect.api_entreprise": ["@proconnect-gouv/proconnect.api_entreprise@2.2.0", "", { "dependencies": { "openapi-fetch": "^0.17.0" } }, "sha512-C5CP7QdEXCo8wU7frz4NeVUlCKMfD2D9xuhakvza1iJEOsV0pgfxPB0EXkwIcGXFU/Es31hindatICC/9xc83A=="],
 
-    "@proconnect-gouv/proconnect.core": ["@proconnect-gouv/proconnect.core@1.0.0", "", { "dependencies": { "@types/lodash-es": "^4.17.12", "@types/oidc-provider": "^9.1.1", "@zootools/email-spell-checker": "^1.12.0", "bcryptjs": "^3.0.2", "is-disposable-email-domain": "^1.0.7", "lodash-es": "^4.17.21", "nanoid": "^5.1.5", "tld-extract": "^2.1.0" } }, "sha512-ZDZ14nq+evqThLUr+u8mbW9N4o2NIC+KtYfLH6awAUh/D3B5bW/e4J7ZCynVSRLigmZ50aLZkxFeAwoxQDgVsw=="],
+    "@proconnect-gouv/proconnect.core": ["@proconnect-gouv/proconnect.core@1.0.2", "", { "dependencies": { "@types/lodash-es": "^4.17.12", "@types/oidc-provider": "^9.5.0", "@zootools/email-spell-checker": "^1.12.0", "bcryptjs": "^3.0.2", "is-disposable-email-domain": "^1.0.7", "lodash-es": "^4.18.1", "nanoid": "^6.0.1", "tld-extract": "^2.1.0" } }, "sha512-/D9SRwjSM/JIi541SO30Egrv0NeOoRZpjN3wCK57NyKw5VQPYe099SD+BEZP4/i6TgCLc1UXk61gSm/fb8Twsg=="],
 
     "@proconnect-gouv/proconnect.crisp": ["@proconnect-gouv/proconnect.crisp@1.0.1", "", {}, "sha512-I9TwlyLeBhhNstfmO4brBG1w74JUX5JE/4OTV+UGVF9ThUyPseYLI6UBQH5eK4UfTR0tt57G4tcsDnQ6QZIr7g=="],
 
@@ -915,7 +915,7 @@
 
     "ms": ["ms@2.1.3", "", {}, "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA=="],
 
-    "nanoid": ["nanoid@5.1.11", "", { "bin": { "nanoid": "bin/nanoid.js" } }, "sha512-v+KEsUv2ps74PaSKv0gHTxTCgMXOIfBEbaqa6w6ISIGC7ZsvHN4N9oJ8d4cmf0n5oTzQz2SLmThbQWhjd/8eKg=="],
+    "nanoid": ["nanoid@6.0.2", "", { "bin": { "nanoid": "bin/nanoid.js" } }, "sha512-hIvVOb9Qr1p/9CNNLOe0OlWvgx/ziTsVwKN/GDSsuArN2K0wDiafP3s0SWmsm7o2BdnyS8Z9Z64NFBUbn6ziBg=="],
 
     "node-abi": ["node-abi@3.92.0", "", { "dependencies": { "semver": "^7.3.5" } }, "sha512-KdHvFWZjEKDf0cakgFjebl371GPsISX2oZHcuyKqM7DtogIsHrqKeLTo8wBHxaXRAQlY2PsPlZmfo+9ZCxEREQ=="],
 
