@@ -16,13 +16,13 @@ Scenario(
     I.click("Domaines à vérifier");
     I.see("Liste des domaines à vérifier");
     I.within("~Domaine non vérifié yeswehack.com pour Yes we hack", () => {
-      I.seeElement({ css: 'button[title="Copier le nom de domaine"]' });
+      I.seeElement({ role: "button", name: "Copier le nom de domaine" });
     });
 
     I.click("Rafraichir");
     I.see("Liste des domaines à vérifier");
     I.within("~Domaine non vérifié yeswehack.com pour Yes we hack", () => {
-      I.seeElement({ css: 'button[title="Copier le nom de domaine"]' });
+      I.seeElement({ role: "button", name: "Copier le nom de domaine" });
     });
   },
 );
