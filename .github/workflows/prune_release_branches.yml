@@ -25,6 +25,6 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - name: 🌳 Prune release branches
-        uses: proconnect-gouv/release-action/prune-branches@ae4edad3731ebb46ec9d37e314a26dc8ab6d2653 # v1.2.0
+        uses: proconnect-gouv/release-action/prune-branches@aabbb2ed4d87456c578f17118a0621a4145cdfee # v1.3.0
         with:
           dry-run: ${{ inputs.dry_run || 'false' }}
