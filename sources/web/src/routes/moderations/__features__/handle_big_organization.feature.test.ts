@@ -7,13 +7,13 @@ setup_scenarios();
 
 //
 
-const PIERRE = "Modération big organisation de Pierre Bon pour 81797266400038";
-
 Scenario("Pierre Bon veut rejoindre l'association ALDP", ({ I }) => {
   I.amOnPage("/moderations");
   I.see("Liste des moderations");
-  I.click(PIERRE);
-  I.seeTitleEquals(PIERRE);
+  I.click("Modération big organisation de Pierre Bon pour 81797266400038");
+  I.seeTitleEquals(
+    "Modération big organisation de Pierre Bon pour 81797266400038",
+  );
 
   I.see(
     "Pierre Bon a rejoint l'organisation de plus de 50 employés « Association des loisirs de la diversite et du partage (ALDP) »",
