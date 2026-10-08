@@ -60,12 +60,12 @@ jobs:
         working-directory: "e2e"
 
   feature-tests:
-    name: 🎭 Feature tests (${{ matrix.shard }}/3)
+    name: 🎭 Feature tests (${{ matrix.shard }}/2)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3]
+        shard: [1, 2]
 
     steps:
       - name: 📥 Checkout
@@ -87,4 +87,4 @@ jobs:
         run: |
           DISPLAY=:99 bun -e 'const v = new Bun.WebView({ backend: { type: "chrome", argv: ["--no-sandbox"] } }); await v.navigate("data:text/html,warm"); v.close();'
       - name: 🎭 Run feature tests
-        run: DISPLAY=:99 bun run test:features --shard=${{ matrix.shard }}/3
+        run: DISPLAY=:99 bun run test:features --shard=${{ matrix.shard }}/2
