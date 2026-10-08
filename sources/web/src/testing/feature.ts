@@ -2,6 +2,10 @@ import {
   hyyyper_pglite,
   empty_database as hyyyperbase_empty_database,
 } from "@~/hyyyperbase/testing";
+import {
+  insert_central_administration_response,
+  insert_domain_name_not_found_response,
+} from "@~/hyyyperbase/testing/response_templates";
 import { insert_moderateur } from "@~/hyyyperbase/testing/users";
 import { insert_database } from "@~/identite-proconnect/database/seed/insert";
 import {
@@ -29,5 +33,7 @@ export function setup_scenarios() {
     await hyyyperbase_empty_database();
     await insert_database(pg);
     await insert_moderateur(hyyyper_pglite);
+    await insert_central_administration_response(hyyyper_pglite);
+    await insert_domain_name_not_found_response(hyyyper_pglite);
   };
 }
