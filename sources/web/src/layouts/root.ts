@@ -168,10 +168,9 @@ export function RootLayout({ children }: PropsWithChildren) {
       }
 
       <meta
-        name="htmx-env"
+        name="htmx-config"
         content="${JSON.stringify({
           defaultSettleDelay: 0,
-          globalViewTransitions: true,
           historyEnabled: true,
           inlineScriptNonce: nonce,
         })}"
