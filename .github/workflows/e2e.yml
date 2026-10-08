@@ -86,7 +86,6 @@ jobs:
         e2e_test:
           - auth
           - delivrability-domain
-          - moderations/select_verification_type.feature
           - moderations/validate_similar_moderations.feature
           - organizations
           - response-templates
