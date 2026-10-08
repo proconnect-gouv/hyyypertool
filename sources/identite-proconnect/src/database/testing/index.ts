@@ -10,6 +10,10 @@ import { schema } from "..";
 //
 
 export const client = new PGlite(undefined, { debug: 0 });
+// Closed once, at the end of the run, by test-teardown.preload.ts
+((globalThis as { pglite_clients?: PGlite[] }).pglite_clients ??= []).push(
+  client,
+);
 export type { PgliteClient } from "drizzle-orm/pglite";
 
 export const pg = drizzle(client, { schema });

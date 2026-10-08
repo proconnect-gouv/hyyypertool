@@ -11,6 +11,10 @@ import * as schema from "../schema";
 //
 
 export const pglite_client = new PGlite(undefined, { debug: 0 });
+// Closed once, at the end of the run, by test-teardown.preload.ts
+((globalThis as { pglite_clients?: PGlite[] }).pglite_clients ??= []).push(
+  pglite_client,
+);
 
 const migrationsFolder = new URL("../../migrations", import.meta.url).pathname;
 
