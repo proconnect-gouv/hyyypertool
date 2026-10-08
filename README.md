@@ -39,39 +39,25 @@ Two suites, split by what they need:
 
 ## Deployment 🚀
 
-### Automated Release Process (Recommended)
+### Release
 
-Hyyypertool now uses a custom changeset plugin for automated versioning and changelog generation, eliminating the need for `@changesets/cli`.
+Releases run through [`proconnect-gouv/release-action`](https://github.com/proconnect-gouv/release-action) on every push to `main` (`.github/workflows/release.yml`). Versions follow CalVer (`yyyy.m.minor`, one cycle per month).
 
-#### 1. Create Release Notes
+#### 1. Describe user-facing changes
+
+Add a plain Markdown file, without frontmatter, to `.release-it-changeset/` in your pull request:
 
 ```bash
-echo "✨ Ajout de la recherche avancée" > .release-it-changeset/$(date +%s)-feature.md
-echo "🐛 Correction d'un problème d'affichage" > .release-it-changeset/$(date +%s)-bug.md
-echo "💄 Simplification du parcours de connexion" > .release-it-changeset/$(date +%s)-ui.md
+echo "Ajout de la recherche avancée" > .release-it-changeset/$(date +%s)-feature.md
 ```
 
-See [plugin documentation](packages/release-it-changeset-plugin/README.md) for more examples.
+See the [action documentation](https://github.com/proconnect-gouv/release-action#changesets) for details.
 
-> [!NOTE]
-> Unlike `@changesets/cli`, this plugin uses plain markdown files without frontmatter.
-> Versioning is handled by `@csmith/release-it-calver-plugin` (CalVer format: `yyyy.mm.minor`).
+#### 2. Merge the release pull request
 
-#### 2. Automated Release
+After each merge to `main`, the action opens or updates the pull request `🔖 release <version>` from branch `release-it/next`. It bumps `package.json`, prepends the version section to `CHANGELOG.md` (changesets under "Changements", then commits grouped by gitmoji) and deletes the consumed changeset files.
 
-The release process is automated via GitHub Actions:
-
-1. Go to the [Hyyypertool Actions](https://github.com/proconnect-gouv/hyyypertool/actions)
-2. Click on 'Release it!'
-3. Run the workflow from the main branch
-
-The release-it plugin will:
-
-- ✅ Detect unreleased changesets in `.release-it-changeset/`
-- ✅ Generate changelog entries under "Changements" section
-- ✅ Format changelog with Prettier
-- ✅ Create git tags and releases
-- ✅ Clean up consumed changeset files
+Review and merge it when you want to ship. The action then creates the tag, the GitHub release and the `release/<version>` branch.
 
 #### 3. Deploy to Environments
 
@@ -84,19 +70,3 @@ Once the release is complete:
 #### 4. Post-Deployment
 
 Finally, you need to make a summary note in the ProConnect general channel and pin the message.
-
-### Manual Release (Legacy)
-
-If you need to bypass the automated process:
-
-```bash
-# Dry run to see what will happen
-npx release-it --dry-run
-
-# Perform manual release
-npx release-it
-```
-
-### Release Configuration
-
-The release process uses the `@~/release-it-changeset-plugin` which integrates with changesets. See the [plugin documentation](packages/release-it-changeset-plugin/README.md) for detailed configuration options.
