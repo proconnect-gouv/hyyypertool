@@ -1,9 +1,15 @@
-import { setup_scenarios } from "#src/testing";
+import { empty_databases, start_app, stop_app } from "#src/testing";
+import { hyyyper_pglite } from "@~/hyyyperbase/testing";
+import { insert_moderateur } from "@~/hyyyperbase/testing/users";
+import { insert_database } from "@~/identite-proconnect/database/seed/insert";
+import { pg } from "@~/identite-proconnect/database/testing";
+import { afterAll, beforeAll } from "bun:test";
 import { Scenario } from "buncept";
 
 //
 
-setup_scenarios();
+beforeAll(start_app);
+afterAll(stop_app);
 
 //
 
@@ -32,6 +38,12 @@ for (const { type_verification, verification_enum } of [
   Scenario(
     `Sélectionner différents types de vérification : ${type_verification}`,
     ({ I }) => {
+      beforeAll(async () => {
+        await empty_databases();
+        await insert_database(pg);
+        await insert_moderateur(hyyyper_pglite);
+      });
+
       I.amOnPage("/moderations");
       I.seeTitleEquals("Liste des moderations");
       I.see("Liste des moderations");

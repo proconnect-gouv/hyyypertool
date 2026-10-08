@@ -1,9 +1,15 @@
-import { setup_scenarios } from "#src/testing";
+import { empty_databases, start_app, stop_app } from "#src/testing";
+import { hyyyper_pglite } from "@~/hyyyperbase/testing";
+import { insert_moderateur } from "@~/hyyyperbase/testing/users";
+import { insert_database } from "@~/identite-proconnect/database/seed/insert";
+import { pg } from "@~/identite-proconnect/database/testing";
+import { afterAll, beforeAll } from "bun:test";
 import { Scenario } from "buncept";
 
 //
 
-setup_scenarios();
+beforeAll(start_app);
+afterAll(stop_app);
 
 //
 
@@ -33,6 +39,12 @@ for (const { action, verification_resultat } of [
   Scenario(
     `Changer le type de vérification d'un membre : ${action}`,
     ({ I }) => {
+      beforeAll(async () => {
+        await empty_databases();
+        await insert_database(pg);
+        await insert_moderateur(hyyyper_pglite);
+      });
+
       I.amOnPage("/moderations");
       I.click("Organisations");
       I.seeInCurrentUrl("/organizations");
@@ -52,6 +64,12 @@ for (const { action, verification_resultat } of [
 }
 
 Scenario("Basculer un membre entre interne et externe : ✅", ({ I }) => {
+  beforeAll(async () => {
+    await empty_databases();
+    await insert_database(pg);
+    await insert_moderateur(hyyyper_pglite);
+  });
+
   I.amOnPage("/moderations");
   I.click("Organisations");
   I.seeInCurrentUrl("/organizations");
@@ -69,6 +87,12 @@ Scenario("Basculer un membre entre interne et externe : ✅", ({ I }) => {
 });
 
 Scenario("Retirer un membre de l'organisation", ({ I }) => {
+  beforeAll(async () => {
+    await empty_databases();
+    await insert_database(pg);
+    await insert_moderateur(hyyyper_pglite);
+  });
+
   I.amOnPage("/moderations");
   I.click("Organisations");
   I.seeInCurrentUrl("/organizations");

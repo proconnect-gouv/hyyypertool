@@ -1,13 +1,31 @@
-import { setup_scenarios } from "#src/testing";
+import { empty_databases, start_app, stop_app } from "#src/testing";
+import { hyyyper_pglite } from "@~/hyyyperbase/testing";
+import {
+  insert_central_administration_response,
+  insert_domain_name_not_found_response,
+} from "@~/hyyyperbase/testing/response_templates";
+import { insert_moderateur } from "@~/hyyyperbase/testing/users";
+import { insert_database } from "@~/identite-proconnect/database/seed/insert";
+import { pg } from "@~/identite-proconnect/database/testing";
+import { afterAll, beforeAll } from "bun:test";
 import { Scenario } from "buncept";
 
 //
 
-setup_scenarios();
+beforeAll(start_app);
+afterAll(stop_app);
 
 //
 
 Scenario("Le modérateur le refuse avec la barre d'outils", ({ I }) => {
+  beforeAll(async () => {
+    await empty_databases();
+    await insert_database(pg);
+    await insert_moderateur(hyyyper_pglite);
+    await insert_central_administration_response(hyyyper_pglite);
+    await insert_domain_name_not_found_response(hyyyper_pglite);
+  });
+
   I.amOnPage("/moderations");
   I.see("Liste des moderations");
   I.fillField("Filtrer les modérations…", "is:pending date:2011-11-11");
@@ -42,6 +60,14 @@ Scenario("Le modérateur le refuse avec la barre d'outils", ({ I }) => {
 Scenario(
   "Le warning ne s'affiche pas quand le template n'autorise pas l'édition",
   ({ I }) => {
+    beforeAll(async () => {
+      await empty_databases();
+      await insert_database(pg);
+      await insert_moderateur(hyyyper_pglite);
+      await insert_central_administration_response(hyyyper_pglite);
+      await insert_domain_name_not_found_response(hyyyper_pglite);
+    });
+
     I.amOnPage("/moderations");
     I.see("Liste des moderations");
     I.fillField("Filtrer les modérations…", "is:pending date:2011-11-11");
