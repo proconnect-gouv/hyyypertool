@@ -44,6 +44,7 @@ beforeAll(() => {
         </table>
         <details><summary>👥 2 membres</summary><p>Marie</p></details>
         <a aria-label="Open Richard" href="#richard">→</a>
+        <button title="Copier"><svg aria-hidden="true"></svg></button>
         <label><input type="checkbox" id="notify"> Notify Jean</label>
         <p id="notified"></p>
         <script>
@@ -84,6 +85,9 @@ Scenario("locators resolve the way a user reads the page", ({ I }) => {
   I.see("Marie");
   I.seeElement("~Open Richard");
   I.dontSeeElement("~Open");
+  I.seeElement({ role: "button", name: "Copier" });
+  I.dontSeeElement({ role: "button", name: "Copi" });
+  I.seeElement({ role: "link", name: "Open Richard" });
   I.click("Open Richard");
   I.seeInCurrentUrl("#richard");
   I.seeTitleEquals("Fixture");

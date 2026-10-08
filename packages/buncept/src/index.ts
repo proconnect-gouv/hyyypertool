@@ -16,7 +16,8 @@ import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 
 // CodeceptJS locators — https://codecept.io/locators/
 // A string is matched the way a user reads the page; objects are strict.
-export type Locator = string | { css: string } | { row: string };
+export type Locator =
+  string | { css: string } | { role: string; name?: string } | { row: string };
 
 export const config: {
   url: string;
@@ -508,6 +509,45 @@ function find(
     locator: Locator,
   ): Element | null => {
     if (typeof locator !== "string") {
+      if ("role" in locator) {
+        // Explicit role, or the implicit ARIA role of the tags this app renders
+        const implicit: Record<string, string> = {
+          button: "button, input[type=button], input[type=submit]",
+          checkbox: "input[type=checkbox]",
+          combobox: "select",
+          dialog: "dialog",
+          heading: "h1, h2, h3, h4, h5, h6",
+          link: "a[href]",
+          radio: "input[type=radio]",
+          row: "tr",
+          textbox:
+            "input:not([type]), input[type=text], input[type=email], textarea",
+        };
+        const selector = [`[role="${locator.role}"]`, implicit[locator.role]]
+          .filter(Boolean)
+          .join(", ");
+        // ponytail: accessible name = aria-label, label, text, title, value;
+        // no aria-labelledby, add it when a page needs it
+        const name = (element: Element) =>
+          [
+            element.getAttribute("aria-label"),
+            Array.from((element as HTMLInputElement).labels ?? [])
+              .map((label) => label.textContent)
+              .join(" "),
+            element.textContent,
+            element.getAttribute("title"),
+            (element as HTMLInputElement).value,
+          ]
+            .map(normalize)
+            .find(Boolean) ?? "";
+        return (
+          all(root, selector).find(
+            (element) =>
+              locator.name === undefined ||
+              name(element) === normalize(locator.name),
+          ) ?? null
+        );
+      }
       if ("css" in locator) return root.querySelector(locator.css);
       const row = normalize(locator.row);
       return (
