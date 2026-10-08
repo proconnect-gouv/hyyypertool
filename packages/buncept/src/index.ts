@@ -22,8 +22,6 @@ export type Locator =
 export const config: {
   url: string;
   timeout: number;
-  // Runs once before each Scenario, e.g. to reset and seed databases
-  before_scenario?: () => Promise<void> | void;
 } = { url: "", timeout: 10_000 };
 
 export type Actor = ReturnType<typeof create_actor>;
@@ -34,7 +32,6 @@ export function Scenario(title: string, body: (context: { I: Actor }) => void) {
     const scenario = {} as Parameters<typeof create_actor>[0];
     let view: Bun.WebView | undefined;
     beforeAll(async () => {
-      await config.before_scenario?.();
       view = new Bun.WebView(
         process.platform === "linux"
           ? {

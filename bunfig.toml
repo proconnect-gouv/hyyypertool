@@ -4,9 +4,6 @@
 linker = "isolated"
 publicHoistPattern = [ "drizzle-orm", "pg" ]
 
-[test]
-preload = ["./test-teardown.preload.ts"]
-
 [build]
 clientScripts = [
   "sources/web/src/**/*.client.ts",

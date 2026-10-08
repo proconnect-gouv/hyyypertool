@@ -1,13 +1,25 @@
-import { setup_scenarios } from "#src/testing";
+import { empty_databases, start_app, stop_app } from "#src/testing";
+import { hyyyper_pglite } from "@~/hyyyperbase/testing";
+import { insert_moderateur } from "@~/hyyyperbase/testing/users";
+import { insert_database } from "@~/identite-proconnect/database/seed/insert";
+import { pg } from "@~/identite-proconnect/database/testing";
+import { afterAll, beforeAll } from "bun:test";
 import { Scenario } from "buncept";
 
 //
 
-setup_scenarios();
+beforeAll(start_app);
+afterAll(stop_app);
 
 //
 
 Scenario("Afficher la liste des domaines en whitelist", ({ I }) => {
+  beforeAll(async () => {
+    await empty_databases();
+    await insert_database(pg);
+    await insert_moderateur(hyyyper_pglite);
+  });
+
   I.amOnPage("/moderations");
   I.click("Délivrabilité des domaines");
   I.seeInCurrentUrl("/domains-deliverability");
@@ -19,6 +31,12 @@ Scenario("Afficher la liste des domaines en whitelist", ({ I }) => {
 });
 
 Scenario("Ajouter un nouveau domaine à la whitelist", ({ I }) => {
+  beforeAll(async () => {
+    await empty_databases();
+    await insert_database(pg);
+    await insert_moderateur(hyyyper_pglite);
+  });
+
   I.amOnPage("/moderations");
   I.click("Délivrabilité des domaines");
   I.seeInCurrentUrl("/domains-deliverability");
@@ -29,6 +47,12 @@ Scenario("Ajouter un nouveau domaine à la whitelist", ({ I }) => {
 });
 
 Scenario("Supprimer un domaine de la whitelist", ({ I }) => {
+  beforeAll(async () => {
+    await empty_databases();
+    await insert_database(pg);
+    await insert_moderateur(hyyyper_pglite);
+  });
+
   I.amAcceptingPopups();
   I.amOnPage("/moderations");
   I.click("Délivrabilité des domaines");
@@ -39,6 +63,12 @@ Scenario("Supprimer un domaine de la whitelist", ({ I }) => {
 });
 
 Scenario("Vérifier les informations de vérification", ({ I }) => {
+  beforeAll(async () => {
+    await empty_databases();
+    await insert_database(pg);
+    await insert_moderateur(hyyyper_pglite);
+  });
+
   I.amOnPage("/moderations");
   I.click("Délivrabilité des domaines");
   I.seeInCurrentUrl("/domains-deliverability");
