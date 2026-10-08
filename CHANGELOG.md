@@ -1,5 +1,33 @@
 # Changelog
 
+## [2026.10.1](https://github.com/proconnect-gouv/hyyypertool/compare/2026.10.0...2026.10.1) (2026-10-08)
+
+### Changements
+
+- 🔗 Les notes de version renvoient désormais vers chaque pull request et chaque commit
+
+### Modifié
+
+- 🔧 drop GitHub release comments ([#1861](https://github.com/proconnect-gouv/hyyypertool/issues/1861)) ([0748fdf](https://github.com/proconnect-gouv/hyyypertool/commit/0748fdf490fadba68fea90301e0607169cf1e732))
+- ♻️ release through proconnect-gouv/release-action ([#1857](https://github.com/proconnect-gouv/hyyypertool/issues/1857)) ([2e684e2](https://github.com/proconnect-gouv/hyyypertool/commit/2e684e21d69d7133dd687c5f9ff3228fe8b22062))
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): Bump @preact/signals ([#1852](https://github.com/proconnect-gouv/hyyypertool/issues/1852)) ([e7beb83](https://github.com/proconnect-gouv/hyyypertool/commit/e7beb830fa61e3178f56bf776cae332b2ab16927))
+- :arrow_upper_right: [patch](deps): Bump @sentry/conventions ([#1851](https://github.com/proconnect-gouv/hyyypertool/issues/1851)) ([3bf37d0](https://github.com/proconnect-gouv/hyyypertool/commit/3bf37d02ad2af2b72cc8249f92cbb942e0206fb7))
+- :arrow_upper_right: [patch](deps-dev): Bump @types/node in /e2e ([#1849](https://github.com/proconnect-gouv/hyyypertool/issues/1849)) ([12d715c](https://github.com/proconnect-gouv/hyyypertool/commit/12d715ca9cac97073f3ca3cd484270bd7c214a5f))
+- :arrow_upper_right: [patch](deps): Bump cypress in /e2e ([#1850](https://github.com/proconnect-gouv/hyyypertool/issues/1850)) ([6b116c9](https://github.com/proconnect-gouv/hyyypertool/commit/6b116c9d531018aa25f6d75c280c03e76aac190f))
+- :arrow_upper_right: [patch](deps): Bump @gouvfr/dsfr ([#1854](https://github.com/proconnect-gouv/hyyypertool/issues/1854)) ([12cc2d6](https://github.com/proconnect-gouv/hyyypertool/commit/12cc2d65a29a92f9e66f3e523b800534c6dc7cc2))
+- ⬆️ bump release-action to v1.1.0 ([#1859](https://github.com/proconnect-gouv/hyyypertool/issues/1859)) ([b3d2fe9](https://github.com/proconnect-gouv/hyyypertool/commit/b3d2fe986be303dde7bdcf5a51c5c0bceb6aa251))
+
+### Documentation
+
+- 📝 add changeset for linked release notes ([#1860](https://github.com/proconnect-gouv/hyyypertool/issues/1860)) ([cd6bd03](https://github.com/proconnect-gouv/hyyypertool/commit/cd6bd03660086c1c46bd78a71dbab8502445e997))
+
+### Divers
+
+- Bump nixpkgs from `e158d9e` to `a7868a7` ([#1856](https://github.com/proconnect-gouv/hyyypertool/issues/1856)) ([0ee5192](https://github.com/proconnect-gouv/hyyypertool/commit/0ee51921b1c4196e56350a3524d44a97a5543114))
+
 ## [2026.10.0](https://github.com/proconnect-gouv/hyyypertool/compare/2026.9.3...2026.10.0) (2026-10-07)
 
 ### Changements
