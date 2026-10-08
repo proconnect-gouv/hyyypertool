@@ -11,9 +11,6 @@ export function ResetMFAMessage() {
     Nous avons réinitialisé votre mot de passe et vos clés d'accès.
     Votre compte ProConnect n'est plus protégé par la validation en deux étapes.
     Vous serez obligé de définir un nouveau mot de passe ou de vous connecter avec un lien magique à la prochaine connexion.
-
-    Excellente journée,
-    L'équipe ProConnect.
   `;
 }
 
@@ -23,9 +20,6 @@ export function ResetPasswordMessage() {
 
     Nous avons réinitialisé votre mot de passe.
     Vous serez obligé de définir un nouveau mot de passe ou de vous connecter avec un lien magique à la prochaine connexion.
-
-    Excellente journée,
-    L'équipe ProConnect.
   `;
 }
 
@@ -35,9 +29,6 @@ export function RevokeIdentityMessage() {
 
     Nous avons réinitialisé la vérification de votre adresse email.
     Il vous sera demandé de confirmer à nouveau votre adresse email.
-
-    Excellente journée,
-    L'équipe ProConnect.
   `;
 }
 
@@ -47,9 +38,6 @@ export function DeleteAccountMessage() {
 
     Nous avons supprimé votre compte ProConnect.
     Vous pouvez créer un nouveau compte à tout moment avec votre adresse email.
-
-    Excellente journée,
-    L'équipe ProConnect.
   `;
 }
 export function RemoveFromOrganizationMessage({
@@ -83,9 +71,5 @@ export function RemoveFromOrganizationMessage({
     Vous ne comprenez pas cette modification ?
 
     Si vous pensez qu'il s'agit d'une erreur ou si vous avez besoin d'aide, vous pouvez contacter le support ProConnect à l'adresse mail suivante : support+identite@proconnect.gouv.fr.
-
-    Cordialement,
-
-    L'équipe ProConnect
   `;
 }
