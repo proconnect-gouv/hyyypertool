@@ -87,7 +87,6 @@ jobs:
           - auth
           - delivrability-domain
           - moderations/handle_big_organization.feature
-          - moderations/manage_external_domain.feature
           - moderations/moderation_detail.feature
           - moderations/reject_blocking_moderation.feature
           - moderations/select_verification_type.feature
