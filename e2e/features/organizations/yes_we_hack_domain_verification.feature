@@ -15,7 +15,7 @@ Fonctionnalité: Page organisation - domaine à vérifier
 
     Alors je dois voir un tableau nommé "Liste des domaines à vérifier" et contenant
       | Domain        | Siret          |
-      | 9online.fr    | 21880352600019 |
+      | pompierre.fr  | 21880352600019 |
       | yeswehack.com | 81403721400016 |
 
     Alors je dois voir un lien nommé "Domaine non vérifié yeswehack.com pour Yes we hack"
@@ -49,5 +49,5 @@ Fonctionnalité: Page organisation - domaine à vérifier
     Quand je clique sur "Domaines à vérifier"
     Et je clique sur "Rafraichir"
     Alors je dois voir un tableau nommé "Liste des domaines à vérifier" et contenant
-      | Domain     | Siret          |
-      | 9online.fr | 21880352600019 |
+      | Domain       | Siret          |
+      | pompierre.fr | 21880352600019 |
