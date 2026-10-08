@@ -1,0 +1,30 @@
+name: "🌳 Deforestation: Cleanup Old Release Branches"
+
+on:
+  schedule:
+    - cron: "0 0 1 * *" # Once a month
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Activer le mode dry-run (ne supprime pas les branches)"
+        required: false
+        default: "true"
+
+permissions: {}
+
+jobs:
+  cleanup-release-branches:
+    name: "🌳 Deforestation Job"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: 🌳 Prune release branches
+        uses: proconnect-gouv/release-action/prune-branches@ae4edad3731ebb46ec9d37e314a26dc8ab6d2653 # v1.2.0
+        with:
+          dry-run: ${{ inputs.dry_run || 'false' }}
