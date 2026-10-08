@@ -83,5 +83,8 @@ jobs:
         run: Xvfb :99 -screen 0 1280x720x24 & sleep 1
       - name: 🔨 Build
         run: bun run build
+      - name: 🔥 Warm Chrome
+        run: |
+          DISPLAY=:99 bun -e 'const v = new Bun.WebView({ backend: { type: "chrome", argv: ["--no-sandbox"] } }); await v.navigate("data:text/html,warm"); v.close();'
       - name: 🎭 Run feature tests
         run: DISPLAY=:99 bun run test:features --shard=${{ matrix.shard }}/3
