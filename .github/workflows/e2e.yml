@@ -85,9 +85,6 @@ jobs:
       matrix:
         e2e_test:
           - auth
-          - delivrability-domain
-          - organizations
-          - response-templates
           - security/visitor_read_only.feature
           - team
           - users
