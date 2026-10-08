@@ -92,6 +92,10 @@ function create_actor(scenario: { browser: Browser; failed_step?: string }) {
     };
 
   return {
+    // https://codecept.io/web-api/#amacceptingpopups
+    amAcceptingPopups: step("am accepting popups", async (browser) =>
+      browser.accept_popups(),
+    ),
     // https://codecept.io/web-api/#amonpage
     amOnPage: step("am on page", (browser, _, path: string) =>
       browser.navigate(new URL(path, config.url).href),
@@ -241,6 +245,10 @@ export function create_browser(view: Bun.WebView) {
     }
   }
 
+  // A native confirm()/alert() blocks the page and every evaluate after it,
+  // so once accepted, each action first replaces them in the current page.
+  let popups = "";
+
   // Waits for the element to be visible (and enabled), then runs `action`
   // on it in the same evaluate, so no swap can land between find and act.
   const act = (
@@ -254,6 +262,7 @@ export function create_browser(view: Bun.WebView) {
       (state) => state === "ok",
       `(() => {
         ${INFLIGHT_SHIM}
+        ${popups}
         if (!(${LOADED})) return "page still loading";
         const element = (${find})(${JSON.stringify(kind)}, ${JSON.stringify(locator)}, ${JSON.stringify(scopes)});
         if (!element) return "element not found";
@@ -268,7 +277,7 @@ export function create_browser(view: Bun.WebView) {
     until<boolean>(
       "page still loading",
       (loaded) => loaded === true,
-      `(() => { ${INFLIGHT_SHIM}; return ${LOADED}; })()`,
+      `(() => { ${INFLIGHT_SHIM}; ${popups} return ${LOADED}; })()`,
     );
 
   // htmx and islands use fetch/XHR: wait until none is in flight.
@@ -284,6 +293,9 @@ export function create_browser(view: Bun.WebView) {
   }
 
   return {
+    accept_popups() {
+      popups = `window.confirm = () => true; window.alert = () => {};`;
+    },
     act,
     // Clicks the option's label until the box stays checked: a click that
     // lands before its island hydrates is lost, so click again.
