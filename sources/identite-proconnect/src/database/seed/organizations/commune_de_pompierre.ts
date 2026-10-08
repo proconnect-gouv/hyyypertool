@@ -36,7 +36,7 @@ export async function insert_commune_de_pompierre(
 
   await pg.insert(schema.email_domains).values({
     organization_id,
-    domain: "9online.fr",
+    domain: "pompierre.fr",
     verification_type: "not_verified_yet" satisfies EmailDomainVerificationType,
     can_be_suggested: true,
     verified_at: null,
