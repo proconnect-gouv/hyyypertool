@@ -149,7 +149,7 @@ mount_island();</script></x-notification-island></div>
 
       <meta
         name="htmx-config"
-        content="{&quot;defaultSettleDelay&quot;:0,&quot;globalViewTransitions&quot;:true,&quot;historyEnabled&quot;:true,&quot;inlineScriptNonce&quot;:&quot;nonce&quot;}"
+        content="{&quot;defaultSettleDelay&quot;:0,&quot;historyEnabled&quot;:true,&quot;inlineScriptNonce&quot;:&quot;nonce&quot;}"
       />
 
       
