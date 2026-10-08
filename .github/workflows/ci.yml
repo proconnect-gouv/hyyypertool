@@ -60,8 +60,12 @@ jobs:
         working-directory: "e2e"
 
   feature-tests:
-    name: 🎭 Feature tests
+    name: 🎭 Feature tests (${{ matrix.shard }}/3)
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
 
     steps:
       - name: 📥 Checkout
@@ -71,10 +75,13 @@ jobs:
       - name: 📦 Install dependencies
         run: bun install --frozen-lockfile
       - name: 🕸️ Install WebKit dependencies
-        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev
+        uses: awalsh128/cache-apt-pkgs-action@553a35bb8ebd9fcabcb1c9451aa4c98e1b4ca8a9 # v1.6.3
+        with:
+          packages: libwebkit2gtk-4.1-dev
+          version: 1
       - name: 🖥️ Start display server
         run: Xvfb :99 -screen 0 1280x720x24 & sleep 1
       - name: 🔨 Build
         run: bun run build
       - name: 🎭 Run feature tests
-        run: DISPLAY=:99 bun run test:features
+        run: DISPLAY=:99 bun run test:features --shard=${{ matrix.shard }}/3
