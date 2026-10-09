@@ -81,8 +81,6 @@ test.each(cases)(
         set_config({
           ALLOWED_USERS: "admin@example.com",
           API_AUTH_URL: "http://crisp.localhost",
-          API_AUTH_USERNAME: "API_AUTH_USERNAME",
-          API_AUTH_PASSWORD: "API_AUTH_PASSWORD",
         }),
       )
       .use(set_identite_pg(pg))
