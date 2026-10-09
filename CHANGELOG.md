@@ -1,5 +1,65 @@
 # Changelog
 
+## [2026.10.2](https://github.com/proconnect-gouv/hyyypertool/compare/2026.10.1...2026.10.2) (2026-10-09)
+
+### Changements
+
+- 🐛 Supprimer la double signature dans les mails envoyés à l'utilisateur après action support
+
+### Ajouté
+
+- ✨ port users/table_pagination feature test to buncept ([#1887](https://github.com/proconnect-gouv/hyyypertool/issues/1887)) ([213e4c6](https://github.com/proconnect-gouv/hyyypertool/commit/213e4c62ef9563cf1180d76ec1a70fd785fca448))
+- ✨ port users/jean_bon feature test to buncept ([#1885](https://github.com/proconnect-gouv/hyyypertool/issues/1885)) ([d604047](https://github.com/proconnect-gouv/hyyypertool/commit/d604047198c379b3594e03f0e0d1f12dc82f2ba2))
+- ✨ port users/raphael_beta feature test to buncept ([#1884](https://github.com/proconnect-gouv/hyyypertool/issues/1884)) ([30ae421](https://github.com/proconnect-gouv/hyyypertool/commit/30ae42187ce96aec4972f1c7cc25390aeeb2578d))
+- ✨ port member_actions feature test to buncept ([#1877](https://github.com/proconnect-gouv/hyyypertool/issues/1877)) ([6717812](https://github.com/proconnect-gouv/hyyypertool/commit/67178129f74bfa87f8dd329edd1fbd44011c0e10))
+- ✨ add amAcceptingPopups to buncept ([#1882](https://github.com/proconnect-gouv/hyyypertool/issues/1882)) ([dd93ac7](https://github.com/proconnect-gouv/hyyypertool/commit/dd93ac765061c7b38b9ae0319b4d7061e37f355f))
+- ✨ port users/raphael_alpha feature test to buncept ([#1886](https://github.com/proconnect-gouv/hyyypertool/issues/1886)) ([25d3fc1](https://github.com/proconnect-gouv/hyyypertool/commit/25d3fc1d725b4015bc5af4a23cbbe5bf794af8ad))
+- ✨ port response-templates/list feature test to buncept ([#1883](https://github.com/proconnect-gouv/hyyypertool/issues/1883)) ([ded5ab9](https://github.com/proconnect-gouv/hyyypertool/commit/ded5ab9c18a9f99de0fc2eab9cd6d8bd111f4872))
+- ✨ port yes_we_hack_domain_verification feature test to buncept ([#1878](https://github.com/proconnect-gouv/hyyypertool/issues/1878)) ([c21cd85](https://github.com/proconnect-gouv/hyyypertool/commit/c21cd856c15221a83b45a95e2b97c759aead07ce))
+- ✨ port organizations table_pagination feature test to buncept ([#1879](https://github.com/proconnect-gouv/hyyypertool/issues/1879)) ([aa83b11](https://github.com/proconnect-gouv/hyyypertool/commit/aa83b1185997a602d718766a4a0987fbbb10b277))
+- ✨ port domains_copy_button_after_refresh feature test to buncept ([#1874](https://github.com/proconnect-gouv/hyyypertool/issues/1874)) ([013fc59](https://github.com/proconnect-gouv/hyyypertool/commit/013fc597c2c4488b91aa2beea76f8263871d7b37))
+- ✨ add { role, name } locator to buncept ([#1875](https://github.com/proconnect-gouv/hyyypertool/issues/1875)) ([ecd7747](https://github.com/proconnect-gouv/hyyypertool/commit/ecd77475cbe0e60b6f9de0bcc9480397b6be1b5c))
+- ✨ port reject_blocking_moderation feature test to buncept ([#1870](https://github.com/proconnect-gouv/hyyypertool/issues/1870)) ([184653e](https://github.com/proconnect-gouv/hyyypertool/commit/184653eb03feb209608617bc2ecb376f7336999e))
+- ✨ port validate_similar_moderations feature test to buncept ([#1872](https://github.com/proconnect-gouv/hyyypertool/issues/1872)) ([8886705](https://github.com/proconnect-gouv/hyyypertool/commit/8886705a52a30ba0900ae5d7f017deaafb8b498d))
+- ✨ port select_verification_type feature test to buncept ([#1871](https://github.com/proconnect-gouv/hyyypertool/issues/1871)) ([08349af](https://github.com/proconnect-gouv/hyyypertool/commit/08349af7d9b869cc27cd27700b8dd5f1b8758eae))
+- ✨ port dinum feature test to buncept ([#1873](https://github.com/proconnect-gouv/hyyypertool/issues/1873)) ([da04481](https://github.com/proconnect-gouv/hyyypertool/commit/da0448117d7fe542ccaddd339b6d8c003eeda346))
+- ✨ port handle_big_organization feature test to buncept ([#1868](https://github.com/proconnect-gouv/hyyypertool/issues/1868)) ([326b760](https://github.com/proconnect-gouv/hyyypertool/commit/326b7609982ae65232caab840d9122055553530e))
+- ✨ port moderation_detail feature test to buncept ([#1867](https://github.com/proconnect-gouv/hyyypertool/issues/1867)) ([09f3f6a](https://github.com/proconnect-gouv/hyyypertool/commit/09f3f6aa40e794176f20b62d389dd83bc05e7712))
+
+### Modifié
+
+- ⚡ run feature tests on 2 shards ([#1894](https://github.com/proconnect-gouv/hyyypertool/issues/1894)) ([838e5f2](https://github.com/proconnect-gouv/hyyypertool/commit/838e5f2886e79b936aabd1f56fe390830b7eccc2))
+- ⚡ warm Chrome before feature tests ([#1893](https://github.com/proconnect-gouv/hyyypertool/issues/1893)) ([837bc1b](https://github.com/proconnect-gouv/hyyypertool/commit/837bc1bdc6a7c1464817f6fb6edff43775eaad00))
+- ♻️ explicit feature test setup, no test preload ([#1890](https://github.com/proconnect-gouv/hyyypertool/issues/1890)) ([788d9c4](https://github.com/proconnect-gouv/hyyypertool/commit/788d9c4c8afcffb8ff70b89445e19ce07ad6458a))
+- ⚡ shard feature tests across 3 runners ([#1881](https://github.com/proconnect-gouv/hyyypertool/issues/1881)) ([89bb95a](https://github.com/proconnect-gouv/hyyypertool/commit/89bb95a586e25a02db97e260b61f13829590b33c))
+- ♻️ inline buncept scenario steps, no shared variables ([#1869](https://github.com/proconnect-gouv/hyyypertool/issues/1869)) ([004b432](https://github.com/proconnect-gouv/hyyypertool/commit/004b4326cf35a46aad69a194f1029c62ad58a3be))
+- ♻️ prune release branches with release-action ([#1862](https://github.com/proconnect-gouv/hyyypertool/issues/1862)) ([5d5f498](https://github.com/proconnect-gouv/hyyypertool/commit/5d5f498f79f9bd1d82ab08014bb91640d04528e0))
+
+### Corrigé
+
+- 🐛 Remove hardcoded signature duplicated by Crisp ([#1891](https://github.com/proconnect-gouv/hyyypertool/issues/1891)) ([a8fff32](https://github.com/proconnect-gouv/hyyypertool/commit/a8fff327229d52a5b0345f392b85c4b7acc6413a))
+- 🐛 read the htmx config meta ([#1876](https://github.com/proconnect-gouv/hyyypertool/issues/1876)) ([477fdcc](https://github.com/proconnect-gouv/hyyypertool/commit/477fdcc12ed6b4b8e9048605a7502c2fde103e55))
+
+### Supprimé
+
+- 🔥 remove dead identite admin api client ([#1895](https://github.com/proconnect-gouv/hyyypertool/issues/1895)) ([4ebb8bb](https://github.com/proconnect-gouv/hyyypertool/commit/4ebb8bb4e5f5b4e48eca09d46865c785bc1318f4))
+- 🔥 drop comments that landed without review ([#1892](https://github.com/proconnect-gouv/hyyypertool/issues/1892)) ([24ceabe](https://github.com/proconnect-gouv/hyyypertool/commit/24ceabef90a60fc37d5f79933ff2d25f97166eb0))
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): Bump @proconnect-gouv/proconnect.core from 1.0.0 to 1.0.2 ([#1855](https://github.com/proconnect-gouv/hyyypertool/issues/1855)) ([f8b4210](https://github.com/proconnect-gouv/hyyypertool/commit/f8b42100f1d749775ab01dae3c8f1a85baf904ce))
+- :arrow_upper_right: [patch](deps): Bump cypress-io/github-action ([#1848](https://github.com/proconnect-gouv/hyyypertool/issues/1848)) ([21cd01d](https://github.com/proconnect-gouv/hyyypertool/commit/21cd01d4658a4ce2c6146a648a6a7f3c29bbe324))
+- ⬆️ bump release-action to v1.3.0 ([#1864](https://github.com/proconnect-gouv/hyyypertool/issues/1864)) ([fa7b654](https://github.com/proconnect-gouv/hyyypertool/commit/fa7b6546974f73fda8f60882f6df4e3b91a2a089))
+
+### CI/CD
+
+- 👷 cache the WebKit apt install in feature tests ([#1880](https://github.com/proconnect-gouv/hyyypertool/issues/1880)) ([46b954c](https://github.com/proconnect-gouv/hyyypertool/commit/46b954cb781b5f56146e9c863e017ceb8a66a854))
+
+### Divers
+
+- ✅ port manage_external_domain feature test to buncept ([#1866](https://github.com/proconnect-gouv/hyyypertool/issues/1866)) ([6238479](https://github.com/proconnect-gouv/hyyypertool/commit/6238479a647fde63f4a194b4bf12923a380a1ce0))
+- ✅ port filter_by_moderator feature test to buncept ([#1865](https://github.com/proconnect-gouv/hyyypertool/issues/1865)) ([d1eaade](https://github.com/proconnect-gouv/hyyypertool/commit/d1eaade8071a15dc850471317b0cb0e5623b441c))
+
 ## [2026.10.1](https://github.com/proconnect-gouv/hyyypertool/compare/2026.10.0...2026.10.1) (2026-10-08)
 
 ### Changements
