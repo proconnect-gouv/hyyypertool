@@ -72,8 +72,6 @@ export function create_testing_router() {
         CRISP_RESOLVE_DELAY: 0,
         BANATIC_BASE_URL: "https://banatic.example.com",
         API_AUTH_URL: "https://auth.example.com",
-        API_AUTH_USERNAME: "",
-        API_AUTH_PASSWORD: "",
         AGENTCONNECT_OIDC_CLIENT_ID: "",
         AGENTCONNECT_OIDC_ISSUER: "https://agentconnect.example.com",
         AGENTCONNECT_OIDC_SECRET_ID: "",
