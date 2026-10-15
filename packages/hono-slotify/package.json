@@ -8,7 +8,7 @@
     "test": "bun test"
   },
   "dependencies": {
-    "hono": "4.13.7"
+    "hono": "4.13.13"
   },
   "devDependencies": {
     "@~/config.typescript": "workspace:*",
