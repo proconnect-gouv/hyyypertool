@@ -1,5 +1,11 @@
 # Changelog
 
+## [2026.10.3](https://github.com/proconnect-gouv/hyyypertool/compare/2026.10.2...2026.10.3) (2026-10-16)
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): Bump actions/setup-node ([#1902](https://github.com/proconnect-gouv/hyyypertool/issues/1902)) ([5cb3ef1](https://github.com/proconnect-gouv/hyyypertool/commit/5cb3ef1a1eaf122def12d004cc77c0c76c116605))
+
 ## [2026.10.2](https://github.com/proconnect-gouv/hyyypertool/compare/2026.10.1...2026.10.2) (2026-10-15)
 
 ### Changements
