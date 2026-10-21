@@ -18,4 +18,8 @@ export const search_schema = z.object({
     .transform(parse_q),
 });
 
-export const query_schema = search_schema.extend(PaginationSchema.shape);
+export const pagination_schema = PaginationSchema.extend({
+  page_size: z.coerce.number().default(20),
+});
+
+export const query_schema = search_schema.extend(pagination_schema.shape);
