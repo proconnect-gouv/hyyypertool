@@ -3,12 +3,11 @@
 import { Main_Layout } from "#src/layouts";
 import { authorized } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
-import { PaginationSchema } from "#src/schema";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { match } from "ts-pattern";
 import moderation_router from "./:id/index";
-import { search_schema } from "./context";
+import { pagination_schema, search_schema } from "./context";
 import { get_moderations_list } from "./get_moderations_list.query";
 import { get_moderators_list } from "./get_moderators_list.query";
 import { get_sp_names_list } from "./get_sp_names_list.query";
@@ -27,9 +26,9 @@ export default new Hono<AppContext>()
 
       const { q: search } = search_schema.parse(query);
 
-      const pagination = match(PaginationSchema.safeParse(query))
+      const pagination = match(pagination_schema.safeParse(query))
         .with({ success: true }, ({ data }) => data)
-        .otherwise(() => PaginationSchema.parse({}));
+        .otherwise(() => pagination_schema.parse({}));
 
       const [query_moderations_list, db_moderators, sp_names_list] =
         await Promise.all([
