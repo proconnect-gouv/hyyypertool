@@ -74,6 +74,6 @@
     "@types/nprogress": "0.2.3",
     "@types/pg": "8.20.0",
     "buncept": "workspace:*",
-    "prettier": "3.9.6"
+    "prettier": "3.9.10"
   }
 }
