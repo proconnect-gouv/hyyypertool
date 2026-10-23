@@ -13,7 +13,7 @@
     "test": "cypress run -x filterSpecs=true"
   },
   "dependencies": {
-    "@badeball/cypress-cucumber-preprocessor": "28.0.0",
+    "@badeball/cypress-cucumber-preprocessor": "28.0.1",
     "@bahmutov/cypress-esbuild-preprocessor": "2.2.8",
     "@proconnect-gouv/proconnect.identite.database": "1.8.1",
     "@testing-library/cypress": "10.1.3",
