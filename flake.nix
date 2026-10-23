@@ -51,7 +51,7 @@
       in
       {
         devShells.default = pkgs.mkShell {
-          # matches "engines.node" in package.json (24.19.0); npm ships with nodejs
+          # matches "engines.node" in package.json; npm ships with nodejs
           packages = [
             pkgs.nodejs_24
             bun
