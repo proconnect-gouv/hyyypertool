@@ -28,7 +28,7 @@
         "@~/identite-proconnect": "workspace:*",
         "hono": "4.13.13",
         "htmx-ext-debug": "2.0.2",
-        "prettier": "3.9.6",
+        "prettier": "3.9.10",
         "prettier-plugin-gherkin": "4.0.0",
         "prettier-plugin-organize-imports": "4.3.0",
         "prettier-plugin-tailwindcss": "0.8.0",
@@ -210,7 +210,7 @@
         "@types/pg": "8.20.0",
         "@~/config.typescript": "workspace:*",
         "buncept": "workspace:*",
-        "prettier": "3.9.6",
+        "prettier": "3.9.10",
       },
     },
   },
@@ -981,7 +981,7 @@
 
     "preact-render-to-string": ["preact-render-to-string@6.7.0", "", { "peerDependencies": { "preact": ">=10 || >= 11.0.0-0" } }, "sha512-Z4WR8fmLMRpdYqJ9i7vrlXSsSrxVJydwrkEXHapexfARbWfGb7vGcnvNQnIzN0cXciMVOlz/XLoiMCi9gUsy9Q=="],
 
-    "prettier": ["prettier@3.9.6", "", { "bin": { "prettier": "bin/prettier.cjs" } }, "sha512-OpN0zzVdiaiAhxpuuj5efpIS4sY9j7bY6uR5mnj5yPzGkdkjNKSJeUThPb60Jw29QuAZgA4o+/iB49kFiaBX6g=="],
+    "prettier": ["prettier@3.9.10", "", { "bin": { "prettier": "bin/prettier.cjs" } }, "sha512-skGHTH1Yb9QvaTC4hWnRTzEYtCpApF0UMBPz+t/0ZPzP8ihefo/btKd+QA7pUE0fEwA1SbS/NmhyEcstdXOIdA=="],
 
     "prettier-plugin-gherkin": ["prettier-plugin-gherkin@4.0.0", "", { "dependencies": { "@cucumber/gherkin": "^39.1.0", "@cucumber/messages": "^32.3.1", "prettier": "^3.5.3" } }, "sha512-EBDwV1Ou9rG+seoh7jcwZ6sXXyHwsbUks5TeSyrlrLaTdz+/qYvnHuwY8rk7mb6/+M1ZGuY4/SiVc68ybwvJOA=="],
 
