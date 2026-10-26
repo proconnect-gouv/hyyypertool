@@ -2,9 +2,9 @@
 
 services:
   postgres-identite-proconnect:
-    image: postgres:17.10-alpine
+    image: postgres:18.6-alpine
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql
     environment:
       POSTGRES_PASSWORD: postgres
     healthcheck:
@@ -16,9 +16,9 @@ services:
       - "5432:5432"
 
   postgres-hyyyperbase:
-    image: postgres:17.10-alpine
+    image: postgres:18.6-alpine
     volumes:
-      - postgres-hyyyperbase:/var/lib/postgresql/data
+      - postgres-hyyyperbase:/var/lib/postgresql
       - ./mocks/postgres-hyyyperbase/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     environment:
       POSTGRES_DB: hyyyperbase
