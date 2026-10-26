@@ -47,7 +47,7 @@
     "jose": "6.2.12",
     "lodash.sortby": "4.7.0",
     "nprogress": "0.2.0",
-    "openid-client": "6.8.4",
+    "openid-client": "6.8.8",
     "pg": "8.22.0",
     "preact": "10.29.8",
     "preact-render-to-string": "6.7.0",
