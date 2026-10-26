@@ -80,7 +80,7 @@ When("je clique sur le bouton nommé {string}", (text: string) => {
 });
 
 When("je clique sur le lien nommé {string}", (name: string) => {
-  get_within_context().within(() => cy.findByRole("link", { name }).click());
+  get_within_context().within(() => cy.getByRole("link", { name }).click());
 });
 
 When(
@@ -150,7 +150,7 @@ When("je navigue au clavier jusqu'au lien nommé {string}", (name: string) => {
 // Assertions
 
 Then("je dois voir un lien nommé {string}", (name: string) => {
-  cy.findByRole("link", { name }).should("be.visible");
+  cy.getByRole("link", { name }).should("be.visible");
 });
 
 Then("je vois {string}", (text: string) => {
