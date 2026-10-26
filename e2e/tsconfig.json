@@ -4,7 +4,7 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "target": "ES2020",
-    "types": ["@testing-library/cypress", "cypress", "node"]
+    "types": ["cypress", "node"]
   },
   "include": ["**/*.ts"]
 }

@@ -4,7 +4,6 @@
 //
 
 import { When } from "@badeball/cypress-cucumber-preprocessor";
-import "@testing-library/cypress/add-commands";
 
 // Navigation helpers
 When("je reviens en avant", () => {
