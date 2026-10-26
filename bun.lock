@@ -18,7 +18,7 @@
         "hyperscript.org": "0.9.93",
         "nprogress": "0.2.0",
         "preact": "10.29.8",
-        "tsx": "4.23.13",
+        "tsx": "4.23.15",
         "zod": "4.4.3",
       },
       "devDependencies": {
@@ -53,7 +53,7 @@
         "dotenv-flow": "4.1.0",
         "hono": "4.13.13",
         "tailwindcss": "4.3.3",
-        "tsx": "4.23.13",
+        "tsx": "4.23.15",
       },
       "devDependencies": {
         "@~/config.bun-plugin-client-scripts": "workspace:*",
@@ -198,7 +198,7 @@
         "tailwindcss": "4.3.3",
         "ts-dedent": "2.3.0",
         "ts-pattern": "5.9.2",
-        "tsx": "4.23.13",
+        "tsx": "4.23.15",
         "type-fest": "5.10.0",
         "unified": "11.0.5",
         "youch": "4.1.1",
@@ -1079,7 +1079,7 @@
 
     "ts-pattern": ["ts-pattern@5.9.2", "", {}, "sha512-qAf+7M7Jjk7uebZeIo9uEzyintfuRtgHdzM9dqxRKcMi2dt76Ec+FH2wW3bnU9TuGLkZIJLoLs7cCQnU7Tu8ig=="],
 
-    "tsx": ["tsx@4.23.13", "", { "dependencies": { "esbuild": "~0.28.0" }, "optionalDependencies": { "fsevents": "~2.3.3" }, "bin": { "tsx": "dist/cli.mjs" } }, "sha512-BL5MGkRln6aDYhb0xbQlEAGw743BaZYWdbWtdJOBriYJboKgUUYCadFp2/FpBBZquBC/ezNBn7wMMPx7FDZUDw=="],
+    "tsx": ["tsx@4.23.15", "", { "dependencies": { "esbuild": "~0.28.0" }, "optionalDependencies": { "fsevents": "~2.3.3" }, "bin": { "tsx": "dist/cli.mjs" } }, "sha512-Yiex1Ovn8z2xPpOWckIiysV1SSyRMY9BkLF++q0yKiDxCqRhosKfMg3janKkiLBwZ5c/YryloKwGZcrEmtwxKw=="],
 
     "type-fest": ["type-fest@5.10.0", "", { "dependencies": { "tagged-tag": "^1.0.0" } }, "sha512-NoSdpq/WEiAg5sjmBkmV/hfxv6HJH4NqPNrqjtSO5CwRmpsDfaf4begxW34KdJykH/l1yHtwBWQkCRdoXO8mPA=="],
 

@@ -27,7 +27,7 @@
     "consola": "3.4.2",
     "hono": "4.13.13",
     "tailwindcss": "4.3.3",
-    "tsx": "4.23.13"
+    "tsx": "4.23.15"
   },
   "devDependencies": {
     "@~/config.bun-plugin-client-scripts": "workspace:*",
