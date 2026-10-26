@@ -10,7 +10,6 @@ import {
   When,
   type DataTable,
 } from "@badeball/cypress-cucumber-preprocessor";
-import "@testing-library/cypress/add-commands";
 
 //
 
@@ -35,10 +34,6 @@ Before(() => {
 });
 
 // Context management
-
-Given("je vais à l'intérieur du dialogue nommé {string}", (text: string) => {
-  get_within_context = () => cy.findAllByLabelText(text);
-});
 
 Given("je vais à l'intérieur de l'élément nommé {string}", (title: string) => {
   cy.contains(title)
@@ -80,13 +75,15 @@ When("je clique sur le bouton nommé {string}", (text: string) => {
 });
 
 When("je clique sur le lien nommé {string}", (name: string) => {
-  get_within_context().within(() => cy.findByRole("link", { name }).click());
+  get_within_context().within(() => cy.getByRole("link", { name }).click());
 });
 
 When(
   "je saisie {string} dans le champ nommé {string}",
   (text: string, name: string) => {
-    get_within_context().within(() => cy.findByLabelText(name).type(text));
+    get_within_context().within(() =>
+      cy.getByRole("textbox", { name }).type(text),
+    );
   },
 );
 
@@ -150,7 +147,7 @@ When("je navigue au clavier jusqu'au lien nommé {string}", (name: string) => {
 // Assertions
 
 Then("je dois voir un lien nommé {string}", (name: string) => {
-  cy.findByRole("link", { name }).should("be.visible");
+  cy.getByRole("link", { name }).should("be.visible");
 });
 
 Then("je vois {string}", (text: string) => {
@@ -159,15 +156,6 @@ Then("je vois {string}", (text: string) => {
   });
 });
 
-Then(
-  "je dois voir un élément ayant pour aria-label {string}",
-  (text: string) => {
-    get_within_context().within(() => {
-      cy.findByLabelText(text).should("be.visible");
-    });
-  },
-);
-
 Then("je dois voir le texte {string}", (text: string) => {
   get_within_context().within(() => cy.contains(text).should("be.visible"));
 });
@@ -175,15 +163,6 @@ Then("je dois voir le texte {string}", (text: string) => {
 Then("je ne vois pas {string}", (text: string) => {
   get_within_context().within(() => cy.contains(text).should("not.exist"));
 });
-
-Then(
-  "je ne dois pas voir un élément ayant pour aria-label {string}",
-  (text: string) => {
-    get_within_context().within(() => {
-      cy.findByLabelText(text).should("not.exist");
-    });
-  },
-);
 
 Then("je suis redirigé vers {string}", (path: string) => {
   cy.url().should("contain", path);
@@ -256,10 +235,6 @@ Then(
   },
 );
 
-When("je clique sur l'élément nommé {string}", (ariaLabel: string) => {
-  get_within_context().within(() => cy.findByLabelText(ariaLabel).click());
-});
-
 Then("je vois un bouton intitulé {string}", (title: string) => {
   get_within_context().within(() =>
     cy.get(`button[title="${title}"]`).should("exist"),
@@ -273,7 +248,9 @@ When("je confirme la suppression", () => {
 When(
   "je sélectionne {string} dans la liste déroulante nommée {string}",
   (value: string, label: string) => {
-    get_within_context().within(() => cy.findByLabelText(label).select(value));
+    get_within_context().within(() =>
+      cy.getByRole("combobox", { name: label }).select(value),
+    );
   },
 );
 
@@ -281,7 +258,7 @@ Then(
   "je vois {string} dans la liste déroulante nommée {string}",
   (value: string, label: string) => {
     get_within_context().within(() =>
-      cy.findByLabelText(label).should("have.value", value),
+      cy.getByRole("combobox", { name: label }).should("have.value", value),
     );
   },
 );
