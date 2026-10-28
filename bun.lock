@@ -161,7 +161,7 @@
         "@hono/node-server": "2.1.1",
         "@hono/sentry": "1.2.2",
         "@hono/zod-validator": "0.9.1",
-        "@proconnect-gouv/proconnect.annuaire_entreprises": "3.0.3",
+        "@proconnect-gouv/proconnect.annuaire_entreprises": "3.0.6",
         "@proconnect-gouv/proconnect.api_entreprise": "2.3.0",
         "@proconnect-gouv/proconnect.core": "1.1.0",
         "@proconnect-gouv/proconnect.crisp": "1.0.1",
@@ -385,7 +385,7 @@
 
     "@preact/signals-core": ["@preact/signals-core@1.14.4", "", {}, "sha512-HNB6HYeYKhQbJ1aKl+YRjrS4+QWHLKX6qKoUsfS/m0vqzsVaEBiZiaKbG/e+NKk2ch5ALQr/ihWaMHxiCuuWHA=="],
 
-    "@proconnect-gouv/proconnect.annuaire_entreprises": ["@proconnect-gouv/proconnect.annuaire_entreprises@3.0.3", "", {}, "sha512-CpV+M91+PLxNNwgesGExuyj2ygEpwfZdjaNV9yZ0kIOvSZMsMg0aRychyDOSSzm1GmqRJ7uQk2qyYSpo/EWm3A=="],
+    "@proconnect-gouv/proconnect.annuaire_entreprises": ["@proconnect-gouv/proconnect.annuaire_entreprises@3.0.6", "", {}, "sha512-pxbDasWNPPDio/nk7fu5ddBH1Mnm1FfKPGWIRBqkiNqcUobiUXN9YP7biVtLKDP5+nLrxZLsuCaCBUXlEtwmRw=="],
 
     "@proconnect-gouv/proconnect.api_entreprise": ["@proconnect-gouv/proconnect.api_entreprise@2.3.0", "", { "dependencies": { "openapi-fetch": "^0.17.0" } }, "sha512-/Bij+W5E6LODwJimlR/jcTm1JwKGcJbeYbe9c3YcjXi8vF2oo0FYecd+dqVOS6ob3TLSEp+ieKmuCMde5m9U0Q=="],
 
