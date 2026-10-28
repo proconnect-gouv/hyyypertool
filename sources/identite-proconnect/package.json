@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@~/config.typescript": "workspace:*",
-    "@electric-sql/pglite": "0.5.10",
+    "@electric-sql/pglite": "0.5.11",
     "@types/pg": "8.23.1",
     "drizzle-kit": "0.31.10"
   }
