@@ -186,7 +186,7 @@
         "openid-client": "6.8.8",
         "pg": "8.22.0",
         "preact": "10.29.8",
-        "preact-render-to-string": "6.7.0",
+        "preact-render-to-string": "6.8.1",
         "rate-limiter-flexible": "11.2.1",
         "rehype-sanitize": "6.0.0",
         "rehype-stringify": "10.0.1",
@@ -979,7 +979,7 @@
 
     "preact": ["preact@10.29.8", "", { "peerDependencies": { "preact-render-to-string": ">=5" }, "optionalPeers": ["preact-render-to-string"] }, "sha512-ej2aVZ+vZ8WO7tvlQWRM9N63A0KzF9q4mWJfDUHgYaIofWY9hu74QdnQrjoPMmZi2/nZ5gN0bJCQF49xQqx09Q=="],
 
-    "preact-render-to-string": ["preact-render-to-string@6.7.0", "", { "peerDependencies": { "preact": ">=10 || >= 11.0.0-0" } }, "sha512-Z4WR8fmLMRpdYqJ9i7vrlXSsSrxVJydwrkEXHapexfARbWfGb7vGcnvNQnIzN0cXciMVOlz/XLoiMCi9gUsy9Q=="],
+    "preact-render-to-string": ["preact-render-to-string@6.8.1", "", { "peerDependencies": { "preact": ">=10 || >= 11.0.0-0" } }, "sha512-EIaLVlarET55f737gG/g1bK1UfjAgT3Z7Ch1Z7UX4/TwHh1O7EI5sCtwhVP+cs0n37SyV2HjZCSRtrpMm4Bujw=="],
 
     "prettier": ["prettier@3.9.10", "", { "bin": { "prettier": "bin/prettier.cjs" } }, "sha512-skGHTH1Yb9QvaTC4hWnRTzEYtCpApF0UMBPz+t/0ZPzP8ihefo/btKd+QA7pUE0fEwA1SbS/NmhyEcstdXOIdA=="],
 
