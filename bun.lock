@@ -187,7 +187,7 @@
         "pg": "8.23.1",
         "preact": "10.29.8",
         "preact-render-to-string": "6.8.1",
-        "rate-limiter-flexible": "11.2.1",
+        "rate-limiter-flexible": "11.2.3",
         "rehype-sanitize": "6.0.0",
         "rehype-stringify": "10.0.1",
         "remark-parse": "11.0.0",
@@ -995,7 +995,7 @@
 
     "punycode": ["punycode@2.3.1", "", {}, "sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg=="],
 
-    "rate-limiter-flexible": ["rate-limiter-flexible@11.2.1", "", {}, "sha512-JAaz01HZ893zAw+Hx5MdM1z3lLAkyVvNpqR+GNp0k3kjuQB8gY91fXhf5C0osWs+A7iKgFv585qzwmjS3aBHlA=="],
+    "rate-limiter-flexible": ["rate-limiter-flexible@11.2.3", "", {}, "sha512-w4HX4toAsEbu1VksOauZwI9d6URb6/4WqJJ5Hg1bESihMt2KJfQ2iTwvDkhIg+y2HetLh65DGu/8xIkUz/xNPA=="],
 
     "react-is": ["react-is@17.0.2", "", {}, "sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w=="],
 
