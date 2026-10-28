@@ -28,16 +28,16 @@
           };
         });
 
-        # nixpkgs-unstable's "bun" still trails upstream (1.3.13 as of
-        # 2026-09-10); pull the official prebuilt binary directly so it
+        # nixpkgs-unstable's "bun" still trails upstream (1.4.2 as of
+        # 2026-10-28); pull the official prebuilt binary directly so it
         # matches "packageManager" in package.json. Drop this override once
         # nixpkgs catches up to 1.4.x.
         bun = pkgs.stdenv.mkDerivation {
           pname = "bun";
-          version = "1.4.2";
+          version = "1.4.4";
           src = pkgs.fetchurl {
-            url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.2/bun-linux-x64.zip";
-            hash = "sha256-NjaPrvdSeHXV/6UuU81IAhdB8qg+tiCKjdZAaNQiqRM=";
+            url = "https://github.com/oven-sh/bun/releases/download/bun-v1.4.4/bun-linux-x64.zip";
+            hash = "sha256-v4zL+ysLgBWeD5ptFcVTF63YB3U028YTCj7bUvzLOVw=";
           };
           nativeBuildInputs = [
             pkgs.unzip
