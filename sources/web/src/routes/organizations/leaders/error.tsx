@@ -138,7 +138,7 @@ export function DocumentErrorPage({
   title: string;
 }) {
   return (
-    <main class="bg-surface flex min-h-full flex-1 flex-col items-center justify-center gap-4 p-6 text-center">
+    <main class="bg-surface flex min-h-[70vh] flex-col items-center justify-center gap-4 p-6 text-center">
       <h1 class="text-xl font-bold">{title}</h1>
       <p class="text-lg">{message}</p>
       {direct_url ? (
