@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "consola": "3.4.2",
-    "zod": "4.4.3"
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@~/config.typescript": "workspace:*",

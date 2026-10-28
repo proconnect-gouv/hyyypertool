@@ -26,6 +26,8 @@ export async function get_oidc_clients_by_user_id(
       columns: {
         created_at: true,
         id: true,
+        interaction_cid: true,
+        outcome: true,
         sp_name: true,
       },
       limit: take,

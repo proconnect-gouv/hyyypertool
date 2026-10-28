@@ -15,7 +15,7 @@
   "dependencies": {
     "@badeball/cypress-cucumber-preprocessor": "28.0.1",
     "@bahmutov/cypress-esbuild-preprocessor": "2.2.8",
-    "@proconnect-gouv/proconnect.identite.database": "1.8.1",
+    "@proconnect-gouv/proconnect.identite.database": "1.10.0",
     "cypress": "16.2.0",
     "cypress-wait-until": "3.0.2",
     "typescript": "7.0.2"

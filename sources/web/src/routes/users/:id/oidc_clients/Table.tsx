@@ -6,6 +6,7 @@ import { Foot } from "#src/ui/hx_table";
 import { table } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
+import { authorization_request_status_label } from "./authorization_request_status.mapper";
 import type { get_oidc_clients_by_user_id } from "./get_oidc_clients_by_user_id.query";
 
 //
@@ -48,6 +49,7 @@ export function Table({
           <th>Service</th>
           <th>Organisation</th>
           <th>SP Name</th>
+          <th>Statut</th>
         </tr>
       </thead>
       <tbody>
@@ -57,7 +59,7 @@ export function Table({
       </tbody>
 
       <Foot
-        colspan={4}
+        colspan={5}
         count={count}
         hx_query_props={hx_get_oidc_clients_query_props}
         id={page_ref}
@@ -93,6 +95,16 @@ function Row({ connection, key }: { connection: Connection; key?: string }) {
         )}
       </td>
       <td>{connection.sp_name ?? <span>—</span>}</td>
+      <td>
+        <span>
+          {authorization_request_status_label({
+            created_at: connection.created_at,
+            interaction_cid: connection.interaction_cid,
+            now: new Date(),
+            outcome: connection.outcome,
+          })}
+        </span>
+      </td>
     </tr>
   );
 }
