@@ -1,20 +1,26 @@
 //
 
-import type { AppEnvContext } from "#src/config";
-import type { FetchVariablesContext } from "#src/middleware/fetch";
-import { button } from "#src/ui/button";
+import { Main_Layout } from "#src/layouts";
+import type { AppContext } from "#src/middleware/context";
 import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
 import { to } from "await-to-js";
 import consola from "consola";
 import { Hono } from "hono";
-import lodash_sortby from "lodash.sortby";
-import { match, P } from "ts-pattern";
+import { jsxRenderer } from "hono/jsx-renderer";
 import { z } from "zod";
+import {
+  DocumentErrorPage,
+  to_document_error_view,
+  type DocumentErrorView,
+} from "./error";
+import {
+  LeadersDocumentControl,
+  to_leaders_document_control_view,
+} from "./leaders_document_control";
+import { load_leader_document, parse_api_error } from "./load_leader_document";
 
-class FatalError extends Error {}
-
-export default new Hono<FetchVariablesContext & AppEnvContext>()
+export default new Hono<AppContext>()
   .get(
     "/",
     zValidator(
@@ -27,89 +33,90 @@ export default new Hono<FetchVariablesContext & AppEnvContext>()
     async function GET({ html, req, env, var: { fetch } }) {
       const { siret, retry } = req.valid("query");
       const useRetry = retry === "true";
-      const hx_organizations_leaders_props = urls.organizations.leaders.$hx_get(
-        {
-          query: { retry: "true", siret },
-        },
-      );
+      const retry_get = urls.organizations.leaders.$hx_get({
+        query: { retry: "true", siret },
+      })["hx-get"];
 
-      const doc = await load_leaders({ siret, fetch, useRetry, env });
+      const result = await load_leader_document({
+        siret,
+        fetch,
+        useRetry,
+        env,
+      });
 
       const document_href = `/organizations/leaders/document?${new URLSearchParams({ siret })}`;
 
-      return match(doc)
-        .with(P.instanceOf(FatalError), () =>
-          html(
-            <button class={button({ size: "sm", type: "tertiary" })} disabled>
-              Erreur API — contacter l'équipe tech
-            </button>,
-          ),
-        )
-        .with(P.instanceOf(Error), () =>
-          html(
-            <button
-              class={button({ size: "sm", type: "tertiary" })}
-              {...hx_organizations_leaders_props}
-              hx-swap="outerHTML"
-            >
-              Liste dirigeants associations (Réessayer)
-            </button>,
-          ),
-        )
-        .with({ url: P.string }, () =>
-          html(
-            <a
-              class={button({
-                className: "bg-white",
-                size: "sm",
-                type: "tertiary",
-              })}
-              href={document_href}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Liste dirigeants associations
-            </a>,
-          ),
-        )
-        .otherwise(() =>
-          html(
-            <button class={button({ size: "sm", type: "tertiary" })} disabled>
-              Pas de liste des dirigeants
-            </button>,
-          ),
-        );
+      const view = to_leaders_document_control_view({
+        document_href,
+        result,
+        retry_get,
+      });
+
+      return html(<LeadersDocumentControl view={view} />);
     },
   )
   .get(
     "/document",
     zValidator("query", z.object({ siret: z.string() })),
-    async function GET({ req, env, var: { fetch }, text }) {
+    jsxRenderer(Main_Layout),
+    async function GET({ req, env, render, status, var: { fetch, sentry } }) {
       const { siret } = req.valid("query");
-      const doc = await load_leaders({ siret, fetch, env });
+      const result = await load_leader_document({ siret, fetch, env });
 
-      if (!doc || doc instanceof Error || !doc.url) {
-        return text("Document introuvable", 404);
+      const render_error = (view: DocumentErrorView) => {
+        sentry.setContext("association_leaders_document", view.context);
+        sentry.captureMessage(view.sentry_message, view.level);
+        status(view.status);
+        return render(
+          <DocumentErrorPage
+            direct_url={view.direct_url}
+            message={view.message}
+            title={view.title}
+          />,
+        );
+      };
+
+      if (result.kind !== "document") {
+        return render_error(to_document_error_view({ ...result, siret }));
       }
 
-      consola.info(`  <<-- ${"GET"} ${doc.url}`);
+      const doc_url = result.url;
+      consola.info(`  <<-- ${"GET"} ${doc_url}`);
       const [error, response] = await to(
-        fetch(doc.url, {
-          signal: AbortSignal.timeout(env.HTTP_CLIENT_TIMEOUT),
+        fetch(doc_url, {
+          signal: AbortSignal.timeout(env.HTTP_CLIENT_TIMEOUT * 5),
         }),
       );
 
       if (error || !response) {
         consola.error(`Failed to fetch leaders document:`, error);
-        return text("Impossible de récupérer le document", 502);
+        return render_error(
+          to_document_error_view({
+            kind: "download_failed",
+            direct_url: doc_url,
+            error,
+            siret,
+          }),
+        );
       }
 
       consola.info(
-        `  -->> ${"GET"} ${doc.url} ${response.status} ${response.statusText}`,
+        `  -->> ${"GET"} ${doc_url} ${response.status} ${response.statusText}`,
       );
 
       if (!response.ok) {
-        return text("Impossible de récupérer le document", 502);
+        const [body_error, body] = await to(response.json());
+        const upstream_error = body_error ? undefined : parse_api_error(body);
+        return render_error(
+          to_document_error_view({
+            kind: "download_error",
+            direct_url: doc_url,
+            http_status: response.status,
+            siret,
+            upstream_code: upstream_error?.code,
+            upstream_message: upstream_error?.message,
+          }),
+        );
       }
 
       const headers = new Headers();
@@ -125,84 +132,3 @@ export default new Hono<FetchVariablesContext & AppEnvContext>()
       return new Response(response.body, { status: 200, headers });
     },
   );
-
-//
-
-async function load_leaders({
-  siret,
-  fetch,
-  useRetry = false,
-  env,
-}: {
-  siret: string;
-  fetch: typeof globalThis.fetch;
-  useRetry?: boolean;
-  env: {
-    ENTREPRISE_API_GOUV_URL: string;
-    ENTREPRISE_API_GOUV_TOKEN: string;
-    HTTP_CLIENT_TIMEOUT: number;
-  };
-}) {
-  const siren = siret.substring(0, 9);
-  const query_params = new URLSearchParams({
-    context: "Modération IdentiteProconnect",
-    object: "Modération IdentiteProconnect",
-    recipient: "13002526500013",
-  });
-
-  const url = `${env.ENTREPRISE_API_GOUV_URL}/v4/djepva/api-association/associations/${siren}?${query_params}`;
-
-  const timeout = useRetry
-    ? env.HTTP_CLIENT_TIMEOUT * 2
-    : env.HTTP_CLIENT_TIMEOUT;
-  const retryLabel = useRetry ? " (with longer timeout)" : "";
-
-  consola.info(`  <<-- ${"GET"} ${url}${retryLabel}`);
-  const [error, response] = await to(
-    fetch(url, {
-      headers: {
-        "content-type": "application/json",
-        Authorization: `Bearer ${env.ENTREPRISE_API_GOUV_TOKEN}`,
-      },
-      signal: AbortSignal.timeout(timeout),
-    }),
-  );
-
-  if (error) return error;
-
-  consola.info(
-    `  -->> ${"GET"} ${url} ${response.status} ${response.statusText}${retryLabel}`,
-  );
-
-  if (!response.ok) {
-    consola.error(`API error ${response.status}:`, await response.text());
-    return new FatalError(`HTTP ${response.status}`);
-  }
-
-  const { data } =
-    (await response.json()) as Entreprise_API_Association_Response;
-
-  if (!data) return;
-  const docs = data.documents_rna.filter(({ date_depot }) =>
-    Boolean(date_depot),
-  );
-  const sortedDocs = lodash_sortby(docs, ["date_depot"]);
-  const doc = sortedDocs.findLast(({ sous_type: { code } }) => code === "LDC");
-
-  return doc;
-}
-
-//
-
-interface Entreprise_API_Association_Response {
-  data: {
-    documents_rna: {
-      annee_depot: string;
-      date_depot: string;
-      sous_type: {
-        code: string;
-      };
-      url: string;
-    }[];
-  };
-}

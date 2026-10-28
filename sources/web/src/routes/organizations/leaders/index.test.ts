@@ -1,7 +1,16 @@
 //
 
+import { authorized, set_userinfo } from "#src/middleware/auth";
 import { set_fetch } from "#src/middleware/fetch";
+import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
+import { set_nonce } from "#src/middleware/nonce";
+import { set_sentry } from "#src/middleware/sentry";
 import { render_html } from "#src/ui/testing";
+import {
+  empty_database as hyyyperbase_empty_database,
+  hyyyper_pglite,
+} from "@~/hyyyperbase/testing";
+import { insert_moderateur } from "@~/hyyyperbase/testing/users";
 import {
   empty_database,
   migrate,
@@ -14,6 +23,7 @@ import app from "./index";
 
 beforeAll(migrate);
 beforeEach(empty_database);
+beforeEach(hyyyperbase_empty_database);
 
 //
 
@@ -179,7 +189,14 @@ test("GET /organizations/leaders/document - serves PDF inline", async () => {
       }),
     );
 
+  const moderator = await insert_moderateur(hyyyper_pglite);
+
   const response = await new Hono()
+    .use(set_sentry())
+    .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_nonce("nonce"))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
     .use(set_fetch(mockFetch))
     .route("/", app)
     .request("/document?siret=12345678901234", undefined, {
@@ -207,7 +224,14 @@ test("GET /organizations/leaders/document - missing document returns 404", async
     ),
   );
 
+  const moderator = await insert_moderateur(hyyyper_pglite);
+
   const response = await new Hono()
+    .use(set_sentry())
+    .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_nonce("nonce"))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
     .use(set_fetch(mockFetch))
     .route("/", app)
     .request("/document?siret=12345678901234", undefined, {
@@ -217,7 +241,216 @@ test("GET /organizations/leaders/document - missing document returns 404", async
     });
 
   expect(response.status).toBe(404);
-  expect(await response.text()).toBe("Document introuvable");
+  expect(await response.text()).toContain("Liste des dirigeants introuvable");
+});
+
+test("GET /organizations/leaders/document - upstream API error returns 502", async () => {
+  const mockFetch = mock(() =>
+    Promise.resolve(
+      new Response(JSON.stringify({}), {
+        status: 401,
+        headers: { "content-type": "application/json" },
+      }),
+    ),
+  );
+
+  const moderator = await insert_moderateur(hyyyper_pglite);
+
+  const response = await new Hono()
+    .use(set_sentry())
+    .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_nonce("nonce"))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
+    .use(set_fetch(mockFetch))
+    .route("/", app)
+    .request("/document?siret=12345678901234", undefined, {
+      ENTREPRISE_API_GOUV_URL: "https://api.entreprise.example.com",
+      ENTREPRISE_API_GOUV_TOKEN: "test-token",
+      HTTP_CLIENT_TIMEOUT: 5000,
+    });
+
+  expect(response.status).toBe(502);
+  expect(await response.text()).toContain("Liste des dirigeants indisponible");
+  expect(mockFetch).toHaveBeenCalledTimes(1);
+});
+
+test("GET /organizations/leaders/document - document download failure returns 502", async () => {
+  const timeoutError = new DOMException(
+    "The operation was aborted due to timeout",
+    "TimeoutError",
+  );
+
+  const mockFetch = mock()
+    .mockResolvedValueOnce(
+      new Response(
+        JSON.stringify({
+          data: {
+            documents_rna: [
+              {
+                annee_depot: "2023",
+                date_depot: "2023-01-15",
+                sous_type: { code: "LDC" },
+                url: "https://example.com/leaders-doc.pdf",
+              },
+            ],
+          },
+        }),
+        { status: 200, headers: { "content-type": "application/json" } },
+      ),
+    )
+    .mockRejectedValueOnce(timeoutError);
+
+  const moderator = await insert_moderateur(hyyyper_pglite);
+
+  const response = await new Hono()
+    .use(set_sentry())
+    .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_nonce("nonce"))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
+    .use(set_fetch(mockFetch))
+    .route("/", app)
+    .request("/document?siret=12345678901234", undefined, {
+      ENTREPRISE_API_GOUV_URL: "https://api.entreprise.example.com",
+      ENTREPRISE_API_GOUV_TOKEN: "test-token",
+      HTTP_CLIENT_TIMEOUT: 5000,
+    });
+
+  expect(response.status).toBe(502);
+  expect(await response.text()).toContain("Liste des dirigeants indisponible");
+  expect(mockFetch).toHaveBeenCalledTimes(2);
+});
+
+test("GET /organizations/leaders/document - document download error returns 502", async () => {
+  const mockFetch = mock()
+    .mockResolvedValueOnce(
+      new Response(
+        JSON.stringify({
+          data: {
+            documents_rna: [
+              {
+                annee_depot: "2023",
+                date_depot: "2023-01-15",
+                sous_type: { code: "LDC" },
+                url: "https://example.com/leaders-doc.pdf",
+              },
+            ],
+          },
+        }),
+        { status: 200, headers: { "content-type": "application/json" } },
+      ),
+    )
+    .mockResolvedValueOnce(new Response("Not Found", { status: 404 }));
+
+  const moderator = await insert_moderateur(hyyyper_pglite);
+
+  const response = await new Hono()
+    .use(set_sentry())
+    .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_nonce("nonce"))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
+    .use(set_fetch(mockFetch))
+    .route("/", app)
+    .request("/document?siret=12345678901234", undefined, {
+      ENTREPRISE_API_GOUV_URL: "https://api.entreprise.example.com",
+      ENTREPRISE_API_GOUV_TOKEN: "test-token",
+      HTTP_CLIENT_TIMEOUT: 5000,
+    });
+
+  expect(response.status).toBe(502);
+  expect(await response.text()).toContain("Liste des dirigeants indisponible");
+  expect(mockFetch).toHaveBeenCalledTimes(2);
+});
+
+test("GET /organizations/leaders/document - provider error shows detail", async () => {
+  const mockFetch = mock()
+    .mockResolvedValueOnce(
+      new Response(
+        JSON.stringify({
+          data: {
+            documents_rna: [
+              {
+                annee_depot: "2023",
+                date_depot: "2023-01-15",
+                sous_type: { code: "LDC" },
+                url: "https://example.com/leaders-doc.pdf",
+              },
+            ],
+          },
+        }),
+        { status: 200, headers: { "content-type": "application/json" } },
+      ),
+    )
+    .mockResolvedValueOnce(
+      new Response(
+        JSON.stringify({
+          errors: [
+            {
+              code: "00603",
+              detail:
+                "Le fournisseur du fichier a rencontré une erreur interne.",
+              title: "Erreur interne du fournisseur de fichier",
+            },
+          ],
+        }),
+        { status: 502, headers: { "content-type": "application/json" } },
+      ),
+    );
+
+  const moderator = await insert_moderateur(hyyyper_pglite);
+
+  const response = await new Hono()
+    .use(set_sentry())
+    .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_nonce("nonce"))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
+    .use(set_fetch(mockFetch))
+    .route("/", app)
+    .request("/document?siret=12345678901234", undefined, {
+      ENTREPRISE_API_GOUV_URL: "https://api.entreprise.example.com",
+      ENTREPRISE_API_GOUV_TOKEN: "test-token",
+      HTTP_CLIENT_TIMEOUT: 5000,
+    });
+
+  expect(response.status).toBe(502);
+  expect(await response.text()).toContain(
+    "Le fournisseur du fichier a rencontré une erreur interne",
+  );
+  expect(mockFetch).toHaveBeenCalledTimes(2);
+});
+
+test("GET /organizations/leaders/document - invalid response returns 502", async () => {
+  const mockFetch = mock(() =>
+    Promise.resolve(
+      new Response("not json", {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      }),
+    ),
+  );
+
+  const moderator = await insert_moderateur(hyyyper_pglite);
+
+  const response = await new Hono()
+    .use(set_sentry())
+    .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_nonce("nonce"))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
+    .use(set_fetch(mockFetch))
+    .route("/", app)
+    .request("/document?siret=12345678901234", undefined, {
+      ENTREPRISE_API_GOUV_URL: "https://api.entreprise.example.com",
+      ENTREPRISE_API_GOUV_TOKEN: "test-token",
+      HTTP_CLIENT_TIMEOUT: 5000,
+    });
+
+  expect(response.status).toBe(502);
+  expect(await response.text()).toContain("Liste des dirigeants indisponible");
+  expect(mockFetch).toHaveBeenCalledTimes(1);
 });
 
 test("GET /organizations/leaders - retry fails, button still shown for further retries", async () => {
