@@ -5,7 +5,7 @@
     "": {
       "name": "hyyypertool",
       "dependencies": {
-        "@gouvfr/dsfr": "1.15.3",
+        "@gouvfr/dsfr": "1.15.4",
         "@preact/signals": "2.11.3",
         "@preact/signals-core": "1.14.4",
         "@tsconfig/bun": "1.0.11",
@@ -285,7 +285,7 @@
 
     "@esbuild/win32-x64": ["@esbuild/win32-x64@0.28.0", "", { "os": "win32", "cpu": "x64" }, "sha512-pEl1bO9mfAmIC+tW5btTmrKaujg3zGtUmWNdCw/xs70FBjwAL3o9OEKNHvNmnyylD6ubxUERiEhdsL0xBQ9efw=="],
 
-    "@gouvfr/dsfr": ["@gouvfr/dsfr@1.15.3", "", {}, "sha512-R9AALZc1LfZjtytWZMOaUIOHWTkllBZ/sZlsL8TpKZVgF3qUKXt/uNYh+L1D1Fh4p92ZqWxbtNcebsigBZe5pQ=="],
+    "@gouvfr/dsfr": ["@gouvfr/dsfr@1.15.4", "", {}, "sha512-Yu+4TuR7wBI7bBuPMNH4fstwmMweve+lJhopLkPZJ7i4pygjEtzfq4zaniibH5QNd+xjTWb/fEJiqe8nmYqcxg=="],
 
     "@happy-dom/global-registrator": ["@happy-dom/global-registrator@21.0.4", "", { "dependencies": { "@types/node": ">=20.0.0", "happy-dom": "^21.0.4" } }, "sha512-Bbr0hW9hhDhBf3Jp0EyDlkCbFgbr0z2jd3BMKYOYW+fOkPM4Nx195GMXyCtRCGEgoNn6i09FabXrSkNFm2ONzg=="],
 
