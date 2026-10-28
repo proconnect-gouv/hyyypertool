@@ -138,7 +138,7 @@
       "version": "1.0.0",
       "dependencies": {
         "@proconnect-gouv/proconnect.api_entreprise": "2.3.0",
-        "@proconnect-gouv/proconnect.core": "1.1.0",
+        "@proconnect-gouv/proconnect.core": "1.1.1",
         "@proconnect-gouv/proconnect.identite": "11.0.0",
         "@proconnect-gouv/proconnect.identite.database": "1.10.0",
         "@proconnect-gouv/proconnect.insee": "2.0.0",
@@ -163,7 +163,7 @@
         "@hono/zod-validator": "0.9.1",
         "@proconnect-gouv/proconnect.annuaire_entreprises": "3.0.6",
         "@proconnect-gouv/proconnect.api_entreprise": "2.3.0",
-        "@proconnect-gouv/proconnect.core": "1.1.0",
+        "@proconnect-gouv/proconnect.core": "1.1.1",
         "@proconnect-gouv/proconnect.crisp": "1.0.1",
         "@proconnect-gouv/proconnect.identite": "11.0.0",
         "@sentry/browser": "11.8.0",
@@ -389,7 +389,7 @@
 
     "@proconnect-gouv/proconnect.api_entreprise": ["@proconnect-gouv/proconnect.api_entreprise@2.3.0", "", { "dependencies": { "openapi-fetch": "^0.17.0" } }, "sha512-/Bij+W5E6LODwJimlR/jcTm1JwKGcJbeYbe9c3YcjXi8vF2oo0FYecd+dqVOS6ob3TLSEp+ieKmuCMde5m9U0Q=="],
 
-    "@proconnect-gouv/proconnect.core": ["@proconnect-gouv/proconnect.core@1.1.0", "", { "dependencies": { "@types/lodash-es": "^4.17.12", "@types/oidc-provider": "^9.5.0", "@zootools/email-spell-checker": "^1.12.0", "bcryptjs": "^3.0.2", "is-disposable-email-domain": "^1.0.7", "lodash-es": "^4.18.1", "nanoid": "^6.0.1", "tld-extract": "^2.1.0" } }, "sha512-7F19u5936GfbCTSpEHcLZggf861BjQXnbwbUrvA7/lKZFXDUjiANPn+9GtEahFUPA1vZeouB03QUJG+knTLsqQ=="],
+    "@proconnect-gouv/proconnect.core": ["@proconnect-gouv/proconnect.core@1.1.1", "", { "dependencies": { "@types/lodash-es": "^4.17.12", "@types/oidc-provider": "^9.5.0", "@zootools/email-spell-checker": "^1.12.0", "bcryptjs": "^3.0.2", "is-disposable-email-domain": "^1.0.7", "lodash-es": "^4.18.1", "nanoid": "^6.0.1", "tld-extract": "^2.1.0" } }, "sha512-89/arEVE/J/DKFFEgD7jLOLxKo1cgKw/jiK7/ZCv6iMNrVIrXqJRiI+FKKeWoPDh9ch8poJQmY8rQkrhnmToYA=="],
 
     "@proconnect-gouv/proconnect.crisp": ["@proconnect-gouv/proconnect.crisp@1.0.1", "", {}, "sha512-I9TwlyLeBhhNstfmO4brBG1w74JUX5JE/4OTV+UGVF9ThUyPseYLI6UBQH5eK4UfTR0tt57G4tcsDnQ6QZIr7g=="],
 
