@@ -137,7 +137,7 @@
       "name": "@~/identite-proconnect",
       "version": "1.0.0",
       "dependencies": {
-        "@proconnect-gouv/proconnect.api_entreprise": "2.2.0",
+        "@proconnect-gouv/proconnect.api_entreprise": "2.3.0",
         "@proconnect-gouv/proconnect.core": "1.1.0",
         "@proconnect-gouv/proconnect.identite": "11.0.0",
         "@proconnect-gouv/proconnect.identite.database": "1.10.0",
@@ -162,7 +162,7 @@
         "@hono/sentry": "1.2.2",
         "@hono/zod-validator": "0.9.0",
         "@proconnect-gouv/proconnect.annuaire_entreprises": "3.0.3",
-        "@proconnect-gouv/proconnect.api_entreprise": "2.2.0",
+        "@proconnect-gouv/proconnect.api_entreprise": "2.3.0",
         "@proconnect-gouv/proconnect.core": "1.1.0",
         "@proconnect-gouv/proconnect.crisp": "1.0.1",
         "@proconnect-gouv/proconnect.identite": "11.0.0",
@@ -387,7 +387,7 @@
 
     "@proconnect-gouv/proconnect.annuaire_entreprises": ["@proconnect-gouv/proconnect.annuaire_entreprises@3.0.3", "", {}, "sha512-CpV+M91+PLxNNwgesGExuyj2ygEpwfZdjaNV9yZ0kIOvSZMsMg0aRychyDOSSzm1GmqRJ7uQk2qyYSpo/EWm3A=="],
 
-    "@proconnect-gouv/proconnect.api_entreprise": ["@proconnect-gouv/proconnect.api_entreprise@2.2.0", "", { "dependencies": { "openapi-fetch": "^0.17.0" } }, "sha512-C5CP7QdEXCo8wU7frz4NeVUlCKMfD2D9xuhakvza1iJEOsV0pgfxPB0EXkwIcGXFU/Es31hindatICC/9xc83A=="],
+    "@proconnect-gouv/proconnect.api_entreprise": ["@proconnect-gouv/proconnect.api_entreprise@2.3.0", "", { "dependencies": { "openapi-fetch": "^0.17.0" } }, "sha512-/Bij+W5E6LODwJimlR/jcTm1JwKGcJbeYbe9c3YcjXi8vF2oo0FYecd+dqVOS6ob3TLSEp+ieKmuCMde5m9U0Q=="],
 
     "@proconnect-gouv/proconnect.core": ["@proconnect-gouv/proconnect.core@1.1.0", "", { "dependencies": { "@types/lodash-es": "^4.17.12", "@types/oidc-provider": "^9.5.0", "@zootools/email-spell-checker": "^1.12.0", "bcryptjs": "^3.0.2", "is-disposable-email-domain": "^1.0.7", "lodash-es": "^4.18.1", "nanoid": "^6.0.1", "tld-extract": "^2.1.0" } }, "sha512-7F19u5936GfbCTSpEHcLZggf861BjQXnbwbUrvA7/lKZFXDUjiANPn+9GtEahFUPA1vZeouB03QUJG+knTLsqQ=="],
 
