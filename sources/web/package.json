@@ -39,7 +39,7 @@
     "@~/identite-proconnect": "workspace:*",
     "await-to-js": "3.0.0",
     "consola": "3.4.2",
-    "drizzle-orm": "0.45.2",
+    "drizzle-orm": "0.45.4",
     "hono": "4.13.13",
     "hono-sessions": "0.8.1",
     "hono-slotify": "workspace:*",
