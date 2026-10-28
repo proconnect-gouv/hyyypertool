@@ -4,7 +4,11 @@ import { $ } from "bun";
 
 //
 
-await $`docker compose up --build --detach --remove-orphans`;
+await $`docker compose up --build --detach --remove-orphans --wait`;
+
+await $`bun run scripts/migrate.ts`;
+
+await $`bun run scripts/seed.ts`;
 
 const tsc_watch = Bun.spawn(
   ["bun", "run", "build:tsc", "--watch", "--preserveWatchOutput"],
