@@ -27,7 +27,7 @@
     "@hono/zod-validator": "0.9.1",
     "@proconnect-gouv/proconnect.annuaire_entreprises": "3.0.6",
     "@proconnect-gouv/proconnect.api_entreprise": "2.3.0",
-    "@proconnect-gouv/proconnect.core": "1.1.0",
+    "@proconnect-gouv/proconnect.core": "1.1.1",
     "@proconnect-gouv/proconnect.crisp": "1.0.1",
     "@proconnect-gouv/proconnect.identite": "11.0.0",
     "@sentry/browser": "11.8.0",
