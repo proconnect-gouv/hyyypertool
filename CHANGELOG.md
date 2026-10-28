@@ -1,5 +1,58 @@
 # Changelog
 
+## [2026.10.4](https://github.com/proconnect-gouv/hyyypertool/compare/2026.10.3...2026.10.4) (2026-10-28)
+
+### Changements
+
+- ✨ Afficher le statut des demandes d'autorisation (terminée, interrompue) sur la page utilisateur
+
+### Ajouté
+
+- ✨ show authorization request status on the user page ([#1928](https://github.com/proconnect-gouv/hyyypertool/issues/1928)) ([39cd3ed](https://github.com/proconnect-gouv/hyyypertool/commit/39cd3edb1e0254844334852af84d84ec0395f8e3))
+
+### Modifié
+
+- 🔧 shard feature tests three ways ([#1939](https://github.com/proconnect-gouv/hyyypertool/issues/1939)) ([2ad8f5f](https://github.com/proconnect-gouv/hyyypertool/commit/2ad8f5f1631cf0307a66bcc0bad3da48a42acf23))
+
+### Dépendances
+
+- :arrow_upper_right: [patch](deps): Bump @proconnect-gouv/proconnect.core ([#1948](https://github.com/proconnect-gouv/hyyypertool/issues/1948)) ([e3ad02e](https://github.com/proconnect-gouv/hyyypertool/commit/e3ad02ea17b50eccdf67ad07834adf674bd95e97))
+- :arrow_upper_right: [patch](deps): Bump rate-limiter-flexible ([#1947](https://github.com/proconnect-gouv/hyyypertool/issues/1947)) ([849e101](https://github.com/proconnect-gouv/hyyypertool/commit/849e101f9c06588acf052051c30f01c2efef8fcb))
+- :arrow_upper_right: [patch](deps): Bump @hono/node-server ([#1946](https://github.com/proconnect-gouv/hyyypertool/issues/1946)) ([5d15f00](https://github.com/proconnect-gouv/hyyypertool/commit/5d15f002816d6cc419ffcc5e8a05af01a0dd273d))
+- :arrow_upper_right: [patch](deps): Bump drizzle-orm ([#1945](https://github.com/proconnect-gouv/hyyypertool/issues/1945)) ([83ded7e](https://github.com/proconnect-gouv/hyyypertool/commit/83ded7e9883d289a57b03b9f6241f6fec60cac5c))
+- :arrow_upper_right: [patch](deps): Bump oxc-parser ([#1944](https://github.com/proconnect-gouv/hyyypertool/issues/1944)) ([5080a35](https://github.com/proconnect-gouv/hyyypertool/commit/5080a35740be5a085924e023609368eea16f9631))
+- :arrow_upper_right: [patch](deps): Bump @gouvfr/dsfr ([#1941](https://github.com/proconnect-gouv/hyyypertool/issues/1941)) ([7371012](https://github.com/proconnect-gouv/hyyypertool/commit/7371012fe30ca32adfdad584cbad84c5d844ffeb))
+- :arrow_upper_right: [patch](deps-dev): Bump prettier-plugin-tailwindcss ([#1943](https://github.com/proconnect-gouv/hyyypertool/issues/1943)) ([3fba009](https://github.com/proconnect-gouv/hyyypertool/commit/3fba009d74ce58a9061ca66a49564677c269da62))
+- :arrow_upper_right: [patch](deps): Bump htmx.org from 2.0.10 to 2.0.11 ([#1942](https://github.com/proconnect-gouv/hyyypertool/issues/1942)) ([31f24de](https://github.com/proconnect-gouv/hyyypertool/commit/31f24de268093eb46bc1ce1805c8a89c9f19d2b5))
+- :arrow_upper_right: [patch](deps-dev): Bump @happy-dom/global-registrator ([#1934](https://github.com/proconnect-gouv/hyyypertool/issues/1934)) ([262c4cf](https://github.com/proconnect-gouv/hyyypertool/commit/262c4cfcb79cdb24d6004c89cd99aba9d14b3b95))
+- :arrow_upper_right: [patch](deps): Bump @proconnect-gouv/proconnect.annuaire_entreprises ([#1929](https://github.com/proconnect-gouv/hyyypertool/issues/1929)) ([2163309](https://github.com/proconnect-gouv/hyyypertool/commit/2163309d17f70b28ab9d9a20cad7e1d44a845e24))
+- :arrow_upper_right: [patch](deps-dev): Bump @electric-sql/pglite ([#1935](https://github.com/proconnect-gouv/hyyypertool/issues/1935)) ([0704ac2](https://github.com/proconnect-gouv/hyyypertool/commit/0704ac2bf434d9de988f3c975d2258e0aac5e7db))
+- :arrow_upper_right: [patch](deps-dev): Bump drizzle-kit ([#1938](https://github.com/proconnect-gouv/hyyypertool/issues/1938)) ([8d2ccbd](https://github.com/proconnect-gouv/hyyypertool/commit/8d2ccbd41008624ab37d80202d0bb5d19f4d9975))
+- :arrow_upper_right: [patch](deps): Bump dotenv from 17.4.2 to 18.0.8 ([#1937](https://github.com/proconnect-gouv/hyyypertool/issues/1937)) ([fdd30c1](https://github.com/proconnect-gouv/hyyypertool/commit/fdd30c18fff8946d7c95bad6f59a6aee4fe2e519))
+- ⬆️ bump bun to 1.4.4 ([#1936](https://github.com/proconnect-gouv/hyyypertool/issues/1936)) ([598ca77](https://github.com/proconnect-gouv/hyyypertool/commit/598ca779763566aae2020709a2cc455c4bfcfc08))
+- :arrow_upper_right: [patch](deps): Bump jose from 6.2.12 to 6.2.13 ([#1931](https://github.com/proconnect-gouv/hyyypertool/issues/1931)) ([76582bc](https://github.com/proconnect-gouv/hyyypertool/commit/76582bc5654e7376067bd5f693157b42e7616363))
+- :arrow_upper_right: [patch](deps): Bump pg and @types/pg ([#1930](https://github.com/proconnect-gouv/hyyypertool/issues/1930)) ([144f9d8](https://github.com/proconnect-gouv/hyyypertool/commit/144f9d85f7fdc19698039c49a4a5a90d965c933d))
+- :arrow_upper_right: [patch](deps): Bump @hono/zod-validator ([#1932](https://github.com/proconnect-gouv/hyyypertool/issues/1932)) ([3d370d0](https://github.com/proconnect-gouv/hyyypertool/commit/3d370d075433586e5c3285f84bf57f416ca97852))
+- :arrow_upper_right: [patch](deps): Bump @proconnect-gouv/proconnect.api_entreprise ([#1933](https://github.com/proconnect-gouv/hyyypertool/issues/1933)) ([e8b4fe6](https://github.com/proconnect-gouv/hyyypertool/commit/e8b4fe617f7b0e92dba0d3e87024225c024c954f))
+- :arrow_upper_right: [patch](deps): Bump preact-render-to-string ([#1926](https://github.com/proconnect-gouv/hyyypertool/issues/1926)) ([ffa1c6e](https://github.com/proconnect-gouv/hyyypertool/commit/ffa1c6ec601091e02e2ea89358dc28f7059f4c46))
+- :arrow_upper_right: [patch](deps): Bump the sentry group with 4 updates ([#1923](https://github.com/proconnect-gouv/hyyypertool/issues/1923)) ([5644659](https://github.com/proconnect-gouv/hyyypertool/commit/5644659bb471d693d12ec8d8b44c7fbf0d8e8a34))
+- :arrow_upper_right: [patch](deps): Bump openid-client ([#1924](https://github.com/proconnect-gouv/hyyypertool/issues/1924)) ([fd0eb09](https://github.com/proconnect-gouv/hyyypertool/commit/fd0eb09f8941eb5347e1b4b0d3c5696cc27bf25c))
+- :arrow_upper_right: [patch](deps): Bump tsx from 4.23.13 to 4.23.15 ([#1925](https://github.com/proconnect-gouv/hyyypertool/issues/1925)) ([f65f12e](https://github.com/proconnect-gouv/hyyypertool/commit/f65f12e644d3251f6d94c67a7d7d0f478cd88021))
+- ⬆️ upgrade postgres to 18.6 ([#1922](https://github.com/proconnect-gouv/hyyypertool/issues/1922)) ([44ea805](https://github.com/proconnect-gouv/hyyypertool/commit/44ea8054234a183913e85381f3cca4cc46076442))
+- :arrow_upper_right: [patch](deps): Bump @badeball/cypress-cucumber-preprocessor ([#1910](https://github.com/proconnect-gouv/hyyypertool/issues/1910)) ([845052d](https://github.com/proconnect-gouv/hyyypertool/commit/845052d841da37cbfa35e8001a27bce1ae80d014))
+- :arrow_upper_right: [patch](deps): Bump cypress from 16.1.1 to 16.2.0 in /e2e ([#1909](https://github.com/proconnect-gouv/hyyypertool/issues/1909)) ([d33d1b3](https://github.com/proconnect-gouv/hyyypertool/commit/d33d1b3bd88f816109444fb21c3cc35b6ba4ec8d))
+- :arrow_upper_right: [patch](deps-dev): Bump @types/node in /e2e ([#1911](https://github.com/proconnect-gouv/hyyypertool/issues/1911)) ([0809d7a](https://github.com/proconnect-gouv/hyyypertool/commit/0809d7aa9a1bf23ccccf99a3a87789e4644e5911))
+- :arrow_upper_right: [patch](deps): Bump the sentry group with 5 updates ([#1912](https://github.com/proconnect-gouv/hyyypertool/issues/1912)) ([4de6743](https://github.com/proconnect-gouv/hyyypertool/commit/4de6743c16c7bc41e64f9b6699f0e9afef10c2d9))
+- :arrow_upper_right: [patch](deps-dev): Bump prettier ([#1913](https://github.com/proconnect-gouv/hyyypertool/issues/1913)) ([a6f7192](https://github.com/proconnect-gouv/hyyypertool/commit/a6f71928f98437083516351da18b8f6b3b444db0))
+- :arrow_upper_right: [patch](deps): Bump ts-pattern from 5.9.0 to 5.9.2 ([#1914](https://github.com/proconnect-gouv/hyyypertool/issues/1914)) ([0ae324d](https://github.com/proconnect-gouv/hyyypertool/commit/0ae324d0029e1a5806da3da397978b6353354ba7))
+- :arrow_upper_right: [patch](deps-dev): Bump @electric-sql/pglite ([#1915](https://github.com/proconnect-gouv/hyyypertool/issues/1915)) ([918d413](https://github.com/proconnect-gouv/hyyypertool/commit/918d4130dfbf561eb66169d82e46585896b478b0))
+- :arrow_upper_right: [patch](deps): Bump oxc-parser ([#1916](https://github.com/proconnect-gouv/hyyypertool/issues/1916)) ([8f52860](https://github.com/proconnect-gouv/hyyypertool/commit/8f52860a3e7b2dcc2185d98d4880e9e5685b4117))
+
+### Divers
+
+- Bump flake-utils from `11707dc` to `b7a79d3` ([#1917](https://github.com/proconnect-gouv/hyyypertool/issues/1917)) ([2353447](https://github.com/proconnect-gouv/hyyypertool/commit/23534474fb5f65210c163bcc1e92db8d37f3c43d))
+- Bump nixpkgs from `6510408` to `fe13242` ([#1918](https://github.com/proconnect-gouv/hyyypertool/issues/1918)) ([e8b3196](https://github.com/proconnect-gouv/hyyypertool/commit/e8b31967583cee451a429f0003a8c7980c2be25b))
+
 ## [2026.10.3](https://github.com/proconnect-gouv/hyyypertool/compare/2026.10.2...2026.10.3) (2026-10-23)
 
 ### Ajouté
