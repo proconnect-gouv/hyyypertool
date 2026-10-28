@@ -47,6 +47,39 @@ test("GET /users/:id/oidc_clients renders connection history", async () => {
   expect(response.status).toBe(200);
 });
 
+test("GET /users/:id/oidc_clients renders authorization request status", async () => {
+  const user_id = await create_adora_pony_user(pg);
+  await create_unicorn_oidc_client(pg);
+  await create_adora_pony_oidc_connection(pg, {
+    interaction_cid: "succeeded-cid",
+    outcome: "succeeded",
+  });
+  await create_adora_pony_oidc_connection(pg, {
+    created_at: "2221-12-31T22:00:00.000Z",
+    interaction_cid: "interrupted-cid",
+  });
+  await create_adora_pony_oidc_connection(pg, {
+    interaction_cid: "in-progress-cid",
+  });
+  await create_adora_pony_oidc_connection(pg, { outcome: "succeeded" });
+  await create_adora_pony_oidc_connection(pg);
+
+  const response = await new Hono()
+    .use(set_config({}))
+    .use(set_identite_pg(pg))
+    .use(set_nonce("nonce"))
+    .use(set_userinfo({ email: "test@example.com" }))
+    .route("/:id/oidc_clients", app)
+    .request(`/${user_id}/oidc_clients?describedby=test&page_ref=test-ref`);
+
+  const html = await response.text();
+  expect(html).toContain("Statut");
+  expect(html).toContain("Terminée");
+  expect(html).toContain("Interrompue");
+  expect(html).toContain("Sans interaction");
+  expect(response.status).toBe(200);
+});
+
 test("GET /users/:id/oidc_clients handles pagination", async () => {
   const user_id = await create_adora_pony_user(pg);
   await create_unicorn_oidc_client(pg);
