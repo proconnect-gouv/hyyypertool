@@ -164,13 +164,25 @@ test("verified replaces the domain states and promotes matching members", async 
       verification_type: LinkEnum.enum.proof_received,
     },
   ]);
-  expect(await pg.query.activity_logs.findMany()).toMatchObject([
+  expect(
+    await pg.query.activity_logs.findMany({ orderBy: (table) => table.id }),
+  ).toMatchObject([
     {
       action: "domain.verified",
       actor_ref: "moderator-sub",
       actor_type: "moderator",
       app: "hyyypertool",
+      id: 1,
       organization_id,
+    },
+    {
+      action: "member.promoted",
+      actor_ref: "domain.promote_members",
+      actor_type: "app",
+      app: "hyyypertool",
+      cause_activity_id: 1,
+      organization_id,
+      user_id: adora_pony_user_id,
     },
   ]);
 });

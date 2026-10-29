@@ -24,6 +24,12 @@ const known_activity_labels: {
       ✅ Domaine <b>{inputs.domain}</b> vérifié ({inputs.verification_type})
     </>
   ),
+  "member.promoted": ({ inputs, outcome }) => (
+    <>
+      ⬆️ Membre promu ({inputs.previous_verification_type} →{" "}
+      {outcome.verification_type})
+    </>
+  ),
 };
 
 // generic `Action` keeps the label and its context correlated
@@ -48,12 +54,35 @@ function GenericActivityLabel({
   );
 }
 
+function ActivityLabel({ parsed }: { parsed: ParsedActivityRow }) {
+  return match(parsed)
+    .with({ kind: "known" }, ({ action, context }) => (
+      <>{known_activity_label(action, context)}</>
+    ))
+    .with({ kind: "unknown_action" }, ({ action, context }) => (
+      <GenericActivityLabel action={action} context={context} />
+    ))
+    .with({ kind: "invalid_context" }, ({ action, context }) => (
+      <>
+        ⚠️ Contexte invalide :{" "}
+        <GenericActivityLabel action={action} context={context} />
+      </>
+    ))
+    .exhaustive();
+}
+
 export function ActivityRow({
   actor,
+  caused,
   created_at,
   parsed,
 }: {
   actor: string;
+  caused: ReadonlyArray<{
+    id: number;
+    parsed: ParsedActivityRow;
+    target: string;
+  }>;
   created_at: string;
   parsed: ParsedActivityRow;
 }) {
@@ -64,20 +93,16 @@ export function ActivityRow({
       </td>
       <td>{actor}</td>
       <td>
-        {match(parsed)
-          .with({ kind: "known" }, ({ action, context }) =>
-            known_activity_label(action, context),
-          )
-          .with({ kind: "unknown_action" }, ({ action, context }) => (
-            <GenericActivityLabel action={action} context={context} />
-          ))
-          .with({ kind: "invalid_context" }, ({ action, context }) => (
-            <>
-              ⚠️ Contexte invalide :{" "}
-              <GenericActivityLabel action={action} context={context} />
-            </>
-          ))
-          .exhaustive()}
+        <ActivityLabel parsed={parsed} />
+        {caused.length > 0 && (
+          <ul>
+            {caused.map(({ id, parsed, target }) => (
+              <li aria-label={`Conséquence ${parsed.action}`} key={`${id}`}>
+                {target} : <ActivityLabel parsed={parsed} />
+              </li>
+            ))}
+          </ul>
+        )}
       </td>
     </tr>
   );

@@ -28,11 +28,18 @@ export default new Hono<AppContext>().get(
         { hyyyper_pg, pg: identite_pg },
         { organization_id },
       )
-    ).map(({ action, context, ...activity }) => ({
+    ).map(({ action, caused, context, ...activity }) => ({
       ...activity,
+      caused: caused.map(({ action, context, ...caused_activity }) => ({
+        ...caused_activity,
+        parsed: parse_activity_row({ action, context }),
+      })),
       parsed: parse_activity_row({ action, context }),
     }));
-    for (const { id, parsed } of activities) {
+    for (const { id, parsed } of activities.flatMap((activity) => [
+      activity,
+      ...activity.caused,
+    ])) {
       if (parsed.kind !== "invalid_context") continue;
       sentry.captureException(parsed.error, {
         data: { action: parsed.action, activity_id: id },
@@ -50,10 +57,11 @@ export default new Hono<AppContext>().get(
           </tr>
         </thead>
         <tbody>
-          {activities.map(({ actor, created_at, id, parsed }) => (
+          {activities.map(({ actor, caused, created_at, id, parsed }) => (
             <ActivityRow
               key={`${id}`}
               actor={actor}
+              caused={caused}
               created_at={created_at}
               parsed={parsed}
             />

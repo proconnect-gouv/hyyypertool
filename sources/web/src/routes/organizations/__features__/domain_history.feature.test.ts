@@ -36,6 +36,10 @@ Scenario(
     I.within("~Activité domain.verified", () => {
       I.see("moderateur@beta.gouv.fr");
       I.see("✅ Domaine yeswehack.com vérifié (verified)");
+      I.see(
+        "jean@yeswehack.com : ⬆️ Membre promu (domain_not_verified_yet → domain)",
+      );
+      I.dontSee("rdubigny@beta.gouv.fr");
     });
 
     I.click("Menu");
