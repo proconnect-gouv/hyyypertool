@@ -36,6 +36,9 @@ export default async function Page({
     param: { id: organization.id },
     query: { describedby: $domains_describedby },
   });
+  const hx_get_domain_history_props = urls.organizations[
+    ":id"
+  ].domains.history.$hx_get({ param: { id: organization.id } });
 
   const { base: alert_base } = alert({ intent: "success" });
 
@@ -71,6 +74,19 @@ export default async function Page({
             ...hx_trigger_from_body([ORGANISATION_EVENTS.enum.DOMAIN_UPDATED]),
           ]}
         ></div>
+        <details>
+          <summary>🕓 Historique des domaines</summary>
+          <div
+            {...hx_get_domain_history_props}
+            hx-target="this"
+            hx-trigger={[
+              "load",
+              ...hx_trigger_from_body([
+                ORGANISATION_EVENTS.enum.DOMAIN_UPDATED,
+              ]),
+            ]}
+          ></div>
+        </details>
         <hr class="border-none py-3" />
         <br />
         <MembersInTheOrganization

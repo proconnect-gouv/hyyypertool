@@ -11,19 +11,6 @@ declare const app: import("hono/hono-base").HonoBase<
     import("#src/middleware/hyyyperbase").HyyyperbasePgContext,
   | import("hono/types").MergeSchemaPath<
       {
-        "/": {
-          $get: {
-            output: {};
-            outputFormat: string;
-            status: import("hono/utils/http-status").StatusCode;
-            input: {};
-          };
-        };
-      },
-      "/"
-    >
-  | import("hono/types").MergeSchemaPath<
-      {
         "/localhost:3000/*": {
           $get: {
             output: undefined;
@@ -34,6 +21,19 @@ declare const app: import("hono/hono-base").HonoBase<
         };
       },
       "/proxy"
+    >
+  | import("hono/types").MergeSchemaPath<
+      {
+        "/": {
+          $get: {
+            output: {};
+            outputFormat: string;
+            status: import("hono/utils/http-status").StatusCode;
+            input: {};
+          };
+        };
+      },
+      "/"
     >
   | import("hono/types").MergeSchemaPath<
       {
@@ -56,81 +56,6 @@ declare const app: import("hono/hono-base").HonoBase<
         };
       },
       `/assets/${string}`
-    >
-  | import("hono/types").MergeSchemaPath<
-      {
-        "/": {
-          $get: {
-            output: {};
-            outputFormat: string;
-            status: import("hono/utils/http-status").StatusCode;
-            input: {};
-          };
-        };
-      } & {
-        "/": {
-          $put:
-            | {
-                output: {};
-                outputFormat: string;
-                status: import("hono/utils/http-status").StatusCode;
-                input: {
-                  form: {
-                    problematic_email: string;
-                  };
-                };
-              }
-            | {
-                output: import("zod").ZodSafeParseError<{
-                  problematic_email: string;
-                }>;
-                outputFormat: "json";
-                status: 400;
-                input: {
-                  form: {
-                    problematic_email: string;
-                  };
-                };
-              };
-        };
-      } & {
-        "/:email_domain": {
-          $delete:
-            | {
-                output: "Erreur lors de la suppression";
-                outputFormat: "text";
-                status: 500;
-                input: {
-                  param: {
-                    email_domain: string;
-                  };
-                };
-              }
-            | {
-                output: "OK";
-                outputFormat: "text";
-                status: 200;
-                input: {
-                  param: {
-                    email_domain: string;
-                  };
-                };
-              }
-            | {
-                output: import("zod").ZodSafeParseError<{
-                  email_domain: string;
-                }>;
-                outputFormat: "json";
-                status: 400;
-                input: {
-                  param: {
-                    email_domain: string;
-                  };
-                };
-              };
-        };
-      },
-      "/domains-deliverability"
     >
   | import("hono/types").MergeSchemaPath<
       {
@@ -244,525 +169,459 @@ declare const app: import("hono/hono-base").HonoBase<
       "/auth"
     >
   | import("hono/types").MergeSchemaPath<
-      {
-        "/": {
-          $get: {
-            output: {};
-            outputFormat: string;
-            status: import("hono/utils/http-status").StatusCode;
-            input: {};
-          };
-        };
-      } & {
-        "/new": {
-          $get: {
-            output: {};
-            outputFormat: string;
-            status: import("hono/utils/http-status").StatusCode;
-            input: {};
-          };
-        };
-      } & {
-        "/:id": {
-          $get: {
-            output: {};
-            outputFormat: string;
-            status: import("hono/utils/http-status").StatusCode;
-            input: {
-              param: {
-                id: string;
+      | import("hono/types").BlankSchema
+      | import("hono/types").MergeSchemaPath<
+          {
+            "/": {
+              $get: {
+                output: {};
+                outputFormat: string;
+                status: import("hono/utils/http-status").StatusCode;
+                input: {};
               };
             };
-          };
-        };
-      } & {
-        "/": {
-          $post:
-            | {
-                output: undefined;
-                outputFormat: "redirect";
-                status: 303;
-                input: {
-                  form: {
-                    label: string;
-                    content: string;
-                    end_user_reason: string;
-                    allow_editing?: string | undefined;
+          } & {
+            "/": {
+              $put:
+                | {
+                    output: import("zod").ZodSafeParseError<{
+                      problematic_email: string;
+                    }>;
+                    outputFormat: "json";
+                    status: 400;
+                    input: {
+                      form: {
+                        problematic_email: string;
+                      };
+                    };
+                  }
+                | {
+                    output: {};
+                    outputFormat: string;
+                    status: import("hono/utils/http-status").StatusCode;
+                    input: {
+                      form: {
+                        problematic_email: string;
+                      };
+                    };
                   };
-                };
-              }
-            | {
-                output: import("zod").ZodSafeParseError<{
-                  label: string;
-                  content: string;
-                  end_user_reason: string;
-                  allow_editing: boolean;
-                }>;
-                outputFormat: "json";
-                status: 400;
-                input: {
-                  form: {
-                    label: string;
-                    content: string;
-                    end_user_reason: string;
-                    allow_editing?: string | undefined;
+            };
+          } & {
+            "/:email_domain": {
+              $delete:
+                | {
+                    output: "OK";
+                    outputFormat: "text";
+                    status: 200;
+                    input: {
+                      param: {
+                        email_domain: string;
+                      };
+                    };
+                  }
+                | {
+                    output: import("zod").ZodSafeParseError<{
+                      email_domain: string;
+                    }>;
+                    outputFormat: "json";
+                    status: 400;
+                    input: {
+                      param: {
+                        email_domain: string;
+                      };
+                    };
+                  }
+                | {
+                    output: "Erreur lors de la suppression";
+                    outputFormat: "text";
+                    status: 500;
+                    input: {
+                      param: {
+                        email_domain: string;
+                      };
+                    };
                   };
-                };
-              };
-        };
-      } & {
-        "/:id": {
-          $patch:
-            | {
-                output: "";
-                outputFormat: "text";
-                status: 200;
-                input: {
-                  form: {
-                    label: string;
-                    content: string;
-                    end_user_reason: string;
-                    allow_editing?: string | undefined;
-                  };
-                } & {
-                  param: {
-                    id: string;
-                  };
-                };
-              }
-            | {
-                output: import("zod").ZodSafeParseError<{
-                  label: string;
-                  content: string;
-                  end_user_reason: string;
-                  allow_editing: boolean;
-                }>;
-                outputFormat: "json";
-                status: 400;
-                input: {
-                  form: {
-                    label: string;
-                    content: string;
-                    end_user_reason: string;
-                    allow_editing?: string | undefined;
-                  };
-                } & {
-                  param: {
-                    id: string;
-                  };
-                };
-              };
-        };
-      } & {
-        "/:id": {
-          $delete: {
-            output: {};
-            outputFormat: string;
-            status: import("hono/utils/http-status").StatusCode;
-            input: {
-              param: {
-                id: string;
+            };
+          },
+          "/domains-deliverability"
+        >
+      | import("hono/types").MergeSchemaPath<
+          {
+            "/": {
+              $get: {
+                output: {};
+                outputFormat: string;
+                status: import("hono/utils/http-status").StatusCode;
+                input: {};
               };
             };
-          };
-        };
-      },
-      "/response-templates"
-    >
-  | import("hono/types").MergeSchemaPath<
-      (
-        | import("hono/types").BlankSchema
-        | import("hono/types").MergeSchemaPath<
-            (((((
-              | import("hono/types").MergeSchemaPath<
-                  {
-                    "/": {
-                      $get:
-                        | {
-                            output: {};
-                            outputFormat: string;
-                            status: import("hono/utils/http-status").StatusCode;
-                            input: {
-                              param: {
-                                id: string;
-                              };
-                            } & {
-                              query: {
-                                describedby: string;
-                              };
-                            };
-                          }
-                        | {
-                            output: import("zod").ZodSafeParseError<{
-                              id: number;
-                            }>;
-                            outputFormat: "json";
-                            status: 400;
-                            input: {
-                              param: {
-                                id: string;
-                              };
-                            } & {
-                              query: {
-                                describedby: string;
-                              };
-                            };
-                          }
-                        | {
-                            output: import("zod").ZodSafeParseError<{
-                              describedby: string;
-                            }>;
-                            outputFormat: "json";
-                            status: 400;
-                            input: {
-                              param: {
-                                id: string;
-                              };
-                            } & {
-                              query: {
-                                describedby: string;
-                              };
-                            };
-                          };
-                    };
-                  },
-                  "/moderations"
-                >
-              | import("hono/types").MergeSchemaPath<
-                  {
-                    "/": {
-                      $get:
-                        | {
-                            output: {};
-                            outputFormat: string;
-                            status: import("hono/utils/http-status").StatusCode;
-                            input: {
-                              param: {
-                                id: string;
-                              };
-                            } & {
-                              query: {
-                                page?: string | string[] | undefined;
-                                page_size?: string | string[] | undefined;
-                                describedby: string | string[];
-                                page_ref: string | string[];
-                              };
-                            };
-                          }
-                        | {
-                            output: import("zod").ZodSafeParseError<{
-                              id: number;
-                            }>;
-                            outputFormat: "json";
-                            status: 400;
-                            input: {
-                              param: {
-                                id: string;
-                              };
-                            } & {
-                              query: {
-                                page?: string | string[] | undefined;
-                                page_size?: string | string[] | undefined;
-                                describedby: string | string[];
-                                page_ref: string | string[];
-                              };
-                            };
-                          }
-                        | {
-                            output: import("zod").ZodSafeParseError<{
-                              page: number;
-                              page_size: number;
-                              describedby: string;
-                              page_ref: string;
-                            }>;
-                            outputFormat: "json";
-                            status: 400;
-                            input: {
-                              param: {
-                                id: string;
-                              };
-                            } & {
-                              query: {
-                                page?: string | string[] | undefined;
-                                page_size?: string | string[] | undefined;
-                                describedby: string | string[];
-                                page_ref: string | string[];
-                              };
-                            };
-                          };
-                    };
-                  },
-                  "/organizations"
-                >
-              | import("hono/types").MergeSchemaPath<
-                  {
-                    "/": {
-                      $get:
-                        | {
-                            output: {};
-                            outputFormat: string;
-                            status: import("hono/utils/http-status").StatusCode;
-                            input: {
-                              param: {
-                                id: string;
-                              };
-                            } & {
-                              query: {
-                                page?: string | string[] | undefined;
-                                page_size?: string | string[] | undefined;
-                                describedby: string | string[];
-                                page_ref: string | string[];
-                              };
-                            };
-                          }
-                        | {
-                            output: import("zod").ZodSafeParseError<{
-                              id: number;
-                            }>;
-                            outputFormat: "json";
-                            status: 400;
-                            input: {
-                              param: {
-                                id: string;
-                              };
-                            } & {
-                              query: {
-                                page?: string | string[] | undefined;
-                                page_size?: string | string[] | undefined;
-                                describedby: string | string[];
-                                page_ref: string | string[];
-                              };
-                            };
-                          }
-                        | {
-                            output: import("zod").ZodSafeParseError<{
-                              page: number;
-                              page_size: number;
-                              describedby: string;
-                              page_ref: string;
-                            }>;
-                            outputFormat: "json";
-                            status: 400;
-                            input: {
-                              param: {
-                                id: string;
-                              };
-                            } & {
-                              query: {
-                                page?: string | string[] | undefined;
-                                page_size?: string | string[] | undefined;
-                                describedby: string | string[];
-                                page_ref: string | string[];
-                              };
-                            };
-                          };
-                    };
-                  },
-                  "/oidc_clients"
-                >
-              | {
-                  "/": {
-                    $get:
-                      | {
-                          output: {};
-                          outputFormat: string;
-                          status: import("hono/utils/http-status").StatusCode;
-                          input: {
-                            param: {
-                              id: string;
-                            };
-                          };
-                        }
-                      | {
-                          output: import("zod").ZodSafeParseError<{
-                            id: number;
-                          }>;
-                          outputFormat: "json";
-                          status: 400;
-                          input: {
-                            param: {
-                              id: string;
-                            };
-                          };
-                        };
-                  };
-                }
-            ) & {
-              "/": {
-                $delete:
-                  | {
-                      output: "OK";
-                      outputFormat: "text";
-                      status: 200;
-                      input: {
-                        param: {
-                          id: string;
-                        };
-                      };
-                    }
-                  | {
-                      output: import("zod").ZodSafeParseError<{
-                        id: number;
-                      }>;
-                      outputFormat: "json";
-                      status: 400;
-                      input: {
-                        param: {
-                          id: string;
-                        };
-                      };
-                    };
+          } & {
+            "/new": {
+              $get: {
+                output: {};
+                outputFormat: string;
+                status: import("hono/utils/http-status").StatusCode;
+                input: {};
               };
-            }) & {
-              "/reset/email_verified": {
-                $patch:
-                  | {
-                      output: "OK";
-                      outputFormat: "text";
-                      status: 200;
-                      input: {
-                        param: {
-                          id: string;
-                        };
-                      };
-                    }
-                  | {
-                      output: import("zod").ZodSafeParseError<{
-                        id: number;
-                      }>;
-                      outputFormat: "json";
-                      status: 400;
-                      input: {
-                        param: {
-                          id: string;
-                        };
-                      };
-                    };
-              };
-            }) & {
-              "/reset/france_connect": {
-                $patch:
-                  | {
-                      output: "OK";
-                      outputFormat: "text";
-                      status: 200;
-                      input: {
-                        param: {
-                          id: string;
-                        };
-                      };
-                    }
-                  | {
-                      output: import("zod").ZodSafeParseError<{
-                        id: number;
-                      }>;
-                      outputFormat: "json";
-                      status: 400;
-                      input: {
-                        param: {
-                          id: string;
-                        };
-                      };
-                    };
-              };
-            }) & {
-              "/reset/password": {
-                $patch:
-                  | {
-                      output: "OK";
-                      outputFormat: "text";
-                      status: 200;
-                      input: {
-                        param: {
-                          id: string;
-                        };
-                      };
-                    }
-                  | {
-                      output: import("zod").ZodSafeParseError<{
-                        id: number;
-                      }>;
-                      outputFormat: "json";
-                      status: 400;
-                      input: {
-                        param: {
-                          id: string;
-                        };
-                      };
-                    };
-              };
-            }) & {
-              "/reset/mfa": {
-                $patch:
-                  | {
-                      output: "OK";
-                      outputFormat: "text";
-                      status: 200;
-                      input: {
-                        param: {
-                          id: string;
-                        };
-                      };
-                    }
-                  | {
-                      output: import("zod").ZodSafeParseError<{
-                        id: number;
-                      }>;
-                      outputFormat: "json";
-                      status: 400;
-                      input: {
-                        param: {
-                          id: string;
-                        };
-                      };
-                    };
-              };
-            },
-            "/:id"
-          >
-      ) & {
-        "/": {
-          $get:
-            | {
+            };
+          } & {
+            "/:id": {
+              $get: {
                 output: {};
                 outputFormat: string;
                 status: import("hono/utils/http-status").StatusCode;
                 input: {
-                  query: {
-                    page?: string | string[] | undefined;
-                    page_size?: string | string[] | undefined;
-                    q?: string | undefined;
-                  };
-                };
-              }
-            | {
-                output: undefined;
-                outputFormat: "redirect";
-                status: import("hono/utils/http-status").RedirectStatusCode;
-                input: {
-                  query: {
-                    page?: string | string[] | undefined;
-                    page_size?: string | string[] | undefined;
-                    q?: string | undefined;
+                  param: {
+                    id: string;
                   };
                 };
               };
-        };
-      },
-      "/users"
-    >
-  | import("hono/types").MergeSchemaPath<
-      (
-        | import("hono/types").BlankSchema
-        | import("hono/types").MergeSchemaPath<
+            };
+          } & {
+            "/": {
+              $post:
+                | {
+                    output: undefined;
+                    outputFormat: "redirect";
+                    status: 303;
+                    input: {
+                      form: {
+                        label: string;
+                        content: string;
+                        end_user_reason: string;
+                        allow_editing?: string | undefined;
+                      };
+                    };
+                  }
+                | {
+                    output: import("zod").ZodSafeParseError<{
+                      label: string;
+                      content: string;
+                      end_user_reason: string;
+                      allow_editing: boolean;
+                    }>;
+                    outputFormat: "json";
+                    status: 400;
+                    input: {
+                      form: {
+                        label: string;
+                        content: string;
+                        end_user_reason: string;
+                        allow_editing?: string | undefined;
+                      };
+                    };
+                  };
+            };
+          } & {
+            "/:id": {
+              $patch:
+                | {
+                    output: "";
+                    outputFormat: "text";
+                    status: 200;
+                    input: {
+                      form: {
+                        label: string;
+                        content: string;
+                        end_user_reason: string;
+                        allow_editing?: string | undefined;
+                      };
+                    } & {
+                      param: {
+                        id: string;
+                      };
+                    };
+                  }
+                | {
+                    output: import("zod").ZodSafeParseError<{
+                      label: string;
+                      content: string;
+                      end_user_reason: string;
+                      allow_editing: boolean;
+                    }>;
+                    outputFormat: "json";
+                    status: 400;
+                    input: {
+                      form: {
+                        label: string;
+                        content: string;
+                        end_user_reason: string;
+                        allow_editing?: string | undefined;
+                      };
+                    } & {
+                      param: {
+                        id: string;
+                      };
+                    };
+                  };
+            };
+          } & {
+            "/:id": {
+              $delete: {
+                output: {};
+                outputFormat: string;
+                status: import("hono/utils/http-status").StatusCode;
+                input: {
+                  param: {
+                    id: string;
+                  };
+                };
+              };
+            };
+          },
+          "/response-templates"
+        >
+      | import("hono/types").MergeSchemaPath<
+          (
+            | import("hono/types").BlankSchema
             | import("hono/types").MergeSchemaPath<
-                {
+                (((((
+                  | import("hono/types").MergeSchemaPath<
+                      {
+                        "/": {
+                          $get:
+                            | {
+                                output: import("zod").ZodSafeParseError<{
+                                  id: number;
+                                }>;
+                                outputFormat: "json";
+                                status: 400;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
+                                } & {
+                                  query: {
+                                    describedby: string;
+                                  };
+                                };
+                              }
+                            | {
+                                output: import("zod").ZodSafeParseError<{
+                                  describedby: string;
+                                }>;
+                                outputFormat: "json";
+                                status: 400;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
+                                } & {
+                                  query: {
+                                    describedby: string;
+                                  };
+                                };
+                              }
+                            | {
+                                output: {};
+                                outputFormat: string;
+                                status: import("hono/utils/http-status").StatusCode;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
+                                } & {
+                                  query: {
+                                    describedby: string;
+                                  };
+                                };
+                              };
+                        };
+                      },
+                      "/moderations"
+                    >
+                  | import("hono/types").MergeSchemaPath<
+                      {
+                        "/": {
+                          $get:
+                            | {
+                                output: import("zod").ZodSafeParseError<{
+                                  id: number;
+                                }>;
+                                outputFormat: "json";
+                                status: 400;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
+                                } & {
+                                  query: {
+                                    page?: string | string[] | undefined;
+                                    page_size?: string | string[] | undefined;
+                                    describedby: string | string[];
+                                    page_ref: string | string[];
+                                  };
+                                };
+                              }
+                            | {
+                                output: import("zod").ZodSafeParseError<{
+                                  page: number;
+                                  page_size: number;
+                                  describedby: string;
+                                  page_ref: string;
+                                }>;
+                                outputFormat: "json";
+                                status: 400;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
+                                } & {
+                                  query: {
+                                    page?: string | string[] | undefined;
+                                    page_size?: string | string[] | undefined;
+                                    describedby: string | string[];
+                                    page_ref: string | string[];
+                                  };
+                                };
+                              }
+                            | {
+                                output: {};
+                                outputFormat: string;
+                                status: import("hono/utils/http-status").StatusCode;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
+                                } & {
+                                  query: {
+                                    page?: string | string[] | undefined;
+                                    page_size?: string | string[] | undefined;
+                                    describedby: string | string[];
+                                    page_ref: string | string[];
+                                  };
+                                };
+                              };
+                        };
+                      },
+                      "/organizations"
+                    >
+                  | import("hono/types").MergeSchemaPath<
+                      {
+                        "/": {
+                          $get:
+                            | {
+                                output: import("zod").ZodSafeParseError<{
+                                  id: number;
+                                }>;
+                                outputFormat: "json";
+                                status: 400;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
+                                } & {
+                                  query: {
+                                    page?: string | string[] | undefined;
+                                    page_size?: string | string[] | undefined;
+                                    describedby: string | string[];
+                                    page_ref: string | string[];
+                                  };
+                                };
+                              }
+                            | {
+                                output: import("zod").ZodSafeParseError<{
+                                  page: number;
+                                  page_size: number;
+                                  describedby: string;
+                                  page_ref: string;
+                                }>;
+                                outputFormat: "json";
+                                status: 400;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
+                                } & {
+                                  query: {
+                                    page?: string | string[] | undefined;
+                                    page_size?: string | string[] | undefined;
+                                    describedby: string | string[];
+                                    page_ref: string | string[];
+                                  };
+                                };
+                              }
+                            | {
+                                output: {};
+                                outputFormat: string;
+                                status: import("hono/utils/http-status").StatusCode;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
+                                } & {
+                                  query: {
+                                    page?: string | string[] | undefined;
+                                    page_size?: string | string[] | undefined;
+                                    describedby: string | string[];
+                                    page_ref: string | string[];
+                                  };
+                                };
+                              };
+                        };
+                      },
+                      "/oidc_clients"
+                    >
+                  | {
+                      "/": {
+                        $get:
+                          | {
+                              output: import("zod").ZodSafeParseError<{
+                                id: number;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              };
+                            }
+                          | {
+                              output: {};
+                              outputFormat: string;
+                              status: import("hono/utils/http-status").StatusCode;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              };
+                            };
+                      };
+                    }
+                ) & {
                   "/": {
+                    $delete:
+                      | {
+                          output: "OK";
+                          outputFormat: "text";
+                          status: 200;
+                          input: {
+                            param: {
+                              id: string;
+                            };
+                          };
+                        }
+                      | {
+                          output: import("zod").ZodSafeParseError<{
+                            id: number;
+                          }>;
+                          outputFormat: "json";
+                          status: 400;
+                          input: {
+                            param: {
+                              id: string;
+                            };
+                          };
+                        };
+                  };
+                }) & {
+                  "/reset/email_verified": {
                     $patch:
                       | {
-                          output: {};
-                          outputFormat: string;
-                          status: import("hono/utils/http-status").StatusCode;
+                          output: "OK";
+                          outputFormat: "text";
+                          status: 200;
                           input: {
                             param: {
                               id: string;
@@ -782,157 +641,16 @@ declare const app: import("hono/hono-base").HonoBase<
                           };
                         };
                   };
-                },
-                "/processed"
-              >
-            | import("hono/types").MergeSchemaPath<
-                {
-                  "/": {
-                    $get:
-                      | {
-                          output: {};
-                          outputFormat: string;
-                          status: import("hono/utils/http-status").StatusCode;
-                          input: {
-                            param: {
-                              id: string;
-                            };
-                          } & {
-                            query: {
-                              describedby: string;
-                            };
-                          };
-                        }
-                      | {
-                          output: import("zod").ZodSafeParseError<{
-                            id: number;
-                          }>;
-                          outputFormat: "json";
-                          status: 400;
-                          input: {
-                            param: {
-                              id: string;
-                            };
-                          } & {
-                            query: {
-                              describedby: string;
-                            };
-                          };
-                        }
-                      | {
-                          output: import("zod").ZodSafeParseError<{
-                            describedby: string;
-                          }>;
-                          outputFormat: "json";
-                          status: 400;
-                          input: {
-                            param: {
-                              id: string;
-                            };
-                          } & {
-                            query: {
-                              describedby: string;
-                            };
-                          };
-                        };
-                  };
-                },
-                "/email"
-              >
-            | import("hono/types").MergeSchemaPath<
-                {
-                  "/": {
-                    $get:
-                      | {
-                          output: {};
-                          outputFormat: string;
-                          status: import("hono/utils/http-status").StatusCode;
-                          input: {
-                            param: {
-                              id: string;
-                            };
-                          } & {
-                            query: {
-                              organization_id: string | string[];
-                              user_id: string | string[];
-                            };
-                          };
-                        }
-                      | {
-                          output: import("zod").ZodSafeParseError<{
-                            id: number;
-                          }>;
-                          outputFormat: "json";
-                          status: 400;
-                          input: {
-                            param: {
-                              id: string;
-                            };
-                          } & {
-                            query: {
-                              organization_id: string | string[];
-                              user_id: string | string[];
-                            };
-                          };
-                        }
-                      | {
-                          output: import("zod").ZodSafeParseError<{
-                            organization_id: number;
-                            user_id: number;
-                          }>;
-                          outputFormat: "json";
-                          status: 400;
-                          input: {
-                            param: {
-                              id: string;
-                            };
-                          } & {
-                            query: {
-                              organization_id: string | string[];
-                              user_id: string | string[];
-                            };
-                          };
-                        };
-                  };
-                },
-                "/duplicate_warning"
-              >
-            | import("hono/types").MergeSchemaPath<
-                {
-                  "/": {
+                }) & {
+                  "/reset/france_connect": {
                     $patch:
                       | {
-                          output: {};
-                          outputFormat: string;
-                          status: import("hono/utils/http-status").StatusCode;
+                          output: "OK";
+                          outputFormat: "text";
+                          status: 200;
                           input: {
                             param: {
                               id: string;
-                            };
-                          } & {
-                            form: {
-                              add_domain?: string | undefined;
-                              add_member: "AS_EXTERNAL" | "AS_INTERNAL";
-                              send_notification?: string | undefined;
-                              verification_type?:
-                                | "bypassed"
-                                | "code_sent_to_official_contact_email"
-                                | "domain"
-                                | "domain_not_verified_yet"
-                                | "imported_from_coop_mediation_numerique"
-                                | "imported_from_inclusion_connect"
-                                | "in_liste_dirigeants_rna"
-                                | "in_liste_dirigeants_rne"
-                                | "no_validation_means_available"
-                                | "no_verification_means_for_entreprise_unipersonnelle"
-                                | "no_verification_means_for_small_association"
-                                | "no_verification_means_for_small_organization"
-                                | "official_contact_email"
-                                | "ordre_professionnel_domain"
-                                | "organization_dirigeant"
-                                | "proof_received"
-                                | "verified_by_coop_mediation_numerique"
-                                | undefined;
                             };
                           };
                         }
@@ -946,57 +664,25 @@ declare const app: import("hono/hono-base").HonoBase<
                             param: {
                               id: string;
                             };
-                          } & {
-                            form: {
-                              add_domain?: string | undefined;
-                              add_member: "AS_EXTERNAL" | "AS_INTERNAL";
-                              send_notification?: string | undefined;
-                              verification_type?:
-                                | "bypassed"
-                                | "code_sent_to_official_contact_email"
-                                | "domain"
-                                | "domain_not_verified_yet"
-                                | "imported_from_coop_mediation_numerique"
-                                | "imported_from_inclusion_connect"
-                                | "in_liste_dirigeants_rna"
-                                | "in_liste_dirigeants_rne"
-                                | "no_validation_means_available"
-                                | "no_verification_means_for_entreprise_unipersonnelle"
-                                | "no_verification_means_for_small_association"
-                                | "no_verification_means_for_small_organization"
-                                | "official_contact_email"
-                                | "ordre_professionnel_domain"
-                                | "organization_dirigeant"
-                                | "proof_received"
-                                | "verified_by_coop_mediation_numerique"
-                                | undefined;
+                          };
+                        };
+                  };
+                }) & {
+                  "/reset/password": {
+                    $patch:
+                      | {
+                          output: "OK";
+                          outputFormat: "text";
+                          status: 200;
+                          input: {
+                            param: {
+                              id: string;
                             };
                           };
                         }
                       | {
                           output: import("zod").ZodSafeParseError<{
-                            add_domain: boolean;
-                            add_member: "AS_EXTERNAL" | "AS_INTERNAL";
-                            send_notification: boolean;
-                            verification_type?:
-                              | "bypassed"
-                              | "code_sent_to_official_contact_email"
-                              | "domain"
-                              | "domain_not_verified_yet"
-                              | "imported_from_coop_mediation_numerique"
-                              | "imported_from_inclusion_connect"
-                              | "in_liste_dirigeants_rna"
-                              | "in_liste_dirigeants_rne"
-                              | "no_validation_means_available"
-                              | "no_verification_means_for_entreprise_unipersonnelle"
-                              | "no_verification_means_for_small_association"
-                              | "no_verification_means_for_small_organization"
-                              | "official_contact_email"
-                              | "ordre_professionnel_domain"
-                              | "organization_dirigeant"
-                              | "proof_received"
-                              | "verified_by_coop_mediation_numerique"
-                              | undefined;
+                            id: number;
                           }>;
                           outputFormat: "json";
                           status: 400;
@@ -1004,40 +690,11 @@ declare const app: import("hono/hono-base").HonoBase<
                             param: {
                               id: string;
                             };
-                          } & {
-                            form: {
-                              add_domain?: string | undefined;
-                              add_member: "AS_EXTERNAL" | "AS_INTERNAL";
-                              send_notification?: string | undefined;
-                              verification_type?:
-                                | "bypassed"
-                                | "code_sent_to_official_contact_email"
-                                | "domain"
-                                | "domain_not_verified_yet"
-                                | "imported_from_coop_mediation_numerique"
-                                | "imported_from_inclusion_connect"
-                                | "in_liste_dirigeants_rna"
-                                | "in_liste_dirigeants_rne"
-                                | "no_validation_means_available"
-                                | "no_verification_means_for_entreprise_unipersonnelle"
-                                | "no_verification_means_for_small_association"
-                                | "no_verification_means_for_small_organization"
-                                | "official_contact_email"
-                                | "ordre_professionnel_domain"
-                                | "organization_dirigeant"
-                                | "proof_received"
-                                | "verified_by_coop_mediation_numerique"
-                                | undefined;
-                            };
                           };
                         };
                   };
-                },
-                "/validate"
-              >
-            | import("hono/types").MergeSchemaPath<
-                {
-                  "/": {
+                }) & {
+                  "/reset/mfa": {
                     $patch:
                       | {
                           output: "OK";
@@ -1063,134 +720,1464 @@ declare const app: import("hono/hono-base").HonoBase<
                         };
                   };
                 },
-                "/reprocess"
+                "/:id"
               >
+          ) & {
+            "/": {
+              $get:
+                | {
+                    output: undefined;
+                    outputFormat: "redirect";
+                    status: import("hono/utils/http-status").RedirectStatusCode;
+                    input: {
+                      query: {
+                        page?: string | string[] | undefined;
+                        page_size?: string | string[] | undefined;
+                        q?: string | undefined;
+                      };
+                    };
+                  }
+                | {
+                    output: {};
+                    outputFormat: string;
+                    status: import("hono/utils/http-status").StatusCode;
+                    input: {
+                      query: {
+                        page?: string | string[] | undefined;
+                        page_size?: string | string[] | undefined;
+                        q?: string | undefined;
+                      };
+                    };
+                  };
+            };
+          },
+          "/users"
+        >
+      | import("hono/types").MergeSchemaPath<
+          (
+            | import("hono/types").BlankSchema
+            | import("hono/types").MergeSchemaPath<
+                | import("hono/types").MergeSchemaPath<
+                    {
+                      "/": {
+                        $get:
+                          | {
+                              output: import("zod").ZodSafeParseError<{
+                                id: number;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                query: {
+                                  organization_id: string | string[];
+                                  user_id: string | string[];
+                                };
+                              };
+                            }
+                          | {
+                              output: import("zod").ZodSafeParseError<{
+                                organization_id: number;
+                                user_id: number;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                query: {
+                                  organization_id: string | string[];
+                                  user_id: string | string[];
+                                };
+                              };
+                            }
+                          | {
+                              output: {};
+                              outputFormat: string;
+                              status: import("hono/utils/http-status").StatusCode;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                query: {
+                                  organization_id: string | string[];
+                                  user_id: string | string[];
+                                };
+                              };
+                            };
+                      };
+                    },
+                    "/duplicate_warning"
+                  >
+                | import("hono/types").MergeSchemaPath<
+                    {
+                      "/": {
+                        $get:
+                          | {
+                              output: import("zod").ZodSafeParseError<{
+                                id: number;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                query: {
+                                  describedby: string;
+                                };
+                              };
+                            }
+                          | {
+                              output: import("zod").ZodSafeParseError<{
+                                describedby: string;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                query: {
+                                  describedby: string;
+                                };
+                              };
+                            }
+                          | {
+                              output: {};
+                              outputFormat: string;
+                              status: import("hono/utils/http-status").StatusCode;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                query: {
+                                  describedby: string;
+                                };
+                              };
+                            };
+                      };
+                    },
+                    "/email"
+                  >
+                | import("hono/types").MergeSchemaPath<
+                    {
+                      "/": {
+                        $patch:
+                          | {
+                              output: import("zod").ZodSafeParseError<{
+                                id: number;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                form: {
+                                  add_domain?: string | undefined;
+                                  add_member: "AS_EXTERNAL" | "AS_INTERNAL";
+                                  send_notification?: string | undefined;
+                                  verification_type?:
+                                    | "bypassed"
+                                    | "code_sent_to_official_contact_email"
+                                    | "domain"
+                                    | "domain_not_verified_yet"
+                                    | "imported_from_coop_mediation_numerique"
+                                    | "imported_from_inclusion_connect"
+                                    | "in_liste_dirigeants_rna"
+                                    | "in_liste_dirigeants_rne"
+                                    | "no_validation_means_available"
+                                    | "no_verification_means_for_entreprise_unipersonnelle"
+                                    | "no_verification_means_for_small_association"
+                                    | "no_verification_means_for_small_organization"
+                                    | "official_contact_email"
+                                    | "ordre_professionnel_domain"
+                                    | "organization_dirigeant"
+                                    | "proof_received"
+                                    | "verified_by_coop_mediation_numerique"
+                                    | undefined;
+                                };
+                              };
+                            }
+                          | {
+                              output: import("zod").ZodSafeParseError<{
+                                add_domain: boolean;
+                                add_member: "AS_EXTERNAL" | "AS_INTERNAL";
+                                send_notification: boolean;
+                                verification_type?:
+                                  | "bypassed"
+                                  | "code_sent_to_official_contact_email"
+                                  | "domain"
+                                  | "domain_not_verified_yet"
+                                  | "imported_from_coop_mediation_numerique"
+                                  | "imported_from_inclusion_connect"
+                                  | "in_liste_dirigeants_rna"
+                                  | "in_liste_dirigeants_rne"
+                                  | "no_validation_means_available"
+                                  | "no_verification_means_for_entreprise_unipersonnelle"
+                                  | "no_verification_means_for_small_association"
+                                  | "no_verification_means_for_small_organization"
+                                  | "official_contact_email"
+                                  | "ordre_professionnel_domain"
+                                  | "organization_dirigeant"
+                                  | "proof_received"
+                                  | "verified_by_coop_mediation_numerique"
+                                  | undefined;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                form: {
+                                  add_domain?: string | undefined;
+                                  add_member: "AS_EXTERNAL" | "AS_INTERNAL";
+                                  send_notification?: string | undefined;
+                                  verification_type?:
+                                    | "bypassed"
+                                    | "code_sent_to_official_contact_email"
+                                    | "domain"
+                                    | "domain_not_verified_yet"
+                                    | "imported_from_coop_mediation_numerique"
+                                    | "imported_from_inclusion_connect"
+                                    | "in_liste_dirigeants_rna"
+                                    | "in_liste_dirigeants_rne"
+                                    | "no_validation_means_available"
+                                    | "no_verification_means_for_entreprise_unipersonnelle"
+                                    | "no_verification_means_for_small_association"
+                                    | "no_verification_means_for_small_organization"
+                                    | "official_contact_email"
+                                    | "ordre_professionnel_domain"
+                                    | "organization_dirigeant"
+                                    | "proof_received"
+                                    | "verified_by_coop_mediation_numerique"
+                                    | undefined;
+                                };
+                              };
+                            }
+                          | {
+                              output: {};
+                              outputFormat: string;
+                              status: import("hono/utils/http-status").StatusCode;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                form: {
+                                  add_domain?: string | undefined;
+                                  add_member: "AS_EXTERNAL" | "AS_INTERNAL";
+                                  send_notification?: string | undefined;
+                                  verification_type?:
+                                    | "bypassed"
+                                    | "code_sent_to_official_contact_email"
+                                    | "domain"
+                                    | "domain_not_verified_yet"
+                                    | "imported_from_coop_mediation_numerique"
+                                    | "imported_from_inclusion_connect"
+                                    | "in_liste_dirigeants_rna"
+                                    | "in_liste_dirigeants_rne"
+                                    | "no_validation_means_available"
+                                    | "no_verification_means_for_entreprise_unipersonnelle"
+                                    | "no_verification_means_for_small_association"
+                                    | "no_verification_means_for_small_organization"
+                                    | "official_contact_email"
+                                    | "ordre_professionnel_domain"
+                                    | "organization_dirigeant"
+                                    | "proof_received"
+                                    | "verified_by_coop_mediation_numerique"
+                                    | undefined;
+                                };
+                              };
+                            };
+                      };
+                    },
+                    "/validate"
+                  >
+                | import("hono/types").MergeSchemaPath<
+                    {
+                      "/": {
+                        $patch:
+                          | {
+                              output: import("zod").ZodSafeParseError<{
+                                id: number;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              };
+                            }
+                          | {
+                              output: {};
+                              outputFormat: string;
+                              status: import("hono/utils/http-status").StatusCode;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              };
+                            };
+                      };
+                    },
+                    "/processed"
+                  >
+                | import("hono/types").MergeSchemaPath<
+                    {
+                      "/": {
+                        $patch:
+                          | {
+                              output: "OK";
+                              outputFormat: "text";
+                              status: 200;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              };
+                            }
+                          | {
+                              output: import("zod").ZodSafeParseError<{
+                                id: number;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              };
+                            };
+                      };
+                    },
+                    "/reprocess"
+                  >
+                | import("hono/types").MergeSchemaPath<
+                    {
+                      "/reason/:response_id": {
+                        $get:
+                          | {
+                              output: import("zod").ZodSafeParseError<{
+                                id: number;
+                                response_id: number;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                  response_id: string;
+                                };
+                              };
+                            }
+                          | {
+                              output: string;
+                              outputFormat: "text";
+                              status: import("hono/utils/http-status").ContentfulStatusCode;
+                              input: {
+                                param: {
+                                  id: string;
+                                  response_id: string;
+                                };
+                              };
+                            };
+                      };
+                    } & {
+                      "/": {
+                        $patch:
+                          | {
+                              output: "OK";
+                              outputFormat: "text";
+                              status: 200;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                form: {
+                                  message:
+                                    | import("hono/types").ParsedFormValue[]
+                                    | import("hono/types").ParsedFormValue;
+                                  subject:
+                                    | import("hono/types").ParsedFormValue[]
+                                    | import("hono/types").ParsedFormValue;
+                                  end_user_reason:
+                                    | import("hono/types").ParsedFormValue[]
+                                    | import("hono/types").ParsedFormValue;
+                                  allow_editing:
+                                    | import("hono/types").ParsedFormValue[]
+                                    | import("hono/types").ParsedFormValue;
+                                };
+                              };
+                            }
+                          | {
+                              output: import("zod").ZodSafeParseError<{
+                                id: number;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                form: {
+                                  message:
+                                    | import("hono/types").ParsedFormValue[]
+                                    | import("hono/types").ParsedFormValue;
+                                  subject:
+                                    | import("hono/types").ParsedFormValue[]
+                                    | import("hono/types").ParsedFormValue;
+                                  end_user_reason:
+                                    | import("hono/types").ParsedFormValue[]
+                                    | import("hono/types").ParsedFormValue;
+                                  allow_editing:
+                                    | import("hono/types").ParsedFormValue[]
+                                    | import("hono/types").ParsedFormValue;
+                                };
+                              };
+                            }
+                          | {
+                              output: import("zod").ZodSafeParseError<{
+                                message: string;
+                                subject: string;
+                                end_user_reason: string;
+                                allow_editing: boolean;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                form: {
+                                  message:
+                                    | import("hono/types").ParsedFormValue[]
+                                    | import("hono/types").ParsedFormValue;
+                                  subject:
+                                    | import("hono/types").ParsedFormValue[]
+                                    | import("hono/types").ParsedFormValue;
+                                  end_user_reason:
+                                    | import("hono/types").ParsedFormValue[]
+                                    | import("hono/types").ParsedFormValue;
+                                  allow_editing:
+                                    | import("hono/types").ParsedFormValue[]
+                                    | import("hono/types").ParsedFormValue;
+                                };
+                              };
+                            };
+                      };
+                    },
+                    "/rejected"
+                  >
+                | {
+                    "/": {
+                      $get:
+                        | {
+                            output: import("zod").ZodSafeParseError<{
+                              id: number;
+                            }>;
+                            outputFormat: "json";
+                            status: 400;
+                            input: {
+                              param: {
+                                id: string;
+                              };
+                            };
+                          }
+                        | {
+                            output: {};
+                            outputFormat: string;
+                            status: import("hono/utils/http-status").StatusCode;
+                            input: {
+                              param: {
+                                id: string;
+                              };
+                            };
+                          };
+                    };
+                  },
+                "/:id"
+              >
+          ) & {
+            "/": {
+              $get: {
+                output: {};
+                outputFormat: string;
+                status: import("hono/utils/http-status").StatusCode;
+                input: {};
+              };
+            };
+          },
+          "/moderations"
+        >
+      | import("hono/types").MergeSchemaPath<
+          (
+            | import("hono/types").BlankSchema
             | import("hono/types").MergeSchemaPath<
                 {
-                  "/reason/:response_id": {
+                  "/": {
                     $get:
                       | {
-                          output: string;
-                          outputFormat: "text";
-                          status: import("hono/utils/http-status").ContentfulStatusCode;
+                          output: undefined;
+                          outputFormat: "redirect";
+                          status: import("hono/utils/http-status").RedirectStatusCode;
                           input: {
-                            param: {
-                              id: string;
-                              response_id: string;
+                            query: {
+                              page?: string | string[] | undefined;
+                              page_size?: string | string[] | undefined;
+                              q?: string | undefined;
                             };
                           };
                         }
                       | {
+                          output: {};
+                          outputFormat: string;
+                          status: import("hono/utils/http-status").StatusCode;
+                          input: {
+                            query: {
+                              page?: string | string[] | undefined;
+                              page_size?: string | string[] | undefined;
+                              q?: string | undefined;
+                            };
+                          };
+                        };
+                  };
+                },
+                "/domains"
+              >
+            | import("hono/types").MergeSchemaPath<
+                {
+                  "/": {
+                    $get:
+                      | {
                           output: import("zod").ZodSafeParseError<{
-                            id: number;
-                            response_id: number;
+                            siret: string;
+                            retry?: string | undefined;
                           }>;
                           outputFormat: "json";
                           status: 400;
                           input: {
-                            param: {
-                              id: string;
-                              response_id: string;
+                            query: {
+                              siret: string;
+                              retry?: string | undefined;
+                            };
+                          };
+                        }
+                      | {
+                          output: {};
+                          outputFormat: string;
+                          status: import("hono/utils/http-status").StatusCode;
+                          input: {
+                            query: {
+                              siret: string;
+                              retry?: string | undefined;
+                            };
+                          };
+                        };
+                  };
+                } & {
+                  "/document": {
+                    $get:
+                      | {
+                          output: import("zod").ZodSafeParseError<{
+                            siret: string;
+                          }>;
+                          outputFormat: "json";
+                          status: 400;
+                          input: {
+                            query: {
+                              siret: string;
+                            };
+                          };
+                        }
+                      | {
+                          output: {};
+                          outputFormat: string;
+                          status: import("hono/utils/http-status").StatusCode;
+                          input: {
+                            query: {
+                              siret: string;
+                            };
+                          };
+                        };
+                  };
+                },
+                "/leaders"
+              >
+            | import("hono/types").MergeSchemaPath<
+                {
+                  "/": {
+                    $get:
+                      | {
+                          output: import("zod").ZodSafeParseError<{
+                            siret?: string | undefined;
+                            created?: string | undefined;
+                            skipped?: string | undefined;
+                          }>;
+                          outputFormat: "json";
+                          status: 400;
+                          input: {
+                            query: {
+                              siret?: string | undefined;
+                              created?: string | undefined;
+                              skipped?: string | undefined;
+                            };
+                          };
+                        }
+                      | {
+                          output: {};
+                          outputFormat: string;
+                          status: import("hono/utils/http-status").StatusCode;
+                          input: {
+                            query: {
+                              siret?: string | undefined;
+                              created?: string | undefined;
+                              skipped?: string | undefined;
                             };
                           };
                         };
                   };
                 } & {
                   "/": {
-                    $patch:
+                    $post:
                       | {
-                          output: "OK";
-                          outputFormat: "text";
-                          status: 200;
+                          output: import("zod").ZodSafeParseError<{
+                            sirets: string;
+                          }>;
+                          outputFormat: "json";
+                          status: 400;
                           input: {
-                            param: {
-                              id: string;
-                            };
-                          } & {
                             form: {
-                              message:
-                                | import("hono/types").ParsedFormValue[]
-                                | import("hono/types").ParsedFormValue;
-                              subject:
-                                | import("hono/types").ParsedFormValue[]
-                                | import("hono/types").ParsedFormValue;
-                              end_user_reason:
-                                | import("hono/types").ParsedFormValue[]
-                                | import("hono/types").ParsedFormValue;
-                              allow_editing:
-                                | import("hono/types").ParsedFormValue[]
-                                | import("hono/types").ParsedFormValue;
+                              sirets: string;
+                            };
+                          };
+                        }
+                      | {
+                          output: {};
+                          outputFormat: string;
+                          status: import("hono/utils/http-status").StatusCode;
+                          input: {
+                            form: {
+                              sirets: string;
+                            };
+                          };
+                        };
+                  };
+                } & {
+                  "/confirm": {
+                    $post:
+                      | {
+                          output: undefined;
+                          outputFormat: "redirect";
+                          status: 303;
+                          input: {
+                            form: {
+                              "sirets[]": string[];
                             };
                           };
                         }
                       | {
                           output: import("zod").ZodSafeParseError<{
-                            id: number;
+                            "sirets[]": string[];
                           }>;
                           outputFormat: "json";
                           status: 400;
                           input: {
-                            param: {
-                              id: string;
-                            };
-                          } & {
                             form: {
-                              message:
-                                | import("hono/types").ParsedFormValue[]
-                                | import("hono/types").ParsedFormValue;
-                              subject:
-                                | import("hono/types").ParsedFormValue[]
-                                | import("hono/types").ParsedFormValue;
-                              end_user_reason:
-                                | import("hono/types").ParsedFormValue[]
-                                | import("hono/types").ParsedFormValue;
-                              allow_editing:
-                                | import("hono/types").ParsedFormValue[]
-                                | import("hono/types").ParsedFormValue;
-                            };
-                          };
-                        }
-                      | {
-                          output: import("zod").ZodSafeParseError<{
-                            message: string;
-                            subject: string;
-                            end_user_reason: string;
-                            allow_editing: boolean;
-                          }>;
-                          outputFormat: "json";
-                          status: 400;
-                          input: {
-                            param: {
-                              id: string;
-                            };
-                          } & {
-                            form: {
-                              message:
-                                | import("hono/types").ParsedFormValue[]
-                                | import("hono/types").ParsedFormValue;
-                              subject:
-                                | import("hono/types").ParsedFormValue[]
-                                | import("hono/types").ParsedFormValue;
-                              end_user_reason:
-                                | import("hono/types").ParsedFormValue[]
-                                | import("hono/types").ParsedFormValue;
-                              allow_editing:
-                                | import("hono/types").ParsedFormValue[]
-                                | import("hono/types").ParsedFormValue;
+                              "sirets[]": string[];
                             };
                           };
                         };
                   };
                 },
-                "/rejected"
+                "/new"
               >
-            | {
+            | import("hono/types").MergeSchemaPath<
+                | {
+                    "/": {
+                      $get:
+                        | {
+                            output: import("zod").ZodSafeParseError<{
+                              id: number;
+                            }>;
+                            outputFormat: "json";
+                            status: 400;
+                            input: {
+                              param: {
+                                id: string;
+                              };
+                            } & {
+                              query: {
+                                status?: "created" | undefined;
+                              };
+                            };
+                          }
+                        | {
+                            output: import("zod").ZodSafeParseError<{
+                              status?: "created" | undefined;
+                            }>;
+                            outputFormat: "json";
+                            status: 400;
+                            input: {
+                              param: {
+                                id: string;
+                              };
+                            } & {
+                              query: {
+                                status?: "created" | undefined;
+                              };
+                            };
+                          }
+                        | {
+                            output: {};
+                            outputFormat: string;
+                            status: import("hono/utils/http-status").StatusCode;
+                            input: {
+                              param: {
+                                id: string;
+                              };
+                            } & {
+                              query: {
+                                status?: "created" | undefined;
+                              };
+                            };
+                          };
+                    };
+                  }
+                | import("hono/types").MergeSchemaPath<
+                    (((
+                      | import("hono/types").MergeSchemaPath<
+                          {
+                            "/": {
+                              $get:
+                                | {
+                                    output: import("zod").ZodSafeParseError<{
+                                      id: number;
+                                    }>;
+                                    outputFormat: "json";
+                                    status: 400;
+                                    input: {
+                                      param: {
+                                        id: string;
+                                      };
+                                    };
+                                  }
+                                | {
+                                    output: {};
+                                    outputFormat: string;
+                                    status: import("hono/utils/http-status").StatusCode;
+                                    input: {
+                                      param: {
+                                        id: string;
+                                      };
+                                    };
+                                  };
+                            };
+                          },
+                          "/history"
+                        >
+                      | {
+                          "/": {
+                            $get:
+                              | {
+                                  output: import("zod").ZodSafeParseError<{
+                                    id: number;
+                                  }>;
+                                  outputFormat: "json";
+                                  status: 400;
+                                  input: {
+                                    param: {
+                                      id: string;
+                                    };
+                                  } & {
+                                    query: {
+                                      describedby: string;
+                                    };
+                                  };
+                                }
+                              | {
+                                  output: import("zod").ZodSafeParseError<{
+                                    describedby: string;
+                                  }>;
+                                  outputFormat: "json";
+                                  status: 400;
+                                  input: {
+                                    param: {
+                                      id: string;
+                                    };
+                                  } & {
+                                    query: {
+                                      describedby: string;
+                                    };
+                                  };
+                                }
+                              | {
+                                  output: {};
+                                  outputFormat: string;
+                                  status: import("hono/utils/http-status").StatusCode;
+                                  input: {
+                                    param: {
+                                      id: string;
+                                    };
+                                  } & {
+                                    query: {
+                                      describedby: string;
+                                    };
+                                  };
+                                };
+                          };
+                        }
+                    ) & {
+                      "/": {
+                        $put:
+                          | {
+                              output: "OK";
+                              outputFormat: "text";
+                              status: 200;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                form: {
+                                  domain: string;
+                                };
+                              };
+                            }
+                          | {
+                              output: import("zod").ZodSafeParseError<{
+                                id: number;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                form: {
+                                  domain: string;
+                                };
+                              };
+                            }
+                          | {
+                              output: import("zod").ZodSafeParseError<{
+                                domain: string;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                form: {
+                                  domain: string;
+                                };
+                              };
+                            };
+                      };
+                    }) & {
+                      "/:domain_id": {
+                        $delete:
+                          | {
+                              output: "OK";
+                              outputFormat: "text";
+                              status: 200;
+                              input: {
+                                param: {
+                                  id: string;
+                                  domain_id: string;
+                                };
+                              };
+                            }
+                          | {
+                              output: import("zod").ZodSafeParseError<{
+                                id: number;
+                                domain_id: number;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                  domain_id: string;
+                                };
+                              };
+                            };
+                      };
+                    }) & {
+                      "/:domain_id": {
+                        $patch:
+                          | {
+                              output: "OK";
+                              outputFormat: "text";
+                              status: 200;
+                              input: {
+                                param: {
+                                  id: string;
+                                  domain_id: string;
+                                };
+                              } & {
+                                query: {
+                                  type: "external" | "refused" | "verified";
+                                };
+                              };
+                            }
+                          | {
+                              output: import("zod").ZodSafeParseError<{
+                                type: "external" | "refused" | "verified";
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                  domain_id: string;
+                                };
+                              } & {
+                                query: {
+                                  type: "external" | "refused" | "verified";
+                                };
+                              };
+                            }
+                          | {
+                              output: import("zod").ZodSafeParseError<{
+                                id: number;
+                                domain_id: number;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                  domain_id: string;
+                                };
+                              } & {
+                                query: {
+                                  type: "external" | "refused" | "verified";
+                                };
+                              };
+                            };
+                      };
+                    },
+                    "/domains"
+                  >
+                | import("hono/types").MergeSchemaPath<
+                    | {
+                        "/": {
+                          $get:
+                            | {
+                                output: import("zod").ZodSafeParseError<{
+                                  id: number;
+                                }>;
+                                outputFormat: "json";
+                                status: 400;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
+                                } & {
+                                  query: {
+                                    page?: string | string[] | undefined;
+                                    page_size?: string | string[] | undefined;
+                                    describedby: string | string[];
+                                    page_ref: string | string[];
+                                  };
+                                };
+                              }
+                            | {
+                                output: import("zod").ZodSafeParseError<{
+                                  page: number;
+                                  page_size: number;
+                                  describedby: string;
+                                  page_ref: string;
+                                }>;
+                                outputFormat: "json";
+                                status: 400;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
+                                } & {
+                                  query: {
+                                    page?: string | string[] | undefined;
+                                    page_size?: string | string[] | undefined;
+                                    describedby: string | string[];
+                                    page_ref: string | string[];
+                                  };
+                                };
+                              }
+                            | {
+                                output: {};
+                                outputFormat: string;
+                                status: import("hono/utils/http-status").StatusCode;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
+                                } & {
+                                  query: {
+                                    page?: string | string[] | undefined;
+                                    page_size?: string | string[] | undefined;
+                                    describedby: string | string[];
+                                    page_ref: string | string[];
+                                  };
+                                };
+                              };
+                        };
+                      }
+                    | (import("hono/types").MergeSchemaPath<
+                        {
+                          "/": {
+                            $patch:
+                              | {
+                                  output: "OK";
+                                  outputFormat: "text";
+                                  status: 200;
+                                  input: {
+                                    param: {
+                                      id: string;
+                                      user_id: string;
+                                    };
+                                  } & {
+                                    form: {
+                                      verification_type?:
+                                        | "bypassed"
+                                        | "code_sent_to_official_contact_email"
+                                        | "domain"
+                                        | "domain_not_verified_yet"
+                                        | "imported_from_coop_mediation_numerique"
+                                        | "imported_from_inclusion_connect"
+                                        | "in_liste_dirigeants_rna"
+                                        | "in_liste_dirigeants_rne"
+                                        | "no_validation_means_available"
+                                        | "no_verification_means_for_entreprise_unipersonnelle"
+                                        | "no_verification_means_for_small_association"
+                                        | "no_verification_means_for_small_organization"
+                                        | "official_contact_email"
+                                        | "ordre_professionnel_domain"
+                                        | "organization_dirigeant"
+                                        | "proof_received"
+                                        | "verified_by_coop_mediation_numerique"
+                                        | undefined;
+                                      is_external?: string | undefined;
+                                    };
+                                  };
+                                }
+                              | {
+                                  output: import("zod").ZodSafeParseError<{
+                                    id: number;
+                                    user_id: number;
+                                  }>;
+                                  outputFormat: "json";
+                                  status: 400;
+                                  input: {
+                                    param: {
+                                      id: string;
+                                      user_id: string;
+                                    };
+                                  } & {
+                                    form: {
+                                      verification_type?:
+                                        | "bypassed"
+                                        | "code_sent_to_official_contact_email"
+                                        | "domain"
+                                        | "domain_not_verified_yet"
+                                        | "imported_from_coop_mediation_numerique"
+                                        | "imported_from_inclusion_connect"
+                                        | "in_liste_dirigeants_rna"
+                                        | "in_liste_dirigeants_rne"
+                                        | "no_validation_means_available"
+                                        | "no_verification_means_for_entreprise_unipersonnelle"
+                                        | "no_verification_means_for_small_association"
+                                        | "no_verification_means_for_small_organization"
+                                        | "official_contact_email"
+                                        | "ordre_professionnel_domain"
+                                        | "organization_dirigeant"
+                                        | "proof_received"
+                                        | "verified_by_coop_mediation_numerique"
+                                        | undefined;
+                                      is_external?: string | undefined;
+                                    };
+                                  };
+                                }
+                              | {
+                                  output: import("zod").ZodSafeParseError<{
+                                    verification_type?:
+                                      | "bypassed"
+                                      | "code_sent_to_official_contact_email"
+                                      | "domain"
+                                      | "domain_not_verified_yet"
+                                      | "imported_from_coop_mediation_numerique"
+                                      | "imported_from_inclusion_connect"
+                                      | "in_liste_dirigeants_rna"
+                                      | "in_liste_dirigeants_rne"
+                                      | "no_validation_means_available"
+                                      | "no_verification_means_for_entreprise_unipersonnelle"
+                                      | "no_verification_means_for_small_association"
+                                      | "no_verification_means_for_small_organization"
+                                      | "official_contact_email"
+                                      | "ordre_professionnel_domain"
+                                      | "organization_dirigeant"
+                                      | "proof_received"
+                                      | "verified_by_coop_mediation_numerique"
+                                      | undefined;
+                                    is_external?: boolean | undefined;
+                                  }>;
+                                  outputFormat: "json";
+                                  status: 400;
+                                  input: {
+                                    param: {
+                                      id: string;
+                                      user_id: string;
+                                    };
+                                  } & {
+                                    form: {
+                                      verification_type?:
+                                        | "bypassed"
+                                        | "code_sent_to_official_contact_email"
+                                        | "domain"
+                                        | "domain_not_verified_yet"
+                                        | "imported_from_coop_mediation_numerique"
+                                        | "imported_from_inclusion_connect"
+                                        | "in_liste_dirigeants_rna"
+                                        | "in_liste_dirigeants_rne"
+                                        | "no_validation_means_available"
+                                        | "no_verification_means_for_entreprise_unipersonnelle"
+                                        | "no_verification_means_for_small_association"
+                                        | "no_verification_means_for_small_organization"
+                                        | "official_contact_email"
+                                        | "ordre_professionnel_domain"
+                                        | "organization_dirigeant"
+                                        | "proof_received"
+                                        | "verified_by_coop_mediation_numerique"
+                                        | undefined;
+                                      is_external?: string | undefined;
+                                    };
+                                  };
+                                };
+                          };
+                        } & {
+                          "/": {
+                            $delete:
+                              | {
+                                  output: "OK";
+                                  outputFormat: "text";
+                                  status: 200;
+                                  input: {
+                                    param: {
+                                      id: string;
+                                      user_id: string;
+                                    };
+                                  };
+                                }
+                              | {
+                                  output: import("zod").ZodSafeParseError<{
+                                    id: number;
+                                    user_id: number;
+                                  }>;
+                                  outputFormat: "json";
+                                  status: 400;
+                                  input: {
+                                    param: {
+                                      id: string;
+                                      user_id: string;
+                                    };
+                                  };
+                                };
+                          };
+                        },
+                        "/:user_id"
+                      > & {
+                        "/": {
+                          $get:
+                            | {
+                                output: import("zod").ZodSafeParseError<{
+                                  id: number;
+                                }>;
+                                outputFormat: "json";
+                                status: 400;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
+                                } & {
+                                  query: {
+                                    page?: string | string[] | undefined;
+                                    page_size?: string | string[] | undefined;
+                                    describedby: string | string[];
+                                    page_ref: string | string[];
+                                  };
+                                };
+                              }
+                            | {
+                                output: import("zod").ZodSafeParseError<{
+                                  page: number;
+                                  page_size: number;
+                                  describedby: string;
+                                  page_ref: string;
+                                }>;
+                                outputFormat: "json";
+                                status: 400;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
+                                } & {
+                                  query: {
+                                    page?: string | string[] | undefined;
+                                    page_size?: string | string[] | undefined;
+                                    describedby: string | string[];
+                                    page_ref: string | string[];
+                                  };
+                                };
+                              }
+                            | {
+                                output: {};
+                                outputFormat: string;
+                                status: import("hono/utils/http-status").StatusCode;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
+                                } & {
+                                  query: {
+                                    page?: string | string[] | undefined;
+                                    page_size?: string | string[] | undefined;
+                                    describedby: string | string[];
+                                    page_ref: string | string[];
+                                  };
+                                };
+                              };
+                        };
+                      }),
+                    "/members"
+                  >,
+                "/:id"
+              >
+          ) & {
+            "/": {
+              $get:
+                | {
+                    output: import("zod").ZodSafeParseError<{
+                      id?: number | undefined;
+                      page: number;
+                      page_size: number;
+                      q: string;
+                    }>;
+                    outputFormat: "json";
+                    status: 400;
+                    input: {
+                      query: {
+                        id?: string | undefined;
+                        page?: string | string[] | undefined;
+                        page_size?: string | string[] | undefined;
+                        q?: string | undefined;
+                      };
+                    };
+                  }
+                | {
+                    output: {};
+                    outputFormat: string;
+                    status: import("hono/utils/http-status").StatusCode;
+                    input: {
+                      query: {
+                        id?: string | undefined;
+                        page?: string | string[] | undefined;
+                        page_size?: string | string[] | undefined;
+                        q?: string | undefined;
+                      };
+                    };
+                  };
+            };
+          },
+          "/organizations"
+        >
+      | import("hono/types").MergeSchemaPath<
+          | import("hono/types").BlankSchema
+          | import("hono/types").MergeSchemaPath<
+              {
                 "/": {
                   $get:
+                    | {
+                        output: undefined;
+                        outputFormat: "redirect";
+                        status: import("hono/utils/http-status").RedirectStatusCode;
+                        input: {
+                          query: {
+                            page?: string | string[] | undefined;
+                            page_size?: string | string[] | undefined;
+                            q?: string | undefined;
+                          };
+                        };
+                      }
                     | {
                         output: {};
                         outputFormat: string;
                         status: import("hono/utils/http-status").StatusCode;
+                        input: {
+                          query: {
+                            page?: string | string[] | undefined;
+                            page_size?: string | string[] | undefined;
+                            q?: string | undefined;
+                          };
+                        };
+                      };
+                };
+              } & {
+                "/": {
+                  $post:
+                    | {
+                        output: "OK";
+                        outputFormat: "text";
+                        status: 200;
+                        input: {
+                          form: {
+                            email: string;
+                            role: string;
+                          };
+                        };
+                      }
+                    | {
+                        output: import("zod").ZodSafeParseError<{
+                          email: string;
+                          role: string;
+                        }>;
+                        outputFormat: "json";
+                        status: 400;
+                        input: {
+                          form: {
+                            email: string;
+                            role: string;
+                          };
+                        };
+                      };
+                };
+              } & {
+                "/:id": {
+                  $patch:
+                    | {
+                        output: "OK";
+                        outputFormat: "text";
+                        status: 200;
+                        input: {
+                          param: {
+                            id: string;
+                          };
+                        } & {
+                          form: {
+                            role: string;
+                          };
+                        };
+                      }
+                    | {
+                        output: import("zod").ZodSafeParseError<{
+                          id: number;
+                        }>;
+                        outputFormat: "json";
+                        status: 400;
+                        input: {
+                          param: {
+                            id: string;
+                          };
+                        } & {
+                          form: {
+                            role: string;
+                          };
+                        };
+                      }
+                    | {
+                        output: import("zod").ZodSafeParseError<{
+                          role: string;
+                        }>;
+                        outputFormat: "json";
+                        status: 400;
+                        input: {
+                          param: {
+                            id: string;
+                          };
+                        } & {
+                          form: {
+                            role: string;
+                          };
+                        };
+                      }
+                    | {
+                        output: "Forbidden: cannot modify your own role";
+                        outputFormat: "text";
+                        status: 403;
+                        input: {
+                          param: {
+                            id: string;
+                          };
+                        } & {
+                          form: {
+                            role: string;
+                          };
+                        };
+                      };
+                };
+              } & {
+                "/:id/disable": {
+                  $patch:
+                    | {
+                        output: "OK";
+                        outputFormat: "text";
+                        status: 200;
+                        input: {
+                          param: {
+                            id: string;
+                          };
+                        };
+                      }
+                    | {
+                        output: import("zod").ZodSafeParseError<{
+                          id: number;
+                        }>;
+                        outputFormat: "json";
+                        status: 400;
+                        input: {
+                          param: {
+                            id: string;
+                          };
+                        };
+                      }
+                    | {
+                        output: "Forbidden: cannot disable yourself";
+                        outputFormat: "text";
+                        status: 403;
+                        input: {
+                          param: {
+                            id: string;
+                          };
+                        };
+                      };
+                };
+              } & {
+                "/:id/enable": {
+                  $patch:
+                    | {
+                        output: "OK";
+                        outputFormat: "text";
+                        status: 200;
                         input: {
                           param: {
                             id: string;
@@ -1211,962 +2198,11 @@ declare const app: import("hono/hono-base").HonoBase<
                       };
                 };
               },
-            "/:id"
-          >
-      ) & {
-        "/": {
-          $get: {
-            output: {};
-            outputFormat: string;
-            status: import("hono/utils/http-status").StatusCode;
-            input: {};
-          };
-        };
-      },
-      "/moderations"
-    >
-  | import("hono/types").MergeSchemaPath<
-      (
-        | import("hono/types").BlankSchema
-        | import("hono/types").MergeSchemaPath<
-            {
-              "/": {
-                $get:
-                  | {
-                      output: {};
-                      outputFormat: string;
-                      status: import("hono/utils/http-status").StatusCode;
-                      input: {
-                        query: {
-                          page?: string | string[] | undefined;
-                          page_size?: string | string[] | undefined;
-                          q?: string | undefined;
-                        };
-                      };
-                    }
-                  | {
-                      output: undefined;
-                      outputFormat: "redirect";
-                      status: import("hono/utils/http-status").RedirectStatusCode;
-                      input: {
-                        query: {
-                          page?: string | string[] | undefined;
-                          page_size?: string | string[] | undefined;
-                          q?: string | undefined;
-                        };
-                      };
-                    };
-              };
-            },
-            "/domains"
-          >
-        | import("hono/types").MergeSchemaPath<
-            {
-              "/": {
-                $get:
-                  | {
-                      output: {};
-                      outputFormat: string;
-                      status: import("hono/utils/http-status").StatusCode;
-                      input: {
-                        query: {
-                          siret: string;
-                          retry?: string | undefined;
-                        };
-                      };
-                    }
-                  | {
-                      output: import("zod").ZodSafeParseError<{
-                        siret: string;
-                        retry?: string | undefined;
-                      }>;
-                      outputFormat: "json";
-                      status: 400;
-                      input: {
-                        query: {
-                          siret: string;
-                          retry?: string | undefined;
-                        };
-                      };
-                    };
-              };
-            } & {
-              "/document": {
-                $get:
-                  | {
-                      output: {};
-                      outputFormat: string;
-                      status: import("hono/utils/http-status").StatusCode;
-                      input: {
-                        query: {
-                          siret: string;
-                        };
-                      };
-                    }
-                  | {
-                      output: import("zod").ZodSafeParseError<{
-                        siret: string;
-                      }>;
-                      outputFormat: "json";
-                      status: 400;
-                      input: {
-                        query: {
-                          siret: string;
-                        };
-                      };
-                    };
-              };
-            },
-            "/leaders"
-          >
-        | import("hono/types").MergeSchemaPath<
-            {
-              "/": {
-                $get:
-                  | {
-                      output: {};
-                      outputFormat: string;
-                      status: import("hono/utils/http-status").StatusCode;
-                      input: {
-                        query: {
-                          siret?: string | undefined;
-                          created?: string | undefined;
-                          skipped?: string | undefined;
-                        };
-                      };
-                    }
-                  | {
-                      output: import("zod").ZodSafeParseError<{
-                        siret?: string | undefined;
-                        created?: string | undefined;
-                        skipped?: string | undefined;
-                      }>;
-                      outputFormat: "json";
-                      status: 400;
-                      input: {
-                        query: {
-                          siret?: string | undefined;
-                          created?: string | undefined;
-                          skipped?: string | undefined;
-                        };
-                      };
-                    };
-              };
-            } & {
-              "/": {
-                $post:
-                  | {
-                      output: {};
-                      outputFormat: string;
-                      status: import("hono/utils/http-status").StatusCode;
-                      input: {
-                        form: {
-                          sirets: string;
-                        };
-                      };
-                    }
-                  | {
-                      output: import("zod").ZodSafeParseError<{
-                        sirets: string;
-                      }>;
-                      outputFormat: "json";
-                      status: 400;
-                      input: {
-                        form: {
-                          sirets: string;
-                        };
-                      };
-                    };
-              };
-            } & {
-              "/confirm": {
-                $post:
-                  | {
-                      output: undefined;
-                      outputFormat: "redirect";
-                      status: 303;
-                      input: {
-                        form: {
-                          "sirets[]": string[];
-                        };
-                      };
-                    }
-                  | {
-                      output: import("zod").ZodSafeParseError<{
-                        "sirets[]": string[];
-                      }>;
-                      outputFormat: "json";
-                      status: 400;
-                      input: {
-                        form: {
-                          "sirets[]": string[];
-                        };
-                      };
-                    };
-              };
-            },
-            "/new"
-          >
-        | import("hono/types").MergeSchemaPath<
-            | import("hono/types").MergeSchemaPath<
-                {
-                  "/": {
-                    $get:
-                      | {
-                          output: {};
-                          outputFormat: string;
-                          status: import("hono/utils/http-status").StatusCode;
-                          input: {
-                            param: {
-                              id: string;
-                            };
-                          } & {
-                            query: {
-                              describedby: string;
-                            };
-                          };
-                        }
-                      | {
-                          output: import("zod").ZodSafeParseError<{
-                            id: number;
-                          }>;
-                          outputFormat: "json";
-                          status: 400;
-                          input: {
-                            param: {
-                              id: string;
-                            };
-                          } & {
-                            query: {
-                              describedby: string;
-                            };
-                          };
-                        }
-                      | {
-                          output: import("zod").ZodSafeParseError<{
-                            describedby: string;
-                          }>;
-                          outputFormat: "json";
-                          status: 400;
-                          input: {
-                            param: {
-                              id: string;
-                            };
-                          } & {
-                            query: {
-                              describedby: string;
-                            };
-                          };
-                        };
-                  };
-                } & {
-                  "/": {
-                    $put:
-                      | {
-                          output: "OK";
-                          outputFormat: "text";
-                          status: 200;
-                          input: {
-                            param: {
-                              id: string;
-                            };
-                          } & {
-                            form: {
-                              domain: string;
-                            };
-                          };
-                        }
-                      | {
-                          output: import("zod").ZodSafeParseError<{
-                            id: number;
-                          }>;
-                          outputFormat: "json";
-                          status: 400;
-                          input: {
-                            param: {
-                              id: string;
-                            };
-                          } & {
-                            form: {
-                              domain: string;
-                            };
-                          };
-                        }
-                      | {
-                          output: import("zod").ZodSafeParseError<{
-                            domain: string;
-                          }>;
-                          outputFormat: "json";
-                          status: 400;
-                          input: {
-                            param: {
-                              id: string;
-                            };
-                          } & {
-                            form: {
-                              domain: string;
-                            };
-                          };
-                        };
-                  };
-                } & {
-                  "/:domain_id": {
-                    $delete:
-                      | {
-                          output: "OK";
-                          outputFormat: "text";
-                          status: 200;
-                          input: {
-                            param: {
-                              id: string;
-                              domain_id: string;
-                            };
-                          };
-                        }
-                      | {
-                          output: import("zod").ZodSafeParseError<{
-                            id: number;
-                            domain_id: number;
-                          }>;
-                          outputFormat: "json";
-                          status: 400;
-                          input: {
-                            param: {
-                              id: string;
-                              domain_id: string;
-                            };
-                          };
-                        };
-                  };
-                } & {
-                  "/:domain_id": {
-                    $patch:
-                      | {
-                          output: "OK";
-                          outputFormat: "text";
-                          status: 200;
-                          input: {
-                            param: {
-                              id: string;
-                              domain_id: string;
-                            };
-                          } & {
-                            query: {
-                              type: "external" | "refused" | "verified";
-                            };
-                          };
-                        }
-                      | {
-                          output: import("zod").ZodSafeParseError<{
-                            id: number;
-                            domain_id: number;
-                          }>;
-                          outputFormat: "json";
-                          status: 400;
-                          input: {
-                            param: {
-                              id: string;
-                              domain_id: string;
-                            };
-                          } & {
-                            query: {
-                              type: "external" | "refused" | "verified";
-                            };
-                          };
-                        }
-                      | {
-                          output: import("zod").ZodSafeParseError<{
-                            type: "external" | "refused" | "verified";
-                          }>;
-                          outputFormat: "json";
-                          status: 400;
-                          input: {
-                            param: {
-                              id: string;
-                              domain_id: string;
-                            };
-                          } & {
-                            query: {
-                              type: "external" | "refused" | "verified";
-                            };
-                          };
-                        };
-                  };
-                },
-                "/domains"
-              >
-            | {
-                "/": {
-                  $get:
-                    | {
-                        output: {};
-                        outputFormat: string;
-                        status: import("hono/utils/http-status").StatusCode;
-                        input: {
-                          param: {
-                            id: string;
-                          };
-                        } & {
-                          query: {
-                            status?: "created" | undefined;
-                          };
-                        };
-                      }
-                    | {
-                        output: import("zod").ZodSafeParseError<{
-                          id: number;
-                        }>;
-                        outputFormat: "json";
-                        status: 400;
-                        input: {
-                          param: {
-                            id: string;
-                          };
-                        } & {
-                          query: {
-                            status?: "created" | undefined;
-                          };
-                        };
-                      }
-                    | {
-                        output: import("zod").ZodSafeParseError<{
-                          status?: "created" | undefined;
-                        }>;
-                        outputFormat: "json";
-                        status: 400;
-                        input: {
-                          param: {
-                            id: string;
-                          };
-                        } & {
-                          query: {
-                            status?: "created" | undefined;
-                          };
-                        };
-                      };
-                };
-              }
-            | import("hono/types").MergeSchemaPath<
-                | {
-                    "/": {
-                      $get:
-                        | {
-                            output: {};
-                            outputFormat: string;
-                            status: import("hono/utils/http-status").StatusCode;
-                            input: {
-                              param: {
-                                id: string;
-                              };
-                            } & {
-                              query: {
-                                page?: string | string[] | undefined;
-                                page_size?: string | string[] | undefined;
-                                describedby: string | string[];
-                                page_ref: string | string[];
-                              };
-                            };
-                          }
-                        | {
-                            output: import("zod").ZodSafeParseError<{
-                              id: number;
-                            }>;
-                            outputFormat: "json";
-                            status: 400;
-                            input: {
-                              param: {
-                                id: string;
-                              };
-                            } & {
-                              query: {
-                                page?: string | string[] | undefined;
-                                page_size?: string | string[] | undefined;
-                                describedby: string | string[];
-                                page_ref: string | string[];
-                              };
-                            };
-                          }
-                        | {
-                            output: import("zod").ZodSafeParseError<{
-                              page: number;
-                              page_size: number;
-                              describedby: string;
-                              page_ref: string;
-                            }>;
-                            outputFormat: "json";
-                            status: 400;
-                            input: {
-                              param: {
-                                id: string;
-                              };
-                            } & {
-                              query: {
-                                page?: string | string[] | undefined;
-                                page_size?: string | string[] | undefined;
-                                describedby: string | string[];
-                                page_ref: string | string[];
-                              };
-                            };
-                          };
-                    };
-                  }
-                | (import("hono/types").MergeSchemaPath<
-                    {
-                      "/": {
-                        $patch:
-                          | {
-                              output: "OK";
-                              outputFormat: "text";
-                              status: 200;
-                              input: {
-                                param: {
-                                  id: string;
-                                  user_id: string;
-                                };
-                              } & {
-                                form: {
-                                  verification_type?:
-                                    | "bypassed"
-                                    | "code_sent_to_official_contact_email"
-                                    | "domain"
-                                    | "domain_not_verified_yet"
-                                    | "imported_from_coop_mediation_numerique"
-                                    | "imported_from_inclusion_connect"
-                                    | "in_liste_dirigeants_rna"
-                                    | "in_liste_dirigeants_rne"
-                                    | "no_validation_means_available"
-                                    | "no_verification_means_for_entreprise_unipersonnelle"
-                                    | "no_verification_means_for_small_association"
-                                    | "no_verification_means_for_small_organization"
-                                    | "official_contact_email"
-                                    | "ordre_professionnel_domain"
-                                    | "organization_dirigeant"
-                                    | "proof_received"
-                                    | "verified_by_coop_mediation_numerique"
-                                    | undefined;
-                                  is_external?: string | undefined;
-                                };
-                              };
-                            }
-                          | {
-                              output: import("zod").ZodSafeParseError<{
-                                id: number;
-                                user_id: number;
-                              }>;
-                              outputFormat: "json";
-                              status: 400;
-                              input: {
-                                param: {
-                                  id: string;
-                                  user_id: string;
-                                };
-                              } & {
-                                form: {
-                                  verification_type?:
-                                    | "bypassed"
-                                    | "code_sent_to_official_contact_email"
-                                    | "domain"
-                                    | "domain_not_verified_yet"
-                                    | "imported_from_coop_mediation_numerique"
-                                    | "imported_from_inclusion_connect"
-                                    | "in_liste_dirigeants_rna"
-                                    | "in_liste_dirigeants_rne"
-                                    | "no_validation_means_available"
-                                    | "no_verification_means_for_entreprise_unipersonnelle"
-                                    | "no_verification_means_for_small_association"
-                                    | "no_verification_means_for_small_organization"
-                                    | "official_contact_email"
-                                    | "ordre_professionnel_domain"
-                                    | "organization_dirigeant"
-                                    | "proof_received"
-                                    | "verified_by_coop_mediation_numerique"
-                                    | undefined;
-                                  is_external?: string | undefined;
-                                };
-                              };
-                            }
-                          | {
-                              output: import("zod").ZodSafeParseError<{
-                                verification_type?:
-                                  | "bypassed"
-                                  | "code_sent_to_official_contact_email"
-                                  | "domain"
-                                  | "domain_not_verified_yet"
-                                  | "imported_from_coop_mediation_numerique"
-                                  | "imported_from_inclusion_connect"
-                                  | "in_liste_dirigeants_rna"
-                                  | "in_liste_dirigeants_rne"
-                                  | "no_validation_means_available"
-                                  | "no_verification_means_for_entreprise_unipersonnelle"
-                                  | "no_verification_means_for_small_association"
-                                  | "no_verification_means_for_small_organization"
-                                  | "official_contact_email"
-                                  | "ordre_professionnel_domain"
-                                  | "organization_dirigeant"
-                                  | "proof_received"
-                                  | "verified_by_coop_mediation_numerique"
-                                  | undefined;
-                                is_external?: boolean | undefined;
-                              }>;
-                              outputFormat: "json";
-                              status: 400;
-                              input: {
-                                param: {
-                                  id: string;
-                                  user_id: string;
-                                };
-                              } & {
-                                form: {
-                                  verification_type?:
-                                    | "bypassed"
-                                    | "code_sent_to_official_contact_email"
-                                    | "domain"
-                                    | "domain_not_verified_yet"
-                                    | "imported_from_coop_mediation_numerique"
-                                    | "imported_from_inclusion_connect"
-                                    | "in_liste_dirigeants_rna"
-                                    | "in_liste_dirigeants_rne"
-                                    | "no_validation_means_available"
-                                    | "no_verification_means_for_entreprise_unipersonnelle"
-                                    | "no_verification_means_for_small_association"
-                                    | "no_verification_means_for_small_organization"
-                                    | "official_contact_email"
-                                    | "ordre_professionnel_domain"
-                                    | "organization_dirigeant"
-                                    | "proof_received"
-                                    | "verified_by_coop_mediation_numerique"
-                                    | undefined;
-                                  is_external?: string | undefined;
-                                };
-                              };
-                            };
-                      };
-                    } & {
-                      "/": {
-                        $delete:
-                          | {
-                              output: "OK";
-                              outputFormat: "text";
-                              status: 200;
-                              input: {
-                                param: {
-                                  id: string;
-                                  user_id: string;
-                                };
-                              };
-                            }
-                          | {
-                              output: import("zod").ZodSafeParseError<{
-                                id: number;
-                                user_id: number;
-                              }>;
-                              outputFormat: "json";
-                              status: 400;
-                              input: {
-                                param: {
-                                  id: string;
-                                  user_id: string;
-                                };
-                              };
-                            };
-                      };
-                    },
-                    "/:user_id"
-                  > & {
-                    "/": {
-                      $get:
-                        | {
-                            output: {};
-                            outputFormat: string;
-                            status: import("hono/utils/http-status").StatusCode;
-                            input: {
-                              param: {
-                                id: string;
-                              };
-                            } & {
-                              query: {
-                                page?: string | string[] | undefined;
-                                page_size?: string | string[] | undefined;
-                                describedby: string | string[];
-                                page_ref: string | string[];
-                              };
-                            };
-                          }
-                        | {
-                            output: import("zod").ZodSafeParseError<{
-                              id: number;
-                            }>;
-                            outputFormat: "json";
-                            status: 400;
-                            input: {
-                              param: {
-                                id: string;
-                              };
-                            } & {
-                              query: {
-                                page?: string | string[] | undefined;
-                                page_size?: string | string[] | undefined;
-                                describedby: string | string[];
-                                page_ref: string | string[];
-                              };
-                            };
-                          }
-                        | {
-                            output: import("zod").ZodSafeParseError<{
-                              page: number;
-                              page_size: number;
-                              describedby: string;
-                              page_ref: string;
-                            }>;
-                            outputFormat: "json";
-                            status: 400;
-                            input: {
-                              param: {
-                                id: string;
-                              };
-                            } & {
-                              query: {
-                                page?: string | string[] | undefined;
-                                page_size?: string | string[] | undefined;
-                                describedby: string | string[];
-                                page_ref: string | string[];
-                              };
-                            };
-                          };
-                    };
-                  }),
-                "/members"
-              >,
-            "/:id"
-          >
-      ) & {
-        "/": {
-          $get:
-            | {
-                output: {};
-                outputFormat: string;
-                status: import("hono/utils/http-status").StatusCode;
-                input: {
-                  query: {
-                    id?: string | undefined;
-                    page?: string | string[] | undefined;
-                    page_size?: string | string[] | undefined;
-                    q?: string | undefined;
-                  };
-                };
-              }
-            | {
-                output: import("zod").ZodSafeParseError<{
-                  id?: number | undefined;
-                  page: number;
-                  page_size: number;
-                  q: string;
-                }>;
-                outputFormat: "json";
-                status: 400;
-                input: {
-                  query: {
-                    id?: string | undefined;
-                    page?: string | string[] | undefined;
-                    page_size?: string | string[] | undefined;
-                    q?: string | undefined;
-                  };
-                };
-              };
-        };
-      },
-      "/organizations"
-    >
-  | import("hono/types").MergeSchemaPath<
-      | import("hono/types").BlankSchema
-      | import("hono/types").MergeSchemaPath<
-          {
-            "/": {
-              $get:
-                | {
-                    output: {};
-                    outputFormat: string;
-                    status: import("hono/utils/http-status").StatusCode;
-                    input: {
-                      query: {
-                        page?: string | string[] | undefined;
-                        page_size?: string | string[] | undefined;
-                        q?: string | undefined;
-                      };
-                    };
-                  }
-                | {
-                    output: undefined;
-                    outputFormat: "redirect";
-                    status: import("hono/utils/http-status").RedirectStatusCode;
-                    input: {
-                      query: {
-                        page?: string | string[] | undefined;
-                        page_size?: string | string[] | undefined;
-                        q?: string | undefined;
-                      };
-                    };
-                  };
-            };
-          } & {
-            "/": {
-              $post:
-                | {
-                    output: "OK";
-                    outputFormat: "text";
-                    status: 200;
-                    input: {
-                      form: {
-                        email: string;
-                        role: string;
-                      };
-                    };
-                  }
-                | {
-                    output: import("zod").ZodSafeParseError<{
-                      email: string;
-                      role: string;
-                    }>;
-                    outputFormat: "json";
-                    status: 400;
-                    input: {
-                      form: {
-                        email: string;
-                        role: string;
-                      };
-                    };
-                  };
-            };
-          } & {
-            "/:id": {
-              $patch:
-                | {
-                    output: "Forbidden: cannot modify your own role";
-                    outputFormat: "text";
-                    status: 403;
-                    input: {
-                      param: {
-                        id: string;
-                      };
-                    } & {
-                      form: {
-                        role: string;
-                      };
-                    };
-                  }
-                | {
-                    output: "OK";
-                    outputFormat: "text";
-                    status: 200;
-                    input: {
-                      param: {
-                        id: string;
-                      };
-                    } & {
-                      form: {
-                        role: string;
-                      };
-                    };
-                  }
-                | {
-                    output: import("zod").ZodSafeParseError<{
-                      id: number;
-                    }>;
-                    outputFormat: "json";
-                    status: 400;
-                    input: {
-                      param: {
-                        id: string;
-                      };
-                    } & {
-                      form: {
-                        role: string;
-                      };
-                    };
-                  }
-                | {
-                    output: import("zod").ZodSafeParseError<{
-                      role: string;
-                    }>;
-                    outputFormat: "json";
-                    status: 400;
-                    input: {
-                      param: {
-                        id: string;
-                      };
-                    } & {
-                      form: {
-                        role: string;
-                      };
-                    };
-                  };
-            };
-          } & {
-            "/:id/disable": {
-              $patch:
-                | {
-                    output: "Forbidden: cannot disable yourself";
-                    outputFormat: "text";
-                    status: 403;
-                    input: {
-                      param: {
-                        id: string;
-                      };
-                    };
-                  }
-                | {
-                    output: "OK";
-                    outputFormat: "text";
-                    status: 200;
-                    input: {
-                      param: {
-                        id: string;
-                      };
-                    };
-                  }
-                | {
-                    output: import("zod").ZodSafeParseError<{
-                      id: number;
-                    }>;
-                    outputFormat: "json";
-                    status: 400;
-                    input: {
-                      param: {
-                        id: string;
-                      };
-                    };
-                  };
-            };
-          } & {
-            "/:id/enable": {
-              $patch:
-                | {
-                    output: "OK";
-                    outputFormat: "text";
-                    status: 200;
-                    input: {
-                      param: {
-                        id: string;
-                      };
-                    };
-                  }
-                | {
-                    output: import("zod").ZodSafeParseError<{
-                      id: number;
-                    }>;
-                    outputFormat: "json";
-                    status: 400;
-                    input: {
-                      param: {
-                        id: string;
-                      };
-                    };
-                  };
-            };
-          },
-          "/team"
+              "/team"
+            >,
+          "/admin"
         >,
-      "/admin"
+      "/"
     >
   | import("hono/types").MergeSchemaPath<
       | import("hono/types").BlankSchema
@@ -2502,7 +2538,7 @@ declare const app: import("hono/hono-base").HonoBase<
               $get: {
                 output: {
                   keys: {
-                    kty?: string;
+                    kty?: import("jose").JWKKeyType;
                     key_ops?: string[];
                     ext?: boolean;
                     x5c?: string[];
@@ -2524,6 +2560,13 @@ declare const app: import("hono/hono-base").HonoBase<
                     y?: string;
                     pub?: string;
                     priv?: string;
+                    oth?:
+                      | {
+                          d?: string;
+                          r?: string;
+                          t?: string;
+                        }[]
+                      | undefined;
                     alg: string;
                     use: string;
                   }[];
@@ -2621,9 +2664,12 @@ declare const app: import("hono/hono-base").HonoBase<
             "/session/end": {
               $get:
                 | {
-                    output: {};
-                    outputFormat: string;
-                    status: import("hono/utils/http-status").StatusCode;
+                    output: import("zod").ZodSafeParseError<{
+                      post_logout_redirect_uri: string;
+                      state: string;
+                    }>;
+                    outputFormat: "json";
+                    status: 400;
                     input: {
                       query: {
                         post_logout_redirect_uri: string;
@@ -2632,12 +2678,9 @@ declare const app: import("hono/hono-base").HonoBase<
                     };
                   }
                 | {
-                    output: import("zod").ZodSafeParseError<{
-                      post_logout_redirect_uri: string;
-                      state: string;
-                    }>;
-                    outputFormat: "json";
-                    status: 400;
+                    output: {};
+                    outputFormat: string;
+                    status: import("hono/utils/http-status").StatusCode;
                     input: {
                       query: {
                         post_logout_redirect_uri: string;
