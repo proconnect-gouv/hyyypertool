@@ -12,6 +12,7 @@ import type { AppContext } from "#src/middleware/context";
 import type { FetchVariablesContext } from "#src/middleware/fetch";
 import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
+import type { OrganizationInfoLookup } from "@proconnect-gouv/proconnect.identite/managers/organization";
 import { upsertFactory } from "@proconnect-gouv/proconnect.identite/repositories/organization";
 import type { OrganizationInfo } from "@proconnect-gouv/proconnect.identite/types";
 import {
@@ -57,12 +58,20 @@ function error_chain(error: unknown) {
   return chain;
 }
 
-function describe_fetch_error(error: unknown) {
-  const chain = error_chain(error);
-  if (chain.some((cause) => cause.constructor.name === "NotFoundError"))
-    return "non diffusible dans la base SIRENE";
-  const messages = chain.map((cause) => cause.message).filter(Boolean);
-  return messages.join(" ← ") || "erreur inconnue";
+function describe_lookup_failure(
+  lookup: Exclude<OrganizationInfoLookup, { kind: "found" }>,
+) {
+  switch (lookup.kind) {
+    case "not_diffusible":
+      return "non diffusible dans la base SIRENE";
+    case "api_entreprise_failed":
+    case "invalid_siret": {
+      const messages = error_chain(lookup.exception)
+        .map((cause) => cause.message)
+        .filter(Boolean);
+      return messages.join(" ← ") || "erreur inconnue";
+    }
+  }
 }
 
 export interface GetOrganizationInfoContext extends Env {
@@ -111,26 +120,22 @@ async function fetch_preview(
   );
   const new_sirets = valid.filter((siret) => !existing_sirets.has(siret));
 
-  const pending = new_sirets.map((siret) => ({
-    siret,
-    result: get_organization_info(siret),
-  }));
-  const results = await Promise.allSettled(pending.map(({ result }) => result));
+  const lookups = await Promise.all(
+    new_sirets.map(async (siret) => ({
+      lookup: await get_organization_info(siret),
+      siret,
+    })),
+  );
 
   const new_organization_infos: OrganizationInfo[] = [];
   const fetch_errors: { siret: string; reason: string }[] = [];
-  for (const [index, { siret }] of pending.entries()) {
-    const result = results[index];
-    if (!result) continue;
-    if (result.status === "fulfilled") {
-      new_organization_infos.push(result.value);
+  for (const { lookup, siret } of lookups) {
+    if (lookup.kind === "found") {
+      new_organization_infos.push(lookup.organization_info);
       continue;
     }
-    const reason = describe_fetch_error(result.reason);
-    consola.error(
-      `get_organization_info(${siret}) failed: ${reason}`,
-      result.reason,
-    );
+    const reason = describe_lookup_failure(lookup);
+    consola.error(`get_organization_info(${siret}) failed: ${reason}`, lookup);
     fetch_errors.push({ siret, reason });
   }
 
@@ -239,10 +244,14 @@ export default new Hono<AppContext & GetOrganizationInfoContext>()
 
       const created_ids: number[] = [];
       for (const siret of new_sirets) {
-        const organization_info = await get_organization_info(siret);
+        const lookup = await get_organization_info(siret);
+        if (lookup.kind !== "found")
+          throw new Error(
+            `get_organization_info(${siret}) failed: ${describe_lookup_failure(lookup)}`,
+          );
         const organization = await upsert({
           siret,
-          organizationInfo: organization_info,
+          organizationInfo: lookup.organization_info,
         });
         created_ids.push(organization.id);
       }
