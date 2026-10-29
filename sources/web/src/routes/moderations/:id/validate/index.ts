@@ -18,17 +18,14 @@ import {
   GetModerationWithUser,
   UpdateModerationById,
 } from "#src/queries/moderations";
+import { GetOrganizationDomains } from "#src/queries/organizations";
 import { UpdateUserByIdInOrganization } from "#src/queries/users";
 import { EntitySchema, z_email_domain } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
-import {
-  EmailDomainRepository,
-  UserOrganisationRepository,
-} from "@~/identite-proconnect/sdk";
+import { UserOrganisationRepository } from "@~/identite-proconnect/sdk";
 import {
   EmailDomainApprovedVerificationEnum,
   LinkEnum,
-  type EmailDomain,
 } from "@~/identite-proconnect/types";
 import { to } from "await-to-js";
 import consola from "consola";
@@ -75,10 +72,6 @@ export default new Hono<AppContext>().patch(
     const find_organization_by_id = GetFicheOrganizationById({
       pg: identite_pg,
     });
-    const find_email_domains_by_organization_id =
-      EmailDomainRepository.findEmailDomainsByOrganizationIdFactory({
-        pg: identite_pg_client,
-      });
     const update_moderation_by_id = UpdateModerationById({ pg: identite_pg });
     //#endregion
 
@@ -136,8 +129,9 @@ export default new Hono<AppContext>().patch(
       .with("AS_INTERNAL", () => false)
       .with("AS_EXTERNAL", () => true)
       .exhaustive();
-    const email_domains =
-      await find_email_domains_by_organization_id(organization_id);
+    const email_domains = await GetOrganizationDomains(identite_pg)({
+      organization_id,
+    });
     const link_verification_type =
       verification_type ??
       deduce_verification_type_from_organization_domains(email_domains, domain);
@@ -213,7 +207,7 @@ export default new Hono<AppContext>().patch(
 );
 
 function deduce_verification_type_from_organization_domains(
-  email_domains: EmailDomain[],
+  email_domains: { domain: string; verification_type: string }[],
   user_domain: string,
 ) {
   return email_domains.some(
