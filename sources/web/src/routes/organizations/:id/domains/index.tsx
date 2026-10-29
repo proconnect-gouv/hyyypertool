@@ -4,8 +4,7 @@ import { BadRequestError, NotFoundError } from "#src/errors";
 import type { HtmxHeader } from "#src/htmx";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import {
-  AddVerifiedDomain,
-  GetFicheOrganizationById,
+  ChangeEmailDomainVerification,
   RemoveDomainEmailById,
 } from "#src/lib/organizations/usecase";
 import { editor_guard } from "#src/middleware/auth";
@@ -13,10 +12,6 @@ import type { AppContext } from "#src/middleware/context";
 import { DescribedBySchema, EntitySchema, IdSchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
 import { roles } from "@~/hyyyperbase";
-import {
-  createProconnectIdentiteContext,
-  MarkDomainAsVerified,
-} from "@~/identite-proconnect/sdk";
 import { EmailDomainVerificationEnum } from "@~/identite-proconnect/types";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
@@ -64,11 +59,7 @@ export default new Hono<AppContext>()
     "/",
     zValidator("param", EntitySchema),
     zValidator("form", z.object({ domain: z.string().min(1) })),
-    async function PUT({
-      text,
-      req,
-      var: { identite_pg, identite_pg_client },
-    }) {
+    async function PUT({ text, req, var: { identite_pg } }) {
       const { id: organization_id } = req.valid("param");
       const { domain } = req.valid("form");
 
@@ -77,17 +68,14 @@ export default new Hono<AppContext>()
           "Domain should not contain the '@' character",
         );
 
-      const identite_context =
-        createProconnectIdentiteContext(identite_pg_client);
-      const add_verified_domain = AddVerifiedDomain({
-        get_organization_by_id: GetFicheOrganizationById({ pg: identite_pg }),
-        mark_domain_as_verified: MarkDomainAsVerified(identite_context),
+      const change_email_domain_verification = ChangeEmailDomainVerification({
+        pg: identite_pg,
       });
 
-      await add_verified_domain({
+      await change_email_domain_verification({
         domain,
-        domain_verification_type: EmailDomainVerificationEnum.enum.verified,
         organization_id,
+        verification_type: EmailDomainVerificationEnum.enum.verified,
       });
 
       return text("OK", 200, {
@@ -118,29 +106,25 @@ export default new Hono<AppContext>()
     "/:domain_id",
     zValidator("param", EntitySchema.merge(DomainParams_Schema)),
     zValidator("query", patch_query),
-    async function PATCH({
-      text,
-      req,
-      var: { identite_pg, identite_pg_client },
-    }) {
+    async function PATCH({ text, req, var: { identite_pg } }) {
       const { domain_id } = req.valid("param");
       const { type: verification_type } = req.valid("query");
 
-      const identite_context =
-        createProconnectIdentiteContext(identite_pg_client);
-      const mark_domain_as_verified = MarkDomainAsVerified(identite_context);
-
       const email_domain = await identite_pg.query.email_domains.findFirst({
         columns: { domain: true, organization_id: true },
-        where: (fields, { eq }) => eq(fields.id, domain_id),
+        where: (table, { eq }) => eq(table.id, domain_id),
       });
       if (!email_domain) throw new NotFoundError("Domain not found");
       const { domain, organization_id } = email_domain;
 
-      await mark_domain_as_verified({
-        domain: domain,
-        domain_verification_type: verification_type,
+      const change_email_domain_verification = ChangeEmailDomainVerification({
+        pg: identite_pg,
+      });
+
+      await change_email_domain_verification({
+        domain,
         organization_id,
+        verification_type,
       });
 
       return text("OK", 200, {
