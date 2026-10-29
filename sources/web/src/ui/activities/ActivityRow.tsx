@@ -19,6 +19,12 @@ const known_activity_labels: {
       🚫 Domaine <b>{inputs.domain}</b> refusé
     </>
   ),
+  "domain.removed": ({ inputs, outcome }) => (
+    <>
+      🗑️ Domaine <b>{inputs.domain}</b> supprimé (
+      {outcome.previous_verification_type})
+    </>
+  ),
   "domain.verified": ({ inputs }) => (
     <>
       ✅ Domaine <b>{inputs.domain}</b> vérifié ({inputs.verification_type})

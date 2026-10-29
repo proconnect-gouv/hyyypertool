@@ -50,9 +50,9 @@ test("known: hyyypertool's own action, unknown keys dropped", () => {
 test("unknown_action: an action neither map defines", () => {
   const context = { inputs: {}, outcome: {} };
 
-  expect(parse_activity_row({ action: "domain.removed", context })).toEqual({
+  expect(parse_activity_row({ action: "domain.archived", context })).toEqual({
     kind: "unknown_action",
-    action: "domain.removed",
+    action: "domain.archived",
     context,
   });
 });
