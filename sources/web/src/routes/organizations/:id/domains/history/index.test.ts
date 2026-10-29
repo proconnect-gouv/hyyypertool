@@ -83,7 +83,7 @@ test("GET /organizations/:id/domains/history lists the organization's domain act
       organization_id,
     },
     {
-      action: "domain.removed",
+      action: "domain.archived",
       actor_ref: "unknown-sub",
       actor_type: "moderator",
       app: "hyyypertool",
@@ -170,7 +170,7 @@ test("GET /organizations/:id/domains/history lists the organization's domain act
   );
   expect(rows).toEqual([
     `04/01/2222 01:00:00 ${moderator.email} ⚠️ Contexte invalide : domain.refused {"inputs":{"domain":"broken.xyz"},"outcome":{}}`,
-    `03/01/2222 01:00:00 unknown-sub domain.removed {"inputs":{"domain":"rainbow.xyz"},"outcome":{}}`,
+    `03/01/2222 01:00:00 unknown-sub domain.archived {"inputs":{"domain":"rainbow.xyz"},"outcome":{}}`,
     `02/01/2222 01:00:00 ${moderator.email} 🚫 Domaine rainbow.xyz refusé`,
     `01/01/2222 01:00:00 proconnect-identite (join.official_contact) ✅ Domaine unicorn.xyz vérifié (official_contact) adora.pony@unicorn.xyz : ⬆️ Membre promu (domain_not_verified_yet → domain) utilisateur #999 : ⬆️ Membre promu (no_validation_means_available → domain)`,
   ]);

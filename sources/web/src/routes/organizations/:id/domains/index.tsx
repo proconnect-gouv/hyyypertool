@@ -92,13 +92,16 @@ export default new Hono<AppContext>()
   .delete(
     "/:domain_id",
     zValidator("param", EntitySchema.merge(DomainParams_Schema)),
-    async function DELETE({ text, req, var: { identite_pg } }) {
+    async function DELETE({ text, req, var: { identite_pg, userinfo } }) {
       const { domain_id } = req.valid("param");
 
       const remove_domain_email_by_id = RemoveDomainEmailById({
         pg: identite_pg,
+        sub: userinfo.sub,
       });
-      await remove_domain_email_by_id(domain_id);
+      const outcome = await remove_domain_email_by_id(domain_id);
+      if (outcome.kind === "domain_not_found")
+        throw new NotFoundError("Domain not found");
 
       return text("OK", 200, {
         "HX-Trigger": ORGANISATION_EVENTS.enum.DOMAIN_UPDATED,

@@ -19,8 +19,9 @@ afterAll(stop_app);
 //
 
 Scenario(
-  "Le modérateur voit qui a autorisé puis refusé le domaine yeswehack.com",
+  "Le modérateur voit qui a autorisé, refusé puis supprimé le domaine yeswehack.com",
   ({ I }) => {
+    I.amAcceptingPopups();
     I.amOnPage("/organizations/domains");
     I.click({
       role: "link",
@@ -49,5 +50,13 @@ Scenario(
       I.see("🚫 Domaine yeswehack.com refusé");
     });
     I.seeElement("~Activité domain.verified");
+
+    I.click("Menu");
+    I.click("🗑️ Supprimer");
+    I.within("~Activité domain.removed", () => {
+      I.see("moderateur@beta.gouv.fr");
+      I.see("🗑️ Domaine yeswehack.com supprimé (refused)");
+    });
+    I.seeElement("~Activité domain.refused");
   },
 );

@@ -16,4 +16,13 @@ export const domain_activities = {
       replaced_verification_types: z.array(z.string()),
     }),
   }),
+  "domain.removed": z.object({
+    inputs: z.object({
+      domain: z.string(),
+    }),
+    outcome: z.object({
+      email_domain_id: z.number(),
+      previous_verification_type: z.string(),
+    }),
+  }),
 };
