@@ -25,7 +25,10 @@ import { ChangeEmailDomainVerification } from "./ChangeEmailDomainVerification";
 beforeAll(migrate);
 beforeEach(empty_database);
 
-const change_email_domain_verification = ChangeEmailDomainVerification({ pg });
+const change_email_domain_verification = ChangeEmailDomainVerification({
+  pg,
+  sub: "moderator-sub",
+});
 
 async function insert_pending_domain(organization_id: number) {
   await pg.insert(schema.email_domains).values({
@@ -74,6 +77,27 @@ test("refused replaces the domain states with refused and leaves members untouch
   ).toMatchObject({
     verification_type: LinkEnum.enum.domain_not_verified_yet,
   });
+  expect(await pg.query.activity_logs.findMany()).toMatchObject([
+    {
+      action: "domain.refused",
+      actor_ref: "moderator-sub",
+      actor_type: "moderator",
+      app: "hyyypertool",
+      context: {
+        inputs: { domain: "unicorn.xyz", verification_type: "refused" },
+        outcome: {
+          email_domain_id: expect.any(Number),
+          replaced_verification_types: expect.arrayContaining([
+            EmailDomainVerificationEnum.enum.not_verified_yet,
+            EmailDomainVerificationEnum.enum.verified,
+          ]),
+        },
+      },
+      moderation_id: null,
+      organization_id,
+      user_id: null,
+    },
+  ]);
 });
 
 test("verified replaces the domain states and promotes matching members", async () => {
@@ -138,6 +162,15 @@ test("verified replaces the domain states and promotes matching members", async 
     {
       user_id: pink_diamond_user_id,
       verification_type: LinkEnum.enum.proof_received,
+    },
+  ]);
+  expect(await pg.query.activity_logs.findMany()).toMatchObject([
+    {
+      action: "domain.verified",
+      actor_ref: "moderator-sub",
+      actor_type: "moderator",
+      app: "hyyypertool",
+      organization_id,
     },
   ]);
 });
