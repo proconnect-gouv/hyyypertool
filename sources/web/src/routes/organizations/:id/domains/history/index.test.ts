@@ -12,7 +12,10 @@ import {
 } from "@~/hyyyperbase/testing";
 import { insert_moderateur } from "@~/hyyyperbase/testing/users";
 import { schema } from "@~/identite-proconnect/database";
-import { create_unicorn_organization } from "@~/identite-proconnect/database/seed/unicorn";
+import {
+  create_adora_pony_user,
+  create_unicorn_organization,
+} from "@~/identite-proconnect/database/seed/unicorn";
 import {
   empty_database,
   migrate,
@@ -49,6 +52,7 @@ function request_history(
 test("GET /organizations/:id/domains/history lists the organization's domain activity, newest first", async () => {
   const moderator = await insert_moderateur(hyyyper_pglite);
   const organization_id = await create_unicorn_organization(pg);
+  const adora_pony_user_id = await create_adora_pony_user(pg);
 
   await pg.insert(schema.activity_logs).values([
     {
@@ -101,9 +105,41 @@ test("GET /organizations/:id/domains/history lists the organization's domain act
       actor_ref: "domain.promote_members",
       actor_type: "app",
       app: "proconnect-identite",
-      context: { inputs: { user_id: 1 }, outcome: {} },
+      cause_activity_id: 1,
+      context: {
+        inputs: { previous_verification_type: "domain_not_verified_yet" },
+        outcome: { verification_type: "domain" },
+      },
+      created_at: "2222-01-01T00:00:00.000Z",
+      organization_id,
+      user_id: adora_pony_user_id,
+    },
+    {
+      action: "member.promoted",
+      actor_ref: "domain.promote_members",
+      actor_type: "app",
+      app: "proconnect-identite",
+      cause_activity_id: 1,
+      context: {
+        inputs: { previous_verification_type: "no_validation_means_available" },
+        outcome: { verification_type: "domain" },
+      },
+      created_at: "2222-01-01T00:00:00.000Z",
+      organization_id,
+      user_id: 999,
+    },
+    {
+      action: "member.promoted",
+      actor_ref: "domain.promote_members",
+      actor_type: "app",
+      app: "proconnect-identite",
+      context: {
+        inputs: { previous_verification_type: "domain_not_verified_yet" },
+        outcome: { verification_type: "domain" },
+      },
       created_at: "2222-01-05T00:00:00.000Z",
       organization_id,
+      user_id: adora_pony_user_id,
     },
     {
       action: "domain.refused",
@@ -136,7 +172,7 @@ test("GET /organizations/:id/domains/history lists the organization's domain act
     `04/01/2222 01:00:00 ${moderator.email} ⚠️ Contexte invalide : domain.refused {"inputs":{"domain":"broken.xyz"},"outcome":{}}`,
     `03/01/2222 01:00:00 unknown-sub domain.removed {"inputs":{"domain":"rainbow.xyz"},"outcome":{}}`,
     `02/01/2222 01:00:00 ${moderator.email} 🚫 Domaine rainbow.xyz refusé`,
-    `01/01/2222 01:00:00 proconnect-identite (join.official_contact) ✅ Domaine unicorn.xyz vérifié (official_contact)`,
+    `01/01/2222 01:00:00 proconnect-identite (join.official_contact) ✅ Domaine unicorn.xyz vérifié (official_contact) adora.pony@unicorn.xyz : ⬆️ Membre promu (domain_not_verified_yet → domain) utilisateur #999 : ⬆️ Membre promu (no_validation_means_available → domain)`,
   ]);
 });
 
