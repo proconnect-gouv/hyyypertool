@@ -60,6 +60,7 @@ export default new Hono<AppContext>().patch(
     //#region 💉 Inject dependencies
     const change_email_domain_verification = ChangeEmailDomainVerification({
       pg: identite_pg,
+      sub: userinfo.sub,
     });
     const get_moderation_with_user = GetModerationWithUser(identite_pg);
     const update_user_by_id_in_organization = UpdateUserByIdInOrganization({

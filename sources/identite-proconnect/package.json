@@ -24,7 +24,7 @@
     "@proconnect-gouv/proconnect.api_entreprise": "2.3.0",
     "@proconnect-gouv/proconnect.core": "1.1.1",
     "@proconnect-gouv/proconnect.identite": "12.0.0",
-    "@proconnect-gouv/proconnect.identite.database": "1.10.1",
+    "@proconnect-gouv/proconnect.identite.database": "1.11.0",
     "@proconnect-gouv/proconnect.insee": "2.0.0",
     "consola": "3.4.2",
     "drizzle-orm": "0.45.4",

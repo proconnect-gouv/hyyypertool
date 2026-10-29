@@ -86,7 +86,7 @@ test.each(cases)(
       .use(set_identite_pg(pg))
       .use(set_identite_pg_client(client as any))
       .use(set_crisp_client(mock_crisp as any))
-      .use(set_userinfo({ email: "admin@example.com" }))
+      .use(set_userinfo({ email: "admin@example.com", sub: "admin-sub" }))
       .route("/:id/validate", app)
       .request(`/${moderation_id}/validate`, {
         method: "PATCH",
@@ -178,7 +178,7 @@ test("PATCH /moderations/:id/validate succeeds when user is already linked to or
     .use(set_identite_pg(pg))
     .use(set_identite_pg_client(client as any))
     .use(set_crisp_client(mock_crisp as any))
-    .use(set_userinfo({ email: "admin@example.com" }))
+    .use(set_userinfo({ email: "admin@example.com", sub: "admin-sub" }))
     .route("/:id/validate", app)
     .request(`/${moderation_id}/validate`, {
       method: "PATCH",

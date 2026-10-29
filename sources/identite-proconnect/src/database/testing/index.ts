@@ -16,6 +16,8 @@ export const pg = drizzle(client, { schema });
 
 export async function empty_database() {
   await pg.transaction(async (tx) => {
+    await tx.delete(schema.activity_logs);
+    await tx.execute(sql`ALTER SEQUENCE activity_logs_id_seq RESTART WITH 1`);
     await tx.delete(schema.users_organizations);
     await tx.delete(schema.users_oidc_clients);
     await tx.execute(

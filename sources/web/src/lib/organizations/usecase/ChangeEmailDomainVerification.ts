@@ -1,12 +1,12 @@
 //
 
 import { NotFoundError } from "#src/errors";
+import { identite_runtime } from "#src/lib/activities";
 import {
   schema,
   type IdentiteProconnectDatabaseCradle,
 } from "@~/identite-proconnect/database";
 import type { EmailDomainApprovedVerificationType } from "@~/identite-proconnect/types";
-import { createIdentiteRuntime } from "@proconnect-gouv/proconnect.identite.runtime";
 import { and, eq } from "drizzle-orm";
 import { match } from "ts-pattern";
 
@@ -14,8 +14,9 @@ import { match } from "ts-pattern";
 
 export function ChangeEmailDomainVerification({
   pg,
-}: IdentiteProconnectDatabaseCradle) {
-  const runtime = createIdentiteRuntime({ db: pg });
+  sub,
+}: IdentiteProconnectDatabaseCradle & { sub: string }) {
+  const runtime = identite_runtime(pg).as({ type: "moderator", sub });
 
   return async function change_email_domain_verification({
     domain,
@@ -33,11 +34,29 @@ export function ChangeEmailDomainVerification({
           eq(schema.email_domains.organization_id, organization_id),
         );
 
-        await tx.delete(schema.email_domains).where(domain_states);
-        await tx.insert(schema.email_domains).values({
-          domain,
+        const replaced = await tx
+          .delete(schema.email_domains)
+          .where(domain_states)
+          .returning({
+            verification_type: schema.email_domains.verification_type,
+          });
+        const [email_domain] = await tx
+          .insert(schema.email_domains)
+          .values({ domain, organization_id, verification_type })
+          .returning({ id: schema.email_domains.id });
+
+        await runtime.record(tx, {
+          action: "domain.refused",
+          context: {
+            inputs: { domain, verification_type },
+            outcome: {
+              email_domain_id: email_domain!.id,
+              replaced_verification_types: replaced.map(
+                ({ verification_type }) => verification_type,
+              ),
+            },
+          },
           organization_id,
-          verification_type,
         });
       });
 

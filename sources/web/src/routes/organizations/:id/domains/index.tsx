@@ -59,7 +59,7 @@ export default new Hono<AppContext>()
     "/",
     zValidator("param", EntitySchema),
     zValidator("form", z.object({ domain: z.string().min(1) })),
-    async function PUT({ text, req, var: { identite_pg } }) {
+    async function PUT({ text, req, var: { identite_pg, userinfo } }) {
       const { id: organization_id } = req.valid("param");
       const { domain } = req.valid("form");
 
@@ -70,6 +70,7 @@ export default new Hono<AppContext>()
 
       const change_email_domain_verification = ChangeEmailDomainVerification({
         pg: identite_pg,
+        sub: userinfo.sub,
       });
 
       await change_email_domain_verification({
@@ -106,7 +107,7 @@ export default new Hono<AppContext>()
     "/:domain_id",
     zValidator("param", EntitySchema.merge(DomainParams_Schema)),
     zValidator("query", patch_query),
-    async function PATCH({ text, req, var: { identite_pg } }) {
+    async function PATCH({ text, req, var: { identite_pg, userinfo } }) {
       const { domain_id } = req.valid("param");
       const { type: verification_type } = req.valid("query");
 
@@ -119,6 +120,7 @@ export default new Hono<AppContext>()
 
       const change_email_domain_verification = ChangeEmailDomainVerification({
         pg: identite_pg,
+        sub: userinfo.sub,
       });
 
       await change_email_domain_verification({

@@ -30,7 +30,7 @@
     "@proconnect-gouv/proconnect.core": "1.1.1",
     "@proconnect-gouv/proconnect.crisp": "1.0.1",
     "@proconnect-gouv/proconnect.identite": "12.0.0",
-    "@proconnect-gouv/proconnect.identite.runtime": "0.1.0",
+    "@proconnect-gouv/proconnect.identite.runtime": "0.2.0",
     "@sentry/browser": "11.8.0",
     "@sentry/conventions": "0.27.0",
     "@sentry/core": "11.8.0",
@@ -66,7 +66,8 @@
     "tsx": "4.23.15",
     "type-fest": "5.10.0",
     "unified": "11.0.5",
-    "youch": "4.1.1"
+    "youch": "4.1.1",
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@~/config.typescript": "workspace:*",
