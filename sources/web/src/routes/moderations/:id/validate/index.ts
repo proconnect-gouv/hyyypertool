@@ -10,7 +10,7 @@ import {
   validate_form_schema,
 } from "#src/lib/moderations";
 import {
-  AddVerifiedDomain,
+  ChangeEmailDomainVerification,
   GetFicheOrganizationById,
 } from "#src/lib/organizations/usecase";
 import type { AppContext } from "#src/middleware/context";
@@ -23,9 +23,7 @@ import { EntitySchema, z_email_domain } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
 import {
   EmailDomainRepository,
-  MarkDomainAsVerified,
   UserOrganisationRepository,
-  createProconnectIdentiteContext,
 } from "@~/identite-proconnect/sdk";
 import {
   EmailDomainApprovedVerificationEnum,
@@ -60,11 +58,8 @@ export default new Hono<AppContext>().patch(
       req.valid("form");
 
     //#region 💉 Inject dependencies
-    const identite_context =
-      createProconnectIdentiteContext(identite_pg_client);
-    const add_verified_domain = AddVerifiedDomain({
-      get_organization_by_id: GetFicheOrganizationById({ pg: identite_pg }),
-      mark_domain_as_verified: MarkDomainAsVerified(identite_context),
+    const change_email_domain_verification = ChangeEmailDomainVerification({
+      pg: identite_pg,
     });
     const get_moderation_with_user = GetModerationWithUser(identite_pg);
     const update_user_by_id_in_organization = UpdateUserByIdInOrganization({
@@ -105,10 +100,10 @@ export default new Hono<AppContext>().patch(
     //#region ✨ Add verified domain
     if (add_domain) {
       const [domain_error] = await to(
-        add_verified_domain({
-          organization_id,
+        change_email_domain_verification({
           domain,
-          domain_verification_type:
+          organization_id,
+          verification_type:
             add_member === "AS_INTERNAL" ? "verified" : "external",
         }),
       );

@@ -1,6 +1,6 @@
 //
 
-export * from "./AddVerifiedDomain";
+export * from "./ChangeEmailDomainVerification";
 export * from "./GetBanaticUrl";
 export * from "./GetFicheOrganizationById";
 export * from "./GetOrganizationInfo";

@@ -33,6 +33,7 @@ import {
 import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
 import { asc } from "drizzle-orm";
 import { Hono } from "hono";
+import { ok } from "node:assert/strict";
 import app from "./index";
 
 //
@@ -354,4 +355,57 @@ test("PATCH /organizations/:id/domains/:domain_id updates verification type to v
       ]
     `);
   }
+});
+
+test("PATCH /organizations/:id/domains/:domain_id refuses a domain without touching members", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
+  const organization_id = await create_unicorn_organization(pg);
+  const adora_pony_user_id = await create_adora_pony_user(pg);
+
+  await pg.insert(schema.users_organizations).values({
+    organization_id,
+    user_id: adora_pony_user_id,
+    verification_type: LinkEnum.enum.domain_not_verified_yet,
+  });
+  const domain = await pg.query.email_domains.findFirst({
+    where: (table, { eq }) => eq(table.organization_id, organization_id),
+  });
+  ok(domain);
+
+  const response = await new Hono()
+    .use(set_config({}))
+    .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_identite_pg(pg))
+    .use(set_nonce("nonce"))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
+    .route("/:id/domains", app)
+    .request(`/${organization_id}/domains/${domain.id}?type=refused`, {
+      method: "PATCH",
+    });
+
+  expect(response.status).toBe(200);
+  expect(response.headers.get("HX-Trigger")).toBe(
+    "DOMAIN_UPDATED, MEMBERS_UPDATED",
+  );
+
+  expect(
+    await pg.query.email_domains.findMany({
+      where: (table, { eq }) => eq(table.organization_id, organization_id),
+    }),
+  ).toMatchObject([
+    {
+      domain: "unicorn.xyz",
+      organization_id,
+      verification_type: "refused",
+      verified_at: null,
+    },
+  ]);
+  expect(
+    await pg.query.users_organizations.findFirst({
+      where: (table, { eq }) => eq(table.user_id, adora_pony_user_id),
+    }),
+  ).toMatchObject({
+    verification_type: LinkEnum.enum.domain_not_verified_yet,
+  });
 });
