@@ -5,6 +5,7 @@ export * from "./DeleteDomainById";
 export * from "./GetDomainCount";
 export * from "./GetDomains";
 export * from "./GetOrganizationById";
+export * from "./GetOrganizationDomains";
 export * from "./GetOrganizationMember";
 export * from "./GetOrganizationMembersCount";
 export * from "./GetOrganizationsList";
