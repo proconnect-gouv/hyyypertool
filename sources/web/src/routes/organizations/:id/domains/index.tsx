@@ -18,6 +18,7 @@ import { jsxRenderer } from "hono/jsx-renderer";
 import { z } from "zod";
 import { patch_query } from "./context";
 import { get_organization_domains } from "./get_organization_domains.query";
+import domain_history_router from "./history";
 import { AddDomain, Table } from "./Table";
 
 //
@@ -54,6 +55,7 @@ export default new Hono<AppContext>()
       );
     },
   )
+  .route("/history", domain_history_router)
   .use(editor_guard())
   .put(
     "/",
