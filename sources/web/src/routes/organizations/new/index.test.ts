@@ -295,6 +295,33 @@ test("POST /organizations/new/confirm crée une organisation depuis un seul SIRE
   );
 });
 
+test("POST /organizations/new/confirm ne crée pas d'organisation pour un SIRET non diffusible", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
+  const mockFetch = mock_siret_fetch({
+    [NintendoOfEuropeSe.siret]: {
+      ...NintendoOfEuropeSe,
+      status_diffusion: "non_diffusible",
+    },
+  });
+
+  const response = await middlewares(moderator)
+    .use(set_fetch(mockFetch))
+    .route("/", app)
+    .request(
+      "/confirm",
+      {
+        method: "POST",
+        body: new URLSearchParams({ "sirets[]": NintendoOfEuropeSe.siret }),
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        redirect: "manual",
+      },
+      env,
+    );
+
+  expect(response.status).toBe(500);
+  expect(await pg.query.organizations.findMany({})).toEqual([]);
+});
+
 test("POST /organizations/new/confirm crée N organisations et le récapitulatif pointe vers chacune", async () => {
   const moderator = await insert_moderateur(hyyyper_pglite);
   const mockFetch = mock_siret_fetch({
