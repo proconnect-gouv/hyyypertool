@@ -20,6 +20,8 @@ import { schema } from "@~/identite-proconnect/database";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
+import user_activities_route from "./activities";
+import { count_activities_by_user_id } from "./activities/count_activities_by_user_id.query";
 import { get_authenticators_by_user_id } from "./get_authenticators_by_user_id.query";
 import { get_franceconnect_by_user_id } from "./get_franceconnect_by_user_id.query";
 import { get_user_by_id } from "./get_user_by_id.query";
@@ -59,6 +61,10 @@ export default new Hono<AppContext>()
           id,
         );
 
+        const query_activities_count = count_activities_by_user_id(
+          identite_pg,
+          user.id,
+        );
         const query_organizations_count = count_user_memberships(
           identite_pg,
           user.id,
@@ -82,6 +88,7 @@ export default new Hono<AppContext>()
             authenticators={authenticators}
             franceconnect={franceconnect}
             is_editor={is_editor}
+            query_activities_count={query_activities_count}
             query_moderations_count={query_moderations_count}
             query_oidc_clients_count={query_oidc_clients_count}
             query_organizations_count={query_organizations_count}
@@ -98,6 +105,7 @@ export default new Hono<AppContext>()
     },
   )
   //
+  .route("/activities", user_activities_route)
   .route("/organizations", user_organizations_page_route)
   .route("/moderations", user_moderations_route)
   .route("/oidc_clients", user_oidc_clients_route)

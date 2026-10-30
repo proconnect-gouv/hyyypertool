@@ -1,9 +1,7 @@
 //
 
-import {
-  schema as hyyyper_schema,
-  type HyyyperPgDatabase,
-} from "@~/hyyyperbase";
+import { label_actors } from "#src/lib/activities";
+import type { HyyyperPgDatabase } from "@~/hyyyperbase";
 import {
   schema,
   type IdentiteProconnectPgDatabase,
@@ -64,29 +62,11 @@ export async function get_domain_history(
           )
           .orderBy(asc(schema.activity_logs.id));
 
-  const moderator_subs = activities
-    .filter(({ actor_type }) => actor_type === "moderator")
-    .map(({ actor_ref }) => actor_ref);
-  const moderators =
-    moderator_subs.length === 0
-      ? []
-      : await hyyyper_pg
-          .select({
-            email: hyyyper_schema.users.email,
-            sub: hyyyper_schema.users.sub,
-          })
-          .from(hyyyper_schema.users)
-          .where(inArray(hyyyper_schema.users.sub, moderator_subs));
-  const email_by_sub = new Map(
-    moderators.map(({ email, sub }) => [sub, email]),
-  );
+  const actor_label = await label_actors(hyyyper_pg, activities);
 
   return activities.map(({ actor_ref, actor_type, app, id, ...activity }) => ({
     ...activity,
-    actor:
-      actor_type === "moderator"
-        ? (email_by_sub.get(actor_ref) ?? actor_ref)
-        : `${app} (${actor_ref})`,
+    actor: actor_label({ actor_ref, actor_type, app }),
     caused: caused
       .filter(({ cause_activity_id }) => cause_activity_id === id)
       .map(({ action, context, id, user_email, user_id }) => ({
