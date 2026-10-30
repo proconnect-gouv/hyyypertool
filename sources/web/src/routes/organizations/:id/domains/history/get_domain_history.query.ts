@@ -62,7 +62,7 @@ export async function get_domain_history(
           )
           .orderBy(asc(schema.activity_logs.id));
 
-  const actor_label = await label_actors(hyyyper_pg, activities);
+  const actor_label = await label_actors({ hyyyper_pg, pg }, activities);
 
   return activities.map(({ actor_ref, actor_type, app, id, ...activity }) => ({
     ...activity,
