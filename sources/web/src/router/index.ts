@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import activity_router from "../routes/activity";
 import admin_router from "../routes/admin";
 import domains_deliverability_router from "../routes/domains-deliverability";
 import moderations_router from "../routes/moderations";
@@ -8,6 +9,7 @@ import users_router from "../routes/users";
 
 export function create_router() {
   return new Hono()
+    .route("/activity", activity_router)
     .route("/moderations", moderations_router)
     .route("/admin", admin_router)
     .route("/users", users_router)
