@@ -212,6 +212,16 @@ function Nav() {
         </li>
         <li class={item()}>
           <a
+            aria-current={route_path.startsWith("/activity")}
+            class={link()}
+            href={urls.activity.$url().pathname}
+            target="_self"
+          >
+            Activité
+          </a>
+        </li>
+        <li class={item()}>
+          <a
             aria-current={route_path.startsWith("/users")}
             class={link()}
             href={urls.users.$url().pathname}
