@@ -18,17 +18,14 @@ import {
 } from "@~/identite-proconnect/types";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
 import { asc } from "drizzle-orm";
-import { ChangeEmailDomainVerification } from "./ChangeEmailDomainVerification";
+import { change_email_domain_verification } from "./change_email_domain_verification";
 
 //
 
 beforeAll(migrate);
 beforeEach(empty_database);
 
-const change_email_domain_verification = ChangeEmailDomainVerification({
-  pg,
-  sub: "moderator-sub",
-});
+const deps = { pg, sub: "moderator-sub" };
 
 async function insert_pending_domain(organization_id: number) {
   await pg.insert(schema.email_domains).values({
@@ -51,7 +48,7 @@ test("refused replaces the domain states with refused and leaves members untouch
   await insert_pending_domain(organization_id);
 
   expect(
-    await change_email_domain_verification({
+    await change_email_domain_verification(deps, {
       domain: "unicorn.xyz",
       organization_id,
       verification_type: "refused",
@@ -119,7 +116,7 @@ test("verified replaces the domain states and promotes matching members", async 
   await insert_pending_domain(organization_id);
 
   expect(
-    await change_email_domain_verification({
+    await change_email_domain_verification(deps, {
       domain: "unicorn.xyz",
       organization_id,
       verification_type: "verified",
@@ -189,7 +186,7 @@ test("verified replaces the domain states and promotes matching members", async 
 
 test("throws NotFoundError when the organization does not exist", async () => {
   await expect(
-    change_email_domain_verification({
+    change_email_domain_verification(deps, {
       domain: "unicorn.xyz",
       organization_id: 999,
       verification_type: "verified",
@@ -201,7 +198,7 @@ test("verifies a domain given by domain and organization", async () => {
   const organization_id = await create_unicorn_organization(pg);
 
   expect(
-    await change_email_domain_verification({
+    await change_email_domain_verification(deps, {
       domain: "rainbow.xyz",
       organization_id,
       verification_type: "external",

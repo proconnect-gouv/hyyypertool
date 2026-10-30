@@ -13,7 +13,7 @@ import {
   pg,
 } from "@~/identite-proconnect/database/testing";
 import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
-import { ValidateSimilarModerations } from "./ValidateSimilarModerations";
+import { validate_similar_moderations } from "./validate_similar_moderations";
 
 //
 
@@ -48,9 +48,7 @@ test("validate similar moderations with verified domain", async () => {
     type: "2️⃣",
   });
 
-  const validate_similar_moderations = ValidateSimilarModerations(pg);
-
-  const validated_moderations = await validate_similar_moderations({
+  const validated_moderations = await validate_similar_moderations(pg, {
     organization_id,
     domain: "unicorn.xyz",
     domain_verification_type: "verified",
@@ -90,9 +88,7 @@ test("validate similar moderations with external domain", async () => {
     type: "2️⃣",
   });
 
-  const validate_similar_moderations = ValidateSimilarModerations(pg);
-
-  const validated_moderations = await validate_similar_moderations({
+  const validated_moderations = await validate_similar_moderations(pg, {
     organization_id,
     domain: "unicorn.xyz",
     domain_verification_type: "external",
@@ -123,9 +119,7 @@ test("validate similar moderations with external domain", async () => {
 test("no validation when domain is not verified", async () => {
   const organization_id = await create_unicorn_organization(pg);
 
-  const validate_similar_moderations = ValidateSimilarModerations(pg);
-
-  const validated_moderations = await validate_similar_moderations({
+  const validated_moderations = await validate_similar_moderations(pg, {
     organization_id,
     domain: "unverified.com",
     domain_verification_type: "external",

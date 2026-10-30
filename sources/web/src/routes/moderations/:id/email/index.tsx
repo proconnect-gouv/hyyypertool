@@ -2,7 +2,7 @@
 
 import { NotFoundError } from "#src/errors";
 import { get_crisp_mail } from "#src/lib/crisp";
-import { GetCripsFromSessionId } from "#src/lib/moderations";
+import { get_crips_from_session_id } from "#src/lib/moderations";
 import type { AppContext } from "#src/middleware/context";
 import { DescribedBySchema, EntitySchema } from "#src/schema";
 import { Crisp } from "#src/ui/moderations/Crisp";
@@ -42,13 +42,16 @@ export default new Hono<AppContext>().get(
     };
 
     const [, crisp] = await to(
-      GetCripsFromSessionId({
-        crisp_config,
-        fetch_crisp_mail: get_crisp_mail,
-      })({
-        session_id: ticket_id,
-        limit: MAX_ARTICLE_COUNT,
-      }),
+      get_crips_from_session_id(
+        {
+          crisp_config,
+          fetch_crisp_mail: get_crisp_mail,
+        },
+        {
+          session_id: ticket_id,
+          limit: MAX_ARTICLE_COUNT,
+        },
+      ),
     );
 
     if (!moderation) throw new NotFoundError("Moderation not found");

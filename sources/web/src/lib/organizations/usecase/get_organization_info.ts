@@ -5,9 +5,9 @@ import { createApiEntrepriseOpenApiClient } from "@proconnect-gouv/proconnect.ap
 import { getOrganizationInfoFactory } from "@proconnect-gouv/proconnect.identite/managers/organization";
 import consola from "consola";
 
-//
+export function get_organization_info({
+  //
 
-export function GetOrganizationInfo({
   entreprise_api_gouv_url,
   entreprise_api_gouv_token,
   http_timeout,
@@ -56,4 +56,6 @@ export function GetOrganizationInfo({
   });
 }
 
-export type GetOrganizationInfoHandler = ReturnType<typeof GetOrganizationInfo>;
+export type GetOrganizationInfoHandler = ReturnType<
+  typeof get_organization_info
+>;

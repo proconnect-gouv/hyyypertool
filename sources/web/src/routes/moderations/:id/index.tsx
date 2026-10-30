@@ -3,7 +3,7 @@
 import { NotFoundError } from "#src/errors";
 import { MainLayout } from "#src/layouts";
 import { moderation_type_to_title } from "#src/lib/moderations";
-import { GetBanaticUrl } from "#src/lib/organizations/usecase";
+import { get_banatic_url } from "#src/lib/organizations/usecase";
 import { editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { get_moderation_with_details } from "#src/queries/moderations";
@@ -74,12 +74,16 @@ export default new Hono<AppContext>()
 
         // Get Banatic URL for organization
         const siren = organization_fiche.siret.substring(0, 9);
-        const get_banatic_url = GetBanaticUrl({
-          banatic_base_url: config.BANATIC_BASE_URL,
-          fetch,
-          http_timout: config.HTTP_CLIENT_TIMEOUT,
-        });
-        const banaticUrl = (await get_banatic_url(siren)).url;
+        const banaticUrl = (
+          await get_banatic_url(
+            {
+              banatic_base_url: config.BANATIC_BASE_URL,
+              fetch,
+              http_timout: config.HTTP_CLIENT_TIMEOUT,
+            },
+            siren,
+          )
+        ).url;
 
         const response_templates = await get_response_templates(hyyyper_pg, "");
 

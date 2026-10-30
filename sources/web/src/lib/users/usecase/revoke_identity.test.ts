@@ -10,7 +10,7 @@ import {
 } from "@~/identite-proconnect/database/testing";
 import { beforeAll, beforeEach, expect, mock, test } from "bun:test";
 import { eq } from "drizzle-orm";
-import { RevokeIdentity } from "./RevokeIdentity";
+import { revoke_identity } from "./revoke_identity";
 
 //
 
@@ -28,7 +28,7 @@ const crisp: CrispApi = {
   send_message: mock().mockResolvedValue(undefined),
 };
 
-const revoke_identity = RevokeIdentity({ crisp, pg, resolve_delay: 0 });
+const deps = { crisp, pg, resolve_delay: 0 };
 
 const anais_tailhade = { email: "anais.tailhade@omage.gouv.fr" };
 
@@ -41,7 +41,7 @@ test("revoke user identity", async () => {
     .set({ email_verified: true })
     .where(eq(schema.users.id, pink_diamond_user_id));
 
-  await revoke_identity({
+  await revoke_identity(deps, {
     moderator: anais_tailhade,
     user_id: pink_diamond_user_id,
   });

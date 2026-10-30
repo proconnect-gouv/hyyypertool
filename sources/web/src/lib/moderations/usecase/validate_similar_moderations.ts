@@ -1,0 +1,74 @@
+import { build_moderation_update } from "#src/lib/moderations";
+import { update_moderation_by_id } from "#src/queries/moderations";
+import {
+  schema,
+  type IdentiteProconnectPgDatabase,
+} from "@~/identite-proconnect/database";
+import { and, eq, ilike, isNull } from "drizzle-orm";
+
+export async function validate_similar_moderations(
+  pg: IdentiteProconnectPgDatabase,
+  {
+    domain_verification_type,
+    domain,
+    organization_id,
+    userinfo,
+  }: {
+    domain_verification_type: "verified" | "external";
+    domain: string;
+    organization_id: number;
+    userinfo: { email: string; given_name: string; usual_name: string };
+  },
+) {
+  // Auto-validate the matching moderations following PCI rules
+  const end_user_reason =
+    domain_verification_type === "verified"
+      ? "[ProConnect] ✨ Validation automatique - domaine vérifié"
+      : "[ProConnect] ✨ Validation automatique - domaine externe vérifié";
+
+  // Find all pending moderations with matching domain using modern query builder
+  const matching_moderations = await pg
+    .select({
+      comment: schema.moderations.comment,
+      id: schema.moderations.id,
+      user_id: schema.moderations.user_id,
+      user_email: schema.users.email,
+    })
+    .from(schema.moderations)
+    .innerJoin(schema.users, eq(schema.moderations.user_id, schema.users.id))
+    .where(
+      and(
+        eq(schema.moderations.organization_id, organization_id),
+        isNull(schema.moderations.moderated_at),
+        ilike(schema.users.email, `%@${domain}`),
+      ),
+    );
+
+  // Early return for empty results
+  if (!matching_moderations.length) return [];
+
+  // Atomic batch validation using transaction and Promise.all
+  return pg.transaction(async (tx) => {
+    const validation_promises = matching_moderations.map(async (moderation) => {
+      const update = build_moderation_update({
+        comment: moderation.comment,
+        userinfo,
+        end_user_reason,
+        type: "VALIDATED",
+      });
+      await update_moderation_by_id(tx, {
+        id: moderation.id,
+        values: update,
+      });
+      return moderation.id;
+    });
+
+    return Promise.all(validation_promises);
+  });
+}
+
+export type ValidateSimilarModerationsHandler =
+  typeof validate_similar_moderations;
+export type ValidateSimilarModerationsDto = Awaited<
+  ReturnType<ValidateSimilarModerationsHandler>
+>;

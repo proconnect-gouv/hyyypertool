@@ -4,8 +4,8 @@ import { BadRequestError, NotFoundError } from "#src/errors";
 import type { HtmxHeader } from "#src/htmx";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import {
-  ChangeEmailDomainVerification,
-  RemoveDomainEmailById,
+  change_email_domain_verification,
+  remove_domain_email_by_id,
 } from "#src/lib/organizations/usecase";
 import { editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
@@ -70,16 +70,17 @@ export default new Hono<AppContext>()
           "Domain should not contain the '@' character",
         );
 
-      const change_email_domain_verification = ChangeEmailDomainVerification({
-        pg: identite_pg,
-        sub: userinfo.sub,
-      });
-
-      await change_email_domain_verification({
-        domain,
-        organization_id,
-        verification_type: EmailDomainVerificationEnum.enum.verified,
-      });
+      await change_email_domain_verification(
+        {
+          pg: identite_pg,
+          sub: userinfo.sub,
+        },
+        {
+          domain,
+          organization_id,
+          verification_type: EmailDomainVerificationEnum.enum.verified,
+        },
+      );
 
       return text("OK", 200, {
         "HX-Trigger": [
@@ -95,11 +96,13 @@ export default new Hono<AppContext>()
     async function DELETE({ text, req, var: { identite_pg, userinfo } }) {
       const { domain_id } = req.valid("param");
 
-      const remove_domain_email_by_id = RemoveDomainEmailById({
-        pg: identite_pg,
-        sub: userinfo.sub,
-      });
-      const outcome = await remove_domain_email_by_id(domain_id);
+      const outcome = await remove_domain_email_by_id(
+        {
+          pg: identite_pg,
+          sub: userinfo.sub,
+        },
+        domain_id,
+      );
       if (outcome.kind === "domain_not_found")
         throw new NotFoundError("Domain not found");
 
@@ -123,16 +126,17 @@ export default new Hono<AppContext>()
       if (!email_domain) throw new NotFoundError("Domain not found");
       const { domain, organization_id } = email_domain;
 
-      const change_email_domain_verification = ChangeEmailDomainVerification({
-        pg: identite_pg,
-        sub: userinfo.sub,
-      });
-
-      await change_email_domain_verification({
-        domain,
-        organization_id,
-        verification_type,
-      });
+      await change_email_domain_verification(
+        {
+          pg: identite_pg,
+          sub: userinfo.sub,
+        },
+        {
+          domain,
+          organization_id,
+          verification_type,
+        },
+      );
 
       return text("OK", 200, {
         "HX-Trigger": [

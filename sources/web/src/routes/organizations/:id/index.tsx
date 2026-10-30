@@ -1,7 +1,7 @@
 import { MainLayout } from "#src/layouts";
 //
 
-import { GetBanaticUrl } from "#src/lib/organizations/usecase";
+import { get_banatic_url } from "#src/lib/organizations/usecase";
 import type { AppContext } from "#src/middleware/context";
 import {
   get_domain_count,
@@ -42,13 +42,15 @@ export default new Hono<AppContext>()
       const organization = await get_organization_by_id(identite_pg, id);
 
       const siren = organization.siret.substring(0, 9);
-      const get_banatic_url = GetBanaticUrl({
-        banatic_base_url: config.BANATIC_BASE_URL,
-        fetch,
-        http_timout: config.HTTP_CLIENT_TIMEOUT,
-      });
 
-      const { url: banaticUrl } = await get_banatic_url(siren);
+      const { url: banaticUrl } = await get_banatic_url(
+        {
+          banatic_base_url: config.BANATIC_BASE_URL,
+          fetch,
+          http_timout: config.HTTP_CLIENT_TIMEOUT,
+        },
+        siren,
+      );
       const domains_count = await get_domain_count(identite_pg, id);
       const members_count = await get_organization_members_count(
         identite_pg,

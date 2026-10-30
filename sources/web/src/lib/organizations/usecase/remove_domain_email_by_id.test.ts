@@ -9,17 +9,14 @@ import {
 } from "@~/identite-proconnect/database/testing";
 import { EmailDomainVerificationEnum } from "@~/identite-proconnect/types";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
-import { RemoveDomainEmailById } from "./RemoveDomainEmailById";
+import { remove_domain_email_by_id } from "./remove_domain_email_by_id";
 
 //
 
 beforeAll(migrate);
 beforeEach(empty_database);
 
-const remove_domain_email_by_id = RemoveDomainEmailById({
-  pg,
-  sub: "moderator-sub",
-});
+const deps = { pg, sub: "moderator-sub" };
 
 //
 
@@ -34,7 +31,7 @@ test("removes the domain and journals it as the moderator", async () => {
     })
     .returning({ domain_id: schema.email_domains.id });
 
-  expect(await remove_domain_email_by_id(domain_id)).toEqual({
+  expect(await remove_domain_email_by_id(deps, domain_id)).toEqual({
     kind: "domain_removed",
   });
 
@@ -65,7 +62,7 @@ test("removes the domain and journals it as the moderator", async () => {
 });
 
 test("an unknown domain id removes nothing and journals nothing", async () => {
-  expect(await remove_domain_email_by_id(999)).toEqual({
+  expect(await remove_domain_email_by_id(deps, 999)).toEqual({
     kind: "domain_not_found",
   });
   expect(await pg.query.activity_logs.findMany()).toEqual([]);
