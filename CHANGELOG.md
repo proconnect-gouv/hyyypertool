@@ -1,5 +1,46 @@
 # Changelog
 
+## [2026.10.5](https://github.com/proconnect-gouv/hyyypertool/compare/2026.10.4...2026.10.5) (2026-10-30)
+
+### Changements
+
+- 🐛 Corriger l'affichage de la liste des dirigeants d'une association
+
+### Ajouté
+
+- ✨ journal domain removal as the moderator ([#1960](https://github.com/proconnect-gouv/hyyypertool/issues/1960)) ([e2cff97](https://github.com/proconnect-gouv/hyyypertool/commit/e2cff972819b55bd938cda13ece0ce4be538d195))
+- ✨ list promoted members under their domain decision ([#1959](https://github.com/proconnect-gouv/hyyypertool/issues/1959)) ([58e714b](https://github.com/proconnect-gouv/hyyypertool/commit/58e714bc72114eb5021cefb5771d374acc74493a))
+- ✨ show each domain's history on the organization page ([#1958](https://github.com/proconnect-gouv/hyyypertool/issues/1958)) ([3e23fc6](https://github.com/proconnect-gouv/hyyypertool/commit/3e23fc632598ffbe9cb0142527e33621a9f18bfa))
+- ✨ journal domain decisions as the moderator ([#1957](https://github.com/proconnect-gouv/hyyypertool/issues/1957)) ([1188fb6](https://github.com/proconnect-gouv/hyyypertool/commit/1188fb64a572914da00ec4d7087a8bb2b8278656))
+
+### Modifié
+
+- ♻️ rename use cases to snake_case ([#1965](https://github.com/proconnect-gouv/hyyypertool/issues/1965)) ([b887158](https://github.com/proconnect-gouv/hyyypertool/commit/b8871589f2b3f96976cf660fd38caa32947612bf))
+- ♻️ rename remaining modules and helpers to snake_case ([#1966](https://github.com/proconnect-gouv/hyyypertool/issues/1966)) ([b382989](https://github.com/proconnect-gouv/hyyypertool/commit/b382989518e89aa86605e1e22ef05ad18c8fe999))
+- ♻️ rename user queries to snake_case ([#1963](https://github.com/proconnect-gouv/hyyypertool/issues/1963)) ([e0a4872](https://github.com/proconnect-gouv/hyyypertool/commit/e0a4872b4f5e9a977c3ceaeefa396015e375facb))
+- ♻️ rename moderation queries to snake_case ([#1964](https://github.com/proconnect-gouv/hyyypertool/issues/1964)) ([f4a1914](https://github.com/proconnect-gouv/hyyypertool/commit/f4a1914f011302d70fcbb455bdf9cb0d8ca2030f))
+- ♻️ rename organization queries to snake_case ([#1962](https://github.com/proconnect-gouv/hyyypertool/issues/1962)) ([1b95688](https://github.com/proconnect-gouv/hyyypertool/commit/1b9568850c6137f7be00e5a768cd1f1ecf89e6eb))
+- ♻️ read organization domains with the local query ([#1961](https://github.com/proconnect-gouv/hyyypertool/issues/1961)) ([e40bb8a](https://github.com/proconnect-gouv/hyyypertool/commit/e40bb8a177a11026c4ba7741ebe7f13d9607f0f2))
+- ♻️ change domain verification without the legacy manager ([#1956](https://github.com/proconnect-gouv/hyyypertool/issues/1956)) ([857250b](https://github.com/proconnect-gouv/hyyypertool/commit/857250b19779794cfe5ef404d752ad7ffff6ded4))
+- 🔧 seed fresh databases on dev start ([#1950](https://github.com/proconnect-gouv/hyyypertool/issues/1950)) ([c9d86cf](https://github.com/proconnect-gouv/hyyypertool/commit/c9d86cfd31eda205646f5199ff56f6f7835ad27b))
+
+### Corrigé
+
+- 🐛 fix association leaders document errors ([#1949](https://github.com/proconnect-gouv/hyyypertool/issues/1949)) ([e0b0cc3](https://github.com/proconnect-gouv/hyyypertool/commit/e0b0cc322371b4ac6045ded4641304011469dae5))
+
+### Dépendances
+
+- ⬆️ bump @proconnect-gouv/proconnect.identite to 12.0.0 ([#1955](https://github.com/proconnect-gouv/hyyypertool/issues/1955)) ([1a8b644](https://github.com/proconnect-gouv/hyyypertool/commit/1a8b644d76e26da976fed7162fae73d718d83c8f))
+- :arrow_upper_right: [patch](deps): Bump cypress-io/github-action ([#1953](https://github.com/proconnect-gouv/hyyypertool/issues/1953)) ([8cd7418](https://github.com/proconnect-gouv/hyyypertool/commit/8cd74189dc144eae95438359b9b3310687e962b6))
+
+### Documentation
+
+- 📝 add leaders document release changeset ([#1952](https://github.com/proconnect-gouv/hyyypertool/issues/1952)) ([ae809bb](https://github.com/proconnect-gouv/hyyypertool/commit/ae809bbf41bce674069e9d60772afad3e0569ade))
+
+### Divers
+
+- Bump nixpkgs from `fe13242` to `3ec6363` ([#1954](https://github.com/proconnect-gouv/hyyypertool/issues/1954)) ([992e599](https://github.com/proconnect-gouv/hyyypertool/commit/992e599e50f19c5d30bdb7d3ece51bef78112bb1))
+
 ## [2026.10.4](https://github.com/proconnect-gouv/hyyypertool/compare/2026.10.3...2026.10.4) (2026-10-28)
 
 ### Changements
