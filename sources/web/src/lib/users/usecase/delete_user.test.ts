@@ -10,7 +10,7 @@ import {
 } from "@~/identite-proconnect/database/testing";
 import { beforeAll, beforeEach, expect, mock, test } from "bun:test";
 import { eq } from "drizzle-orm";
-import { ResetMFA } from "./ResetMFA";
+import { delete_user } from "./delete_user";
 
 //
 
@@ -28,47 +28,29 @@ const crisp: CrispApi = {
   send_message: mock().mockResolvedValue(undefined),
 };
 
-const reset_mfa = ResetMFA({ crisp, pg, resolve_delay: 0 });
+const deps = { crisp, pg, resolve_delay: 0 };
 
-export const anais_tailhade: { email: string } = {
-  email: "anais.tailhade@omage.gouv.fr",
-};
+const anais_tailhade = { email: "anais.tailhade@omage.gouv.fr" };
 
 //
 
-test("reset user MFA", async () => {
+test("delete user account", async () => {
   const pink_diamond_user_id = await create_pink_diamond_user(pg);
-  await pg
-    .update(schema.users)
-    .set({ email_verified: true, encrypted_password: "🔑", force_2fa: true })
-    .where(eq(schema.users.id, pink_diamond_user_id));
 
-  await reset_mfa({ moderator: anais_tailhade, user_id: pink_diamond_user_id });
+  await delete_user(deps, {
+    moderator: anais_tailhade,
+    user_id: pink_diamond_user_id,
+  });
 
   const result = await pg.query.users.findFirst({
-    columns: {
-      email_verified: true,
-      encrypted_password: true,
-      encrypted_totp_key: true,
-      force_2fa: true,
-      id: true,
-      totp_key_verified_at: true,
-    },
     where: eq(schema.users.id, pink_diamond_user_id),
   });
 
-  expect(result).toEqual({
-    email_verified: false,
-    encrypted_password: null,
-    encrypted_totp_key: null,
-    force_2fa: false,
-    id: pink_diamond_user_id,
-    totp_key_verified_at: null,
-  });
+  expect(result).toBeUndefined();
 
   expect(crisp.create_conversation).toHaveBeenCalledWith({
     email: "pink.diamond@unicorn.xyz",
-    subject: "[ProConnect] - Réinitialisation de la validation en deux étapes",
+    subject: "[ProConnect] - Suppression de votre compte",
     nickname: "Pink Diamond",
   });
   expect(crisp.get_user).toHaveBeenCalledWith({
@@ -76,7 +58,7 @@ test("reset user MFA", async () => {
   });
   expect(crisp.send_message).toHaveBeenCalledWith({
     content: expect.stringContaining(
-      "Nous avons réinitialisé votre mot de passe et vos clés d'accès.",
+      "Nous avons supprimé votre compte ProConnect.",
     ),
     session_id: "🗨️",
     user: {

@@ -2,9 +2,9 @@
 
 import type { HtmxHeader } from "#src/htmx";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
+import { remove_member_from_organization } from "#src/lib/users";
 import { editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
-import { RemoveMemberFromOrganization } from "#src/lib/users";
 import { EntitySchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
 import { schema } from "@~/identite-proconnect/database";
@@ -71,16 +71,18 @@ export default new Hono<AppContext>()
     }) {
       const { id: organization_id, user_id } = req.valid("param");
 
-      const remove_member_from_organization = RemoveMemberFromOrganization({
-        crisp,
-        pg: identite_pg,
-        resolve_delay: config.CRISP_RESOLVE_DELAY,
-      });
-      await remove_member_from_organization({
-        moderator: userinfo,
-        organization_id,
-        user_id,
-      });
+      await remove_member_from_organization(
+        {
+          crisp,
+          pg: identite_pg,
+          resolve_delay: config.CRISP_RESOLVE_DELAY,
+        },
+        {
+          moderator: userinfo,
+          organization_id,
+          user_id,
+        },
+      );
 
       return text("OK", 200, {
         "HX-Trigger": ORGANISATION_EVENTS.enum.MEMBERS_UPDATED,

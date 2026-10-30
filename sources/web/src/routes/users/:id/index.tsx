@@ -4,11 +4,11 @@ import { NotFoundError } from "#src/errors";
 import type { HtmxHeader } from "#src/htmx";
 import { MainLayout } from "#src/layouts";
 import {
-  CountUserMemberships,
-  DeleteUser,
-  ResetMFA,
-  ResetPassword,
-  RevokeIdentity,
+  count_user_memberships,
+  delete_user,
+  reset_mfa,
+  reset_password,
+  revoke_identity,
 } from "#src/lib/users";
 import { editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
@@ -59,9 +59,10 @@ export default new Hono<AppContext>()
           id,
         );
 
-        const query_organizations_count = CountUserMemberships({
-          pg: identite_pg,
-        })(user.id);
+        const query_organizations_count = count_user_memberships(
+          identite_pg,
+          user.id,
+        );
         const query_moderations_count = count_moderations_by_user_id(
           identite_pg,
           user.id,
@@ -113,12 +114,14 @@ export default new Hono<AppContext>()
     }) {
       const { id: user_id } = req.valid("param");
 
-      const delete_user = DeleteUser({
-        crisp,
-        pg: identite_pg,
-        resolve_delay: config.CRISP_RESOLVE_DELAY,
-      });
-      await delete_user({ moderator: userinfo, user_id });
+      await delete_user(
+        {
+          crisp,
+          pg: identite_pg,
+          resolve_delay: config.CRISP_RESOLVE_DELAY,
+        },
+        { moderator: userinfo, user_id },
+      );
 
       return text("OK", 200, {
         "HX-Location": urls.users.$url().pathname,
@@ -135,12 +138,14 @@ export default new Hono<AppContext>()
       var: { crisp, identite_pg, userinfo },
     }) {
       const { id: user_id } = req.valid("param");
-      const revoke_identity = RevokeIdentity({
-        crisp,
-        pg: identite_pg,
-        resolve_delay: config.CRISP_RESOLVE_DELAY,
-      });
-      await revoke_identity({ moderator: userinfo, user_id });
+      await revoke_identity(
+        {
+          crisp,
+          pg: identite_pg,
+          resolve_delay: config.CRISP_RESOLVE_DELAY,
+        },
+        { moderator: userinfo, user_id },
+      );
       return text("OK", 200, { "HX-Refresh": "true" } as HtmxHeader);
     },
   )
@@ -158,7 +163,7 @@ export default new Hono<AppContext>()
   .patch(
     "/reset/password",
     zValidator("param", EntitySchema),
-    async function reset_password({
+    async function reset_password_handler({
       text,
       req,
       env: config,
@@ -166,12 +171,14 @@ export default new Hono<AppContext>()
     }) {
       const { id: user_id } = req.valid("param");
 
-      const reset_password = ResetPassword({
-        crisp,
-        pg: identite_pg,
-        resolve_delay: config.CRISP_RESOLVE_DELAY,
-      });
-      await reset_password({ moderator: userinfo, user_id });
+      await reset_password(
+        {
+          crisp,
+          pg: identite_pg,
+          resolve_delay: config.CRISP_RESOLVE_DELAY,
+        },
+        { moderator: userinfo, user_id },
+      );
 
       return text("OK", 200, { "HX-Refresh": "true" } as HtmxHeader);
     },
@@ -179,7 +186,7 @@ export default new Hono<AppContext>()
   .patch(
     "/reset/mfa",
     zValidator("param", EntitySchema),
-    async function reset_mfa({
+    async function reset_mfa_handler({
       text,
       req,
       env: config,
@@ -187,12 +194,14 @@ export default new Hono<AppContext>()
     }) {
       const { id: user_id } = req.valid("param");
 
-      const reset_mfa = ResetMFA({
-        crisp,
-        pg: identite_pg,
-        resolve_delay: config.CRISP_RESOLVE_DELAY,
-      });
-      await reset_mfa({ moderator: userinfo, user_id });
+      await reset_mfa(
+        {
+          crisp,
+          pg: identite_pg,
+          resolve_delay: config.CRISP_RESOLVE_DELAY,
+        },
+        { moderator: userinfo, user_id },
+      );
 
       return text("OK", 200, { "HX-Refresh": "true" } as HtmxHeader);
 

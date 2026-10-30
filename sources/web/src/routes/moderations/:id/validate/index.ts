@@ -4,14 +4,14 @@ import { HTTPError, NotFoundError, is_unique_violation } from "#src/errors";
 import type { HtmxHeader } from "#src/htmx";
 import {
   MODERATION_EVENTS,
-  ValidateSimilarModerations,
   build_moderation_update,
   send_crisp_notification,
   validate_form_schema,
+  validate_similar_moderations,
 } from "#src/lib/moderations";
 import {
-  ChangeEmailDomainVerification,
-  GetFicheOrganizationById,
+  change_email_domain_verification,
+  get_fiche_organization_by_id,
 } from "#src/lib/organizations/usecase";
 import type { AppContext } from "#src/middleware/context";
 import {
@@ -55,19 +55,10 @@ export default new Hono<AppContext>().patch(
       req.valid("form");
 
     //#region 💉 Inject dependencies
-    const change_email_domain_verification = ChangeEmailDomainVerification({
-      pg: identite_pg,
-      sub: userinfo.sub,
-    });
     const link_user_to_organization =
       UserOrganisationRepository.createUserOrganizationFactory({
         pg: identite_pg_client,
       });
-    const validate_similar_moderations =
-      ValidateSimilarModerations(identite_pg);
-    const find_organization_by_id = GetFicheOrganizationById({
-      pg: identite_pg,
-    });
     //#endregion
 
     const [moderation_error, moderation] = await to(
@@ -89,12 +80,18 @@ export default new Hono<AppContext>().patch(
     //#region ✨ Add verified domain
     if (add_domain) {
       const [domain_error] = await to(
-        change_email_domain_verification({
-          domain,
-          organization_id,
-          verification_type:
-            add_member === "AS_INTERNAL" ? "verified" : "external",
-        }),
+        change_email_domain_verification(
+          {
+            pg: identite_pg,
+            sub: userinfo.sub,
+          },
+          {
+            domain,
+            organization_id,
+            verification_type:
+              add_member === "AS_INTERNAL" ? "verified" : "external",
+          },
+        ),
       );
 
       match(domain_error)
@@ -109,7 +106,7 @@ export default new Hono<AppContext>().patch(
           throw domain_error;
         });
 
-      await validate_similar_moderations({
+      await validate_similar_moderations(identite_pg, {
         organization_id,
         domain,
         domain_verification_type:
@@ -153,8 +150,10 @@ export default new Hono<AppContext>().patch(
 
     //#region ✨ Send notification
     if (send_notification) {
-      const { cached_libelle, siret } =
-        await find_organization_by_id(organization_id);
+      const { cached_libelle, siret } = await get_fiche_organization_by_id(
+        identite_pg,
+        organization_id,
+      );
 
       const [, operator] = await to(crisp.get_user({ email: userinfo.email }));
       const sender = operator ?? { nickname: userinfo.email };

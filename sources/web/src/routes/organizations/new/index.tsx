@@ -4,7 +4,7 @@ import type { AppEnvContext } from "#src/config";
 import { MainLayout } from "#src/layouts";
 import { parse_sirets } from "#src/lib/organizations";
 import {
-  GetOrganizationInfo,
+  get_organization_info,
   type GetOrganizationInfoHandler,
 } from "#src/lib/organizations/usecase";
 import { authorized, editor_guard } from "#src/middleware/auth";
@@ -86,7 +86,7 @@ function set_get_organization_info(): MiddlewareHandler<
   return async function set_get_organization_info_middleware(c, next) {
     c.set(
       "get_organization_info",
-      GetOrganizationInfo({
+      get_organization_info({
         entreprise_api_gouv_url: c.env.ENTREPRISE_API_GOUV_URL,
         entreprise_api_gouv_token: c.env.ENTREPRISE_API_GOUV_TOKEN,
         http_timeout: c.env.HTTP_CLIENT_TIMEOUT,

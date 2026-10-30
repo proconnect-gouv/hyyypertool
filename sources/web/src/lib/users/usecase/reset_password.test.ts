@@ -10,7 +10,7 @@ import {
 } from "@~/identite-proconnect/database/testing";
 import { beforeAll, beforeEach, expect, mock, test } from "bun:test";
 import { eq } from "drizzle-orm";
-import { ResetPassword } from "./ResetPassword";
+import { reset_password } from "./reset_password";
 
 //
 
@@ -28,7 +28,7 @@ const crisp: CrispApi = {
   send_message: mock().mockResolvedValue(undefined),
 };
 
-const reset_password = ResetPassword({ crisp, pg, resolve_delay: 0 });
+const deps = { crisp, pg, resolve_delay: 0 };
 
 export const anais_tailhade: { email: string } = {
   email: "anais.tailhade@omage.gouv.fr",
@@ -43,7 +43,7 @@ test("reset user password", async () => {
     .set({ email_verified: true, encrypted_password: "🔑", force_2fa: true })
     .where(eq(schema.users.id, pink_diamond_user_id));
 
-  await reset_password({
+  await reset_password(deps, {
     moderator: anais_tailhade,
     user_id: pink_diamond_user_id,
   });

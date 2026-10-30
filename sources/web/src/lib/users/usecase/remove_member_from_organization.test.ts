@@ -2,15 +2,19 @@
 
 import { type CrispApi } from "#src/lib/crisp";
 import { schema } from "@~/identite-proconnect/database";
-import { create_pink_diamond_user } from "@~/identite-proconnect/database/seed/unicorn";
+import {
+  create_pink_diamond_user,
+  create_unicorn_organization,
+} from "@~/identite-proconnect/database/seed/unicorn";
 import {
   empty_database,
   migrate,
   pg,
 } from "@~/identite-proconnect/database/testing";
+import { VerificationTypeSchema } from "@~/identite-proconnect/types";
 import { beforeAll, beforeEach, expect, mock, test } from "bun:test";
 import { eq } from "drizzle-orm";
-import { DeleteUser } from "./DeleteUser";
+import { remove_member_from_organization } from "./remove_member_from_organization";
 
 //
 
@@ -28,38 +32,49 @@ const crisp: CrispApi = {
   send_message: mock().mockResolvedValue(undefined),
 };
 
-const delete_user = DeleteUser({ crisp, pg, resolve_delay: 0 });
+const deps = { crisp, pg, resolve_delay: 0 };
 
 const anais_tailhade = { email: "anais.tailhade@omage.gouv.fr" };
 
 //
 
-test("delete user account", async () => {
+test("remove user from organization", async () => {
   const pink_diamond_user_id = await create_pink_diamond_user(pg);
+  const unicorn_organization_id = await create_unicorn_organization(pg);
+  await pg.insert(schema.users_organizations).values({
+    organization_id: unicorn_organization_id,
+    user_id: pink_diamond_user_id,
+    is_external: false,
+    verification_type: VerificationTypeSchema.enum.domain,
+  });
 
-  await delete_user({
+  await remove_member_from_organization(deps, {
     moderator: anais_tailhade,
+    organization_id: unicorn_organization_id,
     user_id: pink_diamond_user_id,
   });
 
-  const result = await pg.query.users.findFirst({
-    where: eq(schema.users.id, pink_diamond_user_id),
+  const memberships = await pg.query.users_organizations.findMany({
+    where: eq(schema.users_organizations.user_id, pink_diamond_user_id),
   });
+  expect(memberships).toHaveLength(0);
 
-  expect(result).toBeUndefined();
+  const organization = await pg.query.organizations.findFirst({
+    columns: { cached_libelle: true, siret: true },
+    where: eq(schema.organizations.id, unicorn_organization_id),
+  });
+  const organization_name = organization?.cached_libelle ?? organization?.siret;
 
   expect(crisp.create_conversation).toHaveBeenCalledWith({
     email: "pink.diamond@unicorn.xyz",
-    subject: "[ProConnect] - Suppression de votre compte",
+    subject: "[ProConnect] - Retrait d'une organisation",
     nickname: "Pink Diamond",
   });
   expect(crisp.get_user).toHaveBeenCalledWith({
     email: "anais.tailhade@omage.gouv.fr",
   });
   expect(crisp.send_message).toHaveBeenCalledWith({
-    content: expect.stringContaining(
-      "Nous avons supprimé votre compte ProConnect.",
-    ),
+    content: expect.stringContaining(`${organization_name}`),
     session_id: "🗨️",
     user: {
       nickname: "👩‍🚀",

@@ -13,20 +13,18 @@ import {
   pg,
 } from "@~/identite-proconnect/database/testing";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
-import { SuggestSameUserEmails } from "./SuggestSameUserEmails";
+import { suggest_same_user_emails } from "./suggest_same_user_emails";
 
 //
 
 beforeAll(migrate);
 beforeEach(empty_database);
 
-const suggest_same_user_emails = SuggestSameUserEmails({ pg });
-
 //
 
 test("returns all members", async () => {
   const unicorn_organization_id = await given_unicorn_organization();
-  const emails = await suggest_same_user_emails({
+  const emails = await suggest_same_user_emails(pg, {
     organization_id: unicorn_organization_id,
     family_name: "🧟",
   });
@@ -40,7 +38,7 @@ test("returns all members", async () => {
 
 test("returns Diamond members", async () => {
   const unicorn_organization_id = await given_unicorn_organization();
-  const emails = await suggest_same_user_emails({
+  const emails = await suggest_same_user_emails(pg, {
     organization_id: unicorn_organization_id,
     family_name: "Diamond",
   });

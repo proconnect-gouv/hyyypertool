@@ -2,7 +2,7 @@
 
 import { hx_trigger_from_body } from "#src/htmx";
 import { MODERATION_EVENTS } from "#src/lib/moderations";
-import { CountUserMemberships } from "#src/lib/users";
+import { count_user_memberships } from "#src/lib/users";
 import type { GetModerationWithDetailsDto } from "#src/queries/moderations";
 import { type GetOrganizationMemberDto } from "#src/queries/organizations";
 import { button } from "#src/ui/button";
@@ -143,7 +143,9 @@ async function ModerationPageContent() {
 
         <OrganizationsByUser
           user={moderation.user}
-          query_organization_count={CountUserMemberships({ pg: identite_pg })}
+          query_organization_count={(user_id) =>
+            count_user_memberships(identite_pg, user_id)
+          }
         />
 
         <UsersByOrganization

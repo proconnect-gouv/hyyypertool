@@ -12,21 +12,19 @@ import {
   pg,
 } from "@~/identite-proconnect/database/testing";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
-import { CountUserMemberships } from "./CountUserMemberships";
+import { count_user_memberships } from "./count_user_memberships";
 
 //
 
 beforeAll(migrate);
 beforeEach(empty_database);
 
-const count_user_merbership = CountUserMemberships({ pg });
-
 //
 
 test("returns no membership", async () => {
   const pink_diamond_user_id = await create_pink_diamond_user(pg);
 
-  const memberships = await count_user_merbership(pink_diamond_user_id);
+  const memberships = await count_user_memberships(pg, pink_diamond_user_id);
 
   expect(memberships).toBe(0);
 });
@@ -47,7 +45,7 @@ test("returns two memberships", async () => {
     verification_type: "domain_not_verified_yet",
   });
 
-  const memberships = await count_user_merbership(pink_diamond_user_id);
+  const memberships = await count_user_memberships(pg, pink_diamond_user_id);
 
   expect(memberships).toBe(2);
 });
