@@ -10,12 +10,12 @@ import { format, type Options } from "prettier";
 
 const fakeContext = { var: { nonce: "" } } as any;
 
-export const render_html = PrettyRenderer({ parser: "html" });
-export const render_md = PrettyRenderer({ parser: "mdx" });
+export const render_html = pretty_renderer({ parser: "html" });
+export const render_md = pretty_renderer({ parser: "mdx" });
 
 //
 
-export function PrettyRenderer(options: Options) {
+export function pretty_renderer(options: Options) {
   return async function render_formated(element: Child) {
     if (typeof element === "string") return format(element, options);
     const textDecoder = new TextDecoder();

@@ -1,4 +1,4 @@
-import type { AgentConnectUserInfo } from "./AgentConnectUserInfo";
+import type { AgentConnectUserInfo } from "./agent_connect_user_info";
 
 //
 

@@ -1,7 +1,7 @@
 //
 
 import { NotFoundError } from "#src/errors";
-import { Main_Layout } from "#src/layouts";
+import { MainLayout } from "#src/layouts";
 import { moderation_type_to_title } from "#src/lib/moderations";
 import { GetBanaticUrl } from "#src/lib/organizations/usecase";
 import { editor_guard } from "#src/middleware/auth";
@@ -34,7 +34,7 @@ import moderation_validate_router from "./validate";
 export default new Hono<AppContext>()
   .get(
     "/",
-    jsxRenderer(Main_Layout),
+    jsxRenderer(MainLayout),
     zValidator("param", EntitySchema),
     async function GET({
       render,

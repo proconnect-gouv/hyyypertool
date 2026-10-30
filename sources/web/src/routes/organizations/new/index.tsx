@@ -1,7 +1,7 @@
 //
 
 import type { AppEnvContext } from "#src/config";
-import { Main_Layout } from "#src/layouts";
+import { MainLayout } from "#src/layouts";
 import { parse_sirets } from "#src/lib/organizations";
 import {
   GetOrganizationInfo,
@@ -153,7 +153,7 @@ export default new Hono<AppContext & GetOrganizationInfoContext>()
   .use(authorized())
   .use(editor_guard())
   .use(set_get_organization_info())
-  .use("/", jsxRenderer(Main_Layout))
+  .use("/", jsxRenderer(MainLayout))
   .get(
     "/",
     zValidator("query", NewQuerySchema),

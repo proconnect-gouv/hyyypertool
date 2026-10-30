@@ -2,9 +2,9 @@
 
 import { dedent } from "ts-dedent";
 
-//
+export function reset_mfa_message() {
+  //
 
-export function ResetMFAMessage() {
   return dedent`
     Bonjour,
 
@@ -14,7 +14,7 @@ export function ResetMFAMessage() {
   `;
 }
 
-export function ResetPasswordMessage() {
+export function reset_password_message() {
   return dedent`
     Bonjour,
 
@@ -23,7 +23,7 @@ export function ResetPasswordMessage() {
   `;
 }
 
-export function RevokeIdentityMessage() {
+export function revoke_identity_message() {
   return dedent`
     Bonjour,
 
@@ -32,7 +32,7 @@ export function RevokeIdentityMessage() {
   `;
 }
 
-export function DeleteAccountMessage() {
+export function delete_account_message() {
   return dedent`
     Bonjour,
 
@@ -40,7 +40,8 @@ export function DeleteAccountMessage() {
     Vous pouvez créer un nouveau compte à tout moment avec votre adresse email.
   `;
 }
-export function RemoveFromOrganizationMessage({
+
+export function remove_from_organization_message({
   organization_name,
 }: {
   organization_name: string;

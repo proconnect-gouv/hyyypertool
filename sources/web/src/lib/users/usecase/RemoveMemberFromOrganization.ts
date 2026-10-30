@@ -6,7 +6,7 @@ import { remove_user_from_organization } from "#src/queries/moderations";
 import { z_username } from "#src/schema";
 import type { IdentiteProconnectDatabaseCradle } from "@~/identite-proconnect/database";
 import { to as await_to } from "await-to-js";
-import { RemoveFromOrganizationMessage } from "../templates";
+import { remove_from_organization_message } from "../templates";
 import { GetUserInfo } from "./GetUserInfo";
 
 //
@@ -51,7 +51,7 @@ export function RemoveMemberFromOrganization({
     });
 
     await crisp.send_message({
-      content: RemoveFromOrganizationMessage({ organization_name }),
+      content: remove_from_organization_message({ organization_name }),
       session_id,
       user,
     });

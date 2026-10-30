@@ -1,7 +1,7 @@
 //
 
 import type { HtmxHeader } from "#src/htmx";
-import { Main_Layout } from "#src/layouts";
+import { MainLayout } from "#src/layouts";
 import { authorized, editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { z_username } from "#src/schema";
@@ -26,7 +26,7 @@ export default new Hono<AppContext>()
   .use(authorized())
   .get(
     "/",
-    jsxRenderer(Main_Layout),
+    jsxRenderer(MainLayout),
 
     async function GET({ render, set, var: { identite_pg, hyyyper_user } }) {
       const is_editor = hyyyper_user.role !== roles.enum.visitor;

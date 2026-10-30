@@ -1,6 +1,6 @@
+export type { AgentConnectUserInfo } from "./agent_connect_user_info";
 //
 
-export type { AgentConnectUserInfo } from "./AgentConnectUserInfo";
 export {
   authorized,
   editor_guard,

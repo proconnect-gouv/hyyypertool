@@ -14,20 +14,20 @@ import type {
   User,
 } from "@proconnect-gouv/proconnect.crisp/types";
 
-export function CrispApi(config: Config) {
+export function crisp_api(config: Config) {
   return {
-    create_conversation: CreateConversation(config),
-    get_user: GetUserInfo(config),
-    mark_conversation_as_resolved: MarkConversationAsResolved(config),
-    send_message: SendMessage(config),
+    create_conversation: create_conversation(config),
+    get_user: get_user_info(config),
+    mark_conversation_as_resolved: mark_conversation_as_resolved(config),
+    send_message: send_message(config),
   };
 }
 
-export type CrispApi = ReturnType<typeof CrispApi>;
+export type CrispApi = ReturnType<typeof crisp_api>;
 
 //
 
-function CreateConversation(config: Config) {
+function create_conversation(config: Config) {
   return async function create_conversation({
     email,
     nickname,
@@ -55,7 +55,7 @@ function CreateConversation(config: Config) {
   };
 }
 
-function SendMessage(config: Config) {
+function send_message(config: Config) {
   return async function send_message({
     content,
     session_id,
@@ -80,7 +80,7 @@ function SendMessage(config: Config) {
   };
 }
 
-function MarkConversationAsResolved(config: Config) {
+function mark_conversation_as_resolved(config: Config) {
   return async function mark_conversation_as_resolved({
     session_id,
   }: {
@@ -95,7 +95,7 @@ function MarkConversationAsResolved(config: Config) {
   };
 }
 
-export function GetUserInfo(config: Config) {
+export function get_user_info(config: Config) {
   return async function get_user({ email }: { email: string }) {
     const operators = await fetch_crisp<OperatorsRouter>(config, {
       endpoint: `/v1/website/${config.website_id}/operators/list`,

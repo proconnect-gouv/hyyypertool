@@ -3,9 +3,9 @@
 
 import { visually_hidden } from "#src/ui/visually_hidden";
 
-//
+export class HyyyperTitle extends HTMLElement {
+  //
 
-export class Hyyyper_title extends HTMLElement {
   connectedCallback() {
     const yCount = Math.floor(3 + Math.random() * 5);
     const duration = 444;
@@ -49,4 +49,4 @@ export class Hyyyper_title extends HTMLElement {
   }
 }
 
-customElements.define("hyyyper-title", Hyyyper_title);
+customElements.define("hyyyper-title", HyyyperTitle);

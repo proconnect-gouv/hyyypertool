@@ -1,7 +1,7 @@
 //
 
 import { hx_include } from "#src/htmx";
-import { Main_Layout } from "#src/layouts";
+import { MainLayout } from "#src/layouts";
 import type { AppContext } from "#src/middleware/context";
 import { PaginationSchema, SearchSchema } from "#src/schema";
 import { urls } from "#src/urls";
@@ -30,9 +30,9 @@ const hx_domains_query_props = {
   "hx-target": domains_attrs.targets.table,
 };
 
-//
+export default new Hono<AppContext>().use("/", jsxRenderer(MainLayout)).get(
+  //
 
-export default new Hono<AppContext>().use("/", jsxRenderer(Main_Layout)).get(
   "/",
   zValidator("query", query_schema, function hook(result, { redirect }) {
     if (result.success) return undefined;

@@ -45,4 +45,4 @@ export async function get_crisp_mail(
   return { conversation, messages };
 }
 
-export type get_crisp_mail_dto = Awaited<ReturnType<typeof get_crisp_mail>>;
+export type GetCrispMailDto = Awaited<ReturnType<typeof get_crisp_mail>>;

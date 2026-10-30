@@ -1,3 +1,3 @@
 //
 
-export const FrNumberConverter = new Intl.NumberFormat("fr-FR", {});
+export const fr_number_converter = new Intl.NumberFormat("fr-FR", {});

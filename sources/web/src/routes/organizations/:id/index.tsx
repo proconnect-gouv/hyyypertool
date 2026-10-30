@@ -1,6 +1,6 @@
+import { MainLayout } from "#src/layouts";
 //
 
-import { Main_Layout } from "#src/layouts";
 import { GetBanaticUrl } from "#src/lib/organizations/usecase";
 import type { AppContext } from "#src/middleware/context";
 import {
@@ -24,7 +24,7 @@ const OrganizationQuery_Schema = z.object({
 });
 
 export default new Hono<AppContext>()
-  .use("/", jsxRenderer(Main_Layout))
+  .use("/", jsxRenderer(MainLayout))
   .get(
     "/",
     zValidator("param", EntitySchema),

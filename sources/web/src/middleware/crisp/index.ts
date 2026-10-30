@@ -1,7 +1,7 @@
 //
 
 import type { AppEnvContext } from "#src/config";
-import { CrispApi, type CrispApi as CrispApiType } from "#src/lib/crisp";
+import { crisp_api, type CrispApi as CrispApiType } from "#src/lib/crisp";
 import consola, { LogLevels } from "consola";
 import type { Env, MiddlewareHandler } from "hono";
 
@@ -23,7 +23,7 @@ export function set_crisp_client_from_config(): MiddlewareHandler<
 
   return async function set_crisp_client_from_config_middleware(c, next) {
     if (!client) {
-      client = CrispApi({
+      client = crisp_api({
         base_url: c.env.CRISP_BASE_URL,
         identifier: c.env.CRISP_IDENTIFIER,
         key: c.env.CRISP_KEY,

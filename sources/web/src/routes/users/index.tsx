@@ -1,6 +1,6 @@
+import { MainLayout } from "#src/layouts";
 //
 
-import { Main_Layout } from "#src/layouts";
 import { authorized } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { urls } from "#src/urls";
@@ -23,7 +23,7 @@ export default new Hono<AppContext>()
   //
   .get(
     "/",
-    jsxRenderer(Main_Layout),
+    jsxRenderer(MainLayout),
     zValidator("query", query_schema, function hook(result, { redirect }) {
       if (result.success) return undefined;
       consola.error(result.error);

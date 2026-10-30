@@ -4,7 +4,7 @@ import { hyper_ref } from "#src/html";
 import { hx_include, hx_trigger_from_body } from "#src/htmx";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import { alert } from "#src/ui/notice";
-import { FrNumberConverter } from "#src/ui/number";
+import { fr_number_converter } from "#src/ui/number";
 import { formattedPlural } from "#src/ui/plurial";
 import { table } from "#src/ui/table";
 import { urls } from "#src/urls";
@@ -60,7 +60,7 @@ export default async function Page({
       <hr class="border-none py-3" />
       <div class="container mx-auto p-3">
         <h3 id={$domains_describedby}>
-          🌐 {FrNumberConverter.format(domains_count)}{" "}
+          🌐 {fr_number_converter.format(domains_count)}{" "}
           {formattedPlural(domains_count, {
             one: "domaine",
             other: "domaines",
@@ -118,7 +118,7 @@ async function MembersInTheOrganization({
       <details open={false}>
         <summary>
           <h3 class="inline-block" id={$members_describedby}>
-            👥 {FrNumberConverter.format(members_count)}{" "}
+            👥 {fr_number_converter.format(members_count)}{" "}
             {formattedPlural(members_count, {
               one: "membre enregistré",
               other: "membres enregistrés ",

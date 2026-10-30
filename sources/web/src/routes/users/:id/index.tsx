@@ -2,7 +2,7 @@
 
 import { NotFoundError } from "#src/errors";
 import type { HtmxHeader } from "#src/htmx";
-import { Main_Layout } from "#src/layouts";
+import { MainLayout } from "#src/layouts";
 import {
   CountUserMemberships,
   DeleteUser,
@@ -36,7 +36,7 @@ import { UserPage } from "./page";
 export default new Hono<AppContext>()
   .get(
     "/",
-    jsxRenderer(Main_Layout),
+    jsxRenderer(MainLayout),
     zValidator("param", EntitySchema),
     async function GET({
       render,
@@ -195,7 +195,7 @@ export default new Hono<AppContext>()
       await reset_mfa({ moderator: userinfo, user_id });
 
       return text("OK", 200, { "HX-Refresh": "true" } as HtmxHeader);
+
+      //
     },
   );
-
-//

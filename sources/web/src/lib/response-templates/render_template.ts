@@ -32,7 +32,7 @@ export function decodeHtmlEntities(text: string): string {
   return text.replace(/&#(\d+);/g, (_, n) => String.fromCharCode(+n));
 }
 
-export const VariableKeys = z.enum([
+export const variable_keys = z.enum([
   "categorie_juridique",
   "domain",
   "email",
@@ -44,4 +44,4 @@ export const VariableKeys = z.enum([
   "suggest_organization_domains",
 ]);
 
-export type VariableKeysType = z.output<typeof VariableKeys>;
+export type VariableKeysType = z.output<typeof variable_keys>;
