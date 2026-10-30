@@ -1,7 +1,7 @@
 //
 
 import { build_moderation_update } from "#src/lib/moderations";
-import { UpdateModerationById } from "#src/queries/moderations";
+import { update_moderation_by_id } from "#src/queries/moderations";
 import {
   schema,
   type IdentiteProconnectPgDatabase,
@@ -51,7 +51,6 @@ export function ValidateSimilarModerations(pg: IdentiteProconnectPgDatabase) {
 
     // Atomic batch validation using transaction and Promise.all
     return pg.transaction(async (tx) => {
-      const update_moderation_by_id = UpdateModerationById({ pg: tx });
       const validation_promises = matching_moderations.map(
         async (moderation) => {
           const update = build_moderation_update({
@@ -60,7 +59,10 @@ export function ValidateSimilarModerations(pg: IdentiteProconnectPgDatabase) {
             end_user_reason,
             type: "VALIDATED",
           });
-          await update_moderation_by_id(moderation.id, update);
+          await update_moderation_by_id(tx, {
+            id: moderation.id,
+            values: update,
+          });
           return moderation.id;
         },
       );

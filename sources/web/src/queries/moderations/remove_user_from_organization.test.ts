@@ -11,7 +11,7 @@ import {
   pg,
 } from "@~/identite-proconnect/database/testing";
 import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
-import { RemoveUserFromOrganization } from "./RemoveUserFromOrganization";
+import { remove_user_from_organization } from "./remove_user_from_organization";
 
 //
 
@@ -34,8 +34,7 @@ test("remove adora from unicorn organization", async () => {
     verification_type: "domain_not_verified_yet",
   });
 
-  const remove_user_from_organization = RemoveUserFromOrganization({ pg });
-  const response = await remove_user_from_organization({
+  const response = await remove_user_from_organization(pg, {
     organization_id: unicorn_organization_id,
     user_id: adora_pony_user_id,
   });
@@ -55,8 +54,7 @@ test("do nothing if adora is not a unicorn member", async () => {
   const unicorn_organization_id = await create_unicorn_organization(pg);
   const adora_pony_user_id = await create_adora_pony_user(pg);
 
-  const remove_user_from_organization = RemoveUserFromOrganization({ pg });
-  const response = await remove_user_from_organization({
+  const response = await remove_user_from_organization(pg, {
     organization_id: unicorn_organization_id,
     user_id: adora_pony_user_id,
   });
