@@ -11,7 +11,7 @@ import {
   pg,
 } from "@~/identite-proconnect/database/testing";
 import { beforeAll, expect, setSystemTime, test } from "bun:test";
-import { UpdateModerationById } from "./UpdateModerationById";
+import { update_moderation_by_id } from "./update_moderation_by_id";
 
 //
 
@@ -22,8 +22,6 @@ beforeAll(() => {
   setSystemTime(new Date("2222-01-01T00:00:00.000Z"));
 });
 
-const update_moderation_by_id = UpdateModerationById({ pg });
-
 //
 
 test("update a moderation", async () => {
@@ -32,11 +30,14 @@ test("update a moderation", async () => {
   const moderation_id = await create_adora_pony_moderation(pg, { type: "" });
 
   setSystemTime(new Date("2222-01-02T00:00:00.000Z"));
-  await update_moderation_by_id(moderation_id, {
-    comment: "Adora is a good pony",
-    moderated_at: new Date().toISOString(),
-    moderated_by: "Captain Midnight",
-    status: "accepted",
+  await update_moderation_by_id(pg, {
+    id: moderation_id,
+    values: {
+      comment: "Adora is a good pony",
+      moderated_at: new Date().toISOString(),
+      moderated_by: "Captain Midnight",
+      status: "accepted",
+    },
   });
 
   expect(

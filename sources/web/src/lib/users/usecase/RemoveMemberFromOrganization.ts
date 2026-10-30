@@ -2,7 +2,7 @@
 
 import type { CrispApiCradle } from "#src/lib/crisp";
 import { GetFicheOrganizationById } from "#src/lib/organizations/usecase";
-import { RemoveUserFromOrganization } from "#src/queries/moderations";
+import { remove_user_from_organization } from "#src/queries/moderations";
 import { z_username } from "#src/schema";
 import type { IdentiteProconnectDatabaseCradle } from "@~/identite-proconnect/database";
 import { to as await_to } from "await-to-js";
@@ -42,8 +42,7 @@ export function RemoveMemberFromOrganization({
       nickname: z_username.parse(moderator),
       email: moderator.email,
     };
-    const remove_user_from_organization = RemoveUserFromOrganization({ pg });
-    await remove_user_from_organization({ organization_id, user_id });
+    await remove_user_from_organization(pg, { organization_id, user_id });
 
     const { session_id } = await crisp.create_conversation({
       email,

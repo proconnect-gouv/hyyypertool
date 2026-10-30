@@ -10,9 +10,9 @@ import {
 } from "#src/lib/moderations";
 import { render as render_template } from "#src/lib/response-templates";
 import {
-  GetModerationWithDetails,
-  GetModerationWithUser,
-  UpdateModerationById,
+  get_moderation_with_details,
+  get_moderation_with_user,
+  update_moderation_by_id,
 } from "#src/queries/moderations";
 import { EntitySchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
@@ -39,7 +39,7 @@ export default new Hono<ContextType>()
       const { id, response_id } = req.valid("param");
 
       const [moderation, template] = await Promise.all([
-        GetModerationWithDetails(identite_pg)(id),
+        get_moderation_with_details(identite_pg, id),
         get_response_template(hyyyper_pg, response_id),
       ]);
 
@@ -69,9 +69,10 @@ export default new Hono<ContextType>()
         allow_editing,
       } = req.valid("form");
 
-      const get_moderation_with_user = GetModerationWithUser(identite_pg);
-      const update_moderation_by_id = UpdateModerationById({ pg: identite_pg });
-      const moderation = await get_moderation_with_user(moderation_id);
+      const moderation = await get_moderation_with_user(
+        identite_pg,
+        moderation_id,
+      );
 
       const body = text_body;
       const recipient = moderation.user.email;
@@ -88,8 +89,9 @@ export default new Hono<ContextType>()
           sender,
         });
 
-        await update_moderation_by_id(moderation.id, {
-          ticket_id: session_id,
+        await update_moderation_by_id(identite_pg, {
+          id: moderation.id,
+          values: { ticket_id: session_id },
         });
 
         await new Promise((resolve) =>
@@ -108,8 +110,9 @@ export default new Hono<ContextType>()
         });
 
         if (String(moderation.ticket_id) !== session_id) {
-          await update_moderation_by_id(moderation.id, {
-            ticket_id: session_id,
+          await update_moderation_by_id(identite_pg, {
+            id: moderation.id,
+            values: { ticket_id: session_id },
           });
         }
 
@@ -127,7 +130,10 @@ export default new Hono<ContextType>()
         type: "REJECTED",
         allow_editing,
       });
-      await update_moderation_by_id(moderation.id, update);
+      await update_moderation_by_id(identite_pg, {
+        id: moderation.id,
+        values: update,
+      });
 
       return text("OK", 200, {
         "HX-Trigger": MODERATION_EVENTS.enum.MODERATION_UPDATED,

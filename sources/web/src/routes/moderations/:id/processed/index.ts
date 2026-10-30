@@ -8,9 +8,9 @@ import {
 import type { UserInfoVariablesContext } from "#src/middleware/auth";
 import type { IdentiteProconnectPgContext } from "#src/middleware/identite-pg";
 import {
-  GetModerationWithUser,
-  UpdateModerationById,
   type GetModerationWithUserDto,
+  get_moderation_with_user,
+  update_moderation_by_id,
 } from "#src/queries/moderations";
 import { EntitySchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
@@ -31,8 +31,7 @@ async function mark_as_processed(
     type: "REJECTED",
   });
 
-  const update_moderation_by_id = UpdateModerationById({ pg });
-  await update_moderation_by_id(moderation.id, update);
+  await update_moderation_by_id(pg, { id: moderation.id, values: update });
 }
 
 //
@@ -45,8 +44,7 @@ export default new Hono<
   async ({ text, req, notFound, var: { identite_pg, userinfo } }) => {
     const { id } = req.valid("param");
 
-    const get_moderation_with_user = GetModerationWithUser(identite_pg);
-    const moderation = await get_moderation_with_user(id);
+    const moderation = await get_moderation_with_user(identite_pg, id);
 
     if (!moderation) return notFound();
 

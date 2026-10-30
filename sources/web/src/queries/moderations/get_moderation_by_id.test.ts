@@ -11,7 +11,7 @@ import {
   pg,
 } from "@~/identite-proconnect/database/testing";
 import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
-import { GetModerationById } from "./GetModerationById";
+import { get_moderation_by_id } from "./get_moderation_by_id";
 
 //
 
@@ -29,8 +29,7 @@ test("get a moderation", async () => {
   await create_adora_pony_user(pg);
   const moderation_id = await create_adora_pony_moderation(pg, { type: "" });
 
-  const get_moderation_by_id = GetModerationById({ pg });
-  const moderation = await get_moderation_by_id(moderation_id, {
+  const moderation = await get_moderation_by_id(pg, {
     columns: {
       id: true,
       created_at: true,
@@ -38,6 +37,7 @@ test("get a moderation", async () => {
       user_id: true,
       organization_id: true,
     },
+    id: moderation_id,
   });
 
   expect(moderation).toMatchInlineSnapshot(`

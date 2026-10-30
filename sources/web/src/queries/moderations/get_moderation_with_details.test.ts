@@ -11,7 +11,7 @@ import {
   pg,
 } from "@~/identite-proconnect/database/testing";
 import { beforeAll, expect, setSystemTime, test } from "bun:test";
-import { GetModerationWithDetails } from "./GetModerationWithDetails";
+import { get_moderation_with_details } from "./get_moderation_with_details";
 
 //
 
@@ -29,8 +29,7 @@ test("get a moderation with full organization and user details", async () => {
   await create_adora_pony_user(pg);
   const moderation_id = await create_adora_pony_moderation(pg, { type: "" });
 
-  const get_moderation_with_details = GetModerationWithDetails(pg);
-  const moderation = await get_moderation_with_details(moderation_id);
+  const moderation = await get_moderation_with_details(pg, moderation_id);
 
   expect(moderation).toMatchInlineSnapshot(`
     {
@@ -81,9 +80,7 @@ test("get a moderation with full organization and user details", async () => {
 });
 
 test("throws NotFoundError when moderation does not exist", async () => {
-  const get_moderation_with_details = GetModerationWithDetails(pg);
-
-  await expect(get_moderation_with_details(999999)).rejects.toThrow(
+  await expect(get_moderation_with_details(pg, 999999)).rejects.toThrow(
     "Moderation not found.",
   );
 });

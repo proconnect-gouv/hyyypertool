@@ -6,7 +6,7 @@ import { moderation_type_to_title } from "#src/lib/moderations";
 import { GetBanaticUrl } from "#src/lib/organizations/usecase";
 import { editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
-import { GetModerationWithDetails } from "#src/queries/moderations";
+import { get_moderation_with_details } from "#src/queries/moderations";
 import {
   get_domain_count,
   get_organization_member,
@@ -48,10 +48,8 @@ export default new Hono<AppContext>()
 
       try {
         // Load moderation with full details
-        const get_moderation_with_details =
-          GetModerationWithDetails(identite_pg);
         const [moderation_error, moderation] = await to(
-          get_moderation_with_details(id),
+          get_moderation_with_details(identite_pg, id),
         );
 
         if (moderation_error) {

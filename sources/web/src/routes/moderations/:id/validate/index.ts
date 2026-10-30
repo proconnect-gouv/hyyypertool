@@ -15,8 +15,8 @@ import {
 } from "#src/lib/organizations/usecase";
 import type { AppContext } from "#src/middleware/context";
 import {
-  GetModerationWithUser,
-  UpdateModerationById,
+  get_moderation_with_user,
+  update_moderation_by_id,
 } from "#src/queries/moderations";
 import { get_organization_domains } from "#src/queries/organizations";
 import { UpdateUserByIdInOrganization } from "#src/queries/users";
@@ -59,7 +59,6 @@ export default new Hono<AppContext>().patch(
       pg: identite_pg,
       sub: userinfo.sub,
     });
-    const get_moderation_with_user = GetModerationWithUser(identite_pg);
     const update_user_by_id_in_organization = UpdateUserByIdInOrganization({
       pg: identite_pg,
     });
@@ -72,11 +71,10 @@ export default new Hono<AppContext>().patch(
     const find_organization_by_id = GetFicheOrganizationById({
       pg: identite_pg,
     });
-    const update_moderation_by_id = UpdateModerationById({ pg: identite_pg });
     //#endregion
 
     const [moderation_error, moderation] = await to(
-      get_moderation_with_user(id),
+      get_moderation_with_user(identite_pg, id),
     );
 
     if (moderation_error) {
@@ -177,8 +175,9 @@ export default new Hono<AppContext>().patch(
       });
 
       if (moderation.ticket_id !== session_id) {
-        await update_moderation_by_id(moderation.id, {
-          ticket_id: session_id,
+        await update_moderation_by_id(identite_pg, {
+          id: moderation.id,
+          values: { ticket_id: session_id },
         });
       }
 
@@ -197,7 +196,10 @@ export default new Hono<AppContext>().patch(
       end_user_reason: moderation.end_user_reason,
       type: "VALIDATED",
     });
-    await update_moderation_by_id(moderation.id, update);
+    await update_moderation_by_id(identite_pg, {
+      id: moderation.id,
+      values: update,
+    });
     //#endregion
 
     return text("OK", 200, {
