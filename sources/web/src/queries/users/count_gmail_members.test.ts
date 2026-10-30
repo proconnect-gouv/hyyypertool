@@ -10,7 +10,7 @@ import {
   pg,
 } from "@~/identite-proconnect/database/testing";
 import { beforeAll, expect, test } from "bun:test";
-import { CountGmailMembers } from "./CountGmailMembers";
+import { count_gmail_members } from "./count_gmail_members";
 
 //
 
@@ -27,8 +27,7 @@ test("counts gmail members for organization", async () => {
     verification_type: "domain_not_verified_yet",
   });
 
-  const count_gmail_members = CountGmailMembers(pg);
-  const result = await count_gmail_members({
+  const result = await count_gmail_members(pg, {
     domain: "@gmail.com",
     siret: "🦄 siret",
   });

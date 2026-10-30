@@ -1,0 +1,25 @@
+import {
+  schema,
+  type IdentiteProconnectPgDatabase,
+} from "@~/identite-proconnect/database";
+import { eq } from "drizzle-orm";
+
+export async function get_authenticator_by_user_id(
+  pg: IdentiteProconnectPgDatabase,
+  id: number,
+) {
+  return pg.query.authenticators.findMany({
+    columns: {
+      created_at: true,
+      credential_id: true,
+      display_name: true,
+      last_used_at: true,
+      usage_count: true,
+    },
+    where: eq(schema.authenticators.user_id, id),
+  });
+}
+
+export type GetAuthenticatorsByUserIdDto = Awaited<
+  ReturnType<typeof get_authenticator_by_user_id>
+>;

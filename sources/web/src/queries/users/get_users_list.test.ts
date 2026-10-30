@@ -13,7 +13,7 @@ import {
 } from "@~/identite-proconnect/database/testing";
 import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
 import { eq } from "drizzle-orm";
-import { GetUsersList } from "./GetUsersList";
+import { get_users_list } from "./get_users_list";
 
 //
 
@@ -27,8 +27,7 @@ beforeAll(() => {
 test("returns paginated users list with default pagination", async () => {
   await create_adora_pony_user(pg);
 
-  const get_users_list = GetUsersList(pg);
-  const result = await get_users_list({});
+  const result = await get_users_list(pg, {});
 
   expect(result).toMatchInlineSnapshot(`
     {
@@ -49,8 +48,7 @@ test("returns paginated users list with default pagination", async () => {
 });
 
 test("returns empty list when no users", async () => {
-  const get_users_list = GetUsersList(pg);
-  const result = await get_users_list({});
+  const result = await get_users_list(pg, {});
 
   expect(result).toMatchInlineSnapshot(`
     {
@@ -65,8 +63,7 @@ test("filters users by search term in email", async () => {
   await create_pink_diamond_user(pg);
   await create_red_diamond_user(pg);
 
-  const get_users_list = GetUsersList(pg);
-  const result = await get_users_list({ search: "pony" });
+  const result = await get_users_list(pg, { search: "pony" });
 
   expect(result).toMatchInlineSnapshot(`
     {
@@ -91,8 +88,7 @@ test("filters users by search term in family name", async () => {
   await create_pink_diamond_user(pg);
   await create_red_diamond_user(pg);
 
-  const get_users_list = GetUsersList(pg);
-  const result = await get_users_list({ search: "Pony" });
+  const result = await get_users_list(pg, { search: "Pony" });
 
   expect(result).toMatchInlineSnapshot(`
     {
@@ -117,8 +113,7 @@ test("filters users by search term in given name", async () => {
   await create_pink_diamond_user(pg);
   await create_red_diamond_user(pg);
 
-  const get_users_list = GetUsersList(pg);
-  const result = await get_users_list({ search: "Adora" });
+  const result = await get_users_list(pg, { search: "Adora" });
 
   expect(result).toMatchInlineSnapshot(`
     {
@@ -144,10 +139,8 @@ test("respects pagination parameters", async () => {
   await create_pink_diamond_user(pg);
   await create_red_diamond_user(pg);
 
-  const get_users_list = GetUsersList(pg);
-
   // Test first page
-  const firstPage = await get_users_list({
+  const firstPage = await get_users_list(pg, {
     pagination: { page: 0, page_size: 2 },
   });
   expect(firstPage).toMatchInlineSnapshot(`
@@ -177,7 +170,7 @@ test("respects pagination parameters", async () => {
   `);
 
   // Test second page
-  const secondPage = await get_users_list({
+  const secondPage = await get_users_list(pg, {
     pagination: { page: 1, page_size: 2 },
   });
   expect(secondPage).toMatchInlineSnapshot(`
@@ -216,8 +209,7 @@ test("orders users by created_at descending", async () => {
     .where(eq(schema.users.id, 1))
     .returning({ id: schema.users.id });
 
-  const get_users_list = GetUsersList(pg);
-  const result = await get_users_list({});
+  const result = await get_users_list(pg, {});
 
   expect(result).toMatchInlineSnapshot(`
     {

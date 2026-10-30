@@ -5,20 +5,21 @@ import { insert_1Password_authenticator } from "@~/identite-proconnect/database/
 import { create_pink_diamond_user } from "@~/identite-proconnect/database/seed/unicorn";
 import { migrate, pg } from "@~/identite-proconnect/database/testing";
 import { beforeEach, expect, test } from "bun:test";
-import { GetAuthenticatorByUserId } from "./GetAuthenticatorByUserId";
+import { get_authenticator_by_user_id } from "./get_authenticator_by_user_id";
 
 //
 
 beforeEach(migrate);
 
-const get_authenticators_by_user_id = GetAuthenticatorByUserId(pg);
 test("should returns one authenticator", async () => {
   const pink_diamond_user_id = await create_pink_diamond_user(pg);
 
   await insert_1Password_authenticator(pg, pink_diamond_user_id);
 
-  const authenticators =
-    await get_authenticators_by_user_id(pink_diamond_user_id);
+  const authenticators = await get_authenticator_by_user_id(
+    pg,
+    pink_diamond_user_id,
+  );
 
   expect(authenticators).toMatchInlineSnapshot(`
     [
@@ -39,8 +40,10 @@ test("should returns two authenticators & structure of authenticators", async ()
   await insert_1Password_authenticator(pg, pink_diamond_user_id);
   await insert_nordPass_authenticator(pg, pink_diamond_user_id);
 
-  const authenticators =
-    await get_authenticators_by_user_id(pink_diamond_user_id);
+  const authenticators = await get_authenticator_by_user_id(
+    pg,
+    pink_diamond_user_id,
+  );
 
   expect(authenticators).toMatchInlineSnapshot(`
     [
@@ -65,8 +68,10 @@ test("should returns two authenticators & structure of authenticators", async ()
 test("should returns zero authenticator", async () => {
   const pink_diamond_user_id = await create_pink_diamond_user(pg);
 
-  const authenticators =
-    await get_authenticators_by_user_id(pink_diamond_user_id);
+  const authenticators = await get_authenticator_by_user_id(
+    pg,
+    pink_diamond_user_id,
+  );
 
   expect(authenticators).toHaveLength(0);
 });
