@@ -61,7 +61,7 @@ export async function get_activities_by_user_id(
           where: (table, { inArray }) => inArray(table.id, cause_ids),
         });
 
-  const actor_label = await label_actors(hyyyper_pg, [
+  const actor_label = await label_actors({ hyyyper_pg, pg }, [
     ...activities,
     ...causes,
   ]);

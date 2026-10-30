@@ -140,6 +140,17 @@ async function insert_activities() {
       },
       created_at: "2222-01-06T00:00:00.000Z",
     },
+    {
+      action: "member.removed",
+      actor_ref: `${adora_pony_user_id}`,
+      actor_type: "user",
+      app: "proconnect-identite",
+      context: {
+        inputs: {},
+        outcome: { is_external: false, verification_type: "domain" },
+      },
+      created_at: "2222-01-07T00:00:00.000Z",
+    },
   ]);
 
   return { moderator };
@@ -158,6 +169,7 @@ test("GET /activity lists the latest activities with their targets, newest first
   expect(html).toContain("▶️ Suivre en direct");
   expect(html).not.toContain("every 5s");
   expect(row_texts(html)).toEqual([
+    `07/01/2222 01:00:00 adora.pony@unicorn.xyz ➖ Membre supprimé (domain, interne) —`,
     `06/01/2222 01:00:00 ${moderator.email} ➕ Membre ajouté (domain, externe) —`,
     `05/01/2222 01:00:00 ${moderator.email} ⚠️ Contexte invalide : domain.refused {"inputs":{},"outcome":{}} —`,
     `04/01/2222 01:00:00 ${moderator.email} 🗑️ Utilisateur adora.pony@unicorn.xyz supprimé adora.pony@unicorn.xyz`,
@@ -200,10 +212,11 @@ test("GET /activity?category= accepts several categories", async () => {
   );
 
   const rows = row_texts(await response.text());
-  expect(rows).toHaveLength(3);
-  expect(rows[0]).toContain("➕ Membre ajouté");
-  expect(rows[1]).toContain("moderation.accepted");
-  expect(rows[2]).toContain("⬆️ Membre promu");
+  expect(rows).toHaveLength(4);
+  expect(rows[0]).toContain("➖ Membre supprimé");
+  expect(rows[1]).toContain("➕ Membre ajouté");
+  expect(rows[2]).toContain("moderation.accepted");
+  expect(rows[3]).toContain("⬆️ Membre promu");
 });
 
 test("GET /activity?live=5 polls every 5 seconds until paused", async () => {

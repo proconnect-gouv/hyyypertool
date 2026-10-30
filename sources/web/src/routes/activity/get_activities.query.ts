@@ -110,7 +110,7 @@ export async function get_activities(
         });
   const cause_by_id = new Map(causes.map((cause) => [cause.id, cause]));
 
-  const actor_label = await label_actors(hyyyper_pg, [
+  const actor_label = await label_actors({ hyyyper_pg, pg }, [
     ...activities,
     ...causes,
   ]);
