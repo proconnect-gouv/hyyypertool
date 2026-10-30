@@ -6,7 +6,7 @@ import { button } from "#src/ui/button";
 import { CopyButton, GoogleSearchButton } from "#src/ui/button/components";
 import { card } from "#src/ui/card";
 import { badge_description_list } from "#src/ui/list";
-import { FrNumberConverter } from "#src/ui/number";
+import { fr_number_converter } from "#src/ui/number";
 import { formattedPlural } from "#src/ui/plurial";
 import { table } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
@@ -495,7 +495,7 @@ function AccountInfo({ user }: { user: User }) {
     <dl class={base()}>
       <dt class={dt()}>Nombre de connection</dt>
       <dd class={dd()}>
-        <b>{FrNumberConverter.format(user.sign_in_count)}</b>
+        <b>{fr_number_converter.format(user.sign_in_count)}</b>
       </dd>
 
       <dt class={dt()}>Création</dt>

@@ -16,7 +16,7 @@ import {
 } from "bun:test";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
-import { Main_Layout } from "./main";
+import { MainLayout } from "./main";
 
 //
 
@@ -62,7 +62,7 @@ test("Main Layout", async () => {
     )
     .use(set_nonce("nonce"))
     .use(authorized())
-    .use(jsxRenderer(Main_Layout))
+    .use(jsxRenderer(MainLayout))
     .get("/", (c) => {
       return c.render("✅");
     });

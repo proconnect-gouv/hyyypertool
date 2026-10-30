@@ -8,7 +8,7 @@ import {
 } from "@~/identite-proconnect/database";
 import { to as await_to } from "await-to-js";
 import { eq } from "drizzle-orm";
-import { ResetMFAMessage } from "../templates";
+import { reset_mfa_message } from "../templates";
 import { GetUserInfo } from "./GetUserInfo";
 
 //
@@ -55,7 +55,7 @@ export function ResetMFA({
     };
 
     await crisp.send_message({
-      content: ResetMFAMessage(),
+      content: reset_mfa_message(),
       session_id,
       user,
     });

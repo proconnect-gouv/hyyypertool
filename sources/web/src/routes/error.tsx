@@ -58,15 +58,15 @@ export function error_handler(error: Error, c: Context) {
             );
           })
           .otherwise(async () => {
-            return render(<Error_Page error={error} />);
+            return render(<ErrorPage error={error} />);
           });
       })
   );
 }
 
-//
+export function ErrorPage({ error }: { error: Error }) {
+  //
 
-export function Error_Page({ error }: { error: Error }) {
   const {
     env: { PUBLIC_ASSETS_PATH },
   } = useRequestContext<AppContext>();

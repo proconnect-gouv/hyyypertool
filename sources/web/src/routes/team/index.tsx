@@ -1,7 +1,7 @@
 //
 
 import type { HtmxHeader } from "#src/htmx";
-import { Main_Layout } from "#src/layouts";
+import { MainLayout } from "#src/layouts";
 import type { AdminAppContext } from "#src/middleware/context";
 import { EntitySchema } from "#src/schema";
 import { urls } from "#src/urls";
@@ -22,7 +22,7 @@ import Page from "./page";
 export default new Hono<AdminAppContext>()
   .get(
     "/",
-    jsxRenderer(Main_Layout),
+    jsxRenderer(MainLayout),
     zValidator("query", query_schema, function hook(result, { redirect }) {
       if (result.success) return undefined;
       consola.error(result.error);

@@ -1,6 +1,6 @@
+import { MainLayout } from "#src/layouts";
 //
 
-import { Main_Layout } from "#src/layouts";
 import { authorized, editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
@@ -32,7 +32,7 @@ export default new Hono<AppContext>()
   .use(authorized())
   .get(
     "/",
-    jsxRenderer(Main_Layout),
+    jsxRenderer(MainLayout),
     async function GET({
       render,
       set,
@@ -54,7 +54,7 @@ export default new Hono<AppContext>()
   )
   .get(
     "/new",
-    jsxRenderer(Main_Layout),
+    jsxRenderer(MainLayout),
     function GET({ render, set, var: { hyyyper_user } }) {
       set("page_title", "Nouveau template");
       const is_editor = hyyyper_user.role !== roles.enum.visitor;
@@ -63,7 +63,7 @@ export default new Hono<AppContext>()
   )
   .get(
     "/:id",
-    jsxRenderer(Main_Layout),
+    jsxRenderer(MainLayout),
     async function GET({
       render,
       set,

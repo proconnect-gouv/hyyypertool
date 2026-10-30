@@ -1,4 +1,4 @@
+export * from "./entities/user";
 //
 
-export * from "./entities/User";
 export * from "./usecase";

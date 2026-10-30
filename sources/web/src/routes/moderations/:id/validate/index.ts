@@ -164,7 +164,7 @@ export default new Hono<AppContext>().patch(
         email: moderation.user.email,
         subject: `[ProConnect] Demande pour rejoindre ${cached_libelle || siret}`,
         nickname: moderation.user.email,
-        content: ModerationProcessedMessage({
+        content: moderation_processed_message({
           baseurl: config.API_AUTH_URL,
           email: moderation.user.email,
           libelle: cached_libelle || siret,
@@ -219,7 +219,7 @@ function deduce_verification_type_from_organization_domains(
     : LinkEnum.enum.no_validation_means_available;
 }
 
-export function ModerationProcessedMessage({
+export function moderation_processed_message({
   baseurl,
   libelle,
   email,

@@ -8,7 +8,7 @@ import {
 } from "@~/identite-proconnect/database";
 import { to as await_to } from "await-to-js";
 import { eq } from "drizzle-orm";
-import { RevokeIdentityMessage } from "../templates";
+import { revoke_identity_message } from "../templates";
 import { GetUserInfo } from "./GetUserInfo";
 
 //
@@ -54,7 +54,7 @@ export function RevokeIdentity({
     });
 
     await crisp.send_message({
-      content: RevokeIdentityMessage(),
+      content: revoke_identity_message(),
       session_id,
       user,
     });

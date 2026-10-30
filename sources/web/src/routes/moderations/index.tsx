@@ -1,6 +1,6 @@
+import { MainLayout } from "#src/layouts";
 //
 
-import { Main_Layout } from "#src/layouts";
 import { authorized } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { Hono } from "hono";
@@ -20,7 +20,7 @@ export default new Hono<AppContext>()
   .route("/:id", moderation_router)
   .get(
     "/",
-    jsxRenderer(Main_Layout),
+    jsxRenderer(MainLayout),
     async function GET({ env, render, req, set, var: { identite_pg } }) {
       const query = req.query();
 
@@ -59,7 +59,7 @@ export default new Hono<AppContext>()
           query_result={query_moderations_list}
         />,
       );
+
+      //
     },
   );
-
-//

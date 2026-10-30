@@ -3,7 +3,7 @@
 import { PaginationSchema, type Pagination } from "#src/schema";
 import { button } from "../button";
 import { input } from "../form";
-import { FrNumberConverter } from "../number";
+import { fr_number_converter } from "../number";
 
 //
 
@@ -38,9 +38,9 @@ export function Foot({
     <tfoot class="mt-4">
       <tr>
         <th colspan={info_colspan} class="whitespace-nowrap" scope="row">
-          Affiche de {FrNumberConverter.format(page_index * page_size)}-
-          {FrNumberConverter.format(page_index * page_size + page_size)} sur{" "}
-          {FrNumberConverter.format(count)}
+          Affiche de {fr_number_converter.format(page_index * page_size)}-
+          {fr_number_converter.format(page_index * page_size + page_size)} sur{" "}
+          {fr_number_converter.format(count)}
         </th>
         <td class="space-x-2" colspan={pagination_colspan}>
           <button
@@ -63,7 +63,7 @@ export function Foot({
             name={name ?? PaginationSchema.keyof().enum.page}
             value={page}
           />
-          <span>of {FrNumberConverter.format(last_page)}</span>
+          <span>of {fr_number_converter.format(last_page)}</span>
           <button
             class={button({ type: "tertiary-no-outline" })}
             disabled={page >= last_page}

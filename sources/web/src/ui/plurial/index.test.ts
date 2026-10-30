@@ -1,24 +1,24 @@
 //
 
 import { expect, test } from "bun:test";
-import { formattedPlural, FrCardinalRules } from "./index";
+import { formattedPlural, fr_cardinal_rules } from "./index";
 
 //
 
 test("returns 'one' for 0", () => {
-  expect(FrCardinalRules.select(0)).toEqual("one");
+  expect(fr_cardinal_rules.select(0)).toEqual("one");
 });
 
 test("returns 'one' for 1", () => {
-  expect(FrCardinalRules.select(1)).toEqual("one");
+  expect(fr_cardinal_rules.select(1)).toEqual("one");
 });
 
 test("returns 'other' for 2", () => {
-  expect(FrCardinalRules.select(2)).toEqual("other");
+  expect(fr_cardinal_rules.select(2)).toEqual("other");
 });
 
 test("returns 'other' for 42", () => {
-  expect(FrCardinalRules.select(42)).toEqual("other");
+  expect(fr_cardinal_rules.select(42)).toEqual("other");
 });
 
 //

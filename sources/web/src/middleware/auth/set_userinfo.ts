@@ -4,7 +4,7 @@ import type { Context, Env } from "hono";
 import { createMiddleware } from "hono/factory";
 import type { SentryVariablesContext } from "../sentry";
 import type { SessionContext } from "../session";
-import type { AgentConnectUserInfo } from "./AgentConnectUserInfo";
+import type { AgentConnectUserInfo } from "./agent_connect_user_info";
 
 //
 

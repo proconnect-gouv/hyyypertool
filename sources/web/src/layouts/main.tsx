@@ -15,8 +15,8 @@ import { useRequestContext } from "hono/jsx-renderer";
 import { routePath } from "hono/route";
 import { RootLayout } from "./root";
 
-//
-export function Main_Layout({ children }: PropsWithChildren) {
+export function MainLayout({ children }: PropsWithChildren) {
+  //
   const {
     var: { userinfo, hyyyper_user },
   } = useRequestContext<AppContext>();

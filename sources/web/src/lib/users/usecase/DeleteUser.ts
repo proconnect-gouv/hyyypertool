@@ -8,7 +8,7 @@ import {
 } from "@~/identite-proconnect/database";
 import { to as await_to } from "await-to-js";
 import { eq } from "drizzle-orm";
-import { DeleteAccountMessage } from "../templates";
+import { delete_account_message } from "../templates";
 import { GetUserInfo } from "./GetUserInfo";
 
 //
@@ -45,7 +45,7 @@ export function DeleteUser({
     });
 
     await crisp.send_message({
-      content: DeleteAccountMessage(),
+      content: delete_account_message(),
       session_id,
       user,
     });

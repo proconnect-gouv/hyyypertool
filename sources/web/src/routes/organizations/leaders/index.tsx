@@ -1,6 +1,6 @@
+import { MainLayout } from "#src/layouts";
 //
 
-import { Main_Layout } from "#src/layouts";
 import type { AppContext } from "#src/middleware/context";
 import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
@@ -58,7 +58,7 @@ export default new Hono<AppContext>()
   .get(
     "/document",
     zValidator("query", z.object({ siret: z.string() })),
-    jsxRenderer(Main_Layout),
+    jsxRenderer(MainLayout),
     async function GET({ req, env, render, status, var: { fetch, sentry } }) {
       const { siret } = req.valid("query");
       const result = await load_leader_document({ siret, fetch, env });

@@ -4,7 +4,7 @@ import { SuggestSameUserEmails } from "#src/lib/users/usecase";
 import type { GetModerationWithDetailsDto } from "#src/queries/moderations";
 import { z_email_domain } from "#src/schema";
 import type { IdentiteProconnectDatabaseCradle } from "@~/identite-proconnect/database";
-import { SuggestOrganizationDomains } from "./SuggestOrganizationDomains";
+import { suggest_organization_domains } from "./suggest_organization_domains";
 
 //
 
@@ -19,7 +19,7 @@ export async function build_template_data(
       family_name: moderation.user.family_name ?? "",
       organization_id: moderation.organization_id,
     }),
-    SuggestOrganizationDomains({ pg })(moderation.organization_id),
+    suggest_organization_domains(pg, moderation.organization_id),
   ]);
 
   return {
