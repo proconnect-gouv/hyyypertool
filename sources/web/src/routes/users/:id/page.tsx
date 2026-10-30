@@ -25,6 +25,7 @@ export async function UserPage({
   authenticators,
   franceconnect,
   is_editor,
+  query_activities_count,
   query_moderations_count,
   query_oidc_clients_count,
   query_organizations_count,
@@ -33,15 +34,20 @@ export async function UserPage({
   authenticators: Authenticators;
   franceconnect: FranceConnect;
   is_editor: boolean;
+  query_activities_count: Promise<number>;
   query_moderations_count: Promise<number>;
   query_oidc_clients_count: Promise<number>;
   query_organizations_count: Promise<number>;
   user: User;
 }) {
+  const $activities_describedby = hyper_ref("user_activities");
   const $organizations_describedby = hyper_ref("user_organizations");
   const $moderations_describedby = hyper_ref("user_moderations");
   const $oidc_clients_describedby = hyper_ref("user_oidc_clients");
 
+  const hx_get_user_activities_props = urls.users[":id"].activities.$hx_get({
+    param: { id: user.id },
+  });
   const hx_get_user_organizations_props = urls.users[
     ":id"
   ].organizations.$hx_get({
@@ -103,6 +109,15 @@ export async function UserPage({
           describedby={$oidc_clients_describedby}
           hx_props={hx_get_user_oidc_clients_props}
           query_count={query_oidc_clients_count}
+          user={user}
+        />
+
+        <hr class="border-none py-3" />
+
+        <UserActivitiesList
+          describedby={$activities_describedby}
+          hx_props={hx_get_user_activities_props}
+          query_count={query_activities_count}
           user={user}
         />
       </div>
@@ -229,6 +244,45 @@ async function UserOidcClientsList({
             {formattedPlural(count, {
               one: "connexion",
               other: "connexions",
+            })}{" "}
+            de {user.given_name}
+          </h1>
+        </summary>
+        <div class="max-w-full">
+          <div
+            {...hx_props}
+            hx-target="this"
+            hx-trigger="load"
+            class={table()}
+          ></div>
+        </div>
+      </details>
+    </section>
+  );
+}
+
+async function UserActivitiesList({
+  describedby,
+  hx_props,
+  query_count,
+  user,
+}: {
+  describedby: string;
+  hx_props: Record<string, string>;
+  query_count: Promise<number>;
+  user: Pick<User, "given_name">;
+}) {
+  const count = await query_count;
+
+  return (
+    <section>
+      <details>
+        <summary>
+          <h1 class="inline-block" id={describedby}>
+            🕓 {count}{" "}
+            {formattedPlural(count, {
+              one: "activité",
+              other: "activités",
             })}{" "}
             de {user.given_name}
           </h1>

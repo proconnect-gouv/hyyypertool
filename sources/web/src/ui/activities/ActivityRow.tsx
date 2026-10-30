@@ -60,7 +60,7 @@ function GenericActivityLabel({
   );
 }
 
-function ActivityLabel({ parsed }: { parsed: ParsedActivityRow }) {
+export function ActivityLabel({ parsed }: { parsed: ParsedActivityRow }) {
   return match(parsed)
     .with({ kind: "known" }, ({ action, context }) => (
       <>{known_activity_label(action, context)}</>
