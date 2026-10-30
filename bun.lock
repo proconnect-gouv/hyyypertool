@@ -17,7 +17,7 @@
         "htmx.org": "2.0.11",
         "hyperscript.org": "0.9.93",
         "nprogress": "0.2.0",
-        "preact": "10.29.8",
+        "preact": "11.0.1",
         "tsx": "4.23.15",
         "zod": "4.6.7",
       },
@@ -186,7 +186,7 @@
         "nprogress": "0.2.0",
         "openid-client": "6.8.8",
         "pg": "8.23.1",
-        "preact": "10.29.8",
+        "preact": "11.0.1",
         "preact-render-to-string": "6.8.1",
         "rate-limiter-flexible": "11.2.3",
         "rehype-sanitize": "6.0.0",
@@ -981,7 +981,7 @@
 
     "postgres-interval": ["postgres-interval@1.2.0", "", { "dependencies": { "xtend": "^4.0.0" } }, "sha512-9ZhXKM/rw350N1ovuWHbGxnGh/SNJ4cnxHiM0rxE4VN41wsg8P8zWn9hv/buK00RP4WvlOyr/RBDiptyxVbkZQ=="],
 
-    "preact": ["preact@10.29.8", "", { "peerDependencies": { "preact-render-to-string": ">=5" }, "optionalPeers": ["preact-render-to-string"] }, "sha512-ej2aVZ+vZ8WO7tvlQWRM9N63A0KzF9q4mWJfDUHgYaIofWY9hu74QdnQrjoPMmZi2/nZ5gN0bJCQF49xQqx09Q=="],
+    "preact": ["preact@11.0.1", "", { "peerDependencies": { "preact-render-to-string": ">=6.7.0" }, "optionalPeers": ["preact-render-to-string"] }, "sha512-TNNwEq++jYNHy747LziCjPRVgEwnLSOIOAw/oYcjI3Tdnubx2EXtt76I0an8PATvUWtx/DX1kFIg1eFN+O/fkw=="],
 
     "preact-render-to-string": ["preact-render-to-string@6.8.1", "", { "peerDependencies": { "preact": ">=10 || >= 11.0.0-0" } }, "sha512-EIaLVlarET55f737gG/g1bK1UfjAgT3Z7Ch1Z7UX4/TwHh1O7EI5sCtwhVP+cs0n37SyV2HjZCSRtrpMm4Bujw=="],
 
