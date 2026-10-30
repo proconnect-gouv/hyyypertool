@@ -109,7 +109,15 @@ async function insert_activities() {
       actor_ref: moderator.sub!,
       actor_type: "moderator",
       app: "hyyypertool",
-      context: { inputs: {}, outcome: {} },
+      context: {
+        inputs: { user_id: adora_pony_user_id },
+        outcome: {
+          email: "adora.pony@unicorn.xyz",
+          family_name: "Pony",
+          given_name: "Adora",
+          memberships: [],
+        },
+      },
       created_at: "2222-01-04T00:00:00.000Z",
       user_id: adora_pony_user_id,
     },
@@ -120,6 +128,17 @@ async function insert_activities() {
       app: "hyyypertool",
       context: { inputs: {}, outcome: {} },
       created_at: "2222-01-05T00:00:00.000Z",
+    },
+    {
+      action: "member.joined",
+      actor_ref: moderator.sub!,
+      actor_type: "moderator",
+      app: "hyyypertool",
+      context: {
+        inputs: { is_external: true, verification_type: "domain" },
+        outcome: {},
+      },
+      created_at: "2222-01-06T00:00:00.000Z",
     },
   ]);
 
@@ -139,8 +158,9 @@ test("GET /activity lists the latest activities with their targets, newest first
   expect(html).toContain("▶️ Suivre en direct");
   expect(html).not.toContain("every 5s");
   expect(row_texts(html)).toEqual([
+    `06/01/2222 01:00:00 ${moderator.email} ➕ Membre ajouté (domain, externe) —`,
     `05/01/2222 01:00:00 ${moderator.email} ⚠️ Contexte invalide : domain.refused {"inputs":{},"outcome":{}} —`,
-    `04/01/2222 01:00:00 ${moderator.email} user.deleted {"inputs":{},"outcome":{}} adora.pony@unicorn.xyz`,
+    `04/01/2222 01:00:00 ${moderator.email} 🗑️ Utilisateur adora.pony@unicorn.xyz supprimé adora.pony@unicorn.xyz`,
     `03/01/2222 01:00:00 ${moderator.email} moderation.accepted {"inputs":{},"outcome":{}} 🦄 libelle · adora.pony@unicorn.xyz · Modération #42`,
     `02/01/2222 01:00:00 proconnect-identite (domain.promote_members) ⬆️ Membre promu (domain_not_verified_yet → domain) ↳ Suite à : ✅ Domaine unicorn.xyz vérifié (verified) par ${moderator.email} 🦄 libelle · adora.pony@unicorn.xyz`,
     `01/01/2222 01:00:00 ${moderator.email} ✅ Domaine unicorn.xyz vérifié (verified) 🦄 libelle · adora.pony@unicorn.xyz`,
@@ -180,9 +200,10 @@ test("GET /activity?category= accepts several categories", async () => {
   );
 
   const rows = row_texts(await response.text());
-  expect(rows).toHaveLength(2);
-  expect(rows[0]).toContain("moderation.accepted");
-  expect(rows[1]).toContain("⬆️ Membre promu");
+  expect(rows).toHaveLength(3);
+  expect(rows[0]).toContain("➕ Membre ajouté");
+  expect(rows[1]).toContain("moderation.accepted");
+  expect(rows[2]).toContain("⬆️ Membre promu");
 });
 
 test("GET /activity?live=5 polls every 5 seconds until paused", async () => {
