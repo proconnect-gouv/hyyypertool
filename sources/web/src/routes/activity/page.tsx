@@ -4,7 +4,7 @@ import { hyper_ref } from "#src/html";
 import { hx_include } from "#src/htmx";
 import type { ParsedActivityRow } from "#src/lib/activities";
 import type { Pagination } from "#src/schema";
-import { ActivityLabel } from "#src/ui/activities";
+import { ActivityLabel, Actor } from "#src/ui/activities";
 import { button } from "#src/ui/button";
 import { Foot } from "#src/ui/hx_table";
 import { table } from "#src/ui/table";
@@ -198,13 +198,15 @@ function Row({ activity }: { activity: RenderedActivity }) {
       <td>
         <LocalTime date={activity.created_at} />
       </td>
-      <td>{activity.actor}</td>
+      <td>
+        <Actor actor={activity.actor} />
+      </td>
       <td>
         <ActivityLabel parsed={activity.parsed} />
         {activity.cause !== null && (
           <div>
             ↳ Suite à : <ActivityLabel parsed={activity.cause.parsed} /> par{" "}
-            {activity.cause.actor}
+            <Actor actor={activity.cause.actor} />
           </div>
         )}
       </td>

@@ -11,6 +11,11 @@ type ActorRow = {
   app: string;
 };
 
+export type ActorLabel = {
+  label: string;
+  user_id: number | null;
+};
+
 export async function label_actors(
   {
     hyyyper_pg,
@@ -44,16 +49,27 @@ export async function label_actors(
         });
   const email_by_user_id = new Map(users.map(({ email, id }) => [id, email]));
 
-  return function actor_label({ actor_ref, actor_type, app }: ActorRow) {
+  return function actor_label({
+    actor_ref,
+    actor_type,
+    app,
+  }: ActorRow): ActorLabel {
     switch (actor_type) {
       case "moderator":
-        return email_by_sub.get(actor_ref) ?? actor_ref;
-      case "user":
-        return (
-          email_by_user_id.get(Number(actor_ref)) ?? `utilisateur #${actor_ref}`
-        );
+        return {
+          label: email_by_sub.get(actor_ref) ?? actor_ref,
+          user_id: null,
+        };
+      case "user": {
+        const user_id = Number(actor_ref);
+        const email = email_by_user_id.get(user_id);
+        return {
+          label: email ?? `utilisateur #${actor_ref}`,
+          user_id: email === undefined ? null : user_id,
+        };
+      }
       default:
-        return `${app} (${actor_ref})`;
+        return { label: `${app} (${actor_ref})`, user_id: null };
     }
   };
 }

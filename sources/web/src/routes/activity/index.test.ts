@@ -153,13 +153,13 @@ async function insert_activities() {
     },
   ]);
 
-  return { moderator };
+  return { adora_pony_user_id, moderator };
 }
 
 //
 
 test("GET /activity lists the latest activities with their targets, newest first", async () => {
-  const { moderator } = await insert_activities();
+  const { adora_pony_user_id, moderator } = await insert_activities();
 
   const response = await create_test_app(moderator).request("/");
 
@@ -168,6 +168,9 @@ test("GET /activity lists the latest activities with their targets, newest first
   expect(html).toContain("Liste des activités");
   expect(html).toContain("▶️ Suivre en direct");
   expect(html).not.toContain("every 5s");
+  expect(html).toContain(
+    `<a href="/users/${adora_pony_user_id}">adora.pony@unicorn.xyz</a>`,
+  );
   expect(row_texts(html)).toEqual([
     `07/01/2222 01:00:00 adora.pony@unicorn.xyz ➖ Membre supprimé (domain, interne) —`,
     `06/01/2222 01:00:00 ${moderator.email} ➕ Membre ajouté (domain, externe) —`,
