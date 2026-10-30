@@ -1,11 +1,13 @@
 //
 
 import type {
+  ActorLabel,
   KnownAction,
   KnownActivityContexts,
   ParsedActivityRow,
 } from "#src/lib/activities";
 import { LocalTime } from "#src/ui/time";
+import { urls } from "#src/urls";
 import type { Child } from "hono/jsx";
 import { match } from "ts-pattern";
 
@@ -117,13 +119,23 @@ export function ActivityLabel({ parsed }: { parsed: ParsedActivityRow }) {
     .exhaustive();
 }
 
+export function Actor({ actor }: { actor: ActorLabel }) {
+  if (actor.user_id === null) return <>{actor.label}</>;
+
+  return (
+    <a href={urls.users[":id"].$url({ param: { id: actor.user_id } }).pathname}>
+      {actor.label}
+    </a>
+  );
+}
+
 export function ActivityRow({
   actor,
   caused,
   created_at,
   parsed,
 }: {
-  actor: string;
+  actor: ActorLabel;
   caused: ReadonlyArray<{
     id: number;
     parsed: ParsedActivityRow;
@@ -137,7 +149,9 @@ export function ActivityRow({
       <td>
         <LocalTime date={created_at} />
       </td>
-      <td>{actor}</td>
+      <td>
+        <Actor actor={actor} />
+      </td>
       <td>
         <ActivityLabel parsed={parsed} />
         {caused.length > 0 && (

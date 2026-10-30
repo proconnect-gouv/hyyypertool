@@ -1,7 +1,7 @@
 //
 
 import type { ParsedActivityRow } from "#src/lib/activities";
-import { ActivityLabel } from "#src/ui/activities";
+import { ActivityLabel, Actor } from "#src/ui/activities";
 import { table } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
@@ -47,7 +47,9 @@ function Row({ activity }: { activity: RenderedActivity }) {
       <td>
         <LocalTime date={activity.created_at} />
       </td>
-      <td>{activity.actor}</td>
+      <td>
+        <Actor actor={activity.actor} />
+      </td>
       <td>
         {activity.organization === null ? (
           "—"
@@ -68,7 +70,7 @@ function Row({ activity }: { activity: RenderedActivity }) {
         {activity.cause !== null && (
           <div>
             ↳ Suite à : <ActivityLabel parsed={activity.cause.parsed} /> par{" "}
-            {activity.cause.actor}
+            <Actor actor={activity.cause.actor} />
           </div>
         )}
       </td>
