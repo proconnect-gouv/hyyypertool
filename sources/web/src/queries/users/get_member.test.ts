@@ -11,7 +11,7 @@ import {
   pg,
 } from "@~/identite-proconnect/database/testing";
 import { beforeAll, expect, setSystemTime, test } from "bun:test";
-import { GetMember } from "./GetMember";
+import { get_member } from "./get_member";
 
 //
 
@@ -33,15 +33,15 @@ test("get an organization member", async () => {
     verification_type: "domain_not_verified_yet",
   });
 
-  const get_member = GetMember({
-    pg,
+  const organization = await get_member(pg, {
     columns: {
       is_external: true,
       organization_id: true,
       user_id: true,
     },
+    organization_id,
+    user_id,
   });
-  const organization = await get_member({ organization_id, user_id });
 
   expect(organization).toEqual({
     is_external: false,

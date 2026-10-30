@@ -12,7 +12,7 @@ import {
 } from "@~/identite-proconnect/database/testing";
 import { VerificationTypeSchema } from "@~/identite-proconnect/types";
 import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
-import { UpdateUserByIdInOrganization } from "./UpdateUserByIdInOrganization";
+import { update_user_by_id_in_organization } from "./update_user_by_id_in_organization";
 
 //
 
@@ -39,16 +39,13 @@ test("updates user verification type in organization", async () => {
 
   setSystemTime(new Date("2222-01-11T00:00:00.000Z"));
 
-  const update_user_by_id_in_organization = UpdateUserByIdInOrganization({
-    pg,
-  });
-
-  await update_user_by_id_in_organization(
-    { organization_id, user_id },
-    {
+  await update_user_by_id_in_organization(pg, {
+    organization_id,
+    user_id,
+    values: {
       verification_type: VerificationTypeSchema.enum.domain,
     },
-  );
+  });
 
   const result = await pg.query.users_organizations.findFirst({
     where: (table, { and, eq }) =>
@@ -86,18 +83,15 @@ test("updates multiple fields in user organization", async () => {
 
   setSystemTime(new Date("2222-01-11T00:00:00.000Z"));
 
-  const update_user_by_id_in_organization = UpdateUserByIdInOrganization({
-    pg,
-  });
-
-  await update_user_by_id_in_organization(
-    { organization_id, user_id },
-    {
+  await update_user_by_id_in_organization(pg, {
+    organization_id,
+    user_id,
+    values: {
+      is_external: true,
       verification_type:
         VerificationTypeSchema.enum.no_validation_means_available,
-      is_external: true,
     },
-  );
+  });
 
   const result = await pg.query.users_organizations.findFirst({
     where: (table, { and, eq }) =>

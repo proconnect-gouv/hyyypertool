@@ -7,7 +7,7 @@ import {
   pg,
 } from "@~/identite-proconnect/database/testing";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
-import { GetUserById } from "./GetUserById";
+import { get_user_by_id as get_user_by_id_query } from "./get_user_by_id";
 
 //
 
@@ -17,7 +17,7 @@ beforeEach(empty_database);
 test("returns user with specified columns", async () => {
   const user_id = await create_adora_pony_user(pg);
 
-  const get_user_by_id = GetUserById({
+  const get_user_by_id = get_user_by_id_query({
     columns: {
       id: true,
       email: true,
@@ -38,7 +38,7 @@ test("returns user with specified columns", async () => {
 });
 
 test("throws NotFoundError when user not found", async () => {
-  const get_user_by_id = GetUserById({
+  const get_user_by_id = get_user_by_id_query({
     columns: { id: true },
   });
 

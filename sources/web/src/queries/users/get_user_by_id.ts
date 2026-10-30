@@ -12,12 +12,12 @@ type UserQueryConfigColumns = Partial<
   Record<keyof typeof schema.users._.columns, true>
 >;
 
-export function GetUserById<TColumns extends UserQueryConfigColumns>({
+export function get_user_by_id<TColumns extends UserQueryConfigColumns>({
   columns,
 }: {
   columns: TColumns;
 }) {
-  return async function get_user_by_id(
+  return async function get_user_by_id_handler(
     pg: IdentiteProconnectPgDatabase,
     id: number,
   ) {

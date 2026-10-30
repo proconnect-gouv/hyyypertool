@@ -19,7 +19,7 @@ import {
   update_moderation_by_id,
 } from "#src/queries/moderations";
 import { get_organization_domains } from "#src/queries/organizations";
-import { UpdateUserByIdInOrganization } from "#src/queries/users";
+import { update_user_by_id_in_organization } from "#src/queries/users";
 import { EntitySchema, z_email_domain } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
 import { UserOrganisationRepository } from "@~/identite-proconnect/sdk";
@@ -58,9 +58,6 @@ export default new Hono<AppContext>().patch(
     const change_email_domain_verification = ChangeEmailDomainVerification({
       pg: identite_pg,
       sub: userinfo.sub,
-    });
-    const update_user_by_id_in_organization = UpdateUserByIdInOrganization({
-      pg: identite_pg,
     });
     const link_user_to_organization =
       UserOrganisationRepository.createUserOrganizationFactory({
@@ -146,10 +143,11 @@ export default new Hono<AppContext>().patch(
     if (link_error) {
       if (!is_unique_violation(link_error)) throw link_error;
 
-      await update_user_by_id_in_organization(
-        { organization_id, user_id },
-        { is_external, verification_type: link_verification_type },
-      );
+      await update_user_by_id_in_organization(identite_pg, {
+        organization_id,
+        user_id,
+        values: { is_external, verification_type: link_verification_type },
+      });
     }
     //#endregion
 
