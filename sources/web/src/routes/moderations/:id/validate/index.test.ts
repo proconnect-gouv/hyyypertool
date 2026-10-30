@@ -196,4 +196,27 @@ test("PATCH /moderations/:id/validate succeeds when user is already linked to or
   });
 
   expect(link?.is_external).toBe(false);
+
+  const activity = await pg.query.activity_logs.findFirst({
+    where: (table, { eq }) => eq(table.action, "member.updated"),
+  });
+  expect(activity).toMatchObject({
+    actor_ref: "admin-sub",
+    actor_type: "moderator",
+    app: "hyyypertool",
+    context: {
+      inputs: {
+        is_external: false,
+        verification_type: "domain",
+      },
+      outcome: {
+        previous: {
+          is_external: true,
+          verification_type: "domain_not_verified_yet",
+        },
+      },
+    },
+    organization_id,
+    user_id,
+  });
 });

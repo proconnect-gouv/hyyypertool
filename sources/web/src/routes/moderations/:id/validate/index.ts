@@ -20,7 +20,6 @@ import {
   update_moderation_by_id,
 } from "#src/queries/moderations";
 import { get_organization_domains } from "#src/queries/organizations";
-import { update_user_by_id_in_organization } from "#src/queries/users";
 import { EntitySchema, z_email_domain } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
 import {
@@ -138,10 +137,11 @@ export default new Hono<AppContext>().patch(
     if (join_error) throw join_error;
 
     if (outcome.kind === "member_already_exists") {
-      await update_user_by_id_in_organization(identite_pg, {
+      await runtime.updateMembership({
         organization_id,
         user_id,
-        values: { is_external, verification_type: link_verification_type },
+        is_external,
+        verification_type: link_verification_type,
       });
     }
     //#endregion
