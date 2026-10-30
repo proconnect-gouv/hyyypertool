@@ -11,7 +11,7 @@ import {
   pg,
 } from "@~/identite-proconnect/database/testing";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
-import { CountOrganizationMembers } from "./CountOrganizationMembers";
+import { count_organization_members } from "./count_organization_members";
 
 //
 
@@ -29,8 +29,7 @@ test("counts organization members", async () => {
     verification_type: "domain_not_verified_yet",
   });
 
-  const count_organization_members = CountOrganizationMembers(pg);
-  const count = await count_organization_members({ organization_id });
+  const count = await count_organization_members(pg, { organization_id });
 
   expect(count).toMatchInlineSnapshot(`1`);
 });
@@ -38,8 +37,7 @@ test("counts organization members", async () => {
 test("returns 0 for organization with no members", async () => {
   const organization_id = await create_unicorn_organization(pg);
 
-  const count_organization_members = CountOrganizationMembers(pg);
-  const count = await count_organization_members({ organization_id });
+  const count = await count_organization_members(pg, { organization_id });
 
   expect(count).toMatchInlineSnapshot(`0`);
 });

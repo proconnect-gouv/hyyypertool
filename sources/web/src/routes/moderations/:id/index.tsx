@@ -8,9 +8,9 @@ import { editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { GetModerationWithDetails } from "#src/queries/moderations";
 import {
-  GetDomainCount,
-  GetOrganizationMember,
-  GetOrganizationMembersCount,
+  get_domain_count,
+  get_organization_member,
+  get_organization_members_count,
 } from "#src/queries/organizations";
 import { EntitySchema, z_email_domain } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
@@ -62,8 +62,7 @@ export default new Hono<AppContext>()
         const domain = z_email_domain.parse(moderation.user.email);
 
         // Load organization member details
-        const get_organization_member = GetOrganizationMember(identite_pg);
-        const organization_member = await get_organization_member({
+        const organization_member = await get_organization_member(identite_pg, {
           organization_id: moderation.organization_id,
           user_id: moderation.user.id,
         });
@@ -84,11 +83,6 @@ export default new Hono<AppContext>()
         });
         const banaticUrl = (await get_banatic_url(siren)).url;
 
-        // Prepare query functions for page components
-        const get_organization_members_count =
-          GetOrganizationMembersCount(identite_pg);
-        const get_domain_count = GetDomainCount(identite_pg);
-
         const response_templates = await get_response_templates(hyyyper_pg, "");
 
         const is_editor = hyyyper_user.role !== roles.enum.visitor;
@@ -99,8 +93,12 @@ export default new Hono<AppContext>()
           organization_fiche,
           organization_member,
           response_templates,
-          query_domain_count: get_domain_count(moderation.organization_id),
+          query_domain_count: get_domain_count(
+            identite_pg,
+            moderation.organization_id,
+          ),
           query_organization_members_count: get_organization_members_count(
+            identite_pg,
             moderation.organization_id,
           ),
           is_editor,

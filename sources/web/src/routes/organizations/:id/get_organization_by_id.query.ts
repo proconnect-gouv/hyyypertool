@@ -1,10 +1,9 @@
+import { get_organization_by_id as get_organization_by_id_query } from "#src/queries/organizations";
 //
 
-import { GetOrganizationById } from "#src/queries/organizations";
-
 //
 
-export const get_organization_by_id = GetOrganizationById({
+export const get_organization_by_id = get_organization_by_id_query({
   columns: {
     cached_activite_principale: true,
     cached_adresse: true,

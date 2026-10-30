@@ -12,10 +12,10 @@ type OrganizationQueryConfigColumns = Partial<
   Record<keyof typeof schema.organizations._.columns, true>
 >;
 
-export function GetOrganizationById<
+export function get_organization_by_id<
   TColumns extends OrganizationQueryConfigColumns,
 >({ columns }: { columns: TColumns }) {
-  return async function get_organization_by_id(
+  return async function get_organization_by_id_handler(
     pg: IdentiteProconnectPgDatabase,
     organization_id: number,
   ) {
@@ -32,4 +32,4 @@ export function GetOrganizationById<
 
 export type GetOrganizationByIdHandler<
   TColumns extends OrganizationQueryConfigColumns,
-> = ReturnType<typeof GetOrganizationById<TColumns>>;
+> = ReturnType<typeof get_organization_by_id<TColumns>>;

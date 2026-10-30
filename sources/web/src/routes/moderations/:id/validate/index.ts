@@ -18,7 +18,7 @@ import {
   GetModerationWithUser,
   UpdateModerationById,
 } from "#src/queries/moderations";
-import { GetOrganizationDomains } from "#src/queries/organizations";
+import { get_organization_domains } from "#src/queries/organizations";
 import { UpdateUserByIdInOrganization } from "#src/queries/users";
 import { EntitySchema, z_email_domain } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
@@ -129,7 +129,7 @@ export default new Hono<AppContext>().patch(
       .with("AS_INTERNAL", () => false)
       .with("AS_EXTERNAL", () => true)
       .exhaustive();
-    const email_domains = await GetOrganizationDomains(identite_pg)({
+    const email_domains = await get_organization_domains(identite_pg, {
       organization_id,
     });
     const link_verification_type =

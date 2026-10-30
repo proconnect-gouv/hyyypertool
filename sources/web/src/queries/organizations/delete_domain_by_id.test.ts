@@ -7,7 +7,7 @@ import {
   pg,
 } from "@~/identite-proconnect/database/testing";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
-import { DeleteDomainById } from "./DeleteDomainById";
+import { delete_domain_by_id } from "./delete_domain_by_id";
 
 //
 
@@ -18,9 +18,7 @@ beforeEach(empty_database);
 
 test("deletes domain by id", async () => {
   const organization_id = await create_unicorn_organization(pg);
-  const delete_domain_by_id = DeleteDomainById(pg);
-
-  const result = await delete_domain_by_id(organization_id);
+  const result = await delete_domain_by_id(pg, organization_id);
 
   expect(result).toMatchInlineSnapshot(`
     {
