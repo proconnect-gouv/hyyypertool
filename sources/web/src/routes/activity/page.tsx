@@ -87,6 +87,7 @@ function live_href(live: number, selected: ReadonlyArray<string>) {
 
 const category_labels: Record<string, string> = {
   domain: "Domaines",
+  franceconnect: "FranceConnect",
   member: "Membres",
   moderation: "Modérations",
   organization: "Organisations",

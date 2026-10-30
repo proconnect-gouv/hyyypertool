@@ -1,7 +1,8 @@
 //
 
-import { HTTPError, NotFoundError, is_unique_violation } from "#src/errors";
+import { HTTPError, NotFoundError } from "#src/errors";
 import type { HtmxHeader } from "#src/htmx";
+import { identite_runtime } from "#src/lib/activities";
 import {
   MODERATION_EVENTS,
   build_moderation_update,
@@ -19,10 +20,8 @@ import {
   update_moderation_by_id,
 } from "#src/queries/moderations";
 import { get_organization_domains } from "#src/queries/organizations";
-import { update_user_by_id_in_organization } from "#src/queries/users";
 import { EntitySchema, z_email_domain } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
-import { UserOrganisationRepository } from "@~/identite-proconnect/sdk";
 import {
   EmailDomainApprovedVerificationEnum,
   LinkEnum,
@@ -48,18 +47,16 @@ export default new Hono<AppContext>().patch(
     req,
     notFound,
     env: config,
-    var: { crisp, identite_pg_client, identite_pg, userinfo, sentry },
+    var: { crisp, identite_pg, userinfo, sentry },
   }) {
     const { id } = req.valid("param");
     const { add_domain, add_member, send_notification, verification_type } =
       req.valid("form");
 
-    //#region 💉 Inject dependencies
-    const link_user_to_organization =
-      UserOrganisationRepository.createUserOrganizationFactory({
-        pg: identite_pg_client,
-      });
-    //#endregion
+    const runtime = identite_runtime(identite_pg).as({
+      sub: userinfo.sub,
+      type: "moderator",
+    });
 
     const [moderation_error, moderation] = await to(
       get_moderation_with_user(identite_pg, id),
@@ -128,8 +125,8 @@ export default new Hono<AppContext>().patch(
       verification_type ??
       deduce_verification_type_from_organization_domains(email_domains, domain);
 
-    const [link_error] = await to(
-      link_user_to_organization({
+    const [join_error, outcome] = await to(
+      runtime.addMembership({
         organization_id,
         user_id,
         is_external,
@@ -137,13 +134,14 @@ export default new Hono<AppContext>().patch(
       }),
     );
 
-    if (link_error) {
-      if (!is_unique_violation(link_error)) throw link_error;
+    if (join_error) throw join_error;
 
-      await update_user_by_id_in_organization(identite_pg, {
+    if (outcome.kind === "member_already_exists") {
+      await runtime.updateMembership({
         organization_id,
         user_id,
-        values: { is_external, verification_type: link_verification_type },
+        is_external,
+        verification_type: link_verification_type,
       });
     }
     //#endregion

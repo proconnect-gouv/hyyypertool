@@ -30,12 +30,52 @@ const known_activity_labels: {
       ✅ Domaine <b>{inputs.domain}</b> vérifié ({inputs.verification_type})
     </>
   ),
+  "franceconnect.connected": ({ outcome }) => (
+    <>
+      🔗 FranceConnect lié (<LocalTime date={outcome.connected_at} />)
+    </>
+  ),
+  "franceconnect.disconnected": ({ outcome }) => (
+    <>
+      🔓 FranceConnect délié (<LocalTime date={outcome.connected_at} />)
+    </>
+  ),
+  "member.joined": ({ inputs }) => (
+    <>
+      ➕ Membre ajouté ({inputs.verification_type},{" "}
+      {inputs.is_external ? "externe" : "interne"})
+    </>
+  ),
   "member.promoted": ({ inputs, outcome }) => (
     <>
       ⬆️ Membre promu ({inputs.previous_verification_type} →{" "}
       {outcome.verification_type})
     </>
   ),
+  "member.removed": ({ outcome }) => (
+    <>
+      ➖ Membre supprimé ({outcome.verification_type},{" "}
+      {outcome.is_external ? "externe" : "interne"})
+    </>
+  ),
+  "member.updated": ({ inputs, outcome }) => (
+    <>
+      ✏️ Membre modifié ({outcome.previous.verification_type} →{" "}
+      {inputs.verification_type ?? outcome.previous.verification_type})
+    </>
+  ),
+  "moderation.opened": ({ inputs }) => (
+    <>
+      📝 Modération ouverte ({inputs.type}
+      {inputs.sp_name === null ? null : ` · ${inputs.sp_name}`})
+    </>
+  ),
+  "user.deleted": ({ outcome }) => (
+    <>
+      🗑️ Utilisateur <b>{outcome.email}</b> supprimé
+    </>
+  ),
+  "user.mfa_reset": () => <>🔐 Double authentification réinitialisée</>,
 };
 
 // generic `Action` keeps the label and its context correlated
