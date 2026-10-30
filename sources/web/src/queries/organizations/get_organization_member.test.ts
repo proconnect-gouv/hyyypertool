@@ -11,7 +11,7 @@ import {
   pg,
 } from "@~/identite-proconnect/database/testing";
 import { beforeAll, beforeEach, expect, test } from "bun:test";
-import { GetOrganizationMember } from "./GetOrganizationMember";
+import { get_organization_member } from "./get_organization_member";
 
 //
 
@@ -32,10 +32,9 @@ test("get organization member relationship", async () => {
     verification_type: "domain_not_verified_yet",
   });
 
-  const get_organization_member = GetOrganizationMember(pg);
-  const member = await get_organization_member({
-    user_id,
+  const member = await get_organization_member(pg, {
     organization_id,
+    user_id,
   });
 
   // Should return the membership info
@@ -48,20 +47,18 @@ test("returns null when no membership exists", async () => {
   const organization_id = await create_unicorn_organization(pg);
   const user_id = await create_adora_pony_user(pg);
 
-  const get_organization_member = GetOrganizationMember(pg);
-  const member = await get_organization_member({
-    user_id,
+  const member = await get_organization_member(pg, {
     organization_id,
+    user_id,
   });
 
   expect(member).toBeUndefined();
 });
 
 test("returns null for non-existent user or organization", async () => {
-  const get_organization_member = GetOrganizationMember(pg);
-  const member = await get_organization_member({
-    user_id: 999999,
+  const member = await get_organization_member(pg, {
     organization_id: 999999,
+    user_id: 999999,
   });
 
   expect(member).toBeUndefined();

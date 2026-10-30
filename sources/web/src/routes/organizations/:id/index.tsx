@@ -4,8 +4,8 @@ import { Main_Layout } from "#src/layouts";
 import { GetBanaticUrl } from "#src/lib/organizations/usecase";
 import type { AppContext } from "#src/middleware/context";
 import {
-  GetDomainCount,
-  GetOrganizationMembersCount,
+  get_domain_count,
+  get_organization_members_count,
 } from "#src/queries/organizations";
 import { EntitySchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
@@ -49,8 +49,11 @@ export default new Hono<AppContext>()
       });
 
       const { url: banaticUrl } = await get_banatic_url(siren);
-      const domains_count = await GetDomainCount(identite_pg)(id);
-      const members_count = await GetOrganizationMembersCount(identite_pg)(id);
+      const domains_count = await get_domain_count(identite_pg, id);
+      const members_count = await get_organization_members_count(
+        identite_pg,
+        id,
+      );
 
       set(
         "page_title",
