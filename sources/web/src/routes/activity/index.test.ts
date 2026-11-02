@@ -272,7 +272,7 @@ test("GET /activity keeps the date filter when pausing the live poll", async () 
     await create_test_app(moderator).request("/?date=2222-01-03&live=5")
   ).text();
 
-  expect(html).toContain('href="/activity?live=0&amp;date=2222-01-03"');
+  expect(html).toContain('href="/activity?date=2222-01-03&amp;live=0"');
 });
 test("GET /activity says when there is no activity", async () => {
   const moderator = await insert_moderateur(hyyyper_pglite);

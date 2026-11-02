@@ -16,8 +16,6 @@ import { Page } from "./page";
 
 //
 
-const PAGE_SIZE = 50;
-
 export default new Hono<AppContext>()
   .use(authorized())
   .get(
@@ -30,9 +28,9 @@ export default new Hono<AppContext>()
       set,
       var: { hyyyper_pg, identite_pg, sentry },
     }) {
-      const { date, live, page } = req.valid("query");
+      const { date, live, page, page_size } = req.valid("query");
       const categories = req.queries("category") ?? [];
-      const pagination = { page, page_size: PAGE_SIZE };
+      const pagination = { page, page_size };
 
       const [{ activities: rows, count }, all_categories] = await Promise.all([
         get_activities(
@@ -78,6 +76,7 @@ export default new Hono<AppContext>()
           date={date}
           live={live}
           pagination={pagination}
+          search={new URL(req.url).searchParams}
           selected={categories}
         />,
       );
