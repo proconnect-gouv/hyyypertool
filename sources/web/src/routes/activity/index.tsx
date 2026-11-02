@@ -30,14 +30,14 @@ export default new Hono<AppContext>()
       set,
       var: { hyyyper_pg, identite_pg, sentry },
     }) {
-      const { live, page } = req.valid("query");
+      const { date, live, page } = req.valid("query");
       const categories = req.queries("category") ?? [];
       const pagination = { page, page_size: PAGE_SIZE };
 
       const [{ activities: rows, count }, all_categories] = await Promise.all([
         get_activities(
           { hyyyper_pg, pg: identite_pg },
-          { categories, pagination: { ...pagination, page: page - 1 } },
+          { categories, date, pagination: { ...pagination, page: page - 1 } },
         ),
         get_activity_categories(identite_pg),
       ]);
@@ -75,6 +75,7 @@ export default new Hono<AppContext>()
           activities={activities}
           categories={all_categories}
           count={count}
+          date={date}
           live={live}
           pagination={pagination}
           selected={categories}

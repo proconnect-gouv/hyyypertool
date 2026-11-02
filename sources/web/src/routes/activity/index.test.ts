@@ -225,6 +225,36 @@ test("GET /activity?category= accepts several categories", async () => {
   expect(rows[3]).toContain("⬆️ Membre promu");
 });
 
+test("GET /activity?date= filters by the Europe/Paris day", async () => {
+  const { moderator } = await insert_activities();
+
+  const response =
+    await create_test_app(moderator).request("/?date=2222-01-03");
+
+  expect(row_texts(await response.text())).toEqual([
+    `03/01/2222 01:00:00 ${moderator.email} moderation.accepted {"inputs":{},"outcome":{}} 🦄 libelle · adora.pony@unicorn.xyz · Modération #42`,
+  ]);
+});
+
+test("GET /activity renders the date input and keeps a valid date in it", async () => {
+  const { moderator } = await insert_activities();
+
+  const html = await (
+    await create_test_app(moderator).request("/?date=2222-01-03")
+  ).text();
+
+  expect(html).toContain("Chercher par date");
+  expect(html).toContain('name="date" type="date" value="2222-01-03"');
+});
+
+test("GET /activity ignores an unparsable date", async () => {
+  const { moderator } = await insert_activities();
+
+  const response = await create_test_app(moderator).request("/?date=oops");
+
+  expect(row_texts(await response.text())).toHaveLength(7);
+});
+
 test("GET /activity?live=5 polls every 5 seconds until paused", async () => {
   const { moderator } = await insert_activities();
 
@@ -235,6 +265,15 @@ test("GET /activity?live=5 polls every 5 seconds until paused", async () => {
   expect(html).toContain("⏸️ Pause");
 });
 
+test("GET /activity keeps the date filter when pausing the live poll", async () => {
+  const { moderator } = await insert_activities();
+
+  const html = await (
+    await create_test_app(moderator).request("/?date=2222-01-03&live=5")
+  ).text();
+
+  expect(html).toContain('href="/activity?live=0&amp;date=2222-01-03"');
+});
 test("GET /activity says when there is no activity", async () => {
   const moderator = await insert_moderateur(hyyyper_pglite);
 
