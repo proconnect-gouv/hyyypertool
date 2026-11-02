@@ -4,6 +4,7 @@ import { MODERATION_TYPES } from "#src/types";
 import consola from "consola";
 import type { IdentiteProconnectPgDatabase } from "..";
 import { schema } from "..";
+import { insert_activities } from "./activities";
 import { insert_nordPass_authenticator } from "./authenticators/nordPass";
 import { insert_1Password_authenticator } from "./authenticators/onePassword";
 import { insert_email_deliverability_whitelist } from "./email_deliverability_whitelist";
@@ -114,15 +115,16 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
 
     //
 
-    await insert_moderation(db, {
-      created_at: "2011-11-11T12:11:11+02:00",
-      organization_id: dinum.id,
-      sp_name: "Annuaire des entreprises",
-      type: MODERATION_TYPES.enum.organization_join_block,
-      user_id: jean_bon.id,
-      ticket_id: "session_115793",
-      status: "pending",
-    });
+    const [{ id: jean_bon_dinum_moderation_id } = { id: NaN }] =
+      await insert_moderation(db, {
+        created_at: "2011-11-11T12:11:11+02:00",
+        organization_id: dinum.id,
+        sp_name: "Annuaire des entreprises",
+        type: MODERATION_TYPES.enum.organization_join_block,
+        user_id: jean_bon.id,
+        ticket_id: "session_115793",
+        status: "pending",
+      });
     consola.verbose(
       `🌱 INSERT ${jean_bon.given_name} wants to join ${dinum.cached_libelle}`,
     );
@@ -339,6 +341,20 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
     consola.verbose(
       `🌱 INSERT ${raphael_alpha.given_name} FranceConnect data...`,
     );
+
+    const activities_count = await insert_activities(db, {
+      abracadabra_id: abracadabra.id,
+      bosch_france_id: bosch_france,
+      bosch_rexroth_id: bosch_rexroth,
+      dengi_id: dengi.id,
+      dinum_id: dinum.id,
+      jean_bon_dinum_moderation_id,
+      jean_bon_id: jean_bon.id,
+      marie_bon_id: marie_bon,
+      raphael_alpha_id: raphael_alpha.id,
+      raphael_id: raphael.id,
+    });
+    consola.verbose(`🌱 INSERT ${activities_count} activities`);
   } catch (err) {
     console.error("Something went wrong...");
     console.error(err);
@@ -351,7 +367,10 @@ function insert_moderation(
   db: IdentiteProconnectPgDatabase,
   insert_moderation: typeof schema.moderations.$inferInsert,
 ) {
-  return db.insert(schema.moderations).values(insert_moderation);
+  return db
+    .insert(schema.moderations)
+    .values(insert_moderation)
+    .returning({ id: schema.moderations.id });
 }
 
 function insert_franceconnect_userinfo(

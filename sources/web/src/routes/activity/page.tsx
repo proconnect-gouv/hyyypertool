@@ -6,6 +6,7 @@ import type { ParsedActivityRow } from "#src/lib/activities";
 import type { Pagination } from "#src/schema";
 import { ActivityLabel, Actor } from "#src/ui/activities";
 import { button } from "#src/ui/button";
+import { fieldset } from "#src/ui/form";
 import { Foot } from "#src/ui/hx_table";
 import { table } from "#src/ui/table";
 import { tag } from "#src/ui/tag";
@@ -54,7 +55,7 @@ export function Page({
   return (
     <main class="container mx-auto my-12 px-4">
       <div class="flex items-center justify-between gap-4">
-        <h1>Liste des activités</h1>
+        <h1>Journal d’activité</h1>
         <a
           class={button({ type: "tertiary-no-outline" })}
           href={live_href(live, selected)}
@@ -103,6 +104,8 @@ function Filter({
   live: number;
   selected: ReadonlyArray<string>;
 }) {
+  const { base, legend } = fieldset({ regular: true });
+
   return (
     <form
       {...hx_activities_props}
@@ -111,16 +114,13 @@ function Filter({
       hx-vals={JSON.stringify({ live, page: 1 })}
       id={$filters}
     >
-      <fieldset
-        class="flex flex-wrap items-center gap-2"
-        role="group"
-        aria-label="Filtrer par type d'activité"
-      >
+      <fieldset class={base()} role="group">
+        <legend class={legend()}>Par catégorie</legend>
         {categories.map((category) => (
           <label class={tag({ class: "m-1" })}>
             <input
               checked={selected.includes(category)}
-              hidden
+              class="sr-only"
               name="category"
               type="checkbox"
               value={category}

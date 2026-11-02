@@ -165,7 +165,7 @@ test("GET /activity lists the latest activities with their targets, newest first
 
   expect(response.status).toBe(200);
   const html = await response.text();
-  expect(html).toContain("Liste des activités");
+  expect(html).toContain("Journal d’activité");
   expect(html).toContain("▶️ Suivre en direct");
   expect(html).not.toContain("every 5s");
   expect(html).toContain(
@@ -191,6 +191,9 @@ test("GET /activity renders one checkbox per activity category", async () => {
   expect(html).toContain('name="category" type="checkbox" value="member"');
   expect(html).toContain('name="category" type="checkbox" value="moderation"');
   expect(html).toContain('name="category" type="checkbox" value="user"');
+  expect(html.indexOf("Par catégorie")).toBeLessThan(
+    html.indexOf('name="category"'),
+  );
   expect(html).toContain("Domaines");
   expect(html).not.toContain("type:domain.verified");
 });
