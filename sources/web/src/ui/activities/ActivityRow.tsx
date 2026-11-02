@@ -6,10 +6,33 @@ import type {
   KnownActivityContexts,
   ParsedActivityRow,
 } from "#src/lib/activities";
-import { LocalTime } from "#src/ui/time";
+import type { IconVariants } from "#src/ui/icons";
+import { Svg } from "#src/ui/icons/components";
+import { tag } from "#src/ui/tag";
+import { ActivityTime, LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
 import type { Child } from "hono/jsx";
 import { match } from "ts-pattern";
+
+//
+
+type ActivityGroup = {
+  icon: NonNullable<IconVariants["name"]>;
+  label: string;
+};
+
+const activity_groups: Record<string, ActivityGroup> = {
+  domain: { icon: "global", label: "Domaine" },
+  franceconnect: { icon: "logout", label: "Connexion" },
+  member: { icon: "team", label: "Organisation" },
+  moderation: { icon: "clipboard", label: "Modération" },
+  user: { icon: "info", label: "Compte" },
+};
+
+const activity_overrides: Record<string, ActivityGroup> = {
+  "user.deleted": { icon: "delete", label: "Compte" },
+  "user.mfa_reset": { icon: "shield", label: "2FA" },
+};
 
 //
 
@@ -18,66 +41,66 @@ const known_activity_labels: {
 } = {
   "domain.refused": ({ inputs }) => (
     <>
-      🚫 Domaine <b>{inputs.domain}</b> refusé
+      Domaine <b>{inputs.domain}</b> refusé
     </>
   ),
   "domain.removed": ({ inputs, outcome }) => (
     <>
-      🗑️ Domaine <b>{inputs.domain}</b> supprimé (
+      Domaine <b>{inputs.domain}</b> supprimé (
       {outcome.previous_verification_type})
     </>
   ),
   "domain.verified": ({ inputs }) => (
     <>
-      ✅ Domaine <b>{inputs.domain}</b> vérifié ({inputs.verification_type})
+      Domaine <b>{inputs.domain}</b> vérifié ({inputs.verification_type})
     </>
   ),
   "franceconnect.connected": ({ outcome }) => (
     <>
-      🔗 FranceConnect lié (<LocalTime date={outcome.connected_at} />)
+      FranceConnect lié (<LocalTime date={outcome.connected_at} />)
     </>
   ),
   "franceconnect.disconnected": ({ outcome }) => (
     <>
-      🔓 FranceConnect délié (<LocalTime date={outcome.connected_at} />)
+      FranceConnect délié (<LocalTime date={outcome.connected_at} />)
     </>
   ),
   "member.joined": ({ inputs }) => (
     <>
-      ➕ Membre ajouté ({inputs.verification_type},{" "}
+      Membre ajouté ({inputs.verification_type},{" "}
       {inputs.is_external ? "externe" : "interne"})
     </>
   ),
   "member.promoted": ({ inputs, outcome }) => (
     <>
-      ⬆️ Membre promu ({inputs.previous_verification_type} →{" "}
+      Membre promu ({inputs.previous_verification_type} →{" "}
       {outcome.verification_type})
     </>
   ),
   "member.removed": ({ outcome }) => (
     <>
-      ➖ Membre supprimé ({outcome.verification_type},{" "}
+      Membre supprimé ({outcome.verification_type},{" "}
       {outcome.is_external ? "externe" : "interne"})
     </>
   ),
   "member.updated": ({ inputs, outcome }) => (
     <>
-      ✏️ Membre modifié ({outcome.previous.verification_type} →{" "}
+      Membre modifié ({outcome.previous.verification_type} →{" "}
       {inputs.verification_type ?? outcome.previous.verification_type})
     </>
   ),
   "moderation.opened": ({ inputs }) => (
     <>
-      📝 Modération ouverte ({inputs.type}
+      Modération ouverte ({inputs.type}
       {inputs.sp_name === null ? null : ` · ${inputs.sp_name}`})
     </>
   ),
   "user.deleted": ({ outcome }) => (
     <>
-      🗑️ Utilisateur <b>{outcome.email}</b> supprimé
+      Utilisateur <b>{outcome.email}</b> supprimé
     </>
   ),
-  "user.mfa_reset": () => <>🔐 Double authentification réinitialisée</>,
+  "user.mfa_reset": () => <>Double authentification réinitialisée</>,
 };
 
 // generic `Action` keeps the label and its context correlated
@@ -126,6 +149,59 @@ export function Actor({ actor }: { actor: ActorLabel }) {
     <a href={urls.users[":id"].$url({ param: { id: actor.user_id } }).pathname}>
       {actor.label}
     </a>
+  );
+}
+
+export function ActivityItem({
+  action,
+  actor,
+  cause,
+  children,
+  content_colspan = 1,
+  created_at,
+  parsed,
+}: {
+  action: string;
+  actor: ActorLabel;
+  cause: { actor: ActorLabel; parsed: ParsedActivityRow } | null | undefined;
+  children?: Child;
+  content_colspan?: number;
+  created_at: string;
+  parsed: ParsedActivityRow;
+}) {
+  const group: ActivityGroup = activity_overrides[action] ??
+    activity_groups[action.split(".")[0] ?? ""] ?? {
+      icon: "info",
+      label: "Activité",
+    };
+
+  return (
+    <tr aria-label={`Activité ${action}`}>
+      <td class="w-0 align-top">
+        <span class="bg-blue-france-925 text-blue-france inline-flex size-10 items-center justify-center rounded text-2xl">
+          <Svg name={group.icon} />
+        </span>
+      </td>
+      <td class="w-0 align-top whitespace-nowrap">
+        <ActivityTime date={created_at} />
+      </td>
+      <td class="align-top" colspan={content_colspan}>
+        <span class={tag({ size: "sm", static: true })}>{group.label}</span>
+        <div class="mt-2 text-base">
+          <ActivityLabel parsed={parsed} />
+        </div>
+        <div class="text-text-muted mt-1 text-sm">
+          Par <Actor actor={actor} />
+          {children}
+        </div>
+        {cause === null || cause === undefined ? null : (
+          <div class="bg-blue-france-925 text-grey-850 dark:bg-surface-muted dark:text-text-default mt-3 rounded px-4 py-3">
+            ↳ Suite à : <ActivityLabel parsed={cause.parsed} /> par{" "}
+            <Actor actor={cause.actor} />
+          </div>
+        )}
+      </td>
+    </tr>
   );
 }
 

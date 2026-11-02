@@ -133,9 +133,9 @@ test("GET /users/:id/activities lists the user's activity, newest first, with it
       .trim(),
   );
   expect(rows).toEqual([
-    `04/01/2222 01:00:00 proconnect-identite (domain.promote_members) 🦄 libelle ⬆️ Membre promu (domain_not_verified_yet → domain) ↳ Suite à : ✅ Domaine unicorn.xyz vérifié (verified) par ${moderator.email}`,
-    `03/01/2222 01:00:00 proconnect-identite (join.official_contact) — domain.archived {"inputs":{"domain":"rainbow.xyz"},"outcome":{}}`,
-    `02/01/2222 01:00:00 proconnect-identite (domain.promote_members) — ⚠️ Contexte invalide : member.promoted {"inputs":{},"outcome":{}}`,
+    `04/01/22 à 01h00 Organisation Membre promu (domain_not_verified_yet → domain) Par proconnect-identite (domain.promote_members) · 🦄 libelle ↳ Suite à : Domaine unicorn.xyz vérifié (verified) par ${moderator.email}`,
+    `03/01/22 à 01h00 Domaine domain.archived {"inputs":{"domain":"rainbow.xyz"},"outcome":{}} Par proconnect-identite (join.official_contact)`,
+    `02/01/22 à 01h00 Organisation ⚠️ Contexte invalide : member.promoted {"inputs":{},"outcome":{}} Par proconnect-identite (domain.promote_members)`,
   ]);
 });
 

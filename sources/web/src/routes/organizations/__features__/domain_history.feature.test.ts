@@ -36,9 +36,9 @@ Scenario(
     I.click("✅ Domaine autorisé");
     I.within("~Activité domain.verified", () => {
       I.see("moderateur@beta.gouv.fr");
-      I.see("✅ Domaine yeswehack.com vérifié (verified)");
+      I.see("Domaine yeswehack.com vérifié (verified)");
       I.see(
-        "jean@yeswehack.com : ⬆️ Membre promu (domain_not_verified_yet → domain)",
+        "jean@yeswehack.com : Membre promu (domain_not_verified_yet → domain)",
       );
       I.dontSee("rdubigny@beta.gouv.fr");
     });
@@ -47,7 +47,7 @@ Scenario(
     I.click("🚫 Domaine refusé");
     I.within("~Activité domain.refused", () => {
       I.see("moderateur@beta.gouv.fr");
-      I.see("🚫 Domaine yeswehack.com refusé");
+      I.see("Domaine yeswehack.com refusé");
     });
     I.seeElement("~Activité domain.verified");
 
@@ -55,7 +55,7 @@ Scenario(
     I.click("🗑️ Supprimer");
     I.within("~Activité domain.removed", () => {
       I.see("moderateur@beta.gouv.fr");
-      I.see("🗑️ Domaine yeswehack.com supprimé (refused)");
+      I.see("Domaine yeswehack.com supprimé (refused)");
     });
     I.seeElement("~Activité domain.refused");
   },

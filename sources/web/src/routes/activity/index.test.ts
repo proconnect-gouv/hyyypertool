@@ -172,13 +172,13 @@ test("GET /activity lists the latest activities with their targets, newest first
     `<a href="/users/${adora_pony_user_id}">adora.pony@unicorn.xyz</a>`,
   );
   expect(row_texts(html)).toEqual([
-    `07/01/2222 01:00:00 adora.pony@unicorn.xyz ➖ Membre supprimé (domain, interne) —`,
-    `06/01/2222 01:00:00 ${moderator.email} ➕ Membre ajouté (domain, externe) —`,
-    `05/01/2222 01:00:00 ${moderator.email} ⚠️ Contexte invalide : domain.refused {"inputs":{},"outcome":{}} —`,
-    `04/01/2222 01:00:00 ${moderator.email} 🗑️ Utilisateur adora.pony@unicorn.xyz supprimé adora.pony@unicorn.xyz`,
-    `03/01/2222 01:00:00 ${moderator.email} moderation.accepted {"inputs":{},"outcome":{}} 🦄 libelle · adora.pony@unicorn.xyz · Modération #42`,
-    `02/01/2222 01:00:00 proconnect-identite (domain.promote_members) ⬆️ Membre promu (domain_not_verified_yet → domain) ↳ Suite à : ✅ Domaine unicorn.xyz vérifié (verified) par ${moderator.email} 🦄 libelle · adora.pony@unicorn.xyz`,
-    `01/01/2222 01:00:00 ${moderator.email} ✅ Domaine unicorn.xyz vérifié (verified) 🦄 libelle · adora.pony@unicorn.xyz`,
+    `07/01/22 à 01h00 Organisation Membre supprimé (domain, interne) Par adora.pony@unicorn.xyz`,
+    `06/01/22 à 01h00 Organisation Membre ajouté (domain, externe) Par ${moderator.email}`,
+    `05/01/22 à 01h00 Domaine ⚠️ Contexte invalide : domain.refused {"inputs":{},"outcome":{}} Par ${moderator.email}`,
+    `04/01/22 à 01h00 Compte Utilisateur adora.pony@unicorn.xyz supprimé Par ${moderator.email} · adora.pony@unicorn.xyz`,
+    `03/01/22 à 01h00 Modération moderation.accepted {"inputs":{},"outcome":{}} Par ${moderator.email} · 🦄 libelle · adora.pony@unicorn.xyz · Modération #42`,
+    `02/01/22 à 01h00 Organisation Membre promu (domain_not_verified_yet → domain) Par proconnect-identite (domain.promote_members) · 🦄 libelle · adora.pony@unicorn.xyz ↳ Suite à : Domaine unicorn.xyz vérifié (verified) par ${moderator.email}`,
+    `01/01/22 à 01h00 Domaine Domaine unicorn.xyz vérifié (verified) Par ${moderator.email} · 🦄 libelle · adora.pony@unicorn.xyz`,
   ]);
 });
 
@@ -205,8 +205,8 @@ test("GET /activity?category= filters by first action category", async () => {
     await create_test_app(moderator).request("/?category=domain");
 
   expect(row_texts(await response.text())).toEqual([
-    `05/01/2222 01:00:00 ${moderator.email} ⚠️ Contexte invalide : domain.refused {"inputs":{},"outcome":{}} —`,
-    `01/01/2222 01:00:00 ${moderator.email} ✅ Domaine unicorn.xyz vérifié (verified) 🦄 libelle · adora.pony@unicorn.xyz`,
+    `05/01/22 à 01h00 Domaine ⚠️ Contexte invalide : domain.refused {"inputs":{},"outcome":{}} Par ${moderator.email}`,
+    `01/01/22 à 01h00 Domaine Domaine unicorn.xyz vérifié (verified) Par ${moderator.email} · 🦄 libelle · adora.pony@unicorn.xyz`,
   ]);
 });
 
@@ -219,10 +219,10 @@ test("GET /activity?category= accepts several categories", async () => {
 
   const rows = row_texts(await response.text());
   expect(rows).toHaveLength(4);
-  expect(rows[0]).toContain("➖ Membre supprimé");
-  expect(rows[1]).toContain("➕ Membre ajouté");
+  expect(rows[0]).toContain("Membre supprimé");
+  expect(rows[1]).toContain("Membre ajouté");
   expect(rows[2]).toContain("moderation.accepted");
-  expect(rows[3]).toContain("⬆️ Membre promu");
+  expect(rows[3]).toContain("Membre promu");
 });
 
 test("GET /activity?date= filters by the Europe/Paris day", async () => {
@@ -232,7 +232,7 @@ test("GET /activity?date= filters by the Europe/Paris day", async () => {
     await create_test_app(moderator).request("/?date=2222-01-03");
 
   expect(row_texts(await response.text())).toEqual([
-    `03/01/2222 01:00:00 ${moderator.email} moderation.accepted {"inputs":{},"outcome":{}} 🦄 libelle · adora.pony@unicorn.xyz · Modération #42`,
+    `03/01/22 à 01h00 Modération moderation.accepted {"inputs":{},"outcome":{}} Par ${moderator.email} · 🦄 libelle · adora.pony@unicorn.xyz · Modération #42`,
   ]);
 });
 
