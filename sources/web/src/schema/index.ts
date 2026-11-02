@@ -14,13 +14,19 @@ export const EntitySchema = z.object({
 
 //
 
-export const PaginationSchema = z.object({
-  page: z.coerce
-    .number()
-    .transform((number) => Math.max(1, number))
-    .default(1),
-  page_size: z.coerce.number().default(10),
-});
+export function pagination_schema({
+  page_size = 10,
+}: { page_size?: number } = {}) {
+  return z.object({
+    page: z.coerce
+      .number()
+      .transform((number) => Math.max(1, number))
+      .default(1),
+    page_size: z.coerce.number().default(page_size),
+  });
+}
+
+export const PaginationSchema = pagination_schema();
 export type Pagination = z.infer<typeof PaginationSchema>;
 
 //

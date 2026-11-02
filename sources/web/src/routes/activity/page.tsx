@@ -43,6 +43,7 @@ export function Page({
   date,
   live,
   pagination,
+  search,
   selected,
 }: {
   activities: ReadonlyArray<RenderedActivity>;
@@ -51,6 +52,7 @@ export function Page({
   date: string | undefined;
   live: number;
   pagination: Pagination;
+  search: URLSearchParams;
   selected: ReadonlyArray<string>;
 }) {
   return (
@@ -59,7 +61,7 @@ export function Page({
         <h1>Journal d’activité</h1>
         <a
           class={button({ type: "tertiary-no-outline" })}
-          href={live_href(live, selected, date)}
+          href={live_href(live, search)}
         >
           {live > 0 ? "⏸️ Pause" : "▶️ Suivre en direct"}
         </a>
@@ -82,16 +84,9 @@ export function Page({
 
 const LIVE_INTERVAL = 5;
 
-function live_href(
-  live: number,
-  selected: ReadonlyArray<string>,
-  date: string | undefined,
-) {
-  const search = new URLSearchParams({
-    live: live > 0 ? "0" : `${LIVE_INTERVAL}`,
-  });
-  for (const category of selected) search.append("category", category);
-  if (date !== undefined) search.set("date", date);
+function live_href(live: number, query: URLSearchParams) {
+  const search = new URLSearchParams(query);
+  search.set("live", live > 0 ? "0" : `${LIVE_INTERVAL}`);
   return `${urls.activity.$url().pathname}?${search}`;
 }
 
@@ -171,18 +166,18 @@ function Table({
   live: number;
   pagination: Pagination;
 }) {
+  const polling_props =
+    live > 0
+      ? {
+          ...hx_activities_props,
+          ...hx_pagination_props,
+          "hx-trigger": `every ${live}s [document.visibilityState === 'visible']`,
+          "hx-vals": JSON.stringify({ live }),
+        }
+      : {};
+
   return (
-    <div
-      {...hx_activities_props}
-      {...hx_pagination_props}
-      id={$table}
-      hx-trigger={
-        live > 0
-          ? `every ${live}s [document.visibilityState === 'visible']`
-          : undefined
-      }
-      hx-vals={JSON.stringify({ live })}
-    >
+    <div {...polling_props} id={$table}>
       <table class={table()}>
         <thead>
           <tr>
