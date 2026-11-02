@@ -4,13 +4,12 @@ import { hyper_ref } from "#src/html";
 import { hx_include } from "#src/htmx";
 import type { ParsedActivityRow } from "#src/lib/activities";
 import type { Pagination } from "#src/schema";
-import { ActivityLabel, Actor } from "#src/ui/activities";
+import { ActivityItem } from "#src/ui/activities";
 import { button } from "#src/ui/button";
 import { fieldset, input, label } from "#src/ui/form";
 import { Foot } from "#src/ui/hx_table";
 import { table } from "#src/ui/table";
 import { tag } from "#src/ui/tag";
-import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
 import type { get_activities } from "./get_activities.query";
 
@@ -179,18 +178,10 @@ function Table({
   return (
     <div {...polling_props} id={$table}>
       <table class={table()}>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Acteur</th>
-            <th>Action</th>
-            <th>Cible</th>
-          </tr>
-        </thead>
         <tbody>
           {activities.length === 0 ? (
             <tr>
-              <td colspan={4}>Aucune activité.</td>
+              <td colspan={3}>Aucune activité.</td>
             </tr>
           ) : (
             activities.map((activity) => (
@@ -210,25 +201,19 @@ function Table({
 }
 
 function Row({ activity }: { activity: RenderedActivity }) {
+  const target = Target(activity);
+
   return (
-    <tr aria-label={`Activité ${activity.parsed.action}`}>
-      <td>
-        <LocalTime date={activity.created_at} />
-      </td>
-      <td>
-        <Actor actor={activity.actor} />
-      </td>
-      <td>
-        <ActivityLabel parsed={activity.parsed} />
-        {activity.cause !== null && (
-          <div>
-            ↳ Suite à : <ActivityLabel parsed={activity.cause.parsed} /> par{" "}
-            <Actor actor={activity.cause.actor} />
-          </div>
-        )}
-      </td>
-      <td>{Target(activity)}</td>
-    </tr>
+    <ActivityItem
+      action={activity.parsed.action}
+      actor={activity.actor}
+      cause={activity.cause}
+      content_colspan={2}
+      created_at={activity.created_at}
+      parsed={activity.parsed}
+    >
+      {target === null ? null : <> · {target}</>}
+    </ActivityItem>
   );
 }
 
@@ -262,7 +247,7 @@ function Target({ moderation_id, organization, user }: RenderedActivity) {
     ),
   ].filter((link) => link !== null);
 
-  if (links.length === 0) return "—";
+  if (links.length === 0) return null;
 
   return links.map((link, index) => (
     <>

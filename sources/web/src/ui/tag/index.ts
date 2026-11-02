@@ -40,5 +40,8 @@ export const tag = tv({
         text-white
       `,
     },
+    static: {
+      true: "cursor-default",
+    },
   },
 });

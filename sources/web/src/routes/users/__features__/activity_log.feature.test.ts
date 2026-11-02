@@ -46,8 +46,8 @@ Scenario(
     I.click("🕓 1 activité de Jean");
     I.within("~Activité member.promoted", () => {
       I.see("Yes we hack");
-      I.see("⬆️ Membre promu (domain_not_verified_yet → domain)");
-      I.see("✅ Domaine yeswehack.com vérifié (verified)");
+      I.see("Membre promu (domain_not_verified_yet → domain)");
+      I.see("Domaine yeswehack.com vérifié (verified)");
       I.see("moderateur@beta.gouv.fr");
     });
   },
