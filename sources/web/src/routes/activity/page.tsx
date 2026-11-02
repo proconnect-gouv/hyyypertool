@@ -152,14 +152,14 @@ function Table({
   return (
     <div
       {...hx_activities_props}
-      {...hx_filter_props}
+      {...hx_pagination_props}
       id={$table}
       hx-trigger={
         live > 0
           ? `every ${live}s [document.visibilityState === 'visible']`
           : undefined
       }
-      hx-vals={JSON.stringify({ live, page: 1 })}
+      hx-vals={JSON.stringify({ live })}
     >
       <table class={table()}>
         <thead>
