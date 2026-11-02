@@ -25,6 +25,8 @@ export function Foot({
   const { page, page_size } = pagination;
   const last_page = Math.ceil(count / page_size);
   const page_index = page - 1;
+  const first_item = count === 0 ? 0 : page_index * page_size + 1;
+  const last_item = Math.min(count, (page_index + 1) * page_size);
 
   // Distribute columns: 2 for info, remaining-1 for pagination, 1 for refresh
   const info_colspan = 2;
@@ -38,8 +40,8 @@ export function Foot({
     <tfoot class="mt-4">
       <tr>
         <th colspan={info_colspan} class="whitespace-nowrap" scope="row">
-          Affiche de {fr_number_converter.format(page_index * page_size)}-
-          {fr_number_converter.format(page_index * page_size + page_size)} sur{" "}
+          Affiche de {fr_number_converter.format(first_item)}-
+          {fr_number_converter.format(last_item)} sur{" "}
           {fr_number_converter.format(count)}
         </th>
         <td class="space-x-2" colspan={pagination_colspan}>
@@ -63,7 +65,7 @@ export function Foot({
             name={name ?? PaginationSchema.keyof().enum.page}
             value={page}
           />
-          <span>of {fr_number_converter.format(last_page)}</span>
+          <span>sur {fr_number_converter.format(last_page)}</span>
           <button
             class={button({ type: "tertiary-no-outline" })}
             disabled={page >= last_page}

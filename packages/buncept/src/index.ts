@@ -63,6 +63,7 @@ function create_actor(scenario: { browser: Browser; failed_step?: string }) {
   const step = <A extends unknown[]>(
     name: string,
     run: (browser: Browser, scopes: Locator[], ...args: A) => Promise<void>,
+    timeout?: number | ((args: A) => number),
   ) =>
     function call(...args: A) {
       // Re-point failures at the test line that called the step
@@ -70,22 +71,27 @@ function create_actor(scenario: { browser: Browser; failed_step?: string }) {
       Error.captureStackTrace(site, call);
       const label = `I ${name} ${args.map((arg) => JSON.stringify(arg)).join(", ")}`;
       const step_scopes = scopes;
-      test(label, async () => {
-        // ponytail: bun 1.4.2 has no runtime skip, so steps after a failure
-        // fail as "skipped"; use it once bun ships one
-        if (scenario.failed_step)
-          return expect().fail(
-            `skipped: step "${scenario.failed_step}" failed`,
-          );
-        try {
-          await run(scenario.browser, step_scopes, ...args);
-        } catch (error) {
-          scenario.failed_step = label;
-          const reason = error instanceof Error ? error.message : String(error);
-          site.message = `${label}\n${reason}\n${await scenario.browser.page_line()}`;
-          throw site;
-        }
-      });
+      test(
+        label,
+        async () => {
+          // ponytail: bun 1.4.2 has no runtime skip, so steps after a failure
+          // fail as "skipped"; use it once bun ships one
+          if (scenario.failed_step)
+            return expect().fail(
+              `skipped: step "${scenario.failed_step}" failed`,
+            );
+          try {
+            await run(scenario.browser, step_scopes, ...args);
+          } catch (error) {
+            scenario.failed_step = label;
+            const reason =
+              error instanceof Error ? error.message : String(error);
+            site.message = `${label}\n${reason}\n${await scenario.browser.page_line()}`;
+            throw site;
+          }
+        },
+        typeof timeout === "function" ? timeout(args) : timeout,
+      );
     };
 
   return {
@@ -182,6 +188,12 @@ function create_actor(scenario: { browser: Browser; failed_step?: string }) {
         (actual) => actual === title,
         "document.title",
       ),
+    ),
+    // https://codecept.io/web-api/#wait
+    wait: step(
+      "wait",
+      (browser, _, seconds: number) => browser.wait(seconds),
+      ([seconds]) => seconds * 1000 + config.timeout,
     ),
     // https://codecept.io/basics/#within
     within(scope: Locator, fn: () => void) {
@@ -292,6 +304,9 @@ export function create_browser(view: Bun.WebView) {
       popup_stubs = `window.confirm = () => true; window.alert = () => {};`;
     },
     act,
+    wait(seconds: number) {
+      return Bun.sleep(seconds * 1000);
+    },
     // Clicks the option's label until the box stays checked: a click that
     // lands before its island hydrates is lost, so click again.
     async check(scopes: Locator[], field: Locator) {

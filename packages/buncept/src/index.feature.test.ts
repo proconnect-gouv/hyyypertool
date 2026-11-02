@@ -111,6 +111,12 @@ Scenario("checkOption clicks again until the option stays checked", ({ I }) => {
   I.see("notify on");
 });
 
+Scenario("wait accepts a duration", ({ I }) => {
+  I.amOnPage("/");
+  I.wait(0);
+  I.seeTitleEquals("Fixture");
+});
+
 Scenario("seeFocused follows the keyboard focus", ({ I }) => {
   I.amOnPage("/keyboard");
   I.pressKey("Tab");
