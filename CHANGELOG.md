@@ -1,5 +1,21 @@
 # Changelog
 
+## [2026.10.6](https://github.com/proconnect-gouv/hyyypertool/compare/2026.10.5...2026.10.6) (2026-10-30)
+
+### Ajouté
+
+- ✨ add a global activity log page ([#1969](https://github.com/proconnect-gouv/hyyypertool/issues/1969)) ([c96e827](https://github.com/proconnect-gouv/hyyypertool/commit/c96e827dd35c6fc725132ad5d4db65cf2aa4a892))
+- ✨ show each user's activity log on their page ([#1967](https://github.com/proconnect-gouv/hyyypertool/issues/1967)) ([12b0883](https://github.com/proconnect-gouv/hyyypertool/commit/12b08831cb90419772073a120d41ea491170d8a3))
+
+### Modifié
+
+- 💄 link user actors to their page in the activity logs ([#1972](https://github.com/proconnect-gouv/hyyypertool/issues/1972)) ([3ba6cd8](https://github.com/proconnect-gouv/hyyypertool/commit/3ba6cd8606157ffd2cd296ab6cbe85bfb07abc42))
+- 💄 label user actors by email in the activity logs ([#1971](https://github.com/proconnect-gouv/hyyypertool/issues/1971)) ([d1131e2](https://github.com/proconnect-gouv/hyyypertool/commit/d1131e241a9f857d3af604901bf466a00152a814))
+
+### Dépendances
+
+- ⬆️ bump proconnect.identite to 14.0.0 ([#1970](https://github.com/proconnect-gouv/hyyypertool/issues/1970)) ([2de4223](https://github.com/proconnect-gouv/hyyypertool/commit/2de42239d9c70dd202c0e243453414a36785f263))
+
 ## [2026.10.5](https://github.com/proconnect-gouv/hyyypertool/compare/2026.10.4...2026.10.5) (2026-10-30)
 
 ### Changements
