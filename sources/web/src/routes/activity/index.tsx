@@ -69,7 +69,7 @@ export default new Hono<AppContext>()
         });
       }
 
-      set("page_title", "Liste des activités");
+      set("page_title", "Journal d’activité");
       return render(
         <Page
           activities={activities}

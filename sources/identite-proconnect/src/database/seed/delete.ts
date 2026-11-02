@@ -9,6 +9,10 @@ import { schema } from "..";
 
 export async function delete_database(db: IdentiteProconnectPgDatabase) {
   try {
+    const activities = await db.delete(schema.activity_logs).returning();
+    await db.execute(sql`ALTER SEQUENCE activity_logs_id_seq RESTART WITH 1`);
+    consola.info(`🚮 DELETE ${activities.length} activity_logs`);
+
     const authenticators = await db.delete(schema.authenticators).returning();
     consola.info(`🚮 DELETE ${authenticators.length} authenticators`);
 

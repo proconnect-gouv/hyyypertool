@@ -217,7 +217,7 @@ function Nav() {
             href={urls.activity.$url().pathname}
             target="_self"
           >
-            Activité
+            Journal d’activité
           </a>
         </li>
         <li class={item()}>
