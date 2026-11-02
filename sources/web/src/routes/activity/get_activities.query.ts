@@ -31,14 +31,22 @@ export async function get_activities(
   }: { hyyyper_pg: HyyyperPgDatabase; pg: IdentiteProconnectPgDatabase },
   {
     categories,
+    date,
     pagination,
-  }: { categories: ReadonlyArray<string>; pagination: Pagination },
+  }: {
+    categories: ReadonlyArray<string>;
+    date: string | undefined;
+    pagination: Pagination;
+  },
 ) {
   const { page, page_size: take } = pagination;
   const where = and(
     categories.length > 0
       ? inArray(action_category, [...categories])
       : undefined,
+    date === undefined
+      ? undefined
+      : sql`(${schema.activity_logs.created_at} AT TIME ZONE 'Europe/Paris')::date = ${date}::date`,
   );
 
   const activities = await pg.query.activity_logs.findMany({

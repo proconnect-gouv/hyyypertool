@@ -6,7 +6,7 @@ import type { ParsedActivityRow } from "#src/lib/activities";
 import type { Pagination } from "#src/schema";
 import { ActivityLabel, Actor } from "#src/ui/activities";
 import { button } from "#src/ui/button";
-import { fieldset } from "#src/ui/form";
+import { fieldset, input, label } from "#src/ui/form";
 import { Foot } from "#src/ui/hx_table";
 import { table } from "#src/ui/table";
 import { tag } from "#src/ui/tag";
@@ -32,7 +32,6 @@ const hx_activities_props = {
   "hx-select": `#${$table} > table`,
   "hx-target": `#${$table}`,
 };
-const hx_filter_props = { "hx-include": hx_include([$filters]) };
 const hx_pagination_props = { "hx-include": hx_include([$filters, $table]) };
 
 //
@@ -41,6 +40,7 @@ export function Page({
   activities,
   categories,
   count,
+  date,
   live,
   pagination,
   selected,
@@ -48,6 +48,7 @@ export function Page({
   activities: ReadonlyArray<RenderedActivity>;
   categories: ReadonlyArray<string>;
   count: number;
+  date: string | undefined;
   live: number;
   pagination: Pagination;
   selected: ReadonlyArray<string>;
@@ -58,12 +59,17 @@ export function Page({
         <h1>Journal d’activité</h1>
         <a
           class={button({ type: "tertiary-no-outline" })}
-          href={live_href(live, selected)}
+          href={live_href(live, selected, date)}
         >
           {live > 0 ? "⏸️ Pause" : "▶️ Suivre en direct"}
         </a>
       </div>
-      <Filter categories={categories} live={live} selected={selected} />
+      <Filter
+        categories={categories}
+        date={date}
+        live={live}
+        selected={selected}
+      />
       <Table
         activities={activities}
         count={count}
@@ -76,11 +82,16 @@ export function Page({
 
 const LIVE_INTERVAL = 5;
 
-function live_href(live: number, selected: ReadonlyArray<string>) {
+function live_href(
+  live: number,
+  selected: ReadonlyArray<string>,
+  date: string | undefined,
+) {
   const search = new URLSearchParams({
     live: live > 0 ? "0" : `${LIVE_INTERVAL}`,
   });
   for (const category of selected) search.append("category", category);
+  if (date !== undefined) search.set("date", date);
   return `${urls.activity.$url().pathname}?${search}`;
 }
 
@@ -97,10 +108,12 @@ const category_labels: Record<string, string> = {
 
 function Filter({
   categories,
+  date,
   live,
   selected,
 }: {
   categories: ReadonlyArray<string>;
+  date: string | undefined;
   live: number;
   selected: ReadonlyArray<string>;
 }) {
@@ -129,9 +142,18 @@ function Filter({
           </label>
         ))}
       </fieldset>
-      {selected.length > 0 && (
+      {selected.length > 0 || date !== undefined ? (
         <a href={urls.activity.$url().pathname}>Réinitialiser</a>
-      )}
+      ) : null}
+      <label class={label({ class: "ml-auto w-52" })}>
+        Chercher par date
+        <input
+          class={input({ class: "mt-2" })}
+          name="date"
+          type="date"
+          value={date ?? ""}
+        />
+      </label>
     </form>
   );
 }
