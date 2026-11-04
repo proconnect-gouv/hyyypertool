@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@~/config.typescript": "workspace:*",
-    "@electric-sql/pglite": "0.5.11",
+    "@electric-sql/pglite": "0.5.12",
     "@types/pg": "8.23.1",
     "drizzle-kit": "0.31.11",
     "ts-dedent": "2.3.0"
