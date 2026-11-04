@@ -18,8 +18,8 @@
   },
   "dependencies": {
     "@hono/node-server": "2.1.5",
-    "@sentry/node": "11.9.0",
-    "@sentry/profiling-node": "11.9.0",
+    "@sentry/node": "11.10.0",
+    "@sentry/profiling-node": "11.10.0",
     "@tailwindcss/cli": "4.3.3",
     "@tailwindcss/typography": "0.5.20",
     "@~/web": "workspace:*",
