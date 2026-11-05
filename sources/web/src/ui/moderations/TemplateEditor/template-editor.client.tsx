@@ -210,7 +210,7 @@ export function TemplateEditor({
 function TitleInput(props: {
   label: Signal<string>;
   error: Signal<string>;
-  inputRef: preact.RefObject<HTMLInputElement>;
+  inputRef: preact.RefObject<HTMLInputElement | null>;
 }) {
   const { label: labelSignal, error, inputRef } = props;
   return (
@@ -249,7 +249,7 @@ function TitleInput(props: {
 function EndUserReasonInput(props: {
   value: Signal<string>;
   error: Signal<string>;
-  inputRef: preact.RefObject<HTMLInputElement>;
+  inputRef: preact.RefObject<HTMLInputElement | null>;
 }) {
   const { value: valueSignal, error, inputRef } = props;
   return (
@@ -280,7 +280,7 @@ function EndUserReasonInput(props: {
 
 interface TemplateEditorPanelProps {
   template: Signal<string>;
-  textareaRef: preact.RefObject<HTMLTextAreaElement>;
+  textareaRef: preact.RefObject<HTMLTextAreaElement | null>;
   error: Signal<string>;
 }
 
