@@ -28,7 +28,7 @@
     "@proconnect-gouv/proconnect.insee": "2.0.0",
     "consola": "3.4.2",
     "drizzle-orm": "0.45.4",
-    "hono": "4.13.14",
+    "hono": "4.13.16",
     "pg": "8.23.1"
   },
   "devDependencies": {
