@@ -1,7 +1,7 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
     "local>proconnect-gouv/renovate-config",
-    "local>proconnect-gouv/renovate-config:scalingo"
-  ]
+    "local>proconnect-gouv/renovate-config:scalingo",
+  ],
 }
