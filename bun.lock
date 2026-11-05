@@ -129,7 +129,7 @@
         "ts-dedent": "2.3.0",
       },
       "peerDependencies": {
-        "drizzle-orm": ">=0.45",
+        "drizzle-orm": ">=0.45.4",
         "pg": ">=8.23.1",
       },
     },
