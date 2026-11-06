@@ -1,5 +1,6 @@
 //
 
+import { GlobalRegistrator } from "@happy-dom/global-registrator";
 import { authorized, set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
 import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
@@ -69,5 +70,38 @@ test("Main Layout", async () => {
 
   const res = await app.request("/", undefined, {});
   expect(res.status).toBe(200);
-  expect(await res.text()).toMatchSnapshot();
+  const html = await res.text();
+
+  // registered after the request: happy-dom replaces fetch, Request and Response
+  GlobalRegistrator.register();
+  try {
+    const page = new DOMParser().parseFromString(html, "text/html");
+
+    expect(page.querySelector("#main-content")?.textContent).toBe("✅");
+    expect(
+      [...page.querySelectorAll("#account-menu p, #account-menu a")].map((e) =>
+        e.textContent?.trim(),
+      ),
+    ).toEqual([
+      "Lara Croft admin",
+      admin.email,
+      "Gestion de l'équipe",
+      "Se deconnecter",
+    ]);
+    expect(
+      [...page.querySelectorAll("nav[aria-label='Menu principal'] a")].map(
+        (a) => [a.textContent, a.getAttribute("href")],
+      ),
+    ).toEqual([
+      ["Moderations", "/moderations"],
+      ["Journal d’activité", "/activity"],
+      ["Utilisateurs", "/users"],
+      ["Organisations", "/organizations"],
+      ["Domaines à vérifier", "/organizations/domains"],
+      ["Délivrabilité des domaines", "/domains-deliverability"],
+      ["Templates de réponse", "/response-templates"],
+    ]);
+  } finally {
+    await GlobalRegistrator.unregister();
+  }
 });
