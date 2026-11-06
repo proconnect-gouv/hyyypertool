@@ -103,11 +103,11 @@ test("PUT /organizations/:id/domains adds new domain", async () => {
       [
         {
           "can_be_suggested": true,
-          "created_at": "2222-01-01 01:00:00+01",
+          "created_at": "2222-01-01 00:00:00+00",
           "domain": "unicorn.xyz",
           "id": 1,
           "organization_id": 1,
-          "updated_at": "2222-01-01 01:00:00+01",
+          "updated_at": "2222-01-01 00:00:00+00",
           "verification_type": "verified",
           "verified_at": null,
         },
@@ -143,13 +143,13 @@ test("PUT /organizations/:id/domains adds new domain", async () => {
       [
         {
           "can_be_suggested": true,
-          "created_at": "2222-01-01 01:00:00+01",
+          "created_at": "2222-01-01 00:00:00+00",
           "domain": "unicorn.xyz",
           "id": 2,
           "organization_id": 1,
-          "updated_at": "2222-01-01 01:00:00+01",
+          "updated_at": "2222-01-01 00:00:00+00",
           "verification_type": "verified",
-          "verified_at": "2222-01-01 01:00:00+01",
+          "verified_at": "2222-01-01 00:00:00+00",
         },
       ]
     `);
@@ -162,28 +162,28 @@ test("PUT /organizations/:id/domains adds new domain", async () => {
     expect(result).toMatchInlineSnapshot(`
       [
         {
-          "created_at": "1970-01-01 00:00:00+01",
+          "created_at": "1970-01-01 00:00:00+00",
           "is_external": false,
           "organization_id": 1,
-          "updated_at": "2222-01-01 01:00:00+01",
+          "updated_at": "2222-01-01 00:00:00+00",
           "user_id": 1,
           "verification_type": "domain",
           "verified_at": null,
         },
         {
-          "created_at": "1970-01-01 00:00:00+01",
+          "created_at": "1970-01-01 00:00:00+00",
           "is_external": false,
           "organization_id": 1,
-          "updated_at": "2222-01-01 01:00:00+01",
+          "updated_at": "2222-01-01 00:00:00+00",
           "user_id": 2,
           "verification_type": "domain",
           "verified_at": null,
         },
         {
-          "created_at": "1970-01-01 00:00:00+01",
+          "created_at": "1970-01-01 00:00:00+00",
           "is_external": false,
           "organization_id": 1,
-          "updated_at": "1970-01-01 00:00:00+01",
+          "updated_at": "1970-01-01 00:00:00+00",
           "user_id": 3,
           "verification_type": "proof_received",
           "verified_at": null,
@@ -229,11 +229,11 @@ test("DELETE /organizations/:id/domains/:domain_id removes domain", async () => 
       [
         {
           "can_be_suggested": true,
-          "created_at": "2222-01-01 01:00:00+01",
+          "created_at": "2222-01-01 00:00:00+00",
           "domain": "unicorn.xyz",
           "id": 1,
           "organization_id": 1,
-          "updated_at": "2222-01-01 01:00:00+01",
+          "updated_at": "2222-01-01 00:00:00+00",
           "verification_type": "verified",
           "verified_at": null,
         },
@@ -301,13 +301,13 @@ test("PATCH /organizations/:id/domains/:domain_id updates verification type to v
       [
         {
           "can_be_suggested": true,
-          "created_at": "2222-01-01 01:00:00+01",
+          "created_at": "2222-01-01 00:00:00+00",
           "domain": "unicorn.xyz",
           "id": 3,
           "organization_id": 1,
-          "updated_at": "2222-01-01 01:00:00+01",
+          "updated_at": "2222-01-01 00:00:00+00",
           "verification_type": "verified",
-          "verified_at": "2222-01-01 01:00:00+01",
+          "verified_at": "2222-01-01 00:00:00+00",
         },
       ]
     `);
@@ -320,28 +320,28 @@ test("PATCH /organizations/:id/domains/:domain_id updates verification type to v
     expect(result).toMatchInlineSnapshot(`
       [
         {
-          "created_at": "1970-01-01 00:00:00+01",
+          "created_at": "1970-01-01 00:00:00+00",
           "is_external": false,
           "organization_id": 1,
-          "updated_at": "2222-01-01 01:00:00+01",
+          "updated_at": "2222-01-01 00:00:00+00",
           "user_id": 1,
           "verification_type": "domain",
           "verified_at": null,
         },
         {
-          "created_at": "1970-01-01 00:00:00+01",
+          "created_at": "1970-01-01 00:00:00+00",
           "is_external": false,
           "organization_id": 1,
-          "updated_at": "2222-01-01 01:00:00+01",
+          "updated_at": "2222-01-01 00:00:00+00",
           "user_id": 2,
           "verification_type": "domain",
           "verified_at": null,
         },
         {
-          "created_at": "1970-01-01 00:00:00+01",
+          "created_at": "1970-01-01 00:00:00+00",
           "is_external": false,
           "organization_id": 1,
-          "updated_at": "1970-01-01 00:00:00+01",
+          "updated_at": "1970-01-01 00:00:00+00",
           "user_id": 3,
           "verification_type": "proof_received",
           "verified_at": null,

@@ -79,7 +79,7 @@ test("filters by specific user and organization", async () => {
   expect(moderations).toMatchInlineSnapshot(`
     [
       {
-        "created_at": "2222-01-01 01:00:00+01",
+        "created_at": "2222-01-01 00:00:00+00",
         "id": 1,
         "moderated_at": null,
         "status": "unknown",

@@ -38,11 +38,11 @@ test("should update nothing", async () => {
   ).toMatchInlineSnapshot(`
     {
       "can_be_suggested": true,
-      "created_at": "2222-01-01 01:00:00+01",
+      "created_at": "2222-01-01 00:00:00+00",
       "domain": "unicorn.xyz",
       "id": 1,
       "organization_id": 1,
-      "updated_at": "2222-01-02 01:00:00+01",
+      "updated_at": "2222-01-02 00:00:00+00",
       "verification_type": "verified",
       "verified_at": null,
     }
