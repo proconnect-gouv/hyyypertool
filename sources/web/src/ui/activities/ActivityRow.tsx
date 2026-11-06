@@ -100,7 +100,11 @@ const known_activity_labels: {
       Utilisateur <b>{outcome.email}</b> supprimé
     </>
   ),
+  "user.info_changed": () => <>Informations personnelles modifiées</>,
   "user.mfa_reset": () => <>Double authentification réinitialisée</>,
+  "user.password_changed": ({ inputs }) => (
+    <>Mot de passe modifié ({inputs.source})</>
+  ),
 };
 
 // generic `Action` keeps the label and its context correlated

@@ -123,7 +123,6 @@ test.each(cases)(
 
     expect(link).toEqual({
       created_at: "2222-11-11 01:00:00+01",
-      has_been_greeted: false,
       is_external: add_member === "AS_EXTERNAL",
       organization_id: 1,
       updated_at: "2222-11-11 01:00:00+01",
