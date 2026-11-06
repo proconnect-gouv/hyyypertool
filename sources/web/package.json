@@ -50,7 +50,7 @@
     "nprogress": "0.2.0",
     "openid-client": "6.8.9",
     "pg": "8.23.1",
-    "preact": "11.1.0",
+    "preact": "11.2.0",
     "preact-render-to-string": "6.8.2",
     "rate-limiter-flexible": "11.3.0",
     "rehype-sanitize": "6.0.0",
