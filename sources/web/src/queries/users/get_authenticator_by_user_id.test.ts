@@ -24,10 +24,10 @@ test("should returns one authenticator", async () => {
   expect(authenticators).toMatchInlineSnapshot(`
     [
       {
-        "created_at": "2023-06-23 02:33:33+01",
+        "created_at": "2023-06-23 01:33:33+00",
         "credential_id": "1",
         "display_name": "1Password",
-        "last_used_at": "2023-06-24 03:44:44+01",
+        "last_used_at": "2023-06-24 02:44:44+00",
         "usage_count": 5,
       },
     ]
@@ -48,17 +48,17 @@ test("should returns two authenticators & structure of authenticators", async ()
   expect(authenticators).toMatchInlineSnapshot(`
     [
       {
-        "created_at": "2023-06-23 02:33:33+01",
+        "created_at": "2023-06-23 01:33:33+00",
         "credential_id": "1",
         "display_name": "1Password",
-        "last_used_at": "2023-06-24 03:44:44+01",
+        "last_used_at": "2023-06-24 02:44:44+00",
         "usage_count": 5,
       },
       {
-        "created_at": "2023-06-23 12:33:33+01",
+        "created_at": "2023-06-23 11:33:33+00",
         "credential_id": "2",
         "display_name": "NordPass",
-        "last_used_at": "2023-06-24 13:44:44+01",
+        "last_used_at": "2023-06-24 12:44:44+00",
         "usage_count": 87,
       },
     ]

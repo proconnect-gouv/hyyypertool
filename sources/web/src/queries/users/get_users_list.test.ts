@@ -34,7 +34,7 @@ test("returns paginated users list with default pagination", async () => {
       "count": 1,
       "users": [
         {
-          "created_at": "2222-01-01 01:00:00+01",
+          "created_at": "2222-01-01 00:00:00+00",
           "email": "adora.pony@unicorn.xyz",
           "email_verified_at": null,
           "family_name": "Pony",
@@ -70,7 +70,7 @@ test("filters users by search term in email", async () => {
       "count": 1,
       "users": [
         {
-          "created_at": "2222-01-01 01:00:00+01",
+          "created_at": "2222-01-01 00:00:00+00",
           "email": "adora.pony@unicorn.xyz",
           "email_verified_at": null,
           "family_name": "Pony",
@@ -95,7 +95,7 @@ test("filters users by search term in family name", async () => {
       "count": 1,
       "users": [
         {
-          "created_at": "2222-01-01 01:00:00+01",
+          "created_at": "2222-01-01 00:00:00+00",
           "email": "adora.pony@unicorn.xyz",
           "email_verified_at": null,
           "family_name": "Pony",
@@ -120,7 +120,7 @@ test("filters users by search term in given name", async () => {
       "count": 1,
       "users": [
         {
-          "created_at": "2222-01-01 01:00:00+01",
+          "created_at": "2222-01-01 00:00:00+00",
           "email": "adora.pony@unicorn.xyz",
           "email_verified_at": null,
           "family_name": "Pony",
@@ -148,7 +148,7 @@ test("respects pagination parameters", async () => {
       "count": 3,
       "users": [
         {
-          "created_at": "2222-01-01 01:00:00+01",
+          "created_at": "2222-01-01 00:00:00+00",
           "email": "adora.pony@unicorn.xyz",
           "email_verified_at": null,
           "family_name": "Pony",
@@ -157,7 +157,7 @@ test("respects pagination parameters", async () => {
           "last_sign_in_at": null,
         },
         {
-          "created_at": "2222-01-01 01:00:00+01",
+          "created_at": "2222-01-01 00:00:00+00",
           "email": "pink.diamond@unicorn.xyz",
           "email_verified_at": null,
           "family_name": "Diamond",
@@ -178,7 +178,7 @@ test("respects pagination parameters", async () => {
       "count": 3,
       "users": [
         {
-          "created_at": "2222-01-01 01:00:00+01",
+          "created_at": "2222-01-01 00:00:00+00",
           "email": "red.diamond@unicorn.xyz",
           "email_verified_at": null,
           "family_name": "Diamond",
@@ -216,7 +216,7 @@ test("orders users by created_at descending", async () => {
       "count": 2,
       "users": [
         {
-          "created_at": "2222-02-01 01:00:00+01",
+          "created_at": "2222-02-01 00:00:00+00",
           "email": "second@example.com",
           "email_verified_at": null,
           "family_name": "Second",
@@ -225,7 +225,7 @@ test("orders users by created_at descending", async () => {
           "last_sign_in_at": null,
         },
         {
-          "created_at": "2222-01-01 01:00:00+01",
+          "created_at": "2222-01-01 00:00:00+00",
           "email": "pink.diamond@unicorn.xyz",
           "email_verified_at": null,
           "family_name": "Diamond",

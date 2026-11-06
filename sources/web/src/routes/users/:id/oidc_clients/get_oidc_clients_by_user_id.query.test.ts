@@ -36,7 +36,7 @@ test("get adora's oidc connections", async () => {
     {
       "connections": [
         {
-          "created_at": "2222-01-01 01:00:00+01",
+          "created_at": "2222-01-01 00:00:00+00",
           "id": 1,
           "interaction_cid": "🦄 cid",
           "oidc_client": {
@@ -79,7 +79,7 @@ test("returns connections ordered by created_at desc", async () => {
     {
       "connections": [
         {
-          "created_at": "2024-06-01 01:00:00+01",
+          "created_at": "2024-06-01 00:00:00+00",
           "id": 2,
           "interaction_cid": null,
           "oidc_client": {
@@ -91,7 +91,7 @@ test("returns connections ordered by created_at desc", async () => {
           "sp_name": null,
         },
         {
-          "created_at": "2020-01-01 01:00:00+01",
+          "created_at": "2020-01-01 00:00:00+00",
           "id": 1,
           "interaction_cid": null,
           "oidc_client": {
@@ -129,7 +129,7 @@ test("supports pagination", async () => {
   expect(result.connections).toMatchInlineSnapshot(`
     [
       {
-        "created_at": "2020-01-01 01:00:00+01",
+        "created_at": "2020-01-01 00:00:00+00",
         "id": 1,
         "interaction_cid": null,
         "oidc_client": {
