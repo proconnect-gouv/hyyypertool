@@ -168,7 +168,7 @@
         "@proconnect-gouv/proconnect.identite": "15.0.0",
         "@proconnect-gouv/proconnect.identite.runtime": "0.5.0",
         "@sentry/browser": "11.9.0",
-        "@sentry/conventions": "0.30.0",
+        "@sentry/conventions": "0.31.0",
         "@sentry/core": "11.9.0",
         "@sentry/node": "11.9.0",
         "@tailwindcss/typography": "^0.5.20",
@@ -409,7 +409,7 @@
 
     "@sentry/bundler-plugins": ["@sentry/bundler-plugins@11.9.0", "", { "dependencies": { "@sentry/core": "11.9.0", "dotenv": "^17.4.2", "glob": "^13.0.6", "magic-string": "~0.30.8 || ^1.0.0", "oxc-parser": "^0.152.0", "sentry": "^0.45.0", "supports-color": "^8.1.1" }, "peerDependencies": { "rollup": ">=3.2.0", "webpack": ">=5.1.0" }, "optionalPeers": ["rollup", "webpack"] }, "sha512-wpz/gcM/6rld/wb4Mhf8kbDN9ngG5myKQSZC+45gzqR1w+GcdfVnYkp3sHL9AV4mrwL8skhTItdUghMwMTknKg=="],
 
-    "@sentry/conventions": ["@sentry/conventions@0.30.0", "", {}, "sha512-WTumd5A2iFmHTRubi6mc6gLHU8LswPQqoNaZu6T1cxiTUmy3WdEw0i8FAnVbcgxTlsumX5oh63/b4B9lY5wAPQ=="],
+    "@sentry/conventions": ["@sentry/conventions@0.31.0", "", {}, "sha512-TOXB7z08JPVop4eiYLhZhgWitUYUMX6T1SjLCthaa8YLnNyA3+gbT1ccUinf2EWvzFwBuYPShPB7oYSkKeCFIQ=="],
 
     "@sentry/core": ["@sentry/core@11.9.0", "", { "dependencies": { "@sentry/conventions": "^0.27.0" } }, "sha512-t0dZyHILt2XVC4Fe9UmAty6YRfOuQv95cvWeNl+HlW4LphjF5/jkALV3cJCUMdhpblYELgIJC4U/S/GoYuI2bA=="],
 
