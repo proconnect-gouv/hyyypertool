@@ -1,6 +1,6 @@
 /* @jsxImportSource preact */
 import { GlobalRegistrator } from "@happy-dom/global-registrator";
-import { cleanup, fireEvent, render } from "@testing-library/preact";
+import { act, cleanup, fireEvent, render } from "@testing-library/preact";
 import {
   afterAll,
   afterEach,
@@ -126,7 +126,7 @@ describe("SearchBar", () => {
 
     // Make dirty then unmount
     text.value = "siret:123";
-    unmount();
+    act(() => unmount());
 
     // Settle after unmount should not reset
     document.dispatchEvent(new Event("htmx:afterSettle"));
