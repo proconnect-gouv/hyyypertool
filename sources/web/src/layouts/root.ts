@@ -100,10 +100,10 @@ export function RootLayout({ children }: PropsWithChildren) {
               "@preact/signals": "${config.ASSETS_PATH}/node_modules/@preact/signals/dist/signals.module.js",
               "/src/": "${config.PUBLIC_ASSETS_PATH}/",
               "#src/config": "${config.ASSETS_PATH}/bundle/config.js",
-              "preact": "${config.ASSETS_PATH}/node_modules/preact/dist/preact.module.js",
-              "preact/hooks": "${config.ASSETS_PATH}/node_modules/preact/hooks/dist/hooks.module.js",
-              "preact/jsx-runtime": "${config.ASSETS_PATH}/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js",
-              "preact/jsx-dev-runtime": "${config.ASSETS_PATH}/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js"
+              "preact": "${config.ASSETS_PATH}/node_modules/preact/dist/preact.mjs",
+              "preact/hooks": "${config.ASSETS_PATH}/node_modules/preact/hooks/dist/hooks.mjs",
+              "preact/jsx-runtime": "${config.ASSETS_PATH}/node_modules/preact/jsx-runtime/dist/jsxRuntime.mjs",
+              "preact/jsx-dev-runtime": "${config.ASSETS_PATH}/node_modules/preact/jsx-runtime/dist/jsxRuntime.mjs"
             }
           }
         </script>

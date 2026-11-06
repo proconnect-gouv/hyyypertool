@@ -83,10 +83,10 @@ exports[`development 1`] = `
               "@preact/signals": "/assets/ASSETS_PATH/node_modules/@preact/signals/dist/signals.module.js",
               "/src/": "/assets/PUBLIC_ASSETS_PATH/public/built/",
               "#src/config": "/assets/ASSETS_PATH/bundle/config.js",
-              "preact": "/assets/ASSETS_PATH/node_modules/preact/dist/preact.module.js",
-              "preact/hooks": "/assets/ASSETS_PATH/node_modules/preact/hooks/dist/hooks.module.js",
-              "preact/jsx-runtime": "/assets/ASSETS_PATH/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js",
-              "preact/jsx-dev-runtime": "/assets/ASSETS_PATH/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js"
+              "preact": "/assets/ASSETS_PATH/node_modules/preact/dist/preact.mjs",
+              "preact/hooks": "/assets/ASSETS_PATH/node_modules/preact/hooks/dist/hooks.mjs",
+              "preact/jsx-runtime": "/assets/ASSETS_PATH/node_modules/preact/jsx-runtime/dist/jsxRuntime.mjs",
+              "preact/jsx-dev-runtime": "/assets/ASSETS_PATH/node_modules/preact/jsx-runtime/dist/jsxRuntime.mjs"
             }
           }
         </script>
@@ -275,10 +275,10 @@ exports[`production 1`] = `
               "@preact/signals": "/assets/ASSETS_PATH/node_modules/@preact/signals/dist/signals.module.js",
               "/src/": "/assets/PUBLIC_ASSETS_PATH/public/built/",
               "#src/config": "/assets/ASSETS_PATH/bundle/config.js",
-              "preact": "/assets/ASSETS_PATH/node_modules/preact/dist/preact.module.js",
-              "preact/hooks": "/assets/ASSETS_PATH/node_modules/preact/hooks/dist/hooks.module.js",
-              "preact/jsx-runtime": "/assets/ASSETS_PATH/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js",
-              "preact/jsx-dev-runtime": "/assets/ASSETS_PATH/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js"
+              "preact": "/assets/ASSETS_PATH/node_modules/preact/dist/preact.mjs",
+              "preact/hooks": "/assets/ASSETS_PATH/node_modules/preact/hooks/dist/hooks.mjs",
+              "preact/jsx-runtime": "/assets/ASSETS_PATH/node_modules/preact/jsx-runtime/dist/jsxRuntime.mjs",
+              "preact/jsx-dev-runtime": "/assets/ASSETS_PATH/node_modules/preact/jsx-runtime/dist/jsxRuntime.mjs"
             }
           }
         </script>
