@@ -14,6 +14,21 @@ import * as schema from "./schema";
 
 const HYYYPERBASE_DATABASE_URL = process.env["HYYYPERBASE_DATABASE_URL"];
 
+// the committed .env always sets the URL; locally, skip when nothing listens on
+// it. CI never skips, so a missing database there still fails the build.
+let postgres_available = Boolean(HYYYPERBASE_DATABASE_URL);
+if (postgres_available && !process.env["CI"]) {
+  const probe = new Client({
+    connectionString: HYYYPERBASE_DATABASE_URL,
+    connectionTimeoutMillis: 1_000,
+  });
+  postgres_available = await probe.connect().then(
+    () => true,
+    () => false,
+  );
+  await probe.end().catch(() => {});
+}
+
 const migrationsFolder = new URL("../migrations", import.meta.url).pathname;
 
 const table_exists_query = sql`
@@ -48,7 +63,7 @@ describe("pglite", () => {
   });
 });
 
-describe.skipIf(!HYYYPERBASE_DATABASE_URL)("node-postgres", () => {
+describe.skipIf(!postgres_available)("node-postgres", () => {
   test("migration creates users table", async () => {
     await using pg = {
       client: new Client(HYYYPERBASE_DATABASE_URL),
