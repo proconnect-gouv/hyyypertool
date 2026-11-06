@@ -60,7 +60,7 @@
     "static-path": "0.0.4",
     "tailwind-dsfr": "workspace:*",
     "tailwind-variants": "4.0.1",
-    "tailwindcss": "4.3.3",
+    "tailwindcss": "4.3.5",
     "ts-dedent": "2.3.0",
     "ts-pattern": "5.9.2",
     "tsx": "4.23.15",
