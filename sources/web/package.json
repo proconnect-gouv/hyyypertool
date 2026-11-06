@@ -59,7 +59,7 @@
     "remark-rehype": "11.1.2",
     "static-path": "0.0.4",
     "tailwind-dsfr": "workspace:*",
-    "tailwind-variants": "3.3.1",
+    "tailwind-variants": "4.0.0",
     "tailwindcss": "4.3.3",
     "ts-dedent": "2.3.0",
     "ts-pattern": "5.9.2",
