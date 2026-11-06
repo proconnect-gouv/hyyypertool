@@ -163,7 +163,6 @@ test("PUT /organizations/:id/domains adds new domain", async () => {
       [
         {
           "created_at": "1970-01-01 00:00:00+01",
-          "has_been_greeted": false,
           "is_external": false,
           "organization_id": 1,
           "updated_at": "2222-01-01 01:00:00+01",
@@ -173,7 +172,6 @@ test("PUT /organizations/:id/domains adds new domain", async () => {
         },
         {
           "created_at": "1970-01-01 00:00:00+01",
-          "has_been_greeted": false,
           "is_external": false,
           "organization_id": 1,
           "updated_at": "2222-01-01 01:00:00+01",
@@ -183,7 +181,6 @@ test("PUT /organizations/:id/domains adds new domain", async () => {
         },
         {
           "created_at": "1970-01-01 00:00:00+01",
-          "has_been_greeted": false,
           "is_external": false,
           "organization_id": 1,
           "updated_at": "1970-01-01 00:00:00+01",
@@ -324,7 +321,6 @@ test("PATCH /organizations/:id/domains/:domain_id updates verification type to v
       [
         {
           "created_at": "1970-01-01 00:00:00+01",
-          "has_been_greeted": false,
           "is_external": false,
           "organization_id": 1,
           "updated_at": "2222-01-01 01:00:00+01",
@@ -334,7 +330,6 @@ test("PATCH /organizations/:id/domains/:domain_id updates verification type to v
         },
         {
           "created_at": "1970-01-01 00:00:00+01",
-          "has_been_greeted": false,
           "is_external": false,
           "organization_id": 1,
           "updated_at": "2222-01-01 01:00:00+01",
@@ -344,7 +339,6 @@ test("PATCH /organizations/:id/domains/:domain_id updates verification type to v
         },
         {
           "created_at": "1970-01-01 00:00:00+01",
-          "has_been_greeted": false,
           "is_external": false,
           "organization_id": 1,
           "updated_at": "1970-01-01 00:00:00+01",

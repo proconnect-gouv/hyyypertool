@@ -91,7 +91,6 @@ test("PATCH /organizations/:id/members/:user_id updates user organization member
       [
         {
           "created_at": "1970-01-01 00:00:00+01",
-          "has_been_greeted": false,
           "is_external": false,
           "organization_id": 1,
           "updated_at": "1970-01-01 00:00:00+01",
@@ -127,7 +126,6 @@ test("PATCH /organizations/:id/members/:user_id updates user organization member
       [
         {
           "created_at": "1970-01-01 00:00:00+01",
-          "has_been_greeted": false,
           "is_external": true,
           "organization_id": 1,
           "updated_at": "2222-02-22 01:22:22+01",
@@ -160,7 +158,6 @@ test("PATCH /organizations/:id/members/:user_id clears verification with domain_
       [
         {
           "created_at": "1970-01-01 00:00:00+01",
-          "has_been_greeted": false,
           "is_external": false,
           "organization_id": 1,
           "updated_at": "1970-01-01 00:00:00+01",
@@ -195,7 +192,6 @@ test("PATCH /organizations/:id/members/:user_id clears verification with domain_
       [
         {
           "created_at": "1970-01-01 00:00:00+01",
-          "has_been_greeted": false,
           "is_external": false,
           "organization_id": 1,
           "updated_at": "2222-02-22 01:22:22+01",
