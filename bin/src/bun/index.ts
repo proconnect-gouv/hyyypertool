@@ -1,6 +1,7 @@
 //
 
 import { app_env } from "@~/web/config";
+import { json_reporter } from "@~/web/log";
 import app from "@~/web/routes";
 import { LogLevels, consola } from "consola";
 import dotenvFlow from "dotenv-flow";
@@ -9,6 +10,7 @@ import { parseArgs } from "util";
 
 //
 
+consola.setReporters([json_reporter]);
 dotenvFlow.config({ default_node_env: "development" });
 
 const config = app_env.parse(process.env);
@@ -24,37 +26,19 @@ const { values } = parseArgs({
 
 const port = Number(values.p) || config.PORT;
 
-consola.log("");
-consola.log("");
-consola.log("# Hyyypertool 🚀 [Bun Runtime]", new Date());
-consola.log(Array.from({ length: 42 }).fill("=").join(""));
-consola.log("");
-
-const { ALLOWED_USERS, NODE_ENV, DEPLOY_ENV, VERSION, GIT_SHA, TZ } = config;
-consola.log("");
-consola.log("");
-consola.log("┌─── ENV");
-if (consola.level >= LogLevels.log) {
-  console.table({ NODE_ENV, DEPLOY_ENV, VERSION, GIT_SHA, TZ });
-}
-
-consola.log("");
-consola.log("");
-consola.log("┌─── ALLOWED_USERS");
-if (consola.level >= LogLevels.log) {
-  console.table(ALLOWED_USERS.split(","));
-}
+const { ALLOWED_USERS, DEPLOY_ENV, GIT_SHA, NODE_ENV, TZ, VERSION } = config;
+consola.info("Hyyypertool 🚀 [Bun Runtime]", {
+  ALLOWED_USERS: ALLOWED_USERS.split(","),
+  DEPLOY_ENV,
+  GIT_SHA,
+  NODE_ENV,
+  TZ,
+  VERSION,
+});
 
 if (consola.level >= LogLevels.debug) {
-  consola.debug("");
-  consola.debug("");
-  consola.debug("┌─── Routes");
   showRoutes(app);
-
-  consola.debug("");
-  consola.debug("");
-  consola.debug("┌─── Config");
-  consola.debug(config);
+  consola.debug("Config", config);
 }
 
 //

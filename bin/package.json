@@ -32,6 +32,7 @@
   "devDependencies": {
     "@~/config.bun-plugin-client-scripts": "workspace:*",
     "@~/config.tailwindcss": "workspace:*",
-    "@~/config.typescript": "workspace:*"
+    "@~/config.typescript": "workspace:*",
+    "pino-pretty": "13.2.0"
   }
 }

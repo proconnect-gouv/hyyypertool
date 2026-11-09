@@ -8,6 +8,7 @@
   },
   "exports": {
     "./config": "./src/config/index.ts",
+    "./log": "./src/lib/log/index.ts",
     "./routes": "./src/routes/index.ts"
   },
   "scripts": {

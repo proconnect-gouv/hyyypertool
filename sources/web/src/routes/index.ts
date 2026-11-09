@@ -5,13 +5,13 @@ import { RootLayout } from "#src/layouts";
 import { set_userinfo } from "#src/middleware/auth";
 import { set_crisp_client_from_config } from "#src/middleware/crisp";
 import { set_fetch } from "#src/middleware/fetch";
+import { log_request } from "#src/middleware/log";
 import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import { set_identite_pg_database } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
 import { rate_limit } from "#src/middleware/rate-limit";
 import { set_sentry } from "#src/middleware/sentry";
 import { schema } from "@~/hyyyperbase";
-import consola from "consola";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Hono } from "hono";
 import pg from "pg";
@@ -25,7 +25,6 @@ import { hyyyyyypertool_session } from "#src/middleware/session";
 import { create_router } from "#src/router";
 import { contextStorage } from "hono/context-storage";
 import { jsxRenderer } from "hono/jsx-renderer";
-import { logger } from "hono/logger";
 import { create_asset_router } from "./assets";
 import { error_handler } from "./error";
 import { not_found_handler } from "./not-found";
@@ -49,7 +48,7 @@ const rate_limit_pool = new pg.Pool({
 //
 
 const app = new Hono<{ Bindings: AppEnv }>()
-  .use(logger(consola.info))
+  .use(log_request())
   .use(contextStorage())
   // TODO: Re-enable compression when Bun supports CompressionStream
   // .use(compress())
