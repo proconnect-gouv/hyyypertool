@@ -133,4 +133,4 @@ setTimeout(loadReloadNotifier, 2000);
 
 await $.cwd(
   "..",
-)`tsx watch --clear-screen=false --tsconfig tsconfig.json --import ./bin/src/node/instrument.ts bin/src/node/index.ts`;
+)`tsx watch --clear-screen=false --tsconfig tsconfig.json --import ./bin/src/node/instrument.ts bin/src/node/index.ts 2>&1 | pino-pretty --colorize`;
