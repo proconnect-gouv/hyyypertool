@@ -173,7 +173,9 @@ export default new Hono<AppContext>()
           text("OK", 200, { "HX-Refresh": "true" } as HtmxHeader),
         )
         .with({ kind: "franceconnect_identity_not_found" }, () => {
-          throw new NotFoundError("FranceConnect identity not found.");
+          throw new NotFoundError(
+            "L'utilisateur n'a pas de données FranceConnect.",
+          );
         })
         .exhaustive();
     },

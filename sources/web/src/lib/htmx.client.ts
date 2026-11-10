@@ -51,7 +51,10 @@ document.body.addEventListener("htmx:responseError", (event) => {
     }
   }
 
-  if (responseText) {
+  const content_type = xhr?.getResponseHeader("content-type") ?? "";
+  if (responseText && content_type.startsWith("text/plain")) {
+    message = responseText;
+  } else if (responseText && content_type.startsWith("application/json")) {
     try {
       const parsed = JSON.parse(responseText);
       detail = parsed.error?.message ?? JSON.stringify(parsed, null, 2);

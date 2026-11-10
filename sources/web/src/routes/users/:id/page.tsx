@@ -445,7 +445,9 @@ async function Actions({ user }: { user: User }) {
         </button>
         <button
           class={button({ intent: "danger" })}
-          hx-confirm={"Confirmez-vous la réinitialisation du mot de passe ?"}
+          hx-confirm={
+            "Confirmez-vous la révocation des données FranceConnect ?"
+          }
           {...urls.users[":id"].reset.france_connect.$hx_patch({
             param: { id: id },
           })}
