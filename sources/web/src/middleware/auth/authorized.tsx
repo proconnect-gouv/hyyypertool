@@ -12,6 +12,7 @@ import type { Env } from "hono";
 import { createMiddleware } from "hono/factory";
 import type { HyyyperbasePgContext } from "../hyyyperbase";
 import { NotAuthorized } from "./NotAuthorized";
+import type { AgentConnectUserInfo } from "./agent_connect_user_info";
 import type { UserInfoVariablesContext } from "./set_userinfo";
 
 //
@@ -28,14 +29,21 @@ export interface HyyyperUserContext extends Env {
   };
 }
 
-type AuthorizedContext = HyyyperbasePgContext &
-  HyyyperUserContext &
+export interface AuthorizedContext extends Env {
+  Variables: {
+    hyyyper_user: HyyyperUser;
+    userinfo: AgentConnectUserInfo;
+  };
+}
+
+type AuthorizedMiddlewareContext = AuthorizedContext &
+  HyyyperbasePgContext &
   UserInfoVariablesContext;
 
 export function authorized() {
-  return createMiddleware<AuthorizedContext>(
+  return createMiddleware<AuthorizedMiddlewareContext>(
     async function authorized_middleware(c, next) {
-      const { userinfo } = c.var;
+      const userinfo: AgentConnectUserInfo | undefined = c.var.userinfo;
 
       if (!userinfo) {
         if (is_htmx_request(c.req.raw)) {

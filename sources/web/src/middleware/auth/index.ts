@@ -4,6 +4,7 @@ export type { AgentConnectUserInfo } from "./agent_connect_user_info";
 export {
   authorized,
   editor_guard,
+  type AuthorizedContext,
   type HyyyperUser,
   type HyyyperUserContext,
 } from "./authorized";

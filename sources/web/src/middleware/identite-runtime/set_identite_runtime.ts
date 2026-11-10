@@ -3,7 +3,7 @@
 import { is_htmx_request, type HtmxHeader } from "#src/htmx";
 import { identite_runtime, type IdentiteRuntime } from "#src/lib/activities";
 import type { Env, MiddlewareHandler } from "hono";
-import type { AgentConnectUserInfo, UserInfoVariablesContext } from "../auth";
+import type { UserInfoVariablesContext } from "../auth";
 import type { IdentiteProconnectPgContext } from "../identite-pg";
 import type { SessionContext } from "../session";
 
@@ -16,7 +16,7 @@ export function set_identite_runtime(): MiddlewareHandler<
     UserInfoVariablesContext
 > {
   return async function set_identite_runtime_middleware(c, next) {
-    const userinfo: AgentConnectUserInfo | undefined = c.var.userinfo;
+    const { userinfo } = c.var;
 
     if (!userinfo) {
       c.var.session.deleteSession();

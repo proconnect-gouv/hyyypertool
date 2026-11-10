@@ -44,6 +44,6 @@ export function set_userinfo(value?: Partial<AgentConnectUserInfo>) {
 
 export interface UserInfoVariablesContext extends Env {
   Variables: {
-    userinfo: AgentConnectUserInfo;
+    userinfo: AgentConnectUserInfo | undefined;
   };
 }
