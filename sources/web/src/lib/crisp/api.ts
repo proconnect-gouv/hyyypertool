@@ -45,7 +45,7 @@ function create_conversation(config: Config) {
       searchParams: {},
       body: {
         email,
-        nickname,
+        nickname: nickname || email,
         segments: ["email", "moderation"],
         subject,
       },
