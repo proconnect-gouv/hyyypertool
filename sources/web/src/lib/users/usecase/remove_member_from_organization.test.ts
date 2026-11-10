@@ -1,5 +1,7 @@
 //
 
+import { NotFoundError } from "#src/errors";
+import { identite_runtime } from "#src/lib/activities";
 import { type CrispApi } from "#src/lib/crisp";
 import { schema } from "@~/identite-proconnect/database";
 import {
@@ -32,7 +34,12 @@ const crisp: CrispApi = {
   send_message: mock().mockResolvedValue(undefined),
 };
 
-const deps = { crisp, pg, resolve_delay: 0 };
+const deps = {
+  crisp,
+  pg,
+  resolve_delay: 0,
+  runtime: identite_runtime(pg).as({ sub: "moderator-sub", type: "moderator" }),
+};
 
 const anais_tailhade = { email: "anais.tailhade@omage.gouv.fr" };
 
@@ -58,6 +65,16 @@ test("remove user from organization", async () => {
     where: eq(schema.users_organizations.user_id, pink_diamond_user_id),
   });
   expect(memberships).toHaveLength(0);
+  expect(await pg.query.activity_logs.findMany()).toMatchObject([
+    {
+      action: "member.removed",
+      actor_ref: "moderator-sub",
+      actor_type: "moderator",
+      app: "hyyypertool",
+      organization_id: unicorn_organization_id,
+      user_id: pink_diamond_user_id,
+    },
+  ]);
 
   const organization = await pg.query.organizations.findFirst({
     columns: { cached_libelle: true, siret: true },
@@ -83,4 +100,22 @@ test("remove user from organization", async () => {
   expect(crisp.mark_conversation_as_resolved).toHaveBeenCalledWith({
     session_id: "🗨️",
   });
+});
+
+test("reject a missing membership", async () => {
+  const pink_diamond_user_id = await create_pink_diamond_user(pg);
+  const unicorn_organization_id = await create_unicorn_organization(pg);
+  const create_conversation = mock();
+
+  await expect(
+    remove_member_from_organization(
+      { ...deps, crisp: { ...crisp, create_conversation } },
+      {
+        moderator: anais_tailhade,
+        organization_id: unicorn_organization_id,
+        user_id: pink_diamond_user_id,
+      },
+    ),
+  ).rejects.toThrow(NotFoundError);
+  expect(create_conversation).not.toHaveBeenCalled();
 });

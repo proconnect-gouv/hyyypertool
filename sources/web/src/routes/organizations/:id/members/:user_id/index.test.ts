@@ -4,6 +4,7 @@ import { authorized, set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
 import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import { set_identite_pg } from "#src/middleware/identite-pg";
+import { set_identite_runtime } from "#src/middleware/identite-runtime";
 import { set_nonce } from "#src/middleware/nonce";
 import {
   hyyyper_pglite,
@@ -68,6 +69,7 @@ async function make_app({ crisp = make_crisp_mock() } = {}) {
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
     .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(set_identite_runtime())
     .use(authorized())
     .route("/:id/members/:user_id", app);
 }

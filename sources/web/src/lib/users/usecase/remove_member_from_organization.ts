@@ -1,9 +1,11 @@
+import { NotFoundError } from "#src/errors";
+import type { IdentiteRuntime } from "#src/lib/activities";
 import type { CrispApiCradle } from "#src/lib/crisp";
 import { get_fiche_organization_by_id } from "#src/lib/organizations/usecase";
-import { remove_user_from_organization } from "#src/queries/moderations";
 import { z_username } from "#src/schema";
 import type { IdentiteProconnectDatabaseCradle } from "@~/identite-proconnect/database";
 import { to as await_to } from "await-to-js";
+import { match } from "ts-pattern";
 import { remove_from_organization_message } from "../templates";
 import { get_user_info } from "./get_user_info";
 
@@ -18,8 +20,9 @@ export async function remove_member_from_organization(
     crisp,
     pg,
     resolve_delay,
+    runtime,
   }: IdentiteProconnectDatabaseCradle &
-    CrispApiCradle & { resolve_delay: number },
+    CrispApiCradle & { resolve_delay: number; runtime: IdentiteRuntime },
   { moderator, organization_id, user_id }: RemoveMemberFromOrganizationInput,
 ) {
   const { email, given_name, family_name } = await get_user_info(pg, user_id);
@@ -38,7 +41,15 @@ export async function remove_member_from_organization(
     nickname: z_username.parse(moderator),
     email: moderator.email,
   };
-  await remove_user_from_organization(pg, { organization_id, user_id });
+  const outcome = await runtime.removeMembership({ organization_id, user_id });
+  match(outcome)
+    .with({ kind: "member_removed" }, () => {})
+    .with({ kind: "membership_not_found" }, () => {
+      throw new NotFoundError(
+        `User ${user_id} is not a member of organization ${organization_id}.`,
+      );
+    })
+    .exhaustive();
 
   const { session_id } = await crisp.create_conversation({
     email,

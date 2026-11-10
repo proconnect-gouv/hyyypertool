@@ -106,4 +106,15 @@ Scenario("Retirer un membre de l'organisation", ({ I }) => {
     I.click("🚪🚶retirer de l'orga");
   });
   I.dontSeeElement("~Membre Raphael Dubigny (rdubigny@beta.gouv.fr)");
+
+  I.amOnPage("/users");
+  I.click({
+    role: "link",
+    name: "Utilisateur Raphael Dubigny (rdubigny@beta.gouv.fr)",
+  });
+  I.click("🕓 3 activités de Raphael");
+  I.within("~Activité member.removed", () => {
+    I.see("Membre supprimé");
+    I.see("moderateur@beta.gouv.fr");
+  });
 });
