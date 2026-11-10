@@ -34,4 +34,15 @@ Scenario("Marie Bon à rejoindre l'organisation Bosch par erreur", ({ I }) => {
   I.dontSee("Cette modération a été marqué comme traité");
 
   I.click("👥 0 membre connu dans l’organisation");
+
+  I.amOnPage("/users");
+  I.click({
+    role: "link",
+    name: "Utilisateur Marie Bon (marie.bon@fr.bosch.com)",
+  });
+  I.click("🕓 3 activités de Marie");
+  I.within("~Activité member.removed", () => {
+    I.see("Bosch rexroth d.s.i.");
+    I.see("Membre supprimé");
+  });
 });

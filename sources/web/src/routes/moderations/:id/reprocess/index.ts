@@ -1,11 +1,11 @@
 //
 
 import type { HtmxHeader } from "#src/htmx";
+import type { IdentiteRuntime } from "#src/lib/activities";
 import { MODERATION_EVENTS, append_comment } from "#src/lib/moderations";
 import type { AppContext } from "#src/middleware/context";
 import {
   get_moderation_by_id,
-  remove_user_from_organization,
   update_moderation_by_id,
 } from "#src/queries/moderations";
 import { EntitySchema } from "#src/schema";
@@ -16,11 +16,17 @@ import { Hono } from "hono";
 
 //
 
-async function mark_as_reprocessed(
-  pg: IdentiteProconnectPgDatabase,
-  id: number,
-  userinfo: { email: string },
-) {
+async function mark_as_reprocessed({
+  id,
+  pg,
+  runtime,
+  userinfo,
+}: {
+  id: number;
+  pg: IdentiteProconnectPgDatabase;
+  runtime: IdentiteRuntime;
+  userinfo: { email: string };
+}) {
   const moderation = await get_moderation_by_id(pg, {
     columns: { comment: true, organization_id: true, user_id: true },
     id,
@@ -31,7 +37,7 @@ async function mark_as_reprocessed(
     created_by: userinfo.email,
   });
 
-  await remove_user_from_organization(pg, {
+  await runtime.removeMembership({
     organization_id: moderation.organization_id,
     user_id: moderation.user_id,
   });
@@ -52,10 +58,15 @@ async function mark_as_reprocessed(
 export default new Hono<AppContext>().patch(
   "/",
   zValidator("param", EntitySchema),
-  async ({ text, req, var: { identite_pg, userinfo } }) => {
+  async ({ text, req, var: { identite_pg, identite_runtime, userinfo } }) => {
     const { id } = req.valid("param");
 
-    await mark_as_reprocessed(identite_pg, id, userinfo);
+    await mark_as_reprocessed({
+      id,
+      pg: identite_pg,
+      runtime: identite_runtime,
+      userinfo,
+    });
 
     return text("OK", 200, {
       "HX-Trigger": MODERATION_EVENTS.enum.MODERATION_UPDATED,

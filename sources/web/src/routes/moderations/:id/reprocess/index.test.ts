@@ -3,6 +3,8 @@
 import { set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
 import { set_identite_pg } from "#src/middleware/identite-pg";
+import { set_identite_runtime } from "#src/middleware/identite-runtime";
+import { schema } from "@~/identite-proconnect/database";
 import {
   create_adora_pony_moderation,
   create_adora_pony_user,
@@ -13,6 +15,7 @@ import {
   migrate,
   pg,
 } from "@~/identite-proconnect/database/testing";
+import { VerificationTypeSchema } from "@~/identite-proconnect/types";
 import { beforeAll, beforeEach, expect, setSystemTime, test } from "bun:test";
 import { Hono } from "hono";
 import app from "./index";
@@ -39,7 +42,8 @@ test("PATCH /moderations/:id/reprocess resets moderation to pending", async () =
   const response = await new Hono()
     .use(set_config({ ALLOWED_USERS: "admin@example.com" }))
     .use(set_identite_pg(pg))
-    .use(set_userinfo({ email: "admin@example.com" }))
+    .use(set_userinfo({ email: "admin@example.com", sub: "admin-sub" }))
+    .use(set_identite_runtime())
     .route("/:id/reprocess", app)
     .request(`/${moderation_id}/reprocess`, { method: "PATCH" });
 
@@ -66,4 +70,42 @@ test("PATCH /moderations/:id/reprocess resets moderation to pending", async () =
       "user_id": 1,
     }
   `);
+});
+
+test("PATCH /moderations/:id/reprocess removes the membership", async () => {
+  const organization_id = await create_unicorn_organization(pg);
+  const user_id = await create_adora_pony_user(pg);
+  const moderation_id = await create_adora_pony_moderation(pg, { type: "💼" });
+  await pg.insert(schema.users_organizations).values({
+    is_external: false,
+    organization_id,
+    user_id,
+    verification_type: VerificationTypeSchema.enum.domain,
+  });
+
+  const response = await new Hono()
+    .use(set_config({ ALLOWED_USERS: "admin@example.com" }))
+    .use(set_identite_pg(pg))
+    .use(set_userinfo({ email: "admin@example.com", sub: "admin-sub" }))
+    .use(set_identite_runtime())
+    .route("/:id/reprocess", app)
+    .request(`/${moderation_id}/reprocess`, { method: "PATCH" });
+
+  expect(response.status).toBe(200);
+  expect(await pg.query.users_organizations.findMany()).toHaveLength(0);
+  expect(await pg.query.activity_logs.findMany()).toMatchObject([
+    {
+      action: "member.removed",
+      actor_ref: "admin-sub",
+      actor_type: "moderator",
+      organization_id,
+      user_id,
+    },
+  ]);
+  expect(
+    await pg.query.moderations.findFirst({
+      columns: { status: true },
+      where: (table, { eq }) => eq(table.id, moderation_id),
+    }),
+  ).toEqual({ status: "reopened" });
 });
