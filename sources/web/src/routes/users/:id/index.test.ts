@@ -250,6 +250,7 @@ test("PATCH /users/:id/reset/mfa resets MFA", async () => {
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
     .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(set_identite_runtime())
     .use(authorized())
     .route("/:id", app)
     .request(`/${user_id}/reset/mfa`, { method: "PATCH" });
