@@ -20,13 +20,16 @@ export function error_handler(error: Error, c: Context) {
     render,
     req,
     status,
+    text,
     var: { sentry },
   } = c as Context<AppContext>;
 
   return (
     match(error)
       // Handle false negatives here :)
-      .with(P.instanceOf(NotFoundError), () => notFound())
+      .with(P.instanceOf(NotFoundError), () =>
+        is_htmx_request(req.raw) ? text(error.message, 404) : notFound(),
+      )
       // OK this should not happen...
       .otherwise(() => {
         consola.error(error);
@@ -37,10 +40,11 @@ export function error_handler(error: Error, c: Context) {
 
         //
 
-        status(500);
         if (is_htmx_request(req.raw)) {
-          throw error;
+          return text(error.message, 500);
         }
+
+        status(500);
 
         return match(config)
           .with({ NODE_ENV: "development" }, async () => {
