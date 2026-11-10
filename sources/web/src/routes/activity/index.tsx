@@ -2,7 +2,6 @@
 
 import { MainLayout } from "#src/layouts";
 import { parse_activity_row } from "#src/lib/activities";
-import { authorized } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
@@ -16,69 +15,67 @@ import { Page } from "./page";
 
 //
 
-export default new Hono<AppContext>()
-  .use(authorized())
-  .get(
-    "/",
-    jsxRenderer(MainLayout),
-    zValidator("query", query_schema),
-    async function GET({
-      render,
-      req,
-      set,
-      var: { hyyyper_pg, identite_pg, sentry },
-    }) {
-      const { date, live, page, page_size } = req.valid("query");
-      const categories = req.queries("category") ?? [];
-      const pagination = { page, page_size };
+export default new Hono<AppContext>().get(
+  "/",
+  jsxRenderer(MainLayout),
+  zValidator("query", query_schema),
+  async function GET({
+    render,
+    req,
+    set,
+    var: { hyyyper_pg, identite_pg, sentry },
+  }) {
+    const { date, live, page, page_size } = req.valid("query");
+    const categories = req.queries("category") ?? [];
+    const pagination = { page, page_size };
 
-      const [{ activities: rows, count }, all_categories] = await Promise.all([
-        get_activities(
-          { hyyyper_pg, pg: identite_pg },
-          { categories, date, pagination: { ...pagination, page: page - 1 } },
-        ),
-        get_activity_categories(identite_pg),
-      ]);
+    const [{ activities: rows, count }, all_categories] = await Promise.all([
+      get_activities(
+        { hyyyper_pg, pg: identite_pg },
+        { categories, date, pagination: { ...pagination, page: page - 1 } },
+      ),
+      get_activity_categories(identite_pg),
+    ]);
 
-      const activities = rows.map((activity) => ({
-        ...activity,
-        cause:
-          activity.cause === null
-            ? null
-            : {
-                ...activity.cause,
-                parsed: parse_activity_row({
-                  action: activity.cause.action,
-                  context: activity.cause.context,
-                }),
-              },
-        parsed: parse_activity_row({
-          action: activity.action,
-          context: activity.context,
-        }),
-      }));
+    const activities = rows.map((activity) => ({
+      ...activity,
+      cause:
+        activity.cause === null
+          ? null
+          : {
+              ...activity.cause,
+              parsed: parse_activity_row({
+                action: activity.cause.action,
+                context: activity.cause.context,
+              }),
+            },
+      parsed: parse_activity_row({
+        action: activity.action,
+        context: activity.context,
+      }),
+    }));
 
-      for (const { id, parsed } of activities.flatMap((activity) =>
-        activity.cause === null ? [activity] : [activity, activity.cause],
-      )) {
-        if (parsed.kind !== "invalid_context") continue;
-        sentry.captureException(parsed.error, {
-          data: { action: parsed.action, activity_id: id },
-        });
-      }
+    for (const { id, parsed } of activities.flatMap((activity) =>
+      activity.cause === null ? [activity] : [activity, activity.cause],
+    )) {
+      if (parsed.kind !== "invalid_context") continue;
+      sentry.captureException(parsed.error, {
+        data: { action: parsed.action, activity_id: id },
+      });
+    }
 
-      set("page_title", "Journal d’activité");
-      return render(
-        <Page
-          activities={activities}
-          categories={all_categories}
-          count={count}
-          date={date}
-          live={live}
-          pagination={pagination}
-          search={new URL(req.url).searchParams}
-          selected={categories}
-        />,
-      );
-    },
-  );
+    set("page_title", "Journal d’activité");
+    return render(
+      <Page
+        activities={activities}
+        categories={all_categories}
+        count={count}
+        date={date}
+        live={live}
+        pagination={pagination}
+        search={new URL(req.url).searchParams}
+        selected={categories}
+      />,
+    );
+  },
+);

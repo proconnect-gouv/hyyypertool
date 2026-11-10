@@ -6,14 +6,24 @@ import {
   insert_admin,
   insert_disabled_user,
 } from "@~/hyyyperbase/testing/users";
-import { beforeEach, expect, test } from "bun:test";
+import { beforeEach, expect, mock, test } from "bun:test";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
+import { createMiddleware } from "hono/factory";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { set_hyyyper_pg } from "../hyyyperbase";
 import { set_nonce } from "../nonce";
 import { authorized } from "./authorized";
 import { set_userinfo } from "./set_userinfo";
+
+//
+
+function set_session(session: { deleteSession: () => void }) {
+  return createMiddleware(async ({ set }, next) => {
+    set("session", session);
+    await next();
+  });
+}
 
 //
 
@@ -65,7 +75,8 @@ test("should stop disabled database users", async () => {
   expect(await res.text()).toContain("Accès Non Autorisé");
 });
 
-test("should stop any anonymous user", async () => {
+test("should log out and redirect any anonymous user", async () => {
+  const session = { deleteSession: mock() };
   const app = new Hono()
     .onError((e) => {
       throw e;
@@ -74,6 +85,7 @@ test("should stop any anonymous user", async () => {
       "/",
       jsxRenderer(),
       set_nonce("nonce"),
+      set_session(session),
       authorized(),
       async ({ text }) => text("✅"),
     );
@@ -82,9 +94,11 @@ test("should stop any anonymous user", async () => {
 
   expect(res.status).toBe(302);
   expect(await res.text()).toBe("");
+  expect(session.deleteSession).toHaveBeenCalled();
 });
 
-test("should redirect hx-request", async () => {
+test("should log out and redirect hx-request", async () => {
+  const session = { deleteSession: mock() };
   const app = new Hono()
     .onError((e) => {
       throw e;
@@ -93,6 +107,7 @@ test("should redirect hx-request", async () => {
       "/",
       jsxRenderer(),
       set_nonce("nonce"),
+      set_session(session),
       authorized(),
       async ({ text }) => text("✅"),
     );
@@ -107,6 +122,7 @@ test("should redirect hx-request", async () => {
     "content-type": "text/plain; charset=UTF-8",
     "hx-location": "/",
   });
+  expect(session.deleteSession).toHaveBeenCalled();
 });
 
 test("should stop unknown users (not in db)", async () => {

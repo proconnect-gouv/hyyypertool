@@ -5,7 +5,7 @@ import {
   pg,
 } from "@~/identite-proconnect/database/testing";
 import { Hono } from "hono";
-import { set_userinfo } from "../middleware/auth";
+import { authorized, set_userinfo } from "../middleware/auth";
 import { set_config } from "../middleware/config";
 import { set_crisp_client } from "../middleware/crisp";
 import { set_fetch } from "../middleware/fetch";
@@ -97,7 +97,6 @@ export function create_testing_router() {
     .use(set_nonce("nonce"))
     .use(set_fetch(create_test_fetch()))
     .use(set_userinfo(MODERATOR))
-    .use(set_identite_runtime())
     .route(
       ASSETS_PATH,
       create_asset_router({
@@ -106,5 +105,7 @@ export function create_testing_router() {
         public_root: "./bin",
       }),
     )
+    .use(authorized())
+    .use(set_identite_runtime())
     .route("/", create_router());
 }

@@ -1,6 +1,6 @@
 //
 
-import { set_userinfo } from "#src/middleware/auth";
+import { authorized, set_userinfo } from "#src/middleware/auth";
 import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import { set_identite_pg } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
@@ -45,6 +45,7 @@ test("GET /email delivrability", async () => {
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
     .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(authorized())
     .route("/", app)
     .request("/", undefined, {});
 
@@ -75,6 +76,7 @@ test("PUT /domains-deliverability adds new domain to whitelist", async () => {
         usual_name: "Dupont",
       }),
     )
+    .use(authorized())
     .route("/", app)
     .request("/", {
       method: "PUT",
@@ -137,6 +139,7 @@ test("DELETE /domains-deliverability/:email_domain removes domain from whitelist
         usual_name: "Dupont",
       }),
     )
+    .use(authorized())
     .route("/", app)
     .request("/tobedeleted.fr", {
       method: "DELETE",

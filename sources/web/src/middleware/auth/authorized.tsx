@@ -11,6 +11,7 @@ import { and, eq, isNull } from "drizzle-orm";
 import type { Env } from "hono";
 import { createMiddleware } from "hono/factory";
 import type { HyyyperbasePgContext } from "../hyyyperbase";
+import type { SessionContext } from "../session";
 import { NotAuthorized } from "./NotAuthorized";
 import type { AgentConnectUserInfo } from "./agent_connect_user_info";
 import type { UserInfoVariablesContext } from "./set_userinfo";
@@ -38,6 +39,7 @@ export interface AuthorizedContext extends Env {
 
 type AuthorizedMiddlewareContext = AuthorizedContext &
   HyyyperbasePgContext &
+  SessionContext &
   UserInfoVariablesContext;
 
 export function authorized() {
@@ -46,6 +48,7 @@ export function authorized() {
       const userinfo: AgentConnectUserInfo | undefined = c.var.userinfo;
 
       if (!userinfo) {
+        c.var.session.deleteSession();
         if (is_htmx_request(c.req.raw)) {
           return c.text("Unauthorized", 401, {
             "HX-Location": "/",
