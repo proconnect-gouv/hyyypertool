@@ -5,7 +5,7 @@ import {
   MODERATION_EVENTS,
   build_moderation_update,
 } from "#src/lib/moderations";
-import type { UserInfoVariablesContext } from "#src/middleware/auth";
+import type { AuthorizedContext } from "#src/middleware/auth";
 import type { IdentiteProconnectPgContext } from "#src/middleware/identite-pg";
 import {
   type GetModerationWithUserDto,
@@ -37,7 +37,7 @@ async function mark_as_processed(
 //
 
 export default new Hono<
-  IdentiteProconnectPgContext & UserInfoVariablesContext
+  AuthorizedContext & IdentiteProconnectPgContext
 >().patch(
   "/",
   zValidator("param", EntitySchema),

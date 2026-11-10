@@ -1,8 +1,12 @@
 //
 
 import { AuthError } from "#src/errors";
-import type { AgentConnectUserInfo } from "#src/middleware/auth";
-import type { AppContext } from "#src/middleware/context";
+import type { AppEnvContext } from "#src/config";
+import type {
+  AgentConnectUserInfo,
+  UserInfoVariablesContext,
+} from "#src/middleware/auth";
+import type { SessionContext } from "#src/middleware/session";
 import { MfaAcrValueSchema } from "#src/schema";
 import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
@@ -21,7 +25,9 @@ import { agentconnect, type Oidc_Context } from "./agentconnect";
 
 //
 
-export default new Hono<Oidc_Context & AppContext>()
+export default new Hono<
+  AppEnvContext & Oidc_Context & SessionContext & UserInfoVariablesContext
+>()
   .onError((error, c) => {
     try {
       const session = c.get("session");
@@ -152,7 +158,7 @@ export default new Hono<Oidc_Context & AppContext>()
 
     session.set("userinfo", undefined);
     session.set("state", logout_state);
-    set("userinfo", undefined as any);
+    set("userinfo", undefined);
 
     return redirect(logoutUrl);
   })
