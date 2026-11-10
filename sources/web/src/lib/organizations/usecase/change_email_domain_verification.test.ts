@@ -1,6 +1,7 @@
 //
 
 import { NotFoundError } from "#src/errors";
+import { identite_runtime } from "#src/lib/activities";
 import { schema } from "@~/identite-proconnect/database";
 import {
   create_adora_pony_user,
@@ -25,7 +26,10 @@ import { change_email_domain_verification } from "./change_email_domain_verifica
 beforeAll(migrate);
 beforeEach(empty_database);
 
-const deps = { pg, sub: "moderator-sub" };
+const deps = {
+  pg,
+  runtime: identite_runtime(pg).as({ sub: "moderator-sub", type: "moderator" }),
+};
 
 async function insert_pending_domain(organization_id: number) {
   await pg.insert(schema.email_domains).values({

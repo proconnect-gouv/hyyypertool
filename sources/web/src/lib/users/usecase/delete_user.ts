@@ -1,29 +1,25 @@
 import { NotFoundError } from "#src/errors";
-import { identite_runtime } from "#src/lib/activities";
+import type { IdentiteRuntime } from "#src/lib/activities";
 import type { CrispApiCradle } from "#src/lib/crisp";
 import { z_username } from "#src/schema";
-import type { IdentiteProconnectDatabaseCradle } from "@~/identite-proconnect/database";
 import { to as await_to } from "await-to-js";
 import { match } from "ts-pattern";
 import { delete_account_message } from "../templates";
 
 export type DeleteUserInput = {
-  moderator: { email: string; sub: string };
+  moderator: { email: string };
   user_id: number;
 };
 
 export async function delete_user(
   {
     crisp,
-    pg,
     resolve_delay,
-  }: IdentiteProconnectDatabaseCradle &
-    CrispApiCradle & { resolve_delay: number },
+    runtime,
+  }: CrispApiCradle & { resolve_delay: number; runtime: IdentiteRuntime },
   { moderator, user_id }: DeleteUserInput,
 ) {
-  const outcome = await identite_runtime(pg)
-    .as({ sub: moderator.sub, type: "moderator" })
-    .deleteUser({ user_id });
+  const outcome = await runtime.deleteUser({ user_id });
 
   const { email, family_name, given_name } = match(outcome)
     .with({ kind: "user_deleted" }, ({ previous }) => previous)

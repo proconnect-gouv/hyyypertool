@@ -8,6 +8,7 @@ import { set_fetch } from "#src/middleware/fetch";
 import { log_request } from "#src/middleware/log";
 import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import { set_identite_pg_database } from "#src/middleware/identite-pg";
+import { set_identite_runtime } from "#src/middleware/identite-runtime";
 import { set_nonce } from "#src/middleware/nonce";
 import { rate_limit } from "#src/middleware/rate-limit";
 import { set_sentry } from "#src/middleware/sentry";
@@ -87,6 +88,7 @@ const app = new Hono<{ Bindings: AppEnv }>()
       connectionString: PROCONNECT_IDENTITE_DATABASE_URL,
     }),
   )
+  .use(set_identite_runtime())
   .use(
     set_hyyyper_pg(
       drizzle(HYYYPERBASE_DATABASE_URL, {

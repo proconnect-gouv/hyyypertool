@@ -7,6 +7,7 @@ import {
   set_identite_pg,
   set_identite_pg_client,
 } from "#src/middleware/identite-pg";
+import { set_identite_runtime } from "#src/middleware/identite-runtime";
 import { set_nonce } from "#src/middleware/nonce";
 import {
   hyyyper_pglite,
@@ -122,6 +123,7 @@ test("PUT /organizations/:id/domains adds new domain", async () => {
     .use(set_identite_pg_client(client as any))
     .use(set_nonce("nonce"))
     .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(set_identite_runtime())
     .use(authorized())
     .route("/:id/domains", app)
     .request(`/${organization_id}/domains`, {
@@ -212,6 +214,7 @@ test("DELETE /organizations/:id/domains/:domain_id removes domain", async () => 
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
     .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(set_identite_runtime())
     .use(authorized())
     .route("/:id/domains", app)
     .request(`/${organization_id}/domains/${domain_id}`, {
@@ -282,6 +285,7 @@ test("PATCH /organizations/:id/domains/:domain_id updates verification type to v
     .use(set_identite_pg_client(client as any))
     .use(set_nonce("nonce"))
     .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(set_identite_runtime())
     .use(authorized())
     .route("/:id/domains", app)
     .request(`/${organization_id}/domains/${domain_id}?type=verified`, {
@@ -372,6 +376,7 @@ test("PATCH /organizations/:id/domains/:domain_id refuses a domain without touch
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
     .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(set_identite_runtime())
     .use(authorized())
     .route("/:id/domains", app)
     .request(`/${organization_id}/domains/${domain.id}?type=refused`, {

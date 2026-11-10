@@ -1,5 +1,5 @@
 import { NotFoundError } from "#src/errors";
-import { identite_runtime } from "#src/lib/activities";
+import type { IdentiteRuntime } from "#src/lib/activities";
 import {
   schema,
   type IdentiteProconnectDatabaseCradle,
@@ -9,7 +9,10 @@ import { and, eq } from "drizzle-orm";
 import { match } from "ts-pattern";
 
 export async function change_email_domain_verification(
-  { pg, sub }: IdentiteProconnectDatabaseCradle & { sub: string },
+  {
+    pg,
+    runtime,
+  }: IdentiteProconnectDatabaseCradle & { runtime: IdentiteRuntime },
   {
     domain,
     organization_id,
@@ -20,8 +23,6 @@ export async function change_email_domain_verification(
     verification_type: EmailDomainApprovedVerificationType | "refused";
   },
 ) {
-  const runtime = identite_runtime(pg).as({ type: "moderator", sub });
-
   if (verification_type === "refused") {
     await pg.transaction(async (tx) => {
       const domain_states = and(

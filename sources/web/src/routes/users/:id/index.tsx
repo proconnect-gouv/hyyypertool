@@ -118,15 +118,15 @@ export default new Hono<AppContext>()
       text,
       req,
       env: config,
-      var: { crisp, identite_pg, userinfo },
+      var: { crisp, identite_runtime, userinfo },
     }) {
       const { id: user_id } = req.valid("param");
 
       await delete_user(
         {
           crisp,
-          pg: identite_pg,
           resolve_delay: config.CRISP_RESOLVE_DELAY,
+          runtime: identite_runtime,
         },
         { moderator: userinfo, user_id },
       );
