@@ -1,16 +1,14 @@
+import { NotFoundError } from "#src/errors";
+import { identite_runtime } from "#src/lib/activities";
 import type { CrispApiCradle } from "#src/lib/crisp";
 import { z_username } from "#src/schema";
-import {
-  schema,
-  type IdentiteProconnectDatabaseCradle,
-} from "@~/identite-proconnect/database";
+import type { IdentiteProconnectDatabaseCradle } from "@~/identite-proconnect/database";
 import { to as await_to } from "await-to-js";
-import { eq } from "drizzle-orm";
+import { match } from "ts-pattern";
 import { delete_account_message } from "../templates";
-import { get_user_info } from "./get_user_info";
 
 export type DeleteUserInput = {
-  moderator: { email: string };
+  moderator: { email: string; sub: string };
   user_id: number;
 };
 
@@ -23,7 +21,16 @@ export async function delete_user(
     CrispApiCradle & { resolve_delay: number },
   { moderator, user_id }: DeleteUserInput,
 ) {
-  const { email, given_name, family_name } = await get_user_info(pg, user_id);
+  const outcome = await identite_runtime(pg)
+    .as({ sub: moderator.sub, type: "moderator" })
+    .deleteUser({ user_id });
+
+  const { email, family_name, given_name } = match(outcome)
+    .with({ kind: "user_deleted" }, ({ previous }) => previous)
+    .with({ kind: "user_not_found" }, () => {
+      throw new NotFoundError(`User ${user_id} not found.`);
+    })
+    .exhaustive();
   const nickname = z_username.parse({ given_name, usual_name: family_name });
 
   const [, found_user] = await await_to(
@@ -33,8 +40,6 @@ export async function delete_user(
     nickname: z_username.parse(moderator),
     email: moderator.email,
   };
-
-  await pg.delete(schema.users).where(eq(schema.users.id, user_id));
 
   const { session_id } = await crisp.create_conversation({
     email,
