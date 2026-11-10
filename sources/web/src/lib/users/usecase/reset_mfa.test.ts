@@ -1,5 +1,7 @@
 //
 
+import { NotFoundError } from "#src/errors";
+import { identite_runtime } from "#src/lib/activities";
 import { type CrispApi } from "#src/lib/crisp";
 import { schema } from "@~/identite-proconnect/database";
 import { create_pink_diamond_user } from "@~/identite-proconnect/database/seed/unicorn";
@@ -28,7 +30,12 @@ const crisp: CrispApi = {
   send_message: mock().mockResolvedValue(undefined),
 };
 
-const deps = { crisp, pg, resolve_delay: 0 };
+const deps = {
+  crisp,
+  pg,
+  resolve_delay: 0,
+  runtime: identite_runtime(pg).as({ sub: "moderator-sub", type: "moderator" }),
+};
 
 export const anais_tailhade: { email: string } = {
   email: "anais.tailhade@omage.gouv.fr",
@@ -68,6 +75,16 @@ test("reset user MFA", async () => {
     id: pink_diamond_user_id,
     totp_key_verified_at: null,
   });
+  expect(await pg.query.activity_logs.findMany()).toMatchObject([
+    {
+      action: "user.mfa_reset",
+      actor_ref: "moderator-sub",
+      actor_type: "moderator",
+      app: "hyyypertool",
+      context: { inputs: { user_id: pink_diamond_user_id } },
+      user_id: pink_diamond_user_id,
+    },
+  ]);
 
   expect(crisp.create_conversation).toHaveBeenCalledWith({
     email: "pink.diamond@unicorn.xyz",
@@ -89,4 +106,16 @@ test("reset user MFA", async () => {
   expect(crisp.mark_conversation_as_resolved).toHaveBeenCalledWith({
     session_id: "🗨️",
   });
+});
+
+test("reject an unknown user", async () => {
+  const create_conversation = mock();
+
+  await expect(
+    reset_mfa(
+      { ...deps, crisp: { ...crisp, create_conversation } },
+      { moderator: anais_tailhade, user_id: 42 },
+    ),
+  ).rejects.toThrow(NotFoundError);
+  expect(create_conversation).not.toHaveBeenCalled();
 });

@@ -1,11 +1,10 @@
+import { NotFoundError } from "#src/errors";
+import type { IdentiteRuntime } from "#src/lib/activities";
 import type { CrispApiCradle } from "#src/lib/crisp";
 import { z_username } from "#src/schema";
-import {
-  schema,
-  type IdentiteProconnectDatabaseCradle,
-} from "@~/identite-proconnect/database";
+import type { IdentiteProconnectDatabaseCradle } from "@~/identite-proconnect/database";
 import { to as await_to } from "await-to-js";
-import { eq } from "drizzle-orm";
+import { match } from "ts-pattern";
 import { reset_mfa_message } from "../templates";
 import { get_user_info } from "./get_user_info";
 
@@ -16,24 +15,19 @@ export async function reset_mfa(
     crisp,
     pg,
     resolve_delay,
+    runtime,
   }: IdentiteProconnectDatabaseCradle &
-    CrispApiCradle & { resolve_delay: number },
+    CrispApiCradle & { resolve_delay: number; runtime: IdentiteRuntime },
   { moderator, user_id }: ResetMFAInput,
 ) {
-  await pg
-    .delete(schema.authenticators)
-    .where(eq(schema.authenticators.user_id, user_id));
+  const outcome = await runtime.resetMfa({ user_id });
 
-  await pg
-    .update(schema.users)
-    .set({
-      email_verified: false,
-      encrypted_password: null,
-      encrypted_totp_key: null,
-      force_2fa: false,
-      totp_key_verified_at: null,
+  match(outcome)
+    .with({ kind: "mfa_reset" }, () => undefined)
+    .with({ kind: "user_not_found" }, () => {
+      throw new NotFoundError(`User ${user_id} not found.`);
     })
-    .where(eq(schema.users.id, user_id));
+    .exhaustive();
 
   const { email, given_name, family_name } = await get_user_info(pg, user_id);
   const nickname = z_username.parse({ given_name, usual_name: family_name });
