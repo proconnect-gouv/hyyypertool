@@ -16,10 +16,9 @@ import { EntitySchema } from "#src/schema";
 import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
 import { roles } from "@~/hyyyperbase";
-import { schema } from "@~/identite-proconnect/database";
-import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
+import { match } from "ts-pattern";
 import user_activities_route from "./activities";
 import { count_activities_by_user_id } from "./activities/count_activities_by_user_id.query";
 import { get_authenticators_by_user_id } from "./get_authenticators_by_user_id.query";
@@ -160,12 +159,23 @@ export default new Hono<AppContext>()
   .patch(
     "/reset/france_connect",
     zValidator("param", EntitySchema),
-    async function reset_email_verified({ text, req, var: { identite_pg } }) {
+    async function reset_france_connect({
+      req,
+      text,
+      var: { identite_runtime },
+    }) {
       const { id } = req.valid("param");
-      await identite_pg
-        .delete(schema.franceconnect_userinfo)
-        .where(eq(schema.franceconnect_userinfo.user_id, id));
-      return text("OK", 200, { "HX-Refresh": "true" } as HtmxHeader);
+      const outcome = await identite_runtime.disconnectFranceConnect({
+        user_id: id,
+      });
+      return match(outcome)
+        .with({ kind: "franceconnect_disconnected" }, () =>
+          text("OK", 200, { "HX-Refresh": "true" } as HtmxHeader),
+        )
+        .with({ kind: "franceconnect_identity_not_found" }, () => {
+          throw new NotFoundError("FranceConnect identity not found.");
+        })
+        .exhaustive();
     },
   )
   .patch(
