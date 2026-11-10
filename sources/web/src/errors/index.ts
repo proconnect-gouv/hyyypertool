@@ -22,6 +22,8 @@ export class HTTPError extends Error {
 }
 
 export class NotFoundError extends Error {
+  readonly status = 404;
+
   constructor(message: string, options?: ErrorOptions) {
     super(message, options);
     this.name = "NotFoundError";
