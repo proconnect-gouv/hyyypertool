@@ -1,5 +1,31 @@
 # Changelog
 
+## [2026.11.2](https://github.com/proconnect-gouv/hyyypertool/compare/2026.11.1...2026.11.2) (2026-11-10)
+
+### Changements
+
+- ✨ La suppression d'un compte par un modérateur apparaît désormais dans l'historique d'activité
+- ✨ La dissociation de l'identité FranceConnect d'un compte par un modérateur apparaît désormais dans l'historique d'activité
+- ✨ Les modifications d'un membre par un modérateur (type de vérification, interne ou externe) apparaissent désormais dans l'historique d'activité
+- ✨ Le retrait d'un membre d'une organisation par un modérateur (directement ou en réouvrant une modération) apparaît désormais dans l'historique d'activité
+- ✨ La réinitialisation de la validation en deux étapes par un modérateur apparaît désormais dans l'historique d'activité
+
+### Modifié
+
+- ♻️ prove the hyyyper user once for every protected route ([#2042](https://github.com/proconnect-gouv/hyyypertool/issues/2042)) ([5fae2af](https://github.com/proconnect-gouv/hyyypertool/commit/5fae2af4871acb541b99dae97df11db1c3fb4a01))
+- ♻️ type userinfo as missing until authorized proves it ([#2041](https://github.com/proconnect-gouv/hyyypertool/issues/2041)) ([ca6d3ed](https://github.com/proconnect-gouv/hyyypertool/commit/ca6d3ed7520707903baa4654105a9e6a9881426e))
+- ♻️ disconnect FranceConnect through the identite runtime ([#2040](https://github.com/proconnect-gouv/hyyypertool/issues/2040)) ([b2d1f60](https://github.com/proconnect-gouv/hyyypertool/commit/b2d1f606a781e6031e66bc186ce8ce3975240411))
+- ♻️ remove memberships through the identite runtime ([#2039](https://github.com/proconnect-gouv/hyyypertool/issues/2039)) ([3b62125](https://github.com/proconnect-gouv/hyyypertool/commit/3b621256dd639492f703d425c8f4d546fbea3c4f))
+- ♻️ update memberships through the identite runtime ([#2038](https://github.com/proconnect-gouv/hyyypertool/issues/2038)) ([973b0cf](https://github.com/proconnect-gouv/hyyypertool/commit/973b0cf7613e1abbcaad2c29c6ba3cc502f21d8b))
+- ♻️ reset MFA through the identite runtime ([#2037](https://github.com/proconnect-gouv/hyyypertool/issues/2037)) ([3dd58ad](https://github.com/proconnect-gouv/hyyypertool/commit/3dd58ad416c56cb1cca2f697a52636a4bf5975bc))
+- ♻️ share the identite runtime through a middleware ([#2036](https://github.com/proconnect-gouv/hyyypertool/issues/2036)) ([d28360d](https://github.com/proconnect-gouv/hyyypertool/commit/d28360d6fe3d44aabaecb818555771824b4baee6))
+- ♻️ delete users through the identite runtime ([#2034](https://github.com/proconnect-gouv/hyyypertool/issues/2034)) ([ada1446](https://github.com/proconnect-gouv/hyyypertool/commit/ada144631fb2858ea9cf269db714362be46cdb57))
+
+### Corrigé
+
+- 🐛 show the server error message in htmx notifications ([#2046](https://github.com/proconnect-gouv/hyyypertool/issues/2046)) ([09638a0](https://github.com/proconnect-gouv/hyyypertool/commit/09638a0a7149da3da26b72dfbcc30b8971dfd17f))
+- 🐛 fall back to the email when the crisp nickname is empty ([#2044](https://github.com/proconnect-gouv/hyyypertool/issues/2044)) ([f5f10a7](https://github.com/proconnect-gouv/hyyypertool/commit/f5f10a78609a9b2b07568b3ffdc7008f8f22e26d))
+
 ## [2026.11.1](https://github.com/proconnect-gouv/hyyypertool/compare/2026.11.0...2026.11.1) (2026-11-09)
 
 ### Modifié
