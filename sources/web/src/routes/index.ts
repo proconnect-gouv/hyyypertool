@@ -2,7 +2,7 @@
 
 import { app_env, type AppEnv } from "#src/config";
 import { RootLayout } from "#src/layouts";
-import { set_userinfo } from "#src/middleware/auth";
+import { authorized, set_userinfo } from "#src/middleware/auth";
 import { set_crisp_client_from_config } from "#src/middleware/crisp";
 import { set_fetch } from "#src/middleware/fetch";
 import { log_request } from "#src/middleware/log";
@@ -88,7 +88,6 @@ const app = new Hono<{ Bindings: AppEnv }>()
       connectionString: PROCONNECT_IDENTITE_DATABASE_URL,
     }),
   )
-  .use(set_identite_runtime())
   .use(
     set_hyyyper_pg(
       drizzle(HYYYPERBASE_DATABASE_URL, {
@@ -97,6 +96,8 @@ const app = new Hono<{ Bindings: AppEnv }>()
       }),
     ),
   )
+  .use(authorized())
+  .use(set_identite_runtime())
   //
 
   .route("/", create_router())

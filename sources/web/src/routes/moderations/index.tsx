@@ -1,7 +1,6 @@
 import { MainLayout } from "#src/layouts";
 //
 
-import { authorized } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
@@ -15,7 +14,6 @@ import { ModerationsPage } from "./page";
 
 //
 export default new Hono<AppContext>()
-  .use(authorized())
 
   .route("/:id", moderation_router)
   .get(

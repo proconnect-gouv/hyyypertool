@@ -7,7 +7,7 @@ import {
   get_organization_info,
   type GetOrganizationInfoHandler,
 } from "#src/lib/organizations/usecase";
-import { authorized, editor_guard } from "#src/middleware/auth";
+import { editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import type { FetchVariablesContext } from "#src/middleware/fetch";
 import { urls } from "#src/urls";
@@ -150,7 +150,6 @@ async function fetch_preview(
 //
 
 export default new Hono<AppContext & GetOrganizationInfoContext>()
-  .use(authorized())
   .use(editor_guard())
   .use(set_get_organization_info())
   .use("/", jsxRenderer(MainLayout))

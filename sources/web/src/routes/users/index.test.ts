@@ -1,6 +1,6 @@
 //
 
-import { set_userinfo } from "#src/middleware/auth";
+import { authorized, set_userinfo } from "#src/middleware/auth";
 import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import { set_identite_pg } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
@@ -42,6 +42,7 @@ test("GET /users", async () => {
         sub: moderator.sub!,
       }),
     )
+    .use(authorized())
     .route("/", app)
     .onError((error) => {
       throw error;

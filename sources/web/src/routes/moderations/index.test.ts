@@ -1,6 +1,6 @@
 //
 
-import { set_userinfo } from "#src/middleware/auth";
+import { authorized, set_userinfo } from "#src/middleware/auth";
 import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import { set_identite_pg } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
@@ -43,6 +43,7 @@ function create_test_app(moderator: { email: string; sub: string | null }) {
         sub: moderator.sub!,
       }),
     )
+    .use(authorized())
     .route("/", app);
 }
 

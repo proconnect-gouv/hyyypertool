@@ -1,7 +1,7 @@
 import { MainLayout } from "#src/layouts";
 //
 
-import { authorized, editor_guard } from "#src/middleware/auth";
+import { editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { zValidator } from "@hono/zod-validator";
 import { roles, schema } from "@~/hyyyperbase";
@@ -29,7 +29,6 @@ const TemplateFormSchema = z.object({
 //
 
 export default new Hono<AppContext>()
-  .use(authorized())
   .get(
     "/",
     jsxRenderer(MainLayout),

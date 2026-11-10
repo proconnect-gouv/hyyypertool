@@ -2,7 +2,7 @@
 
 import type { HtmxHeader } from "#src/htmx";
 import { MainLayout } from "#src/layouts";
-import { authorized, editor_guard } from "#src/middleware/auth";
+import { editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { z_username } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
@@ -23,7 +23,6 @@ const WhitelistParams_Schema = z.object({
 
 //
 export default new Hono<AppContext>()
-  .use(authorized())
   .get(
     "/",
     jsxRenderer(MainLayout),

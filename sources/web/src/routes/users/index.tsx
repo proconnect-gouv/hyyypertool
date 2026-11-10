@@ -1,7 +1,6 @@
 import { MainLayout } from "#src/layouts";
 //
 
-import { authorized } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
@@ -17,7 +16,6 @@ import Page from "./page";
 //
 
 export default new Hono<AppContext>()
-  .use(authorized())
   //
   .route("/:id", user_id_router)
   //
