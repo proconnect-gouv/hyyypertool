@@ -1,5 +1,6 @@
 //
 
+import { NotFoundError } from "#src/errors";
 import { authorized, set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
 import { set_crisp_client } from "#src/middleware/crisp";
@@ -174,6 +175,7 @@ test("PATCH /users/:id/reset/france_connect remove FranceConnect data", async ()
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
     .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(set_identite_runtime())
     .use(authorized())
     .route("/:id", app)
     .onError((error) => {
@@ -188,6 +190,36 @@ test("PATCH /users/:id/reset/france_connect remove FranceConnect data", async ()
     where: (table, { eq }) => eq(table.user_id, user_id),
   });
   expect(result).toBeUndefined();
+  expect(await pg.query.activity_logs.findMany()).toMatchObject([
+    {
+      action: "franceconnect.disconnected",
+      actor_ref: moderator.sub,
+      actor_type: "moderator",
+      context: { outcome: { connected_at: "2022-01-01 00:00:00+00" } },
+      user_id,
+    },
+  ]);
+});
+
+test("PATCH /users/:id/reset/france_connect without FranceConnect data", async () => {
+  const moderator = await insert_moderateur(hyyyper_pglite);
+  const user_id = await create_adora_pony_user(pg);
+  const request = new Hono()
+    .use(set_config({}))
+    .use(set_hyyyper_pg(hyyyper_pglite))
+    .use(set_identite_pg(pg))
+    .use(set_nonce("nonce"))
+    .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(set_identite_runtime())
+    .use(authorized())
+    .route("/:id", app)
+    .onError((error) => {
+      throw error;
+    })
+    .request(`/${user_id}/reset/france_connect`, { method: "PATCH" });
+
+  await expect(request).rejects.toThrow(NotFoundError);
+  expect(await pg.query.activity_logs.findMany()).toEqual([]);
 });
 
 test("PATCH /users/:id/reset/password resets password", async () => {
