@@ -5,6 +5,7 @@ import { set_config } from "#src/middleware/config";
 import { set_crisp_client } from "#src/middleware/crisp";
 import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import { set_identite_pg } from "#src/middleware/identite-pg";
+import { set_identite_runtime } from "#src/middleware/identite-runtime";
 import { set_nonce } from "#src/middleware/nonce";
 import {
   hyyyper_pglite,
@@ -90,6 +91,7 @@ test("DELETE /users/:id deletes user and redirects", async () => {
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
     .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(set_identite_runtime())
     .use(authorized())
     .route("/:id", app)
     .request(`/${user_id}`, { method: "DELETE" });

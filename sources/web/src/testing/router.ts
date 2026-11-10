@@ -11,6 +11,7 @@ import { set_crisp_client } from "../middleware/crisp";
 import { set_fetch } from "../middleware/fetch";
 import { set_hyyyper_pg } from "../middleware/hyyyperbase";
 import { set_identite_pg } from "../middleware/identite-pg";
+import { set_identite_runtime } from "../middleware/identite-runtime";
 import { set_nonce } from "../middleware/nonce";
 import { create_asset_router } from "../routes/assets";
 
@@ -96,6 +97,7 @@ export function create_testing_router() {
     .use(set_nonce("nonce"))
     .use(set_fetch(create_test_fetch()))
     .use(set_userinfo(MODERATOR))
+    .use(set_identite_runtime())
     .route(
       ASSETS_PATH,
       create_asset_router({

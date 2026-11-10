@@ -1,6 +1,7 @@
 //
 
 import { NotFoundError } from "#src/errors";
+import { identite_runtime } from "#src/lib/activities";
 import { type CrispApi } from "#src/lib/crisp";
 import { schema } from "@~/identite-proconnect/database";
 import { create_pink_diamond_user } from "@~/identite-proconnect/database/seed/unicorn";
@@ -29,12 +30,13 @@ const crisp: CrispApi = {
   send_message: mock().mockResolvedValue(undefined),
 };
 
-const deps = { crisp, pg, resolve_delay: 0 };
-
-const anais_tailhade = {
-  email: "anais.tailhade@omage.gouv.fr",
-  sub: "moderator-sub",
+const deps = {
+  crisp,
+  resolve_delay: 0,
+  runtime: identite_runtime(pg).as({ sub: "moderator-sub", type: "moderator" }),
 };
+
+const anais_tailhade = { email: "anais.tailhade@omage.gouv.fr" };
 
 //
 

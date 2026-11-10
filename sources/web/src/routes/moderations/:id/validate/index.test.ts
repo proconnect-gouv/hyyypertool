@@ -7,6 +7,7 @@ import {
   set_identite_pg,
   set_identite_pg_client,
 } from "#src/middleware/identite-pg";
+import { set_identite_runtime } from "#src/middleware/identite-runtime";
 import { cartesian } from "#src/testing";
 import { schema } from "@~/identite-proconnect/database";
 import {
@@ -87,6 +88,7 @@ test.each(cases)(
       .use(set_identite_pg_client(client as any))
       .use(set_crisp_client(mock_crisp as any))
       .use(set_userinfo({ email: "admin@example.com", sub: "admin-sub" }))
+      .use(set_identite_runtime())
       .route("/:id/validate", app)
       .request(`/${moderation_id}/validate`, {
         method: "PATCH",
@@ -178,6 +180,7 @@ test("PATCH /moderations/:id/validate succeeds when user is already linked to or
     .use(set_identite_pg_client(client as any))
     .use(set_crisp_client(mock_crisp as any))
     .use(set_userinfo({ email: "admin@example.com", sub: "admin-sub" }))
+    .use(set_identite_runtime())
     .route("/:id/validate", app)
     .request(`/${moderation_id}/validate`, {
       method: "PATCH",

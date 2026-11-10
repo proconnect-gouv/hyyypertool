@@ -2,7 +2,6 @@
 
 import { HTTPError, NotFoundError } from "#src/errors";
 import type { HtmxHeader } from "#src/htmx";
-import { identite_runtime } from "#src/lib/activities";
 import {
   MODERATION_EVENTS,
   build_moderation_update,
@@ -47,16 +46,11 @@ export default new Hono<AppContext>().patch(
     req,
     notFound,
     env: config,
-    var: { crisp, identite_pg, userinfo, sentry },
+    var: { crisp, identite_pg, identite_runtime: runtime, sentry, userinfo },
   }) {
     const { id } = req.valid("param");
     const { add_domain, add_member, send_notification, verification_type } =
       req.valid("form");
-
-    const runtime = identite_runtime(identite_pg).as({
-      sub: userinfo.sub,
-      type: "moderator",
-    });
 
     const [moderation_error, moderation] = await to(
       get_moderation_with_user(identite_pg, id),
@@ -78,10 +72,7 @@ export default new Hono<AppContext>().patch(
     if (add_domain) {
       const [domain_error] = await to(
         change_email_domain_verification(
-          {
-            pg: identite_pg,
-            sub: userinfo.sub,
-          },
+          { pg: identite_pg, runtime },
           {
             domain,
             organization_id,

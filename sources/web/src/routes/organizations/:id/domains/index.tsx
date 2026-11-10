@@ -61,7 +61,7 @@ export default new Hono<AppContext>()
     "/",
     zValidator("param", EntitySchema),
     zValidator("form", z.object({ domain: z.string().min(1) })),
-    async function PUT({ text, req, var: { identite_pg, userinfo } }) {
+    async function PUT({ text, req, var: { identite_pg, identite_runtime } }) {
       const { id: organization_id } = req.valid("param");
       const { domain } = req.valid("form");
 
@@ -71,10 +71,7 @@ export default new Hono<AppContext>()
         );
 
       await change_email_domain_verification(
-        {
-          pg: identite_pg,
-          sub: userinfo.sub,
-        },
+        { pg: identite_pg, runtime: identite_runtime },
         {
           domain,
           organization_id,
@@ -93,14 +90,15 @@ export default new Hono<AppContext>()
   .delete(
     "/:domain_id",
     zValidator("param", EntitySchema.merge(DomainParams_Schema)),
-    async function DELETE({ text, req, var: { identite_pg, userinfo } }) {
+    async function DELETE({
+      text,
+      req,
+      var: { identite_pg, identite_runtime },
+    }) {
       const { domain_id } = req.valid("param");
 
       const outcome = await remove_domain_email_by_id(
-        {
-          pg: identite_pg,
-          sub: userinfo.sub,
-        },
+        { pg: identite_pg, runtime: identite_runtime },
         domain_id,
       );
       if (outcome.kind === "domain_not_found")
@@ -115,7 +113,11 @@ export default new Hono<AppContext>()
     "/:domain_id",
     zValidator("param", EntitySchema.merge(DomainParams_Schema)),
     zValidator("query", patch_query),
-    async function PATCH({ text, req, var: { identite_pg, userinfo } }) {
+    async function PATCH({
+      text,
+      req,
+      var: { identite_pg, identite_runtime },
+    }) {
       const { domain_id } = req.valid("param");
       const { type: verification_type } = req.valid("query");
 
@@ -127,10 +129,7 @@ export default new Hono<AppContext>()
       const { domain, organization_id } = email_domain;
 
       await change_email_domain_verification(
-        {
-          pg: identite_pg,
-          sub: userinfo.sub,
-        },
+        { pg: identite_pg, runtime: identite_runtime },
         {
           domain,
           organization_id,

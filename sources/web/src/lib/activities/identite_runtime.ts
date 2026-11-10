@@ -12,3 +12,7 @@ export function identite_runtime(db: IdentiteProconnectPgDatabase) {
     db,
   });
 }
+
+export type IdentiteRuntime = ReturnType<
+  ReturnType<typeof identite_runtime>["as"]
+>;

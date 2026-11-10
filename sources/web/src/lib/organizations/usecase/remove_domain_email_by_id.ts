@@ -1,4 +1,4 @@
-import { identite_runtime } from "#src/lib/activities";
+import type { IdentiteRuntime } from "#src/lib/activities";
 import {
   schema,
   type IdentiteProconnectDatabaseCradle,
@@ -6,11 +6,12 @@ import {
 import { eq } from "drizzle-orm";
 
 export async function remove_domain_email_by_id(
-  { pg, sub }: IdentiteProconnectDatabaseCradle & { sub: string },
+  {
+    pg,
+    runtime,
+  }: IdentiteProconnectDatabaseCradle & { runtime: IdentiteRuntime },
   id: number,
 ) {
-  const runtime = identite_runtime(pg).as({ type: "moderator", sub });
-
   return pg.transaction(async (tx) => {
     const [removed] = await tx
       .delete(schema.email_domains)

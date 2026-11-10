@@ -1,5 +1,6 @@
 //
 
+import { identite_runtime } from "#src/lib/activities";
 import { schema } from "@~/identite-proconnect/database";
 import { create_unicorn_organization } from "@~/identite-proconnect/database/seed/unicorn";
 import {
@@ -16,7 +17,10 @@ import { remove_domain_email_by_id } from "./remove_domain_email_by_id";
 beforeAll(migrate);
 beforeEach(empty_database);
 
-const deps = { pg, sub: "moderator-sub" };
+const deps = {
+  pg,
+  runtime: identite_runtime(pg).as({ sub: "moderator-sub", type: "moderator" }),
+};
 
 //
 
