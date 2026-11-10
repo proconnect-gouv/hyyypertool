@@ -84,6 +84,17 @@ Scenario("Basculer un membre entre interne et externe : ✅", ({ I }) => {
     I.click("🔄 interne/externe");
     I.see("❌");
   });
+
+  I.amOnPage("/users");
+  I.click({
+    role: "link",
+    name: "Utilisateur Raphael Dubigny (rdubigny@beta.gouv.fr)",
+  });
+  I.click("🕓 3 activités de Raphael");
+  I.within("~Activité member.updated", () => {
+    I.see("Membre modifié");
+    I.see("moderateur@beta.gouv.fr");
+  });
 });
 
 Scenario("Retirer un membre de l'organisation", ({ I }) => {
