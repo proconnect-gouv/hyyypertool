@@ -1,9 +1,11 @@
 //
 
+import { NotFoundError } from "#src/errors";
 import { authorized, set_userinfo } from "#src/middleware/auth";
 import { set_config } from "#src/middleware/config";
 import { set_hyyyper_pg } from "#src/middleware/hyyyperbase";
 import { set_identite_pg } from "#src/middleware/identite-pg";
+import { set_identite_runtime } from "#src/middleware/identite-runtime";
 import { set_nonce } from "#src/middleware/nonce";
 import {
   hyyyper_pglite,
@@ -56,6 +58,9 @@ function make_crisp_mock() {
 async function make_app({ crisp = make_crisp_mock() } = {}) {
   const moderator = await insert_moderateur(hyyyper_pglite);
   return new Hono()
+    .onError((error) => {
+      throw error;
+    })
     .use(
       set_config({
         CRISP_RESOLVE_DELAY: 0,
@@ -68,6 +73,7 @@ async function make_app({ crisp = make_crisp_mock() } = {}) {
     .use(set_identite_pg(pg))
     .use(set_nonce("nonce"))
     .use(set_userinfo({ email: moderator.email, sub: moderator.sub! }))
+    .use(set_identite_runtime())
     .use(authorized())
     .route("/:id/members/:user_id", app);
 }
@@ -136,6 +142,24 @@ test("PATCH /organizations/:id/members/:user_id updates user organization member
       ]
     `);
   }
+  expect(await pg.query.activity_logs.findMany()).toMatchObject([
+    {
+      action: "member.updated",
+      actor_ref: "oidc-sub-moderateur",
+      actor_type: "moderator",
+      context: {
+        inputs: { is_external: true, verification_type: "domain" },
+        outcome: {
+          previous: {
+            is_external: false,
+            verification_type: "domain_not_verified_yet",
+          },
+        },
+      },
+      organization_id,
+      user_id,
+    },
+  ]);
 });
 
 test("PATCH /organizations/:id/members/:user_id clears verification with domain_not_verified_yet", async () => {
@@ -202,6 +226,23 @@ test("PATCH /organizations/:id/members/:user_id clears verification with domain_
       ]
     `);
   }
+});
+
+test("PATCH /organizations/:id/members/:user_id throws NotFoundError for an unknown membership", async () => {
+  const organization_id = await create_unicorn_organization(pg);
+  const user_id = await create_adora_pony_user(pg);
+
+  const testing_app = await make_app();
+  await expect(
+    testing_app.request(`/${organization_id}/members/${user_id}`, {
+      method: "PATCH",
+      body: new URLSearchParams({
+        verification_type: VerificationTypeSchema.enum.domain,
+      }),
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    }),
+  ).rejects.toThrow(NotFoundError);
+  expect(await pg.query.activity_logs.findMany()).toEqual([]);
 });
 
 test("DELETE /organizations/:id/members/:user_id removes user from organization", async () => {

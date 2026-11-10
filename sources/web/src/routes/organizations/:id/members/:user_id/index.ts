@@ -1,5 +1,6 @@
 //
 
+import { NotFoundError } from "#src/errors";
 import type { HtmxHeader } from "#src/htmx";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import { remove_member_from_organization } from "#src/lib/users";
@@ -7,10 +8,9 @@ import { editor_guard } from "#src/middleware/auth";
 import type { AppContext } from "#src/middleware/context";
 import { EntitySchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
-import { schema } from "@~/identite-proconnect/database";
 import { VerificationTypeSchema } from "@~/identite-proconnect/types";
-import { and, eq } from "drizzle-orm";
 import { Hono } from "hono";
+import { match } from "ts-pattern";
 import { z } from "zod";
 
 //
@@ -29,28 +29,27 @@ export default new Hono<AppContext>()
         is_external: z.stringbool().optional(),
       }),
     ),
-    async function PATCH({ text, req, var: { identite_pg } }) {
+    async function PATCH({ text, req, var: { identite_runtime } }) {
       const { id: organization_id, user_id } = req.valid("param");
       const { verification_type, is_external } = req.valid("form");
 
-      await identite_pg
-        .update(schema.users_organizations)
-        .set({
-          is_external,
-          updated_at: new Date().toISOString(),
-          verification_type,
-          verified_at:
-            verification_type ===
-            VerificationTypeSchema.enum.domain_not_verified_yet
-              ? null
-              : verification_type && new Date().toISOString(),
+      const outcome = await identite_runtime.updateMembership({
+        is_external,
+        organization_id,
+        user_id,
+        verification_type,
+      });
+
+      match(outcome)
+        .with(
+          { kind: "member_updated" },
+          { kind: "membership_unchanged" },
+          () => {},
+        )
+        .with({ kind: "membership_not_found" }, () => {
+          throw new NotFoundError("Membership not found.");
         })
-        .where(
-          and(
-            eq(schema.users_organizations.organization_id, organization_id),
-            eq(schema.users_organizations.user_id, user_id),
-          ),
-        );
+        .exhaustive();
 
       return text("OK", 200, {
         "HX-Trigger": ORGANISATION_EVENTS.enum.MEMBERS_UPDATED,
