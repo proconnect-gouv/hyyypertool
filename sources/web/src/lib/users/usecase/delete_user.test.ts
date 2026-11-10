@@ -1,5 +1,6 @@
 //
 
+import { NotFoundError } from "#src/errors";
 import { type CrispApi } from "#src/lib/crisp";
 import { schema } from "@~/identite-proconnect/database";
 import { create_pink_diamond_user } from "@~/identite-proconnect/database/seed/unicorn";
@@ -30,7 +31,10 @@ const crisp: CrispApi = {
 
 const deps = { crisp, pg, resolve_delay: 0 };
 
-const anais_tailhade = { email: "anais.tailhade@omage.gouv.fr" };
+const anais_tailhade = {
+  email: "anais.tailhade@omage.gouv.fr",
+  sub: "moderator-sub",
+};
 
 //
 
@@ -47,6 +51,19 @@ test("delete user account", async () => {
   });
 
   expect(result).toBeUndefined();
+  expect(await pg.query.activity_logs.findMany()).toMatchObject([
+    {
+      action: "user.deleted",
+      actor_ref: "moderator-sub",
+      actor_type: "moderator",
+      app: "hyyypertool",
+      context: {
+        inputs: { user_id: pink_diamond_user_id },
+        outcome: { email: "pink.diamond@unicorn.xyz" },
+      },
+      user_id: pink_diamond_user_id,
+    },
+  ]);
 
   expect(crisp.create_conversation).toHaveBeenCalledWith({
     email: "pink.diamond@unicorn.xyz",
@@ -68,4 +85,10 @@ test("delete user account", async () => {
   expect(crisp.mark_conversation_as_resolved).toHaveBeenCalledWith({
     session_id: "🗨️",
   });
+});
+
+test("reject an unknown user", async () => {
+  await expect(
+    delete_user(deps, { moderator: anais_tailhade, user_id: 42 }),
+  ).rejects.toThrow(NotFoundError);
 });
