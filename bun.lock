@@ -141,7 +141,7 @@
         "@proconnect-gouv/proconnect.api_entreprise": "2.3.0",
         "@proconnect-gouv/proconnect.core": "1.1.1",
         "@proconnect-gouv/proconnect.identite": "15.0.0",
-        "@proconnect-gouv/proconnect.identite.database": "2.0.0",
+        "@proconnect-gouv/proconnect.identite.database": "2.1.0",
         "@proconnect-gouv/proconnect.insee": "2.0.0",
         "consola": "3.4.2",
         "drizzle-orm": "0.45.4",
@@ -396,7 +396,7 @@
 
     "@proconnect-gouv/proconnect.identite": ["@proconnect-gouv/proconnect.identite@15.0.0", "", { "dependencies": { "leven": "^4.0.0", "openid-client": "^6.8.8", "sql-template-tag": "^5.2.1", "ts-pattern": "^5.7.0", "zod": "^4.6.7" }, "peerDependencies": { "@proconnect-gouv/proconnect.annuaire_entreprises": "^3.0.5", "@proconnect-gouv/proconnect.api_entreprise": "^2.3.0", "@proconnect-gouv/proconnect.core": "^1.1.0", "@proconnect-gouv/proconnect.insee": "^2.0.0", "@proconnect-gouv/proconnect.registre_national_entreprises": "^4.1.0" }, "optionalPeers": ["@proconnect-gouv/proconnect.annuaire_entreprises", "@proconnect-gouv/proconnect.api_entreprise", "@proconnect-gouv/proconnect.core", "@proconnect-gouv/proconnect.insee", "@proconnect-gouv/proconnect.registre_national_entreprises"] }, "sha512-Vo6RquUHAxvdMFQLpRp9EHvq2NxdgyMyGd3/u6qCBzkC01vAv5/vo+/PPQbywQ6mCqEwLtDFChNwOUoHROc+hQ=="],
 
-    "@proconnect-gouv/proconnect.identite.database": ["@proconnect-gouv/proconnect.identite.database@2.0.0", "", { "peerDependencies": { "drizzle-orm": ">=0.44" }, "optionalPeers": ["drizzle-orm"] }, "sha512-vZVTjAqJXkb5p3dHOjsf2refDZFpR+FnHLvudIdfUJsY22EZoIHH39yecnsJtY2Z+qZqNWvdAm7b4y1V/beWQw=="],
+    "@proconnect-gouv/proconnect.identite.database": ["@proconnect-gouv/proconnect.identite.database@2.1.0", "", { "peerDependencies": { "drizzle-orm": ">=0.44" }, "optionalPeers": ["drizzle-orm"] }, "sha512-6vykTUJIAFcdr3bzVKXS6P9iXAll3GQrxf9z8PSASA82zGwV1iji3CRkJft80tVcqEQRQ3tAOeQYBhbdtU5cvQ=="],
 
     "@proconnect-gouv/proconnect.identite.runtime": ["@proconnect-gouv/proconnect.identite.runtime@0.5.0", "", { "dependencies": { "@proconnect-gouv/proconnect.identite": "^15.0.0", "@proconnect-gouv/proconnect.identite.database": "^2.0.0", "zod": "^4.6.7" }, "peerDependencies": { "drizzle-orm": "^0.45.4" } }, "sha512-AaH68ABRurpccSo9/vg3pWWGAl5+8UR5DBBJ9Hdca+0GhQeN0+hdB9/DN1hy8dG+egnYw8wR2NJhRt70fHjKRg=="],
 
