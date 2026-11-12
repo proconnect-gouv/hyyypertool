@@ -71,7 +71,7 @@ export default new Hono<AppContext>()
         );
 
       await change_email_domain_verification(
-        { pg: identite_pg, runtime: identite_runtime },
+        { runtime: identite_runtime },
         {
           domain,
           organization_id,
@@ -129,7 +129,7 @@ export default new Hono<AppContext>()
       const { domain, organization_id } = email_domain;
 
       await change_email_domain_verification(
-        { pg: identite_pg, runtime: identite_runtime },
+        { runtime: identite_runtime },
         {
           domain,
           organization_id,

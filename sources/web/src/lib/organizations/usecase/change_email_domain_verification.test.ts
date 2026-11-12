@@ -27,7 +27,6 @@ beforeAll(migrate);
 beforeEach(empty_database);
 
 const deps = {
-  pg,
   runtime: identite_runtime(pg).as({ sub: "moderator-sub", type: "moderator" }),
 };
 
@@ -41,7 +40,7 @@ async function insert_pending_domain(organization_id: number) {
 
 //
 
-test("refused replaces the domain states with refused and leaves members untouched", async () => {
+test("refused replaces the domain states with refused and removes the members on that domain", async () => {
   const organization_id = await create_unicorn_organization(pg);
   const user_id = await create_adora_pony_user(pg);
   await pg.insert(schema.users_organizations).values({
@@ -57,7 +56,16 @@ test("refused replaces the domain states with refused and leaves members untouch
       organization_id,
       verification_type: "refused",
     }),
-  ).toEqual({ kind: "domain_refused" });
+  ).toMatchObject({
+    kind: "domain_verification_changed",
+    promoted_members: [],
+    removed_members: [
+      {
+        previous_verification_type: LinkEnum.enum.domain_not_verified_yet,
+        user_id,
+      },
+    ],
+  });
 
   expect(
     await pg.query.email_domains.findMany({
@@ -75,9 +83,7 @@ test("refused replaces the domain states with refused and leaves members untouch
     await pg.query.users_organizations.findFirst({
       where: (table, { eq }) => eq(table.user_id, user_id),
     }),
-  ).toMatchObject({
-    verification_type: LinkEnum.enum.domain_not_verified_yet,
-  });
+  ).toBeUndefined();
   expect(await pg.query.activity_logs.findMany()).toMatchObject([
     {
       action: "domain.refused",
@@ -97,6 +103,13 @@ test("refused replaces the domain states with refused and leaves members untouch
       moderation_id: null,
       organization_id,
       user_id: null,
+    },
+    {
+      action: "member.removed",
+      actor_ref: "domain.remove_members",
+      actor_type: "app",
+      organization_id,
+      user_id,
     },
   ]);
 });
@@ -129,7 +142,7 @@ test("verified replaces the domain states and promotes matching members", async 
     email_domain: {
       verification_type: EmailDomainVerificationEnum.enum.verified,
     },
-    kind: "domain_verified",
+    kind: "domain_verification_changed",
     promoted_members: [
       {
         previous_verification_type: LinkEnum.enum.domain_not_verified_yet,
@@ -207,7 +220,7 @@ test("verifies a domain given by domain and organization", async () => {
       organization_id,
       verification_type: "external",
     }),
-  ).toMatchObject({ kind: "domain_verified" });
+  ).toMatchObject({ kind: "domain_verification_changed" });
 
   expect(
     await pg.query.email_domains.findFirst({

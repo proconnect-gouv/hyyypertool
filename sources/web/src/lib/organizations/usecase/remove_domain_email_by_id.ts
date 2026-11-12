@@ -1,4 +1,4 @@
-import type { IdentiteRuntime } from "#src/lib/activities";
+import type { IdentiteRuntime, KnownActivity } from "#src/lib/activities";
 import {
   schema,
   type IdentiteProconnectDatabaseCradle,
@@ -23,7 +23,7 @@ export async function remove_domain_email_by_id(
       });
     if (!removed) return { kind: "domain_not_found" } as const;
 
-    await runtime.record(tx, {
+    const domain_removed: KnownActivity = {
       action: "domain.removed",
       context: {
         inputs: { domain: removed.domain },
@@ -32,8 +32,13 @@ export async function remove_domain_email_by_id(
           previous_verification_type: removed.verification_type,
         },
       },
+    };
+    const activity = {
+      ...domain_removed,
       organization_id: removed.organization_id,
-    });
+    };
+    // typing gap only (proconnect-identite#2451): record() is insertActivity, typed for app-owned actions
+    await runtime.record(tx, activity as never);
 
     return { kind: "domain_removed" } as const;
   });

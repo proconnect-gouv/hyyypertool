@@ -5,14 +5,10 @@ import {
   type ActivityOf,
   type ContextsOf,
 } from "@proconnect-gouv/proconnect.identite.runtime";
-import { hyyypertool_activity_context_schemas } from "./contexts";
 
 //
 
-const known_activity_context_schemas = {
-  ...activityContextSchemas,
-  ...hyyypertool_activity_context_schemas,
-};
+const known_activity_context_schemas = activityContextSchemas;
 
 export type KnownActivityContexts = ContextsOf<
   typeof known_activity_context_schemas
