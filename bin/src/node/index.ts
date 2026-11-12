@@ -59,7 +59,24 @@ consola.info("Hyyypertool 🚀", {
 
 if (consola.level >= LogLevels.debug) {
   showRoutes(app);
-  consola.debug("Config", config);
+  consola.debug("Config", {
+    ...config,
+    AGENTCONNECT_OIDC_SECRET_ID: "*".repeat(
+      config.AGENTCONNECT_OIDC_SECRET_ID.length,
+    ),
+    COOKIE_ENCRYPTION_KEY: "*".repeat(config.COOKIE_ENCRYPTION_KEY.length),
+    CRISP_KEY: "*".repeat(config.CRISP_KEY.length),
+    ENTREPRISE_API_GOUV_TOKEN: "*".repeat(
+      config.ENTREPRISE_API_GOUV_TOKEN.length,
+    ),
+    HYYYPERBASE_DATABASE_URL: "*".repeat(
+      config.HYYYPERBASE_DATABASE_URL.length,
+    ),
+    PROCONNECT_IDENTITE_DATABASE_URL: "*".repeat(
+      config.PROCONNECT_IDENTITE_DATABASE_URL.length,
+    ),
+    SENTRY_DNS: config.SENTRY_DNS && "*".repeat(config.SENTRY_DNS.length),
+  });
 }
 
 //
