@@ -8,7 +8,10 @@ declare const app: import("hono/hono-base").HonoBase<
     import("#src/middleware/auth").UserInfoVariablesContext &
     import("#src/middleware/crisp").CrispClientContext &
     import("#src/middleware/identite-pg").IdentiteProconnectPgContext &
-    import("#src/middleware/hyyyperbase").HyyyperbasePgContext,
+    import("#src/middleware/hyyyperbase").HyyyperbasePgContext &
+    import("#src/middleware/auth").AuthorizedContext &
+    import("#src/middleware/session").SessionContext &
+    import("#src/middleware/identite-runtime").IdentiteRuntimeContext,
   | import("hono/types").MergeSchemaPath<
       {
         "/": {
@@ -182,7 +185,8 @@ declare const app: import("hono/hono-base").HonoBase<
                       query: {
                         page?: string | string[] | undefined;
                         page_size?: string | string[] | undefined;
-                        q?: string | undefined;
+                        date?: string | undefined;
+                        live?: string | string[] | undefined;
                       };
                     };
                   }
@@ -190,7 +194,8 @@ declare const app: import("hono/hono-base").HonoBase<
                     output: import("zod").ZodSafeParseError<{
                       page: number;
                       page_size: number;
-                      q: string;
+                      date?: string | undefined;
+                      live: number;
                     }>;
                     outputFormat: "json";
                     status: 400;
@@ -198,7 +203,8 @@ declare const app: import("hono/hono-base").HonoBase<
                       query: {
                         page?: string | string[] | undefined;
                         page_size?: string | string[] | undefined;
-                        q?: string | undefined;
+                        date?: string | undefined;
+                        live?: string | string[] | undefined;
                       };
                     };
                   };
@@ -424,6 +430,36 @@ declare const app: import("hono/hono-base").HonoBase<
                                   param: {
                                     id: string;
                                   };
+                                };
+                              }
+                            | {
+                                output: import("zod").ZodSafeParseError<{
+                                  id: number;
+                                }>;
+                                outputFormat: "json";
+                                status: 400;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
+                                };
+                              };
+                        };
+                      },
+                      "/activities"
+                    >
+                  | import("hono/types").MergeSchemaPath<
+                      {
+                        "/": {
+                          $get:
+                            | {
+                                output: {};
+                                outputFormat: string;
+                                status: import("hono/utils/http-status").StatusCode;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
                                 } & {
                                   query: {
                                     describedby: string;
@@ -465,36 +501,6 @@ declare const app: import("hono/hono-base").HonoBase<
                         };
                       },
                       "/moderations"
-                    >
-                  | import("hono/types").MergeSchemaPath<
-                      {
-                        "/": {
-                          $get:
-                            | {
-                                output: {};
-                                outputFormat: string;
-                                status: import("hono/utils/http-status").StatusCode;
-                                input: {
-                                  param: {
-                                    id: string;
-                                  };
-                                };
-                              }
-                            | {
-                                output: import("zod").ZodSafeParseError<{
-                                  id: number;
-                                }>;
-                                outputFormat: "json";
-                                status: 400;
-                                input: {
-                                  param: {
-                                    id: string;
-                                  };
-                                };
-                              };
-                        };
-                      },
-                      "/activities"
                     >
                   | import("hono/types").MergeSchemaPath<
                       {
@@ -826,144 +832,6 @@ declare const app: import("hono/hono-base").HonoBase<
                 | import("hono/types").MergeSchemaPath<
                     {
                       "/": {
-                        $patch:
-                          | {
-                              output: {};
-                              outputFormat: string;
-                              status: import("hono/utils/http-status").StatusCode;
-                              input: {
-                                param: {
-                                  id: string;
-                                };
-                              } & {
-                                form: {
-                                  add_domain?: string | undefined;
-                                  add_member: "AS_EXTERNAL" | "AS_INTERNAL";
-                                  send_notification?: string | undefined;
-                                  verification_type?:
-                                    | "bypassed"
-                                    | "code_sent_to_official_contact_email"
-                                    | "domain"
-                                    | "domain_not_verified_yet"
-                                    | "imported_from_coop_mediation_numerique"
-                                    | "imported_from_inclusion_connect"
-                                    | "in_liste_dirigeants_rna"
-                                    | "in_liste_dirigeants_rne"
-                                    | "no_validation_means_available"
-                                    | "no_verification_means_for_entreprise_unipersonnelle"
-                                    | "no_verification_means_for_small_association"
-                                    | "no_verification_means_for_small_organization"
-                                    | "official_contact_email"
-                                    | "ordre_professionnel_domain"
-                                    | "organization_dirigeant"
-                                    | "proof_received"
-                                    | "verified_by_coop_mediation_numerique"
-                                    | undefined;
-                                };
-                              };
-                            }
-                          | {
-                              output: import("zod").ZodSafeParseError<{
-                                add_domain: boolean;
-                                add_member: "AS_EXTERNAL" | "AS_INTERNAL";
-                                send_notification: boolean;
-                                verification_type?:
-                                  | "bypassed"
-                                  | "code_sent_to_official_contact_email"
-                                  | "domain"
-                                  | "domain_not_verified_yet"
-                                  | "imported_from_coop_mediation_numerique"
-                                  | "imported_from_inclusion_connect"
-                                  | "in_liste_dirigeants_rna"
-                                  | "in_liste_dirigeants_rne"
-                                  | "no_validation_means_available"
-                                  | "no_verification_means_for_entreprise_unipersonnelle"
-                                  | "no_verification_means_for_small_association"
-                                  | "no_verification_means_for_small_organization"
-                                  | "official_contact_email"
-                                  | "ordre_professionnel_domain"
-                                  | "organization_dirigeant"
-                                  | "proof_received"
-                                  | "verified_by_coop_mediation_numerique"
-                                  | undefined;
-                              }>;
-                              outputFormat: "json";
-                              status: 400;
-                              input: {
-                                param: {
-                                  id: string;
-                                };
-                              } & {
-                                form: {
-                                  add_domain?: string | undefined;
-                                  add_member: "AS_EXTERNAL" | "AS_INTERNAL";
-                                  send_notification?: string | undefined;
-                                  verification_type?:
-                                    | "bypassed"
-                                    | "code_sent_to_official_contact_email"
-                                    | "domain"
-                                    | "domain_not_verified_yet"
-                                    | "imported_from_coop_mediation_numerique"
-                                    | "imported_from_inclusion_connect"
-                                    | "in_liste_dirigeants_rna"
-                                    | "in_liste_dirigeants_rne"
-                                    | "no_validation_means_available"
-                                    | "no_verification_means_for_entreprise_unipersonnelle"
-                                    | "no_verification_means_for_small_association"
-                                    | "no_verification_means_for_small_organization"
-                                    | "official_contact_email"
-                                    | "ordre_professionnel_domain"
-                                    | "organization_dirigeant"
-                                    | "proof_received"
-                                    | "verified_by_coop_mediation_numerique"
-                                    | undefined;
-                                };
-                              };
-                            }
-                          | {
-                              output: import("zod").ZodSafeParseError<{
-                                id: number;
-                              }>;
-                              outputFormat: "json";
-                              status: 400;
-                              input: {
-                                param: {
-                                  id: string;
-                                };
-                              } & {
-                                form: {
-                                  add_domain?: string | undefined;
-                                  add_member: "AS_EXTERNAL" | "AS_INTERNAL";
-                                  send_notification?: string | undefined;
-                                  verification_type?:
-                                    | "bypassed"
-                                    | "code_sent_to_official_contact_email"
-                                    | "domain"
-                                    | "domain_not_verified_yet"
-                                    | "imported_from_coop_mediation_numerique"
-                                    | "imported_from_inclusion_connect"
-                                    | "in_liste_dirigeants_rna"
-                                    | "in_liste_dirigeants_rne"
-                                    | "no_validation_means_available"
-                                    | "no_verification_means_for_entreprise_unipersonnelle"
-                                    | "no_verification_means_for_small_association"
-                                    | "no_verification_means_for_small_organization"
-                                    | "official_contact_email"
-                                    | "ordre_professionnel_domain"
-                                    | "organization_dirigeant"
-                                    | "proof_received"
-                                    | "verified_by_coop_mediation_numerique"
-                                    | undefined;
-                                };
-                              };
-                            };
-                      };
-                    },
-                    "/validate"
-                  >
-                | import("hono/types").MergeSchemaPath<
-                    {
-                      "/": {
                         $get:
                           | {
                               output: {};
@@ -1072,6 +940,144 @@ declare const app: import("hono/hono-base").HonoBase<
                       };
                     },
                     "/duplicate_warning"
+                  >
+                | import("hono/types").MergeSchemaPath<
+                    {
+                      "/": {
+                        $patch:
+                          | {
+                              output: {};
+                              outputFormat: string;
+                              status: import("hono/utils/http-status").StatusCode;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                form: {
+                                  add_domain?: string | undefined;
+                                  add_member: "AS_EXTERNAL" | "AS_INTERNAL";
+                                  send_notification?: string | undefined;
+                                  verification_type?:
+                                    | "bypassed"
+                                    | "code_sent_to_official_contact_email"
+                                    | "domain"
+                                    | "domain_not_verified_yet"
+                                    | "imported_from_coop_mediation_numerique"
+                                    | "imported_from_inclusion_connect"
+                                    | "in_liste_dirigeants_rna"
+                                    | "in_liste_dirigeants_rne"
+                                    | "no_validation_means_available"
+                                    | "no_verification_means_for_entreprise_unipersonnelle"
+                                    | "no_verification_means_for_small_association"
+                                    | "no_verification_means_for_small_organization"
+                                    | "official_contact_email"
+                                    | "ordre_professionnel_domain"
+                                    | "organization_dirigeant"
+                                    | "proof_received"
+                                    | "verified_by_coop_mediation_numerique"
+                                    | undefined;
+                                };
+                              };
+                            }
+                          | {
+                              output: import("zod").ZodSafeParseError<{
+                                id: number;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                form: {
+                                  add_domain?: string | undefined;
+                                  add_member: "AS_EXTERNAL" | "AS_INTERNAL";
+                                  send_notification?: string | undefined;
+                                  verification_type?:
+                                    | "bypassed"
+                                    | "code_sent_to_official_contact_email"
+                                    | "domain"
+                                    | "domain_not_verified_yet"
+                                    | "imported_from_coop_mediation_numerique"
+                                    | "imported_from_inclusion_connect"
+                                    | "in_liste_dirigeants_rna"
+                                    | "in_liste_dirigeants_rne"
+                                    | "no_validation_means_available"
+                                    | "no_verification_means_for_entreprise_unipersonnelle"
+                                    | "no_verification_means_for_small_association"
+                                    | "no_verification_means_for_small_organization"
+                                    | "official_contact_email"
+                                    | "ordre_professionnel_domain"
+                                    | "organization_dirigeant"
+                                    | "proof_received"
+                                    | "verified_by_coop_mediation_numerique"
+                                    | undefined;
+                                };
+                              };
+                            }
+                          | {
+                              output: import("zod").ZodSafeParseError<{
+                                add_domain: boolean;
+                                add_member: "AS_EXTERNAL" | "AS_INTERNAL";
+                                send_notification: boolean;
+                                verification_type?:
+                                  | "bypassed"
+                                  | "code_sent_to_official_contact_email"
+                                  | "domain"
+                                  | "domain_not_verified_yet"
+                                  | "imported_from_coop_mediation_numerique"
+                                  | "imported_from_inclusion_connect"
+                                  | "in_liste_dirigeants_rna"
+                                  | "in_liste_dirigeants_rne"
+                                  | "no_validation_means_available"
+                                  | "no_verification_means_for_entreprise_unipersonnelle"
+                                  | "no_verification_means_for_small_association"
+                                  | "no_verification_means_for_small_organization"
+                                  | "official_contact_email"
+                                  | "ordre_professionnel_domain"
+                                  | "organization_dirigeant"
+                                  | "proof_received"
+                                  | "verified_by_coop_mediation_numerique"
+                                  | undefined;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                form: {
+                                  add_domain?: string | undefined;
+                                  add_member: "AS_EXTERNAL" | "AS_INTERNAL";
+                                  send_notification?: string | undefined;
+                                  verification_type?:
+                                    | "bypassed"
+                                    | "code_sent_to_official_contact_email"
+                                    | "domain"
+                                    | "domain_not_verified_yet"
+                                    | "imported_from_coop_mediation_numerique"
+                                    | "imported_from_inclusion_connect"
+                                    | "in_liste_dirigeants_rna"
+                                    | "in_liste_dirigeants_rne"
+                                    | "no_validation_means_available"
+                                    | "no_verification_means_for_entreprise_unipersonnelle"
+                                    | "no_verification_means_for_small_association"
+                                    | "no_verification_means_for_small_organization"
+                                    | "official_contact_email"
+                                    | "ordre_professionnel_domain"
+                                    | "organization_dirigeant"
+                                    | "proof_received"
+                                    | "verified_by_coop_mediation_numerique"
+                                    | undefined;
+                                };
+                              };
+                            };
+                      };
+                    },
+                    "/validate"
                   >
                 | import("hono/types").MergeSchemaPath<
                     {
@@ -1747,294 +1753,457 @@ declare const app: import("hono/hono-base").HonoBase<
                     "/domains"
                   >
                 | import("hono/types").MergeSchemaPath<
-                    | {
-                        "/": {
-                          $get:
-                            | {
-                                output: {};
-                                outputFormat: string;
-                                status: import("hono/utils/http-status").StatusCode;
-                                input: {
-                                  param: {
-                                    id: string;
-                                  };
-                                } & {
-                                  query: {
-                                    page?: string | string[] | undefined;
-                                    page_size?: string | string[] | undefined;
-                                    describedby: string | string[];
-                                    page_ref: string | string[];
-                                  };
-                                };
-                              }
-                            | {
-                                output: import("zod").ZodSafeParseError<{
-                                  id: number;
-                                }>;
-                                outputFormat: "json";
-                                status: 400;
-                                input: {
-                                  param: {
-                                    id: string;
-                                  };
-                                } & {
-                                  query: {
-                                    page?: string | string[] | undefined;
-                                    page_size?: string | string[] | undefined;
-                                    describedby: string | string[];
-                                    page_ref: string | string[];
-                                  };
-                                };
-                              }
-                            | {
-                                output: import("zod").ZodSafeParseError<{
-                                  page: number;
-                                  page_size: number;
-                                  describedby: string;
-                                  page_ref: string;
-                                }>;
-                                outputFormat: "json";
-                                status: 400;
-                                input: {
-                                  param: {
-                                    id: string;
-                                  };
-                                } & {
-                                  query: {
-                                    page?: string | string[] | undefined;
-                                    page_size?: string | string[] | undefined;
-                                    describedby: string | string[];
-                                    page_ref: string | string[];
-                                  };
-                                };
-                              };
-                        };
-                      }
-                    | (import("hono/types").MergeSchemaPath<
-                        {
+                    (
+                      | {
                           "/": {
-                            $patch:
+                            $get:
                               | {
-                                  output: "OK";
-                                  outputFormat: "text";
-                                  status: 200;
+                                  output: {};
+                                  outputFormat: string;
+                                  status: import("hono/utils/http-status").StatusCode;
                                   input: {
                                     param: {
                                       id: string;
-                                      user_id: string;
                                     };
                                   } & {
-                                    form: {
-                                      verification_type?:
-                                        | "bypassed"
-                                        | "code_sent_to_official_contact_email"
-                                        | "domain"
-                                        | "domain_not_verified_yet"
-                                        | "imported_from_coop_mediation_numerique"
-                                        | "imported_from_inclusion_connect"
-                                        | "in_liste_dirigeants_rna"
-                                        | "in_liste_dirigeants_rne"
-                                        | "no_validation_means_available"
-                                        | "no_verification_means_for_entreprise_unipersonnelle"
-                                        | "no_verification_means_for_small_association"
-                                        | "no_verification_means_for_small_organization"
-                                        | "official_contact_email"
-                                        | "ordre_professionnel_domain"
-                                        | "organization_dirigeant"
-                                        | "proof_received"
-                                        | "verified_by_coop_mediation_numerique"
+                                    query: {
+                                      page?: string | string[] | undefined;
+                                      page_size?: string | string[] | undefined;
+                                      q?: string | undefined;
+                                      order?: "asc" | "desc" | undefined;
+                                      sort?:
+                                        | "created"
+                                        | "email"
+                                        | "family-name"
+                                        | "given-name"
+                                        | "is-external"
+                                        | "job"
+                                        | "verification-type"
                                         | undefined;
-                                      is_external?: string | undefined;
+                                    };
+                                  };
+                                }
+                              | {
+                                  output: undefined;
+                                  outputFormat: "redirect";
+                                  status: import("hono/utils/http-status").RedirectStatusCode;
+                                  input: {
+                                    param: {
+                                      id: string;
+                                    };
+                                  } & {
+                                    query: {
+                                      page?: string | string[] | undefined;
+                                      page_size?: string | string[] | undefined;
+                                      q?: string | undefined;
+                                      order?: "asc" | "desc" | undefined;
+                                      sort?:
+                                        | "created"
+                                        | "email"
+                                        | "family-name"
+                                        | "given-name"
+                                        | "is-external"
+                                        | "job"
+                                        | "verification-type"
+                                        | undefined;
                                     };
                                   };
                                 }
                               | {
                                   output: import("zod").ZodSafeParseError<{
                                     id: number;
-                                    user_id: number;
                                   }>;
                                   outputFormat: "json";
                                   status: 400;
                                   input: {
                                     param: {
                                       id: string;
-                                      user_id: string;
                                     };
                                   } & {
-                                    form: {
-                                      verification_type?:
-                                        | "bypassed"
-                                        | "code_sent_to_official_contact_email"
-                                        | "domain"
-                                        | "domain_not_verified_yet"
-                                        | "imported_from_coop_mediation_numerique"
-                                        | "imported_from_inclusion_connect"
-                                        | "in_liste_dirigeants_rna"
-                                        | "in_liste_dirigeants_rne"
-                                        | "no_validation_means_available"
-                                        | "no_verification_means_for_entreprise_unipersonnelle"
-                                        | "no_verification_means_for_small_association"
-                                        | "no_verification_means_for_small_organization"
-                                        | "official_contact_email"
-                                        | "ordre_professionnel_domain"
-                                        | "organization_dirigeant"
-                                        | "proof_received"
-                                        | "verified_by_coop_mediation_numerique"
+                                    query: {
+                                      page?: string | string[] | undefined;
+                                      page_size?: string | string[] | undefined;
+                                      q?: string | undefined;
+                                      order?: "asc" | "desc" | undefined;
+                                      sort?:
+                                        | "created"
+                                        | "email"
+                                        | "family-name"
+                                        | "given-name"
+                                        | "is-external"
+                                        | "job"
+                                        | "verification-type"
                                         | undefined;
-                                      is_external?: string | undefined;
-                                    };
-                                  };
-                                }
-                              | {
-                                  output: import("zod").ZodSafeParseError<{
-                                    verification_type?:
-                                      | "bypassed"
-                                      | "code_sent_to_official_contact_email"
-                                      | "domain"
-                                      | "domain_not_verified_yet"
-                                      | "imported_from_coop_mediation_numerique"
-                                      | "imported_from_inclusion_connect"
-                                      | "in_liste_dirigeants_rna"
-                                      | "in_liste_dirigeants_rne"
-                                      | "no_validation_means_available"
-                                      | "no_verification_means_for_entreprise_unipersonnelle"
-                                      | "no_verification_means_for_small_association"
-                                      | "no_verification_means_for_small_organization"
-                                      | "official_contact_email"
-                                      | "ordre_professionnel_domain"
-                                      | "organization_dirigeant"
-                                      | "proof_received"
-                                      | "verified_by_coop_mediation_numerique"
-                                      | undefined;
-                                    is_external?: boolean | undefined;
-                                  }>;
-                                  outputFormat: "json";
-                                  status: 400;
-                                  input: {
-                                    param: {
-                                      id: string;
-                                      user_id: string;
-                                    };
-                                  } & {
-                                    form: {
-                                      verification_type?:
-                                        | "bypassed"
-                                        | "code_sent_to_official_contact_email"
-                                        | "domain"
-                                        | "domain_not_verified_yet"
-                                        | "imported_from_coop_mediation_numerique"
-                                        | "imported_from_inclusion_connect"
-                                        | "in_liste_dirigeants_rna"
-                                        | "in_liste_dirigeants_rne"
-                                        | "no_validation_means_available"
-                                        | "no_verification_means_for_entreprise_unipersonnelle"
-                                        | "no_verification_means_for_small_association"
-                                        | "no_verification_means_for_small_organization"
-                                        | "official_contact_email"
-                                        | "ordre_professionnel_domain"
-                                        | "organization_dirigeant"
-                                        | "proof_received"
-                                        | "verified_by_coop_mediation_numerique"
-                                        | undefined;
-                                      is_external?: string | undefined;
                                     };
                                   };
                                 };
                           };
-                        } & {
+                        }
+                      | (import("hono/types").MergeSchemaPath<
+                          {
+                            "/": {
+                              $patch:
+                                | {
+                                    output: "OK";
+                                    outputFormat: "text";
+                                    status: 200;
+                                    input: {
+                                      param: {
+                                        id: string;
+                                        user_id: string;
+                                      };
+                                    } & {
+                                      form: {
+                                        verification_type?:
+                                          | "bypassed"
+                                          | "code_sent_to_official_contact_email"
+                                          | "domain"
+                                          | "domain_not_verified_yet"
+                                          | "imported_from_coop_mediation_numerique"
+                                          | "imported_from_inclusion_connect"
+                                          | "in_liste_dirigeants_rna"
+                                          | "in_liste_dirigeants_rne"
+                                          | "no_validation_means_available"
+                                          | "no_verification_means_for_entreprise_unipersonnelle"
+                                          | "no_verification_means_for_small_association"
+                                          | "no_verification_means_for_small_organization"
+                                          | "official_contact_email"
+                                          | "ordre_professionnel_domain"
+                                          | "organization_dirigeant"
+                                          | "proof_received"
+                                          | "verified_by_coop_mediation_numerique"
+                                          | undefined;
+                                        is_external?: string | undefined;
+                                      };
+                                    };
+                                  }
+                                | {
+                                    output: import("zod").ZodSafeParseError<{
+                                      id: number;
+                                      user_id: number;
+                                    }>;
+                                    outputFormat: "json";
+                                    status: 400;
+                                    input: {
+                                      param: {
+                                        id: string;
+                                        user_id: string;
+                                      };
+                                    } & {
+                                      form: {
+                                        verification_type?:
+                                          | "bypassed"
+                                          | "code_sent_to_official_contact_email"
+                                          | "domain"
+                                          | "domain_not_verified_yet"
+                                          | "imported_from_coop_mediation_numerique"
+                                          | "imported_from_inclusion_connect"
+                                          | "in_liste_dirigeants_rna"
+                                          | "in_liste_dirigeants_rne"
+                                          | "no_validation_means_available"
+                                          | "no_verification_means_for_entreprise_unipersonnelle"
+                                          | "no_verification_means_for_small_association"
+                                          | "no_verification_means_for_small_organization"
+                                          | "official_contact_email"
+                                          | "ordre_professionnel_domain"
+                                          | "organization_dirigeant"
+                                          | "proof_received"
+                                          | "verified_by_coop_mediation_numerique"
+                                          | undefined;
+                                        is_external?: string | undefined;
+                                      };
+                                    };
+                                  }
+                                | {
+                                    output: import("zod").ZodSafeParseError<{
+                                      verification_type?:
+                                        | "bypassed"
+                                        | "code_sent_to_official_contact_email"
+                                        | "domain"
+                                        | "domain_not_verified_yet"
+                                        | "imported_from_coop_mediation_numerique"
+                                        | "imported_from_inclusion_connect"
+                                        | "in_liste_dirigeants_rna"
+                                        | "in_liste_dirigeants_rne"
+                                        | "no_validation_means_available"
+                                        | "no_verification_means_for_entreprise_unipersonnelle"
+                                        | "no_verification_means_for_small_association"
+                                        | "no_verification_means_for_small_organization"
+                                        | "official_contact_email"
+                                        | "ordre_professionnel_domain"
+                                        | "organization_dirigeant"
+                                        | "proof_received"
+                                        | "verified_by_coop_mediation_numerique"
+                                        | undefined;
+                                      is_external?: boolean | undefined;
+                                    }>;
+                                    outputFormat: "json";
+                                    status: 400;
+                                    input: {
+                                      param: {
+                                        id: string;
+                                        user_id: string;
+                                      };
+                                    } & {
+                                      form: {
+                                        verification_type?:
+                                          | "bypassed"
+                                          | "code_sent_to_official_contact_email"
+                                          | "domain"
+                                          | "domain_not_verified_yet"
+                                          | "imported_from_coop_mediation_numerique"
+                                          | "imported_from_inclusion_connect"
+                                          | "in_liste_dirigeants_rna"
+                                          | "in_liste_dirigeants_rne"
+                                          | "no_validation_means_available"
+                                          | "no_verification_means_for_entreprise_unipersonnelle"
+                                          | "no_verification_means_for_small_association"
+                                          | "no_verification_means_for_small_organization"
+                                          | "official_contact_email"
+                                          | "ordre_professionnel_domain"
+                                          | "organization_dirigeant"
+                                          | "proof_received"
+                                          | "verified_by_coop_mediation_numerique"
+                                          | undefined;
+                                        is_external?: string | undefined;
+                                      };
+                                    };
+                                  };
+                            };
+                          } & {
+                            "/": {
+                              $delete:
+                                | {
+                                    output: "OK";
+                                    outputFormat: "text";
+                                    status: 200;
+                                    input: {
+                                      param: {
+                                        id: string;
+                                        user_id: string;
+                                      };
+                                    };
+                                  }
+                                | {
+                                    output: import("zod").ZodSafeParseError<{
+                                      id: number;
+                                      user_id: number;
+                                    }>;
+                                    outputFormat: "json";
+                                    status: 400;
+                                    input: {
+                                      param: {
+                                        id: string;
+                                        user_id: string;
+                                      };
+                                    };
+                                  };
+                            };
+                          },
+                          "/:user_id"
+                        > & {
                           "/": {
-                            $delete:
+                            $get:
                               | {
-                                  output: "OK";
-                                  outputFormat: "text";
-                                  status: 200;
+                                  output: {};
+                                  outputFormat: string;
+                                  status: import("hono/utils/http-status").StatusCode;
                                   input: {
                                     param: {
                                       id: string;
-                                      user_id: string;
+                                    };
+                                  } & {
+                                    query: {
+                                      page?: string | string[] | undefined;
+                                      page_size?: string | string[] | undefined;
+                                      q?: string | undefined;
+                                      order?: "asc" | "desc" | undefined;
+                                      sort?:
+                                        | "created"
+                                        | "email"
+                                        | "family-name"
+                                        | "given-name"
+                                        | "is-external"
+                                        | "job"
+                                        | "verification-type"
+                                        | undefined;
+                                    };
+                                  };
+                                }
+                              | {
+                                  output: undefined;
+                                  outputFormat: "redirect";
+                                  status: import("hono/utils/http-status").RedirectStatusCode;
+                                  input: {
+                                    param: {
+                                      id: string;
+                                    };
+                                  } & {
+                                    query: {
+                                      page?: string | string[] | undefined;
+                                      page_size?: string | string[] | undefined;
+                                      q?: string | undefined;
+                                      order?: "asc" | "desc" | undefined;
+                                      sort?:
+                                        | "created"
+                                        | "email"
+                                        | "family-name"
+                                        | "given-name"
+                                        | "is-external"
+                                        | "job"
+                                        | "verification-type"
+                                        | undefined;
                                     };
                                   };
                                 }
                               | {
                                   output: import("zod").ZodSafeParseError<{
                                     id: number;
-                                    user_id: number;
                                   }>;
                                   outputFormat: "json";
                                   status: 400;
                                   input: {
                                     param: {
                                       id: string;
-                                      user_id: string;
+                                    };
+                                  } & {
+                                    query: {
+                                      page?: string | string[] | undefined;
+                                      page_size?: string | string[] | undefined;
+                                      q?: string | undefined;
+                                      order?: "asc" | "desc" | undefined;
+                                      sort?:
+                                        | "created"
+                                        | "email"
+                                        | "family-name"
+                                        | "given-name"
+                                        | "is-external"
+                                        | "job"
+                                        | "verification-type"
+                                        | undefined;
                                     };
                                   };
                                 };
                           };
-                        },
-                        "/:user_id"
-                      > & {
-                        "/": {
-                          $get:
-                            | {
-                                output: {};
-                                outputFormat: string;
-                                status: import("hono/utils/http-status").StatusCode;
-                                input: {
-                                  param: {
-                                    id: string;
-                                  };
-                                } & {
-                                  query: {
-                                    page?: string | string[] | undefined;
-                                    page_size?: string | string[] | undefined;
-                                    describedby: string | string[];
-                                    page_ref: string | string[];
-                                  };
+                        })
+                    ) & {
+                      "/": {
+                        $post:
+                          | {
+                              output: "OK";
+                              outputFormat: "text";
+                              status: 200;
+                              input: {
+                                param: {
+                                  id: string;
                                 };
-                              }
-                            | {
-                                output: import("zod").ZodSafeParseError<{
-                                  id: number;
-                                }>;
-                                outputFormat: "json";
-                                status: 400;
-                                input: {
-                                  param: {
-                                    id: string;
-                                  };
-                                } & {
-                                  query: {
-                                    page?: string | string[] | undefined;
-                                    page_size?: string | string[] | undefined;
-                                    describedby: string | string[];
-                                    page_ref: string | string[];
-                                  };
-                                };
-                              }
-                            | {
-                                output: import("zod").ZodSafeParseError<{
-                                  page: number;
-                                  page_size: number;
-                                  describedby: string;
-                                  page_ref: string;
-                                }>;
-                                outputFormat: "json";
-                                status: 400;
-                                input: {
-                                  param: {
-                                    id: string;
-                                  };
-                                } & {
-                                  query: {
-                                    page?: string | string[] | undefined;
-                                    page_size?: string | string[] | undefined;
-                                    describedby: string | string[];
-                                    page_ref: string | string[];
-                                  };
+                              } & {
+                                form: {
+                                  action:
+                                    | "bypassed"
+                                    | "code_sent_to_official_contact_email"
+                                    | "domain"
+                                    | "domain_not_verified_yet"
+                                    | "external"
+                                    | "imported_from_coop_mediation_numerique"
+                                    | "imported_from_inclusion_connect"
+                                    | "in_liste_dirigeants_rna"
+                                    | "in_liste_dirigeants_rne"
+                                    | "internal"
+                                    | "no_validation_means_available"
+                                    | "no_verification_means_for_entreprise_unipersonnelle"
+                                    | "no_verification_means_for_small_association"
+                                    | "no_verification_means_for_small_organization"
+                                    | "official_contact_email"
+                                    | "ordre_professionnel_domain"
+                                    | "organization_dirigeant"
+                                    | "proof_received"
+                                    | "remove"
+                                    | "verified_by_coop_mediation_numerique";
+                                  user_id:
+                                    | import("hono/types").ParsedFormValue[]
+                                    | import("hono/types").ParsedFormValue;
                                 };
                               };
-                        };
-                      }),
+                            }
+                          | {
+                              output: "Sélectionnez au moins un membre et une action.";
+                              outputFormat: "text";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                form: {
+                                  action:
+                                    | "bypassed"
+                                    | "code_sent_to_official_contact_email"
+                                    | "domain"
+                                    | "domain_not_verified_yet"
+                                    | "external"
+                                    | "imported_from_coop_mediation_numerique"
+                                    | "imported_from_inclusion_connect"
+                                    | "in_liste_dirigeants_rna"
+                                    | "in_liste_dirigeants_rne"
+                                    | "internal"
+                                    | "no_validation_means_available"
+                                    | "no_verification_means_for_entreprise_unipersonnelle"
+                                    | "no_verification_means_for_small_association"
+                                    | "no_verification_means_for_small_organization"
+                                    | "official_contact_email"
+                                    | "ordre_professionnel_domain"
+                                    | "organization_dirigeant"
+                                    | "proof_received"
+                                    | "remove"
+                                    | "verified_by_coop_mediation_numerique";
+                                  user_id:
+                                    | import("hono/types").ParsedFormValue[]
+                                    | import("hono/types").ParsedFormValue;
+                                };
+                              };
+                            }
+                          | {
+                              output: import("zod").ZodSafeParseError<{
+                                id: number;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                form: {
+                                  action:
+                                    | "bypassed"
+                                    | "code_sent_to_official_contact_email"
+                                    | "domain"
+                                    | "domain_not_verified_yet"
+                                    | "external"
+                                    | "imported_from_coop_mediation_numerique"
+                                    | "imported_from_inclusion_connect"
+                                    | "in_liste_dirigeants_rna"
+                                    | "in_liste_dirigeants_rne"
+                                    | "internal"
+                                    | "no_validation_means_available"
+                                    | "no_verification_means_for_entreprise_unipersonnelle"
+                                    | "no_verification_means_for_small_association"
+                                    | "no_verification_means_for_small_organization"
+                                    | "official_contact_email"
+                                    | "ordre_professionnel_domain"
+                                    | "organization_dirigeant"
+                                    | "proof_received"
+                                    | "remove"
+                                    | "verified_by_coop_mediation_numerique";
+                                  user_id:
+                                    | import("hono/types").ParsedFormValue[]
+                                    | import("hono/types").ParsedFormValue;
+                                };
+                              };
+                            };
+                      };
+                    },
                     "/members"
                   >,
                 "/:id"

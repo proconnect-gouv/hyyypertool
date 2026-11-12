@@ -5,25 +5,58 @@ import {
   schema,
   type IdentiteProconnectPgDatabase,
 } from "@~/identite-proconnect/database";
-import { and, desc, count as drizzle_count, eq, isNotNull } from "drizzle-orm";
+import {
+  and,
+  asc,
+  desc,
+  count as drizzle_count,
+  eq,
+  ilike,
+  isNotNull,
+  or,
+} from "drizzle-orm";
+import type { Order, Sort } from "./context";
 
 //
+
+const sort_columns = {
+  created: schema.users_organizations.created_at,
+  email: schema.users.email,
+  "family-name": schema.users.family_name,
+  "given-name": schema.users.given_name,
+  "is-external": schema.users_organizations.is_external,
+  job: schema.users.job,
+  "verification-type": schema.users_organizations.verification_type,
+} satisfies Record<Sort, unknown>;
 
 export async function get_users_by_organization(
   pg: IdentiteProconnectPgDatabase,
   {
     organization_id,
     pagination = { page: 0, page_size: 10 },
+    search = "",
+    sort,
   }: {
     organization_id: number;
     pagination?: Pagination;
+    search?: string;
+    sort?: { order: Order; sort: Sort };
   },
 ) {
   const { page, page_size: take } = pagination;
 
   const where = and(
     eq(schema.users_organizations.organization_id, organization_id),
+    or(
+      ilike(schema.users.email, `%${search}%`),
+      ilike(schema.users.family_name, `%${search}%`),
+      ilike(schema.users.given_name, `%${search}%`),
+    ),
   );
+
+  const order_by = sort
+    ? (sort.order === "asc" ? asc : desc)(sort_columns[sort.sort])
+    : desc(schema.users.created_at);
 
   return pg.transaction(async (pg_t) => {
     const users = await pg_t
@@ -60,7 +93,7 @@ export async function get_users_by_organization(
         ),
       )
       .where(where)
-      .orderBy(desc(schema.users.created_at), desc(schema.users.id))
+      .orderBy(order_by, desc(schema.users.id))
       .limit(take)
       .offset(page * take);
 

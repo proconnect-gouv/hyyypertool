@@ -1,0 +1,1 @@
+✨ Les membres d'une organisation ont leur propre page (« Voir tous les membres → ») : recherche par nom, prénom ou email, tri par colonne, et actions groupées sur les membres sélectionnés (type de vérification, interne/externe, retrait de l'organisation)
