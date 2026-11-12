@@ -6,26 +6,30 @@ import {
   type JSX,
   type PropsWithChildren,
 } from "hono/jsx";
-import { tv } from "tailwind-variants";
+import { tv, type VariantProps } from "tailwind-variants";
 
 //
 
 export function Popover({
   children,
+  placement,
   ...other_props
-}: PropsWithChildren<JSX.IntrinsicElements["div"]>) {
+}: PropsWithChildren<
+  JSX.IntrinsicElements["div"] & VariantProps<typeof styles>
+>) {
   const { is_open } = useContext(Popover.Context);
-  const base = styles();
   return (
     <div
       aria-orientation="vertical"
-      class={base}
+      class={styles({ placement })}
       hidden={!is_open}
       role="menu"
       tabindex={-1}
       {...other_props}
     >
-      <div role="none">{children}</div>
+      <div class="divide-border divide-y" role="none">
+        {children}
+      </div>
     </div>
   );
 }
@@ -34,19 +38,19 @@ Popover.Context = createContext({ is_open: false });
 
 const styles = tv({
   base: `
-    focus:outline-nones
-    bg-surface
+    bg-background
     absolute
-    right-0
-    bottom-full
     z-50
-    mb-1
-    w-56
-    origin-top-right
-    divide-y
-    divide-gray-100
+    w-max
+    min-w-56
     rounded-md
     shadow-[0_2px_6px_rgba(0,0,18,.16)]
     `,
-  variants: {},
+  defaultVariants: { placement: "top_end" },
+  variants: {
+    placement: {
+      bottom_start: "top-full left-0 mt-1 origin-top-left",
+      top_end: "right-0 bottom-full mb-1 origin-bottom-right",
+    },
+  },
 });

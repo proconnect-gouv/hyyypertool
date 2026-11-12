@@ -1,12 +1,12 @@
 //
 
 import { hyper_ref } from "#src/html";
-import { hx_include, hx_trigger_from_body } from "#src/htmx";
+import { hx_trigger_from_body } from "#src/htmx";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import { alert } from "#src/ui/notice";
 import { fr_number_converter } from "#src/ui/number";
+import { hx_get_members_table_props } from "#src/ui/organizations/members";
 import { formattedPlural } from "#src/ui/plurial";
-import { table } from "#src/ui/table";
 import { urls } from "#src/urls";
 import { Fiche } from "./Fiche";
 import type { get_organization_by_id } from "./get_organization_by_id.query";
@@ -105,19 +105,11 @@ async function MembersInTheOrganization({
   organization: Organisation;
   members_count: number;
 }) {
-  const $members_describedby = hyper_ref("members");
-  const $page_ref = hyper_ref();
-
-  const hx_get_members_query_props = urls.organizations[":id"].members.$hx_get({
-    param: { id: organization.id },
-    query: { describedby: $members_describedby, page_ref: $page_ref },
-  });
-
   return (
     <section>
       <details open={false}>
         <summary>
-          <h3 class="inline-block" id={$members_describedby}>
+          <h3 class="inline-block">
             👥 {fr_number_converter.format(members_count)}{" "}
             {formattedPlural(members_count, {
               one: "membre enregistré",
@@ -127,10 +119,17 @@ async function MembersInTheOrganization({
           </h3>
         </summary>
 
+        <a
+          href={
+            urls.organizations[":id"].members.$url({
+              param: { id: organization.id },
+            }).pathname
+          }
+        >
+          Voir tous les membres →
+        </a>
         <div
-          {...hx_get_members_query_props}
-          class={table()}
-          hx-include={hx_include([$page_ref])}
+          {...hx_get_members_table_props(organization.id)}
           hx-target="this"
           hx-trigger={[
             "load",

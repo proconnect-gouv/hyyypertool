@@ -6,16 +6,17 @@ import { tv } from "tailwind-variants";
 
 export const menu_item = tv({
   base: `
-    hover:bg-grey-50
+    text-blue-france
+    dark:text-blue-france-925
+    hover:bg-surface
+    focus-visible:bg-surface
     block
     w-full
     px-4
     py-2
     text-left
     text-sm
-    text-gray-700
-    dark:text-gray-300
-    dark:hover:bg-gray-700
+    whitespace-nowrap
   `,
   variants: {
     override: {
