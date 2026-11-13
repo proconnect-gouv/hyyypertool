@@ -21,6 +21,7 @@ type Organization = Awaited<ReturnType<typeof get_organization_by_id>>;
 
 export default async function Page({
   is_editor,
+  is_selectable,
   order,
   organization,
   pagination,
@@ -29,6 +30,7 @@ export default async function Page({
   sort,
 }: {
   is_editor: boolean;
+  is_selectable: boolean;
   order: Order;
   organization: Organization;
   pagination: Pagination;
@@ -91,6 +93,7 @@ export default async function Page({
       >
         <Table
           is_editor={is_editor}
+          is_selectable={is_selectable}
           order={order}
           organization_id={organization.id}
           pagination={pagination}

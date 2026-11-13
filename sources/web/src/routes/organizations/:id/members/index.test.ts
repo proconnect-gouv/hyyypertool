@@ -117,6 +117,7 @@ test("GET /organizations/:id/members renders the members page", async () => {
   expect(html).toContain("adora.pony@unicorn.xyz");
   expect(html).toContain("Actions sur les membres sélectionnés");
   expect(html).toContain('name="user_id"');
+  expect(html).toMatch(/name="page_size"[^>]*value="50"/);
 });
 
 test("GET /organizations/:id/members hides member and bulk actions for visitors", async () => {
@@ -132,6 +133,25 @@ test("GET /organizations/:id/members hides member and bulk actions for visitors"
   expect(html).not.toContain("retirer de l'orga");
   expect(html).not.toContain("Actions sur les membres sélectionnés");
   expect(html).not.toContain('name="user_id"');
+});
+
+test("GET /organizations/:id/members embedded over htmx drops bulk selection and pages by 10", async () => {
+  const { organization_id } = await seed_members();
+
+  const response = await (
+    await make_app()
+  ).request(`/${organization_id}/members`, {
+    headers: {
+      "HX-Current-URL": `http://localhost/organizations/${organization_id}`,
+      "HX-Request": "true",
+    },
+  });
+
+  const html = await response.text();
+  expect(html).toContain("adora.pony@unicorn.xyz");
+  expect(html).not.toContain("Actions sur les membres sélectionnés");
+  expect(html).not.toContain('name="user_id"');
+  expect(html).toMatch(/name="page_size"[^>]*value="10"/);
 });
 
 test("GET /organizations/:id/members?q= keeps only matching names and emails", async () => {

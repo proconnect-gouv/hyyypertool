@@ -36,6 +36,7 @@ const selected_members = `#${MEMBERS_TABLE_IDS.table} input[name="user_id"]`;
 
 export async function Table({
   is_editor = true,
+  is_selectable = true,
   order,
   organization_id,
   pagination,
@@ -43,6 +44,7 @@ export async function Table({
   sort,
 }: {
   is_editor?: boolean;
+  is_selectable?: boolean;
   order: Order;
   organization_id: number;
   pagination: Pagination;
@@ -52,7 +54,8 @@ export async function Table({
   const { users, count } = query_members_collection;
   const hx_props = hx_get_members_table_props(organization_id);
   const sort_props = { hx_props, order, sort };
-  const colspan = is_editor ? 9 : 8;
+  const has_selection = is_editor && is_selectable;
+  const colspan = has_selection ? 9 : 8;
 
   return (
     <table
@@ -61,11 +64,11 @@ export async function Table({
       id={MEMBERS_TABLE_IDS.table}
     >
       <thead>
-        {is_editor && (
+        {has_selection && (
           <BatchActions colspan={colspan} organization_id={organization_id} />
         )}
         <tr>
-          {is_editor && (
+          {has_selection && (
             <th>
               <SelectAllMembersIsland />
             </th>
@@ -114,7 +117,9 @@ export async function Table({
 
       <tbody {...no_replace_url}>
         {users.map((user) => (
-          <MemberContext.Provider value={{ user, organization_id, is_editor }}>
+          <MemberContext.Provider
+            value={{ user, organization_id, is_editor, has_selection }}
+          >
             <Row />
           </MemberContext.Provider>
         ))}
@@ -305,14 +310,15 @@ function BatchActions({
 }
 
 function Row({ variants }: { variants?: VariantProps<typeof row> }) {
-  const { user, organization_id, is_editor } = useContext(MemberContext);
+  const { user, organization_id, is_editor, has_selection } =
+    useContext(MemberContext);
 
   return (
     <tr
       aria-label={`Membre ${user.given_name} ${user.family_name} (${user.email})`}
       class={row(variants)}
     >
-      {is_editor && (
+      {has_selection && (
         <td>
           <input
             aria-label={`Sélectionner ${user.email}`}
