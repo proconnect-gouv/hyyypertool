@@ -16,6 +16,7 @@ export const MemberContext = createContext({
   user: {} as User,
   organization_id: 0,
   is_editor: true,
+  has_selection: true,
 });
 
 //
@@ -36,6 +37,7 @@ export type Order = z.infer<typeof OrderSchema>;
 
 export const query_schema = PaginationSchema.extend(SearchSchema.shape).extend({
   order: OrderSchema.default("asc"),
+  page_size: z.coerce.number().optional(),
   sort: SortSchema.optional(),
 });
 

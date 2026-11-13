@@ -1,6 +1,7 @@
 //
 
 import { NotFoundError } from "#src/errors";
+import { is_htmx_request } from "#src/htmx";
 import { MainLayout } from "#src/layouts";
 import { ORGANISATION_EVENTS } from "#src/lib/organizations";
 import { remove_member_from_organization } from "#src/lib/users";
@@ -49,7 +50,14 @@ export default new Hono<AppContext>()
     }) {
       const { id: organization_id } = req.valid("param");
       const { order, page, page_size, q, sort } = req.valid("query");
-      const pagination = { page, page_size };
+      const is_embedded =
+        is_htmx_request(req.raw) &&
+        new URL(req.header("HX-Current-URL") ?? req.url).pathname !==
+          new URL(req.url).pathname;
+      const pagination = {
+        page,
+        page_size: page_size ?? (is_embedded ? 10 : 50),
+      };
 
       const [organization, query_members_collection] = await Promise.all([
         get_organization_by_id(identite_pg, organization_id),
@@ -68,6 +76,7 @@ export default new Hono<AppContext>()
       return render(
         <Page
           is_editor={hyyyper_user.role !== roles.enum.visitor}
+          is_selectable={!is_embedded}
           order={order}
           organization={organization}
           pagination={pagination}
