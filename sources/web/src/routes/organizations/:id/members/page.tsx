@@ -43,7 +43,7 @@ export default async function Page({
   const hx_props = hx_get_members_table_props(organization.id);
 
   return (
-    <main class="container mx-auto my-12 px-4">
+    <main class="group/page container mx-auto my-12 px-4">
       <a
         href={
           urls.organizations[":id"].$url({ param: { id: organization.id } })
@@ -52,7 +52,29 @@ export default async function Page({
       >
         ← {organization.cached_libelle} ({organization.siret})
       </a>
-      <h1>👥 Membres de l’organisation</h1>
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <h1>👥 Membres de l’organisation</h1>
+        <form
+          action={
+            urls.organizations[":id"].members.export.$url({
+              param: { id: organization.id },
+            }).pathname
+          }
+          id={MEMBERS_TABLE_IDS.export}
+          method="get"
+        >
+          <button class={button({ type: "tertiary" })}>
+            📥 Exporter{" "}
+            <span class="group-has-[.member-checkbox:checked]/page:hidden">
+              tous les membres
+            </span>
+            <span class="hidden group-has-[.member-checkbox:checked]/page:inline">
+              la sélection
+            </span>{" "}
+            en CSV
+          </button>
+        </form>
+      </div>
 
       <form
         {...hx_props}
