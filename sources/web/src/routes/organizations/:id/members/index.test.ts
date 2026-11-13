@@ -29,6 +29,7 @@ import {
 } from "@~/identite-proconnect/database/testing";
 import { VerificationTypeSchema } from "@~/identite-proconnect/types";
 import { beforeAll, beforeEach, expect, mock, test } from "bun:test";
+import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import app from "./index";
 import { error_handler } from "../../../error";
@@ -118,6 +119,59 @@ test("GET /organizations/:id/members renders the members page", async () => {
   expect(html).toContain("Actions sur les membres sélectionnés");
   expect(html).toContain('name="user_id"');
   expect(html).toMatch(/name="page_size"[^>]*value="50"/);
+});
+
+test("GET /organizations/:id/members/export downloads every member as CSV", async () => {
+  const { organization_id } = await seed_members();
+
+  const response = await (
+    await make_app()
+  ).request(`/${organization_id}/members/export`);
+
+  expect(response.status).toBe(200);
+  expect(response.headers.get("Content-Type")).toBe("text/csv; charset=utf-8");
+  expect(response.headers.get("Content-Disposition")).toBe(
+    `attachment; filename="organisation-${organization_id}-membres.csv"`,
+  );
+  const [header, ...rows] = (await response.text()).split("\r\n");
+  expect(header).toBe(
+    "Prénom,Nom,Email,Fonction,Interne,Type de vérification,Ajouté le,Modifié le",
+  );
+  expect(rows.map((row) => row.split(",")[2]).sort()).toEqual([
+    "adora.pony@unicorn.xyz",
+    "pink.diamond@unicorn.xyz",
+    "red.diamond@unicorn.xyz",
+  ]);
+});
+
+test("GET /organizations/:id/members/export?user_id= keeps only the selected members", async () => {
+  const { organization_id, pink, red } = await seed_members();
+
+  const response = await (
+    await make_app()
+  ).request(
+    `/${organization_id}/members/export?user_id=${pink}&user_id=${red}`,
+  );
+
+  const [, ...rows] = (await response.text()).split("\r\n");
+  expect(rows.map((row) => row.split(",")[2]).sort()).toEqual([
+    "pink.diamond@unicorn.xyz",
+    "red.diamond@unicorn.xyz",
+  ]);
+});
+
+test("GET /organizations/:id/members/export defuses spreadsheet formulas and quotes commas", async () => {
+  const { adora, organization_id } = await seed_members();
+  await pg
+    .update(schema.users)
+    .set({ job: '=HYPERLINK("x"), boss' })
+    .where(eq(schema.users.id, adora));
+
+  const response = await (
+    await make_app()
+  ).request(`/${organization_id}/members/export?user_id=${adora}`);
+
+  expect(await response.text()).toContain(`,"'=HYPERLINK(""x""), boss",`);
 });
 
 test("GET /organizations/:id/members hides member and bulk actions for visitors", async () => {

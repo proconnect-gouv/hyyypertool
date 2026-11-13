@@ -55,3 +55,10 @@ export const batch_form_schema = z.object({
   action: BatchActionSchema,
   user_id: z.preprocess((value) => [value].flat(), z.array(IdSchema).min(1)),
 });
+
+export const export_query_schema = z.object({
+  user_id: z.preprocess(
+    (value) => (value === undefined ? [] : [value].flat()),
+    z.array(IdSchema),
+  ),
+});

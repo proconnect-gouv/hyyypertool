@@ -17,15 +17,39 @@ import { jsxRenderer } from "hono/jsx-renderer";
 import type { VerificationType } from "@~/identite-proconnect/types";
 import { match } from "ts-pattern";
 import organization_member_router from "./:user_id";
-import { batch_form_schema, query_schema } from "./context";
+import {
+  batch_form_schema,
+  export_query_schema,
+  query_schema,
+} from "./context";
+import { get_members_for_export } from "./get_members_for_export.query";
 import { get_organization_by_id } from "../get_organization_by_id.query";
 import { get_users_by_organization } from "./get_users_by_organization.query";
+import { members_to_csv } from "./members_to_csv";
 import Page from "./page";
 
 //
 
 export default new Hono<AppContext>()
   //
+  .get(
+    "/export",
+    zValidator("param", EntitySchema),
+    zValidator("query", export_query_schema),
+    async function GET({ body, req, var: { identite_pg } }) {
+      const { id: organization_id } = req.valid("param");
+      const { user_id: user_ids } = req.valid("query");
+      const members = await get_members_for_export(identite_pg, {
+        organization_id,
+        user_ids,
+      });
+
+      return body(members_to_csv(members), 200, {
+        "Content-Disposition": `attachment; filename="organisation-${organization_id}-membres.csv"`,
+        "Content-Type": "text/csv; charset=utf-8",
+      });
+    },
+  )
   .route("/:user_id", organization_member_router)
   //
 

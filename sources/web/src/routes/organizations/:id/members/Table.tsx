@@ -323,6 +323,7 @@ function Row({ variants }: { variants?: VariantProps<typeof row> }) {
           <input
             aria-label={`Sélectionner ${user.email}`}
             class="member-checkbox"
+            form={MEMBERS_TABLE_IDS.export}
             name="user_id"
             type="checkbox"
             value={user.id}

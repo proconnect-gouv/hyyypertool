@@ -6,6 +6,7 @@ import { urls } from "#src/urls";
 //
 
 export const MEMBERS_TABLE_IDS = {
+  export: "organization_members_export",
   order: "organization_members_order",
   page: "organization_members_page",
   search: "organization_members_search",
