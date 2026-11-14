@@ -33,25 +33,39 @@ function create_conversation(config: Config) {
     nickname,
     subject,
   }: Pick<ConversationMeta, "email" | "nickname" | "subject">) {
-    const { session_id } = await fetch_crisp<CreateConversationRoute>(config, {
-      endpoint: `/v1/website/${config.website_id}/conversation`,
-      method: "POST",
-      searchParams: {},
-    });
+    async function open_conversation() {
+      const { session_id } = await fetch_crisp<CreateConversationRoute>(
+        config,
+        {
+          endpoint: `/v1/website/${config.website_id}/conversation`,
+          method: "POST",
+          searchParams: {},
+        },
+      );
 
-    await fetch_crisp<UpdateConversationMetaRoute>(config, {
-      endpoint: `/v1/website/${config.website_id}/conversation/${session_id}/meta`,
-      method: "PATCH",
-      searchParams: {},
-      body: {
-        email,
-        nickname: nickname || email,
-        segments: ["email", "moderation"],
-        subject,
-      },
-    });
+      await fetch_crisp<UpdateConversationMetaRoute>(config, {
+        endpoint: `/v1/website/${config.website_id}/conversation/${session_id}/meta`,
+        method: "PATCH",
+        searchParams: {},
+        body: {
+          email,
+          nickname: nickname || email,
+          segments: ["email", "moderation"],
+          subject,
+        },
+      });
 
-    return { session_id };
+      return { session_id };
+    }
+
+    try {
+      return await open_conversation();
+    } catch (error) {
+      if (!(error instanceof Error) || !/ 404 /.test(error.message)) {
+        throw error;
+      }
+      return open_conversation();
+    }
   };
 }
 
