@@ -1,5 +1,26 @@
 # Changelog
 
+## [2026.11.3](https://github.com/proconnect-gouv/hyyypertool/compare/2026.11.2...2026.11.3) (2026-11-13)
+
+### Changements
+
+- ✨ Les membres d'une organisation ont leur propre page (« Voir tous les membres → ») : recherche par nom, prénom ou email, tri par colonne, et actions groupées sur les membres sélectionnés (type de vérification, interne/externe, retrait de l'organisation)
+
+### Ajouté
+
+- ✨ export an organization's members as CSV ([#2054](https://github.com/proconnect-gouv/hyyypertool/issues/2054)) ([7e3ec0a](https://github.com/proconnect-gouv/hyyypertool/commit/7e3ec0ad6a90f6d9337cdbcdab26fe4708406515))
+- ✨ give organization members their own page with search, sort and batch actions ([#2050](https://github.com/proconnect-gouv/hyyypertool/issues/2050)) ([46a59ba](https://github.com/proconnect-gouv/hyyypertool/commit/46a59ba8edfbb075dcde15e8d28f6fc5d1d1e841))
+
+### Dépendances
+
+- ⬆️ bump proconnect.identite.database to 2.1.0 ([#2051](https://github.com/proconnect-gouv/hyyypertool/issues/2051)) ([bfae360](https://github.com/proconnect-gouv/hyyypertool/commit/bfae360ecd5f22eaaf1ae0ad981f801cbe06e88e))
+
+### Divers
+
+- 🚸 page the members page by 50 and drop bulk selection from its embeds ([#2053](https://github.com/proconnect-gouv/hyyypertool/issues/2053)) ([ba4ea8b](https://github.com/proconnect-gouv/hyyypertool/commit/ba4ea8bdd9a3d6cd7b7c8194d2b8862a3eb4688e))
+- 🔇 mask config secrets in the debug log ([#2049](https://github.com/proconnect-gouv/hyyypertool/issues/2049)) ([c167c99](https://github.com/proconnect-gouv/hyyypertool/commit/c167c999dfde6d40100ba989606ab1c3f312f273))
+- 🔇 stop reporting not found errors to sentry ([#2047](https://github.com/proconnect-gouv/hyyypertool/issues/2047)) ([9f6024d](https://github.com/proconnect-gouv/hyyypertool/commit/9f6024dc16993716d34d00c77f427e1d38086216))
+
 ## [2026.11.2](https://github.com/proconnect-gouv/hyyypertool/compare/2026.11.1...2026.11.2) (2026-11-10)
 
 ### Changements
