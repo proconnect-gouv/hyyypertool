@@ -200,25 +200,6 @@ export function RootLayout({ children }: PropsWithChildren) {
 
       <!--  -->
 
-      ${
-        config.NODE_ENV === "development"
-          ? html`<script
-                nonce="${nonce}"
-                src="${config.ASSETS_PATH}/node_modules/hyperscript.org/dist/_hyperscript.js"
-              ></script>
-
-              <script
-                nonce="${nonce}"
-                src="${config.ASSETS_PATH}/node_modules/hyperscript.org/dist/ext/hdb.js"
-              ></script>`
-          : html`<script
-              nonce="${nonce}"
-              src="${config.ASSETS_PATH}/node_modules/hyperscript.org/dist/_hyperscript.min.js"
-            ></script>`
-      }
-
-      <!--  -->
-
       <script
         defer
         nonce="${nonce}"
