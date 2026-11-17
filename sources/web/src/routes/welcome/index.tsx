@@ -3,30 +3,38 @@
 import { RootLayout } from "#src/layouts";
 import type { AppContext } from "#src/middleware/context";
 import { connect, connect_group, CONNECT_LOGO_URL } from "#src/ui/connect";
+import { hyyyperdate, load_hyyyperday, paris_date } from "#src/ui/hyyyperdays";
 import { urls } from "#src/urls";
+import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
+import { z } from "zod";
+
+//
+
+const query_schema = z.object({
+  hyyyperdate: hyyyperdate.optional().catch(undefined),
+});
 
 //
 
 export default new Hono<AppContext>().get(
   "/",
   jsxRenderer(RootLayout),
-  function GET({ render, redirect, env, var: { nonce, userinfo } }) {
+  zValidator("query", query_schema),
+  async function GET({ env, redirect, render, req, var: { nonce, userinfo } }) {
     if (userinfo) {
       return redirect(urls.moderations.$url().pathname);
     }
 
+    const { hyyyperdate: date = paris_date(new Date()) } = req.valid("query");
+    const { entry, HyyyperDay } = await load_hyyyperday(date);
+
     return render(
       <main class="flex h-full grow flex-col items-center justify-center">
-        <h1 class="text-5xl font-bold drop-shadow-lg">
-          <hyyyper-title>Bonjour Hyyypertool !</hyyyper-title>
-          <script
-            nonce={nonce}
-            src={`${env.PUBLIC_ASSETS_PATH}/routes/welcome/hyyypertitle.client.js`}
-            type="module"
-          ></script>
-        </h1>
+        <div data-hyyyperday={entry}>
+          <HyyyperDay assets_path={env.PUBLIC_ASSETS_PATH} nonce={nonce} />
+        </div>
 
         <div class="animated delay-2s fadeInLeftBig flex flex-col items-center">
           <button class="agentconnect-button"></button>
