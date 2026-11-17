@@ -1,5 +1,21 @@
 # Changelog
 
+## [2026.11.5](https://github.com/proconnect-gouv/hyyypertool/compare/2026.11.4...2026.11.5) (2026-11-17)
+
+### Changements
+
+- ✨ La page d'accueil projette une ombre arc-en-ciel du titre qui suit la souris ou l'inclinaison du téléphone
+- 🌙 La page d'accueil propose la bascule du mode nuit, comme le reste de l'outil
+
+### Ajouté
+
+- ✨ cast a rainbow shadow behind next tuesday's hyyyperday ([#2061](https://github.com/proconnect-gouv/hyyypertool/issues/2061)) ([cd485fc](https://github.com/proconnect-gouv/hyyypertool/commit/cd485fce5c0dd2776ed62bb23901c9be28a8e90a))
+- ✨ show the theme switch on the welcome page ([#2063](https://github.com/proconnect-gouv/hyyypertool/issues/2063)) ([47a63b9](https://github.com/proconnect-gouv/hyyypertool/commit/47a63b929d34584749f870130f6f7dfbd468d928))
+
+### Modifié
+
+- 🔧 start, migrate and seed the databases on bun run dev when none is running ([#2062](https://github.com/proconnect-gouv/hyyypertool/issues/2062)) ([c173373](https://github.com/proconnect-gouv/hyyypertool/commit/c173373d7a19880740e8a1c01f22725fe2a127d5))
+
 ## [2026.11.4](https://github.com/proconnect-gouv/hyyypertool/compare/2026.11.3...2026.11.4) (2026-11-17)
 
 ### Changements
