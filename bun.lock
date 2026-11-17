@@ -15,7 +15,6 @@
         "htmx-ext-include-vals": "2.0.2",
         "htmx-ext-sse": "2.2.4",
         "htmx.org": "2.0.11",
-        "hyperscript.org": "0.9.94",
         "nprogress": "0.2.0",
         "preact": "11.2.0",
         "tsx": "4.23.15",
@@ -721,8 +720,6 @@
     "htmx-ext-sse": ["htmx-ext-sse@2.2.4", "", { "dependencies": { "htmx.org": "^2.0.2" } }, "sha512-LJmxVhykyflBWgh5PvbRidcyuqMHlgfajmmzumvKctv9puvsufeH6OaejSMZTNTnEI8O2wXXn4ZZtBdpEMqmEQ=="],
 
     "htmx.org": ["htmx.org@2.0.11", "", {}, "sha512-Thx/WtpeOQqSrqBCw/A1cwGJGg4UrVa3+sW0GmrM3p4gJgO89ecH4qtbnyzDDWFvBTqjnIMCgELTNt636dtamA=="],
-
-    "hyperscript.org": ["hyperscript.org@0.9.94", "", { "bin": { "hyperscript.org": "dist/platform/node-hyperscript.js" } }, "sha512-CCT9n8NQQtHVcJ4gPIDm5Ur6ix7vE0aoyaGSRivZjC59pyWrZUF85muWtyh0HVdAXJ1kve3BCTv8Ath3tAS3AQ=="],
 
     "iron-webcrypto": ["iron-webcrypto@1.2.1", "", {}, "sha512-feOM6FaSr6rEABp/eDfVseKyTMDt+KGpeB35SkVn9Tyn0CqvVsY3EwI0v5i8nMHyJnzCIQf7nsy3p41TPkJZhg=="],
 
