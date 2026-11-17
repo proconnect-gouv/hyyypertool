@@ -3,7 +3,6 @@
 import { createSlot } from "hono-slotify";
 import type { JSX, PropsWithChildren } from "hono/jsx";
 import { createHash } from "node:crypto";
-import { Popover } from "./Popover";
 
 //
 
@@ -22,42 +21,34 @@ function hyper_ref(given_name?: string) {
 
 //
 
-export interface MenuProps {
-  is_open?: boolean;
-}
+export type TriggerProps = JSX.HTMLAttributes & { popovertarget?: string };
 
-export function Menu({ children, ...props }: PropsWithChildren<MenuProps>) {
+export function Menu({ children }: PropsWithChildren) {
   const $trigger = hyper_ref("menu_trigger");
   const $popover = hyper_ref("menu_popover");
-  const is_open = props.is_open ?? false;
 
   return (
-    <div class="relative inline-block">
+    <div class="inline-block">
       <Menu.Trigger.Renderer
-        aria-controls={$popover}
-        aria-expanded={is_open}
         aria-haspopup="menu"
         childs={children}
         id={$trigger}
-        role="button"
-        target_id={$popover}
+        popovertarget={$popover}
+        style={`anchor-name: --${$trigger}`}
       />
-      <Popover.Context.Provider value={{ is_open }}>
-        <Menu.Popover.Renderer
-          aria-hidden={!is_open}
-          aria-labelledby={$trigger}
-          childs={children}
-          id={$popover}
-          role="menu"
-        />
-      </Popover.Context.Provider>
+      <Menu.Popover.Renderer
+        aria-labelledby={$trigger}
+        childs={children}
+        id={$popover}
+        popover="auto"
+        role="menu"
+        style={`position-anchor: --${$trigger}`}
+      />
     </div>
   );
 }
 
 //
 
-Menu.Trigger = createSlot<
-  JSX.IntrinsicElements["div"] & { target_id: string }
->();
+Menu.Trigger = createSlot<TriggerProps>();
 Menu.Popover = createSlot<JSX.IntrinsicElements["div"]>();

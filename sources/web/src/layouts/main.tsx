@@ -123,23 +123,24 @@ function UserMenu({
     <div class={tools()}>
       <div class={tools_links()}>
         <ThemeToggle />
-        <div class="relative inline-block">
+        <div class="inline-block">
           <button
-            _={`on click toggle @hidden on #${$menu} then on click from elsewhere if #${$menu} and not @hidden add @hidden to #${$menu} end`}
             aria-controls={$menu}
-            aria-expanded="false"
             aria-haspopup="menu"
             class={button({ type: "tertiary" })}
+            popovertarget={$menu}
+            style={`anchor-name: --${$menu}`}
             title="Mon espace"
             type="button"
           >
             Mon espace
           </button>
           <div
-            class="border-border bg-background absolute right-0 z-50 mt-1 rounded border shadow-lg"
-            hidden
+            class="border-border bg-background absolute m-0 mt-1 rounded border p-0 text-inherit shadow-lg [position-area:bottom_span-left]"
             id={$menu}
+            popover="auto"
             role="menu"
+            style={`position-anchor: --${$menu}`}
           >
             <div class="border-border border-b px-4 py-3">
               <p class="mb-1 font-semibold whitespace-nowrap">

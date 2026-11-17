@@ -225,21 +225,11 @@ function BatchActions({
         >
           <Menu>
             <Menu.Trigger>
-              {({ target_id, ...props }) => (
+              {(props) => (
                 <button
                   {...props}
-                  _={`
-                    on click
-                      toggle @hidden on #${target_id}
-                      set @aria-expanded to (#${target_id}'s @hidden is null)
-                    end
-                    on click from elsewhere or keydown[key is 'Escape'] from window
-                      add @hidden to #${target_id}
-                      set @aria-expanded to 'false'
-                    end
-                  `}
                   class={button({
-                    class: "group aria-expanded:bg-surface",
+                    class: "group has-[+:popover-open]:bg-surface",
                     size: "sm",
                     type: "tertiary",
                   })}
@@ -248,7 +238,7 @@ function BatchActions({
                   🔄 Type de vérification
                   <svg
                     aria-hidden="true"
-                    class="h-4 w-4 transition-transform group-aria-expanded:rotate-180"
+                    class="h-4 w-4 transition-transform group-has-[+:popover-open]:rotate-180"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
