@@ -17,7 +17,7 @@
     "clean": "rm -rf public/built **/node_modules && bun i",
     "db:migrate": "bun run scripts/migrate.ts",
     "db:seed": "bun run scripts/seed.ts",
-    "dev": "cd bin && bun run dev",
+    "dev": "bun run scripts/dev.ts",
     "dev:inspect-brk": "tsx --inspect-brk bin/src/index.ts",
     "e2e:install": "cd e2e && bun install",
     "e2e:run": "cd e2e && bun run",
