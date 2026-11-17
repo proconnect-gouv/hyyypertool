@@ -8,7 +8,7 @@ import {
 import { button } from "#src/ui/button";
 import { input, input_group, label } from "#src/ui/form";
 import { icon } from "#src/ui/icons";
-import { AUTO_GO_BACK_EVENT } from "#src/ui/moderations/AutoGoBack";
+import { AUTO_GO_BACK_EVENT } from "../AutoGoBack/auto-go-back.client";
 import { useRef, useState } from "preact/hooks";
 import type { ResponseTemplateDto } from "../../../routes/response-templates/get_response_templates.query";
 import { ResponseMessageSelectorClient } from "./response-message-selector.client";
@@ -80,9 +80,7 @@ export function RefusalForm({
         document.body.dispatchEvent(
           new CustomEvent(MODERATION_EVENTS.enum.MODERATION_UPDATED),
         );
-        document
-          .getElementById("auto_go_back")
-          ?.dispatchEvent(new CustomEvent(AUTO_GO_BACK_EVENT));
+        document.body.dispatchEvent(new CustomEvent(AUTO_GO_BACK_EVENT));
       } else {
         notify_danger(`Échec du refus (${res.status})`);
       }

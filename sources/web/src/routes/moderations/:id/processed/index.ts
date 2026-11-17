@@ -12,6 +12,7 @@ import {
   get_moderation_with_user,
   update_moderation_by_id,
 } from "#src/queries/moderations";
+import { AUTO_GO_BACK_EVENT } from "#src/ui/moderations/AutoGoBack";
 import { EntitySchema } from "#src/schema";
 import { zValidator } from "@hono/zod-validator";
 import type { IdentiteProconnectPgDatabase } from "@~/identite-proconnect/database";
@@ -54,6 +55,7 @@ export default new Hono<
       "HX-Trigger": [
         MODERATION_EVENTS.enum.MODERATION_EMAIL_UPDATED,
         MODERATION_EVENTS.enum.MODERATION_UPDATED,
+        AUTO_GO_BACK_EVENT,
       ].join(", "),
     } as HtmxHeader);
   },

@@ -105,16 +105,7 @@ test("GET /moderations/:id/duplicate_warning", async () => {
           </p>
         </li>
       </ul>
-      <form
-        _="
-          on submit
-            wait for htmx:afterSettle
-            wait 2s
-            go back
-          "
-        hx-patch="/moderations/2/processed"
-        hx-swap="none"
-      >
+      <form hx-patch="/moderations/2/processed" hx-swap="none">
         <fieldset
           class="relative m-0 flex flex-row flex-wrap items-baseline border-0 p-0"
         >

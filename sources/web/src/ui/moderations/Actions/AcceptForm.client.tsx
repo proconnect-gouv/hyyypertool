@@ -8,7 +8,7 @@ import {
 import { button } from "#src/ui/button";
 import { checkbox_group, input, input_group } from "#src/ui/form";
 import { icon } from "#src/ui/icons";
-import { AUTO_GO_BACK_EVENT } from "#src/ui/moderations/AutoGoBack";
+import { AUTO_GO_BACK_EVENT } from "../AutoGoBack/auto-go-back.client";
 import { useState } from "preact/hooks";
 import { MemberAndDomainPicker } from "./MemberAndDomainPicker.client";
 import { TagInput } from "./TagInput";
@@ -76,9 +76,7 @@ export function AcceptForm({
         document.body.dispatchEvent(
           new CustomEvent(MODERATION_EVENTS.enum.MODERATION_UPDATED),
         );
-        document
-          .getElementById("auto_go_back")
-          ?.dispatchEvent(new CustomEvent(AUTO_GO_BACK_EVENT));
+        document.body.dispatchEvent(new CustomEvent(AUTO_GO_BACK_EVENT));
       } else {
         notify_danger(`Échec de la validation (${res.status})`);
       }

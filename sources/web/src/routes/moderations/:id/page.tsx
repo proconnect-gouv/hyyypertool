@@ -9,7 +9,7 @@ import { button } from "#src/ui/button";
 import { Actions } from "#src/ui/moderations/Actions";
 
 import { Svg } from "#src/ui/icons/components";
-import { AutoGoBack } from "#src/ui/moderations/AutoGoBack";
+import { AutoGoBackIsland } from "#src/ui/moderations/AutoGoBack";
 import { DomainsByOrganization } from "#src/ui/moderations/DomainsByOrganization";
 import { Header } from "#src/ui/moderations/Header";
 import { OrganizationsByUser } from "#src/ui/moderations/OrganizationsByUser";
@@ -83,7 +83,7 @@ async function ModerationPageContent() {
         retour
       </button>
 
-      <AutoGoBack id="auto_go_back" />
+      <AutoGoBackIsland />
 
       <hr class="border-none py-3" />
 
