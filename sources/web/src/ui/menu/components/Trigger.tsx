@@ -1,24 +1,12 @@
 //
 
 import { button } from "#src/ui/button";
-import type { JSX } from "hono/jsx";
 import { visually_hidden } from "../../visually_hidden";
-import { hide_on_click_elsewere } from "./scripts/hide_on_click_elsewere";
+import type { TriggerProps } from "./Menu";
 
-type TriggerProps = JSX.IntrinsicElements["button"] & {
-  target_id: string;
-};
-export function Trigger({ target_id, ...other_props }: TriggerProps) {
-  const toggle_on_click = `on click toggle @hidden on #${target_id}`;
+export function Trigger(props: TriggerProps) {
   return (
-    <button
-      _={[toggle_on_click, hide_on_click_elsewere(`#${target_id}`)].join(
-        " then ",
-      )}
-      class={button({ intent: "ghost" })}
-      type="button"
-      {...other_props}
-    >
+    <button class={button({ intent: "ghost" })} type="button" {...props}>
       <svg
         aria-hidden="true"
         class="h-5 w-5"
