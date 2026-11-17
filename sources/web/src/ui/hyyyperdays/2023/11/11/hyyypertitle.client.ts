@@ -19,6 +19,11 @@ export class HyyyperTitle extends HTMLElement {
         .fade-in {
           animation: fadeIn ${duration}ms both;
         }
+        @media (prefers-reduced-motion: reduce) {
+          .fade-in {
+            animation: none;
+          }
+        }
         #per {
           text-shadow: 0 0 4px #000;
         }
