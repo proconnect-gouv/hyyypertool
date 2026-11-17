@@ -1,5 +1,28 @@
 # Changelog
 
+## [2026.11.4](https://github.com/proconnect-gouv/hyyypertool/compare/2026.11.3...2026.11.4) (2026-11-17)
+
+### Changements
+
+- ♿️ Les menus déroulants utilisent le menu natif du navigateur : ils se ferment avec Échap ou un clic ailleurs, et les lecteurs d'écran peuvent les lire
+- 🚸 « Marquer la modération comme traité » affiche le retour automatique annulable, comme la validation et le refus
+- ✨ La page d'accueil change de tenue selon la date : bonnet de Noël en décembre, feu d'artifice tricolore en juillet
+- ✨ La page d'accueil annonce l'arrivée des HyyyperDays : le « tool » tombe et laisse place à un nouveau HyyyperDay
+
+### Ajouté
+
+- ✨ announce hyyyperdays with a falling tool ([#2060](https://github.com/proconnect-gouv/hyyypertool/issues/2060)) ([a766d61](https://github.com/proconnect-gouv/hyyypertool/commit/a766d61feea5cdc61ad70dc0eef37a7fa006c38a))
+- ✨ pick the welcome title from a dated hyyyperday ([#2059](https://github.com/proconnect-gouv/hyyypertool/issues/2059)) ([61d2b0c](https://github.com/proconnect-gouv/hyyypertool/commit/61d2b0c1d48fc7299b57d22a0f8a32d0a1b3ae43))
+
+### Supprimé
+
+- 🔥 remove hyperscript ([#2057](https://github.com/proconnect-gouv/hyyypertool/issues/2057)) ([baf7f8b](https://github.com/proconnect-gouv/hyyypertool/commit/baf7f8bf5597f897a03158da6bab3cbe6278a703))
+
+### Divers
+
+- 🚸 show the auto-return callout after marking a duplicate as processed ([#2056](https://github.com/proconnect-gouv/hyyypertool/issues/2056)) ([6e8aacb](https://github.com/proconnect-gouv/hyyypertool/commit/6e8aacb1d4323e2f7dbd116e0d4d7519466d4aff))
+- ♿️ open dropdown menus with the native popover ([#2055](https://github.com/proconnect-gouv/hyyypertool/issues/2055)) ([13e2e36](https://github.com/proconnect-gouv/hyyypertool/commit/13e2e3653051f909b0147eba959aa1e4537e636f))
+
 ## [2026.11.3](https://github.com/proconnect-gouv/hyyypertool/compare/2026.11.2...2026.11.3) (2026-11-13)
 
 ### Changements
