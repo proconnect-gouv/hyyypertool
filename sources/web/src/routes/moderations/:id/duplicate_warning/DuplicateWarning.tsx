@@ -1,6 +1,5 @@
 //
 
-import { HtmxEvents } from "#src/htmx";
 import { badge } from "#src/ui/badge";
 import { button } from "#src/ui/button";
 import { fieldset } from "#src/ui/form";
@@ -200,12 +199,6 @@ async function MarkModerationAsProcessed({
 
   return (
     <form
-      _={`
-      on submit
-        wait for ${HtmxEvents.enum.afterSettle}
-        wait 2s
-        go back
-      `}
       {...urls.moderations[":id"].processed.$hx_patch({
         param: { id: moderation_id },
       })}
