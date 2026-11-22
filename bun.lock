@@ -8,7 +8,7 @@
         "@gouvfr/dsfr": "1.15.4",
         "@preact/signals": "2.11.4",
         "@preact/signals-core": "1.14.5",
-        "@tsconfig/bun": "1.0.11",
+        "@tsconfig/bun": "1.0.12",
         "@~/bin": "workspace:*",
         "animate.css": "4.1.1",
         "dotenv": "18.0.9",
@@ -108,7 +108,7 @@
       "name": "@~/config.typescript",
       "version": "0.0.0",
       "dependencies": {
-        "@tsconfig/bun": "1.0.11",
+        "@tsconfig/bun": "1.0.12",
         "@tsconfig/strictest": "2.0.8",
         "@types/bun": "1.4.4",
         "hono": "4.13.16",
@@ -473,7 +473,7 @@
 
     "@testing-library/preact": ["@testing-library/preact@3.2.6", "", { "dependencies": { "@testing-library/dom": "^10.4.2" }, "peerDependencies": { "preact": ">=10 || ^10.0.0-alpha.0 || ^10.0.0-beta.0" } }, "sha512-qvl5x9zxY50sY3XukHT874eGK5Q7k+JzWrC1bQIN0vbiXWPfVGjHtBmT78cEQpI6NoDoN8bUbwLvOXDK5p5Fzw=="],
 
-    "@tsconfig/bun": ["@tsconfig/bun@1.0.11", "", {}, "sha512-DQA3HOKFQ+/yPTUa73k5QGcuEM1ExtL6uWQMR0QrfOTitm0oLHqHd1tI74WtEtMqlIu+tvSMELJ6p5uNxVE7lw=="],
+    "@tsconfig/bun": ["@tsconfig/bun@1.0.12", "", {}, "sha512-/7sosWfGyWpPtJGwQtTcq8piOWZF8Xjy57lx//8MGBdn5a03Q6qcDTcZ9Zo3Qv3Ui764mp1HZiMlL+RYU6WarA=="],
 
     "@tsconfig/strictest": ["@tsconfig/strictest@2.0.8", "", {}, "sha512-XnQ7vNz5HRN0r88GYf1J9JJjqtZPiHt2woGJOo2dYqyHGGcd6OLGqSlBB6p1j9mpzja6Oe5BoPqWmeDx6X9rLw=="],
 
