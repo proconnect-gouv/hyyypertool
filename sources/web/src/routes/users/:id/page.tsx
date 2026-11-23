@@ -13,11 +13,13 @@ import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
 import type { get_authenticators_by_user_id } from "./get_authenticators_by_user_id.query";
 import type { get_franceconnect_by_user_id } from "./get_franceconnect_by_user_id.query";
+import type { get_recovery_words_by_user_id } from "./get_recovery_words_by_user_id.query";
 import type { get_user_by_id } from "./get_user_by_id.query";
 
 //
 
 type Authenticators = Awaited<ReturnType<typeof get_authenticators_by_user_id>>;
+type RecoveryWords = Awaited<ReturnType<typeof get_recovery_words_by_user_id>>;
 type FranceConnect = Awaited<ReturnType<typeof get_franceconnect_by_user_id>>;
 type User = Awaited<ReturnType<typeof get_user_by_id>>;
 
@@ -29,6 +31,7 @@ export async function UserPage({
   query_moderations_count,
   query_oidc_clients_count,
   query_organizations_count,
+  recovery_words,
   user,
 }: {
   authenticators: Authenticators;
@@ -38,6 +41,7 @@ export async function UserPage({
   query_moderations_count: Promise<number>;
   query_oidc_clients_count: Promise<number>;
   query_organizations_count: Promise<number>;
+  recovery_words: RecoveryWords;
   user: User;
 }) {
   const $activities_describedby = hyper_ref("user_activities");
@@ -131,7 +135,11 @@ export async function UserPage({
 
       <div aria-describedby="mfa" class="container mx-auto px-4 py-6">
         <h1 id="mfa">🔓 MFA</h1>
-        <MFA authenticators={authenticators} user={user} />
+        <MFA
+          authenticators={authenticators}
+          recovery_words={recovery_words}
+          user={user}
+        />
       </div>
 
       <hr class="py-3" />
@@ -303,9 +311,11 @@ async function UserActivitiesList({
 async function MFA({
   user,
   authenticators,
+  recovery_words,
 }: {
   user: User;
   authenticators: Authenticators;
+  recovery_words: RecoveryWords;
 }) {
   const hasTOTP = user.totp_key_verified_at !== null;
   const hasPasskeys = authenticators && authenticators.length > 0;
@@ -352,6 +362,18 @@ async function MFA({
           </p>
         </div>
       ))}
+      <div aria-describedby="recovery-words" class={card().base()}>
+        <h2 class="text-blue-france" id="recovery-words">
+          Mots de secours
+        </h2>
+        {recovery_words ? (
+          <p class="mb-1">
+            <b>Création :</b> <LocalTime date={recovery_words.created_at} />
+          </p>
+        ) : (
+          <p class="mb-1">❌ Non configurés</p>
+        )}
+      </div>
     </div>
   );
 }
