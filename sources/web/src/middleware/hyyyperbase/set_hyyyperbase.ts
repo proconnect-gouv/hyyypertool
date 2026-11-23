@@ -2,7 +2,6 @@
 
 import { type HyyyperPgDatabase } from "@~/hyyyperbase";
 import type { Env, MiddlewareHandler } from "hono";
-import type { Pool } from "pg";
 
 //
 
@@ -19,7 +18,6 @@ export function set_hyyyper_pg(
 
 export interface HyyyperbasePgContext extends Env {
   Variables: {
-    hyyyper_pg_client: Pool;
     hyyyper_pg: HyyyperPgDatabase;
   };
 }
