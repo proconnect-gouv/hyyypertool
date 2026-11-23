@@ -57,7 +57,7 @@ test("GET /email delivrability", async () => {
   expect(response.status).toBe(200);
 });
 
-test("PUT /domains-deliverability adds new domain to whitelist", async () => {
+test("PUT /domains-deliverability trims the new problematic email", async () => {
   const moderator = await insert_moderateur(hyyyperbase.hyyyper_pglite);
   {
     const result = await pg.query.email_deliverability_whitelist.findMany();
@@ -80,7 +80,7 @@ test("PUT /domains-deliverability adds new domain to whitelist", async () => {
     .route("/", app)
     .request("/", {
       method: "PUT",
-      body: new URLSearchParams({ problematic_email: "user@newdomain.fr" }),
+      body: new URLSearchParams({ problematic_email: "  user@newdomain.fr  " }),
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
     });
 

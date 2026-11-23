@@ -16,7 +16,7 @@ import { EmailDomainVerificationEnum } from "@~/identite-proconnect/types";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { z } from "zod";
-import { patch_query } from "./context";
+import { add_params, patch_query } from "./context";
 import { get_organization_domains } from "./get_organization_domains.query";
 import domain_history_router from "./history";
 import { AddDomain, Table } from "./Table";
@@ -60,7 +60,7 @@ export default new Hono<AppContext>()
   .put(
     "/",
     zValidator("param", EntitySchema),
-    zValidator("form", z.object({ domain: z.string().min(1) })),
+    zValidator("form", add_params),
     async function PUT({ text, req, var: { identite_pg, identite_runtime } }) {
       const { id: organization_id } = req.valid("param");
       const { domain } = req.valid("form");

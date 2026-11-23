@@ -73,7 +73,7 @@ test("GET /organizations/:id/domains returns domains for organization", async ()
   expect(html).toContain("rainbow.xyz");
 });
 
-test("PUT /organizations/:id/domains adds new domain", async () => {
+test("PUT /organizations/:id/domains trims the new domain", async () => {
   const moderator = await insert_moderateur(hyyyper_pglite);
   const organization_id = await create_unicorn_organization(pg);
   const adora_pony_user_id = await create_adora_pony_user(pg);
@@ -128,7 +128,7 @@ test("PUT /organizations/:id/domains adds new domain", async () => {
     .route("/:id/domains", app)
     .request(`/${organization_id}/domains`, {
       method: "PUT",
-      body: new URLSearchParams({ domain: "unicorn.xyz" }),
+      body: new URLSearchParams({ domain: "  unicorn.xyz  " }),
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
     });
 

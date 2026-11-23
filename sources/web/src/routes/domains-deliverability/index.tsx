@@ -12,6 +12,7 @@ import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import z from "zod";
+import { whitelist_form_schema } from "./context";
 import { get_email_deliverability_whitelist } from "./get_email_deliverability_whitelist.query";
 import Page from "./page";
 
@@ -42,7 +43,7 @@ export default new Hono<AppContext>()
   .use(editor_guard())
   .put(
     "/",
-    zValidator("form", z.object({ problematic_email: z.string().min(1) })),
+    zValidator("form", whitelist_form_schema),
     async function PUT({ req, var: { identite_pg, userinfo } }) {
       const { problematic_email } = req.valid("form");
 
