@@ -25,7 +25,7 @@
         "@types/bun": "1.4.4",
         "@~/hyyyperbase": "workspace:*",
         "@~/identite-proconnect": "workspace:*",
-        "hono": "4.13.16",
+        "hono": "4.13.18",
         "htmx-ext-debug": "2.0.2",
         "prettier": "3.9.10",
         "prettier-plugin-gherkin": "4.0.0",
@@ -50,7 +50,7 @@
         "@~/web": "workspace:*",
         "consola": "3.4.2",
         "dotenv-flow": "4.1.0",
-        "hono": "4.13.16",
+        "hono": "4.13.18",
         "tailwindcss": "4.3.5",
         "tsx": "4.23.15",
       },
@@ -73,7 +73,7 @@
       "name": "hono-slotify",
       "version": "1.0.0",
       "dependencies": {
-        "hono": "4.13.16",
+        "hono": "4.13.18",
       },
       "devDependencies": {
         "@types/bun": "1.4.4",
@@ -111,7 +111,7 @@
         "@tsconfig/bun": "1.0.11",
         "@tsconfig/strictest": "2.0.8",
         "@types/bun": "1.4.4",
-        "hono": "4.13.16",
+        "hono": "4.13.18",
       },
     },
     "sources/hyyyperbase": {
@@ -144,7 +144,7 @@
         "@proconnect-gouv/proconnect.insee": "2.0.0",
         "consola": "3.4.2",
         "drizzle-orm": "0.45.4",
-        "hono": "4.13.16",
+        "hono": "4.13.18",
         "pg": "8.23.1",
       },
       "devDependencies": {
@@ -177,7 +177,7 @@
         "await-to-js": "3.0.0",
         "consola": "3.4.2",
         "drizzle-orm": "0.45.4",
-        "hono": "4.13.16",
+        "hono": "4.13.18",
         "hono-sessions": "0.8.1",
         "hono-slotify": "workspace:*",
         "is-disposable-email-domain": "1.0.7",
@@ -705,7 +705,7 @@
 
     "help-me": ["help-me@5.0.0", "", {}, "sha512-7xgomUX6ADmcYzFik0HzAxh/73YlKR9bmFzf51CZwR+b6YtzU2m0u49hQCqV6SvlqIqsaxovfwdvbnsw3b/zpg=="],
 
-    "hono": ["hono@4.13.16", "", {}, "sha512-AOLOEhvrV+iH92xXCnFr/5+3KjPKcI3xP63XJtX5spAnkznPdHijlIsUTpi7/9EhWqrTCekw5c5zh1K+YsVw7A=="],
+    "hono": ["hono@4.13.18", "", {}, "sha512-H9q/E1XizaWstJxUW881dmLxEj+t/TrGGnyxINkm4+sK0qUwsMtFdo2BWI9Vs3cIS19MU6b6iCijoUoEf4f3DA=="],
 
     "hono-sessions": ["hono-sessions@0.8.1", "", { "dependencies": { "iron-webcrypto": "^1.2.1", "ohash": "^2" }, "peerDependencies": { "hono": "^4.0.0" } }, "sha512-YLSKuIP13yhXTQe2x3sCc1JWsqt1Z3WZB2DWE+oX+YpOsC3lv8uCHnCoNHcY9DPyflDw4XQJN+MFVvcp5QwWdw=="],
 

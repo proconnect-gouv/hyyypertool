@@ -42,7 +42,7 @@
     "await-to-js": "3.0.0",
     "consola": "3.4.2",
     "drizzle-orm": "0.45.4",
-    "hono": "4.13.16",
+    "hono": "4.13.18",
     "hono-sessions": "0.8.1",
     "hono-slotify": "workspace:*",
     "is-disposable-email-domain": "1.0.7",
