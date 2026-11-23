@@ -31,6 +31,7 @@ import user_oidc_clients_route from "./oidc_clients";
 import { count_oidc_clients_by_user_id } from "./oidc_clients/count_oidc_clients_by_user_id.query";
 import user_organizations_page_route from "./organizations";
 import { UserPage } from "./page";
+import { get_recovery_words_by_user_id } from "./get_recovery_words_by_user_id.query";
 
 //
 
@@ -56,6 +57,10 @@ export default new Hono<AppContext>()
           id,
         );
         const franceconnect = await get_franceconnect_by_user_id(
+          identite_pg,
+          id,
+        );
+        const recovery_words = await get_recovery_words_by_user_id(
           identite_pg,
           id,
         );
@@ -91,6 +96,7 @@ export default new Hono<AppContext>()
             query_moderations_count={query_moderations_count}
             query_oidc_clients_count={query_oidc_clients_count}
             query_organizations_count={query_organizations_count}
+            recovery_words={recovery_words}
             user={user}
           />,
         );
