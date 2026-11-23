@@ -1,5 +1,30 @@
 # Changelog
 
+## [2026.11.6](https://github.com/proconnect-gouv/hyyypertool/compare/2026.11.5...2026.11.6) (2026-11-23)
+
+### Changements
+
+- 🐛 Les espaces autour des domaines et emails ajoutés sont supprimés
+
+### Ajouté
+
+- ✨ Display recovery words status on user page ([#2074](https://github.com/proconnect-gouv/hyyypertool/issues/2074)) ([f29665e](https://github.com/proconnect-gouv/hyyypertool/commit/f29665ed6901bed03b3bc62c8dc6f1855fcb23e4))
+
+### Corrigé
+
+- 🐛 trim whitespace from add-domain inputs ([#2075](https://github.com/proconnect-gouv/hyyypertool/issues/2075)) ([439cedc](https://github.com/proconnect-gouv/hyyypertool/commit/439cedc6932d3b36b4da62d62ac004931312af30))
+
+### Dépendances
+
+- ⬆️ Bump jose from 6.2.15 to 6.2.17 ([#2072](https://github.com/proconnect-gouv/hyyypertool/issues/2072)) ([426d07d](https://github.com/proconnect-gouv/hyyypertool/commit/426d07d4a12406c700d3a91c55a690883e05a16e))
+- ⬆️ Bump cypress-io/github-action from v7.4.9 to v7.4.10 ([#2069](https://github.com/proconnect-gouv/hyyypertool/issues/2069)) ([39aaf0b](https://github.com/proconnect-gouv/hyyypertool/commit/39aaf0b0dde93195ad06cb6ac411a0d9c48a38d7))
+- ⬆️ Bump @tsconfig/strictest from 2.0.8 to 2.0.9 ([#2068](https://github.com/proconnect-gouv/hyyypertool/issues/2068)) ([c5922fb](https://github.com/proconnect-gouv/hyyypertool/commit/c5922fb8806cd5917ff75fc995296e5263707ada))
+- ⬆️ Bump @hono/node-server from 2.1.6 to 2.1.8 ([#2066](https://github.com/proconnect-gouv/hyyypertool/issues/2066)) ([137fd7a](https://github.com/proconnect-gouv/hyyypertool/commit/137fd7af0b5cc5216326091e4bc92e365562f1c8))
+- ⬆️ Bump @electric-sql/pglite from 0.5.15 to 0.5.16 ([#2065](https://github.com/proconnect-gouv/hyyypertool/issues/2065)) ([850f35f](https://github.com/proconnect-gouv/hyyypertool/commit/850f35fcb49d016efdec7bcaf2288c83a19b95ee))
+- ⬆️ Bump @tsconfig/bun from 1.0.11 to 1.0.12 ([#2067](https://github.com/proconnect-gouv/hyyypertool/issues/2067)) ([38d2d05](https://github.com/proconnect-gouv/hyyypertool/commit/38d2d052dc2dd310a1df8474ae595d1c4c44bbb1))
+- ⬆️ Bump dotenv from 18.0.9 to 18.0.10 ([#2070](https://github.com/proconnect-gouv/hyyypertool/issues/2070)) ([6c99522](https://github.com/proconnect-gouv/hyyypertool/commit/6c99522d9b6373ae091ac143945ddccc8ca17cb8))
+- ⬆️ Bump hono from 4.13.16 to 4.13.18 ([#2071](https://github.com/proconnect-gouv/hyyypertool/issues/2071)) ([a84e65c](https://github.com/proconnect-gouv/hyyypertool/commit/a84e65c3df1c7fa0870d7d2ff266b66a7119e7eb))
+
 ## [2026.11.5](https://github.com/proconnect-gouv/hyyypertool/compare/2026.11.4...2026.11.5) (2026-11-17)
 
 ### Changements
