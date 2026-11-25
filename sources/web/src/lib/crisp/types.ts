@@ -1,6 +1,3 @@
 //
 
-export type {
-  Config,
-  ConversationMessage,
-} from "@proconnect-gouv/proconnect.crisp/types";
+export type { ConversationMessage } from "@proconnect-gouv/proconnect.crisp/types";
