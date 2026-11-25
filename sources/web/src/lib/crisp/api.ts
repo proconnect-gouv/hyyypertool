@@ -14,7 +14,26 @@ import type {
   User,
 } from "@proconnect-gouv/proconnect.crisp/types";
 
-export function crisp_api(config: Config) {
+//
+
+export type CrispConfig = Config & { plugin_urn: `urn:${string}` };
+export type CrispSender = Pick<User, "nickname"> &
+  Partial<Pick<User, "user_id">>;
+
+export class CrispHttpError extends Error {
+  readonly http_status: number;
+
+  constructor(
+    message: string,
+    { http_status, cause }: { http_status: number; cause: unknown },
+  ) {
+    super(message, { cause });
+    this.name = "CrispHttpError";
+    this.http_status = http_status;
+  }
+}
+
+export function crisp_api(config: CrispConfig) {
   return {
     create_conversation: create_conversation(config),
     get_user: get_user_info(config),
@@ -27,56 +46,77 @@ export type CrispApi = ReturnType<typeof crisp_api>;
 
 //
 
+// fetch_crisp throws plain Errors formatted as "${url} ${status} ${statusText}".
+async function crisp_request<T>(request: Promise<T>): Promise<T> {
+  try {
+    return await request;
+  } catch (error) {
+    if (!(error instanceof Error)) throw error;
+    const status = / (\d{3}) /.exec(error.message)?.[1];
+    if (status === undefined) throw error;
+    throw new CrispHttpError(error.message, {
+      http_status: Number(status),
+      cause: error,
+    });
+  }
+}
+
 function create_conversation(config: Config) {
   return async function create_conversation({
     email,
     nickname,
     subject,
   }: Pick<ConversationMeta, "email" | "nickname" | "subject">) {
-    const { session_id } = await fetch_crisp<CreateConversationRoute>(config, {
-      endpoint: `/v1/website/${config.website_id}/conversation`,
-      method: "POST",
-      searchParams: {},
-    });
+    const { session_id } = await crisp_request(
+      fetch_crisp<CreateConversationRoute>(config, {
+        endpoint: `/v1/website/${config.website_id}/conversation`,
+        method: "POST",
+        searchParams: {},
+      }),
+    );
 
-    await fetch_crisp<UpdateConversationMetaRoute>(config, {
-      endpoint: `/v1/website/${config.website_id}/conversation/${session_id}/meta`,
-      method: "PATCH",
-      searchParams: {},
-      body: {
-        email,
-        nickname: nickname || email,
-        segments: ["email", "moderation"],
-        subject,
-      },
-    });
+    await crisp_request(
+      fetch_crisp<UpdateConversationMetaRoute>(config, {
+        endpoint: `/v1/website/${config.website_id}/conversation/${session_id}/meta`,
+        method: "PATCH",
+        searchParams: {},
+        body: {
+          email,
+          nickname: nickname || email,
+          segments: ["email", "moderation"],
+          subject,
+        },
+      }),
+    );
 
     return { session_id };
   };
 }
 
-function send_message(config: Config) {
+function send_message(config: CrispConfig) {
   return async function send_message({
     content,
     session_id,
     user,
   }: {
     content: string;
-    user: Partial<User>;
+    user: CrispSender;
     session_id: string;
   }) {
-    return fetch_crisp<SendMessageInAConversationRoute>(config, {
-      endpoint: `/v1/website/${config.website_id}/conversation/${session_id}/message`,
-      method: "POST",
-      searchParams: {},
-      body: {
-        content,
-        from: "operator",
-        origin: config.plugin_urn as `urn:${string}`,
-        type: "text",
-        user,
-      },
-    });
+    return crisp_request(
+      fetch_crisp<SendMessageInAConversationRoute>(config, {
+        endpoint: `/v1/website/${config.website_id}/conversation/${session_id}/message`,
+        method: "POST",
+        searchParams: {},
+        body: {
+          content,
+          from: "operator",
+          origin: config.plugin_urn,
+          type: "text",
+          user,
+        },
+      }),
+    );
   };
 }
 
@@ -86,30 +126,39 @@ function mark_conversation_as_resolved(config: Config) {
   }: {
     session_id: string;
   }) {
-    await fetch_crisp<UpdateConversationStateRoute>(config, {
-      endpoint: `/v1/website/${config.website_id}/conversation/${session_id}/state`,
-      method: "PATCH",
-      searchParams: {},
-      body: { state: "resolved" },
-    });
+    await crisp_request(
+      fetch_crisp<UpdateConversationStateRoute>(config, {
+        endpoint: `/v1/website/${config.website_id}/conversation/${session_id}/state`,
+        method: "PATCH",
+        searchParams: {},
+        body: { state: "resolved" },
+      }),
+    );
   };
 }
 
 export function get_user_info(config: Config) {
   return async function get_user({ email }: { email: string }) {
-    const operators = await fetch_crisp<OperatorsRouter>(config, {
-      endpoint: `/v1/website/${config.website_id}/operators/list`,
-      method: "GET",
-      searchParams: {},
-    });
+    const operators = await crisp_request(
+      fetch_crisp<OperatorsRouter>(config, {
+        endpoint: `/v1/website/${config.website_id}/operators/list`,
+        method: "GET",
+        searchParams: {},
+      }),
+    );
 
     const operator = operators.find(({ details }) => details.email === email);
 
     if (!operator) throw new Error(`Operator "${email}" not found.`);
 
+    const { first_name, last_name, user_id } = operator.details;
+    const last_name_initial = last_name.at(0);
+
     return {
-      user_id: operator.details.user_id,
-      nickname: `${operator.details.first_name} ${operator.details.last_name[0]}.`,
-    } as User;
+      user_id,
+      nickname: last_name_initial
+        ? `${first_name} ${last_name_initial}.`
+        : first_name,
+    };
   };
 }

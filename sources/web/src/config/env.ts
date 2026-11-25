@@ -49,7 +49,10 @@ export const app_env = z
     CRISP_BASE_URL: z.string().url().default("https://api.crisp.chat"),
     CRISP_IDENTIFIER: z.string().trim(),
     CRISP_KEY: z.string().trim(),
-    CRISP_PLUGIN_URN: z.string().trim(),
+    CRISP_PLUGIN_URN: z
+      .string()
+      .trim()
+      .pipe(z.templateLiteral(["urn:", z.string()])),
     CRISP_RESOLVE_DELAY: z.coerce.number().default(2000),
     CRISP_USER_NICKNAME: z.string().trim(),
     CRISP_WEBSITE_ID: z.string().trim(),
