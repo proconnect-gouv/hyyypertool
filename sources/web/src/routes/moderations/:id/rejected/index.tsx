@@ -1,12 +1,11 @@
 //
 
 import type { HtmxHeader } from "#src/htmx";
-import { is_crisp_ticket } from "#src/lib/crisp";
 import {
   build_moderation_update,
   MODERATION_EVENTS,
   reject_form_schema,
-  send_crisp_notification,
+  reply_and_resolve_moderation_ticket,
 } from "#src/lib/moderations";
 import { render as render_template } from "#src/lib/response-templates";
 import {
@@ -80,48 +79,21 @@ export default new Hono<ContextType>()
       const [, operator] = await to(crisp.get_user({ email: userinfo.email }));
       const sender = operator ?? { nickname: "L'équipe ProConnect" };
 
-      if (!moderation.ticket_id || !is_crisp_ticket(moderation.ticket_id)) {
-        const { session_id } = await send_crisp_notification(crisp, {
+      await reply_and_resolve_moderation_ticket(
+        {
+          crisp,
+          pg: identite_pg,
+          resolve_delay: config.CRISP_RESOLVE_DELAY,
+        },
+        {
+          moderation,
           email: recipient,
           subject,
           nickname: recipient,
           content: body,
           sender,
-        });
-
-        await update_moderation_by_id(identite_pg, {
-          id: moderation.id,
-          values: { ticket_id: session_id },
-        });
-
-        await new Promise((resolve) =>
-          setTimeout(resolve, config.CRISP_RESOLVE_DELAY),
-        );
-
-        await crisp.mark_conversation_as_resolved({ session_id });
-      } else {
-        const { session_id } = await send_crisp_notification(crisp, {
-          ticket_id: String(moderation.ticket_id),
-          email: recipient,
-          subject,
-          nickname: recipient,
-          content: body,
-          sender,
-        });
-
-        if (String(moderation.ticket_id) !== session_id) {
-          await update_moderation_by_id(identite_pg, {
-            id: moderation.id,
-            values: { ticket_id: session_id },
-          });
-        }
-
-        await new Promise((resolve) =>
-          setTimeout(resolve, config.CRISP_RESOLVE_DELAY),
-        );
-
-        await crisp.mark_conversation_as_resolved({ session_id });
-      }
+        },
+      );
 
       const update = build_moderation_update({
         comment: moderation.comment,

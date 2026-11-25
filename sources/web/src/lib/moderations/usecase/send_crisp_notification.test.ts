@@ -1,7 +1,7 @@
 //
 
 import { expect, test } from "bun:test";
-import { CrispHttpError, type CrispApi } from "#src/lib/crisp";
+import { CrispHttpError, parse_ticket_id } from "#src/lib/crisp";
 import { send_crisp_notification } from "./send_crisp_notification";
 
 //
@@ -14,60 +14,64 @@ const params = {
   sender: { nickname: "operator" },
 };
 
-test("creates a conversation when no ticket_id is given", async () => {
+test("creates a conversation when there is no Crisp session", async () => {
   const crisp = {
-    create_conversation: async () => ({ session_id: "new_session" }),
-    send_message: async () => {},
-  } as unknown as CrispApi;
-
-  const result = await send_crisp_notification(crisp, params);
-
-  expect(result).toEqual({ session_id: "new_session" });
-});
-
-test("reuses ticket_id when the Crisp conversation still exists", async () => {
-  const crisp = {
-    create_conversation: async () => {
-      throw new Error("should not be called");
-    },
-    send_message: async () => {},
-  } as unknown as CrispApi;
+    create_conversation: async () => ({ session_id: "session_new" }),
+    send_message: async () => ({ fingerprint: 0 }),
+  };
 
   const result = await send_crisp_notification(crisp, {
     ...params,
-    ticket_id: "existing_session",
+    ticket: parse_ticket_id(null),
   });
 
-  expect(result).toEqual({ session_id: "existing_session" });
+  expect(result).toEqual({ kind: "created", session_id: "session_new" });
 });
 
-test("falls back to a new conversation when the stored ticket_id is 404 on Crisp", async () => {
+test("reuses the Crisp session when the conversation still exists", async () => {
+  const crisp = {
+    create_conversation: async (): Promise<{ session_id: string }> => {
+      throw new Error("should not be called");
+    },
+    send_message: async () => ({ fingerprint: 0 }),
+  };
+
+  const result = await send_crisp_notification(crisp, {
+    ...params,
+    ticket: parse_ticket_id("session_existing"),
+  });
+
+  expect(result).toEqual({ kind: "reused", session_id: "session_existing" });
+});
+
+test("falls back to a new conversation when the stored session is 404 on Crisp", async () => {
   let send_message_calls = 0;
   const crisp = {
-    create_conversation: async () => ({ session_id: "new_session" }),
+    create_conversation: async () => ({ session_id: "session_new" }),
     send_message: async ({ session_id }: { session_id: string }) => {
       send_message_calls += 1;
-      if (session_id === "stale_session") {
+      if (session_id === "session_stale") {
         throw new CrispHttpError(
-          "https://api.crisp.chat/v1/website/x/conversation/stale_session/message 404 Not Found",
+          "https://api.crisp.chat/v1/website/x/conversation/session_stale/message 404 Not Found",
           { http_status: 404, cause: undefined },
         );
       }
+      return { fingerprint: 0 };
     },
-  } as unknown as CrispApi;
+  };
 
   const result = await send_crisp_notification(crisp, {
     ...params,
-    ticket_id: "stale_session",
+    ticket: parse_ticket_id("session_stale"),
   });
 
-  expect(result).toEqual({ session_id: "new_session" });
+  expect(result).toEqual({ kind: "created", session_id: "session_new" });
   expect(send_message_calls).toBe(2);
 });
 
 test("rethrows non-404 errors without falling back", async () => {
   const crisp = {
-    create_conversation: async () => {
+    create_conversation: async (): Promise<{ session_id: string }> => {
       throw new Error("should not be called");
     },
     send_message: async () => {
@@ -76,9 +80,12 @@ test("rethrows non-404 errors without falling back", async () => {
         { http_status: 500, cause: undefined },
       );
     },
-  } as unknown as CrispApi;
+  };
 
   await expect(
-    send_crisp_notification(crisp, { ...params, ticket_id: "some_session" }),
+    send_crisp_notification(crisp, {
+      ...params,
+      ticket: parse_ticket_id("session_some"),
+    }),
   ).rejects.toMatchObject({ http_status: 500 });
 });

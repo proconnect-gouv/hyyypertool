@@ -2,11 +2,10 @@
 
 import { HTTPError, NotFoundError } from "#src/errors";
 import type { HtmxHeader } from "#src/htmx";
-import { is_crisp_ticket } from "#src/lib/crisp";
 import {
   MODERATION_EVENTS,
   build_moderation_update,
-  send_crisp_notification,
+  reply_and_resolve_moderation_ticket,
   validate_form_schema,
   validate_similar_moderations,
 } from "#src/lib/moderations";
@@ -148,34 +147,25 @@ export default new Hono<AppContext>().patch(
       const [, operator] = await to(crisp.get_user({ email: userinfo.email }));
       const sender = operator ?? { nickname: userinfo.email };
 
-      const { session_id } = await send_crisp_notification(crisp, {
-        ticket_id:
-          moderation.ticket_id && is_crisp_ticket(moderation.ticket_id)
-            ? moderation.ticket_id
-            : undefined,
-        email: moderation.user.email,
-        subject: `[ProConnect] Demande pour rejoindre ${cached_libelle || siret}`,
-        nickname: moderation.user.email,
-        content: moderation_processed_message({
-          baseurl: config.API_AUTH_URL,
+      await reply_and_resolve_moderation_ticket(
+        {
+          crisp,
+          pg: identite_pg,
+          resolve_delay: config.CRISP_RESOLVE_DELAY,
+        },
+        {
+          moderation,
           email: moderation.user.email,
-          libelle: cached_libelle || siret,
-        }),
-        sender,
-      });
-
-      if (moderation.ticket_id !== session_id) {
-        await update_moderation_by_id(identite_pg, {
-          id: moderation.id,
-          values: { ticket_id: session_id },
-        });
-      }
-
-      await new Promise((resolve) =>
-        setTimeout(resolve, config.CRISP_RESOLVE_DELAY),
+          subject: `[ProConnect] Demande pour rejoindre ${cached_libelle || siret}`,
+          nickname: moderation.user.email,
+          content: moderation_processed_message({
+            baseurl: config.API_AUTH_URL,
+            email: moderation.user.email,
+            libelle: cached_libelle || siret,
+          }),
+          sender,
+        },
       );
-
-      await crisp.mark_conversation_as_resolved({ session_id });
     }
     //#endregion
 
