@@ -27,6 +27,7 @@ Scenario(
     I.click("Échanges entre Jean et nous");
 
     I.see("Conversation de test");
+    I.see("Message 4");
     I.see("Afficher plus de messages");
     I.see("Consulter tous les messages sur Crisp");
   },

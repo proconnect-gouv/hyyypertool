@@ -58,7 +58,7 @@ function List({
 }) {
   return (
     <ul class="list-none">
-      {show_more ? (
+      {show_more && (
         <li class="my-12 text-center">
           <ShowMoreCallout
             limit={limit}
@@ -66,8 +66,6 @@ function List({
             website_id={website_id}
           />
         </li>
-      ) : (
-        <></>
       )}
       {messages.map((message) => (
         <li id={`${message.fingerprint}`} key={`${message.fingerprint}`}>
@@ -77,7 +75,7 @@ function List({
                 <p class="text-center text-sm font-bold">
                   <LocalTime date={new Date(message.timestamp)} />
                 </p>
-                <Message messsage={message} />
+                <Message message={message} />
                 <hr />
               </>
             ))

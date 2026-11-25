@@ -10,24 +10,24 @@ import { processor } from "../processor";
 
 //
 
-export async function Message({ messsage }: { messsage: ConversationMessage }) {
-  return match(messsage.type)
-    .with("text", () => <TextMessage messsage={messsage} />)
+export async function Message({ message }: { message: ConversationMessage }) {
+  return match(message.type)
+    .with("text", () => <TextMessage message={message} />)
     .otherwise(() => <>[...]</>);
 }
 
 export async function TextMessage({
-  messsage,
+  message,
 }: {
-  messsage: ConversationMessage;
+  message: ConversationMessage;
 }) {
   const { author, base, body, caption, source } = message_variants({
-    is_family: messsage.from === "operator",
+    is_family: message.from === "operator",
   });
-  const html_content = String(await processor.process(messsage.content));
+  const html_content = String(await processor.process(message.content));
   const link = create_link({
     base_url: CRISP_APP_BASE_URL,
-    website_id: messsage.website_id,
+    website_id: message.website_id,
   });
 
   return (
@@ -39,15 +39,15 @@ export async function TextMessage({
         }}
       />
       <figcaption class={caption()}>
-        <p class={author()}>{messsage.user.nickname}</p>
+        <p class={author()}>{message.user.nickname}</p>
         <ul class={source()}>
           <li>
-            Créé le <LocalTime date={new Date(messsage.timestamp)} />
+            Créé le <LocalTime date={new Date(message.timestamp)} />
           </li>
-          <li> par {messsage.user.nickname} </li>
+          <li> par {message.user.nickname} </li>
           <li>
             <a
-              href={link.session(messsage.session_id)}
+              href={link.session(message.session_id)}
               rel="noopener noreferrer"
               target="_blank"
               title="Ouvrir la conversation dans Crisp - nouvelle fenêtre"
