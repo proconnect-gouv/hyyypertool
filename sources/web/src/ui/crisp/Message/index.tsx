@@ -24,14 +24,13 @@ export async function Message({
 
   const author = crisp_message_author(message, plugin_urn);
   const author_label = AUTHOR_LABELS[author];
-  const author_variant = author === "system" ? "operator" : author;
   const message_label =
     message.type === "note"
       ? `Note privée ${author_label}`
       : `Message ${author_label}`;
   const { avatar, badge, base, bubble, column, meta } = message_variants({
     ends_run,
-    kind: message.type === "note" ? "note" : author_variant,
+    kind: message.type === "note" ? "note" : author,
   });
 
   return (
@@ -39,9 +38,14 @@ export async function Message({
       <span class="sr-only">{message_label}</span>
       <span
         aria-hidden="true"
-        class={avatar({ class: avatar_color(message.user.nickname) })}
+        class={avatar({
+          class:
+            author === "system"
+              ? undefined
+              : avatar_color(message.user.nickname),
+        })}
       >
-        {initials(message.user.nickname)}
+        {author === "system" ? "🤖" : initials(message.user.nickname)}
       </span>
       <div class={column()}>
         <div class={bubble()}>
@@ -232,6 +236,13 @@ const message_variants = tv({
         base: "ml-auto flex-row-reverse",
         bubble: "bg-blue-france text-white",
         column: "items-end",
+      },
+      system: {
+        avatar: "bg-grey-425 text-xl",
+        base: "mx-auto",
+        bubble: "border-border bg-surface-muted border",
+        column: "items-center",
+        meta: "text-center",
       },
       user: {
         base: "mr-auto",
