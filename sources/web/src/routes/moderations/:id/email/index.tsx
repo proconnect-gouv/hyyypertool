@@ -71,7 +71,12 @@ export default new Hono<AppContext>()
         <Crisp
           crisp={conversation}
           describedby={describedby}
-          older={older_messages_request(id, conversation.page)}
+          older={older_messages_request(
+            id,
+            conversation.page,
+            config.CRISP_PLUGIN_URN,
+          )}
+          plugin_urn={config.CRISP_PLUGIN_URN}
           reply={{
             action: urls.moderations[":id"].email.reply.$url({ param: { id } })
               .pathname,
@@ -93,7 +98,12 @@ export default new Hono<AppContext>()
         run: z.string(),
       }),
     ),
-    async function GET({ render, req, var: { crisp, identite_pg } }) {
+    async function GET({
+      render,
+      req,
+      env: config,
+      var: { crisp, identite_pg },
+    }) {
       const { id } = req.valid("param");
       const { before, run } = req.valid("query");
 
@@ -113,8 +123,9 @@ export default new Hono<AppContext>()
       return render(
         <CrispMessages
           next={{ run, timestamp: before }}
-          older={older_messages_request(id, page)}
+          older={older_messages_request(id, page, config.CRISP_PLUGIN_URN)}
           page={page}
+          plugin_urn={config.CRISP_PLUGIN_URN}
         />,
       );
     },
@@ -158,11 +169,15 @@ export default new Hono<AppContext>()
 function older_messages_request(
   id: number,
   { messages, older }: CrispMessagesPage,
+  plugin_urn: string,
 ) {
   const oldest = messages.at(0);
   if (!older || !oldest) return null;
   return urls.moderations[":id"].email.older.$hx_get({
     param: { id },
-    query: { before: String(older.before), run: message_run(oldest) },
+    query: {
+      before: String(older.before),
+      run: message_run(oldest, plugin_urn),
+    },
   });
 }

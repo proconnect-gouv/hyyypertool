@@ -1,6 +1,6 @@
 //
 
-import type { CrispMessage } from "#src/lib/crisp";
+import { crisp_message_author, type CrispMessage } from "#src/lib/crisp";
 import type {
   CrispConversation,
   CrispMessagesPage,
@@ -20,12 +20,14 @@ export function Crisp({
   crisp,
   describedby,
   older,
+  plugin_urn,
   reply,
   website_id,
 }: {
   crisp: CrispConversation;
   describedby: string;
   older: HxRequest | null;
+  plugin_urn: string;
   reply: ReplyFormProps;
   website_id: string;
 }) {
@@ -41,7 +43,11 @@ export function Crisp({
           tabindex={0}
         >
           <ul class="list-none">
-            <CrispMessages older={older} page={crisp.page} />
+            <CrispMessages
+              older={older}
+              page={crisp.page}
+              plugin_urn={plugin_urn}
+            />
           </ul>
         </div>
         <ReplyFormIsland {...reply} />
@@ -54,10 +60,12 @@ export function CrispMessages({
   next,
   older,
   page,
+  plugin_urn,
 }: {
   next?: { run: string; timestamp: number };
   older: HxRequest | null;
   page: CrispMessagesPage;
+  plugin_urn: string;
 }) {
   const last = page.messages.at(-1);
   const stale_separator_id =
@@ -66,7 +74,7 @@ export function CrispMessages({
       : null;
   const following = [
     ...page.messages.slice(1).map((message) => ({
-      run: message_run(message),
+      run: message_run(message, plugin_urn),
       timestamp: message.timestamp,
     })),
     next,
@@ -100,8 +108,9 @@ export function CrispMessages({
             key={`${message.fingerprint}`}
           >
             <Message
-              ends_run={ends_run(message, following[index])}
+              ends_run={ends_run(message, following[index], plugin_urn)}
               message={message}
+              plugin_urn={plugin_urn}
             />
           </li>
         </>
@@ -113,19 +122,20 @@ export function CrispMessages({
   );
 }
 
-export function message_run(message: CrispMessage) {
+export function message_run(message: CrispMessage, plugin_urn: string) {
   return message.type === "event"
     ? `event:${message.fingerprint}`
-    : `${message.from}:${message.user.nickname}`;
+    : `${crisp_message_author(message, plugin_urn)}:${message.user.nickname}`;
 }
 
 function ends_run(
   message: CrispMessage,
   following: { run: string; timestamp: number } | undefined,
+  plugin_urn: string,
 ) {
   return (
     !following ||
-    following.run !== message_run(message) ||
+    following.run !== message_run(message, plugin_urn) ||
     day_key(following.timestamp) !== day_key(message.timestamp)
   );
 }

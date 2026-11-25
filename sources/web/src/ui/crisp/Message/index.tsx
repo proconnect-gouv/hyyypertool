@@ -1,6 +1,10 @@
 //
 
-import type { CrispMessage } from "#src/lib/crisp";
+import {
+  crisp_message_author,
+  type CrispMessage,
+  type CrispMessageAuthor,
+} from "#src/lib/crisp";
 import { Time } from "#src/ui/time";
 import { tv } from "tailwind-variants";
 import { processor } from "../processor";
@@ -10,19 +14,29 @@ import { processor } from "../processor";
 export async function Message({
   ends_run = true,
   message,
+  plugin_urn,
 }: {
   ends_run?: boolean;
   message: CrispMessage;
+  plugin_urn: string;
 }) {
   if (message.type === "event") return <EventMessage message={message} />;
 
+  const author = crisp_message_author(message, plugin_urn);
+  const author_label = AUTHOR_LABELS[author];
+  const author_variant = author === "system" ? "operator" : author;
+  const message_label =
+    message.type === "note"
+      ? `Note privée ${author_label}`
+      : `Message ${author_label}`;
   const { avatar, badge, base, bubble, column, meta } = message_variants({
     ends_run,
-    kind: message.type === "note" ? "note" : message.from,
+    kind: message.type === "note" ? "note" : author_variant,
   });
 
   return (
     <figure class={base()}>
+      <span class="sr-only">{message_label}</span>
       <span
         aria-hidden="true"
         class={avatar({ class: avatar_color(message.user.nickname) })}
@@ -128,6 +142,12 @@ const AVATAR_COLORS = [
   "bg-grey-425",
   "bg-red-marianne",
 ];
+
+const AUTHOR_LABELS: Record<CrispMessageAuthor, string> = {
+  operator: "d'un opérateur",
+  system: "du système",
+  user: "de l'usager",
+};
 
 const EVENT_LABELS: Record<string, string> = {
   "state:resolved": "✅ A résolu la conversation",

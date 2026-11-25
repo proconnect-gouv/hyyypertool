@@ -7,6 +7,7 @@ import { z } from "zod";
 const MessageBase = z.object({
   fingerprint: z.number(),
   from: z.enum(["operator", "user"]),
+  origin: z.string().optional(),
   session_id: z.string(),
   timestamp: z.number(),
   user: z.object({ nickname: z.string() }),
@@ -41,3 +42,16 @@ export const CrispMessageSchema = z.union([
 
 export type CrispMessage = z.infer<typeof CrispMessageSchema>;
 export type CrispMessageWire = z.input<typeof CrispMessageSchema>;
+
+export type CrispMessageAuthor = "operator" | "system" | "user";
+
+function urn_value(value: string | undefined) {
+  return value?.startsWith("urn:") ? value.slice(4) : value;
+}
+
+export function crisp_message_author(
+  { from, origin }: Pick<CrispMessage, "from" | "origin">,
+  plugin_urn: string,
+): CrispMessageAuthor {
+  return urn_value(origin) === urn_value(plugin_urn) ? "system" : from;
+}
