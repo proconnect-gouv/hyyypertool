@@ -1,3 +1,4 @@
+import type { CrispApi } from "#src/lib/crisp";
 import { create_router } from "#src/router";
 import { hyyyper_pglite } from "@~/hyyyperbase/testing";
 import {
@@ -90,22 +91,47 @@ export function create_testing_router() {
       set_crisp_client({
         create_conversation: async () => ({ session_id: "test-session" }),
         get_conversation: async ({ session_id }: { session_id: string }) => ({
-          conversation: { meta: { subject: "Conversation de test" } },
+          conversation: {
+            created_at: 1_700_000_000_000,
+            last_message: "Message 4",
+            meta: {
+              avatar: "",
+              data: {},
+              device: {},
+              email: "user@example.com",
+              ip: "",
+              nickname: "User",
+              phone: "",
+              segments: ["email"],
+              subject: "Conversation de test",
+            },
+          },
           messages: Array.from({ length: 4 }, (_, index) => ({
             content: `Message ${index + 1}`,
+            delivered: "",
+            edited: false,
             fingerprint: index + 1,
-            from: "operator",
+            from: "operator" as const,
+            origin: "email",
+            read: "",
             session_id,
             timestamp: 1_700_000_000_000 + index,
-            type: "text",
-            user: { nickname: "Maude Rateur" },
+            type: "text" as const,
+            user: {
+              avatar: "",
+              nickname: "Maude Rateur",
+              type: ["website" as const],
+            },
             website_id: "test",
           })),
         }),
-        get_user: async () => null,
-        send_message: async () => undefined,
+        get_user: async () => ({
+          nickname: "Test Operator",
+          user_id: "test-operator",
+        }),
         mark_conversation_as_resolved: async () => undefined,
-      } as never),
+        send_message: async () => ({ fingerprint: 0 }),
+      } satisfies CrispApi),
     )
     .use(set_nonce("nonce"))
     .use(set_fetch(create_test_fetch()))
