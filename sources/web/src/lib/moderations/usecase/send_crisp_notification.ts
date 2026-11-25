@@ -1,7 +1,11 @@
 //
 
-import type { CrispApi, parse_ticket_id } from "#src/lib/crisp";
-import type { User } from "@proconnect-gouv/proconnect.crisp/types";
+import {
+  CrispHttpError,
+  type CrispApi,
+  type CrispSender,
+  type parse_ticket_id,
+} from "#src/lib/crisp";
 import { match } from "ts-pattern";
 
 //
@@ -14,7 +18,7 @@ export async function send_crisp_notification(
     subject: string;
     nickname: string;
     content: string;
-    sender: Partial<User>;
+    sender: CrispSender;
   },
 ): Promise<
   | { kind: "created"; session_id: string }
@@ -45,10 +49,8 @@ export async function send_crisp_notification(
         await send(session_id);
         return { kind: "reused", session_id } as const;
       } catch (error) {
-        // fetch_crisp throws plain Errors with no status field, so a stale
-        // (deleted on Crisp's side) ticket_id is detected by matching " 404 "
-        // in the message text.
-        if (!(error instanceof Error) || !/ 404 /.test(error.message)) {
+        // A stale ticket_id (deleted on Crisp's side) answers 404.
+        if (!(error instanceof CrispHttpError) || error.http_status !== 404) {
           throw error;
         }
         return create_and_send();

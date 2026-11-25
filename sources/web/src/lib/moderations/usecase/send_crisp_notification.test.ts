@@ -1,7 +1,7 @@
 //
 
 import { expect, test } from "bun:test";
-import { parse_ticket_id } from "#src/lib/crisp";
+import { CrispHttpError, parse_ticket_id } from "#src/lib/crisp";
 import { send_crisp_notification } from "./send_crisp_notification";
 
 //
@@ -11,7 +11,7 @@ const params = {
   subject: "subject",
   nickname: "user@example.com",
   content: "content",
-  sender: {},
+  sender: { nickname: "operator" },
 };
 
 test("creates a conversation when there is no Crisp session", async () => {
@@ -51,8 +51,9 @@ test("falls back to a new conversation when the stored session is 404 on Crisp",
     send_message: async ({ session_id }: { session_id: string }) => {
       send_message_calls += 1;
       if (session_id === "session_stale") {
-        throw new Error(
+        throw new CrispHttpError(
           "https://api.crisp.chat/v1/website/x/conversation/session_stale/message 404 Not Found",
+          { http_status: 404, cause: undefined },
         );
       }
       return { fingerprint: 0 };
@@ -74,7 +75,10 @@ test("rethrows non-404 errors without falling back", async () => {
       throw new Error("should not be called");
     },
     send_message: async () => {
-      throw new Error("https://api.crisp.chat/v1/x 500 Internal Server Error");
+      throw new CrispHttpError(
+        "https://api.crisp.chat/v1/x 500 Internal Server Error",
+        { http_status: 500, cause: undefined },
+      );
     },
   };
 
@@ -83,5 +87,5 @@ test("rethrows non-404 errors without falling back", async () => {
       ...params,
       ticket: parse_ticket_id("session_some"),
     }),
-  ).rejects.toThrow("500");
+  ).rejects.toMatchObject({ http_status: 500 });
 });
