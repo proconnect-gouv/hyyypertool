@@ -16,7 +16,7 @@ import { find_moderation_for_email } from "./find_moderation_for_email.query";
 
 //
 
-const MAX_ARTICLE_COUNT = 3;
+const MESSAGE_LIMIT = 3;
 
 //
 
@@ -52,7 +52,7 @@ export default new Hono<AppContext>().get(
 
     const [error, conversation] = await to(
       get_crisp_conversation(crisp, {
-        limit: MAX_ARTICLE_COUNT,
+        limit: MESSAGE_LIMIT,
         session_id: ticket.session_id,
       }),
     );
@@ -71,7 +71,7 @@ export default new Hono<AppContext>().get(
       <Crisp
         crisp={conversation}
         describedby={describedby}
-        limit={MAX_ARTICLE_COUNT}
+        limit={MESSAGE_LIMIT}
         website_id={website_id}
       />,
     );
