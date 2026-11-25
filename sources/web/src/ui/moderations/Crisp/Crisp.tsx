@@ -1,58 +1,72 @@
 //
 
-import type { Config } from "#src/lib/crisp";
-import type { GetCripsFromSessionIdHandler } from "#src/lib/moderations";
+import type { CrispConversation } from "#src/lib/moderations";
 import { callout } from "#src/ui/callout";
 import { OpenInCrisp, short_session_id } from "#src/ui/links";
 import { LocalTime } from "#src/ui/time";
-import { createContext, useContext } from "hono/jsx";
 import { match } from "ts-pattern";
 import { Message } from "../../crisp";
 
 //
 
-interface Values {
-  crisp_config: Config;
+export function Crisp({
+  crisp,
+  limit,
+  website_id,
+}: {
+  crisp: CrispConversation;
   limit: number;
-  crisp: Awaited<ReturnType<GetCripsFromSessionIdHandler>>;
-}
-const context = createContext<Values>(null as any);
-
-//
-
-export async function Crisp() {
-  const { describedby } = { describedby: "" };
-
+  website_id: string;
+}) {
   return (
-    <section aria-describedby={describedby}>
-      <Header />
-      <List />
+    <section>
+      <Header crisp={crisp} website_id={website_id} />
+      <List crisp={crisp} limit={limit} website_id={website_id} />
     </section>
   );
 }
-Crisp.Provider = context.Provider;
 
 //
 
-function Header() {
-  const { crisp, crisp_config } = useContext(context);
-  const { subject, session_id } = crisp;
+function Header({
+  crisp: { session_id, subject },
+  website_id,
+}: {
+  crisp: CrispConversation;
+  website_id: string;
+}) {
   return (
     <h5 class="flex flex-row justify-between">
       <span>{subject}</span>
-      <OpenInCrisp session_id={session_id} website_id={crisp_config.website_id}>
+      <OpenInCrisp session_id={session_id} website_id={website_id}>
         #{short_session_id(session_id)}
       </OpenInCrisp>
     </h5>
   );
 }
 
-function List() {
-  const { crisp } = useContext(context);
-  const { messages } = crisp;
+function List({
+  crisp: { messages, session_id, show_more },
+  limit,
+  website_id,
+}: {
+  crisp: CrispConversation;
+  limit: number;
+  website_id: string;
+}) {
   return (
     <ul class="list-none">
-      <ShowMore />
+      {show_more ? (
+        <li class="my-12 text-center">
+          <ShowMoreCallout
+            limit={limit}
+            session_id={session_id}
+            website_id={website_id}
+          />
+        </li>
+      ) : (
+        <></>
+      )}
       {messages.map((message) => (
         <li id={`${message.fingerprint}`} key={`${message.fingerprint}`}>
           {match(message.type)
@@ -65,33 +79,23 @@ function List() {
                 <hr />
               </>
             ))
-            .otherwise(() => (
-              <>[...]</>
-            ))}
+            .with("note", "file", () => <>[...]</>)
+            .exhaustive()}
         </li>
       ))}
     </ul>
   );
 }
 
-function ShowMore() {
-  const { crisp } = useContext(context);
-  const { show_more, session_id } = crisp;
-
-  if (!show_more) return <></>;
-
-  return (
-    <li class="my-12 text-center">
-      <ShowMoreCallout session_id={session_id} />
-    </li>
-  );
-}
-
-function ShowMoreCallout({ session_id }: { session_id: string }) {
-  const {
-    crisp_config: { website_id },
-    limit,
-  } = useContext(context);
+function ShowMoreCallout({
+  limit,
+  session_id,
+  website_id,
+}: {
+  limit: number;
+  session_id: string;
+  website_id: string;
+}) {
   const { base, text, title } = callout({ intent: "warning" });
   return (
     <div class={base()}>
@@ -100,7 +104,6 @@ function ShowMoreCallout({ session_id }: { session_id: string }) {
         Seul les {limit} derniers messages sont affichés.
         <br />
         Consulter tous les messages sur Crisp{" "}
-        <pre>{JSON.stringify({ session_id, website_id }, null, 2)}</pre>
         <OpenInCrisp session_id={session_id} website_id={website_id}>
           #{short_session_id(session_id)}
         </OpenInCrisp>

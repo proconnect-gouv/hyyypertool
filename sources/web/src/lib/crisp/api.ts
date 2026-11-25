@@ -3,6 +3,8 @@
 import { fetch_crisp } from "@proconnect-gouv/proconnect.crisp/client";
 import type {
   CreateConversationRoute,
+  GetConversationRoute,
+  GetMessagesInAConversationRoute,
   OperatorsRouter,
   SendMessageInAConversationRoute,
   UpdateConversationMetaRoute,
@@ -36,6 +38,7 @@ export class CrispHttpError extends Error {
 export function crisp_api(config: CrispConfig) {
   return {
     create_conversation: create_conversation(config),
+    get_conversation: get_conversation(config),
     get_user: get_user_info(config),
     mark_conversation_as_resolved: mark_conversation_as_resolved(config),
     send_message: send_message(config),
@@ -59,6 +62,32 @@ async function crisp_request<T>(request: Promise<T>): Promise<T> {
       cause: error,
     });
   }
+}
+
+function get_conversation(config: Config) {
+  return async function get_conversation({
+    session_id,
+  }: {
+    session_id: string;
+  }) {
+    const conversation = await crisp_request(
+      fetch_crisp<GetConversationRoute>(config, {
+        endpoint: `/v1/website/${config.website_id}/conversation/${session_id}`,
+        method: "GET",
+        searchParams: {},
+      }),
+    );
+
+    const messages = await crisp_request(
+      fetch_crisp<GetMessagesInAConversationRoute>(config, {
+        endpoint: `/v1/website/${config.website_id}/conversation/${session_id}/messages`,
+        method: "GET",
+        searchParams: {},
+      }),
+    );
+
+    return { conversation, messages };
+  };
 }
 
 function create_conversation(config: Config) {

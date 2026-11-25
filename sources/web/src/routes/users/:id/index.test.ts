@@ -74,6 +74,7 @@ test("DELETE /users/:id deletes user and redirects", async () => {
     create_conversation: mock().mockResolvedValue({
       session_id: "session_123",
     }),
+    get_conversation: mock(),
     get_user: mock().mockResolvedValue({ nickname: "Test User" }),
     mark_conversation_as_resolved: mock().mockResolvedValue(undefined),
     send_message: mock().mockResolvedValue(undefined),
@@ -118,6 +119,7 @@ test("PATCH /users/:id/reset/email_verified resets email verification", async ()
     create_conversation: mock().mockResolvedValue({
       session_id: "session_123",
     }),
+    get_conversation: mock(),
     get_user: mock().mockResolvedValue({ nickname: "Test User" }),
     mark_conversation_as_resolved: mock().mockResolvedValue(undefined),
     send_message: mock().mockResolvedValue(undefined),
@@ -230,6 +232,7 @@ test("PATCH /users/:id/reset/password resets password", async () => {
     create_conversation: mock().mockResolvedValue({
       session_id: "session_123",
     }),
+    get_conversation: mock(),
     get_user: mock().mockResolvedValue({ nickname: "Test User" }),
     mark_conversation_as_resolved: mock().mockResolvedValue(undefined),
     send_message: mock().mockResolvedValue(undefined),
@@ -264,6 +267,7 @@ test("PATCH /users/:id/reset/mfa resets MFA", async () => {
     create_conversation: mock().mockResolvedValue({
       session_id: "session_123",
     }),
+    get_conversation: mock(),
     get_user: mock().mockResolvedValue({ nickname: "Test User" }),
     mark_conversation_as_resolved: mock().mockResolvedValue(undefined),
     send_message: mock().mockResolvedValue(undefined),
