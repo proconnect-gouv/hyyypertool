@@ -24,6 +24,7 @@ const crisp: CrispApi = {
     session_id: "🗨️",
   }),
   get_conversation: mock(),
+  get_messages: mock(),
   get_user: mock().mockResolvedValue({
     nickname: "👩‍🚀",
   }),

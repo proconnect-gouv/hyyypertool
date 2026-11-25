@@ -92,3 +92,25 @@ document.body.addEventListener("htmx:timeout", () => {
     message: "La requête a pris trop de temps.",
   });
 });
+
+/**
+ * Keep the reader's place when a swap inside a `[data-keep-scroll]` scroller
+ * inserts content above what is on screen (older messages loaded on top).
+ */
+document.body.addEventListener("htmx:beforeSwap", (event) => {
+  const target = (event as CustomEvent).detail?.target as Element | undefined;
+  const scroller = target?.closest("[data-keep-scroll]");
+  const anchor = target?.parentElement?.querySelector(
+    ":scope > [data-keep-scroll-anchor]",
+  );
+  if (!scroller || !anchor) return;
+
+  const top = anchor.getBoundingClientRect().top;
+  document.body.addEventListener(
+    "htmx:afterSwap",
+    () => {
+      scroller.scrollTop += anchor.getBoundingClientRect().top - top;
+    },
+    { once: true },
+  );
+});

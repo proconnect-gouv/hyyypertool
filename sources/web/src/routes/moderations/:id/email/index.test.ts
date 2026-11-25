@@ -1,7 +1,7 @@
 //
 
 import { NotFoundError } from "#src/errors";
-import type { CrispApi } from "#src/lib/crisp";
+import { crisp_api, type CrispApi } from "#src/lib/crisp";
 import { set_config } from "#src/middleware/config";
 import { set_crisp_client } from "#src/middleware/crisp";
 import { set_identite_pg } from "#src/middleware/identite-pg";
@@ -78,29 +78,25 @@ test("GET /moderations/:id/email shows the Crisp exchange described by its headi
     type: "",
   });
 
-  const get_conversation = mock<CrispApi["get_conversation"]>(
-    async ({ session_id }) => ({
-      conversation: {
-        created_at: 1_700_000_000_000,
-        last_message: "Message 1",
-        meta: {
-          avatar: "",
-          data: {},
-          device: {},
-          email: "user@example.com",
-          ip: "",
-          nickname: "User",
-          phone: "",
-          segments: ["email"],
-          subject: "Conversation de test",
-        },
-      },
-      messages: [],
-    }),
-  );
+  const get_conversation = mock<CrispApi["get_conversation"]>(async () => ({
+    created_at: 1_700_000_000_000,
+    last_message: "",
+    meta: {
+      avatar: "",
+      data: {},
+      device: {},
+      email: "user@example.com",
+      ip: "",
+      nickname: "User",
+      phone: "",
+      segments: ["email"],
+      subject: "Conversation de test",
+    },
+  }));
   const crisp = {
     create_conversation: mock(),
     get_conversation,
+    get_messages: mock<CrispApi["get_messages"]>(async () => []),
     get_user: mock(),
     mark_conversation_as_resolved: mock(),
     send_message: mock(),
@@ -129,4 +125,86 @@ test("GET /moderations/:id/email shows the Crisp exchange described by its headi
   expect(body).toContain('aria-describedby="🐘"');
   expect(body).toContain("Conversation de test");
   expect(get_conversation).toHaveBeenCalledWith({ session_id: "session_test" });
+});
+
+test("GET /moderations/:id/email shows a hostile Crisp conversation as inert text", async () => {
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+  const moderation_id = await create_adora_pony_moderation(pg, {
+    ticket_id: "session_hostile",
+    type: "",
+  });
+
+  const payload = `<script>alert(1)</script><img src=x onerror=alert(1)>`;
+  const message = {
+    fingerprint: 1,
+    from: "user",
+    session_id: "session_hostile",
+    timestamp: 1_700_000_000_000,
+    user: { nickname: payload },
+    website_id: "test",
+  };
+  const messages = [
+    {
+      ...message,
+      content: `${payload} [lien](javascript:alert(1))`,
+      type: "text",
+    },
+    {
+      ...message,
+      content: `${payload} ![](javascript:alert(1))`,
+      type: "note",
+    },
+    {
+      ...message,
+      content: { name: payload, type: "text/html", url: "javascript:alert(1)" },
+      type: "file",
+    },
+    { ...message, content: { namespace: payload }, type: "event" },
+    { ...message, type: payload },
+  ].map((hostile, index) => ({ ...hostile, fingerprint: index + 1 }));
+  using crisp_server = Bun.serve({
+    fetch: ({ url }) =>
+      Response.json({
+        data: url.endsWith("/messages")
+          ? messages
+          : { meta: { nickname: payload, subject: payload } },
+      }),
+    port: 0,
+  });
+
+  const response = await new Hono()
+    .use(
+      set_config({
+        ALLOWED_USERS: "good@captain.yargs",
+        CRISP_WEBSITE_ID: "test",
+      }),
+    )
+    .use(set_identite_pg(pg))
+    .use(set_nonce("nonce"))
+    .use(set_userinfo({ email: "good@captain.yargs" }))
+    .use(
+      set_crisp_client(
+        crisp_api({
+          base_url: crisp_server.url.origin,
+          identifier: "",
+          key: "",
+          plugin_urn: "urn:test",
+          user_nickname: "",
+          website_id: "test",
+        }),
+      ),
+    )
+    .route("/:id/email", app)
+    .onError((error) => {
+      throw error;
+    })
+    .request(`/${moderation_id}/email?describedby=🐘`);
+  const html = await response.text();
+
+  expect(response.status).toBe(200);
+  expect(html).toContain("&lt;script&gt;alert(1)&lt;/script&gt;");
+  expect(html).not.toContain("<script");
+  expect(html).not.toContain("<img");
+  expect(html).not.toContain("javascript:");
 });

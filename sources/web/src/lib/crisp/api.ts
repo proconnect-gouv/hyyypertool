@@ -15,6 +15,8 @@ import type {
   ConversationMeta,
   User,
 } from "@proconnect-gouv/proconnect.crisp/types";
+import { z } from "zod";
+import { CrispMessageSchema } from "./types";
 
 //
 
@@ -39,6 +41,7 @@ export function crisp_api(config: CrispConfig) {
   return {
     create_conversation: create_conversation(config),
     get_conversation: get_conversation(config),
+    get_messages: get_messages(config),
     get_user: get_operator(config),
     mark_conversation_as_resolved: mark_conversation_as_resolved(config),
     send_message: send_message(config),
@@ -70,23 +73,35 @@ function get_conversation(config: Config) {
   }: {
     session_id: string;
   }) {
-    const conversation = await crisp_request(
+    return crisp_request(
       fetch_crisp<GetConversationRoute>(config, {
         endpoint: `/v1/website/${config.website_id}/conversation/${session_id}`,
         method: "GET",
         searchParams: {},
       }),
     );
+  };
+}
 
+function get_messages(config: Config) {
+  return async function get_messages({
+    session_id,
+    timestamp_before,
+  }: {
+    session_id: string;
+    timestamp_before?: number;
+  }) {
     const messages = await crisp_request(
       fetch_crisp<GetMessagesInAConversationRoute>(config, {
         endpoint: `/v1/website/${config.website_id}/conversation/${session_id}/messages`,
         method: "GET",
-        searchParams: {},
+        searchParams:
+          timestamp_before === undefined
+            ? {}
+            : { timestamp_before: String(timestamp_before) },
       }),
     );
-
-    return { conversation, messages };
+    return z.array(CrispMessageSchema).parse(messages);
   };
 }
 

@@ -1,4 +1,4 @@
-import type { CrispApi } from "#src/lib/crisp";
+import { CrispMessageSchema, type CrispApi } from "#src/lib/crisp";
 import { create_router } from "#src/router";
 import { hyyyper_pglite } from "@~/hyyyperbase/testing";
 import {
@@ -14,6 +14,11 @@ import { set_hyyyper_pg } from "../middleware/hyyyperbase";
 import { set_identite_pg } from "../middleware/identite-pg";
 import { set_identite_runtime } from "../middleware/identite-runtime";
 import { set_nonce } from "../middleware/nonce";
+import {
+  crisp_messages_batch,
+  seeded_crisp_messages,
+  seeded_crisp_subject,
+} from "../routes/___dev___/api.crisp.chat/messages";
 import { create_asset_router } from "../routes/assets";
 
 const ASSETS_PATH = "/assets/test-v123";
@@ -91,40 +96,25 @@ export function create_testing_router() {
       set_crisp_client({
         create_conversation: async () => ({ session_id: "test-session" }),
         get_conversation: async ({ session_id }: { session_id: string }) => ({
-          conversation: {
-            created_at: 1_700_000_000_000,
-            last_message: "Message 4",
-            meta: {
-              avatar: "",
-              data: {},
-              device: {},
-              email: "user@example.com",
-              ip: "",
-              nickname: "User",
-              phone: "",
-              segments: ["email"],
-              subject: "Conversation de test",
-            },
+          created_at: 1_700_000_000_000,
+          last_message: "",
+          meta: {
+            avatar: "",
+            data: {},
+            device: {},
+            email: "user@example.com",
+            ip: "",
+            nickname: "User",
+            phone: "",
+            segments: ["email"],
+            subject: await seeded_crisp_subject(pg, session_id),
           },
-          messages: Array.from({ length: 4 }, (_, index) => ({
-            content: `Message ${index + 1}`,
-            delivered: "",
-            edited: false,
-            fingerprint: index + 1,
-            from: "operator" as const,
-            origin: "email",
-            read: "",
-            session_id,
-            timestamp: 1_700_000_000_000 + index,
-            type: "text" as const,
-            user: {
-              avatar: "",
-              nickname: "Maude Rateur",
-              type: ["website" as const],
-            },
-            website_id: "test",
-          })),
         }),
+        get_messages: async ({ session_id, timestamp_before }) =>
+          crisp_messages_batch(
+            seeded_crisp_messages(session_id, "test"),
+            timestamp_before,
+          ).map((message) => CrispMessageSchema.parse(message)),
         get_user: async () => {
           throw new Error("operator not found");
         },

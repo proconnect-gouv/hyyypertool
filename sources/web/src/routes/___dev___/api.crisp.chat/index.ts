@@ -1,31 +1,34 @@
 //
 
+import type { CrispMessageWire } from "#src/lib/crisp";
 import type { AppContext } from "#src/middleware/context";
 import { Hono } from "hono";
+import {
+  crisp_messages_batch,
+  seeded_crisp_messages,
+  seeded_crisp_subject,
+} from "./messages";
 
 //
 
-type Message = {
-  session_id: string;
-  website_id: string;
-  content: string;
-  type: string;
-  from: string;
-  origin: string;
-  user: Record<string, unknown>;
-  fingerprint: number;
-  timestamp: number;
-  edited: boolean;
-  read: string;
-  delivered: string;
-};
-type Conversation = { session_id: string; messages: Message[] };
+type Conversation = { session_id: string; messages: CrispMessageWire[] };
 
 const websites = new Map<string, Map<string, Conversation>>();
 
 function get_conversations(website_id: string) {
   if (!websites.has(website_id)) websites.set(website_id, new Map());
   return websites.get(website_id)!;
+}
+
+function get_conversation(website_id: string, session_id: string) {
+  const conversations = get_conversations(website_id);
+  if (!conversations.has(session_id)) {
+    conversations.set(session_id, {
+      session_id,
+      messages: seeded_crisp_messages(session_id, website_id),
+    });
+  }
+  return conversations.get(session_id)!;
 }
 
 //
@@ -43,11 +46,16 @@ export default new Hono<AppContext>()
     return c.json({ data: [...convs.values()] });
   })
 
-  .get("/v1/website/:website_id/conversation/:session_id", (c) => {
+  .get("/v1/website/:website_id/conversation/:session_id", async (c) => {
+    const { website_id, session_id } = c.req.param();
+    const last = get_conversation(website_id, session_id).messages.at(-1);
     return c.json({
       data: {
         created_at: Date.now(),
-        last_message: "",
+        last_message:
+          last && "content" in last && typeof last.content === "string"
+            ? last.content
+            : "",
         meta: {
           avatar: "",
           data: {},
@@ -57,7 +65,7 @@ export default new Hono<AppContext>()
           nickname: "",
           phone: "",
           segments: [],
-          subject: "Lorem Ipsum",
+          subject: await seeded_crisp_subject(c.var.identite_pg, session_id),
         },
       },
     });
@@ -75,23 +83,17 @@ export default new Hono<AppContext>()
     async (c) => {
       const { website_id, session_id } = c.req.param();
       const body = await c.req.json().catch(() => ({}));
-      const convs = get_conversations(website_id);
-      if (!convs.has(session_id))
-        convs.set(session_id, { session_id, messages: [] });
+      const conversation = get_conversation(website_id, session_id);
       const fingerprint = Date.now();
-      convs.get(session_id)!.messages.push({
-        session_id,
-        website_id,
-        content: body.content ?? "",
-        type: body.type ?? "text",
-        from: body.from ?? "operator",
-        origin: body.origin ?? "",
-        user: body.user ?? {},
+      conversation.messages.push({
+        content: String(body.content ?? ""),
         fingerprint,
+        from: "operator",
+        session_id,
         timestamp: fingerprint,
-        edited: false,
-        read: "",
-        delivered: "",
+        type: "text",
+        user: { nickname: String(body.user?.nickname ?? "") },
+        website_id,
       });
       return c.json({ data: { fingerprint } });
     },
@@ -99,8 +101,14 @@ export default new Hono<AppContext>()
 
   .get("/v1/website/:website_id/conversation/:session_id/messages", (c) => {
     const { website_id, session_id } = c.req.param();
-    const conv = get_conversations(website_id).get(session_id);
-    return c.json({ data: conv?.messages ?? [] });
+    const timestamp_before = c.req.query("timestamp_before");
+    const conversation = get_conversation(website_id, session_id);
+    return c.json({
+      data: crisp_messages_batch(
+        conversation.messages,
+        timestamp_before === undefined ? undefined : Number(timestamp_before),
+      ),
+    });
   })
 
   .patch("/v1/website/:website_id/conversation/:session_id/meta", (c) =>

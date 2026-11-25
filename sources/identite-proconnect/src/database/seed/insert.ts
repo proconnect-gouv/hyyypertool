@@ -122,7 +122,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
         sp_name: "Annuaire des entreprises",
         type: MODERATION_TYPES.enum.organization_join_block,
         user_id: jean_bon.id,
-        ticket_id: "session_115793",
+        ticket_id: "session_jean_dinum",
         status: "pending",
       });
     consola.verbose(
@@ -134,7 +134,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
       organization_id: abracadabra.id,
       sp_name: "data.gouv.fr",
       status: "pending",
-      ticket_id: "session_456",
+      ticket_id: "session_jean_abracadabra",
       type: MODERATION_TYPES.enum.organization_join_block,
       user_id: jean_bon.id,
     });
@@ -147,7 +147,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
       organization_id: abracadabra.id,
       sp_name: "Tchap",
       status: "pending",
-      ticket_id: "session_789",
+      ticket_id: "session_jean_dre_abracadabra",
       type: MODERATION_TYPES.enum.organization_join_block,
       user_id: jean_dre.id,
     });
@@ -174,7 +174,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
       organization_id: dengi.id,
       sp_name: "Resana",
       status: "accepted",
-      ticket_id: "session_789",
+      ticket_id: "session_richard_dengi_accepted",
       type: MODERATION_TYPES.enum.organization_join_block,
       user_id: richard_bon.id,
     });
@@ -186,7 +186,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
       organization_id: dengi.id,
       sp_name: "Resana",
       status: "pending",
-      ticket_id: "session_321",
+      ticket_id: "session_richard_dengi",
       type: MODERATION_TYPES.enum.organization_join_block,
       user_id: richard_bon.id,
     });
@@ -198,7 +198,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
       organization_id: bosch_france,
       sp_name: "RDV Service Public",
       status: "pending",
-      ticket_id: "session_654",
+      ticket_id: "session_marie_bosch_france",
       type: MODERATION_TYPES.enum.non_verified_domain,
       user_id: marie_bon,
     });
@@ -218,7 +218,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
       organization_id: bosch_rexroth,
       sp_name: "Portail RSE",
       status: "accepted",
-      ticket_id: "session_987",
+      ticket_id: "session_marie_bosch_rexroth",
       type: MODERATION_TYPES.enum.non_verified_domain,
       user_id: marie_bon,
     });
@@ -248,7 +248,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
       created_at: "2011-11-13T12:11:12+02:00",
       organization_id: yes_we_hack,
       status: "pending",
-      ticket_id: "session_duplicate_member",
+      ticket_id: "session_raphael_yes_we_hack",
       type: MODERATION_TYPES.enum.non_verified_domain,
       user_id: raphael.id,
     });
@@ -263,7 +263,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
       organization_id: dinum.id,
       sp_name: "MonAideCyber",
       status: "rejected",
-      ticket_id: "session_111",
+      ticket_id: "session_raphael_alpha_dinum_rejected",
       type: MODERATION_TYPES.enum.non_verified_domain,
       user_id: raphael_alpha.id,
     });
@@ -280,7 +280,7 @@ export async function insert_database(db: IdentiteProconnectPgDatabase) {
       moderated_by: "moderateur@beta.gouv.fr",
       organization_id: dinum.id,
       status: "reopened",
-      ticket_id: "session_222",
+      ticket_id: "session_raphael_alpha_dinum_reopened",
       type: MODERATION_TYPES.enum.non_verified_domain,
       user_id: raphael_alpha.id,
     });
