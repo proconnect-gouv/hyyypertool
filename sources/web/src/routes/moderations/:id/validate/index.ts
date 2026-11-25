@@ -72,7 +72,7 @@ export default new Hono<AppContext>().patch(
     if (add_domain) {
       const [domain_error] = await to(
         change_email_domain_verification(
-          { pg: identite_pg, runtime },
+          { runtime },
           {
             domain,
             organization_id,

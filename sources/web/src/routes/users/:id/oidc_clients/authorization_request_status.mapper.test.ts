@@ -19,6 +19,14 @@ test.each([
   [
     {
       created_at: "2221-12-31 22:00:00+00",
+      interaction_cid: "🦄 cid",
+      outcome: "signed_out",
+    },
+    "Déconnectée",
+  ],
+  [
+    {
+      created_at: "2221-12-31 22:00:00+00",
       interaction_cid: null,
       outcome: "succeeded",
     },

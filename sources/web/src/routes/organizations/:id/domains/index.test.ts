@@ -355,7 +355,7 @@ test("PATCH /organizations/:id/domains/:domain_id updates verification type to v
   }
 });
 
-test("PATCH /organizations/:id/domains/:domain_id refuses a domain without touching members", async () => {
+test("PATCH /organizations/:id/domains/:domain_id refuses a domain and removes its members", async () => {
   const moderator = await insert_moderateur(hyyyper_pglite);
   const organization_id = await create_unicorn_organization(pg);
   const adora_pony_user_id = await create_adora_pony_user(pg);
@@ -404,7 +404,5 @@ test("PATCH /organizations/:id/domains/:domain_id refuses a domain without touch
     await pg.query.users_organizations.findFirst({
       where: (table, { eq }) => eq(table.user_id, adora_pony_user_id),
     }),
-  ).toMatchObject({
-    verification_type: LinkEnum.enum.domain_not_verified_yet,
-  });
+  ).toBeUndefined();
 });

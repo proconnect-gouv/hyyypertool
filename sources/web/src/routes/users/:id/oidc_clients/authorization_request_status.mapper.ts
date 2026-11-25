@@ -25,6 +25,7 @@ export function authorization_request_status_label({
   if (parsed_outcome.success)
     return match(parsed_outcome.data)
       .with("succeeded", () => "Terminée")
+      .with("signed_out", () => "Déconnectée")
       .exhaustive();
   if (outcome !== null) return "—";
   const age_in_ms = now.getTime() - new Date(created_at).getTime();
