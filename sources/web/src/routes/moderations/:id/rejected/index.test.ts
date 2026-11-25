@@ -53,7 +53,7 @@ test("PATCH /moderations/:id/rejected rejects moderation via new crisp conversat
 
   const mock_crisp = {
     create_conversation: mock().mockResolvedValue({
-      session_id: "crisp-new-session",
+      session_id: "session_new",
     }),
     get_user: mock().mockResolvedValue({
       user_id: "operator-123",
@@ -103,12 +103,12 @@ test("PATCH /moderations/:id/rejected rejects moderation via new crisp conversat
     nickname: "adora.pony@unicorn.xyz",
   });
   expect(mock_crisp.send_message).toHaveBeenCalledWith({
-    session_id: "crisp-new-session",
+    session_id: "session_new",
     content: expect.stringContaining("Your request has been rejected."),
     user: { user_id: "operator-123", nickname: "Anaïs T." },
   });
   expect(mock_crisp.mark_conversation_as_resolved).toHaveBeenCalledWith({
-    session_id: "crisp-new-session",
+    session_id: "session_new",
   });
 
   const moderation = await pg.query.moderations.findFirst({
@@ -117,7 +117,7 @@ test("PATCH /moderations/:id/rejected rejects moderation via new crisp conversat
 
   expect(moderation).toMatchObject({
     status: "rejected",
-    ticket_id: "crisp-new-session",
+    ticket_id: "session_new",
     end_user_reason: "Not eligible",
   });
 });
