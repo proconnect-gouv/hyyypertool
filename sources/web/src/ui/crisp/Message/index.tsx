@@ -210,12 +210,12 @@ const message_variants = tv({
     base: "flex max-w-[85%] items-end gap-2",
     bubble: `
       relative
+      max-w-full
       rounded-2xl
       px-4
       py-3
       break-words
-      [&_a]:underline
-      [&_img]:max-w-full
+      [&_a]:underline [&_img]:mx-auto [&_img]:block [&_img]:max-w-full
       [&_p:not(:last-child)]:mb-2
     `,
     column: "flex min-w-0 flex-col gap-1",
