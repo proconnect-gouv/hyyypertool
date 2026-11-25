@@ -26,9 +26,29 @@ Scenario(
     I.click("Modération a traiter de Jean Bon pour 13002526500013");
     I.click("Échanges entre Jean et nous");
 
-    I.see("Conversation de test");
-    I.see("Message 4");
-    I.see("Afficher plus de messages");
-    I.see("Consulter tous les messages sur Crisp");
+    I.see(
+      "[ProConnect] Demande pour rejoindre Direction interministerielle du numerique (DINUM)",
+    );
+    I.see("#jean_di");
+    I.see("A résolu la conversation");
+    I.see("a écrit cette note privée");
+    I.dontSee("Message 24");
+    I.see("Afficher les messages précédents");
+
+    I.click("Afficher les messages précédents");
+    I.see("Message 24");
+    I.dontSee("Message 15");
+
+    I.click("Afficher les messages précédents");
+    I.see("Message 15");
+    I.dontSee("Message 03");
+
+    I.click("Afficher les messages précédents");
+    I.see("Message 03");
+    I.dontSee("Message 01");
+
+    I.click("Afficher les messages précédents");
+    I.see("Message 01");
+    I.dontSee("Afficher les messages précédents");
   },
 );

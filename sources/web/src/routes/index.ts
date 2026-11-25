@@ -45,6 +45,9 @@ const {
 const rate_limit_pool = new pg.Pool({
   connectionString: HYYYPERBASE_DATABASE_URL,
 });
+const identite_pg = set_identite_pg_database({
+  connectionString: PROCONNECT_IDENTITE_DATABASE_URL,
+});
 
 //
 
@@ -79,15 +82,12 @@ const app = new Hono<{ Bindings: AppEnv }>()
   .use(set_userinfo())
   //
   .route("/", welcome_router)
+  .use("/___dev___/*", identite_pg)
   .route("/___dev___", dev_router)
   .route("/auth", auth_router)
   //
   .use(set_crisp_client_from_config())
-  .use(
-    set_identite_pg_database({
-      connectionString: PROCONNECT_IDENTITE_DATABASE_URL,
-    }),
-  )
+  .use(identite_pg)
   .use(
     set_hyyyper_pg(
       drizzle(HYYYPERBASE_DATABASE_URL, {
