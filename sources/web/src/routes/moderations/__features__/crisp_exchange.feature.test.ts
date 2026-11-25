@@ -52,3 +52,20 @@ Scenario(
     I.dontSee("Afficher les messages précédents");
   },
 );
+
+Scenario("Le modérateur répond dans les échanges Crisp", ({ I }) => {
+  beforeAll(async () => {
+    await empty_databases();
+    await insert_database(pg);
+    await insert_moderateur(hyyyper_pglite);
+  });
+
+  I.amOnPage("/moderations");
+  I.click("Modération a traiter de Jean Bon pour 13002526500013");
+  I.click("Échanges entre Jean et nous");
+  I.dontSee("Réponse envoyée depuis la modération");
+
+  I.fillField("Répondre à l'usager…", "Réponse envoyée depuis la modération");
+  I.click({ role: "button", name: "Envoyer" });
+  I.see("Réponse envoyée depuis la modération");
+});

@@ -9,6 +9,8 @@ import { button } from "#src/ui/button";
 import { OpenInCrisp, short_session_id } from "#src/ui/links";
 import { Time } from "#src/ui/time";
 import { Message } from "../../crisp";
+import type { ReplyFormProps } from "./ReplyForm.client";
+import { ReplyFormIsland } from "./ReplyFormIsland";
 
 //
 
@@ -18,26 +20,31 @@ export function Crisp({
   crisp,
   describedby,
   older,
+  reply,
   website_id,
 }: {
   crisp: CrispConversation;
   describedby: string;
   older: HxRequest | null;
+  reply: ReplyFormProps;
   website_id: string;
 }) {
   return (
     <section aria-describedby={describedby}>
       <Header crisp={crisp} website_id={website_id} />
-      <div
-        aria-label="Messages de la conversation Crisp"
-        class="border-border flex max-h-[calc(100dvh-var(--exchange-summary-h)-9rem)] [scrollbar-width:thin] [scrollbar-color:var(--color-grey-425)_transparent] [scrollbar-gutter:stable] flex-col-reverse overflow-y-auto overscroll-contain rounded-sm border p-2 shadow-inner"
-        data-keep-scroll
-        role="region"
-        tabindex={0}
-      >
-        <ul class="list-none">
-          <CrispMessages older={older} page={crisp.page} />
-        </ul>
+      <div class="border-border rounded-sm border shadow-inner">
+        <div
+          aria-label="Messages de la conversation Crisp"
+          class="flex max-h-[calc(100dvh-var(--exchange-summary-h)-17rem)] [scrollbar-width:thin] [scrollbar-color:var(--color-grey-425)_transparent] [scrollbar-gutter:stable] flex-col-reverse overflow-y-auto overscroll-contain p-2"
+          data-keep-scroll
+          role="region"
+          tabindex={0}
+        >
+          <ul class="list-none">
+            <CrispMessages older={older} page={crisp.page} />
+          </ul>
+        </div>
+        <ReplyFormIsland {...reply} />
       </div>
     </section>
   );
