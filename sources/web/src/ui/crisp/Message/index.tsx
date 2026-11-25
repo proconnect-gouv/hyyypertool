@@ -1,7 +1,7 @@
 //
 
 import type { ConversationMessage } from "#src/lib/crisp";
-import { create_link } from "#src/lib/crisp";
+import { CRISP_APP_BASE_URL, create_link } from "#src/lib/crisp";
 import { quote } from "#src/ui/quote";
 import { LocalTime } from "#src/ui/time";
 import { tv } from "tailwind-variants";
@@ -26,7 +26,7 @@ export async function TextMessage({
   });
   const html_content = String(await processor.process(messsage.content));
   const link = create_link({
-    base_url: "https://app.crisp.chat",
+    base_url: CRISP_APP_BASE_URL,
     website_id: messsage.website_id,
   });
 

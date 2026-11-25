@@ -1,5 +1,7 @@
 //
 
+import { CRISP_APP_BASE_URL, create_link } from "#src/lib/crisp";
+
 interface Props {
   describedby: string;
   website_id: string;
@@ -15,7 +17,10 @@ export function FindCorrespondingEmail(props: Props) {
       class="m-auto my-12 flex justify-around"
     >
       <a
-        href={`https://app.crisp.chat/website/${website_id}/inbox/`}
+        href={create_link({
+          base_url: CRISP_APP_BASE_URL,
+          website_id,
+        }).inbox()}
         rel="noopener noreferrer"
         target="_blank"
       >

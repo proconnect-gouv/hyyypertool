@@ -1,6 +1,7 @@
 //
 
 import type { Child } from "hono/jsx";
+import { CRISP_APP_BASE_URL, create_link } from "#src/lib/crisp";
 
 //
 /**
@@ -14,7 +15,7 @@ import type { Child } from "hono/jsx";
  */
 
 export function OpenInCrisp({
-  base_url = "https://app.crisp.chat",
+  base_url = CRISP_APP_BASE_URL,
   children,
   session_id,
   website_id,
@@ -26,7 +27,7 @@ export function OpenInCrisp({
 }) {
   return (
     <a
-      href={`${base_url}/website/${website_id}/inbox/${session_id}`}
+      href={create_link({ base_url, website_id }).session(session_id)}
       rel="noopener noreferrer"
       target="_blank"
     >
