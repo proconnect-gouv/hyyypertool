@@ -1,14 +1,14 @@
 //
 
 interface Props {
+  describedby: string;
   website_id: string;
 }
 
 //
 
 export function FindCorrespondingEmail(props: Props) {
-  const { website_id } = props;
-  const { describedby } = { describedby: "" };
+  const { describedby, website_id } = props;
   return (
     <div
       aria-describedby={describedby}

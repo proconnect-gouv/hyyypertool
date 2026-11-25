@@ -1,13 +1,13 @@
-import type { CrispApi } from "#src/lib/crisp";
+import type { CrispApi, CrispSessionId } from "#src/lib/crisp";
 
 export async function get_crisp_conversation(
   crisp: Pick<CrispApi, "get_conversation">,
   {
-    session_id,
     limit,
+    session_id,
   }: {
-    session_id: string;
     limit: number;
+    session_id: CrispSessionId;
   },
 ) {
   const { conversation, messages } = await crisp.get_conversation({

@@ -1,7 +1,7 @@
 //
 
 import { NotFoundError } from "#src/errors";
-import { is_crisp_ticket } from "#src/lib/crisp";
+import { parse_ticket_id } from "#src/lib/crisp";
 import { get_crisp_conversation } from "#src/lib/moderations";
 import type { AppContext } from "#src/middleware/context";
 import { DescribedBySchema, EntitySchema } from "#src/schema";
@@ -32,6 +32,7 @@ export default new Hono<AppContext>().get(
     var: { crisp, identite_pg },
   }) {
     const { id } = req.valid("param");
+    const { describedby } = req.valid("query");
 
     const moderation = await find_moderation_for_email(identite_pg, id);
     if (!moderation) throw new NotFoundError("Moderation not found");
@@ -39,25 +40,37 @@ export default new Hono<AppContext>().get(
     const website_id = config.CRISP_WEBSITE_ID;
     const { ticket_id } = moderation;
 
-    if (!ticket_id || !is_crisp_ticket(ticket_id)) {
-      return render(<FindCorrespondingEmail website_id={website_id} />);
+    const ticket = parse_ticket_id(ticket_id);
+    if (ticket.kind === "no_crisp_session") {
+      return render(
+        <FindCorrespondingEmail
+          describedby={describedby}
+          website_id={website_id}
+        />,
+      );
     }
 
     const [error, conversation] = await to(
       get_crisp_conversation(crisp, {
         limit: MAX_ARTICLE_COUNT,
-        session_id: ticket_id,
+        session_id: ticket.session_id,
       }),
     );
 
     if (error) {
       consola.error(error);
-      return render(<FindCorrespondingEmail website_id={website_id} />);
+      return render(
+        <FindCorrespondingEmail
+          describedby={describedby}
+          website_id={website_id}
+        />,
+      );
     }
 
     return render(
       <Crisp
         crisp={conversation}
+        describedby={describedby}
         limit={MAX_ARTICLE_COUNT}
         website_id={website_id}
       />,

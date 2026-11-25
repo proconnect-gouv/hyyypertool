@@ -11,15 +11,17 @@ import { Message } from "../../crisp";
 
 export function Crisp({
   crisp,
+  describedby,
   limit,
   website_id,
 }: {
   crisp: CrispConversation;
+  describedby: string;
   limit: number;
   website_id: string;
 }) {
   return (
-    <section>
+    <section aria-describedby={describedby}>
       <Header crisp={crisp} website_id={website_id} />
       <List crisp={crisp} limit={limit} website_id={website_id} />
     </section>
