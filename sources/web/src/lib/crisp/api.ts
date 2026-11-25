@@ -20,6 +20,11 @@ import { CrispMessageSchema } from "./types";
 
 //
 
+export const CrispOutgoingMessageTypeSchema = z.enum(["note", "text"]);
+export type CrispOutgoingMessageType = z.infer<
+  typeof CrispOutgoingMessageTypeSchema
+>;
+
 export type CrispConfig = Config & { plugin_urn: `urn:${string}` };
 export type CrispSender = Pick<User, "nickname"> &
   Partial<Pick<User, "user_id">>;
@@ -141,11 +146,13 @@ function send_message(config: CrispConfig) {
   return async function send_message({
     content,
     session_id,
+    type = "text",
     user,
   }: {
     content: string;
-    user: CrispSender;
     session_id: string;
+    type?: CrispOutgoingMessageType;
+    user: CrispSender;
   }) {
     return crisp_request(
       fetch_crisp<SendMessageInAConversationRoute>(config, {
@@ -156,7 +163,8 @@ function send_message(config: CrispConfig) {
           content,
           from: "operator",
           origin: config.plugin_urn,
-          type: "text",
+          // Crisp accepts private notes; proconnect.crisp only types "text".
+          type: type as "text",
           user,
         },
       }),

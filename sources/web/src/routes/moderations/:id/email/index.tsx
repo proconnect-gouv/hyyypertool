@@ -1,7 +1,10 @@
 //
 
 import { NotFoundError } from "#src/errors";
-import { parse_ticket_id } from "#src/lib/crisp";
+import {
+  CrispOutgoingMessageTypeSchema,
+  parse_ticket_id,
+} from "#src/lib/crisp";
 import {
   get_crisp_conversation,
   get_crisp_messages,
@@ -69,6 +72,11 @@ export default new Hono<AppContext>()
           crisp={conversation}
           describedby={describedby}
           older={older_messages_request(id, conversation.page)}
+          reply={{
+            action: urls.moderations[":id"].email.reply.$url({ param: { id } })
+              .pathname,
+            moderation_id: id,
+          }}
           website_id={website_id}
         />,
       );
@@ -109,6 +117,39 @@ export default new Hono<AppContext>()
           page={page}
         />,
       );
+    },
+  )
+  .post(
+    "/reply",
+    zValidator("param", EntitySchema),
+    zValidator(
+      "form",
+      z.object({
+        content: z.string().trim().min(1),
+        type: CrispOutgoingMessageTypeSchema,
+      }),
+    ),
+    async function POST({ req, text, var: { crisp, identite_pg, userinfo } }) {
+      const { id } = req.valid("param");
+      const { content, type } = req.valid("form");
+
+      const moderation = await find_moderation_for_email(identite_pg, id);
+      if (!moderation) throw new NotFoundError("Moderation not found");
+
+      const ticket = parse_ticket_id(moderation.ticket_id);
+      if (ticket.kind === "no_crisp_session") {
+        throw new NotFoundError("Moderation has no Crisp conversation");
+      }
+
+      const [, operator] = await to(crisp.get_user({ email: userinfo.email }));
+      await crisp.send_message({
+        content,
+        session_id: ticket.session_id,
+        type,
+        user: operator ?? { nickname: "L'équipe ProConnect" },
+      });
+
+      return text("OK");
     },
   );
 

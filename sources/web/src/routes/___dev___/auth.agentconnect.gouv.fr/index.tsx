@@ -52,8 +52,8 @@ const profiles = [
     email: "moderateur@beta.gouv.fr",
     sub: "oidc-sub-moderateur",
     role: "moderator",
-    given_name: "Modérateur",
-    usual_name: "Beta",
+    given_name: "Maude",
+    usual_name: "Rateur",
   },
   {
     email: "jeanbon@yopmail.com",

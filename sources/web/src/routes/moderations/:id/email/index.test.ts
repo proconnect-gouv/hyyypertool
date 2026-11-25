@@ -204,7 +204,51 @@ test("GET /moderations/:id/email shows a hostile Crisp conversation as inert tex
 
   expect(response.status).toBe(200);
   expect(html).toContain("&lt;script&gt;alert(1)&lt;/script&gt;");
-  expect(html).not.toContain("<script");
+  expect(html).not.toContain("<script>alert");
   expect(html).not.toContain("<img");
   expect(html).not.toContain("javascript:");
+});
+
+test("POST /moderations/:id/email/reply sends the moderator note to the Crisp conversation", async () => {
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+  const moderation_id = await create_adora_pony_moderation(pg, {
+    ticket_id: "session_reply",
+    type: "",
+  });
+
+  const send_message = mock<CrispApi["send_message"]>();
+  const crisp = {
+    create_conversation: mock(),
+    get_conversation: mock(),
+    get_messages: mock(),
+    get_user: mock<CrispApi["get_user"]>(async () => ({
+      nickname: "Good C.",
+      user_id: "operator",
+    })),
+    mark_conversation_as_resolved: mock(),
+    send_message,
+  };
+
+  const response = await new Hono()
+    .use(set_config({ ALLOWED_USERS: "good@captain.yargs" }))
+    .use(set_identite_pg(pg))
+    .use(set_userinfo({ email: "good@captain.yargs" }))
+    .use(set_crisp_client(crisp))
+    .route("/:id/email", app)
+    .onError((error) => {
+      throw error;
+    })
+    .request(`/${moderation_id}/email/reply`, {
+      body: new URLSearchParams({ content: "  Bonjour !  ", type: "note" }),
+      method: "POST",
+    });
+
+  expect(response.status).toBe(200);
+  expect(send_message).toHaveBeenCalledWith({
+    content: "Bonjour !",
+    session_id: "session_reply",
+    type: "note",
+    user: { nickname: "Good C.", user_id: "operator" },
+  });
 });

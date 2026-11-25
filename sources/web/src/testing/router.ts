@@ -1,4 +1,8 @@
-import { CrispMessageSchema, type CrispApi } from "#src/lib/crisp";
+import {
+  CrispMessageSchema,
+  type CrispApi,
+  type CrispMessageWire,
+} from "#src/lib/crisp";
 import { create_router } from "#src/router";
 import { hyyyper_pglite } from "@~/hyyyperbase/testing";
 import {
@@ -51,6 +55,8 @@ export function create_test_fetch(): (
     return fetch(input, init);
   };
 }
+
+const sent_messages = new Map<string, CrispMessageWire[]>();
 
 export function create_testing_router() {
   return new Hono()
@@ -112,14 +118,32 @@ export function create_testing_router() {
         }),
         get_messages: async ({ session_id, timestamp_before }) =>
           crisp_messages_batch(
-            seeded_crisp_messages(session_id, "test"),
+            [
+              ...seeded_crisp_messages(session_id, "test"),
+              ...(sent_messages.get(session_id) ?? []),
+            ],
             timestamp_before,
           ).map((message) => CrispMessageSchema.parse(message)),
         get_user: async () => {
           throw new Error("operator not found");
         },
         mark_conversation_as_resolved: async () => undefined,
-        send_message: async () => ({ fingerprint: 0 }),
+        send_message: async ({ content, session_id, type = "text", user }) => {
+          const fingerprint = Date.now();
+          const messages = sent_messages.get(session_id) ?? [];
+          messages.push({
+            content,
+            fingerprint,
+            from: "operator",
+            session_id,
+            timestamp: fingerprint,
+            type,
+            user: { nickname: user.nickname },
+            website_id: "test",
+          });
+          sent_messages.set(session_id, messages);
+          return { fingerprint };
+        },
       } satisfies CrispApi),
     )
     .use(set_nonce("nonce"))

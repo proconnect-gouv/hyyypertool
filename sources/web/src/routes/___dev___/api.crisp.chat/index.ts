@@ -91,7 +91,7 @@ export default new Hono<AppContext>()
         from: "operator",
         session_id,
         timestamp: fingerprint,
-        type: "text",
+        type: body.type === "note" ? "note" : "text",
         user: { nickname: String(body.user?.nickname ?? "") },
         website_id,
       });
