@@ -45,6 +45,7 @@ beforeEach(hyyyperbase_empty_database);
 function make_crisp_mock() {
   return {
     create_conversation: mock().mockResolvedValue({ session_id: "session" }),
+    get_conversation: mock(),
     get_user: mock().mockResolvedValue({ nickname: "Test User" }),
     mark_conversation_as_resolved: mock().mockResolvedValue(undefined),
     send_message: mock().mockResolvedValue(undefined),

@@ -23,6 +23,7 @@ const crisp: CrispApi = {
   create_conversation: mock().mockResolvedValue({
     session_id: "🗨️",
   }),
+  get_conversation: mock(),
   get_user: mock().mockResolvedValue({
     nickname: "👩‍🚀",
   }),

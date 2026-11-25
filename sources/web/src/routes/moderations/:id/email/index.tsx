@@ -1,14 +1,15 @@
 //
 
 import { NotFoundError } from "#src/errors";
-import { get_crisp_mail } from "#src/lib/crisp";
-import { get_crips_from_session_id } from "#src/lib/moderations";
+import { is_crisp_ticket } from "#src/lib/crisp";
+import { get_crisp_conversation } from "#src/lib/moderations";
 import type { AppContext } from "#src/middleware/context";
 import { DescribedBySchema, EntitySchema } from "#src/schema";
 import { Crisp } from "#src/ui/moderations/Crisp";
 import { FindCorrespondingEmail } from "#src/ui/moderations/FindCorrespondingEmail";
 import { zValidator } from "@hono/zod-validator";
 import { to } from "await-to-js";
+import consola from "consola";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { find_moderation_for_email } from "./find_moderation_for_email.query";
@@ -24,48 +25,42 @@ export default new Hono<AppContext>().get(
   jsxRenderer(),
   zValidator("param", EntitySchema),
   zValidator("query", DescribedBySchema),
-  async function GET({ render, req, env: config, var: { identite_pg } }) {
+  async function GET({
+    render,
+    req,
+    env: config,
+    var: { crisp, identite_pg },
+  }) {
     const { id } = req.valid("param");
-    const { describedby } = req.valid("query");
 
     const moderation = await find_moderation_for_email(identite_pg, id);
-    const ticket_id = moderation?.ticket_id ?? "";
-
-    const crisp_config = {
-      base_url: config.CRISP_BASE_URL,
-      identifier: config.CRISP_IDENTIFIER,
-      key: config.CRISP_KEY,
-      plugin_urn: config.CRISP_PLUGIN_URN,
-      user_nickname: config.CRISP_USER_NICKNAME,
-      website_id: config.CRISP_WEBSITE_ID,
-      debug: false,
-    };
-
-    const [, crisp] = await to(
-      get_crips_from_session_id(
-        {
-          crisp_config,
-          fetch_crisp_mail: get_crisp_mail,
-        },
-        {
-          session_id: ticket_id,
-          limit: MAX_ARTICLE_COUNT,
-        },
-      ),
-    );
-
     if (!moderation) throw new NotFoundError("Moderation not found");
 
-    if (crisp) {
-      return render(
-        <Crisp.Provider value={{ crisp_config, limit: 3, crisp }}>
-          <Crisp />
-        </Crisp.Provider>,
-      );
+    const website_id = config.CRISP_WEBSITE_ID;
+    const { ticket_id } = moderation;
+
+    if (!ticket_id || !is_crisp_ticket(ticket_id)) {
+      return render(<FindCorrespondingEmail website_id={website_id} />);
+    }
+
+    const [error, conversation] = await to(
+      get_crisp_conversation(crisp, {
+        limit: MAX_ARTICLE_COUNT,
+        session_id: ticket_id,
+      }),
+    );
+
+    if (error) {
+      consola.error(error);
+      return render(<FindCorrespondingEmail website_id={website_id} />);
     }
 
     return render(
-      <FindCorrespondingEmail website_id={crisp_config.website_id} />,
+      <Crisp
+        crisp={conversation}
+        limit={MAX_ARTICLE_COUNT}
+        website_id={website_id}
+      />,
     );
   },
 );
