@@ -39,7 +39,7 @@ export function crisp_api(config: CrispConfig) {
   return {
     create_conversation: create_conversation(config),
     get_conversation: get_conversation(config),
-    get_user: get_user_info(config),
+    get_user: get_operator(config),
     mark_conversation_as_resolved: mark_conversation_as_resolved(config),
     send_message: send_message(config),
   };
@@ -166,7 +166,7 @@ function mark_conversation_as_resolved(config: Config) {
   };
 }
 
-export function get_user_info(config: Config) {
+function get_operator(config: Config) {
   return async function get_user({ email }: { email: string }) {
     const operators = await crisp_request(
       fetch_crisp<OperatorsRouter>(config, {
