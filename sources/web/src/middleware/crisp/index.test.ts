@@ -10,6 +10,7 @@ import { set_crisp_client, set_crisp_client_from_config } from "./index";
 test("set_crisp_client injects mock client", async () => {
   const mockCrisp = {
     create_conversation: mock(),
+    get_conversation: mock(),
     get_user: mock(),
     mark_conversation_as_resolved: mock(),
     send_message: mock(),

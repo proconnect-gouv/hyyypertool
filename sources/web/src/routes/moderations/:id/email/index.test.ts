@@ -1,5 +1,6 @@
 //
 
+import { NotFoundError } from "#src/errors";
 import { set_config } from "#src/middleware/config";
 import { set_identite_pg } from "#src/middleware/identite-pg";
 import { set_nonce } from "#src/middleware/nonce";
@@ -48,4 +49,19 @@ test("GET /moderations/:id/email", async () => {
   if (response.status >= 400) throw await response.text();
 
   expect(response.status).toBe(200);
+});
+
+test("GET /moderations/:id/email throws NotFoundError for an unknown moderation", async () => {
+  await expect(
+    new Hono()
+      .use(set_config({ ALLOWED_USERS: "good@captain.yargs" }))
+      .use(set_identite_pg(pg))
+      .use(set_nonce("nonce"))
+      .use(set_userinfo({ email: "good@captain.yargs" }))
+      .route("/:id/email", app)
+      .onError((error) => {
+        throw error;
+      })
+      .request(`/42/email?describedby=🐘`),
+  ).rejects.toThrow(NotFoundError);
 });

@@ -89,6 +89,19 @@ export function create_testing_router() {
     .use(
       set_crisp_client({
         create_conversation: async () => ({ session_id: "test-session" }),
+        get_conversation: async ({ session_id }: { session_id: string }) => ({
+          conversation: { meta: { subject: "Conversation de test" } },
+          messages: Array.from({ length: 4 }, (_, index) => ({
+            content: `Message ${index + 1}`,
+            fingerprint: index + 1,
+            from: "operator",
+            session_id,
+            timestamp: 1_700_000_000_000 + index,
+            type: "text",
+            user: { nickname: "Maude Rateur" },
+            website_id: "test",
+          })),
+        }),
         get_user: async () => null,
         send_message: async () => undefined,
         mark_conversation_as_resolved: async () => undefined,

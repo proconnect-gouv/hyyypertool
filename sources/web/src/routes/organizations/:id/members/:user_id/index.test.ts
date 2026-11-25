@@ -49,6 +49,7 @@ function make_crisp_mock() {
     create_conversation: mock().mockResolvedValue({
       session_id: "session_123",
     }),
+    get_conversation: mock(),
     get_user: mock().mockResolvedValue({ nickname: "Test User" }),
     mark_conversation_as_resolved: mock().mockResolvedValue(undefined),
     send_message: mock().mockResolvedValue(undefined),
