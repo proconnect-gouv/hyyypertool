@@ -2,6 +2,7 @@
 
 import { HTTPError, NotFoundError } from "#src/errors";
 import type { HtmxHeader } from "#src/htmx";
+import { is_crisp_ticket } from "#src/lib/crisp";
 import {
   MODERATION_EVENTS,
   build_moderation_update,
@@ -148,7 +149,10 @@ export default new Hono<AppContext>().patch(
       const sender = operator ?? { nickname: userinfo.email };
 
       const { session_id } = await send_crisp_notification(crisp, {
-        ticket_id: moderation.ticket_id ?? undefined,
+        ticket_id:
+          moderation.ticket_id && is_crisp_ticket(moderation.ticket_id)
+            ? moderation.ticket_id
+            : undefined,
         email: moderation.user.email,
         subject: `[ProConnect] Demande pour rejoindre ${cached_libelle || siret}`,
         nickname: moderation.user.email,

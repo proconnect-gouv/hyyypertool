@@ -66,7 +66,7 @@ test.each(cases)(
 
     const mock_crisp = {
       create_conversation: mock().mockResolvedValue({
-        session_id: "test-session",
+        session_id: "session_test",
       }),
       get_user: mock().mockResolvedValue({
         user_id: "operator-123",
@@ -111,7 +111,7 @@ test.each(cases)(
       organization_id: 1,
       sp_name: null,
       status: "accepted",
-      ticket_id: send_notification === "true" ? "test-session" : null,
+      ticket_id: send_notification === "true" ? "session_test" : null,
       type: "💼",
       user_id: 1,
       allow_editing: false,
@@ -138,12 +138,12 @@ test.each(cases)(
         email: "admin@example.com",
       });
       expect(mock_crisp.send_message).toHaveBeenCalledWith({
-        session_id: "test-session",
+        session_id: "session_test",
         content: expect.stringContaining("a été validé"),
         user: { user_id: "operator-123", nickname: "Anaïs T." },
       });
       expect(mock_crisp.mark_conversation_as_resolved).toHaveBeenCalledWith({
-        session_id: "test-session",
+        session_id: "session_test",
       });
     }
   },
@@ -168,7 +168,7 @@ test("PATCH /moderations/:id/validate succeeds when user is already linked to or
 
   const mock_crisp = {
     create_conversation: mock().mockResolvedValue({
-      session_id: "test-session",
+      session_id: "session_test",
     }),
     send_message: mock().mockResolvedValue(undefined),
     mark_conversation_as_resolved: mock().mockResolvedValue(undefined),
@@ -221,4 +221,57 @@ test("PATCH /moderations/:id/validate succeeds when user is already linked to or
     organization_id,
     user_id,
   });
+});
+
+test("PATCH /moderations/:id/validate creates a Crisp conversation for a legacy ticket", async () => {
+  await create_unicorn_organization(pg);
+  await create_adora_pony_user(pg);
+  const moderation_id = await create_adora_pony_moderation(pg, {
+    ticket_id: "12345",
+    type: "💼",
+  });
+
+  const mock_crisp = {
+    create_conversation: mock().mockResolvedValue({
+      session_id: "session_new",
+    }),
+    get_user: mock().mockResolvedValue({
+      user_id: "operator-123",
+      nickname: "Anaïs T.",
+    }),
+    send_message: mock().mockResolvedValue(undefined),
+    mark_conversation_as_resolved: mock().mockResolvedValue(undefined),
+  };
+
+  const response = await new Hono()
+    .use(
+      set_config({
+        ALLOWED_USERS: "admin@example.com",
+        API_AUTH_URL: "http://crisp.localhost",
+      }),
+    )
+    .use(set_identite_pg(pg))
+    .use(set_identite_pg_client(client as any))
+    .use(set_crisp_client(mock_crisp as any))
+    .use(set_userinfo({ email: "admin@example.com", sub: "admin-sub" }))
+    .use(set_identite_runtime())
+    .route("/:id/validate", app)
+    .request(`/${moderation_id}/validate`, {
+      method: "PATCH",
+      body: new URLSearchParams({
+        add_member: "AS_INTERNAL",
+        send_notification: "true",
+      }),
+    });
+
+  expect(response.status).toBe(200);
+  expect(mock_crisp.create_conversation).toHaveBeenCalled();
+  expect(mock_crisp.send_message).toHaveBeenCalledWith(
+    expect.objectContaining({ session_id: "session_new" }),
+  );
+
+  const moderation = await pg.query.moderations.findFirst({
+    where: (table, { eq }) => eq(table.id, moderation_id),
+  });
+  expect(moderation?.ticket_id).toBe("session_new");
 });
