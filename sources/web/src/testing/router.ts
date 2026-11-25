@@ -67,7 +67,7 @@ export function create_testing_router() {
         CRISP_BASE_URL: "https://api.crisp.chat",
         CRISP_IDENTIFIER: "",
         CRISP_KEY: "",
-        CRISP_PLUGIN_URN: "",
+        CRISP_PLUGIN_URN: "urn:test",
         CRISP_USER_NICKNAME: "",
         CRISP_WEBSITE_ID: "",
         CRISP_RESOLVE_DELAY: 0,
