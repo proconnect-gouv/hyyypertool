@@ -22,9 +22,12 @@ export async function ModerationExchanges({
   });
 
   return (
-    <section id="exchange_moderation">
+    <section
+      id="exchange_moderation"
+      class="bg-surface sticky top-0 z-40 max-h-[calc(100dvh-6rem)] overflow-y-auto"
+    >
       <details id="exchange_details">
-        <summary>
+        <summary class="bg-surface sticky top-0 z-10 py-2">
           <h2 class="inline-block" id={$describedby}>
             📥️ Échanges entre {moderation.user.given_name} et nous :{" "}
           </h2>
