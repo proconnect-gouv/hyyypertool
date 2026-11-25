@@ -125,10 +125,9 @@ export function create_testing_router() {
             website_id: "test",
           })),
         }),
-        get_user: async () => ({
-          nickname: "Test Operator",
-          user_id: "test-operator",
-        }),
+        get_user: async () => {
+          throw new Error("operator not found");
+        },
         mark_conversation_as_resolved: async () => undefined,
         send_message: async () => ({ fingerprint: 0 }),
       } satisfies CrispApi),
