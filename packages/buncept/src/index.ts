@@ -274,6 +274,10 @@ export function create_browser(view: Bun.WebView) {
         const element = (${find})(${JSON.stringify(kind)}, ${JSON.stringify(locator)}, ${JSON.stringify(scopes)});
         if (!element) return "element not found";
         if (!(${actionable})(element)) return "element not visible or not enabled";
+        if (${JSON.stringify(kind)} === "click") {
+          const cover = (${covering})(element);
+          if (cover) return "element covered by " + cover;
+        }
         (${action})(element);
         return "ok";
       })()`,
@@ -501,6 +505,19 @@ function actionable(element: Element) {
     !element.hasAttribute("disabled") &&
     !element.hasAttribute("readonly")
   );
+}
+
+// A pointer lands on whatever is painted at the element's centre; the
+// in-page click does not, so check it the way a user's click would miss.
+// A hit on the element's own label counts: clicking it activates the input.
+function covering(element: Element) {
+  element.scrollIntoView({ block: "center", inline: "center" });
+  const { height, left, top, width } = element.getBoundingClientRect();
+  const hit = document.elementFromPoint(left + width / 2, top + height / 2);
+  if (!hit || element.contains(hit)) return "";
+  const labels = Array.from((element as HTMLInputElement).labels ?? []);
+  if (labels.some((label) => label.contains(hit))) return "";
+  return hit.outerHTML.slice(0, hit.outerHTML.indexOf(">") + 1);
 }
 
 // Resolves a locator inside the `scopes` chain, the way CodeceptJS does for

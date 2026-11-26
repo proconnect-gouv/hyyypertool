@@ -34,6 +34,24 @@ beforeAll(() => {
         return html(
           `<button onclick="out.textContent = confirm('Sure?') ? 'deleted' : 'kept'">Delete</button><p id="out"></p>`,
         );
+      // A row-wide link painted over the row's button, as a stretched
+      // `after:absolute after:inset-0` link does
+      if (pathname === "/covered")
+        return html(
+          `<table><tr style="position: relative">
+            <td><button onclick="out.textContent = 'opened'">Menu</button></td>
+            <td><a href="#row" style="position: absolute; inset: 0">Row</a></td>
+          </tr></table><p id="out"></p>`,
+        );
+      // A pill: the checkbox is visually hidden and the user clicks its label
+      if (pathname === "/pill")
+        return html(
+          `<label style="display: inline-block; padding: 8px">
+            <input type="checkbox" aria-label="Domaines" onchange="out.textContent = 'filtered'"
+              style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0)">
+            Domaines
+          </label><p id="out"></p>`,
+        );
       if (pathname === "/nav")
         return html(
           `<button onclick="setTimeout(() => (location.href = '/slow'), 50)">Go slow</button>`,
@@ -111,6 +129,12 @@ Scenario("checkOption clicks again until the option stays checked", ({ I }) => {
   I.see("notify on");
 });
 
+Scenario("click reaches a hidden checkbox through its label", ({ I }) => {
+  I.amOnPage("/pill");
+  I.click({ role: "checkbox", name: "Domaines" });
+  I.see("filtered");
+});
+
 Scenario("wait accepts a duration", ({ I }) => {
   I.amOnPage("/");
   I.wait(0);
@@ -173,6 +197,28 @@ test("concurrent calls to the view are serialized", async () => {
     );
     expect(titles).toHaveLength(5);
   } finally {
+    view.close();
+  }
+});
+
+test("click fails on an element another one is painted over", async () => {
+  const view = new Bun.WebView(
+    process.platform === "linux"
+      ? { backend: { type: "chrome", argv: ["--no-sandbox"] } }
+      : {},
+  );
+  const timeout = config.timeout;
+  config.timeout = 500;
+  try {
+    const browser = create_browser(view);
+    await browser.navigate(`${config.url}/covered`);
+    await expect(
+      browser.act("click", [], "Menu", (element) =>
+        (element as HTMLElement).click(),
+      ),
+    ).rejects.toThrow(/element covered by <a href=/);
+  } finally {
+    config.timeout = timeout;
     view.close();
   }
 });
