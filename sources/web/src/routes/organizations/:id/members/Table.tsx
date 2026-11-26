@@ -4,12 +4,12 @@ import type { Pagination } from "#src/schema";
 import { button } from "#src/ui/button";
 import { Foot } from "#src/ui/hx_table";
 import { MemberRowActions } from "#src/ui/member-row-actions";
-import { menu_item } from "#src/ui/menu";
-import { Menu, Popover } from "#src/ui/menu/components";
+import { Menu } from "#src/ui/menu/components";
 import {
   hx_get_members_table_props,
   MEMBERS_TABLE_IDS,
   SelectAllMembersIsland,
+  VERIFICATION_TYPE_LABELS,
 } from "#src/ui/organizations/members";
 import { row, table } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
@@ -177,21 +177,6 @@ function SortHeader({
   );
 }
 
-const verification_type_labels = [
-  [VerificationTypeSchema.enum.in_liste_dirigeants_rna, "liste dirigeants"],
-  [VerificationTypeSchema.enum.domain, "domaine email"],
-  [VerificationTypeSchema.enum.official_contact_email, "mail officiel"],
-  [
-    VerificationTypeSchema.enum.no_validation_means_available,
-    "no validation means available",
-  ],
-  [
-    VerificationTypeSchema.enum.verified_by_coop_mediation_numerique,
-    "verified by coop mediation numerique",
-  ],
-  [VerificationTypeSchema.enum.domain_not_verified_yet, "non vérifié"],
-] as const satisfies ReadonlyArray<readonly [BatchAction, string]>;
-
 // Shown only while a row is checked (CSS :has, no script), like Gmail's toolbar.
 function BatchActions({
   colspan,
@@ -223,47 +208,28 @@ function BatchActions({
           class="flex flex-wrap items-center gap-2"
           role="toolbar"
         >
-          <Menu>
-            <Menu.Trigger>
-              {(props) => (
-                <button
-                  {...props}
-                  class={button({
-                    class: "group has-[+:popover-open]:bg-surface",
-                    size: "sm",
-                    type: "tertiary",
-                  })}
-                  type="button"
-                >
-                  🔄 Type de vérification
-                  <svg
-                    aria-hidden="true"
-                    class="h-4 w-4 transition-transform group-has-[+:popover-open]:rotate-180"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 13.172l4.95-4.95 1.414 1.414L12 16 5.636 9.636 7.05 8.222z" />
-                  </svg>
-                </button>
-              )}
+          <Menu placement="bottom_start">
+            <Menu.Trigger
+              class={button({
+                class: "has-[+:popover-open]:bg-surface",
+                size: "sm",
+                type: "tertiary",
+              })}
+            >
+              🔄 Type de vérification
+              <Menu.Chevron />
             </Menu.Trigger>
             <Menu.Popover>
-              {(props) => (
-                <Popover {...props} placement="bottom_start">
-                  {verification_type_labels.map(([value, label]) => (
-                    <button
-                      {...batch(
-                        value,
-                        `Passer les membres sélectionnés en vérification « ${label} » ?`,
-                      )}
-                      class={menu_item()}
-                      role="menuitem"
-                    >
-                      {label}
-                    </button>
-                  ))}
-                </Popover>
-              )}
+              {VERIFICATION_TYPE_LABELS.map(([value, label]) => (
+                <Menu.Item
+                  {...batch(
+                    value,
+                    `Passer les membres sélectionnés en vérification « ${label} » ?`,
+                  )}
+                >
+                  {label}
+                </Menu.Item>
+              ))}
             </Menu.Popover>
           </Menu>
           <button

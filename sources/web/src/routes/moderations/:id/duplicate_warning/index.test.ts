@@ -78,11 +78,11 @@ test("GET /moderations/:id/duplicate_warning", async () => {
             class="inline-flex min-h-6 w-fit items-center gap-1 rounded-sm px-2 py-1 text-xs leading-4 font-bold uppercase text-label-success bg-alt-green-emeraude [&amp;&gt;svg:first-child]:-ml-0.5"
           >
             <svg
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              width="1em"
-              height="1em"
               aria-hidden="true"
+              fill="currentColor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
             >
               <path class="icon-check"></path></svg
             >Traité
@@ -94,11 +94,11 @@ test("GET /moderations/:id/duplicate_warning", async () => {
             class="inline-flex min-h-6 w-fit items-center gap-1 rounded-sm px-2 py-1 text-xs leading-4 font-bold uppercase text-label-success bg-alt-green-emeraude [&amp;&gt;svg:first-child]:-ml-0.5"
           >
             <svg
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              width="1em"
-              height="1em"
               aria-hidden="true"
+              fill="currentColor"
+              height="1em"
+              viewBox="0 0 24 24"
+              width="1em"
             >
               <path class="icon-check"></path></svg
             >Traité

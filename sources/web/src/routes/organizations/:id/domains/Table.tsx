@@ -4,8 +4,7 @@ import { hyper_ref } from "#src/html";
 import { button } from "#src/ui/button";
 import { GoogleSearchButton } from "#src/ui/button/components";
 import { input, input_group, label } from "#src/ui/form";
-import { menu_item } from "#src/ui/menu";
-import { HorizontalMenu } from "#src/ui/menu/components";
+import { HorizontalMenu, Menu } from "#src/ui/menu/components";
 import { table } from "#src/ui/table";
 import { LocalTime } from "#src/ui/time";
 import { urls } from "#src/urls";
@@ -14,7 +13,7 @@ import {
   type EmailDomainVerificationType,
 } from "@~/identite-proconnect/types";
 import { match } from "ts-pattern";
-import { add_params, type PatchQuery } from "./context";
+import { add_params } from "./context";
 import type { get_organization_domains } from "./get_organization_domains.query";
 //
 
@@ -184,96 +183,47 @@ function Row({
         >
           Vérifier le matching
         </GoogleSearchButton>
-        <DomainRowActions
-          organization_domain={organization_domain}
-          is_editor={is_editor}
-        />
+        {is_editor ? (
+          <RowActions organization_domain={organization_domain} />
+        ) : null}
       </td>
     </tr>
   );
 }
 
-function DomainRowActions({
-  organization_domain,
-  is_editor,
-}: {
-  organization_domain: Domains[number];
-  is_editor: boolean;
-}) {
-  if (!is_editor) return <></>;
-  return <RowActions organization_domain={organization_domain} />;
-}
+const DOMAIN_TYPE_LABELS = [
+  [EmailDomainVerificationEnum.enum.verified, "✅ Domaine autorisé"],
+  [EmailDomainVerificationEnum.enum.external, "❎ Domaine externe"],
+  [EmailDomainVerificationEnum.enum.refused, "🚫 Domaine refusé"],
+] as const;
 
-async function RowActions({
+function RowActions({
   organization_domain,
 }: {
   organization_domain: Domains[number];
 }) {
   const { domain, id, organization, organization_id } = organization_domain;
-
-  const hx_change_type_props = (type: PatchQuery["type"]) =>
-    urls.organizations[":id"].domains[":domain_id"].$hx_patch({
-      param: { id: organization_id, domain_id: id },
-      query: { type },
-    });
-
-  const hx_delete_domain_props = urls.organizations[":id"].domains[
-    ":domain_id"
-  ].$hx_delete({
-    param: { id: organization_id, domain_id: id },
-  });
+  const param = { domain_id: id, id: organization_id };
+  const organization_domain_urls =
+    urls.organizations[":id"].domains[":domain_id"];
 
   return (
     <HorizontalMenu>
-      <ul class=" [&_li+li]:border-t-grey-200 list-none p-0 [&_li+li]:border-t">
-        <li>
-          <button
-            {...await hx_change_type_props(
-              EmailDomainVerificationEnum.enum.verified,
-            )}
-            class={menu_item()}
-            hx-swap="none"
-            role="menuitem"
-          >
-            ✅ Domaine autorisé
-          </button>
-        </li>
-        <li>
-          <button
-            {...await hx_change_type_props(
-              EmailDomainVerificationEnum.enum.external,
-            )}
-            class={menu_item()}
-            hx-swap="none"
-            role="menuitem"
-          >
-            ❎ Domaine externe
-          </button>
-        </li>
-        <li>
-          <button
-            {...await hx_change_type_props(
-              EmailDomainVerificationEnum.enum.refused,
-            )}
-            class={menu_item()}
-            hx-swap="none"
-            role="menuitem"
-          >
-            🚫 Domaine refusé
-          </button>
-        </li>
-        <li>
-          <button
-            {...hx_delete_domain_props}
-            class={menu_item()}
-            hx-confirm={`Êtes-vous sûr de vouloir supprimer le domaine « ${domain} » de l'organisation « ${organization.cached_libelle} » ?`}
-            hx-swap="none"
-            role="menuitem"
-          >
-            🗑️ Supprimer
-          </button>
-        </li>
-      </ul>
+      {DOMAIN_TYPE_LABELS.map(([type, label]) => (
+        <Menu.Item
+          {...organization_domain_urls.$hx_patch({ param, query: { type } })}
+          hx-swap="none"
+        >
+          {label}
+        </Menu.Item>
+      ))}
+      <Menu.Item
+        {...organization_domain_urls.$hx_delete({ param })}
+        hx-confirm={`Êtes-vous sûr de vouloir supprimer le domaine « ${domain} » de l'organisation « ${organization.cached_libelle} » ?`}
+        hx-swap="none"
+      >
+        🗑️ Supprimer
+      </Menu.Item>
     </HorizontalMenu>
   );
 }

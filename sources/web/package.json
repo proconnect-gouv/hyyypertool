@@ -44,7 +44,6 @@
     "drizzle-orm": "0.45.4",
     "hono": "4.13.18",
     "hono-sessions": "0.8.1",
-    "hono-slotify": "workspace:*",
     "is-disposable-email-domain": "1.0.7",
     "jose": "6.2.17",
     "lodash.sortby": "4.7.0",
