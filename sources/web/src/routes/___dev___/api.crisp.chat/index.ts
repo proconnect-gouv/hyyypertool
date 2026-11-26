@@ -1,6 +1,6 @@
 //
 
-import type { CrispMessageWire } from "#src/lib/crisp";
+import { CrispMessageSchema, type CrispMessageWire } from "#src/lib/crisp";
 import type { AppContext } from "#src/middleware/context";
 import { Hono } from "hono";
 import {
@@ -11,7 +11,11 @@ import {
 
 //
 
-type Conversation = { session_id: string; messages: CrispMessageWire[] };
+type Conversation = {
+  messages: CrispMessageWire[];
+  session_id: string;
+  state: string;
+};
 
 const websites = new Map<string, Map<string, Conversation>>();
 
@@ -23,12 +27,27 @@ function get_conversations(website_id: string) {
 function get_conversation(website_id: string, session_id: string) {
   const conversations = get_conversations(website_id);
   if (!conversations.has(session_id)) {
+    const messages = seeded_crisp_messages(session_id, website_id);
     conversations.set(session_id, {
+      messages,
       session_id,
-      messages: seeded_crisp_messages(session_id, website_id),
+      state: last_state(messages),
     });
   }
   return conversations.get(session_id)!;
+}
+
+function last_state(messages: CrispMessageWire[]) {
+  const event = messages
+    .map((message) => CrispMessageSchema.parse(message))
+    .findLast(
+      (message) =>
+        message.type === "event" &&
+        message.content.namespace.startsWith("state:"),
+    );
+  return event?.type === "event"
+    ? event.content.namespace.slice("state:".length)
+    : "pending";
 }
 
 //
@@ -74,7 +93,11 @@ export default new Hono<AppContext>()
   .post("/v1/website/:website_id/conversation", (c) => {
     const { website_id } = c.req.param();
     const session_id = `session_${Date.now()}`;
-    get_conversations(website_id).set(session_id, { session_id, messages: [] });
+    get_conversations(website_id).set(session_id, {
+      messages: [],
+      session_id,
+      state: "pending",
+    });
     return c.json({ data: { session_id } });
   })
 
@@ -115,8 +138,38 @@ export default new Hono<AppContext>()
     c.json({}),
   )
 
-  .patch("/v1/website/:website_id/conversation/:session_id/state", (c) =>
-    c.json({}),
+  .get("/v1/website/:website_id/conversation/:session_id/state", (c) => {
+    const { website_id, session_id } = c.req.param();
+    return c.json({
+      data: { state: get_conversation(website_id, session_id).state },
+    });
+  })
+
+  .patch(
+    "/v1/website/:website_id/conversation/:session_id/state",
+    async (c) => {
+      const { website_id, session_id } = c.req.param();
+      const { state } = await c.req.json<{ state: string }>();
+      const conversation = get_conversation(website_id, session_id);
+      if (state !== conversation.state) {
+        const fingerprint = Math.max(
+          Date.now(),
+          (conversation.messages.at(-1)?.fingerprint ?? 0) + 1,
+        );
+        conversation.messages.push({
+          content: { namespace: `state:${state}` },
+          fingerprint,
+          from: "operator",
+          session_id,
+          timestamp: fingerprint,
+          type: "event",
+          user: { nickname: c.env.CRISP_USER_NICKNAME },
+          website_id,
+        });
+      }
+      conversation.state = state;
+      return c.json({});
+    },
   )
 
   .get("/v1/website/:website_id/operators/list", (c) =>

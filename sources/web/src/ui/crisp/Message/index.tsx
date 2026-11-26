@@ -155,6 +155,7 @@ const AUTHOR_LABELS: Record<CrispMessageAuthor, string> = {
 
 const EVENT_LABELS: Record<string, string> = {
   "state:resolved": "✅ A résolu la conversation",
+  "state:unresolved": "↩️ A rouvert la conversation",
 };
 
 const time_format = new Intl.DateTimeFormat("fr-FR", {
@@ -216,7 +217,7 @@ const message_variants = tv({
       py-3
       break-words
       [&_a]:underline [&_img]:mx-auto [&_img]:block [&_img]:max-w-full
-      [&_p:not(:last-child)]:mb-2
+      [&_p:last-child]:mb-0 [&_p:not(:last-child)]:mb-2
     `,
     column: "flex min-w-0 flex-col gap-1",
     meta: "text-text-muted px-2 text-xs",

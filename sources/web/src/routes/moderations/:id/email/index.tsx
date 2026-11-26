@@ -8,11 +8,17 @@ import {
 import {
   get_crisp_conversation,
   get_crisp_messages,
+  MODERATION_EVENTS,
   type CrispMessagesPage,
 } from "#src/lib/moderations";
 import type { AppContext } from "#src/middleware/context";
 import { DescribedBySchema, EntitySchema } from "#src/schema";
-import { Crisp, CrispMessages, message_run } from "#src/ui/moderations/Crisp";
+import {
+  Crisp,
+  CrispMessages,
+  message_run,
+  type ConversationStateView,
+} from "#src/ui/moderations/Crisp";
 import { FindCorrespondingEmail } from "#src/ui/moderations/FindCorrespondingEmail";
 import { urls } from "#src/urls";
 import { zValidator } from "@hono/zod-validator";
@@ -67,6 +73,24 @@ export default new Hono<AppContext>()
         );
       }
 
+      const state_url = urls.moderations[":id"].email.state;
+      const state: ConversationStateView =
+        conversation.state === "resolved"
+          ? {
+              kind: "resolved",
+              reopen: state_url.$hx_patch({
+                form: { state: "unresolved" },
+                param: { id },
+              }),
+            }
+          : {
+              kind: "unresolved",
+              resolve: state_url.$hx_patch({
+                form: { state: "resolved" },
+                param: { id },
+              }),
+            };
+
       return render(
         <Crisp
           crisp={conversation}
@@ -81,7 +105,9 @@ export default new Hono<AppContext>()
             action: urls.moderations[":id"].email.reply.$url({ param: { id } })
               .pathname,
             moderation_id: id,
+            state_action: state_url.$url({ param: { id } }).pathname,
           }}
+          state={state}
           website_id={website_id}
         />,
       );
@@ -161,6 +187,32 @@ export default new Hono<AppContext>()
       });
 
       return text("OK");
+    },
+  )
+  .patch(
+    "/state",
+    zValidator("param", EntitySchema),
+    zValidator("form", z.object({ state: z.enum(["resolved", "unresolved"]) })),
+    async function PATCH({ req, text, var: { crisp, identite_pg } }) {
+      const { id } = req.valid("param");
+      const { state } = req.valid("form");
+
+      const moderation = await find_moderation_for_email(identite_pg, id);
+      if (!moderation) throw new NotFoundError("Moderation not found");
+
+      const ticket = parse_ticket_id(moderation.ticket_id);
+      if (ticket.kind === "no_crisp_session") {
+        throw new NotFoundError("Moderation has no Crisp conversation");
+      }
+
+      const session = { session_id: ticket.session_id };
+      if (state === "resolved")
+        await crisp.mark_conversation_as_resolved(session);
+      else await crisp.mark_conversation_as_unresolved(session);
+
+      return text("OK", 200, {
+        "HX-Trigger": MODERATION_EVENTS.enum.MODERATION_EMAIL_UPDATED,
+      });
     },
   );
 

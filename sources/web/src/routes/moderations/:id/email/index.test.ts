@@ -96,9 +96,13 @@ test("GET /moderations/:id/email shows the Crisp exchange described by its headi
   const crisp = {
     create_conversation: mock(),
     get_conversation,
+    get_conversation_state: mock<CrispApi["get_conversation_state"]>(
+      async () => "resolved",
+    ),
     get_messages: mock<CrispApi["get_messages"]>(async () => []),
     get_user: mock(),
     mark_conversation_as_resolved: mock(),
+    mark_conversation_as_unresolved: mock(),
     send_message: mock(),
   };
 
@@ -124,6 +128,7 @@ test("GET /moderations/:id/email shows the Crisp exchange described by its headi
   const body = await response.text();
   expect(body).toContain('aria-describedby="🐘"');
   expect(body).toContain("Conversation de test");
+  expect(body).toContain("Résolue");
   expect(get_conversation).toHaveBeenCalledWith({ session_id: "session_test" });
 });
 
@@ -221,12 +226,14 @@ test("POST /moderations/:id/email/reply sends the moderator note to the Crisp co
   const crisp = {
     create_conversation: mock(),
     get_conversation: mock(),
+    get_conversation_state: mock(),
     get_messages: mock(),
     get_user: mock<CrispApi["get_user"]>(async () => ({
       nickname: "Good C.",
       user_id: "operator",
     })),
     mark_conversation_as_resolved: mock(),
+    mark_conversation_as_unresolved: mock(),
     send_message,
   };
 
@@ -252,3 +259,46 @@ test("POST /moderations/:id/email/reply sends the moderator note to the Crisp co
     user: { nickname: "Good C.", user_id: "operator" },
   });
 });
+
+for (const { method, state } of [
+  { method: "mark_conversation_as_resolved", state: "resolved" },
+  { method: "mark_conversation_as_unresolved", state: "unresolved" },
+] as const) {
+  test(`PATCH /moderations/:id/email/state marks the Crisp conversation as ${state}`, async () => {
+    await create_unicorn_organization(pg);
+    await create_adora_pony_user(pg);
+    const moderation_id = await create_adora_pony_moderation(pg, {
+      ticket_id: "session_state",
+      type: "",
+    });
+
+    const crisp = {
+      create_conversation: mock(),
+      get_conversation: mock(),
+      get_conversation_state: mock(),
+      get_messages: mock(),
+      get_user: mock(),
+      mark_conversation_as_resolved: mock(),
+      mark_conversation_as_unresolved: mock(),
+      send_message: mock(),
+    };
+
+    const response = await new Hono()
+      .use(set_config({ ALLOWED_USERS: "good@captain.yargs" }))
+      .use(set_identite_pg(pg))
+      .use(set_userinfo({ email: "good@captain.yargs" }))
+      .use(set_crisp_client(crisp))
+      .route("/:id/email", app)
+      .onError((error) => {
+        throw error;
+      })
+      .request(`/${moderation_id}/email/state`, {
+        body: new URLSearchParams({ state }),
+        method: "PATCH",
+      });
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get("HX-Trigger")).toBe("MODERATION_EMAIL_UPDATED");
+    expect(crisp[method]).toHaveBeenCalledWith({ session_id: "session_state" });
+  });
+}

@@ -6,6 +6,7 @@ import type {
   CrispMessagesPage,
 } from "#src/lib/moderations";
 import { button } from "#src/ui/button";
+import { Svg } from "#src/ui/icons/components";
 import { OpenInCrisp, short_session_id } from "#src/ui/links";
 import { Time } from "#src/ui/time";
 import { Message } from "../../crisp";
@@ -16,12 +17,17 @@ import { ReplyFormIsland } from "./ReplyFormIsland";
 
 type HxRequest = Record<string, string>;
 
+export type ConversationStateView =
+  | { kind: "resolved"; reopen: HxRequest }
+  | { kind: "unresolved"; resolve: HxRequest };
+
 export function Crisp({
   crisp,
   describedby,
   older,
   plugin_urn,
   reply,
+  state,
   website_id,
 }: {
   crisp: CrispConversation;
@@ -29,11 +35,17 @@ export function Crisp({
   older: HxRequest | null;
   plugin_urn: string;
   reply: ReplyFormProps;
+  state: ConversationStateView;
   website_id: string;
 }) {
   return (
     <section aria-describedby={describedby}>
-      <Header crisp={crisp} website_id={website_id} />
+      <Header
+        session_id={crisp.session_id}
+        state={state}
+        subject={crisp.subject}
+        website_id={website_id}
+      />
       <div class="border-border rounded-sm border shadow-inner">
         <div
           aria-label="Messages de la conversation Crisp"
@@ -183,18 +195,59 @@ function day_id(timestamp: number) {
 //
 
 function Header({
-  crisp: { session_id, subject },
+  session_id,
+  state,
+  subject,
   website_id,
 }: {
-  crisp: CrispConversation;
+  session_id: CrispConversation["session_id"];
+  state: ConversationStateView;
+  subject: CrispConversation["subject"];
   website_id: string;
 }) {
   return (
-    <h5 class="flex flex-row justify-between">
-      <span>{subject}</span>
-      <OpenInCrisp session_id={session_id} website_id={website_id}>
-        #{short_session_id(session_id)}
-      </OpenInCrisp>
-    </h5>
+    <div class="mb-2 flex flex-row items-center gap-4">
+      <h5 class="m-0 flex flex-1 flex-row justify-between">
+        <span>{subject}</span>
+        <OpenInCrisp session_id={session_id} website_id={website_id}>
+          #{short_session_id(session_id)}
+        </OpenInCrisp>
+      </h5>
+      {state.kind === "resolved" ? (
+        <ResolvedButton reopen={state.reopen} />
+      ) : (
+        <UnresolvedButton resolve={state.resolve} />
+      )}
+    </div>
+  );
+}
+
+function ResolvedButton({ reopen }: { reopen: HxRequest }) {
+  return (
+    <button
+      {...reopen}
+      class={button({ intent: "success", size: "sm" })}
+      hx-disabled-elt="this"
+      hx-swap="none"
+      title="Rouvrir cette conversation"
+      type="button"
+    >
+      <Svg name="check" /> Résolue
+    </button>
+  );
+}
+
+function UnresolvedButton({ resolve }: { resolve: HxRequest }) {
+  return (
+    <button
+      {...resolve}
+      class={button({ intent: "warning", size: "sm" })}
+      hx-disabled-elt="this"
+      hx-swap="none"
+      title="Marquer cette conversation comme résolue"
+      type="button"
+    >
+      <Svg name="arrow-right" /> Non résolue
+    </button>
   );
 }

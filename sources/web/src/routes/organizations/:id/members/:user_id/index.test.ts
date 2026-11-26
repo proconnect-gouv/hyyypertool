@@ -50,9 +50,11 @@ function make_crisp_mock() {
       session_id: "session_123",
     }),
     get_conversation: mock(),
+    get_conversation_state: mock(),
     get_messages: mock(),
     get_user: mock().mockResolvedValue({ nickname: "Test User" }),
     mark_conversation_as_resolved: mock().mockResolvedValue(undefined),
+    mark_conversation_as_unresolved: mock(),
     send_message: mock().mockResolvedValue(undefined),
   };
 }

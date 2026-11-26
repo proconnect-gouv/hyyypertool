@@ -17,12 +17,9 @@ declare const app: import("hono/hono-base").HonoBase<
         "/": {
           $get:
             | {
-                output: import("zod").ZodSafeParseError<{
-                  hyyyperdate?:
-                    (string & import("zod").$brand<"HyyyperDate">) | undefined;
-                }>;
-                outputFormat: "json";
-                status: 400;
+                output: {};
+                outputFormat: string;
+                status: import("hono/utils/http-status").StatusCode;
                 input: {
                   query: {
                     hyyyperdate?: string | undefined;
@@ -30,9 +27,12 @@ declare const app: import("hono/hono-base").HonoBase<
                 };
               }
             | {
-                output: {};
-                outputFormat: string;
-                status: import("hono/utils/http-status").StatusCode;
+                output: import("zod").ZodSafeParseError<{
+                  hyyyperdate?:
+                    (string & import("zod").$brand<"HyyyperDate">) | undefined;
+                }>;
+                outputFormat: "json";
+                status: 400;
                 input: {
                   query: {
                     hyyyperdate?: string | undefined;
@@ -123,9 +123,13 @@ declare const app: import("hono/hono-base").HonoBase<
         "/login/callback": {
           $get:
             | {
-                output: undefined;
-                outputFormat: "redirect";
-                status: 302;
+                output: import("zod").ZodSafeParseError<{
+                  code: string;
+                  iss: string;
+                  state: string;
+                }>;
+                outputFormat: "json";
+                status: 400;
                 input: {
                   query: {
                     code: string;
@@ -135,13 +139,9 @@ declare const app: import("hono/hono-base").HonoBase<
                 };
               }
             | {
-                output: import("zod").ZodSafeParseError<{
-                  code: string;
-                  iss: string;
-                  state: string;
-                }>;
-                outputFormat: "json";
-                status: 400;
+                output: undefined;
+                outputFormat: "redirect";
+                status: 302;
                 input: {
                   query: {
                     code: string;
@@ -164,9 +164,11 @@ declare const app: import("hono/hono-base").HonoBase<
         "/logout/callback": {
           $get:
             | {
-                output: undefined;
-                outputFormat: "redirect";
-                status: 302;
+                output: import("zod").ZodSafeParseError<{
+                  state: string;
+                }>;
+                outputFormat: "json";
+                status: 400;
                 input: {
                   query: {
                     state: string;
@@ -174,11 +176,9 @@ declare const app: import("hono/hono-base").HonoBase<
                 };
               }
             | {
-                output: import("zod").ZodSafeParseError<{
-                  state: string;
-                }>;
-                outputFormat: "json";
-                status: 400;
+                output: undefined;
+                outputFormat: "redirect";
+                status: 302;
                 input: {
                   query: {
                     state: string;
@@ -196,14 +196,9 @@ declare const app: import("hono/hono-base").HonoBase<
             "/": {
               $get:
                 | {
-                    output: import("zod").ZodSafeParseError<{
-                      page: number;
-                      page_size: number;
-                      date?: string | undefined;
-                      live: number;
-                    }>;
-                    outputFormat: "json";
-                    status: 400;
+                    output: {};
+                    outputFormat: string;
+                    status: import("hono/utils/http-status").StatusCode;
                     input: {
                       query: {
                         page?: string | string[] | undefined;
@@ -214,9 +209,14 @@ declare const app: import("hono/hono-base").HonoBase<
                     };
                   }
                 | {
-                    output: {};
-                    outputFormat: string;
-                    status: import("hono/utils/http-status").StatusCode;
+                    output: import("zod").ZodSafeParseError<{
+                      page: number;
+                      page_size: number;
+                      date?: string | undefined;
+                      live: number;
+                    }>;
+                    outputFormat: "json";
+                    status: 400;
                     input: {
                       query: {
                         page?: string | string[] | undefined;
@@ -244,6 +244,16 @@ declare const app: import("hono/hono-base").HonoBase<
             "/": {
               $put:
                 | {
+                    output: {};
+                    outputFormat: string;
+                    status: import("hono/utils/http-status").StatusCode;
+                    input: {
+                      form: {
+                        problematic_email: string;
+                      };
+                    };
+                  }
+                | {
                     output: import("zod").ZodSafeParseError<{
                       problematic_email: string;
                     }>;
@@ -254,31 +264,11 @@ declare const app: import("hono/hono-base").HonoBase<
                         problematic_email: string;
                       };
                     };
-                  }
-                | {
-                    output: {};
-                    outputFormat: string;
-                    status: import("hono/utils/http-status").StatusCode;
-                    input: {
-                      form: {
-                        problematic_email: string;
-                      };
-                    };
                   };
             };
           } & {
             "/:email_domain": {
               $delete:
-                | {
-                    output: "OK";
-                    outputFormat: "text";
-                    status: 200;
-                    input: {
-                      param: {
-                        email_domain: string;
-                      };
-                    };
-                  }
                 | {
                     output: import("zod").ZodSafeParseError<{
                       email_domain: string;
@@ -295,6 +285,16 @@ declare const app: import("hono/hono-base").HonoBase<
                     output: "Erreur lors de la suppression";
                     outputFormat: "text";
                     status: 500;
+                    input: {
+                      param: {
+                        email_domain: string;
+                      };
+                    };
+                  }
+                | {
+                    output: "OK";
+                    outputFormat: "text";
+                    status: 200;
                     input: {
                       param: {
                         email_domain: string;
@@ -341,9 +341,14 @@ declare const app: import("hono/hono-base").HonoBase<
             "/": {
               $post:
                 | {
-                    output: undefined;
-                    outputFormat: "redirect";
-                    status: 303;
+                    output: import("zod").ZodSafeParseError<{
+                      label: string;
+                      content: string;
+                      end_user_reason: string;
+                      allow_editing: boolean;
+                    }>;
+                    outputFormat: "json";
+                    status: 400;
                     input: {
                       form: {
                         label: string;
@@ -354,14 +359,9 @@ declare const app: import("hono/hono-base").HonoBase<
                     };
                   }
                 | {
-                    output: import("zod").ZodSafeParseError<{
-                      label: string;
-                      content: string;
-                      end_user_reason: string;
-                      allow_editing: boolean;
-                    }>;
-                    outputFormat: "json";
-                    status: 400;
+                    output: undefined;
+                    outputFormat: "redirect";
+                    status: 303;
                     input: {
                       form: {
                         label: string;
@@ -376,9 +376,14 @@ declare const app: import("hono/hono-base").HonoBase<
             "/:id": {
               $patch:
                 | {
-                    output: "";
-                    outputFormat: "text";
-                    status: 200;
+                    output: import("zod").ZodSafeParseError<{
+                      label: string;
+                      content: string;
+                      end_user_reason: string;
+                      allow_editing: boolean;
+                    }>;
+                    outputFormat: "json";
+                    status: 400;
                     input: {
                       form: {
                         label: string;
@@ -393,14 +398,9 @@ declare const app: import("hono/hono-base").HonoBase<
                     };
                   }
                 | {
-                    output: import("zod").ZodSafeParseError<{
-                      label: string;
-                      content: string;
-                      end_user_reason: string;
-                      allow_editing: boolean;
-                    }>;
-                    outputFormat: "json";
-                    status: 400;
+                    output: "";
+                    outputFormat: "text";
+                    status: 200;
                     input: {
                       form: {
                         label: string;
@@ -441,6 +441,20 @@ declare const app: import("hono/hono-base").HonoBase<
                         "/": {
                           $get:
                             | {
+                                output: {};
+                                outputFormat: string;
+                                status: import("hono/utils/http-status").StatusCode;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
+                                } & {
+                                  query: {
+                                    describedby: string;
+                                  };
+                                };
+                              }
+                            | {
                                 output: import("zod").ZodSafeParseError<{
                                   id: number;
                                 }>;
@@ -450,62 +464,18 @@ declare const app: import("hono/hono-base").HonoBase<
                                   param: {
                                     id: string;
                                   };
-                                };
-                              }
-                            | {
-                                output: {};
-                                outputFormat: string;
-                                status: import("hono/utils/http-status").StatusCode;
-                                input: {
-                                  param: {
-                                    id: string;
+                                } & {
+                                  query: {
+                                    describedby: string;
                                   };
                                 };
-                              };
-                        };
-                      },
-                      "/activities"
-                    >
-                  | import("hono/types").MergeSchemaPath<
-                      {
-                        "/": {
-                          $get:
+                              }
                             | {
                                 output: import("zod").ZodSafeParseError<{
                                   describedby: string;
                                 }>;
                                 outputFormat: "json";
                                 status: 400;
-                                input: {
-                                  param: {
-                                    id: string;
-                                  };
-                                } & {
-                                  query: {
-                                    describedby: string;
-                                  };
-                                };
-                              }
-                            | {
-                                output: import("zod").ZodSafeParseError<{
-                                  id: number;
-                                }>;
-                                outputFormat: "json";
-                                status: 400;
-                                input: {
-                                  param: {
-                                    id: string;
-                                  };
-                                } & {
-                                  query: {
-                                    describedby: string;
-                                  };
-                                };
-                              }
-                            | {
-                                output: {};
-                                outputFormat: string;
-                                status: import("hono/utils/http-status").StatusCode;
                                 input: {
                                   param: {
                                     id: string;
@@ -525,6 +495,16 @@ declare const app: import("hono/hono-base").HonoBase<
                         "/": {
                           $get:
                             | {
+                                output: {};
+                                outputFormat: string;
+                                status: import("hono/utils/http-status").StatusCode;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
+                                };
+                              }
+                            | {
                                 output: import("zod").ZodSafeParseError<{
                                   id: number;
                                 }>;
@@ -534,63 +514,34 @@ declare const app: import("hono/hono-base").HonoBase<
                                   param: {
                                     id: string;
                                   };
-                                } & {
-                                  query: {
-                                    page?: string | string[] | undefined;
-                                    page_size?: string | string[] | undefined;
-                                    describedby: string | string[];
-                                    page_ref: string | string[];
-                                  };
-                                };
-                              }
-                            | {
-                                output: import("zod").ZodSafeParseError<{
-                                  page: number;
-                                  page_size: number;
-                                  describedby: string;
-                                  page_ref: string;
-                                }>;
-                                outputFormat: "json";
-                                status: 400;
-                                input: {
-                                  param: {
-                                    id: string;
-                                  };
-                                } & {
-                                  query: {
-                                    page?: string | string[] | undefined;
-                                    page_size?: string | string[] | undefined;
-                                    describedby: string | string[];
-                                    page_ref: string | string[];
-                                  };
-                                };
-                              }
-                            | {
-                                output: {};
-                                outputFormat: string;
-                                status: import("hono/utils/http-status").StatusCode;
-                                input: {
-                                  param: {
-                                    id: string;
-                                  };
-                                } & {
-                                  query: {
-                                    page?: string | string[] | undefined;
-                                    page_size?: string | string[] | undefined;
-                                    describedby: string | string[];
-                                    page_ref: string | string[];
-                                  };
                                 };
                               };
                         };
                       },
-                      "/organizations"
+                      "/activities"
                     >
                   | import("hono/types").MergeSchemaPath<
                       {
                         "/": {
                           $get:
                             | {
+                                output: {};
+                                outputFormat: string;
+                                status: import("hono/utils/http-status").StatusCode;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
+                                } & {
+                                  query: {
+                                    page?: string | string[] | undefined;
+                                    page_size?: string | string[] | undefined;
+                                    describedby: string | string[];
+                                    page_ref: string | string[];
+                                  };
+                                };
+                              }
+                            | {
                                 output: import("zod").ZodSafeParseError<{
                                   id: number;
                                 }>;
@@ -618,23 +569,6 @@ declare const app: import("hono/hono-base").HonoBase<
                                 }>;
                                 outputFormat: "json";
                                 status: 400;
-                                input: {
-                                  param: {
-                                    id: string;
-                                  };
-                                } & {
-                                  query: {
-                                    page?: string | string[] | undefined;
-                                    page_size?: string | string[] | undefined;
-                                    describedby: string | string[];
-                                    page_ref: string | string[];
-                                  };
-                                };
-                              }
-                            | {
-                                output: {};
-                                outputFormat: string;
-                                status: import("hono/utils/http-status").StatusCode;
                                 input: {
                                   param: {
                                     id: string;
@@ -652,15 +586,79 @@ declare const app: import("hono/hono-base").HonoBase<
                       },
                       "/oidc_clients"
                     >
+                  | import("hono/types").MergeSchemaPath<
+                      {
+                        "/": {
+                          $get:
+                            | {
+                                output: {};
+                                outputFormat: string;
+                                status: import("hono/utils/http-status").StatusCode;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
+                                } & {
+                                  query: {
+                                    page?: string | string[] | undefined;
+                                    page_size?: string | string[] | undefined;
+                                    describedby: string | string[];
+                                    page_ref: string | string[];
+                                  };
+                                };
+                              }
+                            | {
+                                output: import("zod").ZodSafeParseError<{
+                                  id: number;
+                                }>;
+                                outputFormat: "json";
+                                status: 400;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
+                                } & {
+                                  query: {
+                                    page?: string | string[] | undefined;
+                                    page_size?: string | string[] | undefined;
+                                    describedby: string | string[];
+                                    page_ref: string | string[];
+                                  };
+                                };
+                              }
+                            | {
+                                output: import("zod").ZodSafeParseError<{
+                                  page: number;
+                                  page_size: number;
+                                  describedby: string;
+                                  page_ref: string;
+                                }>;
+                                outputFormat: "json";
+                                status: 400;
+                                input: {
+                                  param: {
+                                    id: string;
+                                  };
+                                } & {
+                                  query: {
+                                    page?: string | string[] | undefined;
+                                    page_size?: string | string[] | undefined;
+                                    describedby: string | string[];
+                                    page_ref: string | string[];
+                                  };
+                                };
+                              };
+                        };
+                      },
+                      "/organizations"
+                    >
                   | {
                       "/": {
                         $get:
                           | {
-                              output: import("zod").ZodSafeParseError<{
-                                id: number;
-                              }>;
-                              outputFormat: "json";
-                              status: 400;
+                              output: {};
+                              outputFormat: string;
+                              status: import("hono/utils/http-status").StatusCode;
                               input: {
                                 param: {
                                   id: string;
@@ -668,9 +666,11 @@ declare const app: import("hono/hono-base").HonoBase<
                               };
                             }
                           | {
-                              output: {};
-                              outputFormat: string;
-                              status: import("hono/utils/http-status").StatusCode;
+                              output: import("zod").ZodSafeParseError<{
+                                id: number;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
                               input: {
                                 param: {
                                   id: string;
@@ -683,9 +683,11 @@ declare const app: import("hono/hono-base").HonoBase<
                   "/": {
                     $delete:
                       | {
-                          output: "OK";
-                          outputFormat: "text";
-                          status: 200;
+                          output: import("zod").ZodSafeParseError<{
+                            id: number;
+                          }>;
+                          outputFormat: "json";
+                          status: 400;
                           input: {
                             param: {
                               id: string;
@@ -693,11 +695,9 @@ declare const app: import("hono/hono-base").HonoBase<
                           };
                         }
                       | {
-                          output: import("zod").ZodSafeParseError<{
-                            id: number;
-                          }>;
-                          outputFormat: "json";
-                          status: 400;
+                          output: "OK";
+                          outputFormat: "text";
+                          status: 200;
                           input: {
                             param: {
                               id: string;
@@ -709,9 +709,11 @@ declare const app: import("hono/hono-base").HonoBase<
                   "/reset/email_verified": {
                     $patch:
                       | {
-                          output: "OK";
-                          outputFormat: "text";
-                          status: 200;
+                          output: import("zod").ZodSafeParseError<{
+                            id: number;
+                          }>;
+                          outputFormat: "json";
+                          status: 400;
                           input: {
                             param: {
                               id: string;
@@ -719,11 +721,9 @@ declare const app: import("hono/hono-base").HonoBase<
                           };
                         }
                       | {
-                          output: import("zod").ZodSafeParseError<{
-                            id: number;
-                          }>;
-                          outputFormat: "json";
-                          status: 400;
+                          output: "OK";
+                          outputFormat: "text";
+                          status: 200;
                           input: {
                             param: {
                               id: string;
@@ -735,9 +735,11 @@ declare const app: import("hono/hono-base").HonoBase<
                   "/reset/france_connect": {
                     $patch:
                       | {
-                          output: "OK";
-                          outputFormat: "text";
-                          status: 200;
+                          output: import("zod").ZodSafeParseError<{
+                            id: number;
+                          }>;
+                          outputFormat: "json";
+                          status: 400;
                           input: {
                             param: {
                               id: string;
@@ -745,11 +747,9 @@ declare const app: import("hono/hono-base").HonoBase<
                           };
                         }
                       | {
-                          output: import("zod").ZodSafeParseError<{
-                            id: number;
-                          }>;
-                          outputFormat: "json";
-                          status: 400;
+                          output: "OK";
+                          outputFormat: "text";
+                          status: 200;
                           input: {
                             param: {
                               id: string;
@@ -761,9 +761,11 @@ declare const app: import("hono/hono-base").HonoBase<
                   "/reset/password": {
                     $patch:
                       | {
-                          output: "OK";
-                          outputFormat: "text";
-                          status: 200;
+                          output: import("zod").ZodSafeParseError<{
+                            id: number;
+                          }>;
+                          outputFormat: "json";
+                          status: 400;
                           input: {
                             param: {
                               id: string;
@@ -771,11 +773,9 @@ declare const app: import("hono/hono-base").HonoBase<
                           };
                         }
                       | {
-                          output: import("zod").ZodSafeParseError<{
-                            id: number;
-                          }>;
-                          outputFormat: "json";
-                          status: 400;
+                          output: "OK";
+                          outputFormat: "text";
+                          status: 200;
                           input: {
                             param: {
                               id: string;
@@ -787,9 +787,11 @@ declare const app: import("hono/hono-base").HonoBase<
                   "/reset/mfa": {
                     $patch:
                       | {
-                          output: "OK";
-                          outputFormat: "text";
-                          status: 200;
+                          output: import("zod").ZodSafeParseError<{
+                            id: number;
+                          }>;
+                          outputFormat: "json";
+                          status: 400;
                           input: {
                             param: {
                               id: string;
@@ -797,11 +799,9 @@ declare const app: import("hono/hono-base").HonoBase<
                           };
                         }
                       | {
-                          output: import("zod").ZodSafeParseError<{
-                            id: number;
-                          }>;
-                          outputFormat: "json";
-                          status: 400;
+                          output: "OK";
+                          outputFormat: "text";
+                          status: 200;
                           input: {
                             param: {
                               id: string;
@@ -816,9 +816,9 @@ declare const app: import("hono/hono-base").HonoBase<
             "/": {
               $get:
                 | {
-                    output: undefined;
-                    outputFormat: "redirect";
-                    status: import("hono/utils/http-status").RedirectStatusCode;
+                    output: {};
+                    outputFormat: string;
+                    status: import("hono/utils/http-status").StatusCode;
                     input: {
                       query: {
                         page?: string | string[] | undefined;
@@ -828,9 +828,9 @@ declare const app: import("hono/hono-base").HonoBase<
                     };
                   }
                 | {
-                    output: {};
-                    outputFormat: string;
-                    status: import("hono/utils/http-status").StatusCode;
+                    output: undefined;
+                    outputFormat: "redirect";
+                    status: import("hono/utils/http-status").RedirectStatusCode;
                     input: {
                       query: {
                         page?: string | string[] | undefined;
@@ -851,6 +851,21 @@ declare const app: import("hono/hono-base").HonoBase<
                     {
                       "/": {
                         $get:
+                          | {
+                              output: {};
+                              outputFormat: string;
+                              status: import("hono/utils/http-status").StatusCode;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                query: {
+                                  organization_id: string | string[];
+                                  user_id: string | string[];
+                                };
+                              };
+                            }
                           | {
                               output: import("zod").ZodSafeParseError<{
                                 id: number;
@@ -885,21 +900,6 @@ declare const app: import("hono/hono-base").HonoBase<
                                   user_id: string | string[];
                                 };
                               };
-                            }
-                          | {
-                              output: {};
-                              outputFormat: string;
-                              status: import("hono/utils/http-status").StatusCode;
-                              input: {
-                                param: {
-                                  id: string;
-                                };
-                              } & {
-                                query: {
-                                  organization_id: string | string[];
-                                  user_id: string | string[];
-                                };
-                              };
                             };
                       };
                     },
@@ -910,11 +910,9 @@ declare const app: import("hono/hono-base").HonoBase<
                       "/": {
                         $patch:
                           | {
-                              output: import("zod").ZodSafeParseError<{
-                                id: number;
-                              }>;
-                              outputFormat: "json";
-                              status: 400;
+                              output: {};
+                              outputFormat: string;
+                              status: import("hono/utils/http-status").StatusCode;
                               input: {
                                 param: {
                                   id: string;
@@ -1005,9 +1003,11 @@ declare const app: import("hono/hono-base").HonoBase<
                               };
                             }
                           | {
-                              output: {};
-                              outputFormat: string;
-                              status: import("hono/utils/http-status").StatusCode;
+                              output: import("zod").ZodSafeParseError<{
+                                id: number;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
                               input: {
                                 param: {
                                   id: string;
@@ -1048,11 +1048,9 @@ declare const app: import("hono/hono-base").HonoBase<
                       "/": {
                         $patch:
                           | {
-                              output: import("zod").ZodSafeParseError<{
-                                id: number;
-                              }>;
-                              outputFormat: "json";
-                              status: 400;
+                              output: {};
+                              outputFormat: string;
+                              status: import("hono/utils/http-status").StatusCode;
                               input: {
                                 param: {
                                   id: string;
@@ -1060,9 +1058,11 @@ declare const app: import("hono/hono-base").HonoBase<
                               };
                             }
                           | {
-                              output: {};
-                              outputFormat: string;
-                              status: import("hono/utils/http-status").StatusCode;
+                              output: import("zod").ZodSafeParseError<{
+                                id: number;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
                               input: {
                                 param: {
                                   id: string;
@@ -1078,9 +1078,11 @@ declare const app: import("hono/hono-base").HonoBase<
                       "/": {
                         $patch:
                           | {
-                              output: "OK";
-                              outputFormat: "text";
-                              status: 200;
+                              output: import("zod").ZodSafeParseError<{
+                                id: number;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
                               input: {
                                 param: {
                                   id: string;
@@ -1088,11 +1090,9 @@ declare const app: import("hono/hono-base").HonoBase<
                               };
                             }
                           | {
-                              output: import("zod").ZodSafeParseError<{
-                                id: number;
-                              }>;
-                              outputFormat: "json";
-                              status: 400;
+                              output: "OK";
+                              outputFormat: "text";
+                              status: 200;
                               input: {
                                 param: {
                                   id: string;
@@ -1137,9 +1137,11 @@ declare const app: import("hono/hono-base").HonoBase<
                       "/": {
                         $patch:
                           | {
-                              output: "OK";
-                              outputFormat: "text";
-                              status: 200;
+                              output: import("zod").ZodSafeParseError<{
+                                id: number;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
                               input: {
                                 param: {
                                   id: string;
@@ -1192,11 +1194,9 @@ declare const app: import("hono/hono-base").HonoBase<
                               };
                             }
                           | {
-                              output: import("zod").ZodSafeParseError<{
-                                id: number;
-                              }>;
-                              outputFormat: "json";
-                              status: 400;
+                              output: "OK";
+                              outputFormat: "text";
+                              status: 200;
                               input: {
                                 param: {
                                   id: string;
@@ -1227,11 +1227,9 @@ declare const app: import("hono/hono-base").HonoBase<
                       "/": {
                         $get:
                           | {
-                              output: import("zod").ZodSafeParseError<{
-                                describedby: string;
-                              }>;
-                              outputFormat: "json";
-                              status: 400;
+                              output: {};
+                              outputFormat: string;
+                              status: import("hono/utils/http-status").StatusCode;
                               input: {
                                 param: {
                                   id: string;
@@ -1259,9 +1257,11 @@ declare const app: import("hono/hono-base").HonoBase<
                               };
                             }
                           | {
-                              output: {};
-                              outputFormat: string;
-                              status: import("hono/utils/http-status").StatusCode;
+                              output: import("zod").ZodSafeParseError<{
+                                describedby: string;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
                               input: {
                                 param: {
                                   id: string;
@@ -1276,6 +1276,21 @@ declare const app: import("hono/hono-base").HonoBase<
                     } & {
                       "/older": {
                         $get:
+                          | {
+                              output: {};
+                              outputFormat: string;
+                              status: import("hono/utils/http-status").StatusCode;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                query: {
+                                  before: string | string[];
+                                  run: string | string[];
+                                };
+                              };
+                            }
                           | {
                               output: import("zod").ZodSafeParseError<{
                                 id: number;
@@ -1310,41 +1325,11 @@ declare const app: import("hono/hono-base").HonoBase<
                                   run: string | string[];
                                 };
                               };
-                            }
-                          | {
-                              output: {};
-                              outputFormat: string;
-                              status: import("hono/utils/http-status").StatusCode;
-                              input: {
-                                param: {
-                                  id: string;
-                                };
-                              } & {
-                                query: {
-                                  before: string | string[];
-                                  run: string | string[];
-                                };
-                              };
                             };
                       };
                     } & {
                       "/reply": {
                         $post:
-                          | {
-                              output: "OK";
-                              outputFormat: "text";
-                              status: 200;
-                              input: {
-                                param: {
-                                  id: string;
-                                };
-                              } & {
-                                form: {
-                                  content: string;
-                                  type: "note" | "text";
-                                };
-                              };
-                            }
                           | {
                               output: import("zod").ZodSafeParseError<{
                                 id: number;
@@ -1379,6 +1364,71 @@ declare const app: import("hono/hono-base").HonoBase<
                                   type: "note" | "text";
                                 };
                               };
+                            }
+                          | {
+                              output: "OK";
+                              outputFormat: "text";
+                              status: import("hono/utils/http-status").ContentfulStatusCode;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                form: {
+                                  content: string;
+                                  type: "note" | "text";
+                                };
+                              };
+                            };
+                      };
+                    } & {
+                      "/state": {
+                        $patch:
+                          | {
+                              output: import("zod").ZodSafeParseError<{
+                                id: number;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                form: {
+                                  state: "resolved" | "unresolved";
+                                };
+                              };
+                            }
+                          | {
+                              output: import("zod").ZodSafeParseError<{
+                                state: "resolved" | "unresolved";
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                form: {
+                                  state: "resolved" | "unresolved";
+                                };
+                              };
+                            }
+                          | {
+                              output: "OK";
+                              outputFormat: "text";
+                              status: 200;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                form: {
+                                  state: "resolved" | "unresolved";
+                                };
+                              };
                             };
                       };
                     },
@@ -1388,11 +1438,9 @@ declare const app: import("hono/hono-base").HonoBase<
                     "/": {
                       $get:
                         | {
-                            output: import("zod").ZodSafeParseError<{
-                              id: number;
-                            }>;
-                            outputFormat: "json";
-                            status: 400;
+                            output: {};
+                            outputFormat: string;
+                            status: import("hono/utils/http-status").StatusCode;
                             input: {
                               param: {
                                 id: string;
@@ -1400,9 +1448,11 @@ declare const app: import("hono/hono-base").HonoBase<
                             };
                           }
                         | {
-                            output: {};
-                            outputFormat: string;
-                            status: import("hono/utils/http-status").StatusCode;
+                            output: import("zod").ZodSafeParseError<{
+                              id: number;
+                            }>;
+                            outputFormat: "json";
+                            status: 400;
                             input: {
                               param: {
                                 id: string;
@@ -1433,9 +1483,9 @@ declare const app: import("hono/hono-base").HonoBase<
                   "/": {
                     $get:
                       | {
-                          output: undefined;
-                          outputFormat: "redirect";
-                          status: import("hono/utils/http-status").RedirectStatusCode;
+                          output: {};
+                          outputFormat: string;
+                          status: import("hono/utils/http-status").StatusCode;
                           input: {
                             query: {
                               page?: string | string[] | undefined;
@@ -1445,9 +1495,9 @@ declare const app: import("hono/hono-base").HonoBase<
                           };
                         }
                       | {
-                          output: {};
-                          outputFormat: string;
-                          status: import("hono/utils/http-status").StatusCode;
+                          output: undefined;
+                          outputFormat: "redirect";
+                          status: import("hono/utils/http-status").RedirectStatusCode;
                           input: {
                             query: {
                               page?: string | string[] | undefined;
@@ -1465,6 +1515,17 @@ declare const app: import("hono/hono-base").HonoBase<
                   "/": {
                     $get:
                       | {
+                          output: {};
+                          outputFormat: string;
+                          status: import("hono/utils/http-status").StatusCode;
+                          input: {
+                            query: {
+                              siret: string;
+                              retry?: string | undefined;
+                            };
+                          };
+                        }
+                      | {
                           output: import("zod").ZodSafeParseError<{
                             siret: string;
                             retry?: string | undefined;
@@ -1477,28 +1538,15 @@ declare const app: import("hono/hono-base").HonoBase<
                               retry?: string | undefined;
                             };
                           };
-                        }
-                      | {
-                          output: {};
-                          outputFormat: string;
-                          status: import("hono/utils/http-status").StatusCode;
-                          input: {
-                            query: {
-                              siret: string;
-                              retry?: string | undefined;
-                            };
-                          };
                         };
                   };
                 } & {
                   "/document": {
                     $get:
                       | {
-                          output: import("zod").ZodSafeParseError<{
-                            siret: string;
-                          }>;
-                          outputFormat: "json";
-                          status: 400;
+                          output: {};
+                          outputFormat: string;
+                          status: import("hono/utils/http-status").StatusCode;
                           input: {
                             query: {
                               siret: string;
@@ -1506,9 +1554,11 @@ declare const app: import("hono/hono-base").HonoBase<
                           };
                         }
                       | {
-                          output: {};
-                          outputFormat: string;
-                          status: import("hono/utils/http-status").StatusCode;
+                          output: import("zod").ZodSafeParseError<{
+                            siret: string;
+                          }>;
+                          outputFormat: "json";
+                          status: 400;
                           input: {
                             query: {
                               siret: string;
@@ -1524,6 +1574,18 @@ declare const app: import("hono/hono-base").HonoBase<
                   "/": {
                     $get:
                       | {
+                          output: {};
+                          outputFormat: string;
+                          status: import("hono/utils/http-status").StatusCode;
+                          input: {
+                            query: {
+                              siret?: string | undefined;
+                              created?: string | undefined;
+                              skipped?: string | undefined;
+                            };
+                          };
+                        }
+                      | {
                           output: import("zod").ZodSafeParseError<{
                             siret?: string | undefined;
                             created?: string | undefined;
@@ -1538,23 +1600,21 @@ declare const app: import("hono/hono-base").HonoBase<
                               skipped?: string | undefined;
                             };
                           };
-                        }
-                      | {
-                          output: {};
-                          outputFormat: string;
-                          status: import("hono/utils/http-status").StatusCode;
-                          input: {
-                            query: {
-                              siret?: string | undefined;
-                              created?: string | undefined;
-                              skipped?: string | undefined;
-                            };
-                          };
                         };
                   };
                 } & {
                   "/": {
                     $post:
+                      | {
+                          output: {};
+                          outputFormat: string;
+                          status: import("hono/utils/http-status").StatusCode;
+                          input: {
+                            form: {
+                              sirets: string;
+                            };
+                          };
+                        }
                       | {
                           output: import("zod").ZodSafeParseError<{
                             sirets: string;
@@ -1566,25 +1626,17 @@ declare const app: import("hono/hono-base").HonoBase<
                               sirets: string;
                             };
                           };
-                        }
-                      | {
-                          output: {};
-                          outputFormat: string;
-                          status: import("hono/utils/http-status").StatusCode;
-                          input: {
-                            form: {
-                              sirets: string;
-                            };
-                          };
                         };
                   };
                 } & {
                   "/confirm": {
                     $post:
                       | {
-                          output: undefined;
-                          outputFormat: "redirect";
-                          status: 303;
+                          output: import("zod").ZodSafeParseError<{
+                            "sirets[]": string[];
+                          }>;
+                          outputFormat: "json";
+                          status: 400;
                           input: {
                             form: {
                               "sirets[]": string[];
@@ -1592,11 +1644,9 @@ declare const app: import("hono/hono-base").HonoBase<
                           };
                         }
                       | {
-                          output: import("zod").ZodSafeParseError<{
-                            "sirets[]": string[];
-                          }>;
-                          outputFormat: "json";
-                          status: 400;
+                          output: undefined;
+                          outputFormat: "redirect";
+                          status: 303;
                           input: {
                             form: {
                               "sirets[]": string[];
@@ -1611,6 +1661,20 @@ declare const app: import("hono/hono-base").HonoBase<
                 | {
                     "/": {
                       $get:
+                        | {
+                            output: {};
+                            outputFormat: string;
+                            status: import("hono/utils/http-status").StatusCode;
+                            input: {
+                              param: {
+                                id: string;
+                              };
+                            } & {
+                              query: {
+                                status?: "created" | undefined;
+                              };
+                            };
+                          }
                         | {
                             output: import("zod").ZodSafeParseError<{
                               id: number;
@@ -1642,20 +1706,6 @@ declare const app: import("hono/hono-base").HonoBase<
                                 status?: "created" | undefined;
                               };
                             };
-                          }
-                        | {
-                            output: {};
-                            outputFormat: string;
-                            status: import("hono/utils/http-status").StatusCode;
-                            input: {
-                              param: {
-                                id: string;
-                              };
-                            } & {
-                              query: {
-                                status?: "created" | undefined;
-                              };
-                            };
                           };
                     };
                   }
@@ -1666,11 +1716,9 @@ declare const app: import("hono/hono-base").HonoBase<
                             "/": {
                               $get:
                                 | {
-                                    output: import("zod").ZodSafeParseError<{
-                                      id: number;
-                                    }>;
-                                    outputFormat: "json";
-                                    status: 400;
+                                    output: {};
+                                    outputFormat: string;
+                                    status: import("hono/utils/http-status").StatusCode;
                                     input: {
                                       param: {
                                         id: string;
@@ -1678,9 +1726,11 @@ declare const app: import("hono/hono-base").HonoBase<
                                     };
                                   }
                                 | {
-                                    output: {};
-                                    outputFormat: string;
-                                    status: import("hono/utils/http-status").StatusCode;
+                                    output: import("zod").ZodSafeParseError<{
+                                      id: number;
+                                    }>;
+                                    outputFormat: "json";
+                                    status: 400;
                                     input: {
                                       param: {
                                         id: string;
@@ -1695,11 +1745,9 @@ declare const app: import("hono/hono-base").HonoBase<
                           "/": {
                             $get:
                               | {
-                                  output: import("zod").ZodSafeParseError<{
-                                    describedby: string;
-                                  }>;
-                                  outputFormat: "json";
-                                  status: 400;
+                                  output: {};
+                                  outputFormat: string;
+                                  status: import("hono/utils/http-status").StatusCode;
                                   input: {
                                     param: {
                                       id: string;
@@ -1727,9 +1775,11 @@ declare const app: import("hono/hono-base").HonoBase<
                                   };
                                 }
                               | {
-                                  output: {};
-                                  outputFormat: string;
-                                  status: import("hono/utils/http-status").StatusCode;
+                                  output: import("zod").ZodSafeParseError<{
+                                    describedby: string;
+                                  }>;
+                                  outputFormat: "json";
+                                  status: 400;
                                   input: {
                                     param: {
                                       id: string;
@@ -1745,20 +1795,6 @@ declare const app: import("hono/hono-base").HonoBase<
                     ) & {
                       "/": {
                         $put:
-                          | {
-                              output: "OK";
-                              outputFormat: "text";
-                              status: 200;
-                              input: {
-                                param: {
-                                  id: string;
-                                };
-                              } & {
-                                form: {
-                                  domain: string;
-                                };
-                              };
-                            }
                           | {
                               output: import("zod").ZodSafeParseError<{
                                 id: number;
@@ -1790,11 +1826,7 @@ declare const app: import("hono/hono-base").HonoBase<
                                   domain: string;
                                 };
                               };
-                            };
-                      };
-                    }) & {
-                      "/:domain_id": {
-                        $delete:
+                            }
                           | {
                               output: "OK";
                               outputFormat: "text";
@@ -1802,10 +1834,17 @@ declare const app: import("hono/hono-base").HonoBase<
                               input: {
                                 param: {
                                   id: string;
-                                  domain_id: string;
+                                };
+                              } & {
+                                form: {
+                                  domain: string;
                                 };
                               };
-                            }
+                            };
+                      };
+                    }) & {
+                      "/:domain_id": {
+                        $delete:
                           | {
                               output: import("zod").ZodSafeParseError<{
                                 id: number;
@@ -1819,15 +1858,29 @@ declare const app: import("hono/hono-base").HonoBase<
                                   domain_id: string;
                                 };
                               };
+                            }
+                          | {
+                              output: "OK";
+                              outputFormat: "text";
+                              status: 200;
+                              input: {
+                                param: {
+                                  id: string;
+                                  domain_id: string;
+                                };
+                              };
                             };
                       };
                     }) & {
                       "/:domain_id": {
                         $patch:
                           | {
-                              output: "OK";
-                              outputFormat: "text";
-                              status: 200;
+                              output: import("zod").ZodSafeParseError<{
+                                id: number;
+                                domain_id: number;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
                               input: {
                                 param: {
                                   id: string;
@@ -1857,12 +1910,9 @@ declare const app: import("hono/hono-base").HonoBase<
                               };
                             }
                           | {
-                              output: import("zod").ZodSafeParseError<{
-                                id: number;
-                                domain_id: number;
-                              }>;
-                              outputFormat: "json";
-                              status: 400;
+                              output: "OK";
+                              outputFormat: "text";
+                              status: 200;
                               input: {
                                 param: {
                                   id: string;
@@ -1884,40 +1934,6 @@ declare const app: import("hono/hono-base").HonoBase<
                           {
                             "/": {
                               $patch:
-                                | {
-                                    output: "OK";
-                                    outputFormat: "text";
-                                    status: 200;
-                                    input: {
-                                      param: {
-                                        id: string;
-                                        user_id: string;
-                                      };
-                                    } & {
-                                      form: {
-                                        verification_type?:
-                                          | "bypassed"
-                                          | "code_sent_to_official_contact_email"
-                                          | "domain"
-                                          | "domain_not_verified_yet"
-                                          | "imported_from_coop_mediation_numerique"
-                                          | "imported_from_inclusion_connect"
-                                          | "in_liste_dirigeants_rna"
-                                          | "in_liste_dirigeants_rne"
-                                          | "no_validation_means_available"
-                                          | "no_verification_means_for_entreprise_unipersonnelle"
-                                          | "no_verification_means_for_small_association"
-                                          | "no_verification_means_for_small_organization"
-                                          | "official_contact_email"
-                                          | "ordre_professionnel_domain"
-                                          | "organization_dirigeant"
-                                          | "proof_received"
-                                          | "verified_by_coop_mediation_numerique"
-                                          | undefined;
-                                        is_external?: string | undefined;
-                                      };
-                                    };
-                                  }
                                 | {
                                     output: import("zod").ZodSafeParseError<{
                                       id: number;
@@ -2009,11 +2025,7 @@ declare const app: import("hono/hono-base").HonoBase<
                                         is_external?: string | undefined;
                                       };
                                     };
-                                  };
-                            };
-                          } & {
-                            "/": {
-                              $delete:
+                                  }
                                 | {
                                     output: "OK";
                                     outputFormat: "text";
@@ -2023,8 +2035,35 @@ declare const app: import("hono/hono-base").HonoBase<
                                         id: string;
                                         user_id: string;
                                       };
+                                    } & {
+                                      form: {
+                                        verification_type?:
+                                          | "bypassed"
+                                          | "code_sent_to_official_contact_email"
+                                          | "domain"
+                                          | "domain_not_verified_yet"
+                                          | "imported_from_coop_mediation_numerique"
+                                          | "imported_from_inclusion_connect"
+                                          | "in_liste_dirigeants_rna"
+                                          | "in_liste_dirigeants_rne"
+                                          | "no_validation_means_available"
+                                          | "no_verification_means_for_entreprise_unipersonnelle"
+                                          | "no_verification_means_for_small_association"
+                                          | "no_verification_means_for_small_organization"
+                                          | "official_contact_email"
+                                          | "ordre_professionnel_domain"
+                                          | "organization_dirigeant"
+                                          | "proof_received"
+                                          | "verified_by_coop_mediation_numerique"
+                                          | undefined;
+                                        is_external?: string | undefined;
+                                      };
                                     };
-                                  }
+                                  };
+                            };
+                          } & {
+                            "/": {
+                              $delete:
                                 | {
                                     output: import("zod").ZodSafeParseError<{
                                       id: number;
@@ -2032,6 +2071,17 @@ declare const app: import("hono/hono-base").HonoBase<
                                     }>;
                                     outputFormat: "json";
                                     status: 400;
+                                    input: {
+                                      param: {
+                                        id: string;
+                                        user_id: string;
+                                      };
+                                    };
+                                  }
+                                | {
+                                    output: "OK";
+                                    outputFormat: "text";
+                                    status: 200;
                                     input: {
                                       param: {
                                         id: string;
@@ -2098,6 +2148,32 @@ declare const app: import("hono/hono-base").HonoBase<
                       "/": {
                         $get:
                           | {
+                              output: {};
+                              outputFormat: string;
+                              status: import("hono/utils/http-status").StatusCode;
+                              input: {
+                                param: {
+                                  id: string;
+                                };
+                              } & {
+                                query: {
+                                  page?: string | string[] | undefined;
+                                  q?: string | undefined;
+                                  order?: "asc" | "desc" | undefined;
+                                  page_size?: string | string[] | undefined;
+                                  sort?:
+                                    | "created"
+                                    | "email"
+                                    | "family-name"
+                                    | "given-name"
+                                    | "is-external"
+                                    | "job"
+                                    | "verification-type"
+                                    | undefined;
+                                };
+                              };
+                            }
+                          | {
                               output: import("zod").ZodSafeParseError<{
                                 id: number;
                               }>;
@@ -2150,41 +2226,17 @@ declare const app: import("hono/hono-base").HonoBase<
                                     | undefined;
                                 };
                               };
-                            }
-                          | {
-                              output: {};
-                              outputFormat: string;
-                              status: import("hono/utils/http-status").StatusCode;
-                              input: {
-                                param: {
-                                  id: string;
-                                };
-                              } & {
-                                query: {
-                                  page?: string | string[] | undefined;
-                                  q?: string | undefined;
-                                  order?: "asc" | "desc" | undefined;
-                                  page_size?: string | string[] | undefined;
-                                  sort?:
-                                    | "created"
-                                    | "email"
-                                    | "family-name"
-                                    | "given-name"
-                                    | "is-external"
-                                    | "job"
-                                    | "verification-type"
-                                    | undefined;
-                                };
-                              };
                             };
                       };
                     }) & {
                       "/": {
                         $post:
                           | {
-                              output: "OK";
-                              outputFormat: "text";
-                              status: 200;
+                              output: import("zod").ZodSafeParseError<{
+                                id: number;
+                              }>;
+                              outputFormat: "json";
+                              status: 400;
                               input: {
                                 param: {
                                   id: string;
@@ -2219,11 +2271,9 @@ declare const app: import("hono/hono-base").HonoBase<
                               };
                             }
                           | {
-                              output: import("zod").ZodSafeParseError<{
-                                id: number;
-                              }>;
-                              outputFormat: "json";
-                              status: 400;
+                              output: "OK";
+                              outputFormat: "text";
+                              status: 200;
                               input: {
                                 param: {
                                   id: string;
@@ -2304,14 +2354,9 @@ declare const app: import("hono/hono-base").HonoBase<
             "/": {
               $get:
                 | {
-                    output: import("zod").ZodSafeParseError<{
-                      id?: number | undefined;
-                      page: number;
-                      page_size: number;
-                      q: string;
-                    }>;
-                    outputFormat: "json";
-                    status: 400;
+                    output: {};
+                    outputFormat: string;
+                    status: import("hono/utils/http-status").StatusCode;
                     input: {
                       query: {
                         id?: string | undefined;
@@ -2322,9 +2367,14 @@ declare const app: import("hono/hono-base").HonoBase<
                     };
                   }
                 | {
-                    output: {};
-                    outputFormat: string;
-                    status: import("hono/utils/http-status").StatusCode;
+                    output: import("zod").ZodSafeParseError<{
+                      id?: number | undefined;
+                      page: number;
+                      page_size: number;
+                      q: string;
+                    }>;
+                    outputFormat: "json";
+                    status: 400;
                     input: {
                       query: {
                         id?: string | undefined;
@@ -2345,9 +2395,9 @@ declare const app: import("hono/hono-base").HonoBase<
                 "/": {
                   $get:
                     | {
-                        output: undefined;
-                        outputFormat: "redirect";
-                        status: import("hono/utils/http-status").RedirectStatusCode;
+                        output: {};
+                        outputFormat: string;
+                        status: import("hono/utils/http-status").StatusCode;
                         input: {
                           query: {
                             page?: string | string[] | undefined;
@@ -2357,9 +2407,9 @@ declare const app: import("hono/hono-base").HonoBase<
                         };
                       }
                     | {
-                        output: {};
-                        outputFormat: string;
-                        status: import("hono/utils/http-status").StatusCode;
+                        output: undefined;
+                        outputFormat: "redirect";
+                        status: import("hono/utils/http-status").RedirectStatusCode;
                         input: {
                           query: {
                             page?: string | string[] | undefined;
@@ -2373,17 +2423,6 @@ declare const app: import("hono/hono-base").HonoBase<
                 "/": {
                   $post:
                     | {
-                        output: "OK";
-                        outputFormat: "text";
-                        status: 200;
-                        input: {
-                          form: {
-                            email: string;
-                            role: string;
-                          };
-                        };
-                      }
-                    | {
                         output: import("zod").ZodSafeParseError<{
                           email: string;
                           role: string;
@@ -2396,25 +2435,22 @@ declare const app: import("hono/hono-base").HonoBase<
                             role: string;
                           };
                         };
-                      };
-                };
-              } & {
-                "/:id": {
-                  $patch:
+                      }
                     | {
                         output: "OK";
                         outputFormat: "text";
                         status: 200;
                         input: {
-                          param: {
-                            id: string;
-                          };
-                        } & {
                           form: {
+                            email: string;
                             role: string;
                           };
                         };
-                      }
+                      };
+                };
+              } & {
+                "/:id": {
+                  $patch:
                     | {
                         output: import("zod").ZodSafeParseError<{
                           id: number;
@@ -2460,11 +2496,7 @@ declare const app: import("hono/hono-base").HonoBase<
                             role: string;
                           };
                         };
-                      };
-                };
-              } & {
-                "/:id/disable": {
-                  $patch:
+                      }
                     | {
                         output: "OK";
                         outputFormat: "text";
@@ -2473,8 +2505,16 @@ declare const app: import("hono/hono-base").HonoBase<
                           param: {
                             id: string;
                           };
+                        } & {
+                          form: {
+                            role: string;
+                          };
                         };
-                      }
+                      };
+                };
+              } & {
+                "/:id/disable": {
+                  $patch:
                     | {
                         output: import("zod").ZodSafeParseError<{
                           id: number;
@@ -2496,11 +2536,7 @@ declare const app: import("hono/hono-base").HonoBase<
                             id: string;
                           };
                         };
-                      };
-                };
-              } & {
-                "/:id/enable": {
-                  $patch:
+                      }
                     | {
                         output: "OK";
                         outputFormat: "text";
@@ -2510,13 +2546,27 @@ declare const app: import("hono/hono-base").HonoBase<
                             id: string;
                           };
                         };
-                      }
+                      };
+                };
+              } & {
+                "/:id/enable": {
+                  $patch:
                     | {
                         output: import("zod").ZodSafeParseError<{
                           id: number;
                         }>;
                         outputFormat: "json";
                         status: 400;
+                        input: {
+                          param: {
+                            id: string;
+                          };
+                        };
+                      }
+                    | {
+                        output: "OK";
+                        outputFormat: "text";
+                        status: 200;
                         input: {
                           param: {
                             id: string;
@@ -2920,9 +2970,14 @@ declare const app: import("hono/hono-base").HonoBase<
             "/authorize": {
               $get:
                 | {
-                    output: undefined;
-                    outputFormat: "redirect";
-                    status: 302;
+                    output: import("zod").ZodSafeParseError<{
+                      client_id: string;
+                      nonce: string;
+                      redirect_uri: string;
+                      state: string;
+                    }>;
+                    outputFormat: "json";
+                    status: 400;
                     input: {
                       query: {
                         client_id: string;
@@ -2933,14 +2988,9 @@ declare const app: import("hono/hono-base").HonoBase<
                     };
                   }
                 | {
-                    output: import("zod").ZodSafeParseError<{
-                      client_id: string;
-                      nonce: string;
-                      redirect_uri: string;
-                      state: string;
-                    }>;
-                    outputFormat: "json";
-                    status: 400;
+                    output: undefined;
+                    outputFormat: "redirect";
+                    status: 302;
                     input: {
                       query: {
                         client_id: string;
@@ -3004,12 +3054,9 @@ declare const app: import("hono/hono-base").HonoBase<
             "/session/end": {
               $get:
                 | {
-                    output: import("zod").ZodSafeParseError<{
-                      post_logout_redirect_uri: string;
-                      state: string;
-                    }>;
-                    outputFormat: "json";
-                    status: 400;
+                    output: {};
+                    outputFormat: string;
+                    status: import("hono/utils/http-status").StatusCode;
                     input: {
                       query: {
                         post_logout_redirect_uri: string;
@@ -3018,9 +3065,12 @@ declare const app: import("hono/hono-base").HonoBase<
                     };
                   }
                 | {
-                    output: {};
-                    outputFormat: string;
-                    status: import("hono/utils/http-status").StatusCode;
+                    output: import("zod").ZodSafeParseError<{
+                      post_logout_redirect_uri: string;
+                      state: string;
+                    }>;
+                    outputFormat: "json";
+                    status: 400;
                     input: {
                       query: {
                         post_logout_redirect_uri: string;
@@ -3065,6 +3115,7 @@ declare const app: import("hono/hono-base").HonoBase<
                       | {
                           fingerprint: number;
                           from: "operator" | "user";
+                          origin?: string | undefined;
                           session_id: string;
                           timestamp: number;
                           user: {
@@ -3076,6 +3127,7 @@ declare const app: import("hono/hono-base").HonoBase<
                       | {
                           fingerprint: number;
                           from: "operator" | "user";
+                          origin?: string | undefined;
                           session_id: string;
                           timestamp: number;
                           user: {
@@ -3088,6 +3140,7 @@ declare const app: import("hono/hono-base").HonoBase<
                       | {
                           fingerprint: number;
                           from: "operator" | "user";
+                          origin?: string | undefined;
                           session_id: string;
                           timestamp: number;
                           user: {
@@ -3104,6 +3157,7 @@ declare const app: import("hono/hono-base").HonoBase<
                       | {
                           fingerprint: number;
                           from: "operator" | "user";
+                          origin?: string | undefined;
                           session_id: string;
                           timestamp: number;
                           user: {
@@ -3202,6 +3256,7 @@ declare const app: import("hono/hono-base").HonoBase<
                     | {
                         fingerprint: number;
                         from: "operator" | "user";
+                        origin?: string | undefined;
                         session_id: string;
                         timestamp: number;
                         user: {
@@ -3213,6 +3268,7 @@ declare const app: import("hono/hono-base").HonoBase<
                     | {
                         fingerprint: number;
                         from: "operator" | "user";
+                        origin?: string | undefined;
                         session_id: string;
                         timestamp: number;
                         user: {
@@ -3225,6 +3281,7 @@ declare const app: import("hono/hono-base").HonoBase<
                     | {
                         fingerprint: number;
                         from: "operator" | "user";
+                        origin?: string | undefined;
                         session_id: string;
                         timestamp: number;
                         user: {
@@ -3241,6 +3298,7 @@ declare const app: import("hono/hono-base").HonoBase<
                     | {
                         fingerprint: number;
                         from: "operator" | "user";
+                        origin?: string | undefined;
                         session_id: string;
                         timestamp: number;
                         user: {

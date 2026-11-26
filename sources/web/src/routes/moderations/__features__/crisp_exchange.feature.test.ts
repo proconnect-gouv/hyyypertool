@@ -69,3 +69,43 @@ Scenario("Le modérateur répond dans les échanges Crisp", ({ I }) => {
   I.click({ role: "button", name: "Envoyer" });
   I.see("Réponse envoyée depuis la modération");
 });
+
+Scenario("Le modérateur résout puis rouvre la conversation Crisp", ({ I }) => {
+  beforeAll(async () => {
+    await empty_databases();
+    await insert_database(pg);
+    await insert_moderateur(hyyyper_pglite);
+  });
+
+  I.amOnPage("/moderations");
+  I.click("Modération a traiter de Jean Bon pour 13002526500013");
+  I.click("Échanges entre Jean et nous");
+  I.dontSeeElement({ role: "button", name: "Résolue" });
+
+  I.click({ role: "button", name: "Non résolue" });
+  I.seeElement({ role: "button", name: "Résolue" });
+
+  I.click({ role: "button", name: "Résolue" });
+  I.seeElement({ role: "button", name: "Non résolue" });
+});
+
+Scenario(
+  "Le modérateur envoie et résout depuis les échanges Crisp",
+  ({ I }) => {
+    beforeAll(async () => {
+      await empty_databases();
+      await insert_database(pg);
+      await insert_moderateur(hyyyper_pglite);
+    });
+
+    I.amOnPage("/moderations");
+    I.click("Modération a traiter de Jean Bon pour 13002526500013");
+    I.click("Échanges entre Jean et nous");
+
+    I.fillField("Répondre à l'usager…", "Réponse avant résolution");
+    I.click("~Plus d'options d'envoi");
+    I.click("~Envoyer et résoudre");
+    I.see("Réponse avant résolution");
+    I.seeElement({ role: "button", name: "Résolue" });
+  },
+);

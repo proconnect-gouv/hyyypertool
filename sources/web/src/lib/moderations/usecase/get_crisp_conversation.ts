@@ -1,4 +1,5 @@
 import type { CrispApi, CrispMessage, CrispSessionId } from "#src/lib/crisp";
+import type { ConversationState } from "@proconnect-gouv/proconnect.crisp/types";
 
 //
 
@@ -12,21 +13,27 @@ export interface CrispMessagesPage {
 export interface CrispConversation {
   page: CrispMessagesPage;
   session_id: CrispSessionId;
+  state: ConversationState;
   subject: string | undefined;
 }
 
 export async function get_crisp_conversation(
-  crisp: Pick<CrispApi, "get_conversation" | "get_messages">,
+  crisp: Pick<
+    CrispApi,
+    "get_conversation" | "get_conversation_state" | "get_messages"
+  >,
   { session_id }: { session_id: CrispSessionId },
 ): Promise<CrispConversation> {
-  const [conversation, page] = await Promise.all([
+  const [conversation, state, page] = await Promise.all([
     crisp.get_conversation({ session_id }),
+    crisp.get_conversation_state({ session_id }),
     get_crisp_messages(crisp, { session_id }),
   ]);
 
   return {
     page,
     session_id,
+    state,
     subject: conversation.meta.subject,
   };
 }
