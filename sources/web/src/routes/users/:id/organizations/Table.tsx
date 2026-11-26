@@ -133,7 +133,7 @@ export function Row({
           {cached_code_officiel_geographique}
         </a>
       </td>
-      <td class="space-x-2 text-end">
+      <td class="relative z-10 space-x-2 text-end">
         {is_editor && (
           <MemberRowActions
             user_id={user_id}
