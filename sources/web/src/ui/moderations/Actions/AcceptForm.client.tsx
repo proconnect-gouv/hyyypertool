@@ -7,7 +7,7 @@ import {
 } from "#src/lib/moderations/schema";
 import { button } from "#src/ui/button";
 import { checkbox_group, input, input_group } from "#src/ui/form";
-import { icon } from "#src/ui/icons";
+import { Svg } from "#src/ui/icons/components";
 import { AUTO_GO_BACK_EVENT } from "../AutoGoBack/auto-go-back.client";
 import { useState } from "preact/hooks";
 import { MemberAndDomainPicker } from "./MemberAndDomainPicker.client";
@@ -102,15 +102,7 @@ export function AcceptForm({
           disabled={submitting}
           onClick={() => (toolbar_open.value = null)}
         >
-          <svg
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            width="1em"
-            height="1em"
-            aria-hidden="true"
-          >
-            <path class={icon({ name: "subtract" })} />
-          </svg>
+          <Svg name="subtract" />
           <span class="sr-only">Fermer la modale</span>
         </button>
       </div>

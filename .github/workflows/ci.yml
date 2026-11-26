@@ -33,8 +33,10 @@ jobs:
       - run: bun run format
       - run: bun run build
       - run: bun run lint:type-check
+      - run: bun run test:islands
       - run: bun test
           --path-ignore-patterns='**/*.feature.test.ts'
+          --path-ignore-patterns='**/*.client.test.*'
           --coverage
           --coverage-reporter=lcov
           --coverage-reporter=text

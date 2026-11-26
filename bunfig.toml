@@ -10,3 +10,6 @@ clientScripts = [
   "sources/web/src/**/*.client.tsx"
 ]
 external = ["preact", "preact/jsx-dev-runtime", "preact/jsx-runtime", "@preact/signals"]
+
+[test]
+preload = ["./sources/config/bun-plugin-client-scripts/preact_shared_templates.ts"]
