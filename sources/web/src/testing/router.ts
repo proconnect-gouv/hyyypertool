@@ -9,6 +9,7 @@ import {
   client as identite_pg_client,
   pg,
 } from "@~/identite-proconnect/database/testing";
+import type { ConversationState } from "@proconnect-gouv/proconnect.crisp/types";
 import { Hono } from "hono";
 import { authorized, set_userinfo } from "../middleware/auth";
 import { set_config } from "../middleware/config";
@@ -57,6 +58,12 @@ export function create_test_fetch(): (
 }
 
 const sent_messages = new Map<string, CrispMessageWire[]>();
+const conversation_states = new Map<string, ConversationState>();
+
+export function empty_crisp() {
+  conversation_states.clear();
+  sent_messages.clear();
+}
 
 export function create_testing_router() {
   return new Hono()
@@ -116,6 +123,8 @@ export function create_testing_router() {
             subject: await seeded_crisp_subject(pg, session_id),
           },
         }),
+        get_conversation_state: async ({ session_id }) =>
+          conversation_states.get(session_id) ?? "pending",
         get_messages: async ({ session_id, timestamp_before }) =>
           crisp_messages_batch(
             [
@@ -127,7 +136,12 @@ export function create_testing_router() {
         get_user: async () => {
           throw new Error("operator not found");
         },
-        mark_conversation_as_resolved: async () => undefined,
+        mark_conversation_as_resolved: async ({ session_id }) => {
+          conversation_states.set(session_id, "resolved");
+        },
+        mark_conversation_as_unresolved: async ({ session_id }) => {
+          conversation_states.set(session_id, "unresolved");
+        },
         send_message: async ({ content, session_id, type = "text", user }) => {
           const fingerprint = Date.now();
           const messages = sent_messages.get(session_id) ?? [];

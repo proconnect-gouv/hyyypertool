@@ -5,6 +5,7 @@ export const icon = tv({
     name: {
       "arrow-down-s": "icon-arrow-down-s",
       "arrow-go-back": "icon-arrow-go-back",
+      "arrow-right": "icon-arrow-right",
       check: "icon-check",
       clipboard: "icon-clipboard",
       delete: "icon-delete",

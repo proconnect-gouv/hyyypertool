@@ -4,6 +4,7 @@ import { fetch_crisp } from "@proconnect-gouv/proconnect.crisp/client";
 import type {
   CreateConversationRoute,
   GetConversationRoute,
+  GetConversationStateRoute,
   GetMessagesInAConversationRoute,
   OperatorsRouter,
   SendMessageInAConversationRoute,
@@ -13,6 +14,7 @@ import type {
 import type {
   Config,
   ConversationMeta,
+  ConversationState,
   User,
 } from "@proconnect-gouv/proconnect.crisp/types";
 import { z } from "zod";
@@ -46,9 +48,17 @@ export function crisp_api(config: CrispConfig) {
   return {
     create_conversation: create_conversation(config),
     get_conversation: get_conversation(config),
+    get_conversation_state: get_conversation_state(config),
     get_messages: get_messages(config),
     get_user: get_operator(config),
-    mark_conversation_as_resolved: mark_conversation_as_resolved(config),
+    mark_conversation_as_resolved: change_conversation_state(
+      config,
+      "resolved",
+    ),
+    mark_conversation_as_unresolved: change_conversation_state(
+      config,
+      "unresolved",
+    ),
     send_message: send_message(config),
   };
 }
@@ -85,6 +95,23 @@ function get_conversation(config: Config) {
         searchParams: {},
       }),
     );
+  };
+}
+
+function get_conversation_state(config: Config) {
+  return async function get_conversation_state({
+    session_id,
+  }: {
+    session_id: string;
+  }) {
+    const { state } = await crisp_request(
+      fetch_crisp<GetConversationStateRoute>(config, {
+        endpoint: `/v1/website/${config.website_id}/conversation/${session_id}/state`,
+        method: "GET",
+        searchParams: {},
+      }),
+    );
+    return state;
   };
 }
 
@@ -172,8 +199,8 @@ function send_message(config: CrispConfig) {
   };
 }
 
-function mark_conversation_as_resolved(config: Config) {
-  return async function mark_conversation_as_resolved({
+function change_conversation_state(config: Config, state: ConversationState) {
+  return async function change_conversation_state({
     session_id,
   }: {
     session_id: string;
@@ -183,7 +210,7 @@ function mark_conversation_as_resolved(config: Config) {
         endpoint: `/v1/website/${config.website_id}/conversation/${session_id}/state`,
         method: "PATCH",
         searchParams: {},
-        body: { state: "resolved" },
+        body: { state },
       }),
     );
   };

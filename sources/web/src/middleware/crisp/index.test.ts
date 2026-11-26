@@ -11,9 +11,11 @@ test("set_crisp_client injects mock client", async () => {
   const mockCrisp = {
     create_conversation: mock(),
     get_conversation: mock(),
+    get_conversation_state: mock(),
     get_messages: mock(),
     get_user: mock(),
     mark_conversation_as_resolved: mock(),
+    mark_conversation_as_unresolved: mock(),
     send_message: mock(),
   };
 

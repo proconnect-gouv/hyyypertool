@@ -8,7 +8,7 @@ import {
   migrate,
 } from "@~/identite-proconnect/database/testing";
 import { config as buncept } from "buncept";
-import { create_testing_router } from "./router";
+import { create_testing_router, empty_crisp } from "./router";
 
 //
 
@@ -28,4 +28,5 @@ export async function stop_app() {
 export async function empty_databases() {
   await identite_empty_database();
   await hyyyperbase_empty_database();
+  empty_crisp();
 }
