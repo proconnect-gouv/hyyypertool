@@ -7,7 +7,7 @@ import {
 } from "#src/lib/moderations/schema";
 import { button } from "#src/ui/button";
 import { input, input_group, label } from "#src/ui/form";
-import { icon } from "#src/ui/icons";
+import { Svg } from "#src/ui/icons/components";
 import { AUTO_GO_BACK_EVENT } from "../AutoGoBack/auto-go-back.client";
 import { useRef, useState } from "preact/hooks";
 import type { ResponseTemplateDto } from "../../../routes/response-templates/get_response_templates.query";
@@ -115,15 +115,7 @@ export function RefusalForm({
             disabled={submitting}
             onClick={() => (toolbar_open.value = null)}
           >
-            <svg
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              width="1em"
-              height="1em"
-              aria-hidden="true"
-            >
-              <path class={icon({ name: "subtract" })} />
-            </svg>
+            <Svg name="subtract" />
             <span class="sr-only">Fermer la modale</span>
           </button>
         </div>

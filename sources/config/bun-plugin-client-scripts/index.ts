@@ -3,6 +3,7 @@
 import { Glob, TOML, type BunPlugin } from "bun";
 import { appendFile, exists, readFile } from "node:fs/promises";
 import { dirname, join, relative } from "node:path";
+import { hono_jsx_to_preact } from "./hono_jsx_to_preact";
 
 //
 
@@ -111,7 +112,7 @@ export async function buildClientScripts(
     root: join(root, "sources/web/src"),
     sourcemap: options.sourcemap ?? "external",
     external: options.external ?? [],
-    plugins: options.plugins ?? [],
+    plugins: [hono_jsx_to_preact, ...(options.plugins ?? [])],
     naming: {
       entry: "[dir]/[name].[ext]",
     },
