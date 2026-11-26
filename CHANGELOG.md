@@ -1,5 +1,50 @@
 # Changelog
 
+## [2026.11.7](https://github.com/proconnect-gouv/hyyypertool/compare/2026.11.6...2026.11.7) (2026-11-25)
+
+### Changements
+
+- ✨ La page utilisateur indique si les mots de secours sont configurés, avec leur date de création
+- 🐛 La validation d'une modération avec un ancien ticket Zammad crée une nouvelle conversation Crisp au lieu d'écrire dans un ticket inexistant
+- 🐛 Le pseudo Crisp d'un modérateur sans nom de famille n'affiche plus « undefined. »
+- 💄 L'encart « Afficher plus de messages » n'affiche plus les identifiants JSON bruts de la conversation Crisp
+- 🐛 Rétablit le lien accessible des échanges Crisp et corrige les identifiants espacés
+- ✨ Chargement des échanges Crisp par lots de 10 messages, avec l'affichage des notes internes et des fichiers
+- 💄 Le titre des échanges Crisp reste en haut de l'écran pendant la lecture, pour pouvoir les replier à tout moment
+- ✨ Réponse dans les échanges Crisp depuis la fiche de modération, avec un choix entre message et note privée et un brouillon conservé lors des rechargements
+- ✨ Les messages internes des échanges Crisp sont identifiés comme messages du système
+- 💄 afficher les messages système avec un style distinct dans les échanges Crisp
+- 💄 center Crisp conversation images
+
+Images in Crisp conversation bubbles are now centered by default.
+
+### Ajouté
+
+- ✨ label internal Crisp system messages ([#2091](https://github.com/proconnect-gouv/hyyypertool/issues/2091)) ([45437a5](https://github.com/proconnect-gouv/hyyypertool/commit/45437a5ff75a86500289065f2f5b87f1436e67f8))
+- ✨ reply in Crisp conversations from the moderation page ([#2090](https://github.com/proconnect-gouv/hyyypertool/issues/2090)) ([8509da8](https://github.com/proconnect-gouv/hyyypertool/commit/8509da8c2ff65b7d6e0dff675f4ffbb9021b76af))
+- ✨ charger les messages Crisp par lots de 10 ([#2088](https://github.com/proconnect-gouv/hyyypertool/issues/2088)) ([ffb61ea](https://github.com/proconnect-gouv/hyyypertool/commit/ffb61eab1ed5b303c14bc83e0e3c4a2cb73ce099))
+
+### Modifié
+
+- 💄 center Crisp conversation images ([#2093](https://github.com/proconnect-gouv/hyyypertool/issues/2093)) ([6f9af7c](https://github.com/proconnect-gouv/hyyypertool/commit/6f9af7cb13c4f1df3877e9aa5fafccd568b3d5c9))
+- 💄 render Crisp system messages distinctly ([#2092](https://github.com/proconnect-gouv/hyyypertool/issues/2092)) ([81d8e79](https://github.com/proconnect-gouv/hyyypertool/commit/81d8e799e83a483757c1b64ef1459a042821b3af))
+- ♻️ tidy the Crisp message view ([#2086](https://github.com/proconnect-gouv/hyyypertool/issues/2086)) ([6608b91](https://github.com/proconnect-gouv/hyyypertool/commit/6608b91b3e523602dfc9ef50e5cd24bc2904d03a))
+- ♻️ keep the Crisp fake on the fallback path ([#2087](https://github.com/proconnect-gouv/hyyypertool/issues/2087)) ([15ad59e](https://github.com/proconnect-gouv/hyyypertool/commit/15ad59ed9b3e26b882b3453ba1ce2feb02510fc7))
+- ♻️ type the shared Crisp testing client ([#2084](https://github.com/proconnect-gouv/hyyypertool/issues/2084)) ([3bbc372](https://github.com/proconnect-gouv/hyyypertool/commit/3bbc372bd1b05358bec0a36c59b46b721fce65eb))
+- ♻️ share one Crisp inbox URL builder ([#2083](https://github.com/proconnect-gouv/hyyypertool/issues/2083)) ([0cd86ff](https://github.com/proconnect-gouv/hyyypertool/commit/0cd86ff84ab10020a3cadef6fecc0f2e09bdc9b9))
+- ♻️ parse the moderation ticket id once before notifying through crisp ([#2080](https://github.com/proconnect-gouv/hyyypertool/issues/2080)) ([1716173](https://github.com/proconnect-gouv/hyyypertool/commit/17161739f7b72f0718bf7ba025b6cb3038e7925b))
+- ♻️ load the moderation's crisp conversation without exceptions for missing tickets ([#2079](https://github.com/proconnect-gouv/hyyypertool/issues/2079)) ([516bb31](https://github.com/proconnect-gouv/hyyypertool/commit/516bb31e93a0766a97fcf614e9f944623bfc0186))
+- ♻️ parse crisp errors and config at the adapter boundary ([#2078](https://github.com/proconnect-gouv/hyyypertool/issues/2078)) ([71c0ef7](https://github.com/proconnect-gouv/hyyypertool/commit/71c0ef79a42c664d88633e3895474b678f738d28))
+
+### Corrigé
+
+- 🐛 restore the Crisp exchange accessibility link and trimmed ticket id ([#2082](https://github.com/proconnect-gouv/hyyypertool/issues/2082)) ([978ba46](https://github.com/proconnect-gouv/hyyypertool/commit/978ba46ca1f56775bb83754f3ee27b4c875dd8f2))
+- 🐛 start a new crisp conversation when validating a legacy ticket ([#2077](https://github.com/proconnect-gouv/hyyypertool/issues/2077)) ([0016271](https://github.com/proconnect-gouv/hyyypertool/commit/00162719d8d273a2421e61205316236dd1923a37))
+
+### Supprimé
+
+- 🔥 drop unused Crisp exports ([#2085](https://github.com/proconnect-gouv/hyyypertool/issues/2085)) ([2f4ef6f](https://github.com/proconnect-gouv/hyyypertool/commit/2f4ef6fbc82a1659b9533f47f891c5d26c71f9a8))
+
 ## [2026.11.6](https://github.com/proconnect-gouv/hyyypertool/compare/2026.11.5...2026.11.6) (2026-11-23)
 
 ### Changements
