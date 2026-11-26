@@ -69,17 +69,6 @@
         "@~/config.typescript": "workspace:*",
       },
     },
-    "packages/hono-slotify": {
-      "name": "hono-slotify",
-      "version": "1.0.0",
-      "dependencies": {
-        "hono": "4.13.18",
-      },
-      "devDependencies": {
-        "@types/bun": "1.4.4",
-        "@~/config.typescript": "workspace:*",
-      },
-    },
     "packages/tailwind-dsfr": {
       "name": "tailwind-dsfr",
       "version": "1.0.0",
@@ -179,7 +168,6 @@
         "drizzle-orm": "0.45.4",
         "hono": "4.13.18",
         "hono-sessions": "0.8.1",
-        "hono-slotify": "workspace:*",
         "is-disposable-email-domain": "1.0.7",
         "jose": "6.2.17",
         "lodash.sortby": "4.7.0",
@@ -708,8 +696,6 @@
     "hono": ["hono@4.13.18", "", {}, "sha512-H9q/E1XizaWstJxUW881dmLxEj+t/TrGGnyxINkm4+sK0qUwsMtFdo2BWI9Vs3cIS19MU6b6iCijoUoEf4f3DA=="],
 
     "hono-sessions": ["hono-sessions@0.8.1", "", { "dependencies": { "iron-webcrypto": "^1.2.1", "ohash": "^2" }, "peerDependencies": { "hono": "^4.0.0" } }, "sha512-YLSKuIP13yhXTQe2x3sCc1JWsqt1Z3WZB2DWE+oX+YpOsC3lv8uCHnCoNHcY9DPyflDw4XQJN+MFVvcp5QwWdw=="],
-
-    "hono-slotify": ["hono-slotify@workspace:packages/hono-slotify"],
 
     "html-void-elements": ["html-void-elements@3.0.0", "", {}, "sha512-bEqo66MRXsUGxWHV5IP0PUiAWwoEjba4VCzg0LjFJBpchPaTfyfCKTG6bc5F8ucKec3q5y6qOdGyYTSBEvhCrg=="],
 

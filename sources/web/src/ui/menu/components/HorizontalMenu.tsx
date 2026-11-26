@@ -1,19 +1,21 @@
 //
 
+import { button } from "#src/ui/button";
+import { Svg } from "#src/ui/icons/components";
 import type { PropsWithChildren } from "hono/jsx";
+import { visually_hidden } from "../../visually_hidden";
 import { Menu } from "./Menu";
-import { Popover } from "./Popover";
-import { Trigger } from "./Trigger";
 
 //
 
 export function HorizontalMenu({ children }: PropsWithChildren) {
   return (
     <Menu>
-      <Menu.Trigger>{(props) => <Trigger {...props} />}</Menu.Trigger>
-      <Menu.Popover>
-        {(props) => <Popover {...props}>{children}</Popover>}
-      </Menu.Popover>
+      <Menu.Trigger class={button({ intent: "ghost" })}>
+        <Svg class="size-5" name="more" />
+        <span class={visually_hidden()}>Menu</span>
+      </Menu.Trigger>
+      <Menu.Popover>{children}</Menu.Popover>
     </Menu>
   );
 }
