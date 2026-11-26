@@ -129,3 +129,36 @@ Scenario("Retirer un membre de l'organisation", ({ I }) => {
     I.see("moderateur@beta.gouv.fr");
   });
 });
+
+Scenario("Retirer un membre de l'organisation depuis sa fiche", ({ I }) => {
+  beforeAll(async () => {
+    await empty_databases();
+    await insert_database(pg);
+    await insert_moderateur(hyyyper_pglite);
+  });
+
+  I.amOnPage("/users");
+  I.click({
+    role: "link",
+    name: "Utilisateur Raphael Dubigny (rdubigny@beta.gouv.fr)",
+  });
+  I.click("2 organisations de Raphael");
+  I.within(
+    "~Organisation Direction interministerielle du numerique (DINUM) pour (13002526500013)",
+    () => {
+      I.click("Menu");
+      I.click("🚪🚶retirer de l'orga");
+    },
+  );
+
+  I.amOnPage("/users");
+  I.click({
+    role: "link",
+    name: "Utilisateur Raphael Dubigny (rdubigny@beta.gouv.fr)",
+  });
+  I.click("1 organisation de Raphael");
+  I.see("Yes we hack");
+  I.dontSeeElement(
+    "~Organisation Direction interministerielle du numerique (DINUM) pour (13002526500013)",
+  );
+});
