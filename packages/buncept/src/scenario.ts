@@ -1,7 +1,6 @@
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
-import { create_browser, in_page, type Browser } from "./browser";
+import { call, create_browser, type Browser } from "./browser";
 import { config } from "./config";
-import { element_in_page, focused_in_page, see_in_page } from "./page/checks";
 import type { Locator } from "./protocol";
 
 //
@@ -14,19 +13,15 @@ export function Scenario(title: string, body: (context: { I: Actor }) => void) {
     const scenario = {} as Parameters<typeof create_actor>[0];
     let view: Bun.WebView | undefined;
     beforeAll(async () => {
-      view = new Bun.WebView(
-        process.platform === "linux"
-          ? {
-              backend: {
-                type: "chrome",
-                argv: [
-                  "--no-sandbox",
-                  `--user-data-dir=/tmp/buncept-${crypto.randomUUID()}`,
-                ],
-              },
-            }
-          : {},
-      );
+      view = new Bun.WebView({
+        backend: {
+          type: "chrome",
+          argv: [
+            "--no-sandbox",
+            `--user-data-dir=/tmp/buncept-${crypto.randomUUID()}`,
+          ],
+        },
+      });
       scenario.browser = create_browser(view);
     });
     afterAll(() => view?.close());
@@ -89,9 +84,7 @@ function create_actor(scenario: { browser: Browser; failed_step?: string }) {
     ),
     // https://codecept.io/web-api/#click
     click: step("click", async (browser, scopes, locator: Locator) => {
-      await browser.act("click", scopes, locator, (element) =>
-        (element as HTMLElement).click(),
-      );
+      await browser.act("click", scopes, locator);
       await browser.settle();
     }),
     // https://codecept.io/web-api/#dontsee
@@ -99,7 +92,7 @@ function create_actor(scenario: { browser: Browser; failed_step?: string }) {
       browser.until(
         `"${text}" is still visible`,
         (visible) => !visible,
-        in_page(see_in_page, scopes, text),
+        call("see", scopes, text),
       ),
     ),
     // https://codecept.io/web-api/#dontseeelement
@@ -109,7 +102,7 @@ function create_actor(scenario: { browser: Browser; failed_step?: string }) {
         browser.until(
           `${JSON.stringify(locator)} is still visible`,
           (visible) => !visible,
-          in_page(element_in_page, scopes, locator),
+          call("see_element", scopes, locator),
         ),
     ),
     // https://codecept.io/web-api/#fillfield
@@ -133,16 +126,16 @@ function create_actor(scenario: { browser: Browser; failed_step?: string }) {
     see: step("see", (browser, scopes, text: string) =>
       browser.until(
         `"${text}" is not visible`,
-        (visible) => visible === true,
-        in_page(see_in_page, scopes, text),
+        (visible) => visible,
+        call("see", scopes, text),
       ),
     ),
     // https://codecept.io/web-api/#seeelement
     seeElement: step("see element", (browser, scopes, locator: Locator) =>
       browser.until(
         `${JSON.stringify(locator)} is not visible`,
-        (visible) => visible === true,
-        in_page(element_in_page, scopes, locator),
+        (visible) => visible,
+        call("see_element", scopes, locator),
       ),
     ),
     // Not in CodeceptJS: keyboard focus is on the element a user would name
@@ -150,15 +143,15 @@ function create_actor(scenario: { browser: Browser; failed_step?: string }) {
       browser.until(
         `${JSON.stringify(locator)} is not focused`,
         (focused) => focused === true,
-        in_page(focused_in_page, scopes, locator),
+        call("focused", scopes, locator),
       ),
     ),
     // https://codecept.io/web-api/#seeincurrenturl
     seeInCurrentUrl: step("see in current url", (browser, _, part: string) =>
       browser.until(
         `url does not contain "${part}"`,
-        (href) => String(href).includes(part),
-        "location.href",
+        (href) => href.includes(part),
+        call("url"),
       ),
     ),
     // https://codecept.io/web-api/#seetitleequals
@@ -166,7 +159,7 @@ function create_actor(scenario: { browser: Browser; failed_step?: string }) {
       browser.until(
         `title is not "${title}"`,
         (actual) => actual === title,
-        "document.title",
+        call("title"),
       ),
     ),
     // https://codecept.io/web-api/#wait

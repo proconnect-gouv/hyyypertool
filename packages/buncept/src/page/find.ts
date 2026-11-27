@@ -1,4 +1,5 @@
 import type { Kind, Locator } from "../protocol";
+import { normalize } from "./normalize";
 
 // Resolves a locator inside the `scopes` chain, the way CodeceptJS does for
 // click and fillField, plus a last-resort click on any visible text.
@@ -9,8 +10,6 @@ export function find(
   scopes: Locator[],
   start: Element = document.body,
 ): Element | null {
-  const normalize = (value: string | null | undefined) =>
-    (value ?? "").replace(/\s+/g, " ").replace(/[’‘]/g, "'").trim();
   const visible = (element: Element) =>
     (element as HTMLElement).offsetWidth > 0 ||
     (element as HTMLElement).offsetHeight > 0;

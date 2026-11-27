@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, expect, test } from "bun:test";
 import { start_fixtures, stop_fixtures } from "./fixture_server";
-import { Scenario, config, create_browser } from "./index";
+import { Scenario, call, config, create_browser } from "./index";
 
 //
 
@@ -27,11 +27,9 @@ Scenario(
 );
 
 test("concurrent calls to the view are serialized", async () => {
-  const view = new Bun.WebView(
-    process.platform === "linux"
-      ? { backend: { type: "chrome", argv: ["--no-sandbox"] } }
-      : {},
-  );
+  const view = new Bun.WebView({
+    backend: { type: "chrome", argv: ["--no-sandbox"] },
+  });
   try {
     const browser = create_browser(view);
     await browser.navigate(config.url);
@@ -41,7 +39,7 @@ test("concurrent calls to the view are serialized", async () => {
         browser.until(
           "no title",
           (title) => title === "Fixture",
-          "document.title",
+          call("title"),
         ),
       ),
     );
