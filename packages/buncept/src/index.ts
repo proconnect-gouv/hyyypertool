@@ -10,7 +10,7 @@
 // Modified for hyyypertool: rewritten as a CodeceptJS-style `I` actor over
 // Bun.WebView, relicensed under the GPL-3.0 as LGPL-2.1 §3 allows.
 
-export { create_browser } from "./browser";
+export { call, create_browser } from "./browser";
 export { config } from "./config";
 export type { Locator } from "./protocol";
 export { Scenario, type Actor } from "./scenario";

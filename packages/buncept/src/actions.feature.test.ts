@@ -43,21 +43,17 @@ Scenario("pressKeyUntilFocused tabs to the named element", ({ I }) => {
 });
 
 test("click fails on an element another one is painted over", async () => {
-  const view = new Bun.WebView(
-    process.platform === "linux"
-      ? { backend: { type: "chrome", argv: ["--no-sandbox"] } }
-      : {},
-  );
+  const view = new Bun.WebView({
+    backend: { type: "chrome", argv: ["--no-sandbox"] },
+  });
   const timeout = config.timeout;
   config.timeout = 500;
   try {
     const browser = create_browser(view);
     await browser.navigate(`${config.url}/covered`);
-    await expect(
-      browser.act("click", [], "Menu", (element) =>
-        (element as HTMLElement).click(),
-      ),
-    ).rejects.toThrow(/element covered by <a href=/);
+    await expect(browser.act("click", [], "Menu")).rejects.toThrow(
+      /element covered by <a href=/,
+    );
   } finally {
     config.timeout = timeout;
     view.close();

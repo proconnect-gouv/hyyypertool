@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["DOM", "ESNext"],
+    "lib": ["ESNext"],
     "outDir": "./node_modules/.cache/tsc",
     "types": ["@types/bun"]
   },

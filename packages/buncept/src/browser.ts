@@ -1,19 +1,35 @@
 import { config } from "./config";
-import {
-  actionable,
-  check_in_page,
-  covering,
-  field_value,
-  focused_in_page,
-} from "./page/checks";
-import { find } from "./page/find";
-import { INFLIGHT_SHIM, LOADED } from "./page/loaded";
-import type { Kind, Locator } from "./protocol";
+import type { Action } from "./page/checks";
+import type { Page } from "./page/index";
+import type { Locator } from "./protocol";
 
 //
 
 const TRANSIENT = /navigated or closed|navigation is already pending/;
 const PRESS_CAP = 50;
+
+const build = await Bun.build({
+  entrypoints: [`${import.meta.dir}/page/index.ts`],
+  format: "iife",
+  target: "browser",
+});
+const [bundle] = build.outputs;
+if (!build.success || !bundle)
+  throw new AggregateError(build.logs, "buncept page bundle failed");
+const PAGE = await bundle.text();
+
+type Script<T> = { readonly result?: T; readonly source: string };
+
+const PAGE_LINE: Script<readonly [string, string]> = {
+  source: "[location.href, document.title]",
+};
+
+export const call = <K extends keyof Page>(
+  name: K,
+  ...args: Parameters<Page[K]>
+): Script<ReturnType<Page[K]>> => ({
+  source: `window.__buncept.${name}(${args.map((arg) => JSON.stringify(arg)).join(", ")})`,
+});
 
 export type Browser = ReturnType<typeof create_browser>;
 
@@ -26,22 +42,24 @@ export function create_browser(view: Bun.WebView) {
     chain = run.catch(() => {});
     return run;
   };
-  const evaluate = <T>(script: string) =>
-    serial(() => view.evaluate<T>(script));
+  const evaluate = <T>(script: Script<T>) =>
+    serial(() => view.evaluate<T>(script.source));
+  const on_new_document = (source: string) =>
+    serial(() => view.cdp("Page.addScriptToEvaluateOnNewDocument", { source }));
 
   // Retries `read` until `done`, treating a page torn down by an in-flight
   // navigation as "not ready yet".
   async function until<T>(
     failure: string,
     done: (value: T) => boolean,
-    script: string,
+    script: Script<T>,
   ) {
     const deadline = Date.now() + config.timeout;
     let last: T | string = "not evaluated";
     for (;;) {
       try {
-        last = await evaluate<T>(script);
-        if (done(last as T)) return;
+        last = await evaluate(script);
+        if (done(last)) return;
       } catch (error) {
         if (!TRANSIENT.test(String(error))) throw error;
       }
@@ -53,58 +71,43 @@ export function create_browser(view: Bun.WebView) {
     }
   }
 
-  let popup_stubs = "";
+  let accepting_popups = false;
+  let installed = false;
+
+  async function install() {
+    await serial(() => view.navigate("about:blank"));
+    await on_new_document(PAGE);
+    if (accepting_popups) await on_new_document(call("accept_popups").source);
+    installed = true;
+  }
 
   // Waits for the element to be visible (and enabled), then runs `action`
   // on it in the same evaluate, so no swap can land between find and act.
-  const act = (
-    kind: Kind,
-    scopes: Locator[],
-    locator: Locator,
-    action: (element: Element) => void,
-  ) =>
-    until<string>(
+  const act = (action: Action, scopes: Locator[], locator: Locator) =>
+    until(
       `${JSON.stringify(locator)}`,
       (state) => state === "ok",
-      `(() => {
-        ${INFLIGHT_SHIM}
-        ${popup_stubs}
-        if (!(${LOADED})) return "page still loading";
-        const element = (${find})(${JSON.stringify(kind)}, ${JSON.stringify(locator)}, ${JSON.stringify(scopes)});
-        if (!element) return "element not found";
-        if (!(${actionable})(element)) return "element not visible or not enabled";
-        if (${JSON.stringify(kind)} === "click") {
-          const cover = (${covering})(element);
-          if (cover) return "element covered by " + cover;
-        }
-        (${action})(element);
-        return "ok";
-      })()`,
+      call("act", action, scopes, locator),
     );
 
   // The same wait as `act`, for actions that don't go through it.
   const ready = () =>
-    until<boolean>(
-      "page still loading",
-      (loaded) => loaded === true,
-      `(() => { ${INFLIGHT_SHIM}; ${popup_stubs} return ${LOADED}; })()`,
-    );
+    until("page still loading", (loaded) => loaded, call("loaded"));
 
   // htmx and islands use fetch/XHR: wait until none is in flight.
   // ponytail: best effort, never fails; assertions retry on their own.
   async function settle() {
     try {
-      await until(
-        "page not settled",
-        (busy) => busy === false,
-        `document.readyState !== "complete" || window.__buncept_inflight > 0`,
-      );
+      await ready();
     } catch {}
   }
 
   return {
-    accept_popups() {
-      popup_stubs = `window.confirm = () => true; window.alert = () => {};`;
+    async accept_popups() {
+      accepting_popups = true;
+      if (!installed) return;
+      await on_new_document(call("accept_popups").source);
+      await evaluate(call("accept_popups"));
     },
     act,
     wait(seconds: number) {
@@ -114,7 +117,7 @@ export function create_browser(view: Bun.WebView) {
     // lands before its island hydrates is lost, so click again.
     async check(scopes: Locator[], field: Locator) {
       const deadline = Date.now() + config.timeout;
-      const check = in_page(check_in_page, scopes, field);
+      const check = call("check", scopes, field);
       await ready();
       for (;;) {
         await until(
@@ -133,14 +136,9 @@ export function create_browser(view: Bun.WebView) {
     // island hydrating after the keystrokes resets the field, so retype.
     async fill(scopes: Locator[], field: Locator, value: string) {
       const deadline = Date.now() + config.timeout;
-      const read = in_page(field_value, scopes, field);
+      const read = call("field_value", scopes, field);
       for (;;) {
-        await act("field", scopes, field, (element) => {
-          const input = element as HTMLInputElement;
-          input.focus();
-          input.click();
-          input.select?.();
-        });
+        await act("select_field", scopes, field);
         await serial(() => view.type(value));
         // ponytail: 150ms outlasts Preact's 100ms afterPaint fallback, the
         // latest an island's mount effect can reset the field.
@@ -153,6 +151,7 @@ export function create_browser(view: Bun.WebView) {
       }
     },
     async navigate(url: string) {
+      if (!installed) await install();
       const deadline = Date.now() + config.timeout;
       for (;;) {
         try {
@@ -168,9 +167,7 @@ export function create_browser(view: Bun.WebView) {
     },
     async page_line() {
       try {
-        const [url, title] = await evaluate<[string, string]>(
-          "[location.href, document.title]",
-        );
+        const [url, title] = await evaluate(PAGE_LINE);
         return `Page: ${url} — "${title}"`;
       } catch {
         return "Page: unavailable";
@@ -187,7 +184,7 @@ export function create_browser(view: Bun.WebView) {
       key: string,
       locator: Locator,
     ) {
-      const focused = in_page(focused_in_page, scopes, locator);
+      const focused = call("focused", scopes, locator);
       let last: unknown = null;
       for (let presses = 0; presses <= PRESS_CAP; presses++) {
         await ready();
@@ -203,15 +200,3 @@ export function create_browser(view: Bun.WebView) {
     until,
   };
 }
-
-//
-
-export const in_page = (
-  fn: (element: Element | null, ...args: string[]) => unknown,
-  scopes: Locator[],
-  locator: Locator,
-) =>
-  `(() => {
-    const find = ${find};
-    return (${fn})(find("text", null, ${JSON.stringify(scopes)}), ${JSON.stringify(locator)});
-  })()`;
