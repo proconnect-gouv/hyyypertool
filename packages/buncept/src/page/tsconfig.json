@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "lib": ["DOM", "ESNext"],
+    "outDir": "../../node_modules/.cache/tsc-page",
+    "rootDir": "..",
+    "types": []
+  },
+  "extends": "@~/config.typescript/base/tsconfig.json",
+  "include": [".", "../protocol.ts"]
+}
