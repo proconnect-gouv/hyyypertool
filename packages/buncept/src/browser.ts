@@ -100,42 +100,27 @@ export async function create_browser(view: Bun.WebView) {
     wait(seconds: number) {
       return Bun.sleep(seconds * 1000);
     },
-    // Clicks the option's label until the box stays checked: a click that
-    // lands before its island hydrates is lost, so click again.
     async check(scopes: Locator[], field: Locator) {
-      const deadline = Date.now() + config.timeout;
-      const check = call("check", scopes, field);
       await ready();
-      for (;;) {
-        await until(
-          `${JSON.stringify(field)} is not checked`,
-          (checked) => checked === true,
-          check,
-        );
-        // ponytail: same 150ms settle as fill, see there
-        await Bun.sleep(150);
-        if ((await evaluate(check)) === true) return;
-        if (Date.now() >= deadline)
-          throw new Error(`${JSON.stringify(field)} kept unchecking`);
-      }
+      await until(
+        `${JSON.stringify(field)} not found`,
+        (state) => state === "ok",
+        call("check", scopes, field),
+      );
+      await until(
+        `${JSON.stringify(field)} is not checked`,
+        (checked) => checked === true,
+        call("checked", scopes, field),
+      );
     },
-    // Types over the current value like a user, then checks it held: an
-    // island hydrating after the keystrokes resets the field, so retype.
     async fill(scopes: Locator[], field: Locator, value: string) {
-      const deadline = Date.now() + config.timeout;
-      const read = call("field_value", scopes, field);
-      for (;;) {
-        await act("select_field", scopes, field);
-        await serial(() => view.type(value));
-        // ponytail: 150ms outlasts Preact's 100ms afterPaint fallback, the
-        // latest an island's mount effect can reset the field.
-        if ((await evaluate(read)) === value) {
-          await Bun.sleep(150);
-          if ((await evaluate(read)) === value) return;
-        }
-        if (Date.now() >= deadline)
-          throw new Error(`field kept resetting, expected "${value}"`);
-      }
+      await act("select_field", scopes, field);
+      await serial(() => view.type(value));
+      await until(
+        `${JSON.stringify(field)} does not hold "${value}"`,
+        (held) => held === value,
+        call("field_value", scopes, field),
+      );
     },
     async navigate(url: string) {
       const deadline = Date.now() + config.timeout;
