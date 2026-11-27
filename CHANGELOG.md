@@ -1,5 +1,24 @@
 # Changelog
 
+## [2026.11.8](https://github.com/proconnect-gouv/hyyypertool/compare/2026.11.7...2026.11.8) (2026-11-26)
+
+### Ajouté
+
+- ✨ resolve the Crisp conversation from the moderation exchange ([#2098](https://github.com/proconnect-gouv/hyyypertool/issues/2098)) ([7b3b8dc](https://github.com/proconnect-gouv/hyyypertool/commit/7b3b8dce04c94c733984672462c25d90cc868670))
+
+### Modifié
+
+- ♻️ build the menu from compound components ([#2094](https://github.com/proconnect-gouv/hyyypertool/issues/2094)) ([acd717b](https://github.com/proconnect-gouv/hyyypertool/commit/acd717b82d644b57dc17ecacfafc6059214549db))
+- 🔧 let islands render the ui templates written for hono ([#2099](https://github.com/proconnect-gouv/hyyypertool/issues/2099)) ([59e19ed](https://github.com/proconnect-gouv/hyyypertool/commit/59e19ed5d576c60f14021aafbbd79207bf7b910b))
+
+### Corrigé
+
+- 🐛 let moderators open the member menu on a user's organizations ([#2096](https://github.com/proconnect-gouv/hyyypertool/issues/2096)) ([8cabdfd](https://github.com/proconnect-gouv/hyyypertool/commit/8cabdfdee25c3ef88844da097b5f0468a23840a8))
+
+### Divers
+
+- ✅ fail a feature click on a covered element ([#2095](https://github.com/proconnect-gouv/hyyypertool/issues/2095)) ([60d0055](https://github.com/proconnect-gouv/hyyypertool/commit/60d00550c4b5c722534759f129311f8a321fe1ee))
+
 ## [2026.11.7](https://github.com/proconnect-gouv/hyyypertool/compare/2026.11.6...2026.11.7) (2026-11-25)
 
 ### Changements
