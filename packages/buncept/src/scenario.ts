@@ -22,7 +22,7 @@ export function Scenario(title: string, body: (context: { I: Actor }) => void) {
           ],
         },
       });
-      scenario.browser = create_browser(view);
+      scenario.browser = await create_browser(view);
     });
     afterAll(() => view?.close());
     body({ I: create_actor(scenario) });

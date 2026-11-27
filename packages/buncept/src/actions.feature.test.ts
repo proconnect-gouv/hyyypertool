@@ -49,7 +49,7 @@ test("click fails on an element another one is painted over", async () => {
   const timeout = config.timeout;
   config.timeout = 500;
   try {
-    const browser = create_browser(view);
+    const browser = await create_browser(view);
     await browser.navigate(`${config.url}/covered`);
     await expect(browser.act("click", [], "Menu")).rejects.toThrow(
       /element covered by <a href=/,

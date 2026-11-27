@@ -20,10 +20,6 @@ const PAGE = await bundle.text();
 
 type Script<T> = { readonly result?: T; readonly source: string };
 
-const PAGE_LINE: Script<readonly [string, string]> = {
-  source: "[location.href, document.title]",
-};
-
 export const call = <K extends keyof Page>(
   name: K,
   ...args: Parameters<Page[K]>
@@ -31,9 +27,9 @@ export const call = <K extends keyof Page>(
   source: `window.__buncept.${name}(${args.map((arg) => JSON.stringify(arg)).join(", ")})`,
 });
 
-export type Browser = ReturnType<typeof create_browser>;
+export type Browser = Awaited<ReturnType<typeof create_browser>>;
 
-export function create_browser(view: Bun.WebView) {
+export async function create_browser(view: Bun.WebView) {
   // Bun.WebView rejects concurrent calls ("an evaluate() is already
   // pending"), so every call to the view queues behind the previous one.
   let chain: Promise<unknown> = Promise.resolve();
@@ -71,15 +67,8 @@ export function create_browser(view: Bun.WebView) {
     }
   }
 
-  let accepting_popups = false;
-  let installed = false;
-
-  async function install() {
-    await serial(() => view.navigate("about:blank"));
-    await on_new_document(PAGE);
-    if (accepting_popups) await on_new_document(call("accept_popups").source);
-    installed = true;
-  }
+  await serial(() => view.navigate("about:blank"));
+  await on_new_document(PAGE);
 
   // Waits for the element to be visible (and enabled), then runs `action`
   // on it in the same evaluate, so no swap can land between find and act.
@@ -104,10 +93,8 @@ export function create_browser(view: Bun.WebView) {
 
   return {
     async accept_popups() {
-      accepting_popups = true;
-      if (!installed) return;
       await on_new_document(call("accept_popups").source);
-      await evaluate(call("accept_popups"));
+      if (view.url !== "about:blank") await evaluate(call("accept_popups"));
     },
     act,
     wait(seconds: number) {
@@ -151,7 +138,6 @@ export function create_browser(view: Bun.WebView) {
       }
     },
     async navigate(url: string) {
-      if (!installed) await install();
       const deadline = Date.now() + config.timeout;
       for (;;) {
         try {
@@ -166,12 +152,10 @@ export function create_browser(view: Bun.WebView) {
       await settle();
     },
     async page_line() {
-      try {
-        const [url, title] = await evaluate(PAGE_LINE);
-        return `Page: ${url} — "${title}"`;
-      } catch {
-        return "Page: unavailable";
-      }
+      const title = await evaluate(call("title")).catch(() => null);
+      return title === null
+        ? `Page: ${view.url}`
+        : `Page: ${view.url} — "${title}"`;
     },
     async press(key: string) {
       await ready();
