@@ -32,13 +32,15 @@ export function focused(scopes: Locator[], locator: Locator) {
     : null;
 }
 
-// true once checked; otherwise clicks the label, like a user, and reports
 export function check(scopes: Locator[], field: Locator) {
   const input = find("field", field, scopes) as HTMLInputElement | null;
   if (!input) return "element not found";
-  if (input.checked) return true;
-  (input.labels?.[0] ?? input).click();
-  return false;
+  if (!input.checked) (input.labels?.[0] ?? input).click();
+  return "ok";
+}
+
+export function checked(scopes: Locator[], field: Locator) {
+  return (find("field", field, scopes) as HTMLInputElement | null)?.checked;
 }
 
 const actions = {

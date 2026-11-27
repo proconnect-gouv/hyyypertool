@@ -9,11 +9,22 @@ afterAll(stop_fixtures);
 
 //
 
-Scenario("checkOption clicks again until the option stays checked", ({ I }) => {
-  I.amOnPage("/");
-  I.dontSee("notify on");
-  I.checkOption("Notify Jean");
-  I.see("notify on");
+test("checkOption fails when the click on the option is lost", async () => {
+  const view = new Bun.WebView({
+    backend: { type: "chrome", argv: ["--no-sandbox"] },
+  });
+  const timeout = config.timeout;
+  config.timeout = 500;
+  try {
+    const browser = await create_browser(view);
+    await browser.navigate(config.url);
+    await expect(browser.check([], "Notify Jean")).rejects.toThrow(
+      /"Notify Jean" is not checked/,
+    );
+  } finally {
+    config.timeout = timeout;
+    view.close();
+  }
 });
 
 Scenario(

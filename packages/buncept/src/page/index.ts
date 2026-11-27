@@ -1,4 +1,12 @@
-import { act, check, field_value, focused, see, see_element } from "./checks";
+import {
+  act,
+  check,
+  checked,
+  field_value,
+  focused,
+  see,
+  see_element,
+} from "./checks";
 import { install_inflight, loaded } from "./loaded";
 
 //
@@ -10,6 +18,7 @@ const page = {
   },
   act,
   check,
+  checked,
   field_value,
   focused,
   loaded,
