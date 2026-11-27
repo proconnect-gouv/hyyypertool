@@ -106,15 +106,24 @@ export async function create_browser(view: Bun.WebView) {
       const deadline = Date.now() + config.timeout;
       const check = call("check", scopes, field);
       await ready();
-      for (;;) {
+      let clicks = 0;
+      for (let pass = 1; ; pass++) {
         await until(
           `${JSON.stringify(field)} is not checked`,
-          (checked) => checked === true,
+          (checked) => {
+            if (checked === false) clicks++;
+            return checked === true;
+          },
           check,
         );
         // ponytail: same 150ms settle as fill, see there
         await Bun.sleep(150);
-        if ((await evaluate(check)) === true) return;
+        if ((await evaluate(check)) === true) {
+          console.error(
+            `buncept_retry_probe ${JSON.stringify({ clicks, field, kind: "check", pass, retried: clicks > 1 || pass > 1, url: view.url })}`,
+          );
+          return;
+        }
         if (Date.now() >= deadline)
           throw new Error(`${JSON.stringify(field)} kept unchecking`);
       }
@@ -124,6 +133,7 @@ export async function create_browser(view: Bun.WebView) {
     async fill(scopes: Locator[], field: Locator, value: string) {
       const deadline = Date.now() + config.timeout;
       const read = call("field_value", scopes, field);
+      const reasons: string[] = [];
       for (;;) {
         await act("select_field", scopes, field);
         await serial(() => view.type(value));
@@ -131,8 +141,14 @@ export async function create_browser(view: Bun.WebView) {
         // latest an island's mount effect can reset the field.
         if ((await evaluate(read)) === value) {
           await Bun.sleep(150);
-          if ((await evaluate(read)) === value) return;
-        }
+          if ((await evaluate(read)) === value) {
+            console.error(
+              `buncept_retry_probe ${JSON.stringify({ field, kind: "fill", reasons, retried: reasons.length > 0, url: view.url })}`,
+            );
+            return;
+          }
+          reasons.push("reset_after_150ms");
+        } else reasons.push("wrong_right_after_typing");
         if (Date.now() >= deadline)
           throw new Error(`field kept resetting, expected "${value}"`);
       }
