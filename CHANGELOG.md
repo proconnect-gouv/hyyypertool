@@ -1,5 +1,18 @@
 # Changelog
 
+## [2026.11.9](https://github.com/proconnect-gouv/hyyypertool/compare/2026.11.8...2026.11.9) (2026-11-27)
+
+### Modifié
+
+- ♻️ install buncept's page code when the browser is created ([#2103](https://github.com/proconnect-gouv/hyyypertool/issues/2103)) ([5fbea40](https://github.com/proconnect-gouv/hyyypertool/commit/5fbea40761fca76c91f524868f68f1c15d303867))
+- ♻️ type the boundary between buncept and the page ([#2102](https://github.com/proconnect-gouv/hyyypertool/issues/2102)) ([97313f3](https://github.com/proconnect-gouv/hyyypertool/commit/97313f3ce492e8d31b265181e48e4edf6d9e004c))
+- ♻️ split buncept by where its code runs ([#2100](https://github.com/proconnect-gouv/hyyypertool/issues/2100)) ([a47a30e](https://github.com/proconnect-gouv/hyyypertool/commit/a47a30e037560bb503020b49104d679daa519403))
+
+### Dépendances
+
+- ⬆️ Bump node from v26.13.0 to v26.13.1 ([#2107](https://github.com/proconnect-gouv/hyyypertool/issues/2107)) ([563e249](https://github.com/proconnect-gouv/hyyypertool/commit/563e249aaaba7c788bcef50bf6e5767c4ba44026))
+- ⬆️ Bump cypress from 16.2.1 to 16.3.0 ([#2108](https://github.com/proconnect-gouv/hyyypertool/issues/2108)) ([b9e7e0d](https://github.com/proconnect-gouv/hyyypertool/commit/b9e7e0daf14fe796e338a2ce4aaadc0bec60b755))
+
 ## [2026.11.8](https://github.com/proconnect-gouv/hyyypertool/compare/2026.11.7...2026.11.8) (2026-11-26)
 
 ### Ajouté
